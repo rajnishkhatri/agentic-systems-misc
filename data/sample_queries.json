@@ -1,0 +1,114 @@
+[
+  {
+    "dietary_restriction": "vegetarian",
+    "ingredient_constraints": "leftovers",
+    "meal_portion": "2 people",
+    "complexity_level": "quick/simple",
+    "meal_type": "dinner",
+    "cuisine_type": "Indian"
+  },
+  {
+    "dietary_restriction": "gluten-free",
+    "ingredient_constraints": "pantry-only",
+    "meal_portion": "",
+    "complexity_level": "moderate",
+    "meal_type": "breakfast",
+    "cuisine_type": ""
+  },
+  {
+    "dietary_restriction": "keto",
+    "ingredient_constraints": "seasonal ingredients",
+    "meal_portion": "4 people",
+    "complexity_level": "advanced/gourmet",
+    "meal_type": "dinner",
+    "cuisine_type": "American"
+  },
+  {
+    "dietary_restriction": "vegan",
+    "ingredient_constraints": "specific ingredients available",
+    "meal_portion": "1 person",
+    "complexity_level": "quick/simple",
+    "meal_type": "lunch",
+    "cuisine_type": "Chinese"
+  },
+  {
+    "dietary_restriction": "nut-free",
+    "ingredient_constraints": "minimal ingredients",
+    "meal_portion": "6 people",
+    "complexity_level": "moderate",
+    "meal_type": "brunch",
+    "cuisine_type": "Mediterranean"
+  },
+  {
+    "dietary_restriction": "halal",
+    "ingredient_constraints": "none",
+    "meal_portion": "",
+    "complexity_level": "advanced/gourmet",
+    "meal_type": "snack",
+    "cuisine_type": "Mexican"
+  },
+  {
+    "dietary_restriction": "none",
+    "ingredient_constraints": "one-pot meals",
+    "meal_portion": "2 people",
+    "complexity_level": "quick/simple",
+    "meal_type": "dinner",
+    "cuisine_type": ""
+  },
+  {
+    "dietary_restriction": "none",
+    "ingredient_constraints": "leftovers",
+    "meal_portion": "",
+    "complexity_level": "moderate",
+    "meal_type": "appetizer",
+    "cuisine_type": "Thai"
+  },
+  {
+    "dietary_restriction": "paleo",
+    "ingredient_constraints": "pantry-only",
+    "meal_portion": "1 person",
+    "complexity_level": "quick/simple",
+    "meal_type": "lunch",
+    "cuisine_type": "American"
+  },
+  {
+    "dietary_restriction": "dairy-free",
+    "ingredient_constraints": "minimal ingredients",
+    "meal_portion": "4 people",
+    "complexity_level": "moderate",
+    "meal_type": "dinner",
+    "cuisine_type": "Italian"
+  },
+  {
+    "dietary_restriction": "vegan",
+    "ingredient_constraints": "minimal ingredients",
+    "meal_portion": "",
+    "complexity_level": "moderate",
+    "meal_type": "breakfast",
+    "cuisine_type": "Japanese"
+  },
+  {
+    "dietary_restriction": "low-carb",
+    "ingredient_constraints": "leftovers",
+    "meal_portion": "6 people",
+    "complexity_level": "advanced/gourmet",
+    "meal_type": "dinner",
+    "cuisine_type": "Mediterranean"
+  },
+  {
+    "dietary_restriction": "vegan",
+    "ingredient_constraints": "specific ingredients available",
+    "meal_portion": "4 people",
+    "complexity_level": "quick/simple",
+    "meal_type": "snack",
+    "cuisine_type": "Mexican"
+  },
+  {
+    "dietary_restriction": "gluten-free",
+    "ingredient_constraints": "seasonal ingredients",
+    "meal_portion": "2 people",
+    "complexity_level": "moderate",
+    "meal_type": "brunch",
+    "cuisine_type": "Italian"
+  }
+]

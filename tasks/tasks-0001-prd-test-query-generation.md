@@ -4,8 +4,9 @@
 
 ## Relevant Files
 
-- `tests/generate_test_queries.py` - Main script for generating test queries with dimension tuples and LLM integration (contains dimension configuration constants)
+- `generate_test_queries.py` - Main script for generating test queries with dimension tuples and LLM integration (contains dimension configuration constants)
 - `tests/test_generate_test_queries.py` - Unit tests for query generation script
+- `tests/__init__.py` - Python package marker for tests directory
 - `backend/utils.py` - Existing utility module with `get_agent_response()` function (lines 57-92) to be reused
 - `data/test_queries_generated_[timestamp].csv` - Output CSV file (created by script)
 - `data/sample_queries.csv` - Existing sample queries file for format reference
@@ -20,21 +21,21 @@
 
 ## Tasks
 
-- [ ] **1.0 Create Dimension Configuration Module**
+- [x] **1.0 Create Dimension Configuration Module**
   - [x] 1.1 Define dimension dictionaries for all 5 required dimensions (dietary_restriction, ingredient_constraints, meal_portion, complexity_level, meal_type) and 1 optional dimension (cuisine_type) with values from PRD FR1
   - [x] 1.2 Create constants for coverage requirements (e.g., at least 3 values for priorities 1, 2, 5; all 3 for priority 4; 40-60% for optional meal_portion)
   - [x] 1.3 Add helper function to validate dimension values match PRD specifications
   - [x] 1.4 Write unit tests for dimension configuration validation
 
 - [ ] **2.0 Implement Tuple Generation Logic**
-  - [ ] 2.1 Create function `generate_dimension_tuples()` that constructs a prompt for LLM to generate 15-20 unique tuples
-  - [ ] 2.2 Design prompt to instruct LLM to maximize coverage across all dimensions while creating realistic user scenarios (reference PRD Design Considerations)
-  - [ ] 2.3 Use `get_agent_response()` from `backend/utils.py` to call LLM with custom system prompt (override default recipe prompt)
-  - [ ] 2.4 Parse LLM response into structured tuple format (dict or dataclass with all dimension keys)
-  - [ ] 2.5 Implement deduplication logic to ensure no duplicate tuples exist
-  - [ ] 2.6 Verify at least one tuple exists for each dimension value (from priorities 1, 2, 4, 5)
-  - [ ] 2.7 Add retry logic (up to 3 attempts with exponential backoff) for LLM API failures
-  - [ ] 2.8 Write unit tests for tuple generation (mock LLM responses)
+  - [x] 2.1 Create function `generate_dimension_tuples()` that constructs a prompt for LLM to generate 15-20 unique tuples
+  - [x] 2.2 Design prompt to instruct LLM to maximize coverage across all dimensions while creating realistic user scenarios (reference PRD Design Considerations)
+  - [x] 2.3 Use `get_agent_response()` from `backend/utils.py` to call LLM with custom system prompt (override default recipe prompt)
+  - [x] 2.4 Parse LLM response into structured tuple format (dict or dataclass with all dimension keys)
+  - [x] 2.5 Implement deduplication logic to ensure no duplicate tuples exist
+  - [x] 2.6 Verify at least one tuple exists for each dimension value (from priorities 1, 2, 4, 5)
+  - [x] 2.7 Add retry logic (up to 3 attempts with exponential backoff) for LLM API failures
+  - [x] 2.8 Write unit tests for tuple generation (mock LLM responses)
 
 - [ ] **3.0 Implement Natural Language Query Generation**
   - [ ] 3.1 Create function `generate_query_from_tuple(tuple)` that constructs a prompt to convert tuple to natural language

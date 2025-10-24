@@ -5,6 +5,7 @@ Tests for dimension configuration, validation functions, and query generation lo
 
 from __future__ import annotations
 
+from unittest.mock import patch, MagicMock
 import pytest
 
 from generate_test_queries import (
@@ -17,6 +18,9 @@ from generate_test_queries import (
     NONE_VALUE,
     validate_dimension_value,
     validate_tuple,
+    verify_dimension_coverage,
+    _generate_dimension_tuples_impl,
+    generate_dimension_tuples,
 )
 
 
@@ -234,3 +238,226 @@ class TestDimensionConstants:
         """Test that CUISINE_TYPES has values (PRD FR1 optional dimension)."""
         assert len(CUISINE_TYPES) >= 3
         assert len(CUISINE_TYPES) == 8  # Exact count from PRD
+
+
+# --- Task 2.8: Unit Tests for Tuple Generation ---
+
+
+class TestVerifyDimensionCoverage:
+    """Test verify_dimension_coverage function."""
+
+    def test_should_return_empty_lists_when_full_coverage(self) -> None:
+        """Test that full coverage returns empty missing lists."""
+        tuples = [
+            {"dietary_restriction": "vegan", "ingredient_constraints": "pantry-only", "complexity_level": "quick/simple", "meal_type": "breakfast"},
+            {"dietary_restriction": "gluten-free", "ingredient_constraints": "leftovers", "complexity_level": "moderate", "meal_type": "lunch"},
+            {"dietary_restriction": "keto", "ingredient_constraints": "seasonal ingredients", "complexity_level": "advanced/gourmet", "meal_type": "dinner"},
+        ]
+        missing = verify_dimension_coverage(tuples)
+        assert missing["dietary_restriction"] == []
+        assert missing["ingredient_constraints"] == []
+        assert missing["complexity_level"] == []
+        assert missing["meal_type"] == []
+
+    def test_should_detect_missing_complexity_values(self) -> None:
+        """Test that missing complexity levels are detected."""
+        tuples = [
+            {"dietary_restriction": "vegan", "ingredient_constraints": "pantry-only", "complexity_level": "quick/simple", "meal_type": "breakfast"},
+            {"dietary_restriction": "gluten-free", "ingredient_constraints": "leftovers", "complexity_level": "quick/simple", "meal_type": "lunch"},
+        ]
+        missing = verify_dimension_coverage(tuples)
+        assert "moderate" in missing["complexity_level"]
+        assert "advanced/gourmet" in missing["complexity_level"]
+
+    def test_should_detect_insufficient_dietary_values(self) -> None:
+        """Test that insufficient dietary restriction values are detected."""
+        tuples = [
+            {"dietary_restriction": "vegan", "ingredient_constraints": "pantry-only", "complexity_level": "quick/simple", "meal_type": "breakfast"},
+            {"dietary_restriction": "vegan", "ingredient_constraints": "leftovers", "complexity_level": "moderate", "meal_type": "lunch"},
+        ]
+        missing = verify_dimension_coverage(tuples)
+        assert len(missing["dietary_restriction"]) > 0  # Need at least 3 different values
+
+    def test_should_ignore_none_values_in_coverage(self) -> None:
+        """Test that 'none' values don't count toward coverage."""
+        tuples = [
+            {"dietary_restriction": NONE_VALUE, "ingredient_constraints": NONE_VALUE, "complexity_level": "quick/simple", "meal_type": "breakfast"},
+            {"dietary_restriction": "vegan", "ingredient_constraints": "pantry-only", "complexity_level": "moderate", "meal_type": "lunch"},
+            {"dietary_restriction": "gluten-free", "ingredient_constraints": "leftovers", "complexity_level": "advanced/gourmet", "meal_type": "dinner"},
+        ]
+        missing = verify_dimension_coverage(tuples)
+        # Should still need 1 more dietary value (have 2, need 3)
+        assert len(missing["dietary_restriction"]) >= 1
+
+    def test_should_raise_error_when_no_tuples(self) -> None:
+        """Test that ValueError is raised when no tuples provided."""
+        with pytest.raises(ValueError, match="No tuples provided"):
+            verify_dimension_coverage([])
+
+
+class TestGenerateDimensionTuplesImpl:
+    """Test _generate_dimension_tuples_impl function with mocked LLM."""
+
+    @patch("generate_test_queries.get_agent_response")
+    def test_should_return_valid_tuples_when_llm_succeeds(self, mock_get_agent: MagicMock) -> None:
+        """Test that valid tuples are returned when LLM provides good response."""
+        mock_response = [
+            {"role": "system", "content": "..."},
+            {"role": "user", "content": "..."},
+            {"role": "assistant", "content": '''```json
+[
+  {
+    "dietary_restriction": "vegan",
+    "ingredient_constraints": "pantry-only",
+    "meal_portion": "4 people",
+    "complexity_level": "quick/simple",
+    "meal_type": "dinner",
+    "cuisine_type": ""
+  },
+  {
+    "dietary_restriction": "gluten-free",
+    "ingredient_constraints": "leftovers",
+    "meal_portion": "",
+    "complexity_level": "moderate",
+    "meal_type": "lunch",
+    "cuisine_type": "Italian"
+  }
+]
+```'''}
+        ]
+        mock_get_agent.return_value = mock_response
+
+        tuples = _generate_dimension_tuples_impl()
+
+        assert len(tuples) == 2
+        assert tuples[0]["dietary_restriction"] == "vegan"
+        assert tuples[1]["dietary_restriction"] == "gluten-free"
+
+    @patch("generate_test_queries.get_agent_response")
+    def test_should_skip_invalid_tuples(self, mock_get_agent: MagicMock) -> None:
+        """Test that invalid tuples are skipped with warnings."""
+        mock_response = [
+            {"role": "system", "content": "..."},
+            {"role": "user", "content": "..."},
+            {"role": "assistant", "content": '''```json
+[
+  {
+    "dietary_restriction": "vegan",
+    "ingredient_constraints": "pantry-only",
+    "meal_portion": "4 people",
+    "complexity_level": "quick/simple",
+    "meal_type": "dinner",
+    "cuisine_type": ""
+  },
+  {
+    "dietary_restriction": "invalid-diet",
+    "ingredient_constraints": "pantry-only",
+    "meal_portion": "",
+    "complexity_level": "quick/simple",
+    "meal_type": "lunch",
+    "cuisine_type": ""
+  }
+]
+```'''}
+        ]
+        mock_get_agent.return_value = mock_response
+
+        tuples = _generate_dimension_tuples_impl()
+
+        assert len(tuples) == 1  # Only valid tuple returned
+        assert tuples[0]["dietary_restriction"] == "vegan"
+
+    @patch("generate_test_queries.get_agent_response")
+    def test_should_deduplicate_tuples(self, mock_get_agent: MagicMock) -> None:
+        """Test that duplicate tuples are removed."""
+        mock_response = [
+            {"role": "system", "content": "..."},
+            {"role": "user", "content": "..."},
+            {"role": "assistant", "content": '''```json
+[
+  {
+    "dietary_restriction": "vegan",
+    "ingredient_constraints": "pantry-only",
+    "meal_portion": "4 people",
+    "complexity_level": "quick/simple",
+    "meal_type": "dinner",
+    "cuisine_type": ""
+  },
+  {
+    "dietary_restriction": "vegan",
+    "ingredient_constraints": "pantry-only",
+    "meal_portion": "4 people",
+    "complexity_level": "quick/simple",
+    "meal_type": "dinner",
+    "cuisine_type": ""
+  }
+]
+```'''}
+        ]
+        mock_get_agent.return_value = mock_response
+
+        tuples = _generate_dimension_tuples_impl()
+
+        assert len(tuples) == 1  # Duplicate removed
+
+    @patch("generate_test_queries.get_agent_response")
+    def test_should_raise_error_when_invalid_json(self, mock_get_agent: MagicMock) -> None:
+        """Test that ValueError is raised when LLM returns invalid JSON."""
+        mock_response = [
+            {"role": "system", "content": "..."},
+            {"role": "user", "content": "..."},
+            {"role": "assistant", "content": "This is not JSON"}
+        ]
+        mock_get_agent.return_value = mock_response
+
+        with pytest.raises(ValueError, match="Failed to parse LLM response as JSON"):
+            _generate_dimension_tuples_impl()
+
+
+class TestGenerateDimensionTuplesRetry:
+    """Test generate_dimension_tuples retry logic."""
+
+    @patch("generate_test_queries._generate_dimension_tuples_impl")
+    @patch("generate_test_queries.time.sleep")
+    def test_should_retry_on_failure_and_succeed(self, mock_sleep: MagicMock, mock_impl: MagicMock) -> None:
+        """Test that function retries on failure and eventually succeeds."""
+        mock_impl.side_effect = [
+            ValueError("First attempt failed"),
+            ValueError("Second attempt failed"),
+            [{"dietary_restriction": "vegan", "ingredient_constraints": "pantry-only", "complexity_level": "quick/simple", "meal_type": "dinner"}]
+        ]
+
+        result = generate_dimension_tuples()
+
+        assert len(result) == 1
+        assert mock_impl.call_count == 3
+        assert mock_sleep.call_count == 2  # Slept twice before third attempt
+
+    @patch("generate_test_queries._generate_dimension_tuples_impl")
+    @patch("generate_test_queries.time.sleep")
+    def test_should_raise_runtime_error_after_max_retries(self, mock_sleep: MagicMock, mock_impl: MagicMock) -> None:
+        """Test that RuntimeError is raised after all retries fail."""
+        mock_impl.side_effect = ValueError("Always fails")
+
+        with pytest.raises(RuntimeError, match="Failed to generate tuples after 3 attempts"):
+            generate_dimension_tuples()
+
+        assert mock_impl.call_count == 3
+        assert mock_sleep.call_count == 2  # Slept twice (not after final failure)
+
+    @patch("generate_test_queries._generate_dimension_tuples_impl")
+    @patch("generate_test_queries.time.sleep")
+    def test_should_use_exponential_backoff(self, mock_sleep: MagicMock, mock_impl: MagicMock) -> None:
+        """Test that exponential backoff is used between retries."""
+        mock_impl.side_effect = [
+            ValueError("First attempt failed"),
+            ValueError("Second attempt failed"),
+            [{"dietary_restriction": "vegan", "ingredient_constraints": "pantry-only", "complexity_level": "quick/simple", "meal_type": "dinner"}]
+        ]
+
+        generate_dimension_tuples()
+
+        # Check sleep durations: 1s, 2s
+        assert mock_sleep.call_count == 2
+        assert mock_sleep.call_args_list[0][0][0] == 1.0  # 1 * 2^0
+        assert mock_sleep.call_args_list[1][0][0] == 2.0  # 1 * 2^1
