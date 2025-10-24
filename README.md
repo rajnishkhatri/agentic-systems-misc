@@ -8,9 +8,7 @@ This repository contains a complete AI evaluations course built around a Recipe 
    ```bash
    git clone https://github.com/ai-evals-course/recipe-chatbot.git
    cd recipe-chatbot
-   python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   pip install -r requirements.txt
+   uv sync  # Installs dependencies and creates virtual environment
    ```
 
 2. **Configure Environment**
@@ -21,9 +19,29 @@ This repository contains a complete AI evaluations course built around a Recipe 
 
 3. **Run the Chatbot**
    ```bash
-   uvicorn backend.main:app --reload
+   uv run uvicorn backend.main:app --reload
    # Open http://127.0.0.1:8000
    ```
+
+## Development with uv
+
+This project uses [uv](https://docs.astral.sh/uv/) for fast Python package management and virtual environment handling.
+
+### Key Commands
+
+- **Install dependencies**: `uv sync`
+- **Run the chatbot**: `uv run uvicorn backend.main:app --reload`
+- **Run tests**: `uv run pytest tests/`
+- **Add new dependency**: `uv add package-name`
+- **Add dev dependency**: `uv add --dev package-name`
+- **Run any script**: `uv run python script.py`
+
+### Benefits of uv
+
+- ⚡ **Fast**: 10-100x faster than pip
+- 🔒 **Reliable**: Deterministic dependency resolution
+- 🎯 **Simple**: Single tool for virtual envs, dependencies, and running code
+- 📦 **Modern**: Built-in support for pyproject.toml and modern Python packaging
 
 ## Course Overview
 

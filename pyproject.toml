@@ -1,0 +1,56 @@
+[project]
+name = "recipe-chatbot"
+version = "0.1.0"
+description = "AI Evaluations Course - Recipe Chatbot with comprehensive evaluation framework"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "litellm",
+    "python-dotenv",
+    "httpx",
+    "rich",
+    "pandas",
+    "numpy",
+    "scikit-learn",
+    "judgy",
+    "rank-bm25",
+    "tqdm",
+    "pydantic",
+    "typing-extensions",
+    "matplotlib",
+    "seaborn",
+    "plotly",
+    "python-fasthtml",
+    "monsterui",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "black",
+    "isort",
+    "flake8",
+    "mypy",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["backend"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+]
+
+[project.scripts]
+recipe-chatbot = "backend.main:app"
