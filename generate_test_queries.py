@@ -8,8 +8,11 @@ Based on PRD: tasks/0001-prd-test-query-generation.md
 
 from __future__ import annotations
 
+import csv
 import json
 import time
+from datetime import datetime
+from pathlib import Path
 from typing import Any, Final
 
 import sys
@@ -568,10 +571,10 @@ def verify_query_with_agent(tuple_dict: dict[str, str]) -> dict[str, Any]:
 
 def verify_all_queries(tuples: list[dict[str, str]]) -> dict[str, Any]:
     """Verify all generated tuples produce valid recipe responses.
-    
+
     Args:
         tuples: List of dimension tuple dictionaries
-        
+
     Returns:
         Dictionary with verification results:
         - total: int (total number of tuples)
@@ -582,26 +585,26 @@ def verify_all_queries(tuples: list[dict[str, str]]) -> dict[str, Any]:
     """
     print("Verifying queries with Recipe Bot agent...")
     print()
-    
+
     results = []
     successful = 0
-    
+
     for i, tuple_dict in enumerate(tuples, 1):
         print(f"Verifying query {i}/{len(tuples)}: {tuple_dict['dietary_restriction']} | {tuple_dict['ingredient_constraints']} | {tuple_dict['complexity_level']} | {tuple_dict['meal_type']}")
-        
+
         result = verify_query_with_agent(tuple_dict)
         results.append(result)
-        
+
         if result["success"]:
             successful += 1
             print(f"  ✅ Success")
         else:
             print(f"  ❌ Failed: {result['error'] or 'Invalid response format'}")
-        
+
         print()
-    
+
     pass_rate = successful / len(tuples) if tuples else 0.0
-    
+
     return {
         "total": len(tuples),
         "successful": successful,
@@ -609,6 +612,96 @@ def verify_all_queries(tuples: list[dict[str, str]]) -> dict[str, Any]:
         "pass_rate": pass_rate,
         "results": results
     }
+
+
+# --- CSV Output (Task 4.0) ---
+
+def write_queries_to_csv(tuples: list[dict[str, str]], output_path: str | None = None) -> str:
+    """Write dimension tuples and natural language queries to CSV file.
+
+    Creates a CSV file with columns: query_id, dietary_restriction, ingredient_constraints,
+    meal_portion, complexity_level, meal_type, cuisine_type, natural_language_query.
+
+    Args:
+        tuples: List of dimension tuple dictionaries
+        output_path: Optional output file path. If None, generates timestamped filename
+                    in data/ directory (format: test_queries_generated_YYYYMMDD_HHMMSS.csv)
+
+    Returns:
+        The path to the created CSV file
+
+    Raises:
+        ValueError: If tuples list is empty
+        OSError: If file writing fails (permissions, disk space, etc.)
+        TypeError: If tuples is not a list or contains non-dict elements
+    """
+    # Step 1: Type checking
+    if not isinstance(tuples, list):
+        raise TypeError("tuples must be a list")
+
+    if not tuples:
+        raise ValueError("tuples list cannot be empty")
+
+    for i, t in enumerate(tuples):
+        if not isinstance(t, dict):
+            raise TypeError(f"tuple at index {i} must be a dict, got {type(t).__name__}")
+
+    # Step 2: Generate output path with timestamp if not provided (Task 4.3)
+    if output_path is None:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_path = f"data/test_queries_generated_{timestamp}.csv"
+
+    # Step 3: Create data directory if it doesn't exist (Task 4.6)
+    output_file = Path(output_path)
+    try:
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+    except OSError as e:
+        raise OSError(f"Failed to create directory {output_file.parent}: {e}") from e
+
+    # Step 4: Write CSV with proper schema (Task 4.2, 4.4, 4.5)
+    try:
+        with open(output_file, 'w', encoding='utf-8', newline='') as f:
+            # Define CSV schema per PRD FR4
+            fieldnames = [
+                'query_id',
+                'dietary_restriction',
+                'ingredient_constraints',
+                'meal_portion',
+                'complexity_level',
+                'meal_type',
+                'cuisine_type',
+                'natural_language_query'
+            ]
+
+            # Use csv.QUOTE_MINIMAL for proper escaping (Task 4.4)
+            writer = csv.DictWriter(f, fieldnames=fieldnames, quoting=csv.QUOTE_MINIMAL)
+
+            # Write header
+            writer.writeheader()
+
+            # Write each tuple as a row
+            for i, tuple_dict in enumerate(tuples, start=1):
+                # Generate natural language query from tuple
+                natural_query = convert_tuple_to_query(tuple_dict)
+
+                # Create row with all fields
+                row = {
+                    'query_id': f"Q{i:03d}",  # Format as Q001, Q002, etc.
+                    'dietary_restriction': tuple_dict.get('dietary_restriction', ''),
+                    'ingredient_constraints': tuple_dict.get('ingredient_constraints', ''),
+                    'meal_portion': tuple_dict.get('meal_portion', ''),
+                    'complexity_level': tuple_dict.get('complexity_level', ''),
+                    'meal_type': tuple_dict.get('meal_type', ''),
+                    'cuisine_type': tuple_dict.get('cuisine_type', ''),
+                    'natural_language_query': natural_query
+                }
+
+                writer.writerow(row)
+
+        return str(output_file)
+
+    except OSError as e:
+        raise OSError(f"Failed to write CSV file {output_file}: {e}") from e
 
 
 # --- Main Execution ---
@@ -636,19 +729,16 @@ def main():
                 print(f"     Cuisine: {t['cuisine_type']}")
             print()
         
-        # Save to file
-        output_file = "data/sample_queries.csv"
-        print(f"Saving tuples to {output_file}...")
-        
-        # Create data directory if it doesn't exist
-        os.makedirs(os.path.dirname(output_file), exist_ok=True)
-        
-        # Save as JSON for now (can be converted to CSV later if needed)
-        json_file = output_file.replace('.csv', '.json')
-        with open(json_file, 'w') as f:
+        # Save to CSV file (Task 4.0)
+        print(f"Writing queries to CSV...")
+        csv_file = write_queries_to_csv(tuples)
+        print(f"✅ Saved {len(tuples)} queries to {csv_file}")
+
+        # Also save JSON for reference
+        json_file = csv_file.replace('.csv', '.json')
+        with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(tuples, f, indent=2)
-        
-        print(f"Saved {len(tuples)} tuples to {json_file}")
+        print(f"✅ Saved dimension tuples to {json_file}")
         
         # Verify queries with Recipe Bot agent (Task 1.3)
         print("\n" + "="*60)
@@ -666,12 +756,19 @@ def main():
             print("Some queries may need adjustment for better Recipe Bot compatibility.")
         else:
             print(f"\n✅ All queries passed validation (≥{VALIDATION_PASS_RATE_TARGET:.1%})")
-        
+
         # Save verification results
-        verification_file = output_file.replace('.csv', '_verification.json')
-        with open(verification_file, 'w') as f:
+        verification_file = csv_file.replace('.csv', '_verification.json')
+        with open(verification_file, 'w', encoding='utf-8') as f:
             json.dump(verification_results, f, indent=2)
-        print(f"Verification results saved to {verification_file}")
+        print(f"✅ Verification results saved to {verification_file}")
+
+        print(f"\n{'='*60}")
+        print(f"Summary:")
+        print(f"  CSV output: {csv_file}")
+        print(f"  JSON output: {json_file}")
+        print(f"  Verification: {verification_file}")
+        print(f"{'='*60}")
         
     except Exception as e:
         print(f"Error generating test queries: {e}")

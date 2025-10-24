@@ -21,6 +21,7 @@ from generate_test_queries import (
     verify_dimension_coverage,
     _generate_dimension_tuples_impl,
     generate_dimension_tuples,
+    write_queries_to_csv,
 )
 
 
@@ -461,3 +462,235 @@ class TestGenerateDimensionTuplesRetry:
         assert mock_sleep.call_count == 2
         assert mock_sleep.call_args_list[0][0][0] == 1.0  # 1 * 2^0
         assert mock_sleep.call_args_list[1][0][0] == 2.0  # 1 * 2^1
+
+
+# --- Task 4.8: Unit Tests for CSV Output ---
+
+
+class TestWriteQueriesToCSV:
+    """Test write_queries_to_csv function."""
+
+    def test_should_write_csv_with_correct_schema(self, tmp_path) -> None:
+        """Test that CSV is written with correct headers and data."""
+        import csv
+
+        tuples = [
+            {
+                "dietary_restriction": "vegan",
+                "ingredient_constraints": "pantry-only",
+                "meal_portion": "4 people",
+                "complexity_level": "quick/simple",
+                "meal_type": "dinner",
+                "cuisine_type": "Italian"
+            },
+            {
+                "dietary_restriction": "gluten-free",
+                "ingredient_constraints": "leftovers",
+                "meal_portion": "",
+                "complexity_level": "moderate",
+                "meal_type": "lunch",
+                "cuisine_type": ""
+            }
+        ]
+
+        output_path = tmp_path / "test_output.csv"
+        result_path = write_queries_to_csv(tuples, str(output_path))
+
+        assert result_path == str(output_path)
+        assert output_path.exists()
+
+        # Read and verify CSV content
+        with open(output_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+
+            # Check headers
+            assert reader.fieldnames == [
+                'query_id',
+                'dietary_restriction',
+                'ingredient_constraints',
+                'meal_portion',
+                'complexity_level',
+                'meal_type',
+                'cuisine_type',
+                'natural_language_query'
+            ]
+
+            # Check row count
+            assert len(rows) == 2
+
+            # Check first row
+            assert rows[0]['query_id'] == 'Q001'
+            assert rows[0]['dietary_restriction'] == 'vegan'
+            assert rows[0]['ingredient_constraints'] == 'pantry-only'
+            assert rows[0]['meal_portion'] == '4 people'
+            assert rows[0]['complexity_level'] == 'quick/simple'
+            assert rows[0]['meal_type'] == 'dinner'
+            assert rows[0]['cuisine_type'] == 'Italian'
+            assert 'recipe' in rows[0]['natural_language_query'].lower()
+
+            # Check second row
+            assert rows[1]['query_id'] == 'Q002'
+            assert rows[1]['dietary_restriction'] == 'gluten-free'
+            assert rows[1]['meal_portion'] == ''
+            assert rows[1]['cuisine_type'] == ''
+
+    def test_should_generate_timestamped_filename_when_path_none(self, tmp_path, monkeypatch) -> None:
+        """Test that timestamped filename is generated when output_path is None."""
+        import csv
+        from datetime import datetime
+
+        # Change to tmp_path for testing
+        monkeypatch.chdir(tmp_path)
+
+        tuples = [
+            {
+                "dietary_restriction": "vegan",
+                "ingredient_constraints": "pantry-only",
+                "meal_portion": "",
+                "complexity_level": "quick/simple",
+                "meal_type": "dinner",
+                "cuisine_type": ""
+            }
+        ]
+
+        result_path = write_queries_to_csv(tuples)
+
+        # Check filename format
+        assert result_path.startswith('data/test_queries_generated_')
+        assert result_path.endswith('.csv')
+        assert (tmp_path / result_path).exists()
+
+    def test_should_create_directory_when_not_exists(self, tmp_path) -> None:
+        """Test that parent directory is created if it doesn't exist."""
+        output_path = tmp_path / "subdir" / "nested" / "output.csv"
+
+        tuples = [
+            {
+                "dietary_restriction": "vegan",
+                "ingredient_constraints": "pantry-only",
+                "meal_portion": "",
+                "complexity_level": "quick/simple",
+                "meal_type": "dinner",
+                "cuisine_type": ""
+            }
+        ]
+
+        result_path = write_queries_to_csv(tuples, str(output_path))
+
+        assert result_path == str(output_path)
+        assert output_path.exists()
+        assert output_path.parent.exists()
+
+    def test_should_escape_commas_and_quotes_properly(self, tmp_path) -> None:
+        """Test that CSV properly escapes commas and quotes in data."""
+        import csv
+
+        tuples = [
+            {
+                "dietary_restriction": "vegan",
+                "ingredient_constraints": "specific ingredients available",
+                "meal_portion": "",
+                "complexity_level": "quick/simple",
+                "meal_type": "dinner",
+                "cuisine_type": ""
+            }
+        ]
+
+        output_path = tmp_path / "test_escaping.csv"
+        write_queries_to_csv(tuples, str(output_path))
+
+        # Read and verify escaping
+        with open(output_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+
+            # Natural language query should contain commas but be properly escaped
+            query = rows[0]['natural_language_query']
+            assert ',' in query  # Query contains commas
+            # If we can read it back correctly, escaping worked
+
+    def test_should_use_utf8_encoding(self, tmp_path) -> None:
+        """Test that CSV uses UTF-8 encoding."""
+        tuples = [
+            {
+                "dietary_restriction": "vegan",
+                "ingredient_constraints": "pantry-only",
+                "meal_portion": "",
+                "complexity_level": "quick/simple",
+                "meal_type": "dinner",
+                "cuisine_type": ""
+            }
+        ]
+
+        output_path = tmp_path / "test_utf8.csv"
+        write_queries_to_csv(tuples, str(output_path))
+
+        # Verify file is readable as UTF-8
+        with open(output_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+            assert len(content) > 0
+
+    def test_should_raise_type_error_when_tuples_not_list(self, tmp_path) -> None:
+        """Test that TypeError is raised when tuples is not a list."""
+        with pytest.raises(TypeError, match="tuples must be a list"):
+            write_queries_to_csv("not a list", str(tmp_path / "output.csv"))
+
+    def test_should_raise_value_error_when_tuples_empty(self, tmp_path) -> None:
+        """Test that ValueError is raised when tuples list is empty."""
+        with pytest.raises(ValueError, match="tuples list cannot be empty"):
+            write_queries_to_csv([], str(tmp_path / "output.csv"))
+
+    def test_should_raise_type_error_when_tuple_not_dict(self, tmp_path) -> None:
+        """Test that TypeError is raised when tuple element is not a dict."""
+        tuples = [
+            {"dietary_restriction": "vegan", "ingredient_constraints": "pantry-only", "complexity_level": "quick/simple", "meal_type": "dinner"},
+            "not a dict"
+        ]
+
+        with pytest.raises(TypeError, match="tuple at index 1 must be a dict"):
+            write_queries_to_csv(tuples, str(tmp_path / "output.csv"))
+
+    def test_should_handle_missing_optional_fields(self, tmp_path) -> None:
+        """Test that missing optional fields are handled gracefully."""
+        import csv
+
+        tuples = [
+            {
+                "dietary_restriction": "vegan",
+                "ingredient_constraints": "pantry-only",
+                "complexity_level": "quick/simple",
+                "meal_type": "dinner"
+                # Missing meal_portion and cuisine_type
+            }
+        ]
+
+        output_path = tmp_path / "test_missing_fields.csv"
+        write_queries_to_csv(tuples, str(output_path))
+
+        # Read and verify
+        with open(output_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+
+            assert rows[0]['meal_portion'] == ''
+            assert rows[0]['cuisine_type'] == ''
+
+    def test_should_format_query_id_with_leading_zeros(self, tmp_path) -> None:
+        """Test that query IDs are formatted with leading zeros."""
+        import csv
+
+        tuples = [
+            {"dietary_restriction": "vegan", "ingredient_constraints": "pantry-only", "complexity_level": "quick/simple", "meal_type": "dinner"},
+            {"dietary_restriction": "keto", "ingredient_constraints": "leftovers", "complexity_level": "moderate", "meal_type": "lunch"}
+        ]
+
+        output_path = tmp_path / "test_ids.csv"
+        write_queries_to_csv(tuples, str(output_path))
+
+        with open(output_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+
+            assert rows[0]['query_id'] == 'Q001'
+            assert rows[1]['query_id'] == 'Q002'
