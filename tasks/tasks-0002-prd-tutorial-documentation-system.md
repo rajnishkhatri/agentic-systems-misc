@@ -136,13 +136,13 @@
   - [x] 1.11 Update `CLAUDE.md` with tutorial workflow instructions
   - [x] 1.12 Update each homework/lesson README to link to their TUTORIAL_INDEX.md
 
-- [ ] **2.0 Develop Homework 1-2 Tutorial Series (Foundations)**
-  - [ ] 2.1 Write `homeworks/hw1/system_prompt_engineering_tutorial.md` (concepts, examples, testing strategies)
-  - [ ] 2.2 Write `homeworks/hw1/query_diversity_tutorial.md` (dimension identification, coverage analysis)
-  - [ ] 2.3 Write `homeworks/hw2/error_analysis_concepts.md` (qualitative evaluation, open/axial coding methodology)
-  - [ ] 2.4 Create `homeworks/hw2/dimension_generation_tutorial.ipynb` (interactive walkthrough with LLM tuple generation)
-  - [ ] 2.5 Write `homeworks/hw2/failure_mode_taxonomy_tutorial.md` (taxonomy building, definition writing, examples)
-  - [ ] 2.6 Create Mermaid diagram `homeworks/hw2/diagrams/error_analysis_pipeline.mmd` (dimension → tuples → queries → analysis flow)
+- [x] **2.0 Develop Homework 1-2 Tutorial Series (Foundations)**
+  - [x] 2.1 Write `homeworks/hw1/system_prompt_engineering_tutorial.md` (concepts, examples, testing strategies)
+  - [x] 2.2 Write `homeworks/hw1/query_diversity_tutorial.md` (dimension identification, coverage analysis)
+  - [x] 2.3 Write `homeworks/hw2/error_analysis_concepts.md` (qualitative evaluation, open/axial coding methodology)
+  - [x] 2.4 Create `homeworks/hw2/dimension_generation_tutorial.ipynb` (interactive walkthrough with LLM tuple generation)
+  - [x] 2.5 Write `homeworks/hw2/failure_mode_taxonomy_tutorial.md` (taxonomy building, definition writing, examples)
+  - [x] 2.6 Create Mermaid diagram `homeworks/hw2/diagrams/error_analysis_pipeline.mmd` (dimension → tuples → queries → analysis flow)
 
 - [ ] **3.0 Develop Homework 3-4 Tutorial Series (Advanced Evaluation)**
   - [ ] 3.1 Write `homeworks/hw3/llm_judge_concepts.md` (LLM-as-Judge paradigm, when to use, bias considerations)

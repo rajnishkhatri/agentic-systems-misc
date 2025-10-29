@@ -1,0 +1,61 @@
+%% Error Analysis Pipeline for HW2
+%% This diagram shows the complete workflow from dimension identification
+%% through query generation to error analysis and taxonomy building
+
+graph TD
+    %% Step 1: Dimension Identification
+    A[Identify Key Dimensions<br/>3-5 dimensions for query variation] -->|Examples: cuisine, dietary,<br/>meal type, time, skill| B[Define Dimension Values<br/>3-7 values per dimension]
+
+    %% Step 2: Tuple Generation
+    B -->|Use LLM to generate<br/>diverse combinations| C[Generate Dimension Tuples<br/>15-20 unique combinations]
+
+    %% Step 3: Query Generation
+    C -->|LLM converts tuples<br/>to natural language| D[Generate Synthetic Queries<br/>3-5 queries per tuple]
+
+    %% Step 4: Bot Testing
+    D -->|Run queries through bot<br/>bulk_test.py| E[Collect Bot Responses<br/>Interaction traces]
+
+    %% Step 5: Open Coding
+    E -->|Review traces<br/>without preconceived categories| F[Open Coding<br/>Assign descriptive labels]
+
+    %% Step 6: Pattern Identification
+    F -->|Look for recurring themes<br/>across observations| G[Identify Patterns<br/>Group similar codes]
+
+    %% Step 7: Axial Coding
+    G -->|Organize into<br/>broader categories| H[Axial Coding<br/>Create failure modes]
+
+    %% Step 8: Taxonomy Building
+    H -->|Write definitions<br/>and examples| I[Failure Mode Taxonomy<br/>Title + Definition + Examples]
+
+    %% Step 9: Optional Spreadsheet
+    I --> J{Optional:<br/>Spreadsheet<br/>Analysis?}
+
+    J -->|Yes| K[Create Error Analysis<br/>Spreadsheet<br/>Track failure frequencies]
+    J -->|No| L[Prioritize Failures<br/>Frequency × Severity]
+
+    K -->|Calculate metrics<br/>and correlations| L
+
+    %% Step 10: Iteration
+    L -->|Design interventions<br/>Update system prompt| M[Implement Improvements<br/>Prompt updates, guardrails]
+
+    M -->|Re-test with<br/>same queries| N[Measure Improvement<br/>Compare before/after]
+
+    N -->|Continue refinement<br/>New dimensions if needed| A
+
+    %% Styling per PRD conventions
+    %% Data = blue, Processes = white, Models/LLMs = yellow, Outputs = green, Optional = light red
+
+    style A fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
+    style B fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
+    style C fill:#fff3cd,stroke:#ff9800,stroke-width:2px
+    style D fill:#fff3cd,stroke:#ff9800,stroke-width:2px
+    style E fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
+    style F fill:#ffffff,stroke:#666,stroke-width:2px
+    style G fill:#ffffff,stroke:#666,stroke-width:2px
+    style H fill:#ffffff,stroke:#666,stroke-width:2px
+    style I fill:#d4edda,stroke:#28a745,stroke-width:2px
+    style J fill:#f8d7da,stroke:#dc3545,stroke-width:2px
+    style K fill:#f8d7da,stroke:#dc3545,stroke-width:2px
+    style L fill:#ffffff,stroke:#666,stroke-width:2px
+    style M fill:#ffffff,stroke:#666,stroke-width:2px
+    style N fill:#d4edda,stroke:#28a745,stroke-width:2px
