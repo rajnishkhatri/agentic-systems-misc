@@ -1,5 +1,9 @@
 # Lesson 6: Custom Failure Mode Inspection Interface
 
+**📚 [Tutorial Index](TUTORIAL_INDEX.md)** - Comprehensive tutorials, learning paths, and resources for this lesson
+
+---
+
 ## Overview
 
 This lesson builds a custom interface to inspect and manually mark failure modes in the synthetic conversation traces from Homework 5. The goal is to create tools for detailed analysis of where and how conversational agents fail.

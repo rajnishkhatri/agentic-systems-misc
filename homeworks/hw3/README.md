@@ -1,5 +1,9 @@
 # Homework 3: LLM-as-Judge for Recipe Bot Evaluation
 
+**📚 [Tutorial Index](TUTORIAL_INDEX.md)** - Comprehensive tutorials, learning paths, and resources for this assignment
+
+---
+
 ## Your Core Task: Evaluate "Adherence to Dietary Preferences" for the Recipe Bot
 
 **Example**: If a user asks for a "vegan" recipe, does the bot provide one that is actually vegan?

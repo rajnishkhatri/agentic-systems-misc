@@ -1,6 +1,10 @@
 
 ## Homework Assignment 1: Write a Starting Prompt
 
+**📚 [Tutorial Index](TUTORIAL_INDEX.md)** - Comprehensive tutorials, learning paths, and resources for this assignment
+
+---
+
 Your main task is to get the repo to a starting point for Lesson 2.
 
 1.  **Write an Effective System Prompt**:

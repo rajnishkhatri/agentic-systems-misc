@@ -1,5 +1,9 @@
 # Homework 4: Recipe Bot Retrieval Evaluation
 
+**📚 [Tutorial Index](TUTORIAL_INDEX.md)** - Comprehensive tutorials, learning paths, and resources for this assignment
+
+---
+
 ## Dataset
 
 This assignment uses recipe data from [Majumder et al. (2019)](https://aclanthology.org/D19-1613/) - "Generating Personalized Recipes from Historical User Preferences" (EMNLP-IJCNLP 2019). The dataset contains 180K+ recipes from Food.com with detailed ingredients, instructions, and user interactions.

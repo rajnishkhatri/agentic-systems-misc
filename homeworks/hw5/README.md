@@ -1,5 +1,9 @@
 # Homework 5 – Failure Transition Heat-Map
 
+**📚 [Tutorial Index](TUTORIAL_INDEX.md)** - Comprehensive tutorials, learning paths, and resources for this assignment
+
+---
+
 ## Overview
 Your cooking-assistant agent sometimes drops the spatula.  Every
 conversation trace in this assignment contains **one failure**.  Your job is

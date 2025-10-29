@@ -292,6 +292,68 @@ def test_should_handle_missing_total_time() -> None:
 - **Test Coverage**: Aim for 90%+ coverage
 - **Documentation**: Keep CLAUDE.md updated with project patterns
 
+## Tutorial Workflow
+
+### Using the Tutorial System
+
+This project includes comprehensive tutorials for systematic AI evaluation learning. Each homework and lesson has a `TUTORIAL_INDEX.md` file with:
+
+- **Learning objectives** and prerequisites
+- **Recommended learning paths** with step-by-step guidance
+- **Links to concept tutorials**, interactive notebooks, and visual diagrams
+- **Common pitfalls** and troubleshooting
+- **FAQs** and real-world applications
+
+### Tutorial Navigation
+
+**Homework Tutorials:**
+- [HW1: Prompt Engineering](homeworks/hw1/TUTORIAL_INDEX.md)
+- [HW2: Error Analysis](homeworks/hw2/TUTORIAL_INDEX.md)
+- [HW3: LLM-as-Judge](homeworks/hw3/TUTORIAL_INDEX.md)
+- [HW4: RAG Evaluation](homeworks/hw4/TUTORIAL_INDEX.md)
+- [HW5: Agent Failure Analysis](homeworks/hw5/TUTORIAL_INDEX.md)
+
+**Lesson Tutorials:**
+- [Lesson 4: Substantiation Evaluation](lesson-4/TUTORIAL_INDEX.md)
+- [Lesson 7: Trace Inspection](lesson-7/TUTORIAL_INDEX.md)
+- [Lesson 8: Model Cascades](lesson-8/TUTORIAL_INDEX.md)
+
+### Tutorial Development Workflow
+
+When creating or updating tutorials:
+
+1. **Start with TUTORIAL_INDEX.md** - Navigation hub for all tutorials in a directory
+2. **Write concept tutorials (.md)** - Theory and methodology explanations
+3. **Create interactive notebooks (.ipynb)** - Hands-on exercises with live code
+4. **Design visual diagrams (.mmd)** - Mermaid diagrams for workflow/architecture visualization
+5. **Cross-link tutorials** - Ensure students can navigate between related topics
+6. **Update TUTORIAL_CHANGELOG.md** - Track when tutorials need updates after code changes
+
+### Tutorial Quality Standards
+
+- **Reading time:** 15-30 minutes per tutorial
+- **Execution time:** <5 minutes for notebooks (or provide "Quick Run" option)
+- **Diagrams:** Understandable without reading code
+- **Examples:** Use real course datasets, not toy data
+- **Maintenance:** Use relative paths for stability
+
+### Tutorial Types
+
+1. **Concept Tutorials (.md)**
+   - Explain theory and methodology
+   - Target: 15-25 minute reading time
+   - Include practical exercises at the end
+
+2. **Interactive Notebooks (.ipynb)**
+   - Hands-on implementation with live code
+   - Include setup cells, cost warnings, validation assertions
+   - Target: Execute in <5 minutes
+
+3. **Visual Diagrams (.mmd / .png)**
+   - Mermaid syntax for GitHub rendering
+   - Export to PNG for complex diagrams (>10 nodes)
+   - Show workflow, architecture, or decision trees
+
 ## Working with GitHub
 
 This project uses GitHub Issues and Project Boards for task management:

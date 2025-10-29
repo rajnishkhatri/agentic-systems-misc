@@ -140,6 +140,29 @@ Configure your `.env` file with:
 
 See [LiteLLM docs](https://docs.litellm.ai/docs/providers) for supported providers.
 
+## Tutorials
+
+📚 **Comprehensive tutorial system available!** Each homework and lesson now includes detailed tutorials, interactive notebooks, and visual diagrams.
+
+### Homework Tutorials
+- **[HW1: Prompt Engineering](homeworks/hw1/TUTORIAL_INDEX.md)** - System prompts and query diversity
+- **[HW2: Error Analysis](homeworks/hw2/TUTORIAL_INDEX.md)** - Open/axial coding, failure taxonomies
+- **[HW3: LLM-as-Judge](homeworks/hw3/TUTORIAL_INDEX.md)** - Automated evaluation with bias correction
+- **[HW4: RAG Evaluation](homeworks/hw4/TUTORIAL_INDEX.md)** - BM25 retrieval and synthetic queries
+- **[HW5: Agent Failure Analysis](homeworks/hw5/TUTORIAL_INDEX.md)** - Transition matrices and heatmaps
+
+### Lesson Tutorials
+- **[Lesson 4: Substantiation Evaluation](lesson-4/TUTORIAL_INDEX.md)** - Detecting unsubstantiated claims
+- **[Lesson 7: Trace Inspection](lesson-7/TUTORIAL_INDEX.md)** - Manual annotation workflows
+- **[Lesson 8: Model Cascades](lesson-8/TUTORIAL_INDEX.md)** - Cost optimization with confidence routing
+
+Each tutorial index includes:
+- ✅ Learning objectives and prerequisites
+- ✅ Recommended learning paths
+- ✅ Interactive notebooks and visualizations
+- ✅ Common pitfalls and FAQs
+- ✅ Real-world applications
+
 ## Course Philosophy
 
 This course emphasizes:
