@@ -1,0 +1,76 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#e8f5e9', 'primaryTextColor': '#000', 'primaryBorderColor': '#43a047', 'lineColor': '#43a047', 'secondaryColor': '#ffebee', 'tertiaryColor': '#fff3e0'}}}%%
+
+flowchart TD
+    Start([User Query]) --> Parse
+
+    %% Success Path (Green)
+    Parse[ParseRequest<br/>LLM: Parse user query]
+    Plan[PlanToolCalls<br/>LLM: Decide tools]
+    GenCust[GenCustomerArgs<br/>LLM: Customer query args]
+    GetCust[GetCustomerProfile<br/>TOOL: Fetch profile]
+    GenRec[GenRecipeArgs<br/>LLM: Recipe search args]
+    GetRec[GetRecipes<br/>TOOL: Search recipes]
+    GenWeb[GenWebArgs<br/>LLM: Web search args]
+    GetWeb[GetWebInfo<br/>TOOL: Web search]
+    Compose[ComposeResponse<br/>LLM: Draft answer]
+    Deliver[DeliverResponse<br/>SYSTEM: Send to user]
+
+    %% Normal Success Flow
+    Parse -->|✓| Plan
+    Plan -->|✓| GenCust
+    GenCust -->|✓| GetCust
+    GetCust -->|✓| GenRec
+    GenRec -->|✓| GetRec
+    GetRec -->|✓| GenWeb
+    GenWeb -->|✓| GetWeb
+    GetWeb -->|✓| Compose
+    Compose -->|✓| Deliver
+    Deliver --> End
+
+    End([Response Delivered])
+
+    %% Failure Paths with Frequencies
+    Parse -.->|Fail: 5| FailParse[❌ Parse Failure<br/>Unable to understand query]
+    Plan -.->|Fail: 3| FailPlan[❌ Plan Failure<br/>No valid tool selection]
+    GenCust -.->|Fail: 2| FailGenCust[❌ Arg Gen Failure<br/>Invalid customer args]
+    GetCust -.->|Fail: 4| FailGetCust[❌ Tool Failure<br/>Customer not found]
+    GenRec -.->|Fail: 8| FailGenRec[❌ Arg Gen Failure<br/>Invalid recipe args]
+    GetRec -.->|Fail: 35| FailGetRec[❌ Tool Failure<br/>Empty recipe results]
+    GenWeb -.->|Fail: 3| FailGenWeb[❌ Arg Gen Failure<br/>Invalid web args]
+    GetWeb -.->|Fail: 6| FailGetWeb[❌ Tool Failure<br/>Web search error]
+    Compose -.->|Fail: 12| FailCompose[❌ Compose Failure<br/>Insufficient context]
+
+    %% Transition Analysis Annotations
+    FailParse -.-> Analysis1[Last Success: Start<br/>First Failure: ParseRequest]
+    FailGetRec -.-> Analysis2[<b>BOTTLENECK</b><br/>Last Success: GenRecipeArgs<br/>First Failure: GetRecipes<br/>Frequency: 35/100 traces]
+    FailCompose -.-> Analysis3[Last Success: GetWebInfo<br/>First Failure: ComposeResponse]
+
+    %% Legend
+    subgraph Legend["Legend"]
+        LegendSuccess[Success Path ✓]
+        LegendFail[Failure Path ✗]
+        LegendLLM[LLM State]
+        LegendTool[Tool State]
+        LegendSystem[System State]
+    end
+
+    %% Styling
+    classDef successClass fill:#e8f5e9,stroke:#43a047,stroke-width:2px,color:#000
+    classDef failureClass fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#000
+    classDef llmClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+    classDef toolClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000
+    classDef systemClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
+    classDef analysisClass fill:#fff9c4,stroke:#f9a825,stroke-width:2px,color:#000
+    classDef legendClass fill:#fafafa,stroke:#616161,stroke-width:1px,color:#000
+
+    %% Apply Styles by State Type
+    class Parse,Plan,GenCust,GenRec,GenWeb,Compose llmClass
+    class GetCust,GetRec,GetWeb toolClass
+    class Deliver systemClass
+    class FailParse,FailPlan,FailGenCust,FailGetCust,FailGenRec,FailGetRec,FailGenWeb,FailGetWeb,FailCompose failureClass
+    class Analysis1,Analysis2,Analysis3 analysisClass
+    class LegendSuccess successClass
+    class LegendFail failureClass
+    class LegendLLM llmClass
+    class LegendTool toolClass
+    class LegendSystem systemClass

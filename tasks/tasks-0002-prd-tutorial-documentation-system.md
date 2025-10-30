@@ -32,9 +32,9 @@
 ## High-Level Tasks
 
 - [x] **1.0 Create Tutorial Infrastructure and Index System** ✅ COMPLETED
-- [ ] **2.0 Develop Homework 1-2 Tutorial Series (Foundations)**
-- [ ] **3.0 Develop Homework 3-4 Tutorial Series (Advanced Evaluation)**
-- [ ] **4.0 Develop Homework 5 and Lesson Tutorials (Specialized Topics)**
+- [x] **2.0 Develop Homework 1-2 Tutorial Series (Foundations)** ✅ COMPLETED
+- [ ] **3.0 Develop Homework 3-4 Tutorial Series (Advanced Evaluation)** [9/10 subtasks completed]
+- [x] **4.0 Develop Homework 5 and Lesson Tutorials (Specialized Topics)** ✅ COMPLETED
 - [ ] **5.0 Create Visual Diagrams and Interactive Notebooks**
 - [ ] **6.0 Review, Test, and Document Tutorial System**
 
@@ -61,45 +61,51 @@
 - `homeworks/hw2/dimension_generation_tutorial.ipynb` - Interactive dimension/tuple generation
 - `homeworks/hw2/failure_mode_taxonomy_tutorial.md` - Building failure taxonomies
 
-### Homework 3 Tutorials (New)
-- `homeworks/hw3/llm_judge_concepts.md` - LLM-as-Judge paradigm overview
-- `homeworks/hw3/data_labeling_tutorial.ipynb` - Ground truth creation workflow
-- `homeworks/hw3/judge_development_tutorial.ipynb` - Judge prompt engineering
-- `homeworks/hw3/bias_correction_tutorial.md` - Statistical correction with judgy
+### Homework 3 Tutorials (Created)
+- `homeworks/hw3/llm_judge_concepts.md` - LLM-as-Judge paradigm overview ✅ COMPLETED
+- `homeworks/hw3/data_labeling_tutorial.ipynb` - Ground truth creation workflow ✅ COMPLETED
+- `homeworks/hw3/judge_development_tutorial.ipynb` - Judge prompt engineering ✅ COMPLETED
+- `homeworks/hw3/bias_correction_tutorial.md` - Statistical correction with judgy ✅ COMPLETED
+- `homeworks/hw3/diagrams/judge_evaluation_flow.mmd` - Complete judge pipeline visualization ✅ COMPLETED
 
-### Homework 4 Tutorials (New)
-- `homeworks/hw4/rag_evaluation_concepts.md` - RAG architecture and evaluation
-- `homeworks/hw4/synthetic_query_generation_tutorial.ipynb` - Query generation strategies
-- `homeworks/hw4/retrieval_metrics_tutorial.md` - Recall@k and MRR explained
-- `homeworks/hw4/query_rewrite_agent_tutorial.ipynb` - Agent-enhanced retrieval (optional)
+### Homework 4 Tutorials (Created)
+- `homeworks/hw4/rag_evaluation_concepts.md` - RAG architecture and evaluation ✅ COMPLETED
+- `homeworks/hw4/synthetic_query_generation_tutorial.ipynb` - Query generation strategies ✅ COMPLETED
+- `homeworks/hw4/retrieval_metrics_tutorial.md` - Recall@k and MRR explained ✅ COMPLETED
+- `homeworks/hw4/diagrams/rag_architecture.mmd` - RAG pipeline visualization ✅ COMPLETED
+- `homeworks/hw4/query_rewrite_agent_tutorial.ipynb` - Agent-enhanced retrieval (optional) ⏸️ DEFERRED
 
-### Homework 5 Tutorials (New)
-- `homeworks/hw5/transition_analysis_concepts.md` - Failure transition matrices
-- `homeworks/hw5/heatmap_visualization_tutorial.ipynb` - Matrix visualization
+### Homework 5 Tutorials (Created)
+- `homeworks/hw5/transition_analysis_concepts.md` - Failure transition matrices and state-based modeling ✅ COMPLETED
+- `homeworks/hw5/heatmap_visualization_tutorial.ipynb` - Interactive matrix construction and visualization ✅ COMPLETED
+- `homeworks/hw5/diagrams/transition_matrix_concept.mmd` - 10-state recipe bot pipeline with success/failure paths ✅ COMPLETED
 
-### Lesson 4 Tutorials (New)
-- `lesson-4/substantiation_concepts.md` - Substantiation vs hallucination
-- `lesson-4/data_preprocessing_tutorial.md` - CSV to JSON conversion patterns
-- `lesson-4/parallel_labeling_tutorial.ipynb` - Parallel LLM processing
-- `lesson-4/judge_evaluation_pipeline_tutorial.ipynb` - End-to-end evaluation
+### Lesson 4 Tutorials (Created)
+- `lesson-4/substantiation_concepts.md` - Substantiation vs hallucination, tool grounding concepts ✅ COMPLETED
+- `lesson-4/data_preprocessing_tutorial.md` - CSV to JSON conversion patterns with error handling ✅ COMPLETED
+- `lesson-4/parallel_labeling_tutorial.ipynb` - ThreadPoolExecutor with 64 workers for parallel LLM labeling ✅ COMPLETED
+- `lesson-4/judge_evaluation_pipeline_tutorial.ipynb` - End-to-end evaluation with hash-based splitting ✅ COMPLETED
+- `lesson-4/diagrams/substantiation_pipeline.mmd` - 3-stage pipeline (Clean → Label → Evaluate) ✅ COMPLETED
 
-### Lesson 7 Tutorials (New)
-- `lesson-7/trace_inspection_concepts.md` - Manual inspection methodologies
-- `lesson-7/csv_conversion_tutorial.md` - JSON to CSV transformation
-- `lesson-7/labeling_tool_tutorial.md` - Building annotation interfaces (if applicable)
+### Lesson 7 Tutorials (Created)
+- `lesson-7/trace_inspection_concepts.md` - Manual vs automated evaluation methodologies ✅ COMPLETED
+- `lesson-7/csv_conversion_tutorial.md` - JSON to spreadsheet conversion with role prefixes ✅ COMPLETED
+- `lesson-7/labeling_tool_tutorial.md` - FastAPI web annotation interface with keyboard shortcuts ✅ COMPLETED
+- `lesson-7/diagrams/annotation_workflow.mmd` - Export → Convert → Annotate → Analyze workflow ✅ COMPLETED
 
-### Lesson 8 Tutorials (New)
-- `lesson-8/model_cascade_concepts.md` - Cascade architecture patterns
-- `lesson-8/spam_classification_tutorial.ipynb` - Binary classification cascade
+### Lesson 8 Tutorials (Created)
+- `lesson-8/model_cascade_concepts.md` - Cascade architecture, logprobs, cost-accuracy trade-offs ✅ COMPLETED
+- `lesson-8/spam_classification_tutorial.ipynb` - SMS spam classification with threshold optimization ✅ COMPLETED
+- `lesson-8/diagrams/cascade_decision_tree.mmd` - Routing logic with confidence-based decisions ✅ COMPLETED
 
-### Diagram Files (New)
-- `homeworks/hw2/diagrams/error_analysis_pipeline.mmd` - Error analysis workflow
-- `homeworks/hw3/diagrams/judge_evaluation_flow.mmd` - Judge development pipeline
-- `homeworks/hw4/diagrams/rag_architecture.mmd` - RAG system architecture
-- `homeworks/hw5/diagrams/transition_matrix_concept.mmd` - State transition visualization
-- `lesson-4/diagrams/substantiation_pipeline.mmd` - Substantiation evaluation flow
-- `lesson-7/diagrams/annotation_workflow.mmd` - Inspection interface workflow
-- `lesson-8/diagrams/cascade_decision_tree.mmd` - Model cascade routing
+### Diagram Files (Created)
+- `homeworks/hw2/diagrams/error_analysis_pipeline.mmd` - Error analysis workflow ✅ COMPLETED
+- `homeworks/hw3/diagrams/judge_evaluation_flow.mmd` - Judge development pipeline ✅ COMPLETED
+- `homeworks/hw4/diagrams/rag_architecture.mmd` - RAG system architecture ✅ COMPLETED
+- `homeworks/hw5/diagrams/transition_matrix_concept.mmd` - State transition visualization ✅ COMPLETED
+- `lesson-4/diagrams/substantiation_pipeline.mmd` - Substantiation evaluation flow ✅ COMPLETED
+- `lesson-7/diagrams/annotation_workflow.mmd` - Inspection interface workflow ✅ COMPLETED
+- `lesson-8/diagrams/cascade_decision_tree.mmd` - Model cascade routing ✅ COMPLETED
 
 ### Existing Files to Update
 - `README.md` - Add "Tutorials" section linking to all tutorial indices
@@ -144,34 +150,34 @@
   - [x] 2.5 Write `homeworks/hw2/failure_mode_taxonomy_tutorial.md` (taxonomy building, definition writing, examples)
   - [x] 2.6 Create Mermaid diagram `homeworks/hw2/diagrams/error_analysis_pipeline.mmd` (dimension → tuples → queries → analysis flow)
 
-- [ ] **3.0 Develop Homework 3-4 Tutorial Series (Advanced Evaluation)**
-  - [ ] 3.1 Write `homeworks/hw3/llm_judge_concepts.md` (LLM-as-Judge paradigm, when to use, bias considerations)
-  - [ ] 3.2 Create `homeworks/hw3/data_labeling_tutorial.ipynb` (ground truth creation, train/dev/test splits, labeling strategies)
-  - [ ] 3.3 Create `homeworks/hw3/judge_development_tutorial.ipynb` (prompt engineering, few-shot selection, structured output with Pydantic)
-  - [ ] 3.4 Write `homeworks/hw3/bias_correction_tutorial.md` (TPR/TNR calculation, judgy library usage, confidence intervals)
-  - [ ] 3.5 Create Mermaid diagram `homeworks/hw3/diagrams/judge_evaluation_flow.mmd` (labeling → splitting → judge development → evaluation pipeline)
-  - [ ] 3.6 Write `homeworks/hw4/rag_evaluation_concepts.md` (RAG architecture, BM25 intuition, retrieval vs generation evaluation)
-  - [ ] 3.7 Create `homeworks/hw4/synthetic_query_generation_tutorial.ipynb` (salient fact extraction, parallel processing, quality review)
-  - [ ] 3.8 Write `homeworks/hw4/retrieval_metrics_tutorial.md` (Recall@k, MRR interpretation, baselines, use cases)
-  - [ ] 3.9 Create `homeworks/hw4/query_rewrite_agent_tutorial.ipynb` (optional: agent-enhanced retrieval, strategy comparison)
-  - [ ] 3.10 Create Mermaid diagram `homeworks/hw4/diagrams/rag_architecture.mmd` (query → retrieval → generation → evaluation flow)
+- [ ] **3.0 Develop Homework 3-4 Tutorial Series (Advanced Evaluation)** [9/10 subtasks completed]
+  - [x] 3.1 Write `homeworks/hw3/llm_judge_concepts.md` (LLM-as-Judge paradigm, when to use, bias considerations)
+  - [x] 3.2 Create `homeworks/hw3/data_labeling_tutorial.ipynb` (ground truth creation, train/dev/test splits, labeling strategies)
+  - [x] 3.3 Create `homeworks/hw3/judge_development_tutorial.ipynb` (prompt engineering, few-shot selection, structured output with Pydantic)
+  - [x] 3.4 Write `homeworks/hw3/bias_correction_tutorial.md` (TPR/TNR calculation, judgy library usage, confidence intervals)
+  - [x] 3.5 Create Mermaid diagram `homeworks/hw3/diagrams/judge_evaluation_flow.mmd` (labeling → splitting → judge development → evaluation pipeline)
+  - [x] 3.6 Write `homeworks/hw4/rag_evaluation_concepts.md` (RAG architecture, BM25 intuition, retrieval vs generation evaluation)
+  - [x] 3.7 Create `homeworks/hw4/synthetic_query_generation_tutorial.ipynb` (salient fact extraction, parallel processing, quality review)
+  - [x] 3.8 Write `homeworks/hw4/retrieval_metrics_tutorial.md` (Recall@k, MRR interpretation, baselines, use cases)
+  - [ ] 3.9 Create `homeworks/hw4/query_rewrite_agent_tutorial.ipynb` (optional: agent-enhanced retrieval, strategy comparison) ⏸️ DEFERRED - Optional advanced tutorial, deferred to maintain quality within token constraints
+  - [x] 3.10 Create Mermaid diagram `homeworks/hw4/diagrams/rag_architecture.mmd` (query → retrieval → generation → evaluation flow)
 
-- [ ] **4.0 Develop Homework 5 and Lesson Tutorials (Specialized Topics)**
-  - [ ] 4.1 Write `homeworks/hw5/transition_analysis_concepts.md` (state-based modeling, transition matrices, bottleneck identification)
-  - [ ] 4.2 Create `homeworks/hw5/heatmap_visualization_tutorial.ipynb` (data loading, matrix construction, seaborn visualization, interpretation)
-  - [ ] 4.3 Create Mermaid diagram `homeworks/hw5/diagrams/transition_matrix_concept.mmd` (state transitions with success/failure paths)
-  - [ ] 4.4 Write `lesson-4/substantiation_concepts.md` (substantiation definition, tool grounding, verifiability criteria)
-  - [ ] 4.5 Write `lesson-4/data_preprocessing_tutorial.md` (CSV to JSON conversion, handling malformed data, incremental processing)
-  - [ ] 4.6 Create `lesson-4/parallel_labeling_tutorial.ipynb` (ThreadPoolExecutor patterns, rate limiting, progress tracking, cost optimization)
-  - [ ] 4.7 Create `lesson-4/judge_evaluation_pipeline_tutorial.ipynb` (end-to-end workflow, dataset splitting, metric reporting)
-  - [ ] 4.8 Create Mermaid diagram `lesson-4/diagrams/substantiation_pipeline.mmd` (clean logs → label → split → judge → metrics)
-  - [ ] 4.9 Write `lesson-7/trace_inspection_concepts.md` (manual vs automated evaluation, when human review is necessary)
-  - [ ] 4.10 Write `lesson-7/csv_conversion_tutorial.md` (JSON to CSV transformation, formatting for readability, handling nested data)
-  - [ ] 4.11 Write `lesson-7/labeling_tool_tutorial.md` (annotation UI design, if web interface is built)
-  - [ ] 4.12 Create Mermaid diagram `lesson-7/diagrams/annotation_workflow.mmd` (trace export → conversion → annotation → analysis)
-  - [ ] 4.13 Write `lesson-8/model_cascade_concepts.md` (cascade architecture, cost-accuracy trade-offs, routing strategies)
-  - [ ] 4.14 Create `lesson-8/spam_classification_tutorial.ipynb` (binary classification, logprob confidence, cascade implementation, cost analysis)
-  - [ ] 4.15 Create Mermaid diagram `lesson-8/diagrams/cascade_decision_tree.mmd` (routing logic based on confidence thresholds)
+- [x] **4.0 Develop Homework 5 and Lesson Tutorials (Specialized Topics)** ✅ COMPLETED
+  - [x] 4.1 Write `homeworks/hw5/transition_analysis_concepts.md` (state-based modeling, transition matrices, bottleneck identification)
+  - [x] 4.2 Create `homeworks/hw5/heatmap_visualization_tutorial.ipynb` (data loading, matrix construction, seaborn visualization, interpretation)
+  - [x] 4.3 Create Mermaid diagram `homeworks/hw5/diagrams/transition_matrix_concept.mmd` (state transitions with success/failure paths)
+  - [x] 4.4 Write `lesson-4/substantiation_concepts.md` (substantiation definition, tool grounding, verifiability criteria)
+  - [x] 4.5 Write `lesson-4/data_preprocessing_tutorial.md` (CSV to JSON conversion, handling malformed data, incremental processing)
+  - [x] 4.6 Create `lesson-4/parallel_labeling_tutorial.ipynb` (ThreadPoolExecutor patterns, rate limiting, progress tracking, cost optimization)
+  - [x] 4.7 Create `lesson-4/judge_evaluation_pipeline_tutorial.ipynb` (end-to-end workflow, dataset splitting, metric reporting)
+  - [x] 4.8 Create Mermaid diagram `lesson-4/diagrams/substantiation_pipeline.mmd` (clean logs → label → split → judge → metrics)
+  - [x] 4.9 Write `lesson-7/trace_inspection_concepts.md` (manual vs automated evaluation, when human review is necessary)
+  - [x] 4.10 Write `lesson-7/csv_conversion_tutorial.md` (JSON to CSV transformation, formatting for readability, handling nested data)
+  - [x] 4.11 Write `lesson-7/labeling_tool_tutorial.md` (annotation UI design, if web interface is built)
+  - [x] 4.12 Create Mermaid diagram `lesson-7/diagrams/annotation_workflow.mmd` (trace export → conversion → annotation → analysis)
+  - [x] 4.13 Write `lesson-8/model_cascade_concepts.md` (cascade architecture, cost-accuracy trade-offs, routing strategies)
+  - [x] 4.14 Create `lesson-8/spam_classification_tutorial.ipynb` (binary classification, logprob confidence, cascade implementation, cost analysis)
+  - [x] 4.15 Create Mermaid diagram `lesson-8/diagrams/cascade_decision_tree.mmd` (routing logic based on confidence thresholds)
 
 - [ ] **5.0 Create Visual Diagrams and Interactive Notebooks**
   - [ ] 5.1 Export all Mermaid diagrams (.mmd files) to high-resolution PNGs for complex diagrams (>10 nodes)

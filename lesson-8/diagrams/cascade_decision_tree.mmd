@@ -1,0 +1,69 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#fff3e0', 'primaryTextColor': '#000', 'primaryBorderColor': '#f57c00', 'lineColor': '#f57c00', 'secondaryColor': '#e8f5e9', 'tertiaryColor': '#e3f2fd'}}}%%
+
+flowchart TD
+    Start([User Query / SMS Message]) --> ProxyModel
+
+    %% Proxy Model Processing
+    ProxyModel[Proxy Model: GPT-4o-mini<br/>Cost: $0.15 per 1M tokens<br/>Response time: ~800ms]
+    ProxyModel --> ExtractLogprobs
+
+    %% Extract Confidence
+    ExtractLogprobs[Extract Log Probabilities<br/>logprobs for True/False tokens]
+    ExtractLogprobs --> CalcConfidence[Calculate Confidence<br/>P_normalized = exp(logprob) / sum(exp(logprobs))]
+
+    %% Get Prediction and Confidence
+    CalcConfidence --> GetPrediction[Get Proxy Prediction & Confidence<br/>prediction: 0 or 1<br/>confidence: 0.0 - 1.0]
+
+    %% Threshold Decision
+    GetPrediction --> ThresholdCheck{Confidence ≥ Threshold?<br/>Class 0: threshold_0<br/>Class 1: threshold_1}
+
+    %% High Confidence Path
+    ThresholdCheck -->|Yes: High Confidence| UseProxy[✓ Use Proxy Prediction<br/>Return proxy result<br/>Cost: ~$0.000015 per query]
+    UseProxy --> End1([Final Prediction<br/>Status: PROXY TERMINATED])
+
+    %% Low Confidence Path
+    ThresholdCheck -->|No: Low Confidence| EscalateOracle[⚠️ Escalate to Oracle<br/>Proxy uncertain, need expert model]
+
+    %% Oracle Model Processing
+    EscalateOracle --> OracleModel[Oracle Model: GPT-4o<br/>Cost: $2.50 per 1M tokens<br/>Response time: ~2000ms]
+    OracleModel --> OraclePrediction[Get Oracle Prediction<br/>Higher accuracy, authoritative]
+
+    OraclePrediction --> End2([Final Prediction<br/>Status: ORACLE USED<br/>Cost: ~$0.000250 per query])
+
+    %% Cost Tracking
+    End1 --> CostTracking[/Cost Tracking/]
+    End2 --> CostTracking
+
+    CostTracking --> Metrics{Cascade Metrics}
+
+    Metrics --> Accuracy[Accuracy<br/>≥ Target 99%]
+    Metrics --> Cost[Total Cost<br/>Proxy + Oracle usage]
+    Metrics --> Routing[Routing Distribution<br/>% Proxy vs. % Oracle]
+
+    %% Threshold Optimization Feedback
+    Routing --> ThresholdOptimization[/Threshold Optimization/]
+    ThresholdOptimization --> TrainPhase[Train Phase:<br/>Find min threshold<br/>where accuracy ≥ target]
+
+    TrainPhase --> UpdateThreshold[Update Thresholds<br/>Per-class optimization]
+    UpdateThreshold -.->|Iterate| GetPrediction
+
+    %% Example Annotations
+    UseProxy -.->|Example| ExampleEasy["Easy case:<br/>'BUY NOW!!!' → 99.9% spam<br/>Proxy confident → Use proxy"]
+    OraclePrediction -.->|Example| ExampleHard["Hard case:<br/>'Reminder: Package delivery' → 60% spam<br/>Proxy uncertain → Use oracle"]
+
+    %% Styling
+    classDef modelClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef processClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef decisionClass fill:#e8f5e9,stroke:#43a047,stroke-width:2px
+    classDef successClass fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    classDef escalateClass fill:#ffccbc,stroke:#e64a19,stroke-width:2px
+    classDef stageClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px,stroke-dasharray: 5 5
+    classDef exampleClass fill:#fff9c4,stroke:#f9a825,stroke-width:1px,stroke-dasharray: 3 3
+
+    class ProxyModel,OracleModel modelClass
+    class ExtractLogprobs,CalcConfidence,GetPrediction,OraclePrediction processClass
+    class ThresholdCheck,Metrics decisionClass
+    class UseProxy successClass
+    class EscalateOracle escalateClass
+    class CostTracking,ThresholdOptimization stageClass
+    class ExampleEasy,ExampleHard exampleClass

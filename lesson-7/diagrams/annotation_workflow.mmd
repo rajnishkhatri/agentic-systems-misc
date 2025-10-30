@@ -1,0 +1,90 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#fff3e0', 'primaryTextColor': '#000', 'primaryBorderColor': '#f57c00', 'lineColor': '#f57c00', 'secondaryColor': '#e8f5e9', 'tertiaryColor': '#e3f2fd'}}}%%
+
+flowchart TD
+    Start([Production Traces / Evaluation Dataset]) --> Decision
+
+    %% Decision Point: Manual or Automated
+    Decision{Manual Inspection<br/>Needed?}
+    Decision -->|Yes| Export
+    Decision -->|No, Use Automated| Automated[Automated Evaluation<br/>LLM-as-Judge / Metrics]
+    Automated --> End
+
+    %% Export Traces
+    Export[/Export Traces/] --> SelectSample
+
+    SelectSample[Sample Selection<br/>Random / Stratified / Targeted]
+    SelectSample --> Convert
+
+    %% Convert to CSV
+    Convert[Convert to CSV<br/>scripts/convert_traces_to_csv.py<br/>Flatten nested JSON]
+    Convert --> CSV[(traces.csv<br/>Spreadsheet-ready format)]
+
+    %% Choose Annotation Method
+    CSV --> ChooseMethod{Annotation<br/>Method?}
+
+    ChooseMethod -->|<50 traces| Spreadsheet
+    ChooseMethod -->|50+ traces| WebTool
+
+    %% Spreadsheet Annotation
+    Spreadsheet[Spreadsheet Annotation<br/>Excel / Google Sheets]
+    Spreadsheet --> AddColumns[Add Columns:<br/>label, notes, confidence]
+    AddColumns --> ManualReview1[Manual Review & Label]
+    ManualReview1 --> Export1[Export Annotated CSV]
+
+    %% Web Tool Annotation
+    WebTool[Web Tool Annotation<br/>labeling-tool/main.py]
+    WebTool --> LaunchServer[Launch FastAPI Server<br/>uvicorn main:app]
+    LaunchServer --> UIReview[Interactive UI Review<br/>Keyboard shortcuts P/F/S]
+    UIReview --> JSONL[(labeled_traces.jsonl<br/>Incremental saves)]
+
+    %% Merge Paths
+    Export1 --> QualityCheck
+    JSONL --> QualityCheck
+
+    %% Quality Control
+    QualityCheck[/Quality Control/] --> IAA
+
+    IAA[Inter-Annotator Agreement<br/>2+ annotators label same 20 traces]
+    IAA --> CalcKappa[Calculate Cohen's κ<br/>κ ≥ 0.80 ideal]
+
+    CalcKappa --> CheckQuality{Agreement<br/>≥ 0.80?}
+
+    CheckQuality -->|No| RefineCriteria[Refine Criteria<br/>Add examples<br/>Clarify edge cases]
+    RefineCriteria --> SelectSample
+
+    CheckQuality -->|Yes| FinalLabels
+
+    %% Finalize Labels
+    FinalLabels[(Final Labeled Dataset<br/>150-200 ground truth labels)]
+
+    %% Integration with Automated Evaluation
+    FinalLabels --> Integration[/Integration with Automation/]
+
+    Integration --> TrainJudge[Train LLM-as-Judge<br/>Use labels for train/dev/test]
+    TrainJudge --> ValidateJudge[Validate Judge<br/>Spot-check 30 predictions]
+
+    ValidateJudge --> ProductionDeploy[Deploy to Production<br/>Apply judge to 1000s of traces]
+
+    ProductionDeploy --> FeedbackLoop{Low-Confidence<br/>Cases?}
+
+    FeedbackLoop -->|Yes| SelectTargeted[Targeted Sampling<br/>Review uncertain cases]
+    SelectTargeted --> ManualReview2[Manual Review]
+    ManualReview2 --> UpdateJudge[Update Judge Prompt<br/>Based on findings]
+    UpdateJudge --> ProductionDeploy
+
+    FeedbackLoop -->|No| End
+
+    End([Continuous Monitoring<br/>Manual + Automated])
+
+    %% Styling
+    classDef dataClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef processClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef decisionClass fill:#e8f5e9,stroke:#43a047,stroke-width:2px
+    classDef stageClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px,stroke-dasharray: 5 5
+    classDef automatedClass fill:#e0f7fa,stroke:#0097a7,stroke-width:2px
+
+    class CSV,JSONL,FinalLabels dataClass
+    class Convert,SelectSample,AddColumns,ManualReview1,LaunchServer,UIReview,CalcKappa,RefineCriteria,TrainJudge,ValidateJudge,ProductionDeploy,ManualReview2,UpdateJudge processClass
+    class Decision,ChooseMethod,CheckQuality,FeedbackLoop decisionClass
+    class Export,QualityCheck,Integration stageClass
+    class Automated automatedClass

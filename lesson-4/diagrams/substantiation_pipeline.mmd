@@ -1,0 +1,83 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#e3f2fd', 'primaryTextColor': '#000', 'primaryBorderColor': '#1976d2', 'lineColor': '#1976d2', 'secondaryColor': '#fff8e1', 'tertiaryColor': '#e8f5e9'}}}%%
+
+flowchart TB
+    Start([Raw Production Logs]) --> Stage1
+
+    %% Stage 1: Data Preprocessing
+    Stage1[/Stage 1: Data Preprocessing/] --> CSV
+    CSV[(nurtureboss_logs.csv<br/>2MB CSV with JSON columns)]
+    CSV --> CleanScript
+
+    CleanScript[clean_logs.py<br/>Parse JSON cells<br/>Extract role + content<br/>Generate IDs]
+    CleanScript --> ValidateClean{Valid<br/>Records?}
+
+    ValidateClean -->|Skip Malformed| CleanScript
+    ValidateClean -->|Yes| CleanJSON
+
+    CleanJSON[(nurtureboss_traces.json<br/>~200 structured conversations)]
+
+    %% Stage 2: Ground Truth Labeling
+    CleanJSON --> Stage2
+    Stage2[/Stage 2: Ground Truth Labeling/] --> LabelScript
+
+    LabelScript[label_substantiation.py<br/>Parallel LLM calls GPT-4o<br/>ThreadPoolExecutor 64 workers<br/>Pydantic structured output]
+
+    LabelScript --> IncrementalCheck{Already<br/>Labeled?}
+    IncrementalCheck -->|Yes, Skip| LabeledJSON
+    IncrementalCheck -->|No| LLMLabel
+
+    LLMLabel[LLM Evaluation<br/>Substantiation prompt<br/>+Tool metadata<br/>→ Boolean + Rationale]
+    LLMLabel --> SaveCheckpoint[Save Checkpoint<br/>Every 50 labels]
+    SaveCheckpoint --> LabeledJSON
+
+    LabeledJSON[(nurtureboss_traces_labeled.json<br/>200 conversations with ground truth)]
+
+    %% Stage 3: Judge Evaluation
+    LabeledJSON --> Stage3
+    Stage3[/Stage 3: Judge Evaluation/] --> Split
+
+    Split[Hash-Based Splitting<br/>Train: 20<br/>Dev: 30<br/>Test: ~150]
+    Split --> FewShot
+
+    FewShot[Select Few-Shot Examples<br/>1 PASS + 1 FAIL from Train]
+    FewShot --> JudgeScript
+
+    JudgeScript[judge_substantiation.py<br/>Evaluate cheaper model<br/> gpt-4o-mini as judge]
+
+    JudgeScript --> TestEval[Run Judge on Test Set<br/>Compare predictions to ground truth]
+    TestEval --> Metrics
+
+    Metrics[Calculate Metrics<br/>TPR True Positive Rate<br/>TNR True Negative Rate<br/>Accuracy]
+
+    Metrics --> CheckQuality{TPR & TNR<br/> ≥ 0.85?}
+
+    CheckQuality -->|No| Refine[Refine Judge Prompt<br/>Add edge case examples<br/>Clarify criteria]
+    Refine --> JudgeScript
+
+    CheckQuality -->|Yes| Production
+
+    %% Production Deployment
+    Production[/Production Deployment/] --> ProdLogs
+    ProdLogs[Apply Judge to<br/>1000s of Production Logs]
+    ProdLogs --> BiasCorrect
+
+    BiasCorrect[Statistical Bias Correction<br/>judgy library<br/>θ̂ = p_obs + TNR - 1 / TPR + TNR - 1]
+    BiasCorrect --> CorrectedRate
+
+    CorrectedRate[Corrected Pass Rate<br/>+ 95% Confidence Interval]
+    CorrectedRate --> End
+
+    End([Substantiation Monitoring<br/>Continuous Quality Control])
+
+    %% Styling
+    classDef dataClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef processClass fill:#fff8e1,stroke:#f57c00,stroke-width:2px
+    classDef decisionClass fill:#e8f5e9,stroke:#43a047,stroke-width:2px
+    classDef stageClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px,stroke-dasharray: 5 5
+    classDef metricsClass fill:#fff3e0,stroke:#ff6f00,stroke-width:2px
+
+    class CSV,CleanJSON,LabeledJSON dataClass
+    class CleanScript,LabelScript,LLMLabel,SaveCheckpoint,Split,FewShot,JudgeScript,TestEval,ProdLogs,BiasCorrect processClass
+    class ValidateClean,IncrementalCheck,CheckQuality decisionClass
+    class Stage1,Stage2,Stage3,Production stageClass
+    class Metrics,CorrectedRate metricsClass
