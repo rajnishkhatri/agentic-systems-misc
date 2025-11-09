@@ -1,0 +1,71 @@
+```mermaid
+flowchart TD
+    Start([What kind of task<br/>are you evaluating?]) --> TaskType{Task Type?}
+
+    TaskType -->|Code generation<br/>API calls| FuncCorrect[Use FUNCTIONAL CORRECTNESS<br/>Run unit tests, check execution]
+    TaskType -->|Structured output<br/>dates, IDs, labels| Structured{Multiple<br/>formats?}
+    TaskType -->|Factoid QA<br/>short answers| FactoidQA{Single<br/>format?}
+    TaskType -->|Translation<br/>Summarization| TransSum{Multiple<br/>references?}
+    TaskType -->|Open-ended QA<br/>Chatbot| OpenEnded[Use SEMANTIC SIMILARITY<br/>Embeddings + cosine similarity]
+    TaskType -->|Recipe generation| RecipeType{Evaluating<br/>what?}
+    TaskType -->|Creative writing| Creative[Use AI-AS-JUDGE<br/>or HUMAN EVALUATION]
+
+    Structured -->|Yes| FuzzyOrSem[Use FUZZY MATCH<br/>or SEMANTIC SIMILARITY]
+    Structured -->|No| ExactMatch[Use EXACT MATCH<br/>with normalization]
+
+    FactoidQA -->|Yes| ExactMatch2[Use EXACT MATCH<br/>with normalization]
+    FactoidQA -->|No| FuzzyOrSem2[Use FUZZY MATCH<br/>or SEMANTIC SIMILARITY]
+
+    TransSum -->|Yes| BLEU[Use BLEU or ROUGE<br/>N-gram overlap metrics]
+    TransSum -->|No| BERTScore[Use SEMANTIC SIMILARITY<br/>or BERTScore]
+
+    RecipeType -->|Ingredient lists| FuzzyIngred[Use FUZZY MATCH<br/>Handles typos]
+    RecipeType -->|Full recipe| SemanticJudge[Use SEMANTIC SIMILARITY<br/>+ AI-AS-JUDGE<br/>safety, dietary adherence]
+
+    %% Styling
+    classDef startNode fill:#e3f2fd,stroke:#1976d2,stroke-width:3px,color:#000
+    classDef decisionNode fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000
+    classDef methodNode fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000
+    classDef warningNode fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#000
+
+    class Start startNode
+    class TaskType,Structured,FactoidQA,TransSum,RecipeType decisionNode
+    class FuncCorrect,ExactMatch,FuzzyOrSem,ExactMatch2,FuzzyOrSem2,BLEU,BERTScore,OpenEnded,FuzzyIngred,SemanticJudge methodNode
+    class Creative warningNode
+```
+
+## Decision Tree Explanation
+
+This flowchart helps you choose the appropriate evaluation method based on your task characteristics.
+
+### Key Decision Points:
+
+1. **Task Type:** What is the fundamental nature of your evaluation task?
+2. **Format Constraints:** Are outputs structured or open-ended?
+3. **Reference Availability:** Do you have single or multiple reference answers?
+4. **Domain-Specific Needs:** Recipe generation has unique requirements
+
+### Method Quick Reference:
+
+| Method | Best For | Pros | Cons |
+|--------|----------|------|------|
+| **Functional Correctness** | Code, APIs | Objective, tests actual purpose | Requires execution environment |
+| **Exact Match** | Structured data | Fast, deterministic | Too strict for natural language |
+| **Fuzzy Match** | Typos, variants | Handles minor differences | Threshold tuning required |
+| **BLEU/ROUGE** | Translation, summarization | Industry standard | Ignores semantics |
+| **Semantic Similarity** | Open-ended QA | Captures meaning | API cost, slower |
+| **AI-as-Judge** | Creative, safety | Flexible, multi-dimensional | Expensive, potential bias |
+
+### Common Pitfalls:
+
+❌ **Don't use exact match for natural language** → Too strict
+❌ **Don't use BLEU for open-ended generation** → Ignores paraphrasing
+❌ **Don't use semantic similarity alone for code** → Meaning ≠ correctness
+❌ **Don't use AI-as-judge without validation** → Can be biased
+
+### When in Doubt:
+
+1. Start with the **simplest method** that captures your quality dimension
+2. **Combine multiple metrics** for robustness
+3. **Validate against human judgment** on a sample (100 examples)
+4. **Iterate**: If metric doesn't correlate with quality, try another
