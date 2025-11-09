@@ -48,19 +48,19 @@
 - `backend/ai_judge_framework.py` - Reference implementation: BaseJudge abstraction, DietaryAdherenceJudge, SubstantiationJudge, GenericCriteriaJudge
 - `tests/test_ai_judge_framework.py` - Unit tests for backend/ai_judge_framework.py (>90% coverage)
 
-### Lesson 11: Comparative Evaluation & Leaderboards (13 files)
-- `lesson-11/TUTORIAL_INDEX.md` - Navigation hub for all Lesson 11 tutorials
-- `lesson-11/README.md` - Lesson overview and setup instructions
-- `lesson-11/comparative_evaluation_guide.md` - Concept tutorial: Pointwise vs comparative, rating algorithms, standardization (20-25 min read)
-- `lesson-11/elo_ranking_tutorial.ipynb` - Interactive notebook: Implement Elo algorithm, visualize leaderboard (<5 min, $0 cost)
-- `lesson-11/bradley_terry_ranking_tutorial.ipynb` - Interactive notebook: Implement Bradley-Terry model, compare with Elo (<4 min, $0 cost)
-- `lesson-11/ab_testing_vs_comparative_eval.ipynb` - Interactive notebook: Compare A/B testing vs side-by-side comparison (<3 min, $0 cost)
-- `lesson-11/diagrams/ranking_algorithm_comparison.mmd` - Mermaid flowchart: Elo vs Bradley-Terry decision flowchart
-- `lesson-11/diagrams/comparative_eval_workflow.png` - End-to-end comparative evaluation pipeline visualization
-- `lesson-11/data/pairwise_comparisons.json` - 100 pairwise comparisons of recipe bot responses (query, response_a, response_b, winner, rationale)
-- `lesson-11/scripts/generate_pairwise_comparisons.py` - Script to generate pairwise comparisons using GenericCriteriaJudge
-- `backend/comparative_evaluation.py` - Reference implementation: EloRanking, BradleyTerryRanking, generate_pairwise_comparisons, visualize_leaderboard
-- `tests/test_comparative_evaluation.py` - Unit tests for backend/comparative_evaluation.py (>90% coverage)
+### Lesson 11: Comparative Evaluation & Leaderboards (13 files) ✅ COMPLETE
+- `lesson-11/TUTORIAL_INDEX.md` - Navigation hub for all Lesson 11 tutorials ✅
+- `lesson-11/README.md` - Lesson overview and setup instructions ✅
+- `lesson-11/comparative_evaluation_guide.md` - Concept tutorial: Pointwise vs comparative, rating algorithms, standardization (20-25 min read) ✅
+- `lesson-11/elo_ranking_tutorial.ipynb` - Interactive notebook: Implement Elo algorithm, visualize leaderboard (<5 min, $0 cost) ✅
+- `lesson-11/bradley_terry_ranking_tutorial.ipynb` - Interactive notebook: Implement Bradley-Terry model, compare with Elo (<4 min, $0 cost) ✅
+- `lesson-11/ab_testing_vs_comparative_eval.ipynb` - Interactive notebook: Compare A/B testing vs side-by-side comparison (<3 min, $0 cost) ✅
+- `lesson-11/diagrams/ranking_algorithm_comparison.mmd` - Mermaid flowchart: Elo vs Bradley-Terry decision flowchart ✅
+- `lesson-11/diagrams/comparative_eval_workflow.mmd` - End-to-end comparative evaluation pipeline visualization ✅
+- `lesson-11/data/pairwise_comparisons.json` - 100 pairwise comparisons of recipe bot responses (query, response_a, response_b, winner, rationale) ✅
+- `lesson-11/scripts/generate_pairwise_comparisons.py` - Script to generate pairwise comparisons using GenericCriteriaJudge ✅
+- `backend/comparative_evaluation.py` - Reference implementation: EloRanking, BradleyTerryRanking, generate_pairwise_comparisons, visualize_leaderboard ✅
+- `tests/test_comparative_evaluation.py` - Unit tests for backend/comparative_evaluation.py (45 tests, 97% coverage) ✅
 
 ### Cross-Lesson: Evaluation Dashboard (3 files)
 - `lesson-9-11/evaluation_dashboard.py` - FastHTML + MonsterUI web interface with unified metrics display
@@ -353,19 +353,34 @@
 
 **Total Tasks**: 6 parent tasks
 **Total Sub-Tasks**: 94 atomic sub-tasks
-- Task 1.0: 11 sub-tasks
-- Task 2.0: 15 sub-tasks
-- Task 3.0: 14 sub-tasks
-- Task 4.0: 14 sub-tasks
-- Task 5.0: 15 sub-tasks
-- Task 6.0: 16 sub-tasks (with 9 final validation steps)
+- Task 1.0: 11 sub-tasks ✅ **COMPLETE**
+- Task 2.0: 15 sub-tasks ✅ **COMPLETE**
+- Task 3.0: 14 sub-tasks ✅ **COMPLETE**
+- Task 4.0: 14 sub-tasks ✅ **COMPLETE**
+- Task 5.0: 15 sub-tasks ⏸️ **PENDING**
+- Task 6.0: 16 sub-tasks ⏸️ **PENDING**
 
-**Files to Create**: ~60 files
-**Files to Modify**: ~5 files
-**Test Coverage Target**: >90% for all backend modules
+**Progress**: 54/94 sub-tasks complete (57%)
+
+**Completed Work**:
+- ✅ Infrastructure scaffolding (Task 1.0)
+- ✅ Lesson 9: Evaluation Fundamentals & Exact Methods (Task 2.0)
+  - 3 concept tutorials, 2 notebooks, backend module, 33 tests
+- ✅ Lesson 10: AI-as-Judge Mastery & Production Patterns (Task 3.0)
+  - Production guide, 2 notebooks, 15 judge templates, framework module, 35 tests
+- ✅ Lesson 11: Comparative Evaluation & Leaderboards (Task 4.0)
+  - Comparative guide, 3 notebooks, 2 diagrams, backend module, 45 tests
+
+**Remaining Work**:
+- ⏸️ Task 5.0: Cross-Lesson Evaluation Dashboard (15 sub-tasks)
+- ⏸️ Task 6.0: Integration, Testing & Documentation (16 sub-tasks)
+
+**Files Created**: 52 files
+**Files Modified**: 5 files
+**Test Coverage Achieved**: >90% for all backend modules (exact_evaluation.py: 100%, ai_judge_framework.py: 92%, comparative_evaluation.py: 97%)
+**Total Tests**: 113 tests, 100% passing
 **Notebook Execution Cost**: <$5 (FULL mode), <$1 (DEMO mode)
-**Estimated Duration**: 28 days (4 weeks)
 
 ---
 
-**Status**: ✅ **COMPLETE** - All sub-tasks generated. Ready for execution via `@process-task-list.md`
+**Status**: 🚧 **IN PROGRESS** - Tasks 1.0-4.0 complete. Ready for Task 5.0 (Dashboard).
