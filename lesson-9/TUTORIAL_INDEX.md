@@ -6,7 +6,10 @@ Lesson 9 introduces the **foundational principles of LLM evaluation** and **exac
 
 **Learning Time:** ~3-4 hours
 **Difficulty:** Intermediate
-**Prerequisites:** Completion of HW1-2, basic understanding of probability and information theory
+**Prerequisites:**
+- [HW1: Prompt Engineering](../homeworks/hw1/TUTORIAL_INDEX.md) - Understanding of LLM behavior
+- [HW2: Error Analysis](../homeworks/hw2/TUTORIAL_INDEX.md) - Systematic failure detection
+- Basic understanding of probability and information theory
 
 ---
 

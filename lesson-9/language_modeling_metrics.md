@@ -595,6 +595,15 @@ Perplexity = 2^(Cross-Entropy)
 
 ---
 
+## Related Tutorials
+
+- [Evaluation Fundamentals](evaluation_fundamentals.md) - Why foundation models are hard to evaluate
+- [Exact Evaluation Methods](exact_evaluation_methods.md) - Beyond perplexity: functional correctness and similarity
+- [Perplexity Calculation Tutorial (Notebook)](perplexity_calculation_tutorial.ipynb) - Calculate perplexity, detect data contamination
+- [HW2: Error Analysis](../homeworks/hw2/TUTORIAL_INDEX.md) - Systematic failure detection for LLM applications
+
+---
+
 ## References
 
 1. **Shannon (1948):** "A Mathematical Theory of Communication" (introduced entropy)

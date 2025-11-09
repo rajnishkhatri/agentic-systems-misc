@@ -56,8 +56,10 @@ class TestPerplexityCalculations:
         perplexity = calculate_perplexity(cross_entropy)
 
         # Then: perplexity should be 2^4.5 ≈ 22.627
-        expected = 2 ** 4.5
-        assert abs(perplexity - expected) < 0.001, f"Expected {expected}, got {perplexity}"
+        expected = 2**4.5
+        assert abs(perplexity - expected) < 0.001, (
+            f"Expected {expected}, got {perplexity}"
+        )
 
     def test_should_roundtrip_perplexity_cross_entropy_correctly(self) -> None:
         """Test that converting perplexity → CE → perplexity preserves value."""
@@ -69,8 +71,9 @@ class TestPerplexityCalculations:
         recovered_ppl = calculate_perplexity(ce)
 
         # Then: should recover original value within floating point precision
-        assert abs(recovered_ppl - original_ppl) < 0.01, \
+        assert abs(recovered_ppl - original_ppl) < 0.01, (
             f"Roundtrip failed: {original_ppl} → {ce} → {recovered_ppl}"
+        )
 
     def test_should_raise_error_when_perplexity_is_negative(self) -> None:
         """Test that negative perplexity raises ValueError."""
@@ -152,7 +155,9 @@ class TestNormalizeText:
         normalized = normalize_text(text)
 
         # Then: should be lowercase
-        assert normalized == "hello world", f"Expected 'hello world', got '{normalized}'"
+        assert normalized == "hello world", (
+            f"Expected 'hello world', got '{normalized}'"
+        )
 
     def test_should_remove_punctuation_when_normalizing(self) -> None:
         """Test that normalization removes punctuation."""
@@ -163,7 +168,9 @@ class TestNormalizeText:
         normalized = normalize_text(text)
 
         # Then: punctuation should be removed
-        assert normalized == "hello world", f"Expected 'hello world', got '{normalized}'"
+        assert normalized == "hello world", (
+            f"Expected 'hello world', got '{normalized}'"
+        )
 
     def test_should_collapse_whitespace_when_normalizing(self) -> None:
         """Test that normalization collapses multiple spaces."""
@@ -174,7 +181,9 @@ class TestNormalizeText:
         normalized = normalize_text(text)
 
         # Then: should have single spaces
-        assert normalized == "hello world", f"Expected 'hello world', got '{normalized}'"
+        assert normalized == "hello world", (
+            f"Expected 'hello world', got '{normalized}'"
+        )
 
     def test_should_strip_leading_trailing_whitespace(self) -> None:
         """Test that normalization strips leading/trailing whitespace."""
@@ -185,7 +194,9 @@ class TestNormalizeText:
         normalized = normalize_text(text)
 
         # Then: whitespace should be stripped
-        assert normalized == "hello world", f"Expected 'hello world', got '{normalized}'"
+        assert normalized == "hello world", (
+            f"Expected 'hello world', got '{normalized}'"
+        )
 
 
 class TestFuzzyMatch:
@@ -317,8 +328,10 @@ class TestBLEUScore:
 class TestSemanticSimilarity:
     """Test semantic similarity using embeddings."""
 
-    @patch('backend.exact_evaluation.get_embedding')
-    def test_should_return_high_similarity_when_semantically_similar(self, mock_get_embedding: Mock) -> None:
+    @patch("backend.exact_evaluation.get_embedding")
+    def test_should_return_high_similarity_when_semantically_similar(
+        self, mock_get_embedding: Mock
+    ) -> None:
         """Test semantic similarity with similar meaning."""
         # Given: embeddings for semantically similar texts
         # "The cat sat" and "A feline rested" should be similar
@@ -332,8 +345,10 @@ class TestSemanticSimilarity:
         # Then: should return high similarity (> 0.95)
         assert similarity > 0.95, f"Expected similarity > 0.95, got {similarity}"
 
-    @patch('backend.exact_evaluation.get_embedding')
-    def test_should_return_low_similarity_when_semantically_different(self, mock_get_embedding: Mock) -> None:
+    @patch("backend.exact_evaluation.get_embedding")
+    def test_should_return_low_similarity_when_semantically_different(
+        self, mock_get_embedding: Mock
+    ) -> None:
         """Test semantic similarity with different meaning."""
         # Given: embeddings for semantically different texts
         embedding1 = np.array([1.0, 0.0, 0.0, 0.0, 0.0])
@@ -346,8 +361,10 @@ class TestSemanticSimilarity:
         # Then: should return low similarity (≈ 0.0)
         assert abs(similarity) < 0.1, f"Expected similarity ≈ 0.0, got {similarity}"
 
-    @patch('backend.exact_evaluation.get_embedding')
-    def test_should_return_one_for_identical_embeddings(self, mock_get_embedding: Mock) -> None:
+    @patch("backend.exact_evaluation.get_embedding")
+    def test_should_return_one_for_identical_embeddings(
+        self, mock_get_embedding: Mock
+    ) -> None:
         """Test semantic similarity with identical embeddings."""
         # Given: identical embeddings
         embedding = np.array([0.5, 0.5, 0.5, 0.5, 0.5])
@@ -357,17 +374,21 @@ class TestSemanticSimilarity:
         similarity = semantic_similarity("same text", "same text")
 
         # Then: should return 1.0 (perfect match)
-        assert abs(similarity - 1.0) < 0.001, f"Expected similarity 1.0, got {similarity}"
+        assert abs(similarity - 1.0) < 0.001, (
+            f"Expected similarity 1.0, got {similarity}"
+        )
 
     def test_should_raise_error_when_api_key_missing(self) -> None:
         """Test that missing API key raises appropriate error."""
-        with patch.dict('os.environ', {}, clear=True):
+        with patch.dict("os.environ", {}, clear=True):
             with pytest.raises(ValueError, match="OPENAI_API_KEY"):
                 semantic_similarity("text1", "text2")
 
     def test_should_raise_error_when_embedding_api_fails(self) -> None:
         """Test error handling when OpenAI API fails."""
-        with patch('backend.exact_evaluation.get_embedding', side_effect=Exception("API Error")):
+        with patch(
+            "backend.exact_evaluation.get_embedding", side_effect=Exception("API Error")
+        ):
             with pytest.raises(Exception, match="API Error"):
                 semantic_similarity("text1", "text2")
 
@@ -409,5 +430,6 @@ class TestEdgeCases:
         matches, similarity = fuzzy_match(text1, text2)
 
         # Then: should match with 1.0 similarity
-        assert matches is True and similarity == 1.0, \
+        assert matches is True and similarity == 1.0, (
             "Special characters should be handled in fuzzy matching"
+        )

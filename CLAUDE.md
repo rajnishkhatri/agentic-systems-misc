@@ -317,6 +317,34 @@ This project includes comprehensive tutorials for systematic AI evaluation learn
 - [Lesson 4: Substantiation Evaluation](lesson-4/TUTORIAL_INDEX.md)
 - [Lesson 7: Trace Inspection](lesson-7/TUTORIAL_INDEX.md)
 - [Lesson 8: Model Cascades](lesson-8/TUTORIAL_INDEX.md)
+- [Lesson 9: Evaluation Fundamentals & Exact Methods](lesson-9/TUTORIAL_INDEX.md)
+- [Lesson 10: AI-as-Judge Mastery & Production Patterns](lesson-10/TUTORIAL_INDEX.md)
+- [Lesson 11: Comparative Evaluation & Leaderboards](lesson-11/TUTORIAL_INDEX.md)
+
+**Cross-Lesson Resources:**
+- [Evaluation Dashboard (Lessons 9-11)](lesson-9-11/README.md) - Unified metrics visualization
+- [Tutorial Changelog](TUTORIAL_CHANGELOG.md) - Track tutorial updates after code changes
+
+### Recommended Learning Paths
+
+**Path 1: Foundation → Advanced Evaluation (Lessons 9→10→11)**
+1. Complete Lesson 9 (Evaluation Fundamentals & Exact Methods) - ~3-4 hours
+2. Complete Lesson 10 (AI-as-Judge Mastery) - ~4-5 hours
+3. Complete Lesson 11 (Comparative Evaluation) - ~3-4 hours
+4. Launch Evaluation Dashboard: `python lesson-9-11/evaluation_dashboard.py`
+
+**Path 2: Homework-First Approach**
+1. Complete HW1-2 (Prompt Engineering, Error Analysis)
+2. Complete HW3 (LLM-as-Judge) → Then study Lesson 10 for deeper understanding
+3. Complete HW4 (RAG Evaluation) → Then study Lesson 9 for metric selection
+4. Complete HW5 (Agent Failure Analysis)
+5. Complete Lessons 9-11 for comprehensive evaluation methodology
+
+**Path 3: Quick Start (Dashboard-First)**
+1. Launch dashboard: `python lesson-9-11/evaluation_dashboard.py`
+2. Explore sample metrics from HW3, HW4, Lessons 9-11
+3. Read TUTORIAL_INDEX.md for each lesson to understand metrics
+4. Deep dive into specific tutorials as needed
 
 ### Tutorial Development Workflow
 

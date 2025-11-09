@@ -488,6 +488,16 @@ Evaluating foundation models is hard because:
 
 ---
 
+## Related Tutorials
+
+- [Language Modeling Metrics](language_modeling_metrics.md) - Deep dive into perplexity, cross-entropy, BPC/BPB
+- [Exact Evaluation Methods](exact_evaluation_methods.md) - When to use exact match vs lexical vs semantic similarity
+- [Perplexity Calculation Tutorial (Notebook)](perplexity_calculation_tutorial.ipynb) - Hands-on perplexity calculations
+- [Similarity Measurements Tutorial (Notebook)](similarity_measurements_tutorial.ipynb) - Implement BLEU and semantic similarity
+- [Lesson 10: AI-as-Judge Production Guide](../lesson-10/ai_judge_production_guide.md) - Open-ended evaluation methodology
+
+---
+
 ## References
 
 1. **GLUE Benchmark:** Wang et al. (2018). "GLUE: A Multi-Task Benchmark and Analysis Platform for Natural Language Understanding"

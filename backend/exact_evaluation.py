@@ -19,6 +19,7 @@ from openai import OpenAI
 # Perplexity and Cross-Entropy Calculations
 # ============================================================================
 
+
 def calculate_perplexity(cross_entropy_bits: float) -> float:
     """Calculate perplexity from cross-entropy in bits.
 
@@ -42,7 +43,9 @@ def calculate_perplexity(cross_entropy_bits: float) -> float:
     """
     # Step 1: Type checking
     if not isinstance(cross_entropy_bits, (int, float)):
-        raise TypeError(f"cross_entropy_bits must be a number, got {type(cross_entropy_bits)}")
+        raise TypeError(
+            f"cross_entropy_bits must be a number, got {type(cross_entropy_bits)}"
+        )
 
     # Step 2: Input validation
     if cross_entropy_bits < 0:
@@ -51,7 +54,7 @@ def calculate_perplexity(cross_entropy_bits: float) -> float:
     # Step 3: Edge case handling (none for this function)
 
     # Step 4: Main logic
-    perplexity = 2 ** cross_entropy_bits
+    perplexity = 2**cross_entropy_bits
 
     # Step 5: Return
     return perplexity
@@ -99,6 +102,7 @@ def calculate_cross_entropy(perplexity: float) -> float:
 # Text Normalization
 # ============================================================================
 
+
 def normalize_text(text: str) -> str:
     """Normalize text for comparison: lowercase, remove punctuation, collapse whitespace.
 
@@ -132,10 +136,10 @@ def normalize_text(text: str) -> str:
     text = text.lower()
 
     # Remove punctuation (keep alphanumeric and whitespace)
-    text = re.sub(r'[^\w\s]', '', text)
+    text = re.sub(r"[^\w\s]", "", text)
 
     # Collapse multiple spaces to single space
-    text = re.sub(r'\s+', ' ', text)
+    text = re.sub(r"\s+", " ", text)
 
     # Strip leading/trailing whitespace
     text = text.strip()
@@ -147,6 +151,7 @@ def normalize_text(text: str) -> str:
 # ============================================================================
 # Exact Match
 # ============================================================================
+
 
 def exact_match(candidate: str, reference: str, normalize: bool = True) -> bool:
     """Check if candidate exactly matches reference.
@@ -170,9 +175,13 @@ def exact_match(candidate: str, reference: str, normalize: bool = True) -> bool:
     """
     # Step 1: Type checking
     if not isinstance(candidate, str):
-        raise TypeError(f"Both inputs must be strings, got candidate: {type(candidate)}")
+        raise TypeError(
+            f"Both inputs must be strings, got candidate: {type(candidate)}"
+        )
     if not isinstance(reference, str):
-        raise TypeError(f"Both inputs must be strings, got reference: {type(reference)}")
+        raise TypeError(
+            f"Both inputs must be strings, got reference: {type(reference)}"
+        )
 
     # Step 2: Input validation (none additional)
 
@@ -193,7 +202,10 @@ def exact_match(candidate: str, reference: str, normalize: bool = True) -> bool:
 # Fuzzy Match (Levenshtein Distance)
 # ============================================================================
 
-def fuzzy_match(candidate: str, reference: str, threshold: float = 0.8) -> Tuple[bool, float]:
+
+def fuzzy_match(
+    candidate: str, reference: str, threshold: float = 0.8
+) -> Tuple[bool, float]:
     """Check fuzzy match using Levenshtein similarity ratio.
 
     Args:
@@ -254,6 +266,7 @@ def fuzzy_match(candidate: str, reference: str, threshold: float = 0.8) -> Tuple
 # BLEU Score
 # ============================================================================
 
+
 def bleu_score(candidate: str, reference: str) -> float:
     """Calculate BLEU score (Bilingual Evaluation Understudy) for text similarity.
 
@@ -310,7 +323,7 @@ def bleu_score(candidate: str, reference: str) -> float:
         score = sentence_bleu(
             [reference_tokens],  # Reference is a list of token lists
             candidate_tokens,
-            smoothing_function=smoothing
+            smoothing_function=smoothing,
         )
     except ZeroDivisionError:
         # Fallback for edge cases
@@ -323,6 +336,7 @@ def bleu_score(candidate: str, reference: str) -> float:
 # ============================================================================
 # Semantic Similarity (Embeddings)
 # ============================================================================
+
 
 def get_embedding(text: str, model: str = "text-embedding-3-small") -> List[float]:
     """Get embedding vector from OpenAI API.
@@ -349,7 +363,7 @@ def get_embedding(text: str, model: str = "text-embedding-3-small") -> List[floa
         raise TypeError(f"text must be a string, got {type(text)}")
 
     # Step 2: Input validation
-    api_key = os.getenv('OPENAI_API_KEY')
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise ValueError("OPENAI_API_KEY environment variable must be set")
 
@@ -360,10 +374,7 @@ def get_embedding(text: str, model: str = "text-embedding-3-small") -> List[floa
     # Step 4: Main logic
     try:
         client = OpenAI(api_key=api_key)
-        response = client.embeddings.create(
-            input=text,
-            model=model
-        )
+        response = client.embeddings.create(input=text, model=model)
         embedding = response.data[0].embedding
     except Exception as e:
         raise Exception(f"OpenAI API call failed: {str(e)}") from e
@@ -405,7 +416,9 @@ def cosine_similarity(vec1: List[float], vec2: List[float]) -> float:
         raise ValueError("Vectors cannot be empty")
 
     if len(vec1) != len(vec2):
-        raise ValueError(f"Vectors must have same dimension: {len(vec1)} != {len(vec2)}")
+        raise ValueError(
+            f"Vectors must have same dimension: {len(vec1)} != {len(vec2)}"
+        )
 
     # Step 3: Edge case handling (none additional)
 
@@ -432,7 +445,9 @@ def cosine_similarity(vec1: List[float], vec2: List[float]) -> float:
     return float(similarity)
 
 
-def semantic_similarity(candidate: str, reference: str, model: str = "text-embedding-3-small") -> float:
+def semantic_similarity(
+    candidate: str, reference: str, model: str = "text-embedding-3-small"
+) -> float:
     """Calculate semantic similarity using embeddings.
 
     Args:

@@ -18,6 +18,7 @@ from backend.ai_judge_framework import GenericCriteriaJudge
 # Helper Functions
 # ============================================================================
 
+
 def calculate_expected_score(rating_a: float, rating_b: float) -> float:
     """Calculate expected win probability for player A using Elo formula.
 
@@ -112,6 +113,7 @@ def calculate_win_rate(comparisons: List[Dict[str, Any]], model_name: str) -> fl
 # Elo Ranking System
 # ============================================================================
 
+
 class EloRanking:
     """Elo ranking system for dynamic leaderboards.
 
@@ -141,7 +143,9 @@ class EloRanking:
         """
         # Step 1: Type checking
         if not isinstance(initial_rating, (int, float)):
-            raise TypeError(f"initial_rating must be a number, got {type(initial_rating)}")
+            raise TypeError(
+                f"initial_rating must be a number, got {type(initial_rating)}"
+            )
         if not isinstance(k_factor, (int, float)):
             raise TypeError(f"k_factor must be a number, got {type(k_factor)}")
 
@@ -202,7 +206,9 @@ class EloRanking:
         if not model_b.strip():
             raise ValueError("model_b cannot be empty")
         if winner not in [model_a, model_b, "tie"]:
-            raise ValueError(f"winner must be '{model_a}', '{model_b}', or 'tie', got '{winner}'")
+            raise ValueError(
+                f"winner must be '{model_a}', '{model_b}', or 'tie', got '{winner}'"
+            )
 
         # Step 3: Edge case handling (none)
 
@@ -256,11 +262,7 @@ class EloRanking:
 
         # Step 4: Main logic
         leaderboard = [
-            {
-                "model": model,
-                "rating": rating,
-                "matches": self.match_history[model]
-            }
+            {"model": model, "rating": rating, "matches": self.match_history[model]}
             for model, rating in self.ratings.items()
         ]
 
@@ -274,6 +276,7 @@ class EloRanking:
 # ============================================================================
 # Bradley-Terry Model
 # ============================================================================
+
 
 class BradleyTerryRanking:
     """Bradley-Terry model for probabilistic skill estimation.
@@ -328,7 +331,9 @@ class BradleyTerryRanking:
                 raise ValueError(f"Comparison {i} must be a dict, got {type(comp)}")
             if not required_keys.issubset(comp.keys()):
                 missing = required_keys - comp.keys()
-                raise ValueError(f"Comparison {i} must contain keys {required_keys}, missing: {missing}")
+                raise ValueError(
+                    f"Comparison {i} must contain keys {required_keys}, missing: {missing}"
+                )
 
         # Step 3: Edge case handling - Get unique models
         models = set()
@@ -381,8 +386,8 @@ class BradleyTerryRanking:
         result = minimize(
             neg_log_likelihood,
             initial_skills,
-            method='L-BFGS-B',
-            options={'maxiter': 1000}
+            method="L-BFGS-B",
+            options={"maxiter": 1000},
         )
 
         # Extract optimized skills
@@ -392,7 +397,9 @@ class BradleyTerryRanking:
         optimized_skills -= np.mean(optimized_skills)
 
         # Store skills in dict
-        self.skills = {model: float(optimized_skills[i]) for i, model in enumerate(models)}
+        self.skills = {
+            model: float(optimized_skills[i]) for i, model in enumerate(models)
+        }
         self.fitted = True
 
         # Step 5: Return (void function)
@@ -425,12 +432,18 @@ class BradleyTerryRanking:
 
         # Step 2: Input validation
         if not self.fitted:
-            raise RuntimeError("Model must be fitted before prediction. Call fit() first.")
+            raise RuntimeError(
+                "Model must be fitted before prediction. Call fit() first."
+            )
 
         if model_a not in self.skills:
-            raise ValueError(f"Unknown model: {model_a}. Available: {list(self.skills.keys())}")
+            raise ValueError(
+                f"Unknown model: {model_a}. Available: {list(self.skills.keys())}"
+            )
         if model_b not in self.skills:
-            raise ValueError(f"Unknown model: {model_b}. Available: {list(self.skills.keys())}")
+            raise ValueError(
+                f"Unknown model: {model_b}. Available: {list(self.skills.keys())}"
+            )
 
         # Step 3: Edge case handling (none)
 
@@ -466,11 +479,7 @@ class BradleyTerryRanking:
 
         # Step 4: Main logic
         leaderboard = [
-            {
-                "model": model,
-                "skill": skill
-            }
-            for model, skill in self.skills.items()
+            {"model": model, "skill": skill} for model, skill in self.skills.items()
         ]
 
         # Sort by skill descending
@@ -484,12 +493,13 @@ class BradleyTerryRanking:
 # Pairwise Comparison Generation
 # ============================================================================
 
+
 def generate_pairwise_comparisons(
     queries: List[str],
     responses_a: List[str],
     responses_b: List[str],
     dimension: str,
-    model: str = "gpt-4o-mini"
+    model: str = "gpt-4o-mini",
 ) -> List[Dict[str, Any]]:
     """Generate pairwise comparisons using AI judge.
 
@@ -549,7 +559,7 @@ def generate_pairwise_comparisons(
     judge = GenericCriteriaJudge(
         model=model,
         criteria=f"comparative_{dimension}",
-        criteria_description=criteria_description
+        criteria_description=criteria_description,
     )
 
     comparisons = []
@@ -572,24 +582,28 @@ Which response is better for {dimension}?
             # Parse winner from result
             winner = result.score if result.score in ["A", "B"] else "A"
 
-            comparisons.append({
-                "query": query,
-                "response_a": resp_a,
-                "response_b": resp_b,
-                "winner": winner,
-                "rationale": result.reasoning,
-                "dimension": dimension
-            })
+            comparisons.append(
+                {
+                    "query": query,
+                    "response_a": resp_a,
+                    "response_b": resp_b,
+                    "winner": winner,
+                    "rationale": result.reasoning,
+                    "dimension": dimension,
+                }
+            )
         except Exception as e:
             # Handle evaluation failures gracefully
-            comparisons.append({
-                "query": query,
-                "response_a": resp_a,
-                "response_b": resp_b,
-                "winner": "A",  # Default
-                "rationale": f"Evaluation failed: {str(e)}",
-                "dimension": dimension
-            })
+            comparisons.append(
+                {
+                    "query": query,
+                    "response_a": resp_a,
+                    "response_b": resp_b,
+                    "winner": "A",  # Default
+                    "rationale": f"Evaluation failed: {str(e)}",
+                    "dimension": dimension,
+                }
+            )
 
     # Step 5: Return
     return comparisons
@@ -599,10 +613,11 @@ Which response is better for {dimension}?
 # Visualization
 # ============================================================================
 
+
 def visualize_leaderboard(
     leaderboard: List[Dict[str, Any]],
     title: str = "Model Leaderboard",
-    rating_key: str = "rating"
+    rating_key: str = "rating",
 ) -> None:
     """Visualize leaderboard as horizontal bar chart.
 
@@ -636,17 +651,17 @@ def visualize_leaderboard(
     fig, ax = plt.subplots(figsize=(10, max(6, len(models) * 0.4)))
     y_pos = np.arange(len(models))
 
-    ax.barh(y_pos, ratings, align='center')
+    ax.barh(y_pos, ratings, align="center")
     ax.set_yticks(y_pos)
     ax.set_yticklabels(models)
     ax.invert_yaxis()  # Highest rating at top
-    ax.set_xlabel('Rating')
+    ax.set_xlabel("Rating")
     ax.set_title(title)
-    ax.grid(axis='x', alpha=0.3)
+    ax.grid(axis="x", alpha=0.3)
 
     # Add rating labels on bars
     for i, rating in enumerate(ratings):
-        ax.text(rating, i, f' {rating:.0f}', va='center')
+        ax.text(rating, i, f" {rating:.0f}", va="center")
 
     plt.tight_layout()
     plt.show()

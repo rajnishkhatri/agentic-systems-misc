@@ -381,9 +381,7 @@ class TestHelperFunctions:
     def test_should_handle_zero_matches_when_calculating_win_rate(self) -> None:
         """Test win rate calculation when model has no matches."""
         # Given: comparisons not involving target model
-        comparisons = [
-            {"model_a": "B", "model_b": "C", "winner": "B"}
-        ]
+        comparisons = [{"model_a": "B", "model_b": "C", "winner": "B"}]
 
         # When: calculating win rate for Model A
         win_rate = calculate_win_rate(comparisons, "A")
@@ -395,15 +393,14 @@ class TestHelperFunctions:
 class TestPairwiseComparisonGeneration:
     """Test pairwise comparison dataset generation."""
 
-    @patch('backend.comparative_evaluation.GenericCriteriaJudge')
+    @patch("backend.comparative_evaluation.GenericCriteriaJudge")
     def test_should_generate_comparisons_when_called(self, mock_judge: Mock) -> None:
         """Test generating pairwise comparisons."""
         # Given: mock judge that returns results
         mock_judge_instance = Mock()
         mock_judge.return_value = mock_judge_instance
         mock_judge_instance.evaluate.return_value = Mock(
-            score="A",
-            reasoning="Response A is better"
+            score="A", reasoning="Response A is better"
         )
 
         # When: generating comparisons
@@ -415,12 +412,15 @@ class TestPairwiseComparisonGeneration:
             queries=queries,
             responses_a=responses_a,
             responses_b=responses_b,
-            dimension="helpfulness"
+            dimension="helpfulness",
         )
 
         # Then: should generate 2 comparisons
         assert len(comparisons) == 2
-        assert all(key in comparisons[0] for key in ["query", "response_a", "response_b", "winner", "rationale"])
+        assert all(
+            key in comparisons[0]
+            for key in ["query", "response_a", "response_b", "winner", "rationale"]
+        )
 
     def test_should_raise_error_when_input_lists_different_length(self) -> None:
         """Test that mismatched input lengths raise ValueError."""
@@ -429,14 +429,14 @@ class TestPairwiseComparisonGeneration:
                 queries=["Q1", "Q2"],
                 responses_a=["R1"],  # Length mismatch
                 responses_b=["R1", "R2"],
-                dimension="helpfulness"
+                dimension="helpfulness",
             )
 
 
 class TestLeaderboardVisualization:
     """Test leaderboard visualization functions."""
 
-    @patch('matplotlib.pyplot.show')
+    @patch("matplotlib.pyplot.show")
     def test_should_create_visualization_when_called(self, mock_show: Mock) -> None:
         """Test leaderboard visualization creation."""
         # Given: leaderboard data
@@ -526,7 +526,9 @@ class TestAdditionalTypeChecks:
         with pytest.raises(ValueError, match="at least 2 models"):
             bt.fit(comparisons)
 
-    def test_should_raise_error_when_bradley_terry_predict_with_wrong_types(self) -> None:
+    def test_should_raise_error_when_bradley_terry_predict_with_wrong_types(
+        self,
+    ) -> None:
         """Test BradleyTerryRanking.predict with invalid types."""
         bt = BradleyTerryRanking()
         comparisons = [{"model_a": "A", "model_b": "B", "winner": "A"}]
@@ -545,7 +547,7 @@ class TestAdditionalTypeChecks:
                 queries="not a list",
                 responses_a=["R1"],
                 responses_b=["R2"],
-                dimension="helpfulness"
+                dimension="helpfulness",
             )
 
         with pytest.raises(TypeError, match="responses_a must be a list"):
@@ -553,7 +555,7 @@ class TestAdditionalTypeChecks:
                 queries=["Q1"],
                 responses_a="not a list",
                 responses_b=["R2"],
-                dimension="helpfulness"
+                dimension="helpfulness",
             )
 
         with pytest.raises(TypeError, match="responses_b must be a list"):
@@ -561,28 +563,22 @@ class TestAdditionalTypeChecks:
                 queries=["Q1"],
                 responses_a=["R1"],
                 responses_b="not a list",
-                dimension="helpfulness"
+                dimension="helpfulness",
             )
 
         with pytest.raises(TypeError, match="dimension must be a string"):
             generate_pairwise_comparisons(
-                queries=["Q1"],
-                responses_a=["R1"],
-                responses_b=["R2"],
-                dimension=123
+                queries=["Q1"], responses_a=["R1"], responses_b=["R2"], dimension=123
             )
 
     def test_should_raise_error_when_generate_comparisons_empty_queries(self) -> None:
         """Test generate_pairwise_comparisons with empty query list."""
         with pytest.raises(ValueError, match="queries cannot be empty"):
             generate_pairwise_comparisons(
-                queries=[],
-                responses_a=[],
-                responses_b=[],
-                dimension="helpfulness"
+                queries=[], responses_a=[], responses_b=[], dimension="helpfulness"
             )
 
-    @patch('backend.comparative_evaluation.GenericCriteriaJudge')
+    @patch("backend.comparative_evaluation.GenericCriteriaJudge")
     def test_should_handle_judge_exception_gracefully(self, mock_judge: Mock) -> None:
         """Test that generate_pairwise_comparisons handles judge failures."""
         # Given: mock judge that raises exception
@@ -595,7 +591,7 @@ class TestAdditionalTypeChecks:
             queries=["Q1"],
             responses_a=["R1"],
             responses_b=["R2"],
-            dimension="helpfulness"
+            dimension="helpfulness",
         )
 
         # Then: should handle gracefully and return comparison with error

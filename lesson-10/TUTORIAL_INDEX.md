@@ -6,7 +6,10 @@ Lesson 10 covers **AI-as-Judge evaluation methodology** and **production enginee
 
 **Learning Time:** ~4-5 hours
 **Difficulty:** Intermediate to Advanced
-**Prerequisites:** Completion of HW3, Lesson 9, familiarity with prompt engineering
+**Prerequisites:**
+- [HW3: LLM-as-Judge](../homeworks/hw3/TUTORIAL_INDEX.md) - Dietary adherence judge development
+- [Lesson 9: Evaluation Fundamentals](../lesson-9/TUTORIAL_INDEX.md) - Understanding evaluation challenges and exact methods
+- Familiarity with prompt engineering
 
 ---
 

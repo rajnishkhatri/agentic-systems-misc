@@ -82,7 +82,10 @@ def load_hw3_metrics() -> dict[str, Any]:
         # Validate required fields
         required_fields = ["tpr", "tnr", "confusion_matrix"]
         if not all(field in data for field in required_fields):
-            return {"status": "invalid", "message": "Missing required fields in HW3 metrics"}
+            return {
+                "status": "invalid",
+                "message": "Missing required fields in HW3 metrics",
+            }
 
         return {"status": "ok", "data": data}
     except (json.JSONDecodeError, OSError) as e:
@@ -114,7 +117,10 @@ def load_hw4_metrics() -> dict[str, Any]:
         # Validate required fields
         required_fields = ["recall_at_k", "mrr"]
         if not all(field in data for field in required_fields):
-            return {"status": "invalid", "message": "Missing required fields in HW4 metrics"}
+            return {
+                "status": "invalid",
+                "message": "Missing required fields in HW4 metrics",
+            }
 
         return {"status": "ok", "data": data}
     except (json.JSONDecodeError, OSError) as e:
@@ -293,7 +299,9 @@ def render_hw3_section(hw3_data: dict[str, Any]) -> Div:
         Div(
             render_metric_card("True Positive Rate", f"{tpr:.2%}", "Sensitivity"),
             render_metric_card("True Negative Rate", f"{tnr:.2%}", "Specificity"),
-            render_metric_card("F1 Score", f"{data.get('f1_score', 0.0):.3f}", "Harmonic mean"),
+            render_metric_card(
+                "F1 Score", f"{data.get('f1_score', 0.0):.3f}", "Harmonic mean"
+            ),
             cls="metrics-grid",
         ),
         H3("Confusion Matrix"),
@@ -339,9 +347,15 @@ def render_hw4_section(hw4_data: dict[str, Any]) -> Div:
     return Div(
         H2("HW4: RAG Evaluation"),
         Div(
-            render_metric_card("Recall@1", f"{recall_at_k.get('1', 0.0):.2%}", "Top result accuracy"),
-            render_metric_card("Recall@5", f"{recall_at_k.get('5', 0.0):.2%}", "Top 5 accuracy"),
-            render_metric_card("MRR", f"{data.get('mrr', 0.0):.3f}", "Mean Reciprocal Rank"),
+            render_metric_card(
+                "Recall@1", f"{recall_at_k.get('1', 0.0):.2%}", "Top result accuracy"
+            ),
+            render_metric_card(
+                "Recall@5", f"{recall_at_k.get('5', 0.0):.2%}", "Top 5 accuracy"
+            ),
+            render_metric_card(
+                "MRR", f"{data.get('mrr', 0.0):.3f}", "Mean Reciprocal Rank"
+            ),
             cls="metrics-grid",
         ),
         cls="metrics-section",
@@ -369,11 +383,19 @@ def render_lesson9_section(lesson9_data: dict[str, Any]) -> Div:
     return Div(
         H2("Lesson 9: Exact Evaluation Methods"),
         Div(
-            render_metric_card("Avg BLEU Score", f"{data.get('avg_bleu', 0.0):.3f}", "N-gram overlap"),
             render_metric_card(
-                "Avg Semantic Similarity", f"{data.get('avg_semantic_sim', 0.0):.3f}", "Cosine similarity"
+                "Avg BLEU Score", f"{data.get('avg_bleu', 0.0):.3f}", "N-gram overlap"
             ),
-            render_metric_card("Exact Match Rate", f"{data.get('exact_match_rate', 0.0):.2%}", "Perfect matches"),
+            render_metric_card(
+                "Avg Semantic Similarity",
+                f"{data.get('avg_semantic_sim', 0.0):.3f}",
+                "Cosine similarity",
+            ),
+            render_metric_card(
+                "Exact Match Rate",
+                f"{data.get('exact_match_rate', 0.0):.2%}",
+                "Perfect matches",
+            ),
             cls="metrics-grid",
         ),
         cls="metrics-section",
@@ -402,9 +424,21 @@ def render_lesson10_section(lesson10_data: dict[str, Any]) -> Div:
     return Div(
         H2("Lesson 10: AI-as-Judge Mastery"),
         Div(
-            render_metric_card("Judge Agreement", f"{data.get('agreement_rate', 0.0):.2%}", "Inter-rater reliability"),
-            render_metric_card("Self-Bias", f"{bias_metrics.get('self_bias', 0.0):.2%}", "Model preference"),
-            render_metric_card("Position Bias", f"{bias_metrics.get('position_bias', 0.0):.2%}", "Order effect"),
+            render_metric_card(
+                "Judge Agreement",
+                f"{data.get('agreement_rate', 0.0):.2%}",
+                "Inter-rater reliability",
+            ),
+            render_metric_card(
+                "Self-Bias",
+                f"{bias_metrics.get('self_bias', 0.0):.2%}",
+                "Model preference",
+            ),
+            render_metric_card(
+                "Position Bias",
+                f"{bias_metrics.get('position_bias', 0.0):.2%}",
+                "Order effect",
+            ),
             cls="metrics-grid",
         ),
         cls="metrics-section",
@@ -482,7 +516,9 @@ def render_cost_tracker(metrics: dict[str, Any]) -> Div:
 
     return Div(
         H2("Cost Tracker"),
-        render_metric_card("Total Cost", f"${costs['total']:.2f}", "Across all evaluations"),
+        render_metric_card(
+            "Total Cost", f"${costs['total']:.2f}", "Across all evaluations"
+        ),
         H3("Breakdown by Module"),
         Table(
             Thead(Tr(Th("Module"), Th("Cost"))),
@@ -538,7 +574,10 @@ def render_footer() -> Footer:
             " | ",
             A("GitHub", href="https://github.com/anthropics/courses"),
         ),
-        P(f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", id="last-updated"),
+        P(
+            f"Last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+            id="last-updated",
+        ),
         cls="footer",
     )
 
@@ -907,9 +946,9 @@ def get():
 # ============================================================================
 
 if __name__ == "__main__":
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"  {DASHBOARD_TITLE} v{DASHBOARD_VERSION}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     print(f"\n  🚀 Starting server at http://localhost:8000")
     print(f"  📊 Dashboard: http://localhost:8000/evaluation")
     print(f"  🔄 Auto-refresh: {AUTO_REFRESH_SECONDS}s")
@@ -918,6 +957,6 @@ if __name__ == "__main__":
     print(f"    e - Export HTML")
     print(f"    f - Filter")
     print(f"    ? - Help")
-    print(f"\n{'='*60}\n")
+    print(f"\n{'=' * 60}\n")
 
     serve(port=8000)

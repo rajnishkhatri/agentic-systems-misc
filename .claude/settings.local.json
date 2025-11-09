@@ -11,7 +11,10 @@
       "Bash(git add:*)",
       "Bash(git commit -m \"$(cat <<''EOF''\nfeat: complete Lesson 9 - Evaluation Fundamentals & Exact Methods (Task 2.0)\n\n- Add 3 comprehensive concept tutorials (evaluation_fundamentals.md, language_modeling_metrics.md, exact_evaluation_methods.md)\n- Create 2 interactive Jupyter notebooks (perplexity calculation, similarity measurements)\n- Implement backend/exact_evaluation.py with 7 evaluation functions (perplexity, exact match, fuzzy match, BLEU, semantic similarity)\n- Add 17 TDD tests achieving 100% pass rate\n- Create evaluation taxonomy decision tree diagram (Mermaid)\n- Include sample perplexity data for GPT-2 variants\n- Follow defensive coding: type hints, input validation, comprehensive error handling\n\nRelated to Task 2.0 in tasks-0004-prd-evaluation-methodology-tutorial-system.md\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(git commit -m \"$(cat <<''EOF''\nfeat: complete Lesson 9 - Evaluation Fundamentals & Exact Methods (Task 2.0)\n\n- Add 3 comprehensive concept tutorials (evaluation_fundamentals.md, language_modeling_metrics.md, exact_evaluation_methods.md)\n- Create 2 interactive Jupyter notebooks (perplexity calculation, similarity measurements)\n- Implement backend/exact_evaluation.py with 7 evaluation functions (perplexity, exact match, fuzzy match, BLEU, semantic similarity)\n- Add 33 TDD tests achieving 100% pass rate\n- Create evaluation taxonomy decision tree diagram (Mermaid)\n- Include sample perplexity data for GPT-2 variants\n- Follow defensive coding: type hints, input validation, comprehensive error handling\n\nRelated to Task 2.0 in tasks-0004-prd-evaluation-methodology-tutorial-system.md\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(awk:*)",
+      "Bash(chmod:*)",
+      "Bash(ruff format:*)"
     ],
     "deny": [],
     "ask": []

@@ -6,7 +6,10 @@ Lesson 11 covers **comparative evaluation methodologies** and **leaderboard rank
 
 **Learning Time:** ~3-4 hours
 **Difficulty:** Intermediate
-**Prerequisites:** Completion of Lesson 10, basic understanding of probability and statistics
+**Prerequisites:**
+- [Lesson 10: AI-as-Judge Mastery](../lesson-10/TUTORIAL_INDEX.md) - Judge engineering and bias detection
+- [Lesson 9: Evaluation Fundamentals](../lesson-9/TUTORIAL_INDEX.md) - Understanding evaluation challenges
+- Basic understanding of probability and statistics
 
 ---
 

@@ -1206,6 +1206,18 @@ After reading this guide:
 
 ---
 
+## Related Tutorials
+
+- [Lesson 9: Evaluation Fundamentals](../lesson-9/evaluation_fundamentals.md) - When to use judges vs exact/similarity methods
+- [Lesson 9: Exact Evaluation Methods](../lesson-9/exact_evaluation_methods.md) - Complement judges with objective metrics
+- [Judge Prompt Engineering Tutorial (Notebook)](judge_prompt_engineering_tutorial.ipynb) - Engineer judges for 5 criteria
+- [Judge Bias Detection Tutorial (Notebook)](judge_bias_detection_tutorial.ipynb) - Detect self-bias, position bias, verbosity bias
+- [HW3: LLM-as-Judge](../homeworks/hw3/TUTORIAL_INDEX.md) - Build dietary adherence judge
+- [Lesson 4: Substantiation Evaluation](../lesson-4/TUTORIAL_INDEX.md) - Judge for unsupported claims detection
+- [Lesson 11: Comparative Evaluation Guide](../lesson-11/comparative_evaluation_guide.md) - Use judges for pairwise comparisons
+
+---
+
 **Further Reading:**
 
 - [OpenAI Guide to LLM Evaluation](https://platform.openai.com/docs/guides/evaluation)

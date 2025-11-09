@@ -155,6 +155,12 @@ See [LiteLLM docs](https://docs.litellm.ai/docs/providers) for supported provide
 - **[Lesson 4: Substantiation Evaluation](lesson-4/TUTORIAL_INDEX.md)** - Detecting unsubstantiated claims
 - **[Lesson 7: Trace Inspection](lesson-7/TUTORIAL_INDEX.md)** - Manual annotation workflows
 - **[Lesson 8: Model Cascades](lesson-8/TUTORIAL_INDEX.md)** - Cost optimization with confidence routing
+- **[Lesson 9: Evaluation Fundamentals & Exact Methods](lesson-9/TUTORIAL_INDEX.md)** - Perplexity, BLEU, semantic similarity
+- **[Lesson 10: AI-as-Judge Mastery & Production Patterns](lesson-10/TUTORIAL_INDEX.md)** - Judge engineering and bias detection
+- **[Lesson 11: Comparative Evaluation & Leaderboards](lesson-11/TUTORIAL_INDEX.md)** - Elo and Bradley-Terry ranking systems
+
+### Cross-Lesson Resources
+- **[Evaluation Dashboard (Lessons 9-11)](lesson-9-11/README.md)** - Unified metrics visualization across all evaluation methods
 
 Each tutorial index includes:
 - ✅ Learning objectives and prerequisites

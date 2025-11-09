@@ -617,6 +617,16 @@ For metrics that produce continuous scores (fuzzy match, semantic similarity), y
 
 ---
 
+## Related Tutorials
+
+- [Evaluation Fundamentals](evaluation_fundamentals.md) - Challenges of evaluating foundation models
+- [Language Modeling Metrics](language_modeling_metrics.md) - Perplexity and intrinsic quality metrics
+- [Similarity Measurements Tutorial (Notebook)](similarity_measurements_tutorial.ipynb) - Implement exact, fuzzy, BLEU, semantic similarity
+- [Lesson 10: AI-as-Judge Production Guide](../lesson-10/ai_judge_production_guide.md) - Evaluate subjective criteria beyond similarity
+- [HW4: RAG Evaluation](../homeworks/hw4/TUTORIAL_INDEX.md) - Apply retrieval evaluation metrics
+
+---
+
 ## References
 
 1. **HumanEval:** Chen et al. (2021). "Evaluating Large Language Models Trained on Code"

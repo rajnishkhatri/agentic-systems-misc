@@ -31,6 +31,7 @@ import litellm  # type: ignore
 # Pydantic Models
 # ============================================================================
 
+
 class JudgeResult(BaseModel):
     """Structured output from a judge evaluation.
 
@@ -39,11 +40,14 @@ class JudgeResult(BaseModel):
         reasoning: Detailed explanation of the judgment
         confidence: Judge's confidence in the decision (0.0-1.0)
     """
+
     score: str | int = Field(..., description="PASS/FAIL or numeric score 1-5")
     reasoning: str = Field(..., min_length=1, description="Explanation of judgment")
-    confidence: float = Field(default=1.0, ge=0.0, le=1.0, description="Confidence score")
+    confidence: float = Field(
+        default=1.0, ge=0.0, le=1.0, description="Confidence score"
+    )
 
-    @field_validator('reasoning')
+    @field_validator("reasoning")
     @classmethod
     def reasoning_not_empty(cls, v: str) -> str:
         """Validate that reasoning is not empty."""
@@ -55,6 +59,7 @@ class JudgeResult(BaseModel):
 # ============================================================================
 # Base Judge Abstract Class
 # ============================================================================
+
 
 class BaseJudge(ABC):
     """Abstract base class for all judge implementations.
@@ -69,12 +74,7 @@ class BaseJudge(ABC):
     - evaluate(): Single evaluation logic
     """
 
-    def __init__(
-        self,
-        model: str,
-        temperature: float = 0.0,
-        max_retries: int = 3
-    ):
+    def __init__(self, model: str, temperature: float = 0.0, max_retries: int = 3):
         """Initialize judge with model configuration.
 
         Args:
@@ -111,16 +111,17 @@ class BaseJudge(ABC):
         Raises:
             FileNotFoundError: If template file doesn't exist
         """
-        template_path = Path("lesson-10") / "templates" / "judge_prompts" / template_name
+        template_path = (
+            Path("lesson-10") / "templates" / "judge_prompts" / template_name
+        )
 
         if not template_path.exists():
             raise FileNotFoundError(f"Template file not found: {template_path}")
 
-        return template_path.read_text(encoding='utf-8')
+        return template_path.read_text(encoding="utf-8")
 
     @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=2, max=10)
+        stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10)
     )
     def _call_llm(self, prompt: str) -> str:
         """Call LLM API with retry logic.
@@ -137,7 +138,7 @@ class BaseJudge(ABC):
         response = litellm.completion(
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
-            temperature=self.temperature
+            temperature=self.temperature,
         )
 
         return response.choices[0].message.content
@@ -169,7 +170,9 @@ class BaseJudge(ABC):
         try:
             return json.loads(json_text)
         except json.JSONDecodeError as e:
-            raise ValueError(f"Failed to parse JSON response: {e}. Response: {response[:200]}")
+            raise ValueError(
+                f"Failed to parse JSON response: {e}. Response: {response[:200]}"
+            )
 
     def _validate_inputs(self, **kwargs: Any) -> None:
         """Validate common inputs (query, response).
@@ -201,9 +204,7 @@ class BaseJudge(ABC):
         pass
 
     async def evaluate_batch(
-        self,
-        examples: List[Dict[str, Any]],
-        max_workers: int = 50
+        self, examples: List[Dict[str, Any]], max_workers: int = 50
     ) -> List[JudgeResult]:
         """Evaluate multiple examples in parallel.
 
@@ -229,7 +230,7 @@ class BaseJudge(ABC):
                 return JudgeResult(
                     score="ERROR",
                     reasoning=f"Evaluation failed: {str(e)}",
-                    confidence=0.0
+                    confidence=0.0,
                 )
 
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -242,6 +243,7 @@ class BaseJudge(ABC):
 # ============================================================================
 # Concrete Judge Implementations
 # ============================================================================
+
 
 class DietaryAdherenceJudge(BaseJudge):
     """Judge for evaluating dietary restriction compliance in recipes.
@@ -261,10 +263,7 @@ class DietaryAdherenceJudge(BaseJudge):
         self.prompt_template = self._load_template("dietary_adherence_judge.txt")
 
     def evaluate(
-        self,
-        query: str,
-        response: str,
-        dietary_restriction: str
+        self, query: str, response: str, dietary_restriction: str
     ) -> JudgeResult:
         """Evaluate dietary adherence.
 
@@ -297,7 +296,7 @@ class DietaryAdherenceJudge(BaseJudge):
         return JudgeResult(
             score=parsed.get("answer", "ERROR"),
             reasoning=parsed.get("reasoning", "No reasoning provided"),
-            confidence=1.0
+            confidence=1.0,
         )
 
 
@@ -319,10 +318,7 @@ class SubstantiationJudge(BaseJudge):
         self.prompt_template = self._load_template("substantiation_judge.txt")
 
     def evaluate(
-        self,
-        query: str,
-        response: str,
-        context: Dict[str, Any] | None = None
+        self, query: str, response: str, context: Dict[str, Any] | None = None
     ) -> JudgeResult:
         """Evaluate substantiation of claims.
 
@@ -356,7 +352,7 @@ class SubstantiationJudge(BaseJudge):
         return JudgeResult(
             score=parsed.get("answer", "ERROR"),
             reasoning=parsed.get("reasoning", "No reasoning provided"),
-            confidence=1.0
+            confidence=1.0,
         )
 
 
@@ -372,7 +368,7 @@ class GenericCriteriaJudge(BaseJudge):
         model: str,
         criteria: str,
         criteria_description: str,
-        temperature: float = 0.0
+        temperature: float = 0.0,
     ):
         """Initialize generic criteria judge.
 
@@ -424,12 +420,7 @@ Provide your evaluation in JSON format:
 """
         return prompt
 
-    def evaluate(
-        self,
-        query: str,
-        response: str,
-        **kwargs: Any
-    ) -> JudgeResult:
+    def evaluate(self, query: str, response: str, **kwargs: Any) -> JudgeResult:
         """Evaluate response against custom criteria.
 
         Args:
@@ -457,7 +448,7 @@ Provide your evaluation in JSON format:
         return JudgeResult(
             score=parsed.get("answer", "ERROR"),
             reasoning=parsed.get("reasoning", "No reasoning provided"),
-            confidence=1.0
+            confidence=1.0,
         )
 
 
@@ -465,10 +456,8 @@ Provide your evaluation in JSON format:
 # Utility Functions: TPR/TNR Calculations
 # ============================================================================
 
-def calculate_tpr_tnr(
-    y_true: List[bool],
-    y_pred: List[bool]
-) -> tuple[float, float]:
+
+def calculate_tpr_tnr(y_true: List[bool], y_pred: List[bool]) -> tuple[float, float]:
     """Calculate True Positive Rate (TPR) and True Negative Rate (TNR).
 
     TPR (Recall/Sensitivity):
@@ -496,10 +485,18 @@ def calculate_tpr_tnr(
         raise ValueError("y_true and y_pred must have same length")
 
     # Calculate confusion matrix components
-    tp = sum(1 for true, pred in zip(y_true, y_pred) if not true and not pred)  # True failures correctly identified
-    fn = sum(1 for true, pred in zip(y_true, y_pred) if not true and pred)      # True failures missed
-    tn = sum(1 for true, pred in zip(y_true, y_pred) if true and pred)          # True successes correctly identified
-    fp = sum(1 for true, pred in zip(y_true, y_pred) if true and not pred)      # False alarms
+    tp = sum(
+        1 for true, pred in zip(y_true, y_pred) if not true and not pred
+    )  # True failures correctly identified
+    fn = sum(
+        1 for true, pred in zip(y_true, y_pred) if not true and pred
+    )  # True failures missed
+    tn = sum(
+        1 for true, pred in zip(y_true, y_pred) if true and pred
+    )  # True successes correctly identified
+    fp = sum(
+        1 for true, pred in zip(y_true, y_pred) if true and not pred
+    )  # False alarms
 
     # Calculate TPR and TNR with edge case handling
     tpr = tp / (tp + fn) if (tp + fn) > 0 else 1.0  # No failures -> perfect TPR
@@ -508,10 +505,7 @@ def calculate_tpr_tnr(
     return tpr, tnr
 
 
-def calculate_balanced_accuracy(
-    y_true: List[bool],
-    y_pred: List[bool]
-) -> float:
+def calculate_balanced_accuracy(y_true: List[bool], y_pred: List[bool]) -> float:
     """Calculate balanced accuracy for imbalanced datasets.
 
     Balanced Accuracy = (TPR + TNR) / 2

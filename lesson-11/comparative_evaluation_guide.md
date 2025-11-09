@@ -767,5 +767,16 @@ Excluded: MMLU, HumanEval, HellaSwag (benchmark contamination prevention)
 
 ---
 
+## Related Tutorials
+
+- [Lesson 10: AI-as-Judge Production Guide](../lesson-10/ai_judge_production_guide.md) - Engineer judges for pairwise comparisons
+- [Lesson 10: Judge Bias Detection Tutorial](../lesson-10/judge_bias_detection_tutorial.ipynb) - Detect position bias in comparisons
+- [Elo Ranking Tutorial (Notebook)](elo_ranking_tutorial.ipynb) - Implement dynamic leaderboard rankings
+- [Bradley-Terry Ranking Tutorial (Notebook)](bradley_terry_ranking_tutorial.ipynb) - Probabilistic skill estimation
+- [A/B Testing vs Comparative Eval (Notebook)](ab_testing_vs_comparative_eval.ipynb) - Sample efficiency analysis
+- [Lesson 9-11: Evaluation Dashboard](../lesson-9-11/README.md) - Visualize unified metrics across lessons
+
+---
+
 **Last Updated:** 2025-11-09
 **Author:** AI Evaluation Course Team

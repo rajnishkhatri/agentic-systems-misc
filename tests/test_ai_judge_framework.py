@@ -41,7 +41,7 @@ class TestJudgeResultModel:
         data = {
             "score": "PASS",
             "reasoning": "Recipe adheres to dietary restriction.",
-            "confidence": 0.95
+            "confidence": 0.95,
         }
 
         # When: creating JudgeResult
@@ -96,6 +96,7 @@ class TestBaseJudgeInterface:
 
         class IncompleteJudge(BaseJudge):
             """Judge that doesn't implement required methods."""
+
             pass
 
         with pytest.raises(TypeError):
@@ -108,17 +109,18 @@ class TestDietaryAdherenceJudge:
     @pytest.fixture
     def judge(self) -> DietaryAdherenceJudge:
         """Create a DietaryAdherenceJudge instance for testing."""
-        return DietaryAdherenceJudge(
-            model="gpt-4o-mini",
-            temperature=0.0
-        )
+        return DietaryAdherenceJudge(model="gpt-4o-mini", temperature=0.0)
 
-    def test_should_initialize_judge_with_model_name(self, judge: DietaryAdherenceJudge) -> None:
+    def test_should_initialize_judge_with_model_name(
+        self, judge: DietaryAdherenceJudge
+    ) -> None:
         """Test judge initialization with model parameter."""
         assert judge.model == "gpt-4o-mini"
         assert judge.temperature == 0.0
 
-    def test_should_load_prompt_template_on_initialization(self, judge: DietaryAdherenceJudge) -> None:
+    def test_should_load_prompt_template_on_initialization(
+        self, judge: DietaryAdherenceJudge
+    ) -> None:
         """Test that judge loads prompt template from file."""
         # Judge should have loaded template from lesson-10/templates/judge_prompts/dietary_adherence_judge.txt
         assert judge.prompt_template is not None
@@ -127,21 +129,27 @@ class TestDietaryAdherenceJudge:
         assert "{dietary_restriction}" in judge.prompt_template
         assert "{response}" in judge.prompt_template
 
-    @patch('litellm.completion')
+    @patch("litellm.completion")
     def test_should_evaluate_single_example_when_called(
         self, mock_completion: Mock, judge: DietaryAdherenceJudge
     ) -> None:
         """Test evaluating a single query-response pair."""
         # Given: mock LLM response
         mock_completion.return_value = Mock(
-            choices=[Mock(message=Mock(content='{"reasoning": "All ingredients are vegan", "answer": "PASS"}'))]
+            choices=[
+                Mock(
+                    message=Mock(
+                        content='{"reasoning": "All ingredients are vegan", "answer": "PASS"}'
+                    )
+                )
+            ]
         )
 
         # When: evaluating a vegan query
         result = judge.evaluate(
             query="Give me a vegan dinner recipe",
             response="Try this tofu stir-fry with vegetables...",
-            dietary_restriction="vegan"
+            dietary_restriction="vegan",
         )
 
         # Then: should return JudgeResult
@@ -149,14 +157,16 @@ class TestDietaryAdherenceJudge:
         assert result.score == "PASS"
         assert "vegan" in result.reasoning.lower()
 
-    @patch('litellm.completion')
+    @patch("litellm.completion")
     def test_should_format_prompt_with_placeholders(
         self, mock_completion: Mock, judge: DietaryAdherenceJudge
     ) -> None:
         """Test that judge correctly formats prompt with query/response/restriction."""
         # Given: mock LLM response
         mock_completion.return_value = Mock(
-            choices=[Mock(message=Mock(content='{"reasoning": "Test", "answer": "PASS"}'))]
+            choices=[
+                Mock(message=Mock(content='{"reasoning": "Test", "answer": "PASS"}'))
+            ]
         )
 
         query = "Test query"
@@ -174,14 +184,14 @@ class TestDietaryAdherenceJudge:
         assert response in prompt
         assert restriction in prompt
 
-    @patch('litellm.completion')
+    @patch("litellm.completion")
     def test_should_handle_json_parsing_errors_gracefully(
         self, mock_completion: Mock, judge: DietaryAdherenceJudge
     ) -> None:
         """Test error handling when LLM returns invalid JSON."""
         # Given: LLM returns malformed JSON
         mock_completion.return_value = Mock(
-            choices=[Mock(message=Mock(content='This is not valid JSON'))]
+            choices=[Mock(message=Mock(content="This is not valid JSON"))]
         )
 
         # When/Then: should raise appropriate error
@@ -189,10 +199,10 @@ class TestDietaryAdherenceJudge:
             judge.evaluate(
                 query="Test query",
                 response="Test response",
-                dietary_restriction="vegan"
+                dietary_restriction="vegan",
             )
 
-    @patch('litellm.completion')
+    @patch("litellm.completion")
     def test_should_retry_on_api_failure(
         self, mock_completion: Mock, judge: DietaryAdherenceJudge
     ) -> None:
@@ -201,14 +211,18 @@ class TestDietaryAdherenceJudge:
         mock_completion.side_effect = [
             Exception("API Error"),
             Exception("API Error"),
-            Mock(choices=[Mock(message=Mock(content='{"reasoning": "Test", "answer": "PASS"}'))])
+            Mock(
+                choices=[
+                    Mock(
+                        message=Mock(content='{"reasoning": "Test", "answer": "PASS"}')
+                    )
+                ]
+            ),
         ]
 
         # When: evaluating (should retry)
         result = judge.evaluate(
-            query="Test query",
-            response="Test response",
-            dietary_restriction="vegan"
+            query="Test query", response="Test response", dietary_restriction="vegan"
         )
 
         # Then: should succeed after retries
@@ -224,49 +238,63 @@ class TestSubstantiationJudge:
         """Create a SubstantiationJudge instance."""
         return SubstantiationJudge(model="gpt-4o-mini", temperature=0.0)
 
-    def test_should_load_substantiation_template(self, judge: SubstantiationJudge) -> None:
+    def test_should_load_substantiation_template(
+        self, judge: SubstantiationJudge
+    ) -> None:
         """Test that substantiation judge loads correct template."""
         assert judge.prompt_template is not None
         assert "{context}" in judge.prompt_template
         assert "{query}" in judge.prompt_template
         assert "{response}" in judge.prompt_template
 
-    @patch('litellm.completion')
+    @patch("litellm.completion")
     def test_should_evaluate_with_context(
         self, mock_completion: Mock, judge: SubstantiationJudge
     ) -> None:
         """Test evaluating response against provided context."""
         # Given: mock LLM response
         mock_completion.return_value = Mock(
-            choices=[Mock(message=Mock(content='{"reasoning": "All claims verified", "all_responses_substantiated": true, "answer": "PASS"}'))]
+            choices=[
+                Mock(
+                    message=Mock(
+                        content='{"reasoning": "All claims verified", "all_responses_substantiated": true, "answer": "PASS"}'
+                    )
+                )
+            ]
         )
 
         # When: evaluating with context
         result = judge.evaluate(
             query="What's in the recipe?",
             response="The recipe contains flour and eggs.",
-            context={"ingredients": ["flour", "eggs", "sugar"]}
+            context={"ingredients": ["flour", "eggs", "sugar"]},
         )
 
         # Then: should return substantiation result
         assert isinstance(result, JudgeResult)
         assert result.score == "PASS"
 
-    @patch('litellm.completion')
+    @patch("litellm.completion")
     def test_should_detect_unsubstantiated_claims(
         self, mock_completion: Mock, judge: SubstantiationJudge
     ) -> None:
         """Test detection of fabricated information."""
         # Given: LLM detects hallucination
         mock_completion.return_value = Mock(
-            choices=[Mock(message=Mock(content='{"reasoning": "Recipe mentions chocolate not in context", "all_responses_substantiated": false, "answer": "FAIL"}'))]
+            choices=[
+                Mock(
+                    message=Mock(
+                        content='{"reasoning": "Recipe mentions chocolate not in context", "all_responses_substantiated": false, "answer": "FAIL"}'
+                    )
+                )
+            ]
         )
 
         # When: evaluating response with fabricated claim
         result = judge.evaluate(
             query="What's in the recipe?",
             response="The recipe contains chocolate and vanilla.",
-            context={"ingredients": ["flour", "eggs"]}  # No chocolate!
+            context={"ingredients": ["flour", "eggs"]},  # No chocolate!
         )
 
         # Then: should fail
@@ -283,19 +311,22 @@ class TestGenericCriteriaJudge:
             model="gpt-4o-mini",
             temperature=0.0,
             criteria="helpfulness",
-            criteria_description="Response provides actionable, useful information"
+            criteria_description="Response provides actionable, useful information",
         )
 
-    def test_should_initialize_with_custom_criteria(self, judge: GenericCriteriaJudge) -> None:
+    def test_should_initialize_with_custom_criteria(
+        self, judge: GenericCriteriaJudge
+    ) -> None:
         """Test initialization with custom evaluation criteria."""
         assert judge.criteria == "helpfulness"
         assert "actionable" in judge.criteria_description
 
-    def test_should_build_prompt_from_criteria(self, judge: GenericCriteriaJudge) -> None:
+    def test_should_build_prompt_from_criteria(
+        self, judge: GenericCriteriaJudge
+    ) -> None:
         """Test dynamic prompt building based on criteria."""
         prompt = judge._build_prompt(
-            query="How do I bake cookies?",
-            response="Bake at 350°F for 12 minutes."
+            query="How do I bake cookies?", response="Bake at 350°F for 12 minutes."
         )
 
         assert "helpfulness" in prompt.lower()
@@ -303,32 +334,53 @@ class TestGenericCriteriaJudge:
         assert "How do I bake cookies?" in prompt
         assert "350°F" in prompt
 
-    @patch('litellm.completion')
+    @patch("litellm.completion")
     def test_should_evaluate_custom_criteria(
         self, mock_completion: Mock, judge: GenericCriteriaJudge
     ) -> None:
         """Test evaluation using custom criteria."""
         # Given: mock evaluation
         mock_completion.return_value = Mock(
-            choices=[Mock(message=Mock(content='{"reasoning": "Response is helpful and actionable", "answer": "PASS"}'))]
+            choices=[
+                Mock(
+                    message=Mock(
+                        content='{"reasoning": "Response is helpful and actionable", "answer": "PASS"}'
+                    )
+                )
+            ]
         )
 
         # When: evaluating
         result = judge.evaluate(
             query="Quick dinner idea?",
-            response="Try a 15-minute stir-fry: heat oil, add protein and veggies, season with soy sauce."
+            response="Try a 15-minute stir-fry: heat oil, add protein and veggies, season with soy sauce.",
         )
 
         # Then: should evaluate based on custom criteria
         assert result.score == "PASS"
-        assert "helpful" in result.reasoning.lower() or "actionable" in result.reasoning.lower()
+        assert (
+            "helpful" in result.reasoning.lower()
+            or "actionable" in result.reasoning.lower()
+        )
 
     def test_should_support_multiple_criteria_types(self) -> None:
         """Test creating judges for different criteria."""
         judges = [
-            GenericCriteriaJudge(model="gpt-4o-mini", criteria="coherence", criteria_description="Logical flow"),
-            GenericCriteriaJudge(model="gpt-4o-mini", criteria="toxicity", criteria_description="Harmful content"),
-            GenericCriteriaJudge(model="gpt-4o-mini", criteria="creativity", criteria_description="Novel ideas")
+            GenericCriteriaJudge(
+                model="gpt-4o-mini",
+                criteria="coherence",
+                criteria_description="Logical flow",
+            ),
+            GenericCriteriaJudge(
+                model="gpt-4o-mini",
+                criteria="toxicity",
+                criteria_description="Harmful content",
+            ),
+            GenericCriteriaJudge(
+                model="gpt-4o-mini",
+                criteria="creativity",
+                criteria_description="Novel ideas",
+            ),
         ]
 
         for judge in judges:
@@ -343,20 +395,34 @@ class TestBatchProcessing:
         """Create judge for batch testing."""
         return DietaryAdherenceJudge(model="gpt-4o-mini", temperature=0.0)
 
-    @patch('litellm.completion')
+    @patch("litellm.completion")
     async def test_should_evaluate_batch_in_parallel(
         self, mock_completion: Mock, judge: DietaryAdherenceJudge
     ) -> None:
         """Test parallel batch evaluation."""
         # Given: multiple examples
         examples = [
-            {"query": "Vegan recipe 1", "response": "Tofu dish", "dietary_restriction": "vegan"},
-            {"query": "Vegan recipe 2", "response": "Bean salad", "dietary_restriction": "vegan"},
-            {"query": "Vegan recipe 3", "response": "Vegetable soup", "dietary_restriction": "vegan"},
+            {
+                "query": "Vegan recipe 1",
+                "response": "Tofu dish",
+                "dietary_restriction": "vegan",
+            },
+            {
+                "query": "Vegan recipe 2",
+                "response": "Bean salad",
+                "dietary_restriction": "vegan",
+            },
+            {
+                "query": "Vegan recipe 3",
+                "response": "Vegetable soup",
+                "dietary_restriction": "vegan",
+            },
         ]
 
         mock_completion.return_value = Mock(
-            choices=[Mock(message=Mock(content='{"reasoning": "Test", "answer": "PASS"}'))]
+            choices=[
+                Mock(message=Mock(content='{"reasoning": "Test", "answer": "PASS"}'))
+            ]
         )
 
         # When: batch evaluating
@@ -367,7 +433,7 @@ class TestBatchProcessing:
         assert all(isinstance(r, JudgeResult) for r in results)
         assert mock_completion.call_count == 3
 
-    @patch('litellm.completion')
+    @patch("litellm.completion")
     async def test_should_handle_partial_failures_in_batch(
         self, mock_completion: Mock, judge: DietaryAdherenceJudge
     ) -> None:
@@ -380,9 +446,21 @@ class TestBatchProcessing:
         ]
 
         mock_completion.side_effect = [
-            Mock(choices=[Mock(message=Mock(content='{"reasoning": "Test", "answer": "PASS"}'))]),
+            Mock(
+                choices=[
+                    Mock(
+                        message=Mock(content='{"reasoning": "Test", "answer": "PASS"}')
+                    )
+                ]
+            ),
             Exception("API Error"),  # Second call fails
-            Mock(choices=[Mock(message=Mock(content='{"reasoning": "Test", "answer": "PASS"}'))]),
+            Mock(
+                choices=[
+                    Mock(
+                        message=Mock(content='{"reasoning": "Test", "answer": "PASS"}')
+                    )
+                ]
+            ),
         ]
 
         # When: batch evaluating
@@ -413,7 +491,7 @@ class TestTPRTNRCalculations:
         """Test TPR when judge misses some failures."""
         # Given: 2 true failures, judge catches only 1
         y_true = [True, True, False, False]  # 2 PASS, 2 FAIL
-        y_pred = [True, True, True, False]   # Missed one FAIL (false negative)
+        y_pred = [True, True, True, False]  # Missed one FAIL (false negative)
 
         # When: calculating TPR
         tpr, tnr = calculate_tpr_tnr(y_true, y_pred)
@@ -427,7 +505,7 @@ class TestTPRTNRCalculations:
         """Test TNR when judge has false positives."""
         # Given: judge incorrectly flags successes as failures
         y_true = [True, True, False, False]  # 2 PASS, 2 FAIL
-        y_pred = [False, True, False, False] # One false positive
+        y_pred = [False, True, False, False]  # One false positive
 
         # When: calculating TNR
         tpr, tnr = calculate_tpr_tnr(y_true, y_pred)
@@ -449,7 +527,9 @@ class TestTPRTNRCalculations:
 
         # Then: balanced accuracy = (0.8 + 0.9) / 2 = 0.85
         expected = (0.8 + 0.9) / 2
-        assert abs(balanced_acc - expected) < 0.01, f"Expected {expected}, got {balanced_acc}"
+        assert abs(balanced_acc - expected) < 0.01, (
+            f"Expected {expected}, got {balanced_acc}"
+        )
 
     def test_should_handle_edge_case_when_no_positives(self) -> None:
         """Test handling edge case with no positive examples."""
@@ -485,6 +565,7 @@ class TestErrorHandlingAndDefensiveProgramming:
 
     def test_should_raise_error_for_missing_template_file(self) -> None:
         """Test handling of missing prompt template file."""
+
         class BrokenJudge(BaseJudge):
             def __init__(self, model: str, temperature: float = 0.0):
                 super().__init__(model, temperature)
@@ -515,8 +596,16 @@ class TestErrorHandlingAndDefensiveProgramming:
         """Test that all public methods have type hints."""
         import inspect
 
-        for judge_class in [DietaryAdherenceJudge, SubstantiationJudge, GenericCriteriaJudge]:
-            for name, method in inspect.getmembers(judge_class, predicate=inspect.isfunction):
+        for judge_class in [
+            DietaryAdherenceJudge,
+            SubstantiationJudge,
+            GenericCriteriaJudge,
+        ]:
+            for name, method in inspect.getmembers(
+                judge_class, predicate=inspect.isfunction
+            ):
                 if not name.startswith("_"):  # Public methods
                     annotations = method.__annotations__
-                    assert "return" in annotations, f"{judge_class.__name__}.{name} missing return type hint"
+                    assert "return" in annotations, (
+                        f"{judge_class.__name__}.{name} missing return type hint"
+                    )
