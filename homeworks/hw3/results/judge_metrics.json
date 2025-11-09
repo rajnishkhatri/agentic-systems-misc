@@ -1,0 +1,18 @@
+{
+  "tpr": 0.87,
+  "tnr": 0.92,
+  "f1_score": 0.891,
+  "confusion_matrix": {
+    "tp": 87,
+    "tn": 92,
+    "fp": 8,
+    "fn": 13
+  },
+  "corrected_success_rate": 0.895,
+  "confidence_interval": {
+    "lower": 0.851,
+    "upper": 0.939
+  },
+  "total_cost": 1.24,
+  "evaluation_timestamp": "2025-11-09T14:30:00Z"
+}

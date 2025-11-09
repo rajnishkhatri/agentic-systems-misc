@@ -1,0 +1,15 @@
+{
+  "recall_at_k": {
+    "1": 0.68,
+    "3": 0.82,
+    "5": 0.91,
+    "10": 0.96
+  },
+  "mrr": 0.7623,
+  "query_success_rate": 0.89,
+  "avg_retrieval_time_ms": 143,
+  "total_queries": 500,
+  "failed_queries": 55,
+  "total_cost": 0.87,
+  "evaluation_timestamp": "2025-11-09T14:35:00Z"
+}

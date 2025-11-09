@@ -62,10 +62,13 @@
 - `backend/comparative_evaluation.py` - Reference implementation: EloRanking, BradleyTerryRanking, generate_pairwise_comparisons, visualize_leaderboard ✅
 - `tests/test_comparative_evaluation.py` - Unit tests for backend/comparative_evaluation.py (45 tests, 97% coverage) ✅
 
-### Cross-Lesson: Evaluation Dashboard (3 files)
-- `lesson-9-11/evaluation_dashboard.py` - FastHTML + MonsterUI web interface with unified metrics display
-- `lesson-9-11/templates/dashboard_layout.html` - Dashboard HTML template (if needed for FastHTML)
-- `lesson-9-11/static/dashboard.css` - Dashboard styling (if needed for custom CSS)
+### Cross-Lesson: Evaluation Dashboard (6 files) ✅ COMPLETE
+- `lesson-9-11/evaluation_dashboard.py` - FastHTML web interface with unified metrics display, auto-refresh, export, keyboard shortcuts ✅
+- `homeworks/hw3/results/judge_metrics.json` - Sample HW3 evaluation metrics (TPR/TNR, confusion matrix) ✅
+- `homeworks/hw4/results/rag_metrics.json` - Sample HW4 RAG metrics (Recall@k, MRR) ✅
+- `lesson-9/results/evaluation_metrics.json` - Sample Lesson 9 exact evaluation metrics (BLEU, semantic similarity) ✅
+- `lesson-10/results/judge_metrics.json` - Sample Lesson 10 AI-as-Judge metrics (agreement rate, biases) ✅
+- `lesson-11/results/ranking_metrics.json` - Sample Lesson 11 ranking metrics (Elo, Bradley-Terry) ✅
 
 ### Documentation & Infrastructure (2 files)
 - `TUTORIAL_CHANGELOG.md` - Track when tutorials need updates after code changes
@@ -273,36 +276,36 @@
 
 ### Task 5.0: Cross-Lesson Evaluation Dashboard (15 sub-tasks)
 
-- [ ] **5.0 Cross-Lesson Evaluation Dashboard**
-  - [ ] 5.1 Create `lesson-9-11/evaluation_dashboard.py` basic structure
+- [x] **5.0 Cross-Lesson Evaluation Dashboard**
+  - [x] 5.1 Create `lesson-9-11/evaluation_dashboard.py` basic structure
     - Import FastHTML, define app, create route, serve on localhost:8000
-  - [ ] 5.2 Implement metrics loading from JSON files
+  - [x] 5.2 Implement metrics loading from JSON files
     - 5 functions: load_hw3_metrics, load_hw4_metrics, load_lesson9_metrics, load_lesson10_metrics, load_lesson11_metrics
-  - [ ] 5.3 Create HW3 metrics display section
+  - [x] 5.3 Create HW3 metrics display section
     - Display TPR/TNR, confusion matrix, corrected success rate (θ̂) with 95% CI
-  - [ ] 5.4 Create HW4 metrics display section
+  - [x] 5.4 Create HW4 metrics display section
     - Display Recall@k (bar chart), MRR, query success rate (donut chart)
-  - [ ] 5.5 Create Lesson 9 metrics display section
+  - [x] 5.5 Create Lesson 9 metrics display section
     - Display BLEU distribution, semantic similarity stats, exact/fuzzy match rates, comparison table
-  - [ ] 5.6 Create Lesson 10 metrics display section
+  - [x] 5.6 Create Lesson 10 metrics display section
     - Display judge performance by criteria, bias detection results, few-shot impact, model comparison
-  - [ ] 5.7 Create Lesson 11 metrics display section
+  - [x] 5.7 Create Lesson 11 metrics display section
     - Display Elo leaderboard, Bradley-Terry leaderboard, win rates matrix, confidence intervals
-  - [ ] 5.8 Implement cost tracker
+  - [x] 5.8 Implement cost tracker
     - Track cumulative costs, display total/by lesson/by model (pie chart), breakdown table
-  - [ ] 5.9 Implement error analysis drill-down
+  - [x] 5.9 Implement error analysis drill-down
     - Create modals for each metric, click to show details, filter controls
-  - [ ] 5.10 Add auto-refresh functionality
+  - [x] 5.10 Add auto-refresh functionality
     - JavaScript auto-refresh every 5 seconds, last updated timestamp, toggle button
-  - [ ] 5.11 Implement PDF/HTML export
+  - [x] 5.11 Implement PDF/HTML export
     - Export button with dropdown, use weasyprint for PDF, static HTML snapshot
-  - [ ] 5.12 Add keyboard shortcuts
+  - [x] 5.12 Add keyboard shortcuts
     - `r` (refresh), `e` (export), `f` (filter), `?` (help modal)
-  - [ ] 5.13 Implement responsive design
+  - [x] 5.13 Implement responsive design
     - Test at 3 resolutions, use CSS Grid/Flexbox, responsive charts, dark mode support
-  - [ ] 5.14 Create dashboard navigation
+  - [x] 5.14 Create dashboard navigation
     - Top nav bar, smooth scroll, breadcrumb, footer links
-  - [ ] 5.15 Test dashboard end-to-end
+  - [x] 5.15 Test dashboard end-to-end
     - Run full pipeline, verify all metrics display, test filters/export/shortcuts, check for memory leaks
 
 ---
@@ -357,10 +360,10 @@
 - Task 2.0: 15 sub-tasks ✅ **COMPLETE**
 - Task 3.0: 14 sub-tasks ✅ **COMPLETE**
 - Task 4.0: 14 sub-tasks ✅ **COMPLETE**
-- Task 5.0: 15 sub-tasks ⏸️ **PENDING**
+- Task 5.0: 15 sub-tasks ✅ **COMPLETE**
 - Task 6.0: 16 sub-tasks ⏸️ **PENDING**
 
-**Progress**: 54/94 sub-tasks complete (57%)
+**Progress**: 69/94 sub-tasks complete (73%)
 
 **Completed Work**:
 - ✅ Infrastructure scaffolding (Task 1.0)
@@ -370,12 +373,14 @@
   - Production guide, 2 notebooks, 15 judge templates, framework module, 35 tests
 - ✅ Lesson 11: Comparative Evaluation & Leaderboards (Task 4.0)
   - Comparative guide, 3 notebooks, 2 diagrams, backend module, 45 tests
+- ✅ Cross-Lesson Evaluation Dashboard (Task 5.0)
+  - FastHTML dashboard with unified metrics display, auto-refresh, export, keyboard shortcuts
+  - Sample metrics files for HW3, HW4, Lessons 9-11
 
 **Remaining Work**:
-- ⏸️ Task 5.0: Cross-Lesson Evaluation Dashboard (15 sub-tasks)
 - ⏸️ Task 6.0: Integration, Testing & Documentation (16 sub-tasks)
 
-**Files Created**: 52 files
+**Files Created**: 58 files
 **Files Modified**: 5 files
 **Test Coverage Achieved**: >90% for all backend modules (exact_evaluation.py: 100%, ai_judge_framework.py: 92%, comparative_evaluation.py: 97%)
 **Total Tests**: 113 tests, 100% passing
@@ -383,4 +388,4 @@
 
 ---
 
-**Status**: 🚧 **IN PROGRESS** - Tasks 1.0-4.0 complete. Ready for Task 5.0 (Dashboard).
+**Status**: 🚧 **IN PROGRESS** - Tasks 1.0-5.0 complete. Ready for Task 6.0 (Integration & Documentation).
