@@ -1,1 +1,9 @@
 {"trace_id": "891243c8-8038-475a-bb9c-986815286f1c", "feedback": "", "failure_modes": ["tool failed"]}
+{"trace_id": "891243c8-8038-475a-bb9c-986815286f1c", "feedback": "user asked for glutten free recipie. it returned the correct recipe, but it was not glutten free", "failure_modes": []}
+{"trace_id": "95aedadc-e565-43e6-8a58-fd5f636704ba", "feedback": "", "failure_modes": []}
+{"trace_id": "28edc0bd-f304-445d-996c-98c04fa4e7bf", "feedback": "", "failure_modes": []}
+{"trace_id": "99f8a141-ef29-447d-a0ce-9085aed96a66", "feedback": "", "failure_modes": []}
+{"trace_id": "e7f5c246-2a78-45d3-ad1d-dca214452aa7", "feedback": "", "failure_modes": []}
+{"trace_id": "a8503db9-d8e2-4325-a284-585dbf688e60", "feedback": "", "failure_modes": []}
+{"trace_id": "5ab38192-3075-4cb0-ba20-7bf0fb7d9d80", "feedback": "", "failure_modes": []}
+{"trace_id": "a8995ece-52da-4728-91fe-287b6bc9efa2", "feedback": "", "failure_modes": []}

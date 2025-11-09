@@ -1,0 +1,90 @@
+You are a logical consistency expert evaluating responses for internal contradictions, inconsistencies, or conflicting information.
+
+TASK DEFINITION:
+Identify whether the response contains contradictory statements, including:
+- Direct contradictions (saying X then saying not-X)
+- Inconsistent measurements or instructions
+- Conflicting advice or recommendations
+- Incompatible claims presented as both true
+- Self-defeating statements
+
+EVALUATION CRITERIA:
+
+PASS if ALL of the following are true:
+- All statements are logically consistent with each other
+- No contradictory instructions or advice
+- Measurements and quantities are consistent throughout
+- If alternatives presented, clearly marked as options (not contradictions)
+- Qualifications and caveats don't contradict main claims
+
+FAIL if ANY of the following are present:
+- Direct contradiction (states X, then states not-X)
+- Inconsistent measurements (says "2 cups" then "1 cup" for same ingredient)
+- Conflicting instructions that can't both be true
+- Self-defeating advice ("Always use fresh herbs, but dried herbs are better")
+- Contradictory timing or temperature guidance
+
+DECISION RULES (apply in order):
+1. Offering alternatives is NOT contradiction ("use butter OR oil" is fine)
+2. Qualified statements can coexist ("usually X, but sometimes Y" is fine)
+3. Corrections are fine if marked as such ("Actually, I meant...")
+4. Context-dependent advice is okay ("for baking use X, for frying use Y")
+5. Nuanced positions aren't contradictions ("generally X, with exceptions")
+6. Only flag TRUE contradictions, not just different options
+
+FEW-SHOT EXAMPLES:
+
+Example 1 (PASS):
+Query: How long do I bake cookies?
+Response: Bake at 350°F for 10-12 minutes for chewy cookies, or 12-14 minutes for crispy cookies. The baking time affects the final texture.
+Reasoning: Not a contradiction - presents two valid options with clear distinction (chewy vs crispy). Context-dependent advice is appropriate.
+Answer: PASS
+
+Example 2 (FAIL):
+Query: What temperature should I use?
+Response: Bake at 350°F for best results. Never use 350°F - it's too low. The ideal temperature is 350°F.
+Reasoning: Clear self-contradiction. States 350°F is best, then says never use 350°F (too low), then says 350°F is ideal. These cannot all be true simultaneously. Logically inconsistent.
+Answer: FAIL
+
+Example 3 (PASS):
+Query: Should I use fresh or dried herbs?
+Response: Fresh herbs generally have brighter flavor and are preferred for finishing dishes. However, dried herbs work better in long-cooked dishes like stews, where their concentrated flavor holds up to heat. Use 1 tablespoon fresh or 1 teaspoon dried (3:1 ratio).
+Reasoning: Not contradictory - explains context-dependent preference. Fresh for some uses, dried for others. Provides conversion ratio. Nuanced, consistent advice.
+Answer: PASS
+
+Example 4 (FAIL):
+Query: How much flour do I need?
+Response: Add 2 cups of flour to the mixture. Mix in 1 cup of flour. The recipe requires 3 cups of flour total.
+Reasoning: Contradictory measurements: 2 cups + 1 cup ≠ 3 cups (that's only 2 cups total, not 3). Inconsistent quantities that don't add up.
+Answer: FAIL
+
+Example 5 (PASS):
+Query: Is sourdough bread hard to make?
+Response: Sourdough has a steep learning curve initially - maintaining a starter and timing can be tricky for beginners. However, once you understand the process, it becomes straightforward. It's both challenging and simple, depending on your experience level.
+Reasoning: Not contradictory - acknowledges complexity for beginners vs simplicity for experienced bakers. Context-dependent statement is logically consistent. Explains the apparent paradox.
+Answer: PASS
+
+Example 6 (FAIL):
+Query: Can I make this recipe ahead?
+Response: Yes, you can prepare this completely in advance. However, you must make it fresh right before serving, never prepare ahead. But it's perfect for make-ahead meals!
+Reasoning: Blatant contradiction: says yes (make ahead), then no (must be fresh), then yes again (perfect for make-ahead). These statements directly contradict each other.
+Answer: FAIL
+
+Example 7 (PASS):
+Query: What's the best way to cook steak?
+Response: For a tender cut like ribeye, high-heat searing works beautifully. For tougher cuts like chuck, low-and-slow braising is better. The best method depends on the cut you're using.
+Reasoning: Context-dependent advice, not contradiction. Different cuts require different methods. Explicitly states dependence on context. Logically sound.
+Answer: PASS
+
+NOW EVALUATE:
+Query: {query}
+Response: {response}
+
+Provide your evaluation in the following JSON format:
+{
+    "reasoning": "Identify any contradictory statements, or confirm logical consistency throughout response",
+    "contradiction_found": true or false,
+    "contradiction_details": "Describe specific contradictions if found, or 'None - response is internally consistent'",
+    "contradiction_type": "none" or "direct_contradiction" or "inconsistent_measurements" or "conflicting_advice" or "self_defeating",
+    "answer": "PASS" or "FAIL"
+}

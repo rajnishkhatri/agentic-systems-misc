@@ -1,0 +1,70 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#e1f5ff', 'primaryTextColor': '#000', 'primaryBorderColor': '#0288d1', 'lineColor': '#0288d1', 'secondaryColor': '#fff3e0', 'tertiaryColor': '#f1f8e9'}}}%%
+
+flowchart TD
+    Start([Start: LLM-as-Judge Pipeline]) --> GenTraces
+
+    %% Phase 1: Data Collection & Labeling
+    GenTraces[Generate/Collect Traces<br/>Run AI system on test queries] --> Label
+    Label[Create Ground Truth Labels<br/>Manual or automated with validation] --> Split
+    Split[Stratified Data Splitting<br/>Train: 15%<br/>Dev: 40%<br/>Test: 45%] --> CheckBalance
+
+    CheckBalance{Labels<br/>Balanced?<br/> 40-60% PASS}
+    CheckBalance -->|No| GenMore[Generate More Traces<br/>Target underrepresented outcomes]
+    GenMore --> Label
+    CheckBalance -->|Yes| Phase2
+
+    %% Phase 2: Judge Development
+    Phase2[/Judge Development Phase/] --> SelectFS
+    SelectFS[Select Few-Shot Examples<br/>From train set<br/> 1 PASS : 3 FAIL ratio] --> CreatePrompt
+    CreatePrompt[Create Judge Prompt<br/>Role + Definitions + Criteria<br/>+ Few-shot + Output format] --> TestDev
+
+    TestDev[Test Judge on Dev Set<br/>Calculate initial metrics] --> CalcMetrics
+    CalcMetrics[Calculate TPR and TNR<br/>Analyze false positives/negatives] --> CheckPerf
+
+    CheckPerf{TPR ≥ 0.85<br/>AND<br/>TNR ≥ 0.85?}
+    CheckPerf -->|No| AnalyzeErrors
+
+    AnalyzeErrors[Error Analysis<br/>Identify patterns in FP/FN] --> RefinePrompt
+    RefinePrompt[Refine Judge Prompt<br/>- Clarify criteria<br/>- Add edge case examples<br/>- Adjust few-shot] --> IterCount
+
+    IterCount{Iterations<br/> < 5?}
+    IterCount -->|Yes| TestDev
+    IterCount -->|No| AcceptPerf[Accept Current Performance<br/>Document limitations]
+
+    CheckPerf -->|Yes| Phase3
+    AcceptPerf --> Phase3
+
+    %% Phase 3: Final Evaluation
+    Phase3[/Final Evaluation Phase/] --> TestSet
+    TestSet[Evaluate on Test Set<br/> ONCE ONLY] --> FinalTPR
+    FinalTPR[Calculate Final TPR/TNR<br/>These measure judge bias] --> CheckFinal
+
+    CheckFinal{Final<br/>TPR/TNR<br/> ≥ 0.75?}
+    CheckFinal -->|No| Reject[❌ Judge Too Unreliable<br/>Options:<br/>1. Use better model<br/>2. Improve prompt<br/>3. Get more labeled data<br/>4. Use human evaluation]
+    CheckFinal -->|Yes| Production
+
+    %% Phase 4: Production Deployment
+    Production[Apply Judge to<br/>Production Dataset<br/> n=1000+ traces] --> RawRate
+    RawRate[Calculate Raw Pass Rate<br/> p_obs=observed_pass_rate] --> Correction
+
+    Correction[Statistical Bias Correction<br/>using judgy library<br/> θ̂ = p_obs + TNR - 1 / TPR + TNR - 1] --> CI
+    CI[Calculate 95%<br/>Confidence Interval<br/>Bootstrap sampling] --> Report
+
+    Report[Report Results<br/>Raw rate + Corrected rate + CI] --> Interpret
+
+    Interpret[Interpret & Document<br/>- True success rate estimate<br/>- Uncertainty quantification<br/>- Actionable recommendations] --> End
+
+    End([End: Complete Evaluation])
+
+    %% Styling
+    classDef dataClass fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
+    classDef processClass fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef decisionClass fill:#f1f8e9,stroke:#689f38,stroke-width:2px
+    classDef phaseClass fill:#e8eaf6,stroke:#3f51b5,stroke-width:3px,stroke-dasharray: 5 5
+    classDef errorClass fill:#ffebee,stroke:#c62828,stroke-width:2px
+
+    class GenTraces,Label,Split,TestSet,Production dataClass
+    class SelectFS,CreatePrompt,TestDev,CalcMetrics,AnalyzeErrors,RefinePrompt,FinalTPR,RawRate,Correction,CI,Report,Interpret processClass
+    class CheckBalance,CheckPerf,IterCount,CheckFinal decisionClass
+    class Phase2,Phase3 phaseClass
+    class Reject,GenMore,AcceptPerf errorClass

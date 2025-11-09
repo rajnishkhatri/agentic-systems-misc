@@ -1,0 +1,127 @@
+graph TB
+    %% HW1: Prompt Engineering & Query Design
+    PE[Prompt Engineering]
+    QD[Query Diversity]
+
+    %% HW2: Error Analysis
+    OC[Open Coding]
+    AC[Axial Coding]
+    FT[Failure Taxonomy]
+    SQG[Synthetic Query<br/>Generation]
+
+    %% HW3: LLM-as-Judge
+    GTL[Ground Truth<br/>Labeling]
+    DS[Dataset Splitting]
+    LLMJ[LLM-as-Judge]
+    TPR[TPR/TNR<br/>Measurement]
+    BC[Bias Correction]
+
+    %% HW4: RAG Evaluation
+    BM25[BM25 Retrieval]
+    SFE[Salient Fact<br/>Extraction]
+    RK[Recall@k]
+    MRR[MRR Calculation]
+    QRA[Query Rewrite<br/>Agent]
+
+    %% HW5: Agent Debugging
+    SBM[State-Based<br/>Modeling]
+    TMA[Transition Matrix<br/>Analysis]
+    BI[Bottleneck<br/>Identification]
+
+    %% Lesson 4: Substantiation
+    DP[Data<br/>Preprocessing]
+    PL[Parallel<br/>Labeling]
+    SE[Substantiation<br/>Evaluation]
+
+    %% Lesson 7: Trace Inspection
+    CSV[CSV Conversion]
+    MA[Manual<br/>Annotation]
+
+    %% Lesson 8: Model Cascades
+    LE[Logprob<br/>Extraction]
+    CT[Confidence<br/>Thresholding]
+    MC[Model Cascades]
+    CAO[Cost-Accuracy<br/>Optimization]
+
+    %% ========================================
+    %% Dependencies (requires relationships)
+    %% ========================================
+
+    %% HW1
+    PE --> QD
+
+    %% HW2
+    QD --> OC
+    OC --> AC
+    AC --> FT
+    FT --> SQG
+
+    %% HW3
+    GTL --> DS
+    DS --> LLMJ
+    LLMJ --> TPR
+    TPR --> BC
+
+    %% HW4
+    SFE --> RK
+    SFE --> MRR
+    BM25 --> RK
+    BM25 --> MRR
+    RK --> QRA
+    MRR --> QRA
+
+    %% HW5
+    SBM --> TMA
+    TMA --> BI
+
+    %% Lesson 4
+    DP --> PL
+    PL --> SE
+
+    %% Lesson 7
+    CSV --> MA
+
+    %% Lesson 8
+    LE --> CT
+    CT --> MC
+
+    %% ========================================
+    %% Enablement relationships (dashed)
+    %% ========================================
+
+    QD -.-> SQG
+    MA -.-> GTL
+    LLMJ -.-> SE
+    BC -.-> CAO
+
+    %% ========================================
+    %% Related techniques (dotted)
+    %% ========================================
+
+    SQG -.-> SFE
+    GTL -.-> PL
+
+    %% ========================================
+    %% Styling by family
+    %% ========================================
+
+    classDef qualitative fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px
+    classDef quantitative fill:#E3F2FD,stroke:#2196F3,stroke-width:2px
+    classDef automated fill:#FFF3E0,stroke:#FF9800,stroke-width:2px
+    classDef optimization fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px
+    classDef debugging fill:#FFEBEE,stroke:#F44336,stroke-width:2px
+
+    %% Qualitative Methods
+    class PE,QD,OC,AC,FT,MA qualitative
+
+    %% Quantitative Metrics
+    class TPR,RK,MRR quantitative
+
+    %% Automated Evaluation
+    class GTL,DS,LLMJ,BC,SQG,SFE,PL,SE automated
+
+    %% Optimization Techniques
+    class BM25,QRA,LE,CT,MC,CAO optimization
+
+    %% Debugging Methods
+    class DP,CSV,SBM,TMA,BI debugging

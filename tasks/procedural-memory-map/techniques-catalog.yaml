@@ -1,0 +1,976 @@
+# LLM Evaluation Techniques Catalog
+# Machine-readable index for AI assistant consumption
+# Version: 1.0
+# Last Updated: 2025-11-08
+
+techniques:
+  # ============================================================================
+  # HW1: Prompt Engineering & Query Design
+  # ============================================================================
+
+  - id: prompt_engineering
+    name: "System Prompt Engineering"
+    family: qualitative_methods
+    difficulty: beginner
+    when_to_use:
+      - "Building new conversational AI system"
+      - "Need to define bot behavior and constraints"
+      - "Controlling LLM creativity and output format"
+    when_not_to_use:
+      - "Using pre-built prompt templates that work"
+      - "No control over system prompt (API limitation)"
+    prerequisites:
+      knowledge: ["Basic understanding of LLMs", "Chat completions API"]
+      tools: []
+      data: []
+    cost_estimate: "Free"
+    time_estimate: "1-2 hours"
+    key_steps:
+      - "Define bot role and objective clearly"
+      - "Set behavioral rules (always/never instructions)"
+      - "Control LLM agency and creativity levels"
+      - "Structure output with formatting instructions"
+      - "Add safety clauses and ethical considerations"
+      - "Iteratively refine based on testing"
+    outputs:
+      - "Well-crafted system prompt (100-300 words)"
+    relationships:
+      requires: []
+      enables: ["query_diversity", "bulk_testing"]
+      related_to: []
+    source_tutorial: "homeworks/hw1/TUTORIAL_INDEX.md"
+
+  - id: query_diversity
+    name: "Query Diversity Testing"
+    family: qualitative_methods
+    difficulty: beginner
+    when_to_use:
+      - "Need systematic test coverage"
+      - "Want to stress-test system across dimensions"
+      - "Building initial evaluation dataset"
+    when_not_to_use:
+      - "Only testing one specific scenario"
+      - "Already have comprehensive query dataset"
+    prerequisites:
+      knowledge: ["Domain understanding"]
+      tools: []
+      data: ["System prompt"]
+    cost_estimate: "Free (manual creation)"
+    time_estimate: "30-60 minutes"
+    key_steps:
+      - "Identify key dimensions (e.g., cuisine, dietary restrictions)"
+      - "List 3-5 values per dimension"
+      - "Select representative combinations"
+      - "Write natural language queries (10-20 minimum)"
+      - "Ensure edge cases and boundary conditions"
+    outputs:
+      - "Diverse test query set (10-20+ queries)"
+      - "Dimension coverage matrix"
+    relationships:
+      requires: ["prompt_engineering"]
+      enables: ["bulk_testing", "open_coding"]
+      related_to: ["synthetic_query_generation"]
+    source_tutorial: "homeworks/hw1/TUTORIAL_INDEX.md"
+
+  # ============================================================================
+  # HW2: Error Analysis & Synthetic Query Generation
+  # ============================================================================
+
+  - id: open_coding
+    name: "Open Coding (Qualitative Analysis)"
+    family: qualitative_methods
+    difficulty: beginner
+    when_to_use:
+      - "Unknown failure modes - exploring patterns"
+      - "Initial error analysis on conversation traces"
+      - "Building labeled dataset from scratch"
+    when_not_to_use:
+      - "Failure modes already well-understood"
+      - "Need quantitative metrics, not qualitative insights"
+      - "Less than 10 traces to analyze"
+    prerequisites:
+      knowledge: ["Grounded theory basics"]
+      tools: ["Spreadsheet software"]
+      data: ["10-20+ conversation traces"]
+    cost_estimate: "Free"
+    time_estimate: "2-3 hours"
+    key_steps:
+      - "Review traces without preconceived categories"
+      - "Assign descriptive labels to patterns"
+      - "Take detailed notes on observations"
+      - "Look for recurring themes"
+      - "Avoid forcing observations into predetermined buckets"
+    outputs:
+      - "Initial codes and observations (unstructured)"
+      - "Patterns and themes identified"
+    relationships:
+      requires: ["query_diversity"]
+      enables: ["axial_coding", "failure_taxonomy"]
+      related_to: []
+    source_tutorial: "homeworks/hw2/TUTORIAL_INDEX.md"
+
+  - id: axial_coding
+    name: "Axial Coding (Pattern Grouping)"
+    family: qualitative_methods
+    difficulty: beginner
+    when_to_use:
+      - "After open coding, need to organize findings"
+      - "Want to group observations into categories"
+      - "Building structured failure taxonomy"
+    when_not_to_use:
+      - "Haven't completed open coding first"
+      - "Only have 1-2 failure types (no need for taxonomy)"
+    prerequisites:
+      knowledge: ["Open coding methodology"]
+      tools: []
+      data: ["Open codes from previous analysis"]
+    cost_estimate: "Free"
+    time_estimate: "1-2 hours"
+    key_steps:
+      - "Identify common themes across open codes"
+      - "Create hierarchical structure (categories → sub-categories)"
+      - "Define relationships between failure modes"
+      - "Ensure categories are mutually exclusive"
+      - "Aim for 3-7 top-level categories"
+    outputs:
+      - "Hierarchical failure mode structure"
+      - "Category definitions"
+    relationships:
+      requires: ["open_coding"]
+      enables: ["failure_taxonomy"]
+      related_to: []
+    source_tutorial: "homeworks/hw2/TUTORIAL_INDEX.md"
+
+  - id: failure_taxonomy
+    name: "Failure Taxonomy Construction"
+    family: qualitative_methods
+    difficulty: intermediate
+    when_to_use:
+      - "After axial coding, need formal documentation"
+      - "Want to communicate failure modes to team"
+      - "Building reference for future evaluation"
+    when_not_to_use:
+      - "Failure modes are obvious and don't need documentation"
+      - "System changes frequently (taxonomy would be outdated)"
+    prerequisites:
+      knowledge: ["Axial coding results"]
+      tools: []
+      data: ["Grouped failure modes from axial coding"]
+    cost_estimate: "Free"
+    time_estimate: "1-2 hours"
+    key_steps:
+      - "For each category: write title, definition, examples"
+      - "Ensure definitions are testable (can determine if trace matches)"
+      - "Include 1-2 concrete examples from real traces"
+      - "Document hypothetical examples if needed"
+      - "Maintain taxonomy consistency"
+    outputs:
+      - "Formal failure taxonomy document"
+      - "Definitions with examples for each failure mode"
+    relationships:
+      requires: ["axial_coding"]
+      enables: ["synthetic_query_generation"]
+      related_to: []
+    source_tutorial: "homeworks/hw2/TUTORIAL_INDEX.md"
+
+  - id: synthetic_query_generation
+    name: "Synthetic Query Generation (Dimension Tuples)"
+    family: automated_evaluation
+    difficulty: intermediate
+    when_to_use:
+      - "Need to test specific failure modes systematically"
+      - "Want to expand test coverage beyond manual queries"
+      - "Cold-start evaluation (no organic queries yet)"
+    when_not_to_use:
+      - "Have sufficient real user queries"
+      - "Dimensions are unclear or too complex"
+    prerequisites:
+      knowledge: ["Dimension identification"]
+      tools: ["litellm", "pandas"]
+      data: ["Identified dimensions and values"]
+    cost_estimate: "$0.05-0.40 (DEMO: $0.05-0.10 / FULL: $0.20-0.40)"
+    time_estimate: "30 minutes - 1 hour"
+    key_steps:
+      - "Identify 3-5 key dimensions"
+      - "Use LLM to generate dimension tuples"
+      - "Convert tuples to natural language queries"
+      - "Validate query quality and diversity"
+      - "Export to CSV for testing"
+    outputs:
+      - "15-20 (DEMO) or 100+ (FULL) synthetic queries"
+      - "Dimension coverage documentation"
+    relationships:
+      requires: ["failure_taxonomy"]
+      enables: ["bulk_testing"]
+      related_to: ["query_diversity", "salient_fact_extraction"]
+    source_tutorial: "homeworks/hw2/TUTORIAL_INDEX.md"
+
+  # ============================================================================
+  # HW3: LLM-as-Judge & Bias Correction
+  # ============================================================================
+
+  - id: ground_truth_labeling
+    name: "Ground Truth Labeling"
+    family: automated_evaluation
+    difficulty: intermediate
+    when_to_use:
+      - "Building LLM-as-Judge system"
+      - "Need labeled dataset for evaluation"
+      - "Criteria are objective and clearly defined"
+    when_not_to_use:
+      - "Criteria are highly subjective"
+      - "Less than 50 examples (manual labeling faster)"
+    prerequisites:
+      knowledge: ["Evaluation criteria definition"]
+      tools: ["litellm", "pydantic"]
+      data: ["Unlabeled conversation traces"]
+    cost_estimate: "$0.50-1.00 per 150 examples (GPT-4o)"
+    time_estimate: "15-30 minutes (automated with LLM)"
+    key_steps:
+      - "Define clear evaluation criteria"
+      - "Use high-quality LLM (GPT-4o or Claude) for labeling"
+      - "Structure output with Pydantic models"
+      - "Spot-check 10-20% of labels manually"
+      - "Document labeling methodology"
+    outputs:
+      - "Labeled dataset (100-200 examples recommended)"
+      - "Labeling criteria documentation"
+    relationships:
+      requires: []
+      enables: ["dataset_splitting", "llm_as_judge"]
+      related_to: ["parallel_labeling"]
+    source_tutorial: "homeworks/hw3/TUTORIAL_INDEX.md"
+
+  - id: dataset_splitting
+    name: "Train/Dev/Test Dataset Splitting"
+    family: automated_evaluation
+    difficulty: beginner
+    when_to_use:
+      - "Building any ML-style evaluation system"
+      - "Want to avoid overfitting to test data"
+      - "Have 100+ labeled examples"
+    when_not_to_use:
+      - "Less than 50 labeled examples (insufficient for splitting)"
+      - "One-time evaluation (no judge development needed)"
+    prerequisites:
+      knowledge: ["ML evaluation methodology"]
+      tools: ["pandas", "hashlib"]
+      data: ["Labeled dataset (100+ examples)"]
+    cost_estimate: "Free"
+    time_estimate: "5-10 minutes"
+    key_steps:
+      - "Use hash-based deterministic splitting (reproducible)"
+      - "Split ratios: 15% train / 40% dev / 45% test"
+      - "Ensure balanced label distribution across splits"
+      - "Validate split sizes meet minimum requirements"
+      - "Never look at test set until final evaluation"
+    outputs:
+      - "Train set (for few-shot examples)"
+      - "Dev set (for prompt engineering)"
+      - "Test set (for final evaluation)"
+    relationships:
+      requires: ["ground_truth_labeling"]
+      enables: ["llm_as_judge"]
+      related_to: []
+    source_tutorial: "homeworks/hw3/TUTORIAL_INDEX.md"
+
+  - id: llm_as_judge
+    name: "LLM-as-Judge Evaluation"
+    family: automated_evaluation
+    difficulty: intermediate
+    when_to_use:
+      - "Clear objective evaluation criteria exist"
+      - "Need to evaluate 100+ examples at scale"
+      - "Repeatable consistent judgments required"
+    when_not_to_use:
+      - "Highly subjective criteria (e.g., humor quality)"
+      - "Safety-critical applications (use human review)"
+      - "Very small datasets (<50 examples)"
+    prerequisites:
+      knowledge: ["Prompt engineering", "Binary classification"]
+      tools: ["litellm", "pydantic"]
+      data: ["Train/dev/test splits with labels"]
+    cost_estimate: "$0.03-0.05 per 100 examples (gpt-4o-mini as judge)"
+    time_estimate: "2-3 hours (includes prompt engineering)"
+    key_steps:
+      - "Engineer judge prompt with clear criteria"
+      - "Select few-shot examples from train set"
+      - "Iterate on dev set to improve prompt"
+      - "Measure TPR/TNR on dev set"
+      - "Final evaluation on test set (once only)"
+      - "Report metrics with confidence intervals"
+    outputs:
+      - "Judge prompt with few-shot examples"
+      - "TPR/TNR metrics on test set"
+      - "Confusion matrix"
+      - "False positive/negative analysis"
+    relationships:
+      requires: ["dataset_splitting"]
+      enables: ["bias_correction", "production_monitoring"]
+      related_to: ["substantiation_evaluation"]
+    source_tutorial: "homeworks/hw3/TUTORIAL_INDEX.md"
+
+  - id: tpr_tnr_measurement
+    name: "TPR/TNR Measurement"
+    family: quantitative_metrics
+    difficulty: intermediate
+    when_to_use:
+      - "Evaluating binary classifier (including LLM-as-Judge)"
+      - "Need to understand false positive vs false negative rates"
+      - "Preparing for bias correction"
+    when_not_to_use:
+      - "Multi-class problems (use precision/recall per class)"
+      - "Regression tasks (use MAE/RMSE)"
+    prerequisites:
+      knowledge: ["Confusion matrix interpretation"]
+      tools: ["pandas", "numpy"]
+      data: ["Predictions with ground truth labels"]
+    cost_estimate: "Free"
+    time_estimate: "10-15 minutes"
+    key_steps:
+      - "Build confusion matrix (TP, TN, FP, FN)"
+      - "Calculate TPR = TP / (TP + FN)"
+      - "Calculate TNR = TN / (TN + FP)"
+      - "Analyze false positives and false negatives separately"
+      - "Identify systematic error patterns"
+    outputs:
+      - "TPR (True Positive Rate / Sensitivity)"
+      - "TNR (True Negative Rate / Specificity)"
+      - "Confusion matrix"
+    relationships:
+      requires: ["llm_as_judge"]
+      enables: ["bias_correction"]
+      related_to: []
+    source_tutorial: "homeworks/hw3/TUTORIAL_INDEX.md"
+
+  - id: bias_correction
+    name: "Statistical Bias Correction (judgy library)"
+    family: automated_evaluation
+    difficulty: advanced
+    when_to_use:
+      - "Judge has known TPR/TNR measured on test set"
+      - "Reporting corrected success rates for production"
+      - "Want to account for systematic judge errors"
+    when_not_to_use:
+      - "Judge TPR/TNR unknown or unreliable"
+      - "Perfect judge (TPR=TNR=1.0, no correction needed)"
+      - "Test set too small (<30 examples)"
+    prerequisites:
+      knowledge: ["TPR/TNR interpretation", "Statistical correction"]
+      tools: ["judgy", "pandas"]
+      data: ["Judge predictions, TPR/TNR from test set"]
+    cost_estimate: "Free (computation only)"
+    time_estimate: "10-15 minutes"
+    key_steps:
+      - "Measure judge TPR/TNR on held-out test set"
+      - "Collect judge predictions on large unlabeled dataset"
+      - "Calculate raw observed pass rate (p_obs)"
+      - "Apply judgy correction: θ̂ = (p_obs + TNR - 1) / (TPR + TNR - 1)"
+      - "Report corrected rate with 95% confidence interval"
+    outputs:
+      - "Corrected success rate (θ̂)"
+      - "95% confidence interval"
+      - "Interpretation of correction"
+    relationships:
+      requires: ["tpr_tnr_measurement"]
+      enables: ["production_monitoring"]
+      related_to: []
+    source_tutorial: "homeworks/hw3/TUTORIAL_INDEX.md"
+
+  # ============================================================================
+  # HW4: RAG Retrieval Evaluation
+  # ============================================================================
+
+  - id: bm25_retrieval
+    name: "BM25 Retrieval Implementation"
+    family: optimization_techniques
+    difficulty: intermediate
+    when_to_use:
+      - "Building RAG system with keyword-based retrieval"
+      - "Want fast interpretable retrieval"
+      - "Avoiding embedding costs"
+    when_not_to_use:
+      - "Need semantic similarity (use embeddings instead)"
+      - "Queries and documents use very different vocabulary"
+    prerequisites:
+      knowledge: ["Information retrieval basics", "TF-IDF concepts"]
+      tools: ["rank-bm25", "pandas"]
+      data: ["Processed documents"]
+    cost_estimate: "Free (no API costs)"
+    time_estimate: "30-60 minutes"
+    key_steps:
+      - "Preprocess documents (tokenization, lowercasing)"
+      - "Build BM25 index with rank-bm25"
+      - "Save index for fast reuse"
+      - "Implement query function returning top-k results"
+      - "Handle edge cases (empty results)"
+    outputs:
+      - "BM25 retrieval implementation"
+      - "Saved index for reuse"
+    relationships:
+      requires: []
+      enables: ["recall_at_k", "mrr_calculation"]
+      related_to: []
+    source_tutorial: "homeworks/hw4/TUTORIAL_INDEX.md"
+
+  - id: salient_fact_extraction
+    name: "Salient Fact Extraction (for Query Generation)"
+    family: automated_evaluation
+    difficulty: intermediate
+    when_to_use:
+      - "Need realistic synthetic queries for RAG evaluation"
+      - "Want queries that reflect document content"
+      - "Cold-start evaluation (no organic queries)"
+    when_not_to_use:
+      - "Have sufficient real user queries"
+      - "Documents lack clear factual content"
+    prerequisites:
+      knowledge: ["Query generation strategy"]
+      tools: ["litellm", "pandas"]
+      data: ["Processed documents (recipes, articles, etc.)"]
+    cost_estimate: "$0.05-0.15 (DEMO: 10 docs) / $1.50-2.00 (FULL: 100 docs)"
+    time_estimate: "1-5 minutes (depending on scale)"
+    key_steps:
+      - "Use LLM to extract 3-5 salient facts per document"
+      - "Convert facts to natural language queries"
+      - "Use parallel processing (ThreadPoolExecutor)"
+      - "Validate query quality (length, diversity)"
+      - "Export to JSON/CSV with document IDs"
+    outputs:
+      - "Synthetic queries with ground truth document mappings"
+      - "Query quality metrics (diversity rate, avg length)"
+    relationships:
+      requires: []
+      enables: ["recall_at_k", "query_rewrite_agent"]
+      related_to: ["synthetic_query_generation"]
+    source_tutorial: "homeworks/hw4/TUTORIAL_INDEX.md"
+
+  - id: recall_at_k
+    name: "Recall@k Measurement"
+    family: quantitative_metrics
+    difficulty: intermediate
+    when_to_use:
+      - "Evaluating retrieval system performance"
+      - "Have queries with known relevant documents"
+      - "Want standard IR metric"
+    when_not_to_use:
+      - "Don't have ground truth document mappings"
+      - "Multi-label retrieval (one query → many correct docs)"
+    prerequisites:
+      knowledge: ["Information retrieval metrics"]
+      tools: ["pandas"]
+      data: ["Query-document pairs", "Retrieval results"]
+    cost_estimate: "Free"
+    time_estimate: "15-30 minutes"
+    key_steps:
+      - "For each query, retrieve top-k results"
+      - "Check if target document is in top-k"
+      - "Calculate Recall@1, Recall@3, Recall@5"
+      - "Analyze query types that fail"
+      - "Identify vocabulary mismatch patterns"
+    outputs:
+      - "Recall@1, Recall@3, Recall@5 metrics"
+      - "Failure analysis by query type"
+    relationships:
+      requires: ["bm25_retrieval", "salient_fact_extraction"]
+      enables: ["query_rewrite_agent"]
+      related_to: ["mrr_calculation"]
+    source_tutorial: "homeworks/hw4/TUTORIAL_INDEX.md"
+
+  - id: mrr_calculation
+    name: "Mean Reciprocal Rank (MRR) Calculation"
+    family: quantitative_metrics
+    difficulty: intermediate
+    when_to_use:
+      - "Want to measure ranking quality (not just top-k)"
+      - "Care about position of target document"
+      - "Comparing multiple retrieval strategies"
+    when_not_to_use:
+      - "Only care about binary (found/not found)"
+      - "Multi-label retrieval scenarios"
+    prerequisites:
+      knowledge: ["Ranking metrics"]
+      tools: ["pandas", "numpy"]
+      data: ["Query-document pairs", "Ranked retrieval results"]
+    cost_estimate: "Free"
+    time_estimate: "15-30 minutes"
+    key_steps:
+      - "For each query, find rank of target document"
+      - "Calculate reciprocal rank (1/rank)"
+      - "If target not found, RR = 0"
+      - "Average across all queries to get MRR"
+      - "Compare MRR across different retrieval strategies"
+    outputs:
+      - "Mean Reciprocal Rank (MRR)"
+      - "Per-query reciprocal ranks"
+    relationships:
+      requires: ["bm25_retrieval", "salient_fact_extraction"]
+      enables: ["query_rewrite_agent"]
+      related_to: ["recall_at_k"]
+    source_tutorial: "homeworks/hw4/TUTORIAL_INDEX.md"
+
+  - id: query_rewrite_agent
+    name: "Query Rewrite Agent (Retrieval Enhancement)"
+    family: optimization_techniques
+    difficulty: advanced
+    when_to_use:
+      - "Baseline retrieval performance is insufficient (<70% Recall@5)"
+      - "Want to improve hard queries"
+      - "Have budget for additional LLM calls"
+    when_not_to_use:
+      - "Baseline already >85% Recall@5"
+      - "Strict latency requirements (adds overhead)"
+      - "Very low budget (expensive per query)"
+    prerequisites:
+      knowledge: ["RAG architecture", "Query optimization strategies"]
+      tools: ["litellm", "rank-bm25"]
+      data: ["Baseline retrieval metrics", "Failed queries"]
+    cost_estimate: "$0.50-2.00 for evaluation"
+    time_estimate: "1-2 hours"
+    key_steps:
+      - "Implement 3 strategies: keywords, rewrite, expansion"
+      - "Test each on failed queries from baseline"
+      - "Measure improvement in Recall@5"
+      - "Analyze cost-benefit (% improvement vs additional cost)"
+      - "Select best strategy for production"
+    outputs:
+      - "Enhanced retrieval results"
+      - "Strategy comparison (baseline vs enhanced)"
+      - "Query rescue analysis (which queries improved)"
+    relationships:
+      requires: ["recall_at_k", "mrr_calculation"]
+      enables: []
+      related_to: ["model_cascades"]
+    source_tutorial: "homeworks/hw4/TUTORIAL_INDEX.md"
+
+  # ============================================================================
+  # HW5: Agent Failure Analysis (Transition Matrices)
+  # ============================================================================
+
+  - id: state_based_modeling
+    name: "State-Based Agent Modeling"
+    family: debugging_methods
+    difficulty: intermediate
+    when_to_use:
+      - "Agent has multi-step workflow"
+      - "Need to identify where failures occur"
+      - "Want to visualize agent pipeline"
+    when_not_to_use:
+      - "Single-step system (no pipeline)"
+      - "Failures are obvious (don't need analysis)"
+    prerequisites:
+      knowledge: ["State machine concepts"]
+      tools: []
+      data: ["Agent architecture documentation"]
+    cost_estimate: "Free"
+    time_estimate: "30-60 minutes"
+    key_steps:
+      - "Identify all states in agent pipeline"
+      - "Define state transitions (normal flow)"
+      - "Document what each state does"
+      - "Identify possible failure points"
+      - "Create state diagram"
+    outputs:
+      - "State list with descriptions"
+      - "State transition diagram"
+    relationships:
+      requires: []
+      enables: ["transition_matrix_analysis"]
+      related_to: []
+    source_tutorial: "homeworks/hw5/TUTORIAL_INDEX.md"
+
+  - id: transition_matrix_analysis
+    name: "Transition Matrix Analysis (Failure Patterns)"
+    family: debugging_methods
+    difficulty: intermediate
+    when_to_use:
+      - "Have labeled failure traces (100+ examples)"
+      - "Want to identify bottlenecks in agent pipeline"
+      - "Need data-driven prioritization for fixes"
+    when_not_to_use:
+      - "Less than 30 failure traces"
+      - "Agent pipeline is very simple (<3 states)"
+      - "Failures are already well-understood"
+    prerequisites:
+      knowledge: ["State-based modeling"]
+      tools: ["pandas", "seaborn", "matplotlib"]
+      data: ["Labeled failure traces with state information"]
+    cost_estimate: "Free"
+    time_estimate: "1-2 hours"
+    key_steps:
+      - "Extract (last_success_state, first_failure_state) pairs"
+      - "Build transition frequency matrix"
+      - "Create heatmap visualization"
+      - "Identify high-frequency transitions (bottlenecks)"
+      - "Analyze patterns (clustered vs distributed failures)"
+      - "Distinguish LLM failures from tool failures"
+    outputs:
+      - "Transition matrix (state × state)"
+      - "Heatmap visualization"
+      - "Bottleneck identification report"
+    relationships:
+      requires: ["state_based_modeling"]
+      enables: ["bottleneck_identification"]
+      related_to: []
+    source_tutorial: "homeworks/hw5/TUTORIAL_INDEX.md"
+
+  - id: bottleneck_identification
+    name: "Agent Bottleneck Identification"
+    family: debugging_methods
+    difficulty: intermediate
+    when_to_use:
+      - "After transition matrix analysis"
+      - "Want to prioritize which states to fix"
+      - "Need to explain findings to team"
+    when_not_to_use:
+      - "Haven't built transition matrix yet"
+    prerequisites:
+      knowledge: ["Transition matrix interpretation"]
+      tools: []
+      data: ["Transition matrix with frequencies"]
+    cost_estimate: "Free"
+    time_estimate: "30-60 minutes"
+    key_steps:
+      - "Sum failures per state (column totals)"
+      - "Identify states with highest failure rates"
+      - "Determine if failures are LLM or tool related"
+      - "Propose targeted improvements"
+      - "Document findings and recommendations"
+    outputs:
+      - "Ranked list of bottleneck states"
+      - "Improvement recommendations"
+    relationships:
+      requires: ["transition_matrix_analysis"]
+      enables: []
+      related_to: []
+    source_tutorial: "homeworks/hw5/TUTORIAL_INDEX.md"
+
+  # ============================================================================
+  # Lesson 4: Substantiation Evaluation
+  # ============================================================================
+
+  - id: data_preprocessing
+    name: "Conversation Log Preprocessing"
+    family: debugging_methods
+    difficulty: beginner
+    when_to_use:
+      - "Have raw CSV logs from production"
+      - "Need structured JSON for analysis"
+      - "Logs contain malformed JSON in cells"
+    when_not_to_use:
+      - "Logs already in clean structured format"
+    prerequisites:
+      knowledge: ["JSON parsing", "CSV handling"]
+      tools: ["pandas", "json"]
+      data: ["Raw conversation logs (CSV)"]
+    cost_estimate: "Free"
+    time_estimate: "30-60 minutes"
+    key_steps:
+      - "Parse CSV with malformed JSON handling"
+      - "Extract essential fields (role, content, tool_outputs)"
+      - "Filter incomplete or invalid records"
+      - "Generate unique conversation IDs"
+      - "Export to structured JSON"
+    outputs:
+      - "Cleaned conversation traces (JSON)"
+    relationships:
+      requires: []
+      enables: ["parallel_labeling", "substantiation_evaluation"]
+      related_to: []
+    source_tutorial: "lesson-4/TUTORIAL_INDEX.md"
+
+  - id: parallel_labeling
+    name: "Parallel LLM Labeling (ThreadPoolExecutor)"
+    family: automated_evaluation
+    difficulty: advanced
+    when_to_use:
+      - "Need to label 200+ examples with LLM"
+      - "Want to reduce labeling time from 40min to 5min"
+      - "Have API rate limit headroom"
+    when_not_to_use:
+      - "Less than 50 examples (sequential is fine)"
+      - "Hit API rate limits with parallel calls"
+    prerequisites:
+      knowledge: ["Parallel programming basics", "API rate limits"]
+      tools: ["litellm", "concurrent.futures", "tqdm"]
+      data: ["Unlabeled traces", "Labeling criteria"]
+    cost_estimate: "$0.50-1.00 per 200 traces (GPT-4o)"
+    time_estimate: "5-8 minutes (parallel) vs 30-40 minutes (sequential)"
+    key_steps:
+      - "Define labeling function for single trace"
+      - "Use ThreadPoolExecutor with 10-64 workers"
+      - "Add progress tracking with tqdm"
+      - "Implement error handling and retry logic"
+      - "Save checkpoints for resume capability"
+    outputs:
+      - "Labeled dataset (200+ examples)"
+      - "Processing time and cost metrics"
+    relationships:
+      requires: ["data_preprocessing"]
+      enables: ["llm_as_judge", "substantiation_evaluation"]
+      related_to: ["ground_truth_labeling"]
+    source_tutorial: "lesson-4/TUTORIAL_INDEX.md"
+
+  - id: substantiation_evaluation
+    name: "Substantiation Evaluation (Tool Grounding)"
+    family: automated_evaluation
+    difficulty: advanced
+    when_to_use:
+      - "Agent uses tools and might fabricate information"
+      - "Need to verify claims are grounded in tool outputs"
+      - "Preventing hallucinations in production"
+    when_not_to_use:
+      - "Agent doesn't use tools (no grounding possible)"
+      - "All responses are creative (e.g., story generation)"
+    prerequisites:
+      knowledge: ["Tool grounding concepts", "LLM-as-Judge"]
+      tools: ["litellm", "pydantic", "judgy"]
+      data: ["Conversation traces with tool outputs"]
+    cost_estimate: "$0.50-2.00 for 200 evaluations"
+    time_estimate: "3-4 hours (including setup)"
+    key_steps:
+      - "Define substantiation criteria clearly"
+      - "Label ground truth with GPT-4o (parallel)"
+      - "Split into train/dev/test (15%/40%/45%)"
+      - "Develop judge prompt with few-shot examples"
+      - "Measure TPR/TNR on test set"
+      - "Deploy for production monitoring"
+    outputs:
+      - "Substantiation judge"
+      - "TPR/TNR metrics"
+      - "% of responses that are substantiated"
+    relationships:
+      requires: ["parallel_labeling"]
+      enables: ["production_monitoring"]
+      related_to: ["llm_as_judge"]
+    source_tutorial: "lesson-4/TUTORIAL_INDEX.md"
+
+  # ============================================================================
+  # Lesson 7: Trace Inspection & Manual Annotation
+  # ============================================================================
+
+  - id: csv_conversion
+    name: "Trace-to-CSV Conversion (Manual Review)"
+    family: debugging_methods
+    difficulty: beginner
+    when_to_use:
+      - "Need to manually review conversation traces"
+      - "Want to use spreadsheet software for annotation"
+      - "JSON traces too complex to read directly"
+    when_not_to_use:
+      - "Traces already in readable format"
+      - "Automated evaluation is sufficient"
+    prerequisites:
+      knowledge: ["JSON/CSV handling"]
+      tools: ["pandas"]
+      data: ["JSON conversation traces"]
+    cost_estimate: "Free"
+    time_estimate: "15-30 minutes"
+    key_steps:
+      - "Flatten nested JSON structures"
+      - "Format messages with role prefixes (USER:, AGENT:, TOOL:)"
+      - "Summarize tool calls for readability"
+      - "Handle special characters and CSV escaping"
+      - "Export to CSV compatible with Excel/Google Sheets"
+    outputs:
+      - "Human-readable CSV file"
+      - "Trace review spreadsheet"
+    relationships:
+      requires: []
+      enables: ["manual_annotation"]
+      related_to: ["data_preprocessing"]
+    source_tutorial: "lesson-7/TUTORIAL_INDEX.md"
+
+  - id: manual_annotation
+    name: "Manual Annotation Workflow"
+    family: qualitative_methods
+    difficulty: beginner
+    when_to_use:
+      - "Evaluation criteria are subjective"
+      - "Building initial labeled dataset (<100 examples)"
+      - "Validating automated labels"
+      - "Safety-critical applications"
+    when_not_to_use:
+      - "Need to annotate 200+ examples (too time-intensive)"
+      - "Criteria are objective (use LLM-as-Judge)"
+    prerequisites:
+      knowledge: ["Annotation task definition"]
+      tools: ["Spreadsheet software or custom UI"]
+      data: ["Traces in CSV or annotation interface"]
+    cost_estimate: "Free (human time)"
+    time_estimate: "2-5 minutes per trace"
+    key_steps:
+      - "Define annotation task and criteria clearly"
+      - "Provide 3-5 example annotations"
+      - "Annotate traces in spreadsheet or UI"
+      - "Track uncertain cases separately"
+      - "Measure inter-annotator agreement (if multiple annotators)"
+      - "Export labeled data"
+    outputs:
+      - "Manually labeled dataset"
+      - "Annotation notes and edge cases"
+    relationships:
+      requires: ["csv_conversion"]
+      enables: ["llm_as_judge", "failure_taxonomy"]
+      related_to: ["ground_truth_labeling"]
+    source_tutorial: "lesson-7/TUTORIAL_INDEX.md"
+
+  # ============================================================================
+  # Lesson 8: Model Cascades & Cost Optimization
+  # ============================================================================
+
+  - id: logprob_extraction
+    name: "Log Probability Extraction (Confidence Scores)"
+    family: optimization_techniques
+    difficulty: intermediate
+    when_to_use:
+      - "Building model cascade"
+      - "Need confidence scores for routing decisions"
+      - "Binary or multi-class classification tasks"
+    when_not_to_use:
+      - "Model doesn't support logprobs"
+      - "Generative tasks (confidence harder to measure)"
+    prerequisites:
+      knowledge: ["Probability interpretation", "Classification tasks"]
+      tools: ["litellm"]
+      data: ["LLM predictions"]
+    cost_estimate: "Free (included in LLM API call)"
+    time_estimate: "30 minutes (implementation)"
+    key_steps:
+      - "Call LLM API with logprobs=True parameter"
+      - "Extract token probabilities for answer tokens"
+      - "Convert logprobs to probabilities: exp(logprob)"
+      - "Normalize probabilities (sum to 1)"
+      - "Use as confidence score"
+    outputs:
+      - "Confidence scores for predictions"
+    relationships:
+      requires: []
+      enables: ["confidence_thresholding", "model_cascades"]
+      related_to: []
+    source_tutorial: "lesson-8/TUTORIAL_INDEX.md"
+
+  - id: confidence_thresholding
+    name: "Confidence Thresholding (Routing Logic)"
+    family: optimization_techniques
+    difficulty: intermediate
+    when_to_use:
+      - "Have confidence scores from cheap model"
+      - "Want to route uncertain queries to expensive model"
+      - "Building cascade system"
+    when_not_to_use:
+      - "No confidence scores available"
+      - "All queries have similar difficulty"
+    prerequisites:
+      knowledge: ["Confidence score interpretation"]
+      tools: []
+      data: ["Predictions with confidence scores", "Ground truth labels"]
+    cost_estimate: "Free"
+    time_estimate: "1-2 hours (threshold optimization)"
+    key_steps:
+      - "Test multiple thresholds (0.70, 0.80, 0.90, 0.95, 0.99)"
+      - "For each threshold, measure: % to cheap, accuracy, cost"
+      - "Plot threshold vs accuracy and threshold vs cost"
+      - "Select threshold meeting accuracy target with max savings"
+      - "Validate on held-out test set"
+    outputs:
+      - "Optimal threshold for routing"
+      - "Expected cost savings and accuracy"
+    relationships:
+      requires: ["logprob_extraction"]
+      enables: ["model_cascades"]
+      related_to: []
+    source_tutorial: "lesson-8/TUTORIAL_INDEX.md"
+
+  - id: model_cascades
+    name: "Model Cascades (Cost-Accuracy Optimization)"
+    family: optimization_techniques
+    difficulty: advanced
+    when_to_use:
+      - "Production costs too high"
+      - "Many queries are 'easy' (can use cheap model)"
+      - "Can accept sequential latency overhead"
+    when_not_to_use:
+      - "Cheap model too weak (<80% accuracy)"
+      - "Strict latency requirements"
+      - "All queries uniformly difficult"
+    prerequisites:
+      knowledge: ["Cascade architecture", "Cost-accuracy trade-offs"]
+      tools: ["litellm"]
+      data: ["Baseline metrics from cheap and expensive models"]
+    cost_estimate: "Varies (goal is 40-70% reduction)"
+    time_estimate: "2-3 hours (design + evaluation)"
+    key_steps:
+      - "Measure baseline: cheap-only accuracy, expensive-only accuracy"
+      - "Extract confidence scores from cheap model"
+      - "Optimize threshold (see confidence_thresholding)"
+      - "Implement routing: if confidence >= threshold, use cheap; else expensive"
+      - "Measure cascade: accuracy, % routed to cheap, total cost"
+      - "Compare to baselines"
+    outputs:
+      - "Cascade system implementation"
+      - "Cost savings (40-70% typical)"
+      - "Accuracy maintenance (match expensive model)"
+      - "Routing statistics"
+    relationships:
+      requires: ["logprob_extraction", "confidence_thresholding"]
+      enables: ["production_deployment"]
+      related_to: ["query_rewrite_agent"]
+    source_tutorial: "lesson-8/TUTORIAL_INDEX.md"
+
+  - id: cost_accuracy_optimization
+    name: "Cost-Accuracy Trade-off Analysis"
+    family: optimization_techniques
+    difficulty: intermediate
+    when_to_use:
+      - "Multiple model options with different costs/quality"
+      - "Need to justify model selection"
+      - "Balancing accuracy targets with budget constraints"
+    when_not_to_use:
+      - "Only one model option available"
+      - "Cost is not a concern"
+    prerequisites:
+      knowledge: ["Model pricing", "Accuracy metrics"]
+      tools: ["pandas", "matplotlib"]
+      data: ["Accuracy metrics for each model", "Pricing information"]
+    cost_estimate: "Free (analysis only)"
+    time_estimate: "1-2 hours"
+    key_steps:
+      - "List all model options with costs per 1K tokens"
+      - "Measure accuracy for each model on same test set"
+      - "Calculate cost per 1000 queries"
+      - "Plot accuracy vs cost"
+      - "Identify pareto frontier (efficient models)"
+      - "Select model or cascade strategy"
+    outputs:
+      - "Cost-accuracy comparison table"
+      - "Model selection recommendation"
+    relationships:
+      requires: []
+      enables: ["model_cascades"]
+      related_to: []
+    source_tutorial: "lesson-8/TUTORIAL_INDEX.md"
+
+# ============================================================================
+# Metadata
+# ============================================================================
+
+metadata:
+  version: "1.0"
+  created: "2025-11-08"
+  total_techniques: 35
+  technique_families:
+    - qualitative_methods
+    - quantitative_metrics
+    - automated_evaluation
+    - optimization_techniques
+    - debugging_methods
+  source_tutorials:
+    - "homeworks/hw1/TUTORIAL_INDEX.md"
+    - "homeworks/hw2/TUTORIAL_INDEX.md"
+    - "homeworks/hw3/TUTORIAL_INDEX.md"
+    - "homeworks/hw4/TUTORIAL_INDEX.md"
+    - "homeworks/hw5/TUTORIAL_INDEX.md"
+    - "lesson-4/TUTORIAL_INDEX.md"
+    - "lesson-7/TUTORIAL_INDEX.md"
+    - "lesson-8/TUTORIAL_INDEX.md"

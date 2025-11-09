@@ -1,0 +1,93 @@
+```mermaid
+graph TD
+    Start[Need to evaluate LLM outputs?] --> Q1{What are you evaluating?}
+
+    Q1 -->|Objective criterion with ground truth| OBJ[Use Exact/Lexical/Semantic Match]
+    Q1 -->|Subjective quality or behavior| SUBJ[Use AI-as-Judge]
+
+    OBJ --> OBJ_EXAMPLES[Examples: Code correctness,<br/>Factual Q&A, Translation]
+
+    SUBJ --> Q2{What specific criterion?}
+
+    Q2 -->|Safety/Compliance| SAFETY{Which type?}
+    Q2 -->|Quality/Coherence| QUALITY{Which type?}
+    Q2 -->|Accuracy/Truth| ACCURACY{Which type?}
+    Q2 -->|User Experience| UX{Which type?}
+
+    SAFETY -->|Dietary restrictions| D1[DietaryAdherenceJudge]
+    SAFETY -->|Toxic content| D2[ToxicityDetectionJudge]
+    SAFETY -->|Food safety violations| D3[SafetyJudge]
+    SAFETY -->|Cultural sensitivity| D4[CulturalSensitivityJudge]
+
+    QUALITY -->|Logical flow| Q1J[CoherenceJudge]
+    QUALITY -->|Response length fit| Q2J[LengthAppropriatenessJudge]
+    QUALITY -->|Creative content| Q3J[CreativityJudge]
+    QUALITY -->|Code quality| Q4J[CodeQualityJudge]
+
+    ACCURACY -->|Unsupported claims| A1[SubstantiationJudge]
+    ACCURACY -->|Fabricated information| A2[HallucinationDetectionJudge]
+    ACCURACY -->|Factual errors| A3[FactualCorrectnessJudge]
+    ACCURACY -->|Internal contradictions| A4[ContradictionDetectionJudge]
+
+    UX -->|Useful information| U1[HelpfulnessJudge]
+    UX -->|Following instructions| U2[InstructionFollowingJudge]
+    UX -->|Citation accuracy| U3[CitationQualityJudge]
+
+    D1 --> IMPL[Implementation Options]
+    D2 --> IMPL
+    D3 --> IMPL
+    D4 --> IMPL
+    Q1J --> IMPL
+    Q2J --> IMPL
+    Q3J --> IMPL
+    Q4J --> IMPL
+    A1 --> IMPL
+    A2 --> IMPL
+    A3 --> IMPL
+    A4 --> IMPL
+    U1 --> IMPL
+    U2 --> IMPL
+    U3 --> IMPL
+
+    IMPL --> CHOICE{Use predefined template<br/>or custom criteria?}
+
+    CHOICE -->|Predefined| PRED[Load template from<br/>lesson-10/templates/judge_prompts/]
+    CHOICE -->|Custom| CUST[GenericCriteriaJudge<br/>with custom description]
+
+    PRED --> MODEL{Which model?}
+    CUST --> MODEL
+
+    MODEL -->|High-stakes, production| M1[GPT-4o<br/>$$$$ | 95%+ accuracy]
+    MODEL -->|Most use cases| M2[GPT-4o-mini<br/>$$$ | 90-93% accuracy<br/>RECOMMENDED]
+    MODEL -->|Development, iteration| M3[GPT-3.5-turbo<br/>$ | 84-87% accuracy]
+    MODEL -->|Privacy/scale| M4[Open-source Llama 3.1<br/>FREE | 82-85% accuracy]
+
+    M1 --> VALIDATE[Validate Judge Quality]
+    M2 --> VALIDATE
+    M3 --> VALIDATE
+    M4 --> VALIDATE
+
+    VALIDATE --> V1{Have ground truth?}
+    V1 -->|Yes| TPR[Measure TPR/TNR<br/>Target: Balanced Acc >85%]
+    V1 -->|No| INTER[Measure inter-judge<br/>agreement Kappa >0.6]
+
+    TPR --> BIAS[Test for biases]
+    INTER --> BIAS
+
+    BIAS --> B1[Self-preference bias]
+    BIAS --> B2[Position bias]
+    BIAS --> B3[Verbosity bias]
+
+    B1 --> PROD[Deploy to Production]
+    B2 --> PROD
+    B3 --> PROD
+
+    PROD --> MONITOR[Monitor & Iterate]
+    MONITOR --> METRICS[Track: TPR, TNR,<br/>cost, latency,<br/>false positive rate]
+
+    style Start fill:#e1f5ff
+    style IMPL fill:#fff4e1
+    style VALIDATE fill:#ffe1e1
+    style PROD fill:#e1ffe1
+    style M2 fill:#90EE90
+```

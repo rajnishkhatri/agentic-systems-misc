@@ -9,7 +9,7 @@ flowchart TD
 
     %% Extract Confidence
     ExtractLogprobs[Extract Log Probabilities<br/>logprobs for True/False tokens]
-    ExtractLogprobs --> CalcConfidence[Calculate Confidence<br/>P_normalized = exp(logprob) / sum(exp(logprobs))]
+    ExtractLogprobs --> CalcConfidence["Calculate Confidence<br/>P_normalized = exp(logprob) / sum(exp(logprobs))"]
 
     %% Get Prediction and Confidence
     CalcConfidence --> GetPrediction[Get Proxy Prediction & Confidence<br/>prediction: 0 or 1<br/>confidence: 0.0 - 1.0]

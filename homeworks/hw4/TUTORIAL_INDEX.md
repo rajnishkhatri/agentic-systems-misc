@@ -43,22 +43,29 @@ By completing these tutorials, you will be able to:
 
 ### 2. Synthetic Query Generation Tutorial (Interactive)
 **File:** `synthetic_query_generation_tutorial.ipynb`
-**Execution Time:** 20-30 minutes
+**Execution Time:**
+- **DEMO MODE** (default): 1-2 minutes | Cost: $0.05-0.15 (10 recipes)
+- **FULL MODE**: 3-5 minutes | Cost: $1.50-2.00 (100 recipes)
+
 **Topics:**
-- Salient fact extraction from documents
-- Two-step LLM prompting: facts → queries
-- Parallel processing with ThreadPoolExecutor
-- Query quality validation and filtering
-- Generating 100+ queries efficiently
+- Salient fact extraction from recipe documents
+- Two-step LLM prompting: facts → queries for better quality
+- Parallel processing with ThreadPoolExecutor (10 workers)
+- Automated query quality validation (length, diversity)
+- Generating 100+ queries efficiently at scale
 - Cost optimization for large-scale generation
 
 **When to use:** After processing recipe data, use this to create your evaluation dataset.
 
 **Interactive Features:**
-- Live salient fact extraction
+- Configurable DEMO vs FULL mode for cost control
+- Live salient fact extraction with gpt-4o-mini
 - Natural language query generation
-- Quality review interface
-- Export to JSON for evaluation
+- Automated quality metrics (diversity rate, avg length)
+- Cost estimation calculator
+- Export to JSON and CSV for evaluation
+
+**⚠️ Requirements:** API key in `.env`, processed recipes from `scripts/process_recipes.py`
 
 ---
 

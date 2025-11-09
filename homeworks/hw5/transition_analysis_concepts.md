@@ -550,7 +550,7 @@ Matrix rows: [Parse, Plan, GenRec, GetRec, Compose]
 
 ### Related Tutorials
 - [Heatmap Visualization Tutorial](heatmap_visualization_tutorial.ipynb) - Build and visualize transition matrices
-- [Transition Matrix Diagram](diagrams/transition_matrix_concept.mmd) - Visual reference for state pipeline
+- [Transition Matrix Diagram](diagrams/transition_matrix_concept.mmd) ([PNG version](diagrams/transition_matrix_concept.png)) - Visual reference for state pipeline
 - [Error Analysis Concepts](../hw2/error_analysis_concepts.md) - Prerequisite qualitative methodology
 - [HW5 Tutorial Index](TUTORIAL_INDEX.md) - Complete HW5 learning path
 

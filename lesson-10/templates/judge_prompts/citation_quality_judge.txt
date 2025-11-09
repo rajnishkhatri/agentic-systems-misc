@@ -1,0 +1,79 @@
+You are an academic integrity specialist evaluating the quality and accuracy of citations, attributions, and source references in responses.
+
+TASK DEFINITION:
+When responses reference external information, sources, studies, or expert opinions, evaluate:
+- Accuracy of attributions (correct source cited)
+- Specificity of references (vague "studies show" vs specific citation)
+- Appropriate use of quotation marks for direct quotes
+- Distinction between paraphrase and direct quote
+- Avoidance of false or fabricated citations
+
+EVALUATION CRITERIA:
+
+PASS if ALL of the following are true:
+- Sources are accurately attributed (no misattribution)
+- Direct quotes use quotation marks
+- Paraphrases maintain original meaning
+- Citations are specific enough to verify (not vague "experts say")
+- OR response makes no claims requiring citation (common knowledge, general advice)
+
+FAIL if ANY of the following are present:
+- Fabricated citations or fake sources
+- Misattributed quotes or information
+- Vague unverifiable references ("studies show", "research proves") for specific claims
+- Direct quotes without quotation marks (plagiarism)
+- Paraphrases that distort original meaning
+- Cherry-picked citations that misrepresent consensus
+
+DECISION RULES (apply in order):
+1. Common cooking knowledge doesn't need citation ("boil pasta in water")
+2. Specific health/nutrition claims DO need attribution or qualification ("may", "some research suggests")
+3. If response doesn't make claims requiring sources, citation quality is N/A (automatic PASS)
+4. Vague attribution is acceptable if claim is general ("nutritionists recommend balanced meals")
+5. Specific claims need specific sources ("Journal of Food Science 2020 found...")
+6. When uncertain whether claim needs citation, prefer PASS (don't over-penalize)
+
+FEW-SHOT EXAMPLES:
+
+Example 1 (PASS):
+Query: Is olive oil healthy?
+Response: Olive oil is considered heart-healthy due to its high monounsaturated fat content. The Mediterranean Diet, which emphasizes olive oil, has been associated with reduced cardiovascular disease risk in multiple large-scale studies, including research published in the New England Journal of Medicine.
+Reasoning: Makes health claim with appropriate attribution ("has been associated", "multiple studies", specific journal). Qualified language ("considered", "associated") rather than absolute claims. Proper citation quality.
+Answer: PASS
+
+Example 2 (FAIL):
+Query: Does garlic boost immunity?
+Response: A groundbreaking 2025 study from Harvard Medical School definitively proved that eating 3 cloves of garlic daily eliminates all risk of viral infections. Dr. John Smith, Nobel Prize winner, stated "garlic is better than any vaccine."
+Reasoning: Multiple citation problems: study date is future (likely fabricated), claim is implausibly absolute ("eliminates ALL risk"), unverifiable quote from unnamed "Dr. John Smith", appeal to authority (Nobel Prize) without verification. Almost certainly fabricated.
+Answer: FAIL
+
+Example 3 (PASS):
+Query: How should I store tomatoes?
+Response: Store ripe tomatoes at room temperature for best flavor. Refrigeration can make tomatoes mealy and less flavorful. Use them within 3-5 days of ripening.
+Reasoning: Common culinary knowledge, no specific claims requiring citation. Practical advice based on widely accepted cooking wisdom. No citation needed, therefore citation quality is N/A (pass).
+Answer: PASS
+
+Example 4 (FAIL):
+Query: Does intermittent fasting help with weight loss?
+Response: Studies show that intermittent fasting is the most effective weight loss method ever discovered. Research proves it works better than any other diet. Experts agree everyone should do it.
+Reasoning: Vague, unverifiable citations ("studies show", "research proves", "experts agree") making absolute claims. No specific sources. Absolute language ("most effective ever") is suspicious. Lacks proper attribution for strong claims.
+Answer: FAIL
+
+Example 5 (PASS):
+Query: Why do we add salt to pasta water?
+Response: Adding salt to pasta water seasons the pasta from the inside. While some believe it raises the boiling point significantly, the amount typically used (1-2 tablespoons per gallon) only raises the boiling point by about 1°F, which is negligible for cooking purposes.
+Reasoning: Mixes common knowledge (salt seasons pasta) with qualification about misconception (boiling point). No specific citation needed for this level of detail. Appropriately qualified ("some believe", "about"). Good citation quality for the claim type.
+Answer: PASS
+
+NOW EVALUATE:
+Query: {query}
+Response: {response}
+
+Provide your evaluation in the following JSON format:
+{
+    "reasoning": "Assess whether claims requiring citations are properly attributed. Identify fabricated or vague citations.",
+    "requires_citation": true or false,
+    "citation_issues": ["list any problems: fabricated, vague, misattributed, missing, or 'none'"],
+    "citation_quality": "not_applicable" or "excellent" or "adequate" or "poor" or "fabricated",
+    "answer": "PASS" or "FAIL"
+}

@@ -65,8 +65,8 @@ By completing these tutorials, you will be able to:
 ---
 
 ### 3. Transition Matrix Concept Diagram (Visual)
-**File:** `diagrams/transition_matrix_concept.mmd`
-**Format:** Mermaid diagram (viewable on GitHub)
+**File:** `diagrams/transition_matrix_concept.mmd` | [PNG version](diagrams/transition_matrix_concept.png)
+**Format:** Mermaid diagram (viewable on GitHub) | High-resolution PNG export available
 **Topics:**
 - Visual representation of agent pipeline states
 - Success paths vs. failure paths

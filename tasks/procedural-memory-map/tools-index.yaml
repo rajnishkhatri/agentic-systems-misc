@@ -1,0 +1,482 @@
+# LLM Evaluation Tools & Libraries Index
+# Maps libraries to techniques and provides usage guidance
+# Version: 1.0
+# Last Updated: 2025-11-08
+
+libraries:
+  litellm:
+    purpose: "Multi-provider LLM API access with unified interface"
+    enables_techniques:
+      - llm_as_judge
+      - ground_truth_labeling
+      - synthetic_query_generation
+      - salient_fact_extraction
+      - parallel_labeling
+      - substantiation_evaluation
+      - logprob_extraction
+      - model_cascades
+    key_features:
+      - "Unified API for OpenAI, Anthropic, Google, Azure, etc."
+      - "Logprobs support for confidence scoring"
+      - "Streaming support"
+      - "Response format specification (JSON mode)"
+      - "Automatic retries and error handling"
+    common_use_cases:
+      - "LLM-as-Judge evaluation (HW3)"
+      - "Ground truth labeling (HW3, Lesson 4)"
+      - "Synthetic query generation (HW2, HW4)"
+      - "Model cascades with confidence scores (Lesson 8)"
+    installation: "pip install litellm"
+    documentation: "https://docs.litellm.ai/"
+    example_usage: |
+      import litellm
+
+      response = litellm.completion(
+          model="gpt-4o-mini",
+          messages=[{"role": "user", "content": "Hello"}],
+          logprobs=True  # For confidence scores
+      )
+      print(response.choices[0].message.content)
+
+  judgy:
+    purpose: "Statistical bias correction for imperfect judges"
+    enables_techniques:
+      - bias_correction
+      - confidence_intervals
+    key_features:
+      - "Binary classification bias correction"
+      - "Confidence interval calculation"
+      - "Handles imperfect annotators (TPR/TNR < 1.0)"
+      - "Corrects observed rates to true rates"
+    when_to_use:
+      - "Judge has known TPR/TNR from test set"
+      - "Reporting corrected success rates"
+      - "Want statistical rigor in evaluation"
+    installation: "pip install judgy"
+    documentation: "https://github.com/ai-evals-course/judgy"
+    example_usage: |
+      from judgy import binary_correction
+
+      # Measured on test set
+      TPR = 0.93  # Judge correctly identifies 93% of passes
+      TNR = 0.88  # Judge correctly identifies 88% of fails
+
+      # Observed on production
+      observed_pass_rate = 0.85
+
+      # Apply correction
+      result = binary_correction(
+          observed_pass_rate,
+          tpr=TPR,
+          tnr=TNR,
+          n=1000
+      )
+
+      print(f"Corrected: {result.theta:.2%}")
+      print(f"95% CI: [{result.ci_lower:.2%}, {result.ci_upper:.2%}]")
+
+  rank-bm25:
+    purpose: "Fast BM25 retrieval implementation"
+    enables_techniques:
+      - bm25_retrieval
+      - recall_at_k
+      - mrr_calculation
+    key_features:
+      - "Pure Python implementation"
+      - "Fast indexing and querying"
+      - "No external dependencies"
+      - "Supports custom tokenization"
+    when_to_use:
+      - "Building RAG system with keyword retrieval"
+      - "Want zero API costs for retrieval"
+      - "Need interpretable retrieval (see matching terms)"
+    installation: "pip install rank-bm25"
+    documentation: "https://github.com/dorianbrown/rank_bm25"
+    example_usage: |
+      from rank_bm25 import BM25Okapi
+
+      # Prepare documents
+      documents = ["recipe for pasta", "how to make bread", ...]
+      tokenized_docs = [doc.lower().split() for doc in documents]
+
+      # Build index
+      bm25 = BM25Okapi(tokenized_docs)
+
+      # Query
+      query = "pasta recipe"
+      query_tokens = query.lower().split()
+      scores = bm25.get_scores(query_tokens)
+      top_5_indices = scores.argsort()[-5:][::-1]
+
+  pandas:
+    purpose: "Data manipulation and analysis"
+    enables_techniques:
+      - "All analysis workflows"
+      - dataset_splitting
+      - csv_conversion
+      - transition_matrix_analysis
+      - data_preprocessing
+    key_features:
+      - "DataFrame for tabular data"
+      - "CSV/JSON/Excel I/O"
+      - "Filtering, grouping, aggregation"
+      - "Missing data handling"
+    common_use_cases:
+      - "Loading conversation traces from CSV"
+      - "Splitting datasets (train/dev/test)"
+      - "Building transition matrices"
+      - "Calculating metrics (Recall@k, MRR)"
+    installation: "pip install pandas"
+    documentation: "https://pandas.pydata.org/"
+    example_usage: |
+      import pandas as pd
+
+      # Load data
+      df = pd.read_csv("traces.csv")
+
+      # Filter
+      failures = df[df["success"] == False]
+
+      # Group and count
+      failure_counts = failures.groupby("failure_mode").size()
+
+      # Export
+      df.to_csv("processed.csv", index=False)
+
+  pydantic:
+    purpose: "Data validation and structured output parsing"
+    enables_techniques:
+      - llm_as_judge
+      - ground_truth_labeling
+      - parallel_labeling
+      - substantiation_evaluation
+    key_features:
+      - "Type validation"
+      - "Automatic parsing from dict/JSON"
+      - "Clear error messages"
+      - "Field constraints (min/max, regex)"
+    when_to_use:
+      - "Parsing LLM JSON responses"
+      - "Ensuring consistent data structures"
+      - "Validating API inputs/outputs"
+    installation: "pip install pydantic"
+    documentation: "https://docs.pydantic.dev/"
+    example_usage: |
+      from pydantic import BaseModel, Field
+
+      class JudgmentResult(BaseModel):
+          verdict: str = Field(..., regex="^(PASS|FAIL)$")
+          reasoning: str
+          confidence: float = Field(..., ge=0.0, le=1.0)
+
+      # Parse LLM response
+      import json
+      data = json.loads(llm_response)
+      result = JudgmentResult(**data)  # Validates automatically
+
+  seaborn:
+    purpose: "Statistical data visualization (heatmaps)"
+    enables_techniques:
+      - transition_matrix_analysis
+      - tpr_tnr_measurement
+    key_features:
+      - "Beautiful default styles"
+      - "Heatmap visualization"
+      - "Confusion matrix plotting"
+      - "Built on matplotlib"
+    common_use_cases:
+      - "Transition matrix heatmaps (HW5)"
+      - "Confusion matrix visualization (HW3)"
+    installation: "pip install seaborn matplotlib"
+    documentation: "https://seaborn.pydata.org/"
+    example_usage: |
+      import seaborn as sns
+      import matplotlib.pyplot as plt
+      import pandas as pd
+
+      # Transition matrix
+      matrix = pd.DataFrame(...)  # state × state matrix
+
+      # Create heatmap
+      plt.figure(figsize=(10, 8))
+      sns.heatmap(
+          matrix,
+          annot=True,
+          fmt='d',
+          cmap='YlOrRd',
+          cbar_kws={'label': 'Frequency'}
+      )
+      plt.title("Failure Transition Matrix")
+      plt.xlabel("First Failing State")
+      plt.ylabel("Last Successful State")
+      plt.tight_layout()
+      plt.savefig("transition_heatmap.png", dpi=300)
+
+  concurrent_futures:
+    purpose: "Parallel execution (ThreadPoolExecutor)"
+    enables_techniques:
+      - parallel_labeling
+      - synthetic_query_generation
+      - salient_fact_extraction
+    key_features:
+      - "ThreadPoolExecutor for I/O-bound tasks (LLM API calls)"
+      - "ProcessPoolExecutor for CPU-bound tasks"
+      - "Built into Python standard library"
+      - "Simple map/submit interface"
+    when_to_use:
+      - "Processing 50+ items with LLM API calls"
+      - "Want to reduce execution time (40min → 5min)"
+    installation: "Built-in (Python 3.2+)"
+    documentation: "https://docs.python.org/3/library/concurrent.futures.html"
+    example_usage: |
+      from concurrent.futures import ThreadPoolExecutor
+
+      def process_item(item):
+          return expensive_operation(item)
+
+      items = [...]
+
+      with ThreadPoolExecutor(max_workers=10) as executor:
+          results = list(executor.map(process_item, items))
+
+  tqdm:
+    purpose: "Progress bars for loops"
+    enables_techniques:
+      - "All iterative operations"
+    key_features:
+      - "ASCII progress bars"
+      - "Automatic time estimation"
+      - "Nested progress bars"
+      - "Minimal overhead"
+    when_to_use:
+      - "Any loop taking >10 seconds"
+      - "Parallel processing with ThreadPoolExecutor"
+      - "File processing"
+    installation: "pip install tqdm"
+    documentation: "https://tqdm.github.io/"
+    example_usage: |
+      from tqdm import tqdm
+
+      # Simple loop
+      for item in tqdm(items, desc="Processing"):
+          process(item)
+
+      # With ThreadPoolExecutor
+      from concurrent.futures import ThreadPoolExecutor
+
+      with ThreadPoolExecutor(max_workers=10) as executor:
+          results = list(tqdm(
+              executor.map(process_fn, items),
+              total=len(items),
+              desc="Processing"
+          ))
+
+  matplotlib:
+    purpose: "Low-level plotting and visualization"
+    enables_techniques:
+      - "All visualization tasks"
+      - transition_matrix_analysis
+      - cost_accuracy_optimization
+    key_features:
+      - "Fine-grained control over plots"
+      - "Export to PNG, PDF, SVG"
+      - "Subplot layouts"
+      - "Customizable styling"
+    common_use_cases:
+      - "Cost vs accuracy plots"
+      - "Threshold optimization curves"
+      - "Metric trends over time"
+    installation: "pip install matplotlib"
+    documentation: "https://matplotlib.org/"
+    example_usage: |
+      import matplotlib.pyplot as plt
+
+      # Simple plot
+      plt.plot(thresholds, accuracies, label='Accuracy')
+      plt.plot(thresholds, costs, label='Cost')
+      plt.xlabel('Threshold')
+      plt.legend()
+      plt.savefig('optimization.png')
+
+  numpy:
+    purpose: "Numerical computing and array operations"
+    enables_techniques:
+      - recall_at_k
+      - mrr_calculation
+      - tpr_tnr_measurement
+    key_features:
+      - "Fast array operations"
+      - "Linear algebra"
+      - "Statistical functions"
+      - "Random number generation"
+    common_use_cases:
+      - "Calculating means, medians"
+      - "Array indexing and slicing"
+      - "Matrix operations"
+    installation: "pip install numpy"
+    documentation: "https://numpy.org/"
+    example_usage: |
+      import numpy as np
+
+      # Calculate MRR
+      ranks = np.array([1, 3, 2, 0, 1])  # 0 = not found
+      reciprocal_ranks = np.where(ranks > 0, 1.0 / ranks, 0.0)
+      mrr = reciprocal_ranks.mean()
+
+  hashlib:
+    purpose: "Deterministic dataset splitting"
+    enables_techniques:
+      - dataset_splitting
+    key_features:
+      - "SHA256 hashing"
+      - "Reproducible splits"
+      - "Built into Python standard library"
+    when_to_use:
+      - "Splitting datasets for train/dev/test"
+      - "Need reproducible splits across runs"
+    installation: "Built-in"
+    documentation: "https://docs.python.org/3/library/hashlib.html"
+    example_usage: |
+      import hashlib
+
+      def get_split(record_id):
+          hash_val = int(hashlib.sha256(record_id.encode()).hexdigest(), 16)
+          bucket = hash_val % 100
+          if bucket < 15: return "train"
+          elif bucket < 55: return "dev"
+          else: return "test"
+
+  json:
+    purpose: "JSON parsing and serialization"
+    enables_techniques:
+      - "All data I/O operations"
+      - data_preprocessing
+      - csv_conversion
+    key_features:
+      - "Parse JSON strings"
+      - "Serialize Python objects to JSON"
+      - "Built into Python standard library"
+      - "JSONL (line-delimited JSON) support"
+    installation: "Built-in"
+    documentation: "https://docs.python.org/3/library/json.html"
+    example_usage: |
+      import json
+
+      # Parse JSON string
+      data = json.loads('{"key": "value"}')
+
+      # Write JSONL (one JSON per line)
+      with open('output.jsonl', 'w') as f:
+          for record in records:
+              f.write(json.dumps(record) + '\n')
+
+      # Read JSONL
+      with open('input.jsonl', 'r') as f:
+          records = [json.loads(line) for line in f]
+
+# ============================================================================
+# Library Combinations for Common Tasks
+# ============================================================================
+
+task_stacks:
+  llm_as_judge_basic:
+    description: "Build basic LLM-as-Judge (HW3)"
+    libraries:
+      - litellm
+      - pandas
+      - pydantic
+    optional:
+      - tqdm
+    estimated_setup_time: "15 minutes"
+
+  llm_as_judge_production:
+    description: "Production LLM-as-Judge with bias correction"
+    libraries:
+      - litellm
+      - judgy
+      - pandas
+      - pydantic
+      - concurrent_futures
+      - tqdm
+    estimated_setup_time: "30 minutes"
+
+  rag_retrieval_evaluation:
+    description: "RAG retrieval evaluation (HW4)"
+    libraries:
+      - rank-bm25
+      - litellm
+      - pandas
+      - numpy
+    optional:
+      - tqdm
+    estimated_setup_time: "20 minutes"
+
+  agent_debugging:
+    description: "Agent pipeline debugging (HW5)"
+    libraries:
+      - pandas
+      - seaborn
+      - matplotlib
+      - numpy
+    estimated_setup_time: "10 minutes"
+
+  parallel_labeling:
+    description: "Large-scale parallel labeling (Lesson 4)"
+    libraries:
+      - litellm
+      - concurrent_futures
+      - pydantic
+      - pandas
+      - tqdm
+      - json
+    estimated_setup_time: "20 minutes"
+
+  model_cascades:
+    description: "Cost optimization with model cascades (Lesson 8)"
+    libraries:
+      - litellm
+      - pandas
+      - numpy
+      - matplotlib
+    estimated_setup_time: "25 minutes"
+
+# ============================================================================
+# Installation Shortcuts
+# ============================================================================
+
+installation_commands:
+  minimal:
+    description: "Minimum for HW1-2 (qualitative methods)"
+    command: "pip install pandas tqdm"
+
+  basic_evaluation:
+    description: "For HW3 (LLM-as-Judge)"
+    command: "pip install litellm pandas pydantic judgy tqdm"
+
+  rag_evaluation:
+    description: "For HW4 (RAG evaluation)"
+    command: "pip install litellm pandas numpy rank-bm25 tqdm"
+
+  agent_debugging:
+    description: "For HW5 (Agent debugging)"
+    command: "pip install pandas seaborn matplotlib numpy"
+
+  advanced_evaluation:
+    description: "For Lesson 4 (Substantiation + Parallel)"
+    command: "pip install litellm pandas pydantic tqdm"
+
+  full_stack:
+    description: "Everything for complete evaluation workflows"
+    command: "pip install litellm judgy rank-bm25 pandas numpy pydantic seaborn matplotlib tqdm"
+
+# ============================================================================
+# Metadata
+# ============================================================================
+
+metadata:
+  version: "1.0"
+  created: "2025-11-08"
+  total_libraries: 12
+  primary_libraries: 5  # litellm, judgy, rank-bm25, pandas, pydantic
+  visualization_libraries: 2  # seaborn, matplotlib
+  utility_libraries: 5  # concurrent.futures, tqdm, numpy, hashlib, json

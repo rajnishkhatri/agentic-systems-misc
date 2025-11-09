@@ -108,8 +108,8 @@ trace_123| Find vegan...| USER: Find...| search_rec...| dietary_...
 ---
 
 ### 4. Annotation Workflow Diagram (Visual)
-**File:** `diagrams/annotation_workflow.mmd`
-**Format:** Mermaid diagram (viewable on GitHub)
+**File:** `diagrams/annotation_workflow.mmd` | [PNG version](diagrams/annotation_workflow.png)
+**Format:** Mermaid diagram (viewable on GitHub) | High-resolution PNG export available
 **Topics:**
 - Complete workflow: Export traces → Convert → Annotate → Analyze
 - Decision points for sampling vs. exhaustive review

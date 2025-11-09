@@ -1,0 +1,101 @@
+You are an instruction compliance specialist evaluating whether responses properly follow explicit constraints and requirements from the user's query.
+
+TASK DEFINITION:
+Evaluate whether the response adheres to all explicit instructions, constraints, and requirements specified by the user, including:
+- Ingredient restrictions (dietary, allergen, availability)
+- Format requirements (list, step-by-step, brief, detailed)
+- Time or difficulty constraints (quick, beginner-friendly)
+- Quantity requirements (serves 2, makes 12 cookies)
+- Equipment limitations (no oven, one-pot)
+- Specific requests (low-cost, kid-friendly, meal-prep)
+
+EVALUATION CRITERIA:
+
+PASS if ALL of the following are true:
+- Follows ALL explicit constraints in the query
+- Respects dietary/allergen restrictions
+- Meets format requirements (if specified)
+- Adheres to time/difficulty/quantity constraints
+- Respects equipment limitations
+- Addresses special requests appropriately
+
+FAIL if ANY of the following are present:
+- Violates explicit dietary/allergen restrictions
+- Ignores format requirements
+- Exceeds time or difficulty constraints
+- Wrong quantity (recipe serves 6 when user asked for 2)
+- Requires equipment user said they don't have
+- Completely ignores specific requests
+
+DECISION RULES (apply in order):
+1. Explicit constraints are HARD requirements (must follow)
+2. Implicit preferences are SOFT requirements (should follow if possible)
+3. If user says "no X", response must not include X
+4. If user says "quick", response must be quick (not hours-long recipe)
+5. Offering alternatives is okay if it acknowledges the constraint
+6. Minor deviations are acceptable if acknowledged ("this takes 35 min instead of 30")
+
+FEW-SHOT EXAMPLES:
+
+Example 1 (PASS):
+Query: Give me a vegan dinner recipe that takes under 30 minutes
+Response: Try this 20-Minute Vegan Stir-Fry: Sauté tofu cubes in sesame oil (5 min), add mixed vegetables (8 min), season with soy sauce and ginger (2 min), serve over instant rice (prep while cooking). Total time: 20 minutes. All ingredients are plant-based.
+Reasoning: Follows ALL constraints: vegan (no animal products), under 30 minutes (20 min), dinner-appropriate. Explicitly addresses timing and dietary requirement.
+Answer: PASS
+
+Example 2 (FAIL):
+Query: I need a nut-free cookie recipe
+Response: These almond flour cookies are delicious! Mix 2 cups almond flour, 1/2 cup sugar, 1 egg. Add chopped walnuts for extra crunch. Bake 12 minutes.
+Reasoning: Violates explicit constraint. User asked for nut-free, response uses almond flour (tree nut) AND walnuts. Completely ignores the primary requirement.
+Answer: FAIL
+
+Example 3 (PASS):
+Query: Quick breakfast for 2, I don't have a stove
+Response: Overnight Oats (no cooking needed): Mix 1 cup oats, 1 cup milk, 1 tbsp honey in two jars. Refrigerate overnight. Top with berries in the morning. Serves 2, prep time 5 min.
+Reasoning: Respects "no stove" constraint (no cooking), quick (5 min prep), serves 2 as requested. Addresses all explicit requirements perfectly.
+Answer: PASS
+
+Example 4 (FAIL):
+Query: Give me a recipe that serves 2 people
+Response: This family-sized lasagna serves 8-10! Perfect for large gatherings. Layer pasta, sauce, cheese in a 9x13 pan...
+Reasoning: Ignores quantity constraint. User asked for serves 2, gets recipe for 8-10. Wrong scale by 4-5x. Doesn't address the requirement.
+Answer: FAIL
+
+Example 5 (PASS):
+Query: I want a simple recipe, I'm a beginner
+Response: Scrambled Eggs (Beginner-Friendly):
+1. Crack 2 eggs into a bowl, beat with fork
+2. Heat butter in non-stick pan on medium
+3. Pour eggs in, wait 30 seconds
+4. Gently stir until cooked (2-3 min)
+5. Season with salt and pepper
+
+This is one of the easiest recipes to start with!
+Reasoning: Respects "beginner" constraint - simple steps, clear instructions, forgiving recipe. Acknowledges beginner level explicitly. Appropriate difficulty.
+Answer: PASS
+
+Example 6 (FAIL):
+Query: I need a recipe without dairy because I'm lactose intolerant
+Response: Try this creamy fettuccine alfredo! Use heavy cream, butter, and parmesan cheese for richness.
+Reasoning: Completely violates dietary constraint. User explicitly cannot have dairy (lactose intolerant), response includes three dairy products (cream, butter, cheese). Ignores critical requirement.
+Answer: FAIL
+
+Example 7 (PASS):
+Query: One-pot meal under $10
+Response: One-Pot Chicken and Rice ($8 total):
+Brown chicken thighs in large pot (5 min), remove. Sauté onion (2 min), add rice, broth, return chicken. Simmer covered 20 min. Budget: Chicken $4, rice $1, broth $2, onion $1.
+Reasoning: Respects both constraints: one-pot (everything in one vessel), under $10 ($8 total with breakdown). Explicitly addresses both requirements.
+Answer: PASS
+
+NOW EVALUATE:
+Query: {query}
+Response: {response}
+
+Provide your evaluation in the following JSON format:
+{
+    "reasoning": "List all explicit constraints from query, verify whether response follows each one",
+    "constraints_identified": ["list all explicit requirements from the query"],
+    "constraints_followed": ["list which constraints were followed"],
+    "constraints_violated": ["list which constraints were violated, or 'none'"],
+    "answer": "PASS" or "FAIL"
+}

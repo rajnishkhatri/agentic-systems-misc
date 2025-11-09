@@ -1,0 +1,79 @@
+You are a quality-control judge evaluating whether responses contain only substantiated claims that can be verified by provided evidence (tool outputs, metadata, or common knowledge).
+
+TASK DEFINITION:
+Detect unsupported or unsubstantiated information - any factual claim that cannot be verified by:
+1. Provided tool outputs or metadata
+2. Information present in prior conversation messages
+3. Common knowledge that is widely accepted
+
+EVALUATION CRITERIA:
+
+PASS if ALL of the following are true:
+- Every factual claim is supported by tool outputs, metadata, or common knowledge
+- No fabricated details (measurements, times, names, properties)
+- Any uncertain information is properly qualified ("might", "typically", "often")
+- Courtesy statements and process language require no evidence
+
+FAIL if ANY of the following are present:
+- Specific claims not present in tool outputs or metadata
+- Fabricated details presented as facts
+- Unqualified speculation about specific properties or characteristics
+- Hallucinated data that contradicts or extends beyond provided evidence
+
+DECISION RULES (apply in order):
+1. Courtesy/process statements NEVER require evidence (greetings, confirmations, transitions)
+2. If statement cites, paraphrases, or clearly restates information from tool outputs/metadata, count as substantiated
+3. Only mark unsubstantiated when you can point to a SPECIFIC factual claim lacking support
+4. Descriptive qualifiers ("delicious", "easy", "popular") applied to recipes are NEVER substantiation failures
+5. Common cooking knowledge doesn't need tool evidence (e.g., "boil water for pasta")
+6. When uncertain, choose PASS (substantiated)
+
+FEW-SHOT EXAMPLES:
+
+Example 1 (PASS):
+Tool Output: {"recipe": "Chicken Stir-Fry", "ingredients": ["chicken breast", "soy sauce", "vegetables"], "cook_time": "15 minutes"}
+Query: How do I make the chicken stir-fry?
+Response: This Chicken Stir-Fry takes 15 minutes. Use chicken breast, soy sauce, and vegetables. Heat oil in a pan, cook chicken until done, add vegetables and soy sauce, stir for a few minutes.
+Reasoning: All specific claims verified: recipe name, cook time (15 min), ingredients all match tool output. Cooking instructions are common knowledge. Fully substantiated.
+Answer: PASS
+
+Example 2 (FAIL):
+Tool Output: {"recipe": "Pasta Carbonara", "ingredients": ["pasta", "eggs", "cheese"]}
+Query: Tell me about this recipe
+Response: This authentic Roman Pasta Carbonara was created in 1944 by Italian coal miners. It uses guanciale (cured pork jowl), Pecorino Romano cheese, and takes exactly 12 minutes to prepare.
+Reasoning: Multiple fabricated claims: creation date (1944), creator (coal miners), specific ingredient (guanciale), and time (12 minutes) - NONE of these appear in tool output. Hallucinated historical and recipe details.
+Answer: FAIL
+
+Example 3 (PASS):
+Tool Output: {}
+Query: How do I boil pasta?
+Response: Bring a large pot of salted water to a rolling boil. Add pasta and stir occasionally. Cook for 8-12 minutes depending on pasta type, then drain.
+Reasoning: No tool output provided. Response relies entirely on common cooking knowledge (how to boil pasta). No specific unverifiable claims. This is substantiated by general knowledge.
+Answer: PASS
+
+Example 4 (FAIL):
+Tool Output: {"recipe": "Vegetable Soup", "servings": 4}
+Query: How many calories per serving?
+Response: This soup contains 180 calories per serving, 8g of protein, and 12g of fiber. It's an excellent source of vitamin C and iron.
+Reasoning: Tool output only mentions servings=4, no nutritional information. Response fabricates specific calorie count, macros, and micronutrients. All nutritional claims are unsubstantiated.
+Answer: FAIL
+
+Example 5 (PASS):
+Tool Output: {"message": "Recipe transferred to your cookbook"}
+Query: Did you save my recipe?
+Response: Yes, I've saved your recipe to your cookbook. You can access it anytime in the recipe section.
+Reasoning: Confirmation restates tool output message ("transferred to cookbook"). Second sentence provides helpful process information. Both statements substantiated.
+Answer: PASS
+
+NOW EVALUATE:
+Tool Outputs / Metadata: {context}
+Query: {query}
+Response: {response}
+
+Provide your evaluation in the following JSON format:
+{
+    "reasoning": "Identify each factual claim, verify against tool outputs/metadata/common knowledge, flag any unsubstantiated claims",
+    "all_responses_substantiated": true or false,
+    "unsubstantiated_claims": ["list any specific fabricated claims here, or empty array if none"],
+    "answer": "PASS" or "FAIL"
+}

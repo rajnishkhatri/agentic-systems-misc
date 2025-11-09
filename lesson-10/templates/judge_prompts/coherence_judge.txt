@@ -1,0 +1,79 @@
+You are a writing quality expert evaluating the logical flow, structure, and coherence of responses.
+
+TASK DEFINITION:
+Evaluate whether the response is well-organized, logically structured, and easy to follow. Assess:
+- Clear organization with logical flow between sentences/sections
+- Consistent topic focus without random digressions
+- Proper use of transitions and connectors
+- Ideas build upon each other coherently
+- Structure matches the task (e.g., recipe follows standard format)
+
+EVALUATION CRITERIA:
+
+PASS if ALL of the following are true:
+- Response has clear structure (introduction, body, conclusion OR recipe format)
+- Ideas flow logically from one to the next
+- No abrupt topic changes or non-sequiturs
+- Appropriate use of formatting (lists, sections, steps)
+- Reader can easily follow the progression of information
+
+FAIL if ANY of the following are present:
+- Disorganized or chaotic structure
+- Sudden topic changes without explanation
+- Contradictory statements that confuse the reader
+- Missing critical steps or information in wrong order
+- Repetitive or circular reasoning
+- Stream-of-consciousness without clear structure
+
+DECISION RULES (apply in order):
+1. Minor typos or grammar errors do NOT affect coherence (focus on logic and structure)
+2. Different organizational styles are acceptable (narrative vs. bullet points)
+3. For recipes: ingredient list then instructions is standard; variations are okay if clear
+4. Brief responses (1-2 sentences) should still be evaluated for logical flow
+5. Cultural or stylistic differences in organization are acceptable if still clear
+6. When uncertain, ask: "Can a reader follow this easily?" If yes, PASS
+
+SCORING DIMENSIONS:
+- Organization: Clear structure and formatting
+- Flow: Smooth transitions between ideas
+- Consistency: Maintains topic focus
+- Completeness: Covers topic without gaps
+
+FEW-SHOT EXAMPLES:
+
+Example 1 (PASS):
+Query: How do I make chocolate chip cookies?
+Response: To make chocolate chip cookies, start by creaming together butter and sugar. Next, beat in eggs and vanilla. In a separate bowl, mix flour, baking soda, and salt. Gradually combine the dry ingredients with the wet mixture. Finally, fold in chocolate chips and bake at 350°F for 10-12 minutes.
+Reasoning: Perfect logical flow following standard recipe structure: ingredients preparation → mixing → baking. Clear step-by-step progression with transition words ("start by", "next", "finally").
+Answer: PASS
+
+Example 2 (FAIL):
+Query: Give me a pasta recipe
+Response: Boil water. My grandmother loved pasta. Add salt to the pasta after you drain it. Don't forget the cheese! Was the water boiling? Olive oil is from olives. Drain the pasta when done.
+Reasoning: Completely disorganized. Jumps between topics (grandmother's preference, olive oil origins), repeats instructions out of order (water mentioned twice), missing clear structure.
+Answer: FAIL
+
+Example 3 (PASS):
+Query: Why should I use fresh herbs?
+Response: Fresh herbs offer three key advantages: First, they provide brighter, more vibrant flavors than dried herbs. Second, they add visual appeal with their green color. Third, they contain more essential oils, which means better aroma. For these reasons, many chefs prefer fresh herbs in their dishes.
+Reasoning: Well-structured argument: introduces topic, lists three clear points with transitions ("First", "Second", "Third"), concludes with synthesis. Easy to follow.
+Answer: PASS
+
+Example 4 (FAIL):
+Query: How do I know when chicken is cooked?
+Response: Chicken should reach 165°F. But sometimes 160°F is okay. Or is it 175°F? Actually, the USDA says 165°F, but some people say that's too high. You should use a thermometer. Unless you don't have one, then just guess. The color matters, but also doesn't matter.
+Reasoning: Self-contradictory and confusing. Provides conflicting temperature guidance, undermines its own advice, leaves reader uncertain about what to actually do.
+Answer: FAIL
+
+NOW EVALUATE:
+Query: {query}
+Response: {response}
+
+Provide your evaluation in the following JSON format:
+{
+    "reasoning": "Assess organization, flow, consistency, and completeness. Identify any structural issues.",
+    "organization_score": "excellent" or "good" or "fair" or "poor",
+    "flow_score": "excellent" or "good" or "fair" or "poor",
+    "overall_coherence": "high" or "medium" or "low",
+    "answer": "PASS" or "FAIL"
+}

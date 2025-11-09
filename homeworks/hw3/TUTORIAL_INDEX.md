@@ -43,43 +43,54 @@ By completing these tutorials, you will be able to:
 
 ### 2. Data Labeling Tutorial (Interactive)
 **File:** `data_labeling_tutorial.ipynb`
-**Execution Time:** 15-20 minutes
+**Execution Time:** 15-20 minutes (uses pre-labeled data, no API calls)
+**Labeling Cost (if creating new labels):** $0.01-0.05 per example with GPT-4o
+
 **Topics:**
 - Manual vs. automated ground truth labeling
-- Creating balanced train/dev/test splits
+- Creating balanced train/dev/test splits (15%/40%/45%)
 - Labeling consistency and inter-annotator agreement
 - Using GPT-4o for automated labeling (with caveats)
-- Quality validation and label review
+- Quality validation with automated assertions
 - Handling edge cases and ambiguous examples
 
 **When to use:** After collecting bot traces, use this to create your ground truth dataset.
 
 **Interactive Features:**
-- Dataset splitting code with reproducible random seeds
-- Labeling interface examples
-- Label distribution analysis
-- Export labeled datasets to CSV
+- Stratified dataset splitting with validation checks
+- Label distribution visualization
+- Automated quality validation (balance, missing values)
+- Manual review sampling
+- Export to CSV (train/dev/test splits)
+
+**⚠️ Note:** Tutorial uses pre-labeled data. For labeling new data, run `scripts/label_data.py` (costs ~$2-8 for 150 examples)
 
 ---
 
 ### 3. Judge Development Tutorial (Interactive)
 **File:** `judge_development_tutorial.ipynb`
-**Execution Time:** 20-30 minutes
+**Execution Time:**
+- **DEMO MODE** (default): 1-2 minutes | Cost: $0.30-0.50 (20 examples)
+- **FULL MODE**: 3-5 minutes | Cost: $0.80-1.50 (40 examples)
+
 **Topics:**
-- Engineering effective judge prompts
-- Few-shot example selection strategies
+- Engineering effective judge prompts with clear criteria
+- Few-shot example selection strategies (1 PASS : 3 FAIL ratio)
 - Structured output with Pydantic models
 - Iterative prompt refinement using dev set
-- Debugging common judge errors
+- Debugging common judge errors (false positives/negatives)
 - Measuring TPR/TNR on validation data
 
 **When to use:** After creating labeled dataset, use this to build and refine your judge.
 
 **Interactive Features:**
-- Live judge prompt testing
-- TPR/TNR calculation on dev set
-- Confusion matrix visualization
-- False positive/negative analysis
+- Configurable DEMO vs FULL mode for cost control
+- Live judge prompt testing with gpt-4o-mini
+- Automated TPR/TNR calculation with assertions
+- Confusion matrix visualization (heatmap)
+- False positive/negative error analysis
+
+**⚠️ Requirements:** API key in `.env`, pre-labeled train/dev/test splits from previous tutorial
 
 ---
 
@@ -107,8 +118,8 @@ Corrected Rate (θ̂) = (p_obs + TNR - 1) / (TPR + TNR - 1)
 ---
 
 ### 5. Judge Evaluation Flow (Visual)
-**File:** `diagrams/judge_evaluation_flow.mmd`
-**Format:** Mermaid diagram (viewable on GitHub)
+**File:** `diagrams/judge_evaluation_flow.mmd` | [PNG version](diagrams/judge_evaluation_flow.png)
+**Format:** Mermaid diagram (viewable on GitHub) | High-resolution PNG export available
 **Topics:**
 - Complete pipeline from trace generation to final metrics
 - Data splitting strategy visualization

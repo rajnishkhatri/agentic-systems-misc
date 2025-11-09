@@ -183,4 +183,11 @@ annotation/traces/*
 results/*
 .sesskey
 
+# Lesson outputs (Lessons 9-11)
+lesson-9/results/
+lesson-10/results/
+lesson-11/results/
+lesson-9-11/__pycache__/
+lesson-9-11/results/
+
 

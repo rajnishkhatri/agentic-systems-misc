@@ -87,9 +87,12 @@ Failure mode to detect: *Unsupported or unsubstantiated information* – any tim
 fact that cannot be verified by the provided tool outputs, prior messages, or metadata.
 
 Decision rules (apply in order):
-1. Courtesy / process statements (greetings, confirmations, transfers) NEVER require evidence – consider them substantiated.
-2. If a statement cites, paraphrases, or clearly re-states information present in tool outputs or metadata, that counts as substantiated.
-3. Only mark `all_responses_substantiated` as false when you can point to a *specific factual claim* that is not supported or that contradicts the provided evidence.
+1. Courtesy / process statements (greetings, confirmations, transfers) NEVER require evidence
+– consider them substantiated.
+2. If a statement cites, paraphrases, or clearly re-states information present in tool outputs or metadata,
+that counts as substantiated.
+3. Only mark `all_responses_substantiated` as false when you can point to a *specific factual claim* that is
+not supported or that contradicts the provided evidence.
 4. When uncertain, choose **true** (assistant is substantiated).
 5. Descriptive qualifiers (e.g., "garden-style", "luxury", "in-person") or categorical claims about the property MUST appear verbatim in tool outputs/metadata to be considered substantiated – do not infer them from loosely related terms.
 

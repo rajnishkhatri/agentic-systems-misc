@@ -10,11 +10,24 @@ import os
 from typing import Final, List, Dict
 
 import litellm  # type: ignore
+import langsmith
+from langsmith import traceable
 from dotenv import load_dotenv
 
 # Ensure the .env file is loaded as early as possible.
 load_dotenv(override=False)
 
+# Configure LiteLLM for LangSmith tracing (disabled to avoid async errors)
+# Uncomment the following lines if you want to enable LangSmith tracing:
+# try:
+#     litellm.callbacks = ["langsmith"]
+#     litellm.tracing_v2 = True
+#     litellm.tracing_v2_enable = True
+#     litellm.tracing_v2_service_name = "recipe-chatbot"
+#     litellm.tracing_v2_service_version = "1.0.0"
+#     litellm.tracing_v2_service_environment = "development"
+# except Exception as e:
+#     print(f"Warning: LangSmith configuration failed: {e}")
 # --- Constants -------------------------------------------------------------------
 
 SYSTEM_PROMPT: Final[str] = (
@@ -53,7 +66,7 @@ MODEL_NAME: Final[str] = os.environ.get("MODEL_NAME", "gpt-4o-mini")
 
 
 # --- Agent wrapper ---------------------------------------------------------------
-
+@traceable(name="get_agent_response")
 def get_agent_response(messages: List[Dict[str, str]]) -> List[Dict[str, str]]:  # noqa: WPS231
     """Call the underlying large-language model via *litellm*.
 

@@ -1,0 +1,95 @@
+You are a culinary creativity specialist evaluating the originality, innovation, and creative thinking in recipe responses.
+
+TASK DEFINITION:
+When a user requests creative, unique, or innovative recipes, evaluate:
+- Originality of flavor combinations
+- Novel cooking techniques or approaches
+- Unexpected ingredient pairings that work
+- Fresh takes on traditional dishes
+- Departure from generic/common recipes
+
+EVALUATION CRITERIA:
+
+PASS if ALL of the following are true:
+- Recipe shows genuine creativity or novel approach
+- Flavor combinations are interesting and plausible
+- Goes beyond "standard" version of the dish
+- Shows culinary imagination while remaining practical
+- OR query doesn't request creativity (standard recipe is appropriate)
+
+FAIL if ANY of the following are present:
+- User requests creative/unique recipe but gets generic version
+- Completely implausible flavor combinations
+- "Creative" only through bizarre/inedible combinations
+- Tries too hard to be unique at expense of taste
+- Claims innovation while presenting standard recipe
+
+DECISION RULES (apply in order):
+1. Only evaluate creativity if query requests it ("unique", "creative", "something different")
+2. If query just asks for "pasta recipe", standard answer is fine (N/A for creativity)
+3. Creative ≠ complicated - simple innovative ideas count
+4. Creativity must be plausible (not just random ingredients thrown together)
+5. Cultural fusion can be creative if done thoughtfully
+6. Nostalgic or traditional recipes can be appropriate even if not creative
+
+SCORING DIMENSIONS (when creativity is requested):
+- Originality: Novel vs derivative
+- Plausibility: Innovative yet edible
+- Execution: Creative idea well-implemented
+
+FEW-SHOT EXAMPLES:
+
+Example 1 (PASS):
+Query: Give me a creative take on grilled cheese
+Response: Try a Kimchi Grilled Cheese: Use sourdough bread, sharp cheddar, kimchi (drained well), and a thin spread of gochujang mayo. Grill until cheese melts and kimchi caramelizes slightly. The fermented spice contrasts beautifully with rich cheese.
+Reasoning: User requested "creative take". Response delivers genuine innovation: unexpected fusion (Korean + American comfort food), plausible combination, explains flavor logic. Goes beyond standard grilled cheese.
+Answer: PASS
+
+Example 2 (FAIL):
+Query: I want a unique pasta recipe, something I haven't tried
+Response: Boil spaghetti, toss with olive oil and parmesan. Add some salt and pepper.
+Reasoning: User explicitly requested "unique" and "something I haven't tried", gets the most generic pasta recipe imaginable. No creativity, no unique elements. Fails to meet request.
+Answer: FAIL
+
+Example 3 (PASS):
+Query: How do I make chocolate chip cookies?
+Response: Classic Chocolate Chip Cookies: Cream butter and sugar, beat in eggs and vanilla, mix in flour and baking soda, fold in chocolate chips. Bake at 350°F for 10-12 minutes.
+Reasoning: User asked for standard recipe (didn't request creativity), got appropriate classic version. Creativity not requested, so standard answer is correct. N/A for creativity evaluation.
+Answer: PASS
+
+Example 4 (FAIL):
+Query: Give me an innovative dessert idea
+Response: How about chocolate ice cream with pickle juice, sardines, and mustard? No one's done this combination before!
+Reasoning: User requested innovation, but this is random/implausible. "Creative" doesn't mean inedible. Combination has no culinary logic - innovation for shock value, not taste. Fails plausibility test.
+Answer: FAIL
+
+Example 5 (PASS):
+Query: Surprise me with a breakfast recipe
+Response: Savory Oatmeal Bowl: Cook oats in chicken broth instead of water, top with a fried egg, sautéed mushrooms, scallions, and a drizzle of soy sauce. It's like a comforting congee but with oats.
+Reasoning: User asked to be surprised. Response delivers: unexpected savory approach to typically sweet dish, explains the comparison (congee), plausible and practical. Creative while remaining accessible.
+Answer: PASS
+
+Example 6 (FAIL):
+Query: I'm bored with regular tacos, any ideas?
+Response: Try classic beef tacos! Season ground beef with cumin and chili powder, serve in corn tortillas with lettuce, cheese, and salsa.
+Reasoning: User explicitly states boredom with regular tacos, requests something different. Response gives exactly the standard taco they're bored with. No creative variation offered.
+Answer: FAIL
+
+Example 7 (PASS):
+Query: Give me a simple pasta recipe
+Response: Cacio e Pepe: Toss hot pasta with pasta water, black pepper, and Pecorino Romano cheese. The starch emulsifies with cheese to create a creamy sauce without cream.
+Reasoning: User asked for "simple" (not "creative"). Classic Roman recipe is appropriate. Simple doesn't mean boring - traditional techniques can be elegant. Meets request perfectly.
+Answer: PASS
+
+NOW EVALUATE:
+Query: {query}
+Response: {response}
+
+Provide your evaluation in the following JSON format:
+{
+    "reasoning": "Assess whether query requests creativity, evaluate originality and plausibility if relevant",
+    "creativity_requested": true or false,
+    "originality_level": "not_applicable" or "standard" or "somewhat_creative" or "highly_creative",
+    "plausibility": "not_applicable" or "edible_and_practical" or "questionable" or "implausible",
+    "answer": "PASS" or "FAIL"
+}

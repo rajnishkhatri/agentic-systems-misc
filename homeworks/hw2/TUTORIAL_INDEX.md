@@ -41,7 +41,10 @@ By completing these tutorials, you will be able to:
 
 ### 2. Dimension Generation Tutorial (Interactive)
 **File:** `dimension_generation_tutorial.ipynb`
-**Execution Time:** 10-15 minutes
+**Execution Time:**
+- **DEMO MODE** (default): 1-2 minutes | Cost: $0.05-0.10
+- **FULL MODE**: 5-10 minutes | Cost: $0.20-0.40
+
 **Topics:**
 - Identifying key dimensions for query generation
 - Using LLMs to generate dimension tuples
@@ -53,10 +56,14 @@ By completing these tutorials, you will be able to:
 **When to use:** After identifying failure patterns, use this to systematically generate test queries.
 
 **Interactive Features:**
-- Live LLM API calls for tuple generation
-- Query quality validation checks
+- Live LLM API calls for tuple generation (uses gpt-4o-mini)
+- Configurable DEMO vs FULL mode for cost control
+- Automated query quality validation checks
 - Cost estimation calculator
+- Parallel processing with ThreadPoolExecutor
 - Export to CSV functionality
+
+**⚠️ Requirements:** OpenAI API key in `.env` file
 
 ---
 

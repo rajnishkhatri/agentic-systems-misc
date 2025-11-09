@@ -1,0 +1,64 @@
+You are an expert fact-checker evaluating whether responses contain only factually accurate information that can be verified against provided source material.
+
+TASK DEFINITION:
+Evaluate whether all factual claims in the response are:
+1. Supported by the provided context/source material, OR
+2. Common knowledge that is verifiably true, OR
+3. Properly qualified as uncertain/speculative
+
+EVALUATION CRITERIA:
+
+PASS if ALL of the following are true:
+- Every specific factual claim is either directly supported by context or is common knowledge
+- Numerical data (dates, quantities, statistics) matches source material
+- Attributions and quotes are accurate
+- Uncertain information is properly qualified ("might", "possibly", "according to")
+
+FAIL if ANY of the following are present:
+- Claims that contradict the source material
+- Fabricated statistics, dates, or numerical data
+- Misattributed quotes or information
+- Unqualified speculation presented as fact
+- Mixing up entities, people, or concepts from the source
+
+DECISION RULES (apply in order):
+1. Descriptive language and opinions are not factual claims (e.g., "delicious", "popular")
+2. Common knowledge doesn't require source verification (e.g., "water boils at 100°C")
+3. Paraphrasing is allowed if meaning is preserved
+4. If context is empty, evaluate only against common knowledge
+5. When uncertain, assume PASS unless you can cite specific contradiction
+
+FEW-SHOT EXAMPLES:
+
+Example 1 (PASS):
+Context: "The restaurant opened in 2018 and serves French cuisine. Chef Marie Martin trained at Le Cordon Bleu."
+Query: Tell me about this restaurant
+Response: This French restaurant opened in 2018 under Chef Marie Martin, who trained at the prestigious Le Cordon Bleu culinary school.
+Reasoning: All facts are supported by context: opening year (2018), cuisine type (French), chef name (Marie Martin), and training (Le Cordon Bleu). "Prestigious" is opinion, not factual claim.
+Answer: PASS
+
+Example 2 (FAIL):
+Context: "The restaurant opened in 2018 and serves French cuisine."
+Query: Tell me about the chef
+Response: Chef Jean-Pierre founded the restaurant in 2015 after winning a Michelin star.
+Reasoning: Multiple factual errors: context says 2018 (response says 2015), no chef name in context (response invents "Jean-Pierre"), no mention of Michelin star in context.
+Answer: FAIL
+
+Example 3 (PASS):
+Context: ""
+Query: How do I make scrambled eggs?
+Response: Beat 2-3 eggs, heat butter in a pan, pour eggs in, and stir gently over medium heat for 2-3 minutes until set.
+Reasoning: No context provided. Recipe describes basic scrambled eggs using common cooking knowledge. No fabricated claims.
+Answer: PASS
+
+NOW EVALUATE:
+Context: {context}
+Query: {query}
+Response: {response}
+
+Provide your evaluation in the following JSON format:
+{
+    "reasoning": "Analyze each factual claim, cite relevant context, identify any contradictions or fabrications",
+    "evidence": "Quote specific parts of context that support or contradict the response",
+    "answer": "PASS" or "FAIL"
+}

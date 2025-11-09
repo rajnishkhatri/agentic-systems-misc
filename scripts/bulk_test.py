@@ -66,10 +66,13 @@ def run_bulk_test(csv_path: Path, num_workers: int = MAX_WORKERS) -> None:
 
     with csv_path.open("r", newline="", encoding="utf-8") as csv_file:
         reader = csv.DictReader(csv_file)
-        # Expects columns 'id' and 'query'
-        input_data: List[Dict[str, str]] = [
-            row for row in reader if row.get("id") and row.get("query")
-        ]
+        # Handle both 'id'/'query' and 'query_id'/'natural_language_query' column formats
+        input_data: List[Dict[str, str]] = []
+        for row in reader:
+            if row.get("id") and row.get("query"):
+                input_data.append({"id": row["id"], "query": row["query"]})
+            elif row.get("query_id") and row.get("natural_language_query"):
+                input_data.append({"id": row["query_id"], "query": row["natural_language_query"]})
 
     if not input_data:
         raise ValueError("No valid data (with 'id' and 'query') found in the provided CSV file.")

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Architecture Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .caption {
+            color: #666;
+            font-size: 14px;
+            margin-top: 20px;
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>RAG Architecture Flow Diagram</h1>
+        <div class="mermaid">
+flowchart TB
+    Start([User Query]) --> QueryProcess
+
+    %% Query Processing
+    QueryProcess[Query Processing<br/>Parse intent and constraints] --> OptionalRewrite
+
+    OptionalRewrite{Use Query<br/>Rewrite Agent?}
+    OptionalRewrite -->|No| Retrieval
+    OptionalRewrite -->|Yes| RewriteAgent
+
+    RewriteAgent[Query Rewrite Agent<br/>- Extract keywords<br/>- Rewrite for BM25<br/>- Expand with synonyms] --> Retrieval
+
+    %% Retrieval Phase
+    Retrieval[/Retrieval Phase/] --> BM25
+
+    BM25[BM25 Ranking<br/>TF-IDF scoring<br/>Length normalization] --> Corpus
+
+    Corpus[(Recipe Corpus<br/>200 recipes<br/>Indexed: title + ingredients + steps)] --> BM25
+
+    BM25 --> TopK[Select Top-K Results<br/> k=5 most relevant recipes]
+
+    %% Evaluation Branch
+    TopK --> EvalDecision{Evaluation<br/>Mode?}
+
+    EvalDecision -->|Yes| EvalMetrics[Calculate Metrics<br/>- Recall@1/3/5<br/>- MRR<br/>- Target rank] --> EvalReport[Report Results<br/>Identify failure patterns]
+    EvalDecision -->|No| ContextAssembly
+
+    %% Generation Phase
+    ContextAssembly[/Generation Phase/] --> FormatContext
+
+    FormatContext[Context Assembly<br/>Format top-5 recipes<br/>for LLM prompt] --> LLMPrompt
+
+    LLMPrompt[LLM Generation<br/>Prompt: Based on these recipes,<br/>answer user query] --> LLMCall
+
+    LLMCall[LLM API Call<br/> GPT-4o / Claude] --> Synthesize
+
+    Synthesize[Synthesize Response<br/>Combine info from<br/>multiple recipes] --> Response
+
+    Response[Final Response<br/>Grounded in retrieved context] --> End
+
+    End([Return to User])
+
+    %% Failure Detection
+    TopK -.->|Target Missing| RetrievalFailure
+    RetrievalFailure[❌ Retrieval Failure<br/>Target not in top-k<br/>Fix: Improve indexing,<br/>query processing, ranking]
+
+    Synthesize -.->|Hallucination| GenerationFailure
+    GenerationFailure[❌ Generation Failure<br/>Response not grounded<br/>Fix: Improve prompt,<br/>context format, model]
+
+    %% Optimization Loop
+    EvalReport -.->|Poor Recall@5| OptimizeRetrieval[Optimize Retrieval<br/>- Better tokenization<br/>- Tune BM25 params<br/>- Use query rewrite]
+    OptimizeRetrieval -.->|Iterate| QueryProcess
+
+    %% Styling
+    classDef userClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef retrievalClass fill:#fff8e1,stroke:#f57c00,stroke-width:2px
+    classDef generationClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef evalClass fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    classDef failureClass fill:#ffebee,stroke:#c62828,stroke-width:2px
+    classDef dataClass fill:#fafafa,stroke:#616161,stroke-width:2px
+    classDef phaseClass fill:#e0f7fa,stroke:#0097a7,stroke-width:3px,stroke-dasharray: 5 5
+
+    class Start,End,QueryProcess,OptionalRewrite,RewriteAgent userClass
+    class Retrieval,BM25,TopK,OptimizeRetrieval retrievalClass
+    class ContextAssembly,FormatContext,LLMPrompt,LLMCall,Synthesize,Response generationClass
+    class EvalDecision,EvalMetrics,EvalReport evalClass
+    class RetrievalFailure,GenerationFailure failureClass
+    class Corpus dataClass
+        </div>
+        <div class="caption">
+            RAG Architecture Flow: Complete pipeline from user query through retrieval, evaluation, and response generation
+        </div>
+    </div>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#e3f2fd',
+                primaryTextColor: '#000',
+                primaryBorderColor: '#1976d2',
+                lineColor: '#1976d2',
+                secondaryColor: '#fff8e1',
+                tertiaryColor: '#f3e5f5'
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+

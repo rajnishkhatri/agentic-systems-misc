@@ -80,55 +80,69 @@ Structured JSON (nurtureboss_traces.json)
 
 ### 3. Parallel Labeling Tutorial (Interactive)
 **File:** `parallel_labeling_tutorial.ipynb`
-**Execution Time:** 20-30 minutes
+**Execution Time:**
+- **DEMO MODE** (default): 10-15 seconds | Cost: $0.05-0.10 (5 traces)
+- **FULL MODE**: 5-8 minutes | Cost: $0.50-1.00 (~200 traces)
+
 **Topics:**
-- Using ThreadPoolExecutor for parallel LLM calls
+- Using ThreadPoolExecutor for parallel LLM calls (10-20 workers)
 - Rate limiting and API quota management
 - Progress tracking with tqdm
-- Cost optimization strategies
-- Incremental labeling (resume after interruption)
+- Cost optimization (gpt-4o vs gpt-4o-mini comparison)
+- Incremental labeling with checkpoint saving (resume after interruption)
 - Structured output with Pydantic models
 - Error handling for API failures
 
 **When to use:** After preprocessing, use this to create ground truth labels efficiently.
 
 **Interactive Features:**
+- Configurable DEMO vs FULL mode for cost control
 - Live parallel LLM labeling demonstration
-- Cost estimation calculator
+- Cost estimation calculator (compares models)
 - Progress bars for long-running operations
-- Resume capability for interrupted runs
+- Checkpoint save/resume capability
 
-**Example Performance:**
-- Sequential: ~200 conversations in 30-40 minutes
-- Parallel (64 workers): ~200 conversations in 3-5 minutes
+**Performance Comparison:**
+- Sequential: ~200 traces in 30-40 minutes
+- Parallel (10 workers): ~200 traces in 5-8 minutes
+- Parallel (20 workers): ~200 traces in 3-5 minutes
+
+**⚠️ Requirements:** API key in `.env`, preprocessed JSON traces from `clean_logs.py`
 
 ---
 
 ### 4. Judge Evaluation Pipeline Tutorial (Interactive)
 **File:** `judge_evaluation_pipeline_tutorial.ipynb`
-**Execution Time:** 20-25 minutes
+**Execution Time:** 30-60 seconds (DEMO: 20 traces) | Cost: $0.10-0.30
+**Full Evaluation:** 5-10 minutes (150 traces) | Cost: $1.00-2.00
+
 **Topics:**
-- Deterministic train/dev/test splitting (hash-based)
-- Balanced few-shot example selection
-- Evaluating judge models on binary classification
-- TPR/TNR calculation for substantiation detection
+- Deterministic train/dev/test splitting (hash-based, reproducible)
+- Balanced few-shot example selection (1 PASS : 1 FAIL)
+- Evaluating judge models on binary classification (substantiation)
+- TPR/TNR calculation with automated validation
 - False positive/negative analysis
+- Bias interpretation (too strict vs too lenient)
 - When substantiation judges work well vs. poorly
 
-**When to use:** After labeling, use this to evaluate if a cheaper model can replace GPT-4o.
+**When to use:** After labeling, use this to evaluate if a cheaper model (gpt-4o-mini) can replace GPT-4o.
 
 **Interactive Features:**
+- Cost warning with demo mode (limits to 20 traces by default)
 - Dataset splitting with reproducible seeds
 - Few-shot prompt construction
-- Live judge evaluation on test set
-- TPR/TNR metric calculation
+- Live judge evaluation on test set with progress indicators
+- Automated TPR/TNR metric validation (0-1 range checks)
+- Bias analysis output
+
+**⚠️ Requirements:** API key in `.env`, labeled JSON traces from parallel_labeling_tutorial
 - Error analysis notebooks
 
 ---
 
 ### 5. Substantiation Pipeline Diagram (Visual)
-**File:** `diagrams/substantiation_pipeline.mmd`
-**Format:** Mermaid diagram (viewable on GitHub)
+**File:** `diagrams/substantiation_pipeline.mmd` | [PNG version](diagrams/substantiation_pipeline.png)
+**Format:** Mermaid diagram (viewable on GitHub) | High-resolution PNG export available
 **Topics:**
 - Complete 3-step pipeline visualization
 - Data flow: Raw logs → Clean → Labeled → Evaluated

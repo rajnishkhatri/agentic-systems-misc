@@ -1,6 +1,6 @@
-# Claude Code Instructions for Bhagavad Gita Chatbot
+# Claude Code Instructions for LLM Evals tutorial
 
-This project combines the **AI Dev Tasks** workflow with **Compound Engineering** principles for building an intelligent Bhagavad Gita chatbot with LangGraph multi-agent architecture.
+This project combines the **AI Dev Tasks** workflow with **Compound Engineering** principles for building an intelligent LLM evaluation tutorial.
 
 ## Project Philosophy
 
