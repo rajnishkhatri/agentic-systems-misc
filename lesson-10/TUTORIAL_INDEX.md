@@ -41,7 +41,7 @@ By completing these tutorials, you will be able to:
 ---
 
 ### 2. Judge Prompt Engineering Tutorial (Interactive Notebook)
-**File:** `judge_prompt_engineering_tutorial.ipynb`
+**File:** [`judge_prompt_engineering_tutorial.ipynb`](judge_prompt_engineering_tutorial.ipynb)
 **Execution Time:** 8-10 minutes
 **Cost:** $0.30-0.50 (DEMO mode, 5 criteria × 5 queries), $1.50-2.50 (FULL mode, 5 criteria × 25 queries)
 **Topics:**
@@ -57,7 +57,7 @@ By completing these tutorials, you will be able to:
 ---
 
 ### 3. Judge Bias Detection Tutorial (Interactive Notebook)
-**File:** `judge_bias_detection_tutorial.ipynb`
+**File:** [`judge_bias_detection_tutorial.ipynb`](judge_bias_detection_tutorial.ipynb)
 **Execution Time:** <5 minutes
 **Cost:** $0.50-1.00 (DEMO mode), $2.00-3.00 (FULL mode)
 **Topics:**
@@ -324,6 +324,6 @@ A: Include version identifier in prompt metadata, store prompts in version contr
 
 ---
 
-**Tutorial Status:** ⏳ In Development
+**Tutorial Status:** ✅ Complete
 **Last Updated:** 2025-11-09
 **Maintainer:** AI Evaluation Course Team

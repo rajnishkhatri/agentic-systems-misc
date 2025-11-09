@@ -1,41 +1,29 @@
 #!/usr/bin/env python3
 """Develop and refine the LLM judge prompt for dietary adherence evaluation.
 
-By default the script will use the base prompt provided by the course and add
-one random positive and three random negative few-shot examples from the train
-set.
+REFACTORED: Now uses DietaryAdherenceJudge from backend/ai_judge_framework.py
 
-This script also offers other possibilities to create the judge prompt. These 
-other options can all be set in the global variables at the top of the file.
+By default the script will use the DietaryAdherenceJudge from the framework.
+You can optionally use the legacy custom prompt approach with few-shot examples
+by setting USE_FRAMEWORK = False.
 
-This opens the opportunity to first run the script with the default settings
-which will result in the default prompt with random few-shot examples saved as
-`/homeworks/hw3/results/judge_prompt.txt`. And then adjust this prompt manually
-and run the script again with `OWN_PROMPT = True` to use your own manually
-changed prompt.
+This script offers two evaluation modes:
 
-This script offers two options for defining the base prompt:
+- FRAMEWORK MODE (default): Use DietaryAdherenceJudge from ai_judge_framework.py
+- LEGACY MODE: Use custom prompt with few-shot examples (set USE_FRAMEWORK = False)
 
-- Use the base prompt profided by the course with automatically selected few-shot examples.
-- Use a prompt of your own design with manually selected few-shot examples.
+When using LEGACY MODE, you can:
+- Use the base prompt with automatically selected few-shot examples
+- Use your own prompt by setting OWN_PROMPT = True and placing it in `homeworks/hw3/results/judge_prompt.txt`
 
-When using the base prompt profided by the course, this script offers two options for
-adding the few-shot examples:
-
-- Randomly add few-shot examples from the train set.
-- Randomly add few-shot examples from the train set, but use a seed for reproducibility.
-
-When using a prompt of your own design, be sure to:
-- place it in `homeworks/hw3/results/judge_prompt.txt`,
-- be sure to have the following placeholders in the prompt: 
-  - `__QUERY__`, 
-  - `__DIETARY_RESTRICTION__`, 
-  - `__RESPONSE__`.
-  The script uses these to embed the query, dietary restriction and recipe response in the
-  evaluation prompt.
+Legacy mode requires these placeholders in the prompt:
+  - `__QUERY__`,
+  - `__DIETARY_RESTRICTION__`,
+  - `__RESPONSE__`
 """
 
 import os
+import sys
 import json
 import pandas as pd
 import random
@@ -46,9 +34,14 @@ import litellm
 from dotenv import load_dotenv
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+# Add backend to path for framework imports
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from backend.ai_judge_framework import DietaryAdherenceJudge
+
 # Global variables that can be set by user
-SEED = None # Set to an integer to use a seed for reproducibility of selected few-shot examples
-OWN_PROMPT = False # Set to True to use a base prompt of your own design
+USE_FRAMEWORK = True  # Set to False to use legacy custom prompt approach
+SEED = None # Set to an integer to use a seed for reproducibility of selected few-shot examples (legacy mode only)
+OWN_PROMPT = False # Set to True to use a base prompt of your own design (legacy mode only)
 
 # Start script
 load_dotenv()
@@ -57,7 +50,7 @@ MAX_WORKERS = 32
 console = Console()
 
 # Model used for the LLM judge
-MODEL_NAME_JUDGE: Final[str] = os.environ.get("MODEL_NAME_JUDGE", "gpt-4.1-nano")
+MODEL_NAME_JUDGE: Final[str] = os.environ.get("MODEL_NAME_JUDGE", "gpt-4o-mini")
 
 def load_data_split(csv_path: str) -> List[Dict[str, Any]]:
     """Load a data split from CSV file."""
@@ -166,15 +159,55 @@ def read_judge_prompt(f: Path # file path to the judge prompt
 
     return f.read_text(encoding='utf-8')
 
-def evaluate_single_trace(args: tuple) -> Dict[str, Any]:
-    """Evaluate a single trace with the judge - for parallel processing."""
-    trace, judge_prompt = args
-    
+def evaluate_single_trace_framework(args: tuple) -> Dict[str, Any]:
+    """Evaluate a single trace using DietaryAdherenceJudge from framework."""
+    trace, judge = args
+
     query = trace["query"]
     dietary_restriction = trace["dietary_restriction"]
     response = trace["response"]
     true_label = trace["label"]
-    
+
+    try:
+        # Use framework judge
+        result = judge.evaluate(
+            query=query,
+            response=response,
+            dietary_restriction=dietary_restriction
+        )
+
+        # Convert "PASS"/"FAIL" to match expected format
+        predicted_label = result.score  # Already "PASS" or "FAIL"
+
+        return {
+            "trace_id": trace.get("trace_id", "unknown"),
+            "true_label": true_label,
+            "predicted_label": predicted_label,
+            "query": query,
+            "dietary_restriction": dietary_restriction,
+            "success": True
+        }
+
+    except Exception as e:
+        return {
+            "trace_id": trace.get("trace_id", "unknown"),
+            "true_label": true_label,
+            "predicted_label": "ERROR",
+            "query": query,
+            "dietary_restriction": dietary_restriction,
+            "success": False,
+            "error": str(e)
+        }
+
+def evaluate_single_trace_legacy(args: tuple) -> Dict[str, Any]:
+    """Evaluate a single trace with custom prompt - LEGACY MODE for parallel processing."""
+    trace, judge_prompt = args
+
+    query = trace["query"]
+    dietary_restriction = trace["dietary_restriction"]
+    response = trace["response"]
+    true_label = trace["label"]
+
     # Format the prompt using string replacement
     if not "__QUERY__" in judge_prompt:
         raise ValueError("Judge prompt does not contain __QUERY__ placeholder.")
@@ -182,20 +215,20 @@ def evaluate_single_trace(args: tuple) -> Dict[str, Any]:
         raise ValueError("Judge prompt does not contain __DIETARY_RESTRICTION__ placeholder.")
     if not "__RESPONSE__" in judge_prompt:
         raise ValueError("Judge prompt does not contain __RESPONSE__ placeholder.")
-    
+
     formatted_prompt = judge_prompt.replace("__QUERY__", query)
     formatted_prompt = formatted_prompt.replace("__DIETARY_RESTRICTION__", dietary_restriction)
     formatted_prompt = formatted_prompt.replace("__RESPONSE__", response)
-    
+
     try:
         # Get judge prediction
         completion = litellm.completion(
             model=MODEL_NAME_JUDGE,  # Use a cheaper model for judge evaluation
             messages=[{"role": "user", "content": formatted_prompt}],
         )
-        
+
         response_text = completion.choices[0].message.content.strip()
-        
+
         # Parse JSON response
         try:
             if "```json" in response_text:
@@ -208,12 +241,12 @@ def evaluate_single_trace(args: tuple) -> Dict[str, Any]:
                 json_text = response_text[json_start:json_end]
             else:
                 json_text = response_text
-            
+
             result = json.loads(json_text)
             predicted_label = result.get("label", "UNKNOWN")
         except json.JSONDecodeError:
             predicted_label = "UNKNOWN"
-        
+
         return {
             "trace_id": trace.get("trace_id", "unknown"),
             "true_label": true_label,
@@ -222,7 +255,7 @@ def evaluate_single_trace(args: tuple) -> Dict[str, Any]:
             "dietary_restriction": dietary_restriction,
             "success": True
         }
-        
+
     except Exception as e:
         return {
             "trace_id": trace.get("trace_id", "unknown"),
@@ -234,54 +267,70 @@ def evaluate_single_trace(args: tuple) -> Dict[str, Any]:
             "error": str(e)
         }
 
-def evaluate_judge_on_dev(judge_prompt: str, dev_traces: List[Dict[str, Any]], 
-                         sample_size: int = 50, max_workers: int = MAX_WORKERS) -> Tuple[float, float, List[Dict[str, Any]]]:
-    """Evaluate the judge prompt on a sample of the dev set using parallel processing."""
-    
+def evaluate_judge_on_dev(judge_or_prompt: Any, dev_traces: List[Dict[str, Any]],
+                         sample_size: int = 50, max_workers: int = MAX_WORKERS,
+                         use_framework: bool = True) -> Tuple[float, float, List[Dict[str, Any]]]:
+    """Evaluate the judge on a sample of the dev set using parallel processing.
+
+    Args:
+        judge_or_prompt: Either DietaryAdherenceJudge instance (framework mode) or str prompt (legacy mode)
+        dev_traces: List of development traces
+        sample_size: Number of traces to evaluate
+        max_workers: Number of parallel workers
+        use_framework: If True, use framework judge; if False, use legacy prompt
+
+    Returns:
+        Tuple of (TPR, TNR, predictions)
+    """
+
     # Sample dev traces for evaluation
     if len(dev_traces) > sample_size:
         sampled_traces = random.sample(dev_traces, sample_size)
     else:
         sampled_traces = dev_traces
-    
-    console.print(f"[yellow]Evaluating judge on {len(sampled_traces)} dev traces with {max_workers} workers...")
-    
+
+    mode_str = "FRAMEWORK" if use_framework else "LEGACY"
+    console.print(f"[yellow]Evaluating judge on {len(sampled_traces)} dev traces with {max_workers} workers ({mode_str} mode)...")
+
     # Prepare tasks for parallel processing
-    tasks = [(trace, judge_prompt) for trace in sampled_traces]
-    
+    tasks = [(trace, judge_or_prompt) for trace in sampled_traces]
+
     predictions = []
-    
+
+    # Choose evaluation function based on mode
+    eval_func = evaluate_single_trace_framework if use_framework else evaluate_single_trace_legacy
+
     # Use ThreadPoolExecutor for parallel evaluation
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         # Submit all tasks
-        future_to_task = {executor.submit(evaluate_single_trace, task): task for task in tasks}
-        
+        future_to_task = {executor.submit(eval_func, task): task for task in tasks}
+
         # Process completed tasks with progress tracking
         with console.status("[yellow]Evaluating traces in parallel...") as status:
             completed = 0
             total = len(tasks)
-            
+
             for future in as_completed(future_to_task):
                 result = future.result()
                 predictions.append(result)
                 completed += 1
-                
+
                 if not result["success"]:
                     console.print(f"[yellow]Warning: Failed to evaluate trace {result['trace_id']}: {result.get('error', 'Unknown error')}")
-                
+
                 status.update(f"[yellow]Evaluated {completed}/{total} traces ({completed/total*100:.1f}%)")
-    
+
     console.print(f"[green]Completed parallel evaluation of {len(predictions)} traces")
-    
+
     # Calculate TPR and TNR
     tp = sum(1 for p in predictions if p["true_label"] == "PASS" and p["predicted_label"] == "PASS")
     fn = sum(1 for p in predictions if p["true_label"] == "PASS" and p["predicted_label"] == "FAIL")
     tn = sum(1 for p in predictions if p["true_label"] == "FAIL" and p["predicted_label"] == "FAIL")
     fp = sum(1 for p in predictions if p["true_label"] == "FAIL" and p["predicted_label"] == "PASS")
-    
+
     tpr = tp / (tp + fn) if (tp + fn) > 0 else 0.0
     tnr = tn / (tn + fp) if (tn + fp) > 0 else 0.0
-    
+
     return tpr, tnr, predictions
 
 def save_judge_prompt(prompt: str, output_path: str) -> None:
@@ -294,69 +343,98 @@ def main():
     """Main function to develop the LLM judge."""
     console.print("[bold blue]LLM Judge Development")
     console.print("=" * 50)
-    
+
+    mode_str = "FRAMEWORK" if USE_FRAMEWORK else "LEGACY"
+    console.print(f"[cyan]Mode: {mode_str}")
+    if USE_FRAMEWORK:
+        console.print("[cyan]Using DietaryAdherenceJudge from backend/ai_judge_framework.py")
+    else:
+        console.print("[cyan]Using legacy custom prompt approach")
+    console.print("=" * 50)
+
     # Set up paths
     script_dir = Path(__file__).parent
     hw3_dir = script_dir.parent
     data_dir = hw3_dir / "data"
     results_dir = hw3_dir / "results"
     results_dir.mkdir(exist_ok=True)
-    
+
     # Load data splits
     train_path = data_dir / "train_set.csv"
     dev_path = data_dir / "dev_set.csv"
-    
+
     if not train_path.exists() or not dev_path.exists():
         console.print("[red]Error: Train or dev set not found!")
         console.print("[yellow]Please run split_data.py first.")
         return
-    
-    # Select few-shot examples randomly from train set
-    if not OWN_PROMPT:
-        train_traces = load_data_split(str(train_path))
-        console.print(f"[green]Loaded {len(train_traces)} train traces")
-        few_shot_examples = select_few_shot_examples(train_traces, seed=SEED)
-
-        if not few_shot_examples:
-            console.print("[red]Failed to select few-shot examples!")
-            return
 
     # Load dev set
     dev_traces = load_data_split(str(dev_path))
     console.print(f"[green]Loaded {len(dev_traces)} dev traces")
-    
-    # Create judge prompt
-    prompt_path = results_dir / "judge_prompt.txt"
 
-    if OWN_PROMPT:
-        console.print("[yellow]Using custom judge prompt...")
-        judge_prompt = read_judge_prompt(prompt_path)
+    # Framework mode: Use DietaryAdherenceJudge
+    if USE_FRAMEWORK:
+        console.print("[yellow]Initializing DietaryAdherenceJudge...")
+        judge = DietaryAdherenceJudge(
+            model=MODEL_NAME_JUDGE,
+            temperature=0.0
+        )
+        console.print("[green]Judge initialized successfully")
+
+        # Evaluate judge on dev set
+        console.print("[yellow]Evaluating judge on dev set...")
+        tpr, tnr, predictions = evaluate_judge_on_dev(
+            judge, dev_traces, use_framework=True
+        )
+
+    # Legacy mode: Use custom prompt with few-shot examples
     else:
-        console.print("[yellow]Using base judge prompt...")
-        judge_prompt = create_judge_prompt(few_shot_examples)
-    
-    # Evaluate judge on dev set
-    console.print("[yellow]Evaluating judge on dev set...")
-    tpr, tnr, predictions = evaluate_judge_on_dev(judge_prompt, dev_traces)
-    
+        # Select few-shot examples randomly from train set
+        if not OWN_PROMPT:
+            train_traces = load_data_split(str(train_path))
+            console.print(f"[green]Loaded {len(train_traces)} train traces")
+            few_shot_examples = select_few_shot_examples(train_traces, seed=SEED)
+
+            if not few_shot_examples:
+                console.print("[red]Failed to select few-shot examples!")
+                return
+
+        # Create judge prompt
+        prompt_path = results_dir / "judge_prompt.txt"
+
+        if OWN_PROMPT:
+            console.print("[yellow]Using custom judge prompt...")
+            judge_prompt = read_judge_prompt(prompt_path)
+        else:
+            console.print("[yellow]Using base judge prompt...")
+            judge_prompt = create_judge_prompt(few_shot_examples)
+
+        # Evaluate judge on dev set
+        console.print("[yellow]Evaluating judge on dev set...")
+        tpr, tnr, predictions = evaluate_judge_on_dev(
+            judge_prompt, dev_traces, use_framework=False
+        )
+
+        # Save judge prompt
+        if not OWN_PROMPT:
+            save_judge_prompt(judge_prompt, str(prompt_path))
+
     # Print results
     console.print(f"\n[bold]Judge Performance on Dev Set:")
     console.print(f"True Positive Rate (TPR): {tpr:.3f}")
     console.print(f"True Negative Rate (TNR): {tnr:.3f}")
     console.print(f"Balanced Accuracy: {(tpr + tnr) / 2:.3f}")
- 
-    # Save judge prompt
-    if not OWN_PROMPT:
-        save_judge_prompt(judge_prompt, str(prompt_path))
- 
+
     # Save dev set predictions for analysis
     predictions_path = results_dir / "dev_predictions.json"
     with open(predictions_path, 'w', encoding='utf-8') as f:
         json.dump(predictions, f, indent=2)
     console.print(f"[green]Saved dev predictions to {predictions_path}")
- 
+
     console.print("\n[bold green]Judge development completed!")
-    console.print(f"[blue]Judge prompt saved to: {prompt_path}")
+    if not USE_FRAMEWORK:
+        prompt_path = results_dir / "judge_prompt.txt"
+        console.print(f"[blue]Judge prompt saved to: {prompt_path}")
 
 if __name__ == "__main__":
     main() 

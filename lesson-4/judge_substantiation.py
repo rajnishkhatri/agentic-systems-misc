@@ -1,5 +1,7 @@
 """LLM Judge for the *unsupported / unsubstantiated information* failure mode.
 
+REFACTORED: Now uses SubstantiationJudge from backend/ai_judge_framework.py
+
 Reads the ground-truth file produced by *label_substantiation.py* and evaluates
 a cheaper model (OpenAI **gpt-4.1-nano**) against it.
 
@@ -9,12 +11,16 @@ Metrics reported:
 
 A deterministic 10 %/10 %/80 % split (train/dev/test) is created based on a
 hash of the `id` so results are repeatable.
+
+By default uses SubstantiationJudge from the framework. Set USE_FRAMEWORK = False
+to use the legacy custom prompt approach with few-shot examples.
 """
 
 from pathlib import Path
 import hashlib
 import json
 import os
+import sys
 from typing import List, Dict, Any
 
 import litellm  # type: ignore
@@ -22,6 +28,10 @@ from sklearn.metrics import confusion_matrix
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dotenv import load_dotenv
 from pydantic import BaseModel
+
+# Add backend to path for framework imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from backend.ai_judge_framework import SubstantiationJudge
 
 try:
     from tqdm import tqdm
@@ -31,8 +41,10 @@ except ModuleNotFoundError:  # pragma: no cover
 
 load_dotenv()
 
+# Configuration
+USE_FRAMEWORK = True  # Set to False to use legacy custom prompt approach
 DATA_PATH = Path("lesson-4/nurtureboss_traces_labeled.json")
-MODEL_NAME = "gpt-4.1"
+MODEL_NAME = "gpt-4o-mini"
 
 # Threadpool size for model calls
 MAX_WORKERS = int(os.environ.get("NB_LLM_WORKERS", "64"))
@@ -141,43 +153,96 @@ def main() -> None:
     if "OPENAI_API_KEY" not in os.environ:
         raise RuntimeError("Missing OPENAI_API_KEY")
 
+    mode_str = "FRAMEWORK" if USE_FRAMEWORK else "LEGACY"
+    print(f"=== Substantiation Judge Evaluation ({mode_str} mode) ===")
+    if USE_FRAMEWORK:
+        print("Using SubstantiationJudge from backend/ai_judge_framework.py")
+    else:
+        print("Using legacy custom prompt with few-shot examples")
+    print()
+
     with DATA_PATH.open() as fp:
         records = json.load(fp)
 
     splits = split_dataset(records)
 
+    # Framework mode: Create judge instance once
+    if USE_FRAMEWORK:
+        judge = SubstantiationJudge(model=MODEL_NAME, temperature=0.0)
+
     for split_name, split_recs in splits.items():
         y_true: List[bool] = [bool(r["all_responses_substantiated"]) for r in split_recs]
 
-        # Collect pass/fail examples – ensure equal count (up to 2 each)
-        pass_examples = [r for r in splits["train"] if r["all_responses_substantiated"]]
-        fail_examples = [r for r in splits["train"] if not r["all_responses_substantiated"]]
+        # Framework mode evaluation function
+        if USE_FRAMEWORK:
+            def evaluate_framework(rec: Dict[str, Any]) -> bool:
+                """Evaluate using SubstantiationJudge from framework."""
+                # Format messages as query
+                messages = rec.get("messages", [])
+                query_parts = []
+                response_parts = []
 
-        k = min(5, len(pass_examples), len(fail_examples))
-        pass_examples = pass_examples[:k]
-        fail_examples = fail_examples[:k]
+                for msg in messages:
+                    role = msg['role'].upper()
+                    content = msg['content']
+                    if role == 'USER':
+                        query_parts.append(f"USER: {content}")
+                    elif role == 'ASSISTANT':
+                        response_parts.append(f"ASSISTANT: {content}")
 
-        example_pass_combined = "\n---\n".join(_format_conv_short(r) for r in pass_examples)
-        example_fail_combined = "\n---\n".join(_format_conv_short(r) for r in fail_examples)
+                query = "\n".join(query_parts) if query_parts else "Evaluate this conversation"
+                response = "\n".join(response_parts) if response_parts else "(no response)"
 
-        def evaluate(rec: Dict[str, Any]) -> bool:
-            prompt = build_judge_prompt(
-                rec.get("messages", []),
-                {k: v for k, v in rec.items() if k not in {"messages", "id", "z_note", "all_responses_substantiated", "substantiation_rationale"}},
-                example_pass=example_pass_combined,
-                example_fail=example_fail_combined,
-            )
-            resp_raw = litellm.completion(
-                model=MODEL_NAME,
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0,
-                response_format=JudgeResult,
-            )
+                # Extract context (metadata)
+                context = {k: v for k, v in rec.items() if k not in {"messages", "id", "z_note", "all_responses_substantiated", "substantiation_rationale"}}
 
-            # LiteLLM still returns OpenAI-style object; extract JSON and parse
-            parsed = JudgeResult(**json.loads(resp_raw.choices[0].message.content))  # type: ignore[attr-defined]
-            return parsed.all_responses_substantiated
+                # Call judge
+                result = judge.evaluate(
+                    query=query,
+                    response=response,
+                    context=context
+                )
 
+                # SubstantiationJudge returns PASS if substantiated, FAIL if not
+                return result.score == "PASS"
+
+            evaluate = evaluate_framework
+
+        # Legacy mode evaluation function
+        else:
+            # Collect pass/fail examples – ensure equal count (up to 5 each)
+            pass_examples = [r for r in splits["train"] if r["all_responses_substantiated"]]
+            fail_examples = [r for r in splits["train"] if not r["all_responses_substantiated"]]
+
+            k = min(5, len(pass_examples), len(fail_examples))
+            pass_examples = pass_examples[:k]
+            fail_examples = fail_examples[:k]
+
+            example_pass_combined = "\n---\n".join(_format_conv_short(r) for r in pass_examples)
+            example_fail_combined = "\n---\n".join(_format_conv_short(r) for r in fail_examples)
+
+            def evaluate_legacy(rec: Dict[str, Any]) -> bool:
+                """Evaluate using legacy custom prompt."""
+                prompt = build_judge_prompt(
+                    rec.get("messages", []),
+                    {k: v for k, v in rec.items() if k not in {"messages", "id", "z_note", "all_responses_substantiated", "substantiation_rationale"}},
+                    example_pass=example_pass_combined,
+                    example_fail=example_fail_combined,
+                )
+                resp_raw = litellm.completion(
+                    model=MODEL_NAME,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=0,
+                    response_format=JudgeResult,
+                )
+
+                # LiteLLM still returns OpenAI-style object; extract JSON and parse
+                parsed = JudgeResult(**json.loads(resp_raw.choices[0].message.content))  # type: ignore[attr-defined]
+                return parsed.all_responses_substantiated
+
+            evaluate = evaluate_legacy
+
+        # Run evaluation in parallel
         y_pred: List[bool] = [False] * len(split_recs)
         with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
             futures = {executor.submit(evaluate, rec): idx for idx, rec in enumerate(split_recs)}
