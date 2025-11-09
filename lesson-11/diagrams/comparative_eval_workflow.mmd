@@ -1,0 +1,53 @@
+flowchart LR
+    subgraph Generation["1️⃣ Generate Responses"]
+        Query[User Query] --> ModelA[Model A<br/>Response]
+        Query --> ModelB[Model B<br/>Response]
+        Query --> ModelC[Model C<br/>Response]
+    end
+
+    subgraph Comparison["2️⃣ Pairwise Comparison"]
+        ModelA --> PairAB{Judge:<br/>A vs B}
+        ModelB --> PairAB
+        ModelB --> PairBC{Judge:<br/>B vs C}
+        ModelC --> PairBC
+        ModelA --> PairAC{Judge:<br/>A vs C}
+        ModelC --> PairAC
+        
+        PairAB -->|Winner: A| CompData[(Comparison<br/>Dataset)]
+        PairBC -->|Winner: B| CompData
+        PairAC -->|Winner: A| CompData
+    end
+
+    subgraph Ranking["3️⃣ Compute Rankings"]
+        CompData --> Algorithm{Algorithm<br/>Choice}
+        Algorithm -->|Online| EloRank[Elo Rating<br/>Update]
+        Algorithm -->|Batch| BTRank[Bradley-Terry<br/>MLE Fit]
+        
+        EloRank --> Ratings[(Model Ratings)]
+        BTRank --> Skills[(Model Skills)]
+    end
+
+    subgraph Visualization["4️⃣ Visualize Results"]
+        Ratings --> Leaderboard[Leaderboard<br/>Sorted by Elo]
+        Skills --> LeaderboardBT[Leaderboard<br/>+ Confidence Intervals]
+        
+        Leaderboard --> Dashboard{{Evaluation<br/>Dashboard}}
+        LeaderboardBT --> Dashboard
+    end
+
+    subgraph Validation["5️⃣ Validate Quality"]
+        Dashboard --> CheckTransitivity{Transitivity<br/>Violations?}
+        CheckTransitivity -->|<10%| Good[✅ Reliable<br/>Rankings]
+        CheckTransitivity -->|>10%| Investigate[⚠️ Investigate<br/>Query Heterogeneity]
+        
+        Investigate --> Stratify[Stratify by<br/>Query Type]
+        Stratify --> Ranking
+    end
+
+    style Generation fill:#E8F5E9
+    style Comparison fill:#E3F2FD
+    style Ranking fill:#FFF3E0
+    style Visualization fill:#F3E5F5
+    style Validation fill:#FFEBEE
+    style Good fill:#90EE90
+    style Investigate fill:#FFB6C1

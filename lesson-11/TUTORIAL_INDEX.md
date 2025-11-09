@@ -361,6 +361,29 @@ A: Elo supports ties (S_A = 0.5). Bradley-Terry requires extension (e.g., Davids
 
 ---
 
-**Tutorial Status:** ⏳ In Development
+**Tutorial Status:** ✅ Complete
 **Last Updated:** 2025-11-09
 **Maintainer:** AI Evaluation Course Team
+
+---
+
+## Implementation Notes
+
+**Backend Module:** `backend/comparative_evaluation.py`
+- ✅ EloRanking class implemented
+- ✅ BradleyTerryRanking class implemented
+- ✅ Helper functions (calculate_expected_score, calculate_win_rate, generate_pairwise_comparisons, visualize_leaderboard)
+- ✅ 97% test coverage (45 tests passing)
+
+**Dataset:** `lesson-11/data/pairwise_comparisons.json`
+- ✅ 100 pairwise comparisons across 4 dimensions
+- ✅ 30 helpfulness, 30 correctness, 20 conciseness, 20 safety comparisons
+
+**Generation Script:** `lesson-11/scripts/generate_pairwise_comparisons.py`
+- ✅ CLI tool for generating new comparison datasets
+- ✅ Parallel processing support
+- ✅ Multiple dimension support
+
+**Diagrams:**
+- ✅ `diagrams/ranking_algorithm_comparison.mmd` - Algorithm decision flowchart
+- ✅ `diagrams/comparative_eval_workflow.mmd` - End-to-end pipeline visualization

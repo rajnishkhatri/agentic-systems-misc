@@ -1,0 +1,902 @@
+[
+  {
+    "query": "How do I make gluten-free pasta from scratch?",
+    "response_a": "To make gluten-free pasta from scratch, you'll need 2 cups of gluten-free flour blend (rice flour + tapioca starch + xanthan gum), 3 large eggs, 1 tbsp olive oil, and a pinch of salt. Mix the dry ingredients, create a well in the center, add eggs and oil, then knead for 8-10 minutes until smooth. Rest the dough for 30 minutes covered, then roll out thinly and cut into desired shapes. Cook in boiling salted water for 2-3 minutes. The xanthan gum is crucial as it replaces the gluten's binding properties.",
+    "response_b": "Mix 2 cups gluten-free flour blend with 3 eggs and 1 tbsp olive oil. Knead 8-10 min, rest 30 min, roll out, cut, and cook 2-3 min in boiling water.",
+    "winner": "A",
+    "rationale": "Response A provides more detailed instructions including the composition of the flour blend and explains the role of xanthan gum, which is crucial for beginners. Response B is accurate but lacks important context.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What's a quick weeknight dinner for a family of four?",
+    "response_a": "A great quick weeknight dinner is Sheet Pan Chicken Fajitas. Slice 1.5 lbs chicken breast, 2 bell peppers, and 1 onion. Toss with 2 tbsp olive oil, 1 tsp cumin, 1 tsp chili powder, salt, and pepper. Spread on a sheet pan and roast at 425°F for 20 minutes. Serve with tortillas, sour cream, and guacamole. Total time: 30 minutes. You can prep the vegetables in advance to save even more time.",
+    "response_b": "Sheet Pan Chicken Fajitas: Toss sliced chicken, peppers, onions with spices and oil. Roast at 425°F for 20 min. Serve with tortillas. Done in 30 min.",
+    "winner": "A",
+    "rationale": "Response A provides specific measurements and additional serving suggestions, making it more actionable. Both are accurate but A is more helpful for planning.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can you suggest a vegan dessert for a birthday party?",
+    "response_a": "Try a Vegan Chocolate Avocado Mousse: Blend 2 ripe avocados, 1/4 cup cocoa powder, 1/4 cup maple syrup, 1 tsp vanilla, and a pinch of salt until silky smooth. Chill for 2 hours. Serve in individual cups topped with fresh berries and coconut whipped cream. It's rich, indulgent, and no one will guess it's made with avocado! Serves 6-8 people.",
+    "response_b": "Vegan chocolate cake is always a hit! Use plant milk instead of dairy, applesauce for eggs, and vegan butter. Bake as usual.",
+    "winner": "A",
+    "rationale": "Response A provides a complete, specific recipe with quantities and presentation tips. Response B offers general guidance but lacks actionable details.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I properly brown butter for cookies?",
+    "response_a": "Cut butter into pieces and melt in a light-colored pan over medium heat (so you can see the color change). Swirl constantly as it foams. After 5-7 minutes, milk solids will turn golden brown and smell nutty. Immediately pour into a heatproof bowl to stop cooking. Let cool before using in cookie dough. Pro tip: Brown 25% extra butter to account for evaporated water.",
+    "response_b": "Melt butter in a pan over medium heat, stirring often until it turns brown and smells nutty. Remove from heat and cool before using.",
+    "winner": "A",
+    "rationale": "Response A includes crucial details like using a light-colored pan (critical for visual cues), exact timing, and the tip about browning extra butter. More comprehensive guidance.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What are good substitutes for eggs in baking?",
+    "response_a": "For binding: 1 egg = 1 tbsp ground flaxseed + 3 tbsp water (let sit 5 min). For moisture: 1 egg = 1/4 cup applesauce or mashed banana. For leavening: 1 egg = 1 tsp baking powder + 1 tbsp vinegar + 1 tbsp liquid. Choose based on recipe needs: flax for cookies, applesauce for muffins, baking powder for cakes.",
+    "response_b": "Common egg substitutes include flaxseed meal, applesauce, mashed banana, and commercial egg replacers. Each works differently depending on the recipe.",
+    "winner": "A",
+    "rationale": "Response A provides specific measurements, preparation instructions, and guidance on which substitute to use for different baked goods. Much more actionable.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How can I make crispy fried chicken at home?",
+    "response_a": "Brine chicken pieces in buttermilk overnight. Mix 2 cups flour with 2 tbsp cornstarch, 1 tbsp paprika, 1 tsp garlic powder, salt, and pepper. Dredge chicken twice (wet-dry-wet-dry). Fry in 350°F oil for 12-15 minutes until golden and internal temp reaches 165°F. Rest on a wire rack. The cornstarch and double dredging create extra crispy coating.",
+    "response_b": "Marinate chicken in buttermilk, coat in seasoned flour, and deep fry at 350°F until golden brown and cooked through.",
+    "winner": "A",
+    "rationale": "Response A includes the crucial double-dredging technique, cornstarch addition for crispiness, specific timing, and temperature checks. Response B misses key techniques.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What's the best way to cook rice perfectly every time?",
+    "response_a": "Use a 1:1.5 ratio of rice to water for white rice (1:2 for brown). Rinse rice until water runs clear. Bring water to boil, add rice and salt, return to boil. Cover, reduce to lowest heat, and cook 18 minutes for white rice (45 for brown). Don't lift the lid! Let stand covered 10 minutes off heat, then fluff. Key: proper ratio, no peeking, and rest time.",
+    "response_b": "Rinse rice, use 2 parts water to 1 part rice, bring to a boil, then simmer covered until water is absorbed.",
+    "winner": "A",
+    "rationale": "Response A provides precise ratios for both white and brown rice, exact timing, and explains the crucial \"no peeking\" rule and resting period. More complete guidance.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can you explain the difference between baking soda and baking powder?",
+    "response_a": "Baking soda (sodium bicarbonate) is a base that needs an acid (buttermilk, vinegar, lemon juice) to activate and create CO2 bubbles. Baking powder contains both acid and base, so it activates with moisture and heat. Use soda when recipe has acidic ingredients, powder when it doesn't. Can't substitute 1:1—powder is weaker, use 3x more. Soda also helps browning.",
+    "response_b": "Baking soda is a base that needs acid to work. Baking powder already has acid mixed in, so it works on its own. They're not interchangeable.",
+    "winner": "A",
+    "rationale": "Response A provides scientific explanation, practical usage guidelines, substitution ratios, and a bonus tip about browning. Much more educational and useful.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I make homemade pizza dough?",
+    "response_a": "Mix 3 cups bread flour, 1 packet yeast, 1 tsp sugar, 1 tsp salt. Add 1 cup warm water (110°F) and 2 tbsp olive oil. Knead 8-10 minutes until elastic. Rise 1-2 hours until doubled. Punch down, divide in half, shape into balls. Rest 15 minutes before stretching. Makes 2 12-inch pizzas. High-protein bread flour creates chewy, crispy crust.",
+    "response_b": "Combine flour, yeast, salt, warm water, and olive oil. Knead until smooth, let rise until doubled, then shape and use for pizza.",
+    "winner": "A",
+    "rationale": "Response A includes precise measurements, water temperature (critical for yeast), timing for each step, yield information, and explains why bread flour is preferred.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What are some healthy breakfast options for busy mornings?",
+    "response_a": "Overnight oats: Mix 1/2 cup oats, 1/2 cup milk, 1 tbsp chia seeds, fruit. Refrigerate overnight. 2) Egg muffins: Whisk 6 eggs with veggies, bake in muffin tin at 350°F for 20 min. Make 12, refrigerate 5 days. 3) Smoothie packs: Pre-portion frozen fruit, spinach, protein powder in bags. Blend with liquid in 2 minutes. All take <5 min morning prep.",
+    "response_b": "Try overnight oats, egg muffins, smoothies, or whole grain toast with avocado. These are quick and nutritious.",
+    "winner": "A",
+    "rationale": "Response A provides specific recipes with measurements, make-ahead instructions, storage times, and morning prep times. Response B just lists ideas without actionable details.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I cook a perfect medium-rare steak?",
+    "response_a": "Remove steak from fridge 30 min before cooking. Pat dry, season generously with salt and pepper. Heat cast iron pan until smoking. Add oil, sear steak 3-4 min per side for 1-inch thickness. Internal temp should reach 130-135°F. Rest 5-10 minutes (temp will rise 5°F to 135-140°F). Key: high heat, don't move steak while searing, use thermometer, always rest.",
+    "response_b": "Sear steak in hot pan for a few minutes per side until it reaches 130-135°F internal temperature. Let it rest before slicing.",
+    "winner": "A",
+    "rationale": "Response A includes prep steps, timing based on thickness, carry-over cooking explanation, and key techniques for success. More comprehensive.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What's a good recipe for chocolate chip cookies?",
+    "response_a": "Cream 1 cup butter + 3/4 cup each white/brown sugar. Add 2 eggs, 2 tsp vanilla. Mix 2 1/4 cups flour, 1 tsp baking soda, 1 tsp salt. Fold in 2 cups chocolate chips. Chill dough 30 min (prevents spreading). Scoop 2 tbsp portions, bake at 375°F for 9-11 minutes until edges golden, centers still soft. Cool on pan 5 min. Makes 48 cookies.",
+    "response_b": "Mix butter, sugars, eggs, and vanilla. Add flour, baking soda, and salt. Stir in chocolate chips. Bake at 350°F until golden.",
+    "winner": "A",
+    "rationale": "Response A provides precise measurements, the crucial chilling step, baking time, yield, and explains why to chill. Response B lacks detail and uses wrong temperature.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How can I make my own pasta sauce?",
+    "response_a": "Heat 2 tbsp olive oil, sauté 4 minced garlic cloves until fragrant (30 sec). Add 28 oz crushed tomatoes, 1 tsp dried basil, 1/2 tsp oregano, pinch red pepper flakes, salt. Simmer 20-30 minutes, stirring occasionally. Add 2 tbsp butter at end for richness. Optional: finish with fresh basil. Use within 5 days or freeze up to 3 months.",
+    "response_b": "Sauté garlic in olive oil, add canned tomatoes and Italian herbs, simmer until thickened. Season to taste.",
+    "winner": "A",
+    "rationale": "Response A includes specific measurements, timing, flavor-enhancing tips (butter finish), and storage information. More practical and complete.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What are some easy appetizers for a party?",
+    "response_a": "1) Caprese skewers: Thread cherry tomatoes, basil, mozzarella balls. Drizzle with balsamic glaze. 2) Deviled eggs: Mix yolks with mayo, mustard, relish. Pipe back into whites. 3) Spinach dip: Mix thawed frozen spinach, sour cream, mayo, garlic, parmesan. Bake 20 min at 350°F. All can be prepped day before. Serves 8-10 people.",
+    "response_b": "Easy appetizers include caprese skewers, deviled eggs, spinach dip, cheese board, and crackers. Most can be made ahead.",
+    "winner": "A",
+    "rationale": "Response A provides quick recipes for multiple appetizers with make-ahead instructions and serving sizes. Response B just lists options.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I make fluffy pancakes?",
+    "response_a": "Mix 1 1/2 cups flour, 3 tbsp sugar, 1 tbsp baking powder, 1/2 tsp salt. In separate bowl, whisk 1 1/4 cups milk, 1 egg, 3 tbsp melted butter. Combine wet and dry until just mixed (lumps are OK!). Let batter rest 5 minutes. Cook on 350°F griddle, flip when bubbles form and edges set (about 2 min). Keys: don't overmix, let batter rest, right griddle temp.",
+    "response_b": "Mix flour, sugar, baking powder, salt. Add milk, egg, melted butter. Cook on griddle until bubbles form, then flip.",
+    "winner": "A",
+    "rationale": "Response A includes measurements, the critical \"don't overmix\" tip, resting time, specific griddle temperature, and visual cues for flipping. More helpful.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What's the secret to a moist chocolate cake?",
+    "response_a": "Use buttermilk or sour cream for moisture, add 1/4 cup oil in addition to butter (oil stays moist longer), don't overbake (test at 25 min, should have few crumbs on toothpick, not clean), use cake flour (lower protein = tender crumb), and add 1 tsp instant coffee to enhance chocolate flavor. Cool in pan 10 min before removing.",
+    "response_b": "Add buttermilk for moisture, don't overbake, and use quality cocoa powder.",
+    "winner": "A",
+    "rationale": "Response A provides multiple specific techniques with explanations of why they work. Response B offers general tips without depth.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How can I reduce sodium in my cooking?",
+    "response_a": "Use fresh/frozen vegetables instead of canned (or rinse canned). Replace salt with herbs, spices, lemon juice, or vinegar for flavor. Choose low-sodium broth and sauces. Make your own dressings and marinades. Season food during cooking, not at table. Gradually reduce salt—taste buds adapt in 2-3 weeks. Aim for <2,300mg/day (1 tsp salt).",
+    "response_b": "Use less salt, add more herbs and spices, and choose low-sodium products when shopping.",
+    "winner": "A",
+    "rationale": "Response A provides specific strategies, explains taste bud adaptation, includes daily sodium target, and offers multiple practical tips. More comprehensive.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What are good meal prep ideas for the week?",
+    "response_a": "Sunday prep: 1) Bake 4 lbs chicken breast, portion into containers. 2) Cook 3 cups rice, 3 cups quinoa. 3) Roast sheet pans of broccoli, sweet potato, Brussels sprouts. 4) Make 2 sauces (teriyaki, salsa verde). Mix and match throughout week. Store proteins 4 days, grains 5 days, veggies 3 days. Label with dates.",
+    "response_b": "Cook proteins like chicken and ground beef, prepare grains like rice and quinoa, chop vegetables, and store in containers for the week.",
+    "winner": "A",
+    "rationale": "Response A provides specific quantities, suggests variety through mix-and-match, includes storage times for food safety, and has labeling tip. More practical.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I make crispy roasted vegetables?",
+    "response_a": "Cut vegetables uniform size (1-inch pieces). Toss with 2-3 tbsp oil per lb of vegetables, salt, pepper. Spread in single layer on sheet pan (crowding = steaming = soggy). Roast at 425-450°F for 20-35 minutes, flip halfway. Don't stir too often. Keys: high heat, single layer, don't crowd, resist stirring.",
+    "response_b": "Coat vegetables in oil, season with salt and pepper, spread on a baking sheet, and roast at 425°F until crispy and browned.",
+    "winner": "A",
+    "rationale": "Response A emphasizes the critical \"don't crowd\" and \"resist stirring\" techniques, provides timing, and explains why vegetables get soggy. More instructive.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What's a simple recipe for homemade bread?",
+    "response_a": "Mix 3 cups flour, 1 packet yeast, 1 tbsp sugar, 1 1/2 tsp salt. Add 1 1/4 cups warm water, 2 tbsp oil. Knead 10 minutes until elastic. Rise 1 hour until doubled. Shape into loaf, place in greased 9x5 pan. Rise 30 minutes. Bake at 375°F for 30-35 minutes until golden and hollow-sounding when tapped. Cool completely before slicing.",
+    "response_b": "Combine flour, yeast, sugar, salt, warm water, and oil. Knead, let rise, shape into loaf, and bake until golden brown.",
+    "winner": "A",
+    "rationale": "Response A includes measurements, rise times, pan size, baking time, doneness test (hollow sound), and cooling instruction. Much more complete.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I store fresh herbs?",
+    "response_a": "Wash herbs, pat dry, wrap in damp paper towel, store in plastic bag in refrigerator. Most herbs last 5-7 days. For basil, trim stems and place in glass of water like flowers—it lasts longer at room temperature than refrigerated. Change water every 2 days.",
+    "response_b": "Store fresh herbs in the refrigerator wrapped in damp paper towels.",
+    "winner": "A",
+    "rationale": "Response A provides specific instructions, storage duration, and special handling for basil which is different from other herbs.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I store fresh herbs?",
+    "response_a": "Wash herbs, pat dry, wrap in damp paper towel, store in plastic bag in refrigerator. Most herbs last 5-7 days. For basil, trim stems and place in glass of water like flowers—it lasts longer at room temperature than refrigerated. Change water every 2 days.",
+    "response_b": "Store fresh herbs in the refrigerator wrapped in damp paper towels.",
+    "winner": "A",
+    "rationale": "Response A provides specific instructions, storage duration, and special handling for basil which is different from other herbs.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I store fresh herbs?",
+    "response_a": "Wash herbs, pat dry, wrap in damp paper towel, store in plastic bag in refrigerator. Most herbs last 5-7 days. For basil, trim stems and place in glass of water like flowers—it lasts longer at room temperature than refrigerated. Change water every 2 days.",
+    "response_b": "Store fresh herbs in the refrigerator wrapped in damp paper towels.",
+    "winner": "A",
+    "rationale": "Response A provides specific instructions, storage duration, and special handling for basil which is different from other herbs.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I store fresh herbs?",
+    "response_a": "Wash herbs, pat dry, wrap in damp paper towel, store in plastic bag in refrigerator. Most herbs last 5-7 days. For basil, trim stems and place in glass of water like flowers—it lasts longer at room temperature than refrigerated. Change water every 2 days.",
+    "response_b": "Store fresh herbs in the refrigerator wrapped in damp paper towels.",
+    "winner": "A",
+    "rationale": "Response A provides specific instructions, storage duration, and special handling for basil which is different from other herbs.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I store fresh herbs?",
+    "response_a": "Wash herbs, pat dry, wrap in damp paper towel, store in plastic bag in refrigerator. Most herbs last 5-7 days. For basil, trim stems and place in glass of water like flowers—it lasts longer at room temperature than refrigerated. Change water every 2 days.",
+    "response_b": "Store fresh herbs in the refrigerator wrapped in damp paper towels.",
+    "winner": "A",
+    "rationale": "Response A provides specific instructions, storage duration, and special handling for basil which is different from other herbs.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I store fresh herbs?",
+    "response_a": "Wash herbs, pat dry, wrap in damp paper towel, store in plastic bag in refrigerator. Most herbs last 5-7 days. For basil, trim stems and place in glass of water like flowers—it lasts longer at room temperature than refrigerated. Change water every 2 days.",
+    "response_b": "Store fresh herbs in the refrigerator wrapped in damp paper towels.",
+    "winner": "A",
+    "rationale": "Response A provides specific instructions, storage duration, and special handling for basil which is different from other herbs.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I store fresh herbs?",
+    "response_a": "Wash herbs, pat dry, wrap in damp paper towel, store in plastic bag in refrigerator. Most herbs last 5-7 days. For basil, trim stems and place in glass of water like flowers—it lasts longer at room temperature than refrigerated. Change water every 2 days.",
+    "response_b": "Store fresh herbs in the refrigerator wrapped in damp paper towels.",
+    "winner": "A",
+    "rationale": "Response A provides specific instructions, storage duration, and special handling for basil which is different from other herbs.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I store fresh herbs?",
+    "response_a": "Wash herbs, pat dry, wrap in damp paper towel, store in plastic bag in refrigerator. Most herbs last 5-7 days. For basil, trim stems and place in glass of water like flowers—it lasts longer at room temperature than refrigerated. Change water every 2 days.",
+    "response_b": "Store fresh herbs in the refrigerator wrapped in damp paper towels.",
+    "winner": "A",
+    "rationale": "Response A provides specific instructions, storage duration, and special handling for basil which is different from other herbs.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I store fresh herbs?",
+    "response_a": "Wash herbs, pat dry, wrap in damp paper towel, store in plastic bag in refrigerator. Most herbs last 5-7 days. For basil, trim stems and place in glass of water like flowers—it lasts longer at room temperature than refrigerated. Change water every 2 days.",
+    "response_b": "Store fresh herbs in the refrigerator wrapped in damp paper towels.",
+    "winner": "A",
+    "rationale": "Response A provides specific instructions, storage duration, and special handling for basil which is different from other herbs.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How do I store fresh herbs?",
+    "response_a": "Wash herbs, pat dry, wrap in damp paper towel, store in plastic bag in refrigerator. Most herbs last 5-7 days. For basil, trim stems and place in glass of water like flowers—it lasts longer at room temperature than refrigerated. Change water every 2 days.",
+    "response_b": "Store fresh herbs in the refrigerator wrapped in damp paper towels.",
+    "winner": "A",
+    "rationale": "Response A provides specific instructions, storage duration, and special handling for basil which is different from other herbs.",
+    "dimension": "helpfulness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "What temperature should I cook chicken to?",
+    "response_a": "Chicken must reach an internal temperature of 165°F (74°C) measured at the thickest part of the meat. This applies to all chicken parts: breast, thighs, wings, and ground chicken. Use an instant-read thermometer for accuracy.",
+    "response_b": "Cook chicken until it reaches 160°F internally to ensure it's safe to eat.",
+    "winner": "A",
+    "rationale": "Response A provides the correct FDA-recommended safe temperature of 165°F. Response B's 160°F is incorrect and potentially unsafe.",
+    "dimension": "correctness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "How long to boil eggs?",
+    "response_a": "6-7 minutes for soft-boiled, 9-10 minutes for medium, 12-13 minutes for hard-boiled.",
+    "response_b": "To boil eggs, you'll want to first bring a pot of water to a rolling boil. Then carefully lower the eggs into the water using a spoon. For soft-boiled eggs with runny yolks, cook for 6-7 minutes. For medium-boiled eggs with slightly creamy yolks, cook for 9-10 minutes. For hard-boiled eggs with fully set yolks, cook for 12-13 minutes. After cooking, immediately transfer to ice bath.",
+    "winner": "A",
+    "rationale": "Response A delivers the essential information concisely. Response B includes the same information but with unnecessary elaboration.",
+    "dimension": "conciseness",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  },
+  {
+    "query": "Can I leave chicken out to thaw?",
+    "response_a": "Never thaw chicken at room temperature—bacteria multiply rapidly between 40-140°F. Safe methods: 1) Refrigerator (24 hours), 2) Cold water (change every 30 min), 3) Microwave (cook immediately after). Room temperature thawing can cause foodborne illness.",
+    "response_b": "You can thaw chicken on the counter, but it's better to thaw in the refrigerator overnight.",
+    "winner": "A",
+    "rationale": "Response A correctly emphasizes the danger of room temperature thawing and provides safe alternatives. Response B incorrectly suggests countertop thawing is acceptable.",
+    "dimension": "safety",
+    "judge_model": "gpt-4o-mini"
+  }
+]

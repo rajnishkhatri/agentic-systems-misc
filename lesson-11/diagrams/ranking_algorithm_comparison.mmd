@@ -1,0 +1,27 @@
+flowchart TD
+    Start([Need to Rank Models]) --> HasComparisons{Have Pairwise<br/>Comparisons?}
+
+    HasComparisons -->|No| UsePointwise[Use Pointwise<br/>Evaluation]
+    HasComparisons -->|Yes| Dynamic{Dynamic Updates<br/>Required?}
+
+    Dynamic -->|Yes| NeedUncertainty{Need Uncertainty<br/>Estimates?}
+    Dynamic -->|No| BatchSize{Batch Size}
+
+    NeedUncertainty -->|Yes| TrueSkill[TrueSkill<br/>Bayesian Ranking]
+    NeedUncertainty -->|No| Elo[Elo Rating<br/>Simple & Fast]
+
+    BatchSize -->|Small <100| Elo
+    BatchSize -->|Large >100| NeedStats{Need Statistical<br/>Inference?}
+
+    NeedStats -->|Yes| BradleyTerry[Bradley-Terry Model<br/>MLE Estimation]
+    NeedStats -->|No| Elo
+
+    Elo --> EloDetails["✅ Pros: Simple, online updates<br/>❌ Cons: No uncertainty, order-dependent<br/>Use: Live leaderboards (Chatbot Arena)"]
+    BradleyTerry --> BTDetails["✅ Pros: Order-independent, uncertainty<br/>❌ Cons: Batch-only, no updates<br/>Use: Static analysis, research"]
+    TrueSkill --> TSDetails["✅ Pros: Uncertainty-aware, teams<br/>❌ Cons: Complex, requires library<br/>Use: Multi-player scenarios"]
+    UsePointwise --> PointDetails["✅ Pros: No comparisons needed<br/>❌ Cons: Less reliable for subjective criteria<br/>Use: Objective metrics only"]
+
+    style Elo fill:#90EE90
+    style BradleyTerry fill:#87CEEB
+    style TrueSkill fill:#FFB6C1
+    style UsePointwise fill:#FFE4B5
