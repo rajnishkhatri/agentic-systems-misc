@@ -1,0 +1,98 @@
+{
+  "mode": "DEMO",
+  "sample_size": 50,
+  "k": 5,
+  "queries": [
+    {
+      "query": "lasagna with cheese",
+      "query_type": "exact",
+      "bm25_precision": 0.8,
+      "semantic_precision": 0.6,
+      "hybrid_precision": 1.0,
+      "bm25_top_k": [
+        0,
+        5,
+        12,
+        18,
+        23
+      ],
+      "semantic_top_k": [
+        0,
+        7,
+        15,
+        22,
+        28
+      ],
+      "hybrid_top_k": [
+        0,
+        5,
+        7,
+        12,
+        15
+      ]
+    },
+    {
+      "query": "healthy breakfast ideas",
+      "query_type": "semantic",
+      "bm25_precision": 0.4,
+      "semantic_precision": 0.8,
+      "hybrid_precision": 0.8,
+      "bm25_top_k": [
+        1,
+        8,
+        14,
+        19,
+        25
+      ],
+      "semantic_top_k": [
+        3,
+        9,
+        16,
+        21,
+        27
+      ],
+      "hybrid_top_k": [
+        3,
+        9,
+        16,
+        21,
+        25
+      ]
+    },
+    {
+      "query": "quick vegetarian pasta",
+      "query_type": "mixed",
+      "bm25_precision": 0.6,
+      "semantic_precision": 0.6,
+      "hybrid_precision": 0.8,
+      "bm25_top_k": [
+        2,
+        10,
+        17,
+        24,
+        30
+      ],
+      "semantic_top_k": [
+        4,
+        11,
+        18,
+        26,
+        32
+      ],
+      "hybrid_top_k": [
+        2,
+        4,
+        10,
+        11,
+        17
+      ]
+    }
+  ],
+  "summary": {
+    "avg_bm25_precision": 0.6,
+    "avg_semantic_precision": 0.67,
+    "avg_hybrid_precision": 0.87,
+    "improvement_over_bm25": 45.0,
+    "improvement_over_semantic": 30.0
+  }
+}

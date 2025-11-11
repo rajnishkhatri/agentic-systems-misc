@@ -1,0 +1,46 @@
+flowchart TD
+    A[Original Document] --> B[Standard Chunking]
+
+    B --> C[Chunk 1: 'You have a right to<br/>perform your duty...']
+    B --> D[Chunk 2: 'The wise person acts<br/>without attachment...']
+    B --> E[Chunk 3: 'Karma yoga teaches<br/>selfless action...']
+
+    C --> F[Problem: Missing Context]
+    D --> F
+    E --> F
+
+    F --> G[❌ Chunk doesn't mention:<br/>- Source: Bhagavad Gita<br/>- Chapter: 2<br/>- Topic: Karma Yoga]
+
+    A --> H[Contextual Retrieval Solution]
+
+    H --> H1[LLM Augmentation]
+    H1 --> H2[Generate Context Prefix<br/>for Each Chunk]
+
+    H2 --> I[Augmented Chunk 1:<br/>'In Bhagavad Gita Ch 2 v47:<br/>You have a right to perform...']
+    H2 --> J[Augmented Chunk 2:<br/>'In Bhagavad Gita Ch 2 v50:<br/>The wise person acts without...']
+    H2 --> K[Augmented Chunk 3:<br/>'In Bhagavad Gita Ch 3 v5:<br/>Karma yoga teaches selfless...']
+
+    I --> L[✅ Benefits]
+    J --> L
+    K --> L
+
+    L --> M[Better Retrieval:<br/>Query 'Gita dharma'<br/>now matches chunk text]
+    L --> N[Better Generation:<br/>LLM has full context<br/>for accurate response]
+    L --> O[Source Citation:<br/>Can cite Ch 2 v47<br/>in response]
+
+    style A fill:#e1f5ff
+    style F fill:#ffe1e1
+    style G fill:#ffcccc
+    style H fill:#e1ffe1
+    style L fill:#d4edda
+    style M fill:#d4edda
+    style N fill:#d4edda
+    style O fill:#d4edda
+
+    classDef problemStyle fill:#ffe1e1,stroke:#f44336
+    classDef solutionStyle fill:#e1ffe1,stroke:#4caf50
+    classDef benefitStyle fill:#d4edda,stroke:#28a745
+
+    class F,G problemStyle
+    class H,H1,H2 solutionStyle
+    class L,M,N,O benefitStyle

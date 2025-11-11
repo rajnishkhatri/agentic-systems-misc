@@ -1,0 +1,72 @@
+{
+  "mode": "DEMO",
+  "sample_size": 30,
+  "strategies_tested": 3,
+  "queries_tested": 2,
+  "results": [
+    {
+      "query": "creamy pasta with cheese",
+      "strategy": "Fixed-100",
+      "precision": 0.72,
+      "diversity": 0.4,
+      "top_chunk": "5 cheese crab lasagna with roasted garlic and vegetables. this creamy, gooey, gorgeous white l..."
+    },
+    {
+      "query": "creamy pasta with cheese",
+      "strategy": "Fixed-200",
+      "precision": 0.85,
+      "diversity": 0.68,
+      "top_chunk": "5 cheese crab lasagna with roasted garlic and vegetables. this creamy, gooey, gorgeous white lasagna will..."
+    },
+    {
+      "query": "creamy pasta with cheese",
+      "strategy": "Fixed-400",
+      "precision": 0.78,
+      "diversity": 0.82,
+      "top_chunk": "5 cheese crab lasagna with roasted garlic and vegetables. this creamy, gooey, gorgeous white lasagna will impress..."
+    },
+    {
+      "query": "healthy vegetarian dinner",
+      "strategy": "Fixed-100",
+      "precision": 0.68,
+      "diversity": 0.42,
+      "top_chunk": "vegetable stir fry with tofu. Quick and nutritious dinner..."
+    },
+    {
+      "query": "healthy vegetarian dinner",
+      "strategy": "Fixed-200",
+      "precision": 0.82,
+      "diversity": 0.7,
+      "top_chunk": "vegetable stir fry with tofu. Quick and nutritious dinner packed with protein..."
+    },
+    {
+      "query": "healthy vegetarian dinner",
+      "strategy": "Fixed-400",
+      "precision": 0.75,
+      "diversity": 0.85,
+      "top_chunk": "vegetable stir fry with tofu. Quick and nutritious dinner packed with protein and vegetables..."
+    }
+  ],
+  "summary": [
+    {
+      "Strategy": "Fixed-200",
+      "Avg Precision": 0.835,
+      "Avg Diversity": 0.69
+    },
+    {
+      "Strategy": "Fixed-400",
+      "Avg Precision": 0.765,
+      "Avg Diversity": 0.835
+    },
+    {
+      "Strategy": "Fixed-100",
+      "Avg Precision": 0.7,
+      "Avg Diversity": 0.41
+    }
+  ],
+  "best_strategy": {
+    "name": "Fixed-200",
+    "precision": 0.835,
+    "diversity": 0.69
+  }
+}

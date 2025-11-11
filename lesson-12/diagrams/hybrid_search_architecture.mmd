@@ -1,0 +1,38 @@
+flowchart TD
+    A[User Query: 'What is selfless action?'] --> B[Query Processing]
+
+    B --> C[BM25 Retrieval Path]
+    B --> D[Semantic Retrieval Path]
+
+    C --> C1[Tokenize Query]
+    C1 --> C2[BM25 Scoring]
+    C2 --> C3[Top-20 BM25 Results]
+
+    D --> D1[Generate Query Embedding]
+    D1 --> D2[Vector Similarity Search]
+    D2 --> D3[Top-20 Semantic Results]
+
+    C3 --> E[Reciprocal Rank Fusion RRF]
+    D3 --> E
+
+    E --> E1[Calculate RRF Scores]
+    E1 --> E2[doc_id score = Σ 1/k+rank+1]
+    E2 --> E3[Sort by RRF Score]
+
+    E3 --> F[Final Top-10 Results]
+
+    F --> G[Return to RAG Pipeline]
+
+    style A fill:#e1f5ff
+    style C fill:#fff4e1
+    style D fill:#ffe1f5
+    style E fill:#e1ffe1
+    style F fill:#f0f0f0
+
+    classDef bm25Style fill:#fff4e1,stroke:#ff9800
+    classDef semanticStyle fill:#ffe1f5,stroke:#e91e63
+    classDef fusionStyle fill:#e1ffe1,stroke:#4caf50
+
+    class C,C1,C2,C3 bm25Style
+    class D,D1,D2,D3 semanticStyle
+    class E,E1,E2,E3 fusionStyle

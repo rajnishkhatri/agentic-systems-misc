@@ -1,0 +1,72 @@
+flowchart TB
+    subgraph Original[Original Document]
+        DOC["The Bhagavad Gita teaches dharma.<br/>Krishna guides Arjuna.<br/><br/>Karma yoga is selfless action.<br/>One must act without attachment.<br/><br/>The path of knowledge leads to liberation."]
+    end
+
+    subgraph Strategy1[1. Character-Based 50 chars]
+        C1["The Bhagavad Gita teaches dharma. Krishna g"]
+        C2["uides Arjuna. Karma yoga is selfless action."]
+        C3[" One must act without attachment. The path o"]
+        PROB1["❌ Breaks mid-word/sentence"]
+    end
+
+    subgraph Strategy2[2. Sentence-Based 2 sentences]
+        S1["The Bhagavad Gita teaches dharma.<br/>Krishna guides Arjuna."]
+        S2["Karma yoga is selfless action.<br/>One must act without attachment."]
+        S3["The path of knowledge leads to liberation."]
+        GOOD1["✅ Preserves sentence boundaries"]
+    end
+
+    subgraph Strategy3[3. Paragraph-Based]
+        P1["The Bhagavad Gita teaches dharma.<br/>Krishna guides Arjuna."]
+        P2["Karma yoga is selfless action.<br/>One must act without attachment."]
+        P3["The path of knowledge leads to liberation."]
+        GOOD2["✅ Natural semantic boundaries"]
+    end
+
+    subgraph Strategy4[4. Recursive separator list]
+        R1["The Bhagavad Gita teaches dharma.<br/>Krishna guides Arjuna."]
+        R2["Karma yoga is selfless action.<br/>One must act without attachment."]
+        R3["The path of knowledge leads to liberation."]
+        GOOD3["✅ Balances size & semantics"]
+    end
+
+    subgraph Strategy5[5. Semantic topic shift]
+        T1["<b>Topic: Gita Basics</b><br/>The Bhagavad Gita teaches dharma.<br/>Krishna guides Arjuna."]
+        T2["<b>Topic: Karma Yoga</b><br/>Karma yoga is selfless action.<br/>One must act without attachment."]
+        T3["<b>Topic: Knowledge Path</b><br/>The path of knowledge leads to liberation."]
+        GOOD4["✅✅ Most coherent topic-aware"]
+    end
+
+    DOC --> Strategy1
+    DOC --> Strategy2
+    DOC --> Strategy3
+    DOC --> Strategy4
+    DOC --> Strategy5
+
+    subgraph Comparison[Performance Comparison]
+        direction TB
+        COMP["<b>Retrieval Quality Ranking</b><br/>1. Semantic 0.82<br/>2. Paragraph/Sentence 0.78<br/>3. Recursive 0.76<br/>4. Character 0.65<br/><br/><b>Cost Ranking</b><br/>1. Character/Sentence/Paragraph $0<br/>2. Recursive $0<br/>3. Semantic $$$<br/><br/><b>Recommendation</b><br/>Sentence-based for most use cases<br/>Paragraph for structured docs<br/>Semantic for critical applications"]
+    end
+
+    Strategy1 --> Comparison
+    Strategy2 --> Comparison
+    Strategy3 --> Comparison
+    Strategy4 --> Comparison
+    Strategy5 --> Comparison
+
+    style DOC fill:#e1f5ff
+    style PROB1 fill:#ffcccc
+    style GOOD1 fill:#d4edda
+    style GOOD2 fill:#d4edda
+    style GOOD3 fill:#d4edda
+    style GOOD4 fill:#c3e6cb
+    style COMP fill:#fff3cd
+
+    classDef badStyle fill:#ffcccc,stroke:#f44336
+    classDef goodStyle fill:#d4edda,stroke:#28a745
+    classDef bestStyle fill:#c3e6cb,stroke:#155724
+
+    class C1,C2,C3,PROB1 badStyle
+    class S1,S2,S3,GOOD1,P1,P2,P3,GOOD2,R1,R2,R3,GOOD3 goodStyle
+    class T1,T2,T3,GOOD4 bestStyle
