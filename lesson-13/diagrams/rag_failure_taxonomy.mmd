@@ -1,0 +1,252 @@
+```mermaid
+graph TD
+    Root[RAG System Failure]
+
+    Root --> Retrieval[1. RETRIEVAL FAILURES]
+    Root --> Generation[2. GENERATION FAILURES]
+    Root --> Interaction[3. INTERACTION FAILURES]
+    Root --> Query[4. QUERY UNDERSTANDING FAILURES]
+
+    %% Retrieval Failures
+    Retrieval --> R1[Missing Relevant Docs<br/>Low Recall]
+    Retrieval --> R2[Irrelevant Docs Retrieved<br/>Low Precision]
+    Retrieval --> R3[Incorrect Ranking<br/>Low MRR]
+    Retrieval --> R4[Index Staleness<br/>Outdated Embeddings]
+
+    R1 --> R1_Cause[Cause: Poor embedding quality,<br/>BM25 keyword mismatch,<br/>Insufficient corpus coverage]
+    R2 --> R2_Cause[Cause: Overly broad retrieval,<br/>Semantic drift,<br/>Query ambiguity]
+    R3 --> R3_Cause[Cause: Suboptimal ranking algorithm,<br/>Missing reranking stage]
+    R4 --> R4_Cause[Cause: Corpus updated but index not refreshed]
+
+    %% Generation Failures
+    Generation --> G1[Hallucination<br/>Intrinsic/Extrinsic]
+    Generation --> G2[Context Ignored<br/>Low Utilization]
+    Generation --> G3[Poor Synthesis<br/>Fails to Combine Docs]
+    Generation --> G4[Attribution Failure<br/>No Source Citations]
+
+    G1 --> G1_Cause[Cause: Weak prompt instruction,<br/>LLM over-relies on parametric knowledge,<br/>Contradictory context]
+    G2 --> G2_Cause[Cause: Irrelevant context,<br/>Context too long,<br/>Missing instruction to use context]
+    G3 --> G3_Cause[Cause: Multi-document reasoning required,<br/>LLM capacity limitations]
+    G4 --> G4_Cause[Cause: No citation instruction in prompt,<br/>LLM doesn't track sources]
+
+    %% Interaction Failures
+    Interaction --> I1[Context Overwhelm<br/>Too Many Docs]
+    Interaction --> I2[Context Conflict<br/>Contradictory Docs]
+    Interaction --> I3[Context Truncation<br/>Token Limit Exceeded]
+    Interaction --> I4[Retrieval-Generation<br/>Mismatch]
+
+    I1 --> I1_Cause[Cause: Retrieved k too high,<br/>No doc filtering,<br/>LLM synthesis capacity exceeded]
+    I2 --> I2_Cause[Cause: Multiple sources with<br/>conflicting information,<br/>No consensus mechanism]
+    I3 --> I3_Cause[Cause: Long documents,<br/>Context window too small,<br/>No chunking strategy]
+    I4 --> I4_Cause[Cause: Retrieved docs don't match<br/>LLM's expected format]
+
+    %% Query Understanding Failures
+    Query --> Q1[Ambiguous Query<br/>Multiple Interpretations]
+    Query --> Q2[Multi-Hop Query<br/>Needs Multiple Sources]
+    Query --> Q3[Out-of-Distribution Query<br/>No Relevant Docs]
+    Query --> Q4[Under-Specified Query<br/>Missing Context]
+
+    Q1 --> Q1_Cause[Cause: Vague user question,<br/>No clarification mechanism]
+    Q2 --> Q2_Cause[Cause: Query requires reasoning<br/>across multiple docs,<br/>Single-hop retrieval only]
+    Q3 --> Q3_Cause[Cause: Query outside corpus domain,<br/>Knowledge gap in documents]
+    Q4 --> Q4_Cause[Cause: User assumes system has<br/>conversation context,<br/>No state tracking]
+
+    %% Styling
+    classDef retrieval fill:#ffcccc
+    classDef generation fill:#ccf
+
+fcc
+    classDef interaction fill:#ffffcc
+    classDef query fill:#ccffcc
+    classDef cause fill:#e6e6e6,stroke:#999
+
+    class Retrieval,R1,R2,R3,R4 retrieval
+    class Generation,G1,G2,G3,G4 generation
+    class Interaction,I1,I2,I3,I4 interaction
+    class Query,Q1,Q2,Q3,Q4 query
+    class R1_Cause,R2_Cause,R3_Cause,R4_Cause,G1_Cause,G2_Cause,G3_Cause,G4_Cause,I1_Cause,I2_Cause,I3_Cause,I4_Cause,Q1_Cause,Q2_Cause,Q3_Cause,Q4_Cause cause
+```
+
+## RAG Failure Mode Taxonomy
+
+This diagram categorizes **all possible failure modes** in a RAG (Retrieval-Augmented Generation) system, organized by the stage where failure occurs.
+
+### 1. Retrieval Failures (Red)
+
+**Definition:** Retrieval stage fails to find relevant documents or retrieves irrelevant ones.
+
+| Failure Type | Symptom | Example |
+|-------------|---------|---------|
+| **Missing Relevant Docs** | Response is incomplete or incorrect due to lack of information | Query: "Gluten-free carbonara" but system only retrieves regular pasta recipes |
+| **Irrelevant Docs Retrieved** | Response contains off-topic information | Query: "Carbonara recipe" but retrieves carbonara pizza instead of pasta |
+| **Incorrect Ranking** | Relevant docs retrieved but ranked low | Correct recipe is at position 10, LLM only sees top 3 docs |
+| **Index Staleness** | Corpus updated but embeddings not refreshed | New recipes added but vector index not rebuilt |
+
+**Detection:**
+```python
+# Measure Recall@k and MRR to detect retrieval failures
+if recall_at_k < 0.7 or MRR < 0.5:
+    diagnosis = "RETRIEVAL_FAILURE"
+```
+
+---
+
+### 2. Generation Failures (Blue)
+
+**Definition:** Retrieval succeeds but LLM generates poor response.
+
+| Failure Type | Symptom | Example |
+|-------------|---------|---------|
+| **Hallucination** | LLM makes claims not in context | Context: "Bake 25 min" → Response: "Bake 45 min" |
+| **Context Ignored** | LLM doesn't use retrieved docs | Retrieved 5 relevant docs but response uses 0 of them |
+| **Poor Synthesis** | LLM fails to combine multiple docs | Retrieves 3 docs with complementary info but response only uses 1 |
+| **Attribution Failure** | No source citations | Response is accurate but doesn't cite which doc it came from |
+
+**Detection:**
+```python
+# Measure attribution rate and context utilization
+if attribution_rate < 0.75 or utilization_rate < 0.5:
+    diagnosis = "GENERATION_FAILURE"
+```
+
+---
+
+### 3. Interaction Failures (Yellow)
+
+**Definition:** Both retrieval and generation work individually, but their interaction causes failure.
+
+| Failure Type | Symptom | Example |
+|-------------|---------|---------|
+| **Context Overwhelm** | Too many docs, LLM can't synthesize | Retrieved 20 docs (15,000 tokens), LLM confused |
+| **Context Conflict** | Retrieved docs contradict each other | Doc 1: "Bake 350°F", Doc 2: "Bake 375°F", Doc 3: "Bake 325°F" |
+| **Context Truncation** | Exceeds token limit, important info cut off | Retrieved 10,000 tokens but LLM limit is 8,000 |
+| **Retrieval-Generation Mismatch** | Format mismatch between docs and LLM | Retrieved JSON but LLM expects plain text |
+
+**Detection:**
+```python
+# Check context size and contradictions
+if total_tokens > 8000 or has_contradictions:
+    diagnosis = "INTERACTION_FAILURE"
+```
+
+---
+
+### 4. Query Understanding Failures (Green)
+
+**Definition:** System misinterprets user intent.
+
+| Failure Type | Symptom | Example |
+|-------------|---------|---------|
+| **Ambiguous Query** | Multiple valid interpretations | "How to use salt?" → Cooking technique? Amount? Types of salt? |
+| **Multi-Hop Query** | Requires reasoning across sources | "Compare Italian vs American carbonara" → Need both sources + comparison |
+| **Out-of-Distribution Query** | No relevant docs in corpus | Recipe corpus asked about car maintenance |
+| **Under-Specified Query** | Missing necessary context | "How long to cook?" → Cook what? In oven or stovetop? |
+
+**Detection:**
+```python
+# Use query classifier to detect ambiguity
+if query_specificity_score < 0.4:
+    diagnosis = "QUERY_UNDERSTANDING_FAILURE"
+```
+
+---
+
+### Failure Diagnosis Workflow
+
+```python
+def diagnose_rag_failure(
+    query: str,
+    retrieved_docs: list[str],
+    response: str,
+    reference_answer: str = None
+) -> str:
+    """Identify root cause of RAG failure."""
+
+    # Check retrieval quality
+    retrieval_recall = calculate_recall(retrieved_docs, reference_docs)
+    if retrieval_recall < 0.6:
+        return "RETRIEVAL_FAILURE: Missing relevant documents"
+
+    # Check hallucination
+    hallucination_result = detect_hallucination(response, retrieved_docs)
+    if hallucination_result["has_hallucination"]:
+        return "GENERATION_FAILURE: Hallucination detected"
+
+    # Check context utilization
+    utilization_rate = measure_context_utilization(response, retrieved_docs)
+    if utilization_rate < 0.3:
+        return "GENERATION_FAILURE: Context ignored"
+
+    # Check context size
+    total_tokens = sum(count_tokens(doc) for doc in retrieved_docs)
+    if total_tokens > 10000:
+        return "INTERACTION_FAILURE: Context overwhelm"
+
+    # Check for contradictions in context
+    contradictions = find_contradictions(retrieved_docs)
+    if len(contradictions) > 0:
+        return "INTERACTION_FAILURE: Contradictory context"
+
+    # Check query ambiguity
+    specificity = calculate_query_specificity(query)
+    if specificity < 0.4:
+        return "QUERY_FAILURE: Ambiguous query"
+
+    return "NO_FAILURE_DETECTED"
+```
+
+---
+
+### Mitigation Strategies by Failure Type
+
+| Failure Type | Mitigation Strategy |
+|-------------|-------------------|
+| **Retrieval** | Improve embeddings, hybrid search (BM25 + semantic), query rewriting |
+| **Generation** | Stronger prompts ("use only context"), self-verification, constrained decoding |
+| **Interaction** | Reranking, context filtering, chunk size optimization, conflict resolution |
+| **Query** | Query classification, clarification prompts, intent detection |
+
+---
+
+### Real-World Example: Recipe Chatbot Failure Analysis
+
+**Query:** "How do I make carbonara?"
+
+**Failure Scenario:**
+
+```
+Retrieved Docs:
+[1] Carbonara recipe (relevant)
+[2] Carbonara history (somewhat relevant)
+[3] Pizza carbonara (irrelevant)
+[4] Pasta cooking times (relevant)
+[5] Italian cuisine overview (tangentially relevant)
+
+Response: "Carbonara is a Roman dish that became popular after World War II.
+To make it, cook pasta and top with a cream-based sauce containing bacon,
+eggs, and Parmesan cheese."
+
+Analysis:
+- Retrieval: MIXED (3/5 docs relevant) → Precision issue
+- Generation: HALLUCINATION (cream + bacon + Parmesan all wrong)
+- Context Utilization: LOW (ignored Doc 1 with correct recipe)
+- Diagnosis: GENERATION_FAILURE + Moderate RETRIEVAL_FAILURE
+```
+
+**Fix:**
+1. Improve retrieval precision (filter out Doc 3 and 5)
+2. Strengthen generation prompt: "Use ONLY the provided recipe, do NOT use your training knowledge about carbonara"
+3. Add attribution requirement: "Cite which document you used"
+
+**After Fix:**
+```
+Retrieved Docs:
+[1] Carbonara recipe (relevant)
+[2] Pasta cooking times (relevant)
+
+Response: "To make carbonara, cook pasta al dente (7-9 minutes, Doc 2),
+then combine with guanciale, eggs, Pecorino Romano, and black pepper (Doc 1).
+Do not add cream or use bacon (Doc 1)."
+
+Result: ✅ PASS (100% attribution, no hallucination)
+```

@@ -1,0 +1,308 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'fontSize':'14px'}}}%%
+graph TB
+    subgraph Legend["📊 Context Utilization Heatmap"]
+        L1["🟩 High Utilization (>0.7): LLM actively used document"]
+        L2["🟨 Medium Utilization (0.4-0.7): LLM partially used document"]
+        L3["🟥 Low Utilization (<0.4): LLM ignored document"]
+        L4["⬜ Not Retrieved"]
+    end
+
+    subgraph Example["Example: Recipe Query - 'How to make carbonara?'"]
+        Query["🔍 Query: 'How to make carbonara?'<br/>Retrieved: 5 documents<br/>Generated response analyzed"]
+    end
+
+    subgraph Heatmap["Context Utilization Analysis"]
+        Doc1["📄 Doc 1: Carbonara Recipe<br/>─────────────────────<br/>Relevance: ⭐⭐⭐⭐⭐<br/>Similarity to Response: 0.92<br/>Utilization: 🟩 HIGH<br/>Status: ✅ USED<br/>Evidence: 'eggs, guanciale, pecorino'<br/>found in response"]
+
+        Doc2["📄 Doc 2: Italian Food History<br/>─────────────────────<br/>Relevance: ⭐⭐<br/>Similarity to Response: 0.18<br/>Utilization: 🟥 LOW<br/>Status: ❌ IGNORED<br/>Reason: Historical context<br/>not in response"]
+
+        Doc3["📄 Doc 3: Pasta Cooking Times<br/>─────────────────────<br/>Relevance: ⭐⭐⭐⭐<br/>Similarity to Response: 0.73<br/>Utilization: 🟩 HIGH<br/>Status: ✅ USED<br/>Evidence: 'cook pasta 8-10 min'<br/>found in response"]
+
+        Doc4["📄 Doc 4: Cheese Varieties<br/>─────────────────────<br/>Relevance: ⭐⭐⭐<br/>Similarity to Response: 0.54<br/>Utilization: 🟨 MEDIUM<br/>Status: ⚠️ PARTIAL<br/>Evidence: 'Pecorino Romano'<br/>mentioned but not explained"]
+
+        Doc5["📄 Doc 5: Sauce Techniques<br/>─────────────────────<br/>Relevance: ⭐<br/>Similarity to Response: 0.12<br/>Utilization: 🟥 LOW<br/>Status: ❌ IGNORED<br/>Reason: Generic techniques,<br/>not carbonara-specific"]
+    end
+
+    subgraph Metrics["📈 Utilization Metrics"]
+        M1["Total Documents Retrieved: 5"]
+        M2["Documents Used HIGH: 2 40%"]
+        M3["Documents Used MEDIUM: 1 20%"]
+        M4["Documents Ignored LOW: 2 40%"]
+        M5["Overall Utilization Rate: 60%"]
+        M6["Avg Similarity Score: 0.498"]
+    end
+
+    subgraph Insights["💡 Insights & Recommendations"]
+        I1["✅ Good: LLM effectively used<br/>primary recipe document Doc 1"]
+        I2["⚠️ Waste: Docs 2 and 5 retrieved<br/>but ignored - improve precision"]
+        I3["💡 Optimization: Reduce k from 5→3<br/>to focus on most relevant docs"]
+        I4["📊 Expected Improvement:<br/>Utilization rate 60% → 85%<br/>by filtering low-relevance docs"]
+    end
+
+    Query --> Heatmap
+    Heatmap --> Metrics
+    Metrics --> Insights
+
+    %% Styling
+    classDef high fill:#90EE90,stroke:#2d6b2d,stroke-width:2px
+    classDef medium fill:#FFE599,stroke:#b8860b,stroke-width:2px
+    classDef low fill:#FFB6C6,stroke:#8b0000,stroke-width:2px
+    classDef info fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
+    classDef metric fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px
+    classDef insight fill:#FFF9C4,stroke:#F57F17,stroke-width:2px
+
+    class Doc1,Doc3 high
+    class Doc4 medium
+    class Doc2,Doc5 low
+    class Query,Example,Legend info
+    class Metrics,M1,M2,M3,M4,M5,M6 metric
+    class Insights,I1,I2,I3,I4 insight
+```
+
+## Context Utilization Heatmap Explanation
+
+### What is Context Utilization?
+
+**Context utilization** measures **which retrieved documents the LLM actually uses** when generating its response. Even if retrieval fetches 5 relevant documents, the LLM might only use 2 of them.
+
+### Why Measure It?
+
+1. **Identify Wasted Retrieval:** If LLM ignores 60% of docs, retrieval is fetching too many irrelevant documents
+2. **Optimize Cost:** Unused docs waste API costs (embedding + retrieval + context window tokens)
+3. **Improve Precision:** Low utilization indicates poor retrieval precision
+4. **Detect Distractions:** Too many docs can confuse LLM (context overwhelm)
+
+---
+
+### Measurement Methodology
+
+#### Method 1: Semantic Similarity (Automated)
+
+```python
+def measure_utilization_similarity(response: str, docs: list[str]) -> list[float]:
+    """
+    Measure utilization via embedding similarity.
+
+    High similarity → LLM likely used doc
+    Low similarity → LLM likely ignored doc
+    """
+    response_embedding = get_embedding(response)
+
+    utilization_scores = []
+    for doc in docs:
+        doc_embedding = get_embedding(doc)
+        similarity = cosine_similarity(response_embedding, doc_embedding)
+        utilization_scores.append(similarity)
+
+    return utilization_scores
+
+# Threshold interpretation:
+# - >0.7: HIGH utilization (LLM actively used doc)
+# - 0.4-0.7: MEDIUM utilization (LLM partially used doc)
+# - <0.4: LOW utilization (LLM ignored doc)
+```
+
+#### Method 2: Lexical Overlap (Fast)
+
+```python
+def measure_utilization_lexical(response: str, docs: list[str]) -> list[float]:
+    """Measure via n-gram overlap (Jaccard similarity)."""
+    response_ngrams = set(extract_ngrams(response, n=3))
+
+    utilization_scores = []
+    for doc in docs:
+        doc_ngrams = set(extract_ngrams(doc, n=3))
+        jaccard = len(response_ngrams & doc_ngrams) / len(response_ngrams | doc_ngrams)
+        utilization_scores.append(jaccard)
+
+    return utilization_scores
+```
+
+#### Method 3: LLM-as-Judge (Most Accurate)
+
+```python
+def measure_utilization_judge(response: str, docs: list[str]) -> list[dict]:
+    """Use LLM to identify which docs were actually used."""
+    prompt = f"""
+Retrieved Documents:
+{format_with_ids(docs)}
+
+Generated Response:
+{response}
+
+For each document, determine if the response uses information from it.
+
+Output JSON:
+[
+    {{"doc_id": 0, "used": true/false, "utilization_score": 0.0-1.0, "evidence": "quote"}},
+    ...
+]
+"""
+    result = llm_call(prompt, temperature=0.0)
+    return json.loads(result)
+```
+
+---
+
+### Interpreting the Heatmap
+
+From the example above:
+
+```
+Retrieved: 5 docs
+Used (HIGH): 2 docs (Doc 1, Doc 3) → 40%
+Used (MEDIUM): 1 doc (Doc 4) → 20%
+Ignored (LOW): 2 docs (Doc 2, Doc 5) → 40%
+
+Overall Utilization Rate: 60%
+```
+
+**What does 60% utilization mean?**
+
+- **Good News:** LLM is using the most relevant docs (Doc 1: recipe, Doc 3: cooking times)
+- **Bad News:** 40% of retrieved docs are wasted (Doc 2, Doc 5 ignored)
+- **Actionable Insight:** Improve retrieval precision to avoid fetching irrelevant docs
+
+---
+
+### Utilization Patterns & Diagnosis
+
+| Pattern | Utilization Rate | Diagnosis | Action |
+|---------|-----------------|-----------|--------|
+| **Selective** | 50-70% | LLM uses some docs, ignores others | Improve retrieval precision |
+| **Comprehensive** | >80% | LLM synthesizes across all docs | ✅ Optimal |
+| **Minimal** | <30% | LLM ignores most docs | Prompt issue or irrelevant retrieval |
+| **Single-Doc** | 1 doc used, rest ignored | LLM latches onto first relevant doc | Improve doc ranking (MRR) |
+
+---
+
+### Optimization Strategies
+
+#### Strategy 1: Reduce Retrieved Documents (k)
+
+```python
+# Before: k=5, utilization=60%
+docs = retrieve(query, k=5)
+utilization_rate = 0.60  # Only 3/5 docs used
+
+# After: k=3, utilization=85%
+docs = retrieve(query, k=3)  # Retrieve fewer, higher-quality docs
+utilization_rate = 0.85  # 2.5/3 docs used on average
+```
+
+**Trade-Off:** Lower k reduces recall but increases precision and utilization.
+
+#### Strategy 2: Reranking
+
+```python
+# Retrieve 10 candidates
+candidates = retrieve(query, k=10)
+
+# Rerank by relevance
+reranked = rerank(query, candidates)
+
+# Select top 3 after reranking
+final_docs = reranked[:3]
+
+# Result: Higher utilization because docs are more relevant
+```
+
+#### Strategy 3: Document Filtering
+
+```python
+# Retrieve docs with relevance scores
+docs_with_scores = retrieve_with_scores(query, k=5)
+
+# Filter out low-relevance docs
+filtered_docs = [
+    doc for doc, score in docs_with_scores
+    if score > 0.7  # Only keep highly relevant docs
+]
+
+# Generate with filtered context
+response = llm_generate(query, filtered_docs)
+```
+
+#### Strategy 4: Explicit Utilization Instruction
+
+```python
+# Add prompt instruction to use all docs
+PROMPT = """
+Use information from ALL provided documents to answer the question.
+If multiple documents contain relevant information, synthesize them.
+
+Documents:
+{docs}
+
+Question: {query}
+
+Answer (using all relevant documents):
+"""
+```
+
+---
+
+### Visualizing Utilization in Production
+
+**Dashboard Visualization:**
+
+```
+┌─────────────────────────────────────────────┐
+│  Context Utilization Dashboard (Last 24h)  │
+├─────────────────────────────────────────────┤
+│                                             │
+│  📊 Average Utilization Rate: 67%          │
+│  📄 Avg Docs Retrieved: 4.2                │
+│  ✅ Avg Docs Used: 2.8                     │
+│  ❌ Avg Docs Ignored: 1.4                  │
+│                                             │
+│  Utilization Distribution:                 │
+│  ████████████ HIGH (>0.7): 45% of docs     │
+│  ██████ MEDIUM (0.4-0.7): 22% of docs      │
+│  ████ LOW (<0.4): 33% of docs              │
+│                                             │
+│  ⚠️ Waste Alert: 33% docs ignored          │
+│  💡 Recommendation: Reduce k from 5 → 3     │
+│                                             │
+└─────────────────────────────────────────────┘
+```
+
+**SQL Query for Monitoring:**
+
+```sql
+SELECT
+    AVG(utilization_rate) as avg_utilization,
+    AVG(docs_retrieved) as avg_docs_retrieved,
+    AVG(docs_used) as avg_docs_used,
+    SUM(CASE WHEN utilization_score > 0.7 THEN 1 ELSE 0 END) / COUNT(*) as pct_high_util,
+    SUM(CASE WHEN utilization_score < 0.4 THEN 1 ELSE 0 END) / COUNT(*) as pct_ignored
+FROM context_utilization_logs
+WHERE timestamp >= NOW() - INTERVAL '24 hours';
+```
+
+---
+
+### Real-World Impact
+
+**Case Study: Recipe Chatbot Optimization**
+
+**Before Optimization:**
+- k = 5 (retrieve 5 docs per query)
+- Average utilization: 58%
+- Average cost per query: $0.015 (5 docs × $0.003 embedding)
+- Response latency: 2.8s
+
+**After Optimization:**
+- k = 3 (retrieve 3 docs per query)
+- Average utilization: 84%
+- Average cost per query: $0.009 (3 docs × $0.003 embedding)
+- Response latency: 1.9s
+
+**Results:**
+- ✅ 26% utilization improvement (58% → 84%)
+- ✅ 40% cost reduction ($0.015 → $0.009)
+- ✅ 32% latency reduction (2.8s → 1.9s)
+- ✅ Answer quality maintained (87% → 86%, negligible drop)
+
+**Key Insight:** Fewer, higher-quality documents lead to better utilization, lower cost, and faster responses without sacrificing quality.

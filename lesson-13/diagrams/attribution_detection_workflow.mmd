@@ -1,0 +1,136 @@
+```mermaid
+flowchart TD
+    Start([Query + Retrieved Context + LLM Response]) --> Extract[Extract Claims from Response]
+
+    Extract --> ClaimList[List of Atomic Claims]
+
+    ClaimList --> Loop{For Each Claim}
+
+    Loop --> CheckExact[Check Exact Match in Context]
+
+    CheckExact --> ExactMatch{Exact Match Found?}
+
+    ExactMatch -->|Yes| Attributed1[Mark: ATTRIBUTED<br/>Match Type: EXACT<br/>Confidence: 1.0]
+    ExactMatch -->|No| CheckSemantic[Calculate Semantic Similarity]
+
+    CheckSemantic --> SemSim{Similarity > 0.85?}
+
+    SemSim -->|Yes| Attributed2[Mark: ATTRIBUTED<br/>Match Type: PARAPHRASE<br/>Confidence: similarity]
+    SemSim -->|No| LLMJudge[LLM-as-Judge Verification]
+
+    LLMJudge --> Judge{Judge Verdict?}
+
+    Judge -->|ATTRIBUTED| Attributed3[Mark: ATTRIBUTED<br/>Match Type: INFERENCE<br/>Evidence: quoted passage]
+    Judge -->|UNATTRIBUTED| Unattributed[Mark: UNATTRIBUTED<br/>Reason: Not in context]
+    Judge -->|CONTRADICTED| Contradicted[Mark: CONTRADICTED<br/>Evidence: conflicting passage]
+
+    Attributed1 --> Aggregate
+    Attributed2 --> Aggregate
+    Attributed3 --> Aggregate
+    Unattributed --> Aggregate
+    Contradicted --> Aggregate
+
+    Aggregate[Aggregate Results]
+
+    Loop --> Aggregate
+
+    Aggregate --> Calculate[Calculate Metrics]
+
+    Calculate --> Metrics[Attribution Rate<br/>Document Coverage<br/>Confidence Distribution]
+
+    Metrics --> Report[Generate Attribution Report]
+
+    Report --> Decision{Attribution Rate?}
+
+    Decision -->|> 0.90| Pass[✅ PASS: High Attribution]
+    Decision -->|0.70-0.90| Warning[⚠️ WARNING: Moderate Attribution]
+    Decision -->|< 0.70| Fail[❌ FAIL: Low Attribution]
+
+    Pass --> End([End])
+    Warning --> End
+    Fail --> End
+
+    style Start fill:#e1f5ff
+    style End fill:#e1f5ff
+    style Attributed1 fill:#d4edda
+    style Attributed2 fill:#d4edda
+    style Attributed3 fill:#d4edda
+    style Unattributed fill:#fff3cd
+    style Contradicted fill:#f8d7da
+    style Pass fill:#d4edda
+    style Warning fill:#fff3cd
+    style Fail fill:#f8d7da
+```
+
+## Workflow Description
+
+This diagram illustrates the **attribution detection workflow** for RAG evaluation:
+
+### Stages:
+
+1. **Input Stage**
+   - Query: User's question
+   - Retrieved Context: Documents from retrieval stage
+   - LLM Response: Generated answer
+
+2. **Claim Extraction**
+   - Parse response into atomic factual claims
+   - Each claim should be self-contained and falsifiable
+
+3. **Claim Verification Loop**
+   - For each extracted claim, perform 3-tier verification:
+     - **Tier 1: Exact Match** - Check if claim appears verbatim in context (fast, 100% confidence)
+     - **Tier 2: Semantic Similarity** - Calculate embedding similarity (medium speed, variable confidence)
+     - **Tier 3: LLM-as-Judge** - Use LLM to verify attribution with reasoning (slow, high accuracy)
+
+4. **Claim Classification**
+   - **ATTRIBUTED** (✅): Claim is supported by context
+     - `EXACT`: Direct quote from context
+     - `PARAPHRASE`: Semantically equivalent to context
+     - `INFERENCE`: Valid multi-hop reasoning from context
+   - **UNATTRIBUTED** (⚠️): Claim not found in context (extrinsic hallucination)
+   - **CONTRADICTED** (❌): Claim conflicts with context (intrinsic hallucination)
+
+5. **Aggregation & Metrics**
+   - Calculate attribution rate: `(# attributed claims) / (total claims)`
+   - Measure document coverage: How many retrieved docs contributed?
+   - Analyze confidence distribution
+
+6. **Final Verdict**
+   - **PASS** (>0.90): High attribution, production-ready
+   - **WARNING** (0.70-0.90): Moderate attribution, needs improvement
+   - **FAIL** (<0.70): Low attribution, debugging required
+
+### Usage Example:
+
+```python
+from backend.rag_generation_eval import AttributionDetector
+
+detector = AttributionDetector()
+
+query = "What ingredients are in carbonara?"
+context = ["Traditional carbonara uses eggs, Pecorino Romano, guanciale, and pepper."]
+response = "Carbonara is made with eggs, cheese, cured pork, and pepper. It originated in Rome in the 1940s."
+
+# Extract claims
+claims = detector.extract_claims(response)
+# Output: ["Carbonara uses eggs", "Carbonara uses cheese", "Carbonara uses cured pork",
+#          "Carbonara uses pepper", "Carbonara originated in Rome in 1940s"]
+
+# Verify attribution
+result = detector.verify_attribution(claims, context)
+
+print(f"Attribution Rate: {result['attribution_rate']:.1%}")
+# Output: Attribution Rate: 80.0% (4/5 claims attributed)
+# - "originated in Rome in 1940s" is UNATTRIBUTED (not in context)
+```
+
+### Performance Characteristics:
+
+| Verification Tier | Speed | Accuracy | Cost |
+|------------------|-------|----------|------|
+| **Exact Match** | 1ms | 100% (if found) | $0 |
+| **Semantic Similarity** | 10-20ms | 85-90% | $0.0001 |
+| **LLM-as-Judge** | 500-1500ms | 95%+ | $0.001-0.01 |
+
+**Recommendation:** Use exact match first (fast elimination), semantic similarity for paraphrases, and LLM-as-judge only for ambiguous cases.
