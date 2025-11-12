@@ -262,6 +262,7 @@ def test_should_handle_missing_total_time() -> None:
 3. **Clear Specifications**: Document requirements thoroughly before coding
 4. **Quality First**: Ruff formatting, type hints, comprehensive tests
 5. **User-Centric**: Focus on outcomes that matter to users
+6. **Pattern Library**: Use documented patterns from `/patterns/` directory for consistent, maintainable code
 
 ## Project Structure
 
@@ -270,6 +271,11 @@ def test_should_handle_missing_total_time() -> None:
 ├── src/                 # Source code (Bhagavad Gita chatbot)
 ├── tests/               # Test suite
 ├── tasks/               # AI Dev Tasks (PRDs and task lists)
+├── patterns/            # Reusable code patterns documentation
+│   ├── README.md               # Pattern library catalog
+│   ├── tdd-workflow.md         # TDD pattern (RED→GREEN→REFACTOR)
+│   ├── threadpool-parallel.md  # ThreadPoolExecutor concurrency pattern
+│   └── abstract-base-class.md  # Abstract Base Class OOP pattern
 ├── analysis/            # Design docs and decisions
 ├── Gita/                # Bhagavad Gita datasets
 │   ├── Bhagwat-Gita-Infinity/  # 737 verse JSON files with commentaries
@@ -284,6 +290,51 @@ def test_should_handle_missing_total_time() -> None:
 └── pyproject.toml       # Project configuration with all dependencies
 ```
 
+## Pattern Library
+
+This project includes a comprehensive **Pattern Library** documenting reusable code patterns for building robust, maintainable AI evaluation systems.
+
+### Available Patterns
+
+**Location:** `/patterns/` directory
+
+**Quick Reference:**
+
+| Pattern | Complexity | Use Case |
+|---------|-----------|----------|
+| [TDD Workflow](patterns/tdd-workflow.md) | ⭐⭐ | Testing & development methodology (RED→GREEN→REFACTOR) |
+| [ThreadPoolExecutor Parallel](patterns/threadpool-parallel.md) | ⭐⭐⭐ | Concurrent batch processing for I/O-bound tasks |
+| [Abstract Base Class](patterns/abstract-base-class.md) | ⭐⭐⭐ | OOP interface enforcement & polymorphism |
+
+**When to use patterns:**
+
+1. **TDD Workflow** - When building new features, refactoring code, or fixing bugs
+   - Write tests BEFORE implementation
+   - Follow RED (failing test) → GREEN (minimal code) → REFACTOR (improve quality)
+   - Use test naming convention: `test_should_[result]_when_[condition]()`
+
+2. **ThreadPoolExecutor Parallel** - When batch processing I/O-bound tasks
+   - Processing multiple API calls, database queries, or file operations in parallel
+   - Use `future_to_index` mapping to preserve result order
+   - Include exception handling with fallbacks and `tqdm` progress tracking
+
+3. **Abstract Base Class** - When creating frameworks with multiple implementations
+   - Define common interface with `ABC` and `@abstractmethod`
+   - Share functionality (retry logic, validation) in base class
+   - Enforce contract: subclasses must call `super().__init__()` and implement abstract methods
+
+**For AI Assistants (Claude Code):**
+
+When generating code, check if a pattern applies and use the template from the pattern documentation. All patterns include:
+- Copy-paste code templates with defensive coding
+- Real examples from codebase with file:line references
+- Common pitfalls and how to avoid them
+- Integration with defensive coding principles
+
+**See:** [Pattern Library README](patterns/README.md) for full documentation and contribution guidelines.
+
+---
+
 ## Quality Standards
 
 - **Line Length**: 120 characters (Ruff configuration)
@@ -291,6 +342,7 @@ def test_should_handle_missing_total_time() -> None:
 - **Async/Await**: Preferred for I/O operations
 - **Test Coverage**: Aim for 90%+ coverage
 - **Documentation**: Keep CLAUDE.md updated with project patterns
+- **Code Patterns**: Follow documented patterns from `/patterns/` directory
 
 ## Tutorial Workflow
 
