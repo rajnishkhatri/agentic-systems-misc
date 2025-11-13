@@ -1,0 +1,201 @@
+```mermaid
+flowchart TD
+    Start([User Query: Find vegan recipes]) --> Init[Initialize Agent State]
+
+    Init --> Loop{Step < Max Steps?}
+
+    Loop -->|Yes| Phase1[Phase 1: THOUGHT]
+    Loop -->|No| Timeout[Max Steps Reached]
+
+    Phase1 --> Think[Generate Reasoning Trace]
+
+    Think --> Analyze[Analyze Current State:<br/>- What do I know?<br/>- What do I need?<br/>- What action next?]
+
+    Analyze --> Decision{Ready to Answer?}
+
+    Decision -->|Yes| FinalAnswer[Extract Final Answer]
+    Decision -->|No| Phase2[Phase 2: ACTION]
+
+    Phase2 --> SelectTool[Select Tool from Thought]
+
+    SelectTool --> ParseArgs[Parse Tool Arguments]
+
+    ParseArgs --> Validate[Validate Action]
+
+    Validate --> ValidCheck{Valid Action?}
+
+    ValidCheck -->|Yes| Execute[Execute Tool Call]
+    ValidCheck -->|No| ErrorObs[Observation: Validation Error]
+
+    Execute --> Success{Execution OK?}
+
+    Success -->|Yes| SuccessObs[Observation: Tool Result]
+    Success -->|No| FailObs[Observation: Execution Error]
+
+    SuccessObs --> Phase3
+    FailObs --> Phase3
+    ErrorObs --> Phase3
+
+    Phase3[Phase 3: OBSERVATION]
+
+    Phase3 --> ProcessObs[Process Observation Result]
+
+    ProcessObs --> UpdateState[Update Agent State:<br/>- Add to history<br/>- Store observation<br/>- Increment step counter]
+
+    UpdateState --> CheckDone{Task Complete?}
+
+    CheckDone -->|No| Loop
+    CheckDone -->|Yes| FinalAnswer
+
+    FinalAnswer --> FormatAnswer[Format Response]
+
+    FormatAnswer --> Return[Return Result]
+
+    Timeout --> FormatError[Return Timeout Error]
+
+    Return --> End([End])
+    FormatError --> End
+
+    style Start fill:#e1f5ff
+    style End fill:#e1f5ff
+    style Phase1 fill:#fff4e1,stroke:#ff9800,stroke-width:3px
+    style Phase2 fill:#ffe1f5,stroke:#e91e63,stroke-width:3px
+    style Phase3 fill:#e1ffe1,stroke:#4caf50,stroke-width:3px
+    style FinalAnswer fill:#d4edda
+    style Timeout fill:#f8d7da
+    style SuccessObs fill:#d4edda
+    style FailObs fill:#fff3cd
+    style ErrorObs fill:#fff3cd
+
+    classDef thoughtStyle fill:#fff4e1,stroke:#ff9800
+    classDef actionStyle fill:#ffe1f5,stroke:#e91e63
+    classDef observationStyle fill:#e1ffe1,stroke:#4caf50
+
+    class Think,Analyze thoughtStyle
+    class SelectTool,ParseArgs,Validate,Execute actionStyle
+    class ProcessObs,UpdateState observationStyle
+```
+
+## Workflow Description
+
+This diagram illustrates the **ReAct (Reasoning + Acting) agent workflow** for iterative task execution with dynamic planning.
+
+### Three-Phase Loop: Thought → Action → Observation
+
+**Phase 1: THOUGHT (Reasoning Trace)**
+- Agent analyzes current state and decides next step
+- Questions: What information do I have? What do I need? What should I do next?
+- Output: Reasoning trace explaining the plan for the next action
+- **OR** Agent determines it has enough information to provide final answer
+
+**Phase 2: ACTION (Tool Execution)**
+- Agent selects appropriate tool based on thought
+- Parses arguments from reasoning trace
+- Validates action (correct tool, valid parameters)
+- Executes tool call (or records validation error)
+
+**Phase 3: OBSERVATION (Result Processing)**
+- Agent receives execution result (success, error, or validation failure)
+- Updates internal state with observation
+- Adds observation to history for next thought
+- Checks if task is complete or more steps needed
+
+### Iteration Strategy
+
+The loop continues until one of:
+1. **Task Complete**: Agent has final answer (thought indicates "Final Answer:")
+2. **Max Steps Reached**: Safety limit prevents infinite loops
+3. **Error Threshold**: Too many consecutive errors trigger termination
+
+### Example Trajectory
+
+**Query:** "Find vegan pasta recipes I can make in 30 minutes"
+
+```
+Step 1:
+├─ THOUGHT: "I need to search recipes with constraints: vegan, pasta, quick"
+├─ ACTION: search_recipes(ingredients=["pasta"], dietary_restrictions=["vegan"], max_cook_time=30)
+└─ OBSERVATION: Found 8 recipes
+
+Step 2:
+├─ THOUGHT: "8 results is manageable. Let me get details to recommend top-rated ones"
+├─ ACTION: get_recipe_ratings(recipe_ids=[1,2,3,4,5,6,7,8])
+└─ OBSERVATION: Ratings: [4.5, 3.2, 4.8, 4.1, 3.9, 4.6, 4.2, 3.5]
+
+Step 3:
+├─ THOUGHT: "I have recipes and ratings. Top 2 are IDs 3 (4.8★) and 6 (4.6★). Ready to answer."
+└─ FINAL ANSWER: "Found 8 vegan pasta recipes under 30 min. Top-rated:
+    1. Recipe #3: 4.8★, 25 min
+    2. Recipe #6: 4.6★, 22 min"
+```
+
+### Key Advantages of ReAct
+
+1. **Dynamic Adaptation**: Plan adjusts based on what agent observes
+   - Example: Search returned 500 results? Agent can narrow constraints in next action
+
+2. **Error Recovery**: Observation of failure informs next thought
+   - Example: Tool call failed? Agent tries alternative approach
+
+3. **Context Accumulation**: Each observation enriches agent's knowledge
+   - Example: Learning user preferences in step 1 improves search in step 2
+
+4. **Transparency**: Full trajectory shows reasoning at each step
+   - Debuggable: Know exactly why agent chose each action
+
+### Performance Characteristics
+
+| Metric | Static Planning | ReAct |
+|--------|----------------|-------|
+| **Upfront Knowledge Required** | High (must plan all steps) | Low (adapts as it learns) |
+| **Steps to Completion** | Fixed | Variable (3-10 typical) |
+| **LLM Calls** | 1-2 | 3-10 (thought per step) |
+| **Success Rate** | Baseline | +10-20% (dynamic adaptation) |
+| **Cost** | $ | $$-$$$ (more LLM calls) |
+| **Error Recovery** | None (plan fails) | Built-in (observe + adapt) |
+
+### Usage Example
+
+```python
+from backend.react_agent import ReActAgent
+
+agent = ReActAgent(
+    llm_model="gpt-4o-mini",
+    max_steps=10,
+    tools=[search_recipes, get_recipe_details, get_user_preferences]
+)
+
+result = agent.run("Find healthy dinner recipes I can make quickly")
+
+print(f"Success: {result['success']}")
+print(f"Steps Taken: {result['steps']}")
+print(f"Final Answer: {result['answer']}")
+
+# Inspect trajectory
+for item in result['trajectory']:
+    print(f"{item['type'].upper()}: {item['content'][:80]}...")
+```
+
+### When to Use ReAct
+
+**✅ Use ReAct when:**
+- Task requires adapting to intermediate results (e.g., search result counts unknown)
+- Static planning is insufficient (information revealed incrementally)
+- Error recovery is valuable (retry with alternative approach)
+- Task complexity is high (multi-step reasoning with dependencies)
+
+**❌ Don't use ReAct when:**
+- Task is simple and deterministic (single tool call sufficient)
+- All information available upfront (no need for iterative observation)
+- Cost/latency critical (fewer LLM calls preferred)
+- Plan is fixed and known in advance
+
+### Integration with Reflexion
+
+ReAct can be extended with **Reflexion** for learning from failures:
+- After failed ReAct execution, generate self-reflection
+- Store reflection in memory
+- Provide past reflections in future ReAct attempts
+- Result: Agent improves over time through learning
+
+See `react_reflexion_patterns.md` for details on combining ReAct with self-reflection.

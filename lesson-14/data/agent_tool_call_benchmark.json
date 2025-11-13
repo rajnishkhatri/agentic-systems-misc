@@ -1,0 +1,2849 @@
+{
+  "version": "1.0",
+  "created": "2025-11-12",
+  "description": "Tool Call Validation Benchmark - 150 test cases for function calling errors",
+  "statistics": {
+    "total_cases": 150,
+    "correct_calls": 50,
+    "wrong_tool": 30,
+    "missing_required_args": 25,
+    "invalid_arg_types": 25,
+    "invalid_arg_values": 20
+  },
+  "available_tools": [
+    {
+      "name": "search_recipes",
+      "description": "Search recipe database",
+      "parameters": {
+        "ingredients": {
+          "type": "list[str]",
+          "required": false
+        },
+        "dietary_restrictions": {
+          "type": "list[str]",
+          "required": false
+        },
+        "cuisine": {
+          "type": "str",
+          "required": false
+        },
+        "meal_type": {
+          "type": "str",
+          "required": false,
+          "options": [
+            "breakfast",
+            "lunch",
+            "dinner",
+            "dessert",
+            "snack"
+          ]
+        },
+        "max_cook_time": {
+          "type": "int",
+          "required": false,
+          "min": 1,
+          "max": 240
+        },
+        "max_results": {
+          "type": "int",
+          "required": false,
+          "default": 10,
+          "min": 1,
+          "max": 100
+        }
+      }
+    },
+    {
+      "name": "get_recipe_details",
+      "description": "Get full recipe by ID",
+      "parameters": {
+        "recipe_id": {
+          "type": "int",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "add_to_shopping_list",
+      "description": "Add ingredients to shopping list",
+      "parameters": {
+        "ingredients": {
+          "type": "list[str]",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "check_ingredient_availability",
+      "description": "Check if ingredient is in stock",
+      "parameters": {
+        "ingredient": {
+          "type": "str",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "get_nutrition_info",
+      "description": "Get nutritional information",
+      "parameters": {
+        "food": {
+          "type": "str",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "get_user_preferences",
+      "description": "Retrieve user dietary preferences",
+      "parameters": {}
+    },
+    {
+      "name": "search_web",
+      "description": "Search external web",
+      "parameters": {
+        "query": {
+          "type": "str",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "get_gita_verses",
+      "description": "Search Bhagavad Gita verses",
+      "parameters": {
+        "chapter": {
+          "type": "int",
+          "required": false,
+          "min": 1,
+          "max": 18
+        },
+        "verse": {
+          "type": "int",
+          "required": false
+        },
+        "keyword": {
+          "type": "str",
+          "required": false
+        },
+        "max_results": {
+          "type": "int",
+          "required": false,
+          "default": 5
+        }
+      }
+    }
+  ],
+  "test_cases": [
+    {
+      "id": "tool_001",
+      "task": "Find vegan recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegan"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_002",
+      "task": "Find vegetarian recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegetarian"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_003",
+      "task": "Find gluten-free recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "gluten-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_004",
+      "task": "Find keto recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "keto"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_005",
+      "task": "Find paleo recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "paleo"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_006",
+      "task": "Find vegan recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegan"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_007",
+      "task": "Find vegetarian recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegetarian"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_008",
+      "task": "Find gluten-free recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "gluten-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_009",
+      "task": "Find keto recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "keto"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_010",
+      "task": "Find paleo recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "paleo"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_011",
+      "task": "Find vegan recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegan"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_012",
+      "task": "Find vegetarian recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegetarian"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_013",
+      "task": "Find gluten-free recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "gluten-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_014",
+      "task": "Find keto recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "keto"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_015",
+      "task": "Find paleo recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "paleo"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_016",
+      "task": "Find vegan recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegan"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_017",
+      "task": "Find vegetarian recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegetarian"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_018",
+      "task": "Find gluten-free recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "gluten-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_019",
+      "task": "Find keto recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "keto"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_020",
+      "task": "Find paleo recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "paleo"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_021",
+      "task": "Find vegan recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegan"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_022",
+      "task": "Find vegetarian recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegetarian"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_023",
+      "task": "Find gluten-free recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "gluten-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_024",
+      "task": "Find keto recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "keto"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_025",
+      "task": "Find paleo recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "paleo"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_026",
+      "task": "Find Italian recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Italian"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_027",
+      "task": "Find Chinese recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Chinese"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_028",
+      "task": "Find Mexican recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Mexican"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_029",
+      "task": "Find Indian recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Indian"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_030",
+      "task": "Find Thai recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Thai"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_031",
+      "task": "Find Italian recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Italian"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_032",
+      "task": "Find Chinese recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Chinese"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_033",
+      "task": "Find Mexican recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Mexican"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_034",
+      "task": "Find Indian recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Indian"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_035",
+      "task": "Find Thai recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Thai"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_036",
+      "task": "Find Italian recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Italian"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_037",
+      "task": "Find Chinese recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Chinese"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_038",
+      "task": "Find Mexican recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Mexican"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_039",
+      "task": "Find Indian recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Indian"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_040",
+      "task": "Find Thai recipes",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "cuisine": "Thai"
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_041",
+      "task": "Get recipe 41 details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {
+          "recipe_id": 41
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_042",
+      "task": "Get recipe 42 details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {
+          "recipe_id": 42
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_043",
+      "task": "Get recipe 43 details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {
+          "recipe_id": 43
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_044",
+      "task": "Get recipe 44 details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {
+          "recipe_id": 44
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_045",
+      "task": "Get recipe 45 details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {
+          "recipe_id": 45
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_046",
+      "task": "Get Gita Chapter 2 verses",
+      "tool_call": {
+        "tool": "get_gita_verses",
+        "args": {
+          "chapter": 2
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_047",
+      "task": "Get Gita Chapter 3 verses",
+      "tool_call": {
+        "tool": "get_gita_verses",
+        "args": {
+          "chapter": 3
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_048",
+      "task": "Get Gita Chapter 4 verses",
+      "tool_call": {
+        "tool": "get_gita_verses",
+        "args": {
+          "chapter": 4
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_049",
+      "task": "Get Gita Chapter 5 verses",
+      "tool_call": {
+        "tool": "get_gita_verses",
+        "args": {
+          "chapter": 5
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_050",
+      "task": "Get Gita Chapter 6 verses",
+      "tool_call": {
+        "tool": "get_gita_verses",
+        "args": {
+          "chapter": 6
+        }
+      },
+      "labels": {
+        "is_valid": true,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALID"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_051_wrong_tool",
+      "task": "Find vegan recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "vegan recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegan"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_052_wrong_tool",
+      "task": "Find vegetarian recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "vegetarian recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegetarian"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_053_wrong_tool",
+      "task": "Find gluten-free recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "gluten-free recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "gluten-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_054_wrong_tool",
+      "task": "Find keto recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "keto recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "keto"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_055_wrong_tool",
+      "task": "Find paleo recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "paleo recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "paleo"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_056_wrong_tool",
+      "task": "Find dairy-free recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "dairy-free recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "dairy-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_057_wrong_tool",
+      "task": "Find nut-free recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "nut-free recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "nut-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_058_wrong_tool",
+      "task": "Find vegan recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "vegan recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegan"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_059_wrong_tool",
+      "task": "Find vegetarian recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "vegetarian recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegetarian"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_060_wrong_tool",
+      "task": "Find gluten-free recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "gluten-free recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "gluten-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_061_wrong_tool",
+      "task": "Find keto recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "keto recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "keto"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_062_wrong_tool",
+      "task": "Find paleo recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "paleo recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "paleo"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_063_wrong_tool",
+      "task": "Find dairy-free recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "dairy-free recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "dairy-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_064_wrong_tool",
+      "task": "Find nut-free recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "nut-free recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "nut-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_065_wrong_tool",
+      "task": "Find vegan recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "vegan recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegan"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_066_wrong_tool",
+      "task": "Find vegetarian recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "vegetarian recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegetarian"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_067_wrong_tool",
+      "task": "Find gluten-free recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "gluten-free recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "gluten-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_068_wrong_tool",
+      "task": "Find keto recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "keto recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "keto"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_069_wrong_tool",
+      "task": "Find paleo recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "paleo recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "paleo"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_070_wrong_tool",
+      "task": "Find dairy-free recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "dairy-free recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "dairy-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_071_wrong_tool",
+      "task": "Find nut-free recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "nut-free recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "nut-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_072_wrong_tool",
+      "task": "Find vegan recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "vegan recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegan"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_073_wrong_tool",
+      "task": "Find vegetarian recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "vegetarian recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegetarian"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_074_wrong_tool",
+      "task": "Find gluten-free recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "gluten-free recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "gluten-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_075_wrong_tool",
+      "task": "Find keto recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "keto recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "keto"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_076_wrong_tool",
+      "task": "Find paleo recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "paleo recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "paleo"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_077_wrong_tool",
+      "task": "Find dairy-free recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "dairy-free recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "dairy-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_078_wrong_tool",
+      "task": "Find nut-free recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "nut-free recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "nut-free"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_079_wrong_tool",
+      "task": "Find vegan recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "vegan recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegan"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_080_wrong_tool",
+      "task": "Find vegetarian recipes",
+      "tool_call": {
+        "tool": "search_web",
+        "args": {
+          "query": "vegetarian recipes"
+        }
+      },
+      "gold_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": [
+            "vegetarian"
+          ]
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes (internal DB), not search_web (external)"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_081_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_082_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_083_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_084_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_085_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_086_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_087_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_088_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_089_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_090_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_091_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_092_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_093_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_094_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_095_missing_required",
+      "task": "Get recipe details",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: recipe_id"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_096_missing_required",
+      "task": "Add to shopping list",
+      "tool_call": {
+        "tool": "add_to_shopping_list",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: ingredients"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_097_missing_required",
+      "task": "Add to shopping list",
+      "tool_call": {
+        "tool": "add_to_shopping_list",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: ingredients"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_098_missing_required",
+      "task": "Add to shopping list",
+      "tool_call": {
+        "tool": "add_to_shopping_list",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: ingredients"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_099_missing_required",
+      "task": "Add to shopping list",
+      "tool_call": {
+        "tool": "add_to_shopping_list",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: ingredients"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_100_missing_required",
+      "task": "Add to shopping list",
+      "tool_call": {
+        "tool": "add_to_shopping_list",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: ingredients"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_101_missing_required",
+      "task": "Add to shopping list",
+      "tool_call": {
+        "tool": "add_to_shopping_list",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: ingredients"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_102_missing_required",
+      "task": "Add to shopping list",
+      "tool_call": {
+        "tool": "add_to_shopping_list",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: ingredients"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_103_missing_required",
+      "task": "Add to shopping list",
+      "tool_call": {
+        "tool": "add_to_shopping_list",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: ingredients"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_104_missing_required",
+      "task": "Add to shopping list",
+      "tool_call": {
+        "tool": "add_to_shopping_list",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: ingredients"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_105_missing_required",
+      "task": "Add to shopping list",
+      "tool_call": {
+        "tool": "add_to_shopping_list",
+        "args": {}
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "MISSING_REQUIRED",
+        "failure_reason": "Missing required arg: ingredients"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "tool_106_type_error",
+      "task": "Call with wrong max_cook_time type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": "30 minutes"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_107_type_error",
+      "task": "Call with wrong max_results type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_results": "ten"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_108_type_error",
+      "task": "Call with wrong ingredients type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "ingredients": "pasta"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be list[str], not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_109_type_error",
+      "task": "Call with wrong dietary_restrictions type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": "vegan"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be list[str], not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_110_type_error",
+      "task": "Call with wrong recipe_id type",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {
+          "recipe_id": "123"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_111_type_error",
+      "task": "Call with wrong max_cook_time type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": "30 minutes"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_112_type_error",
+      "task": "Call with wrong max_results type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_results": "ten"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_113_type_error",
+      "task": "Call with wrong ingredients type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "ingredients": "pasta"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be list[str], not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_114_type_error",
+      "task": "Call with wrong dietary_restrictions type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": "vegan"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be list[str], not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_115_type_error",
+      "task": "Call with wrong recipe_id type",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {
+          "recipe_id": "123"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_116_type_error",
+      "task": "Call with wrong max_cook_time type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": "30 minutes"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_117_type_error",
+      "task": "Call with wrong max_results type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_results": "ten"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_118_type_error",
+      "task": "Call with wrong ingredients type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "ingredients": "pasta"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be list[str], not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_119_type_error",
+      "task": "Call with wrong dietary_restrictions type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": "vegan"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be list[str], not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_120_type_error",
+      "task": "Call with wrong recipe_id type",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {
+          "recipe_id": "123"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_121_type_error",
+      "task": "Call with wrong max_cook_time type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": "30 minutes"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_122_type_error",
+      "task": "Call with wrong max_results type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_results": "ten"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_123_type_error",
+      "task": "Call with wrong ingredients type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "ingredients": "pasta"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be list[str], not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_124_type_error",
+      "task": "Call with wrong dietary_restrictions type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": "vegan"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be list[str], not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_125_type_error",
+      "task": "Call with wrong recipe_id type",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {
+          "recipe_id": "123"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_126_type_error",
+      "task": "Call with wrong max_cook_time type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": "30 minutes"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_127_type_error",
+      "task": "Call with wrong max_results type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_results": "ten"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_128_type_error",
+      "task": "Call with wrong ingredients type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "ingredients": "pasta"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be list[str], not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_129_type_error",
+      "task": "Call with wrong dietary_restrictions type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "dietary_restrictions": "vegan"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be list[str], not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_130_type_error",
+      "task": "Call with wrong recipe_id type",
+      "tool_call": {
+        "tool": "get_recipe_details",
+        "args": {
+          "recipe_id": "123"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "TYPE_ERROR",
+        "failure_reason": "Should be int, not str"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_131_value_error",
+      "task": "Search with invalid cook time",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": -10
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "max_cook_time must be between 1 and 240"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_132_value_error",
+      "task": "Search with invalid cook time",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": -11
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "max_cook_time must be between 1 and 240"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_133_value_error",
+      "task": "Search with invalid cook time",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": -12
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "max_cook_time must be between 1 and 240"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_134_value_error",
+      "task": "Search with invalid cook time",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": -13
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "max_cook_time must be between 1 and 240"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_135_value_error",
+      "task": "Search with invalid cook time",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": -14
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "max_cook_time must be between 1 and 240"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_136_value_error",
+      "task": "Search with invalid cook time",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": -15
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "max_cook_time must be between 1 and 240"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_137_value_error",
+      "task": "Search with invalid cook time",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": -16
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "max_cook_time must be between 1 and 240"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_138_value_error",
+      "task": "Search with invalid cook time",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": -17
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "max_cook_time must be between 1 and 240"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_139_value_error",
+      "task": "Search with invalid cook time",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": -18
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "max_cook_time must be between 1 and 240"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_140_value_error",
+      "task": "Search with invalid cook time",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "max_cook_time": -19
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "max_cook_time must be between 1 and 240"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_141_value_error",
+      "task": "Search with invalid meal type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "meal_type": "brunch"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "meal_type must be one of: breakfast, lunch, dinner, dessert, snack"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_142_value_error",
+      "task": "Search with invalid meal type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "meal_type": "snack-time"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "meal_type must be one of: breakfast, lunch, dinner, dessert, snack"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_143_value_error",
+      "task": "Search with invalid meal type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "meal_type": "teatime"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "meal_type must be one of: breakfast, lunch, dinner, dessert, snack"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_144_value_error",
+      "task": "Search with invalid meal type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "meal_type": "supper"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "meal_type must be one of: breakfast, lunch, dinner, dessert, snack"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_145_value_error",
+      "task": "Search with invalid meal type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "meal_type": "appetizer"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "meal_type must be one of: breakfast, lunch, dinner, dessert, snack"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_146_value_error",
+      "task": "Search with invalid meal type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "meal_type": "beverage"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "meal_type must be one of: breakfast, lunch, dinner, dessert, snack"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_147_value_error",
+      "task": "Search with invalid meal type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "meal_type": "course"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "meal_type must be one of: breakfast, lunch, dinner, dessert, snack"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_148_value_error",
+      "task": "Search with invalid meal type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "meal_type": "side"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "meal_type must be one of: breakfast, lunch, dinner, dessert, snack"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_149_value_error",
+      "task": "Search with invalid meal type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "meal_type": "main"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "meal_type must be one of: breakfast, lunch, dinner, dessert, snack"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "tool_150_value_error",
+      "task": "Search with invalid meal type",
+      "tool_call": {
+        "tool": "search_recipes",
+        "args": {
+          "meal_type": "entree"
+        }
+      },
+      "labels": {
+        "is_valid": false,
+        "tool_selection": "CORRECT",
+        "args_validation": "VALUE_ERROR",
+        "failure_reason": "meal_type must be one of: breakfast, lunch, dinner, dessert, snack"
+      },
+      "difficulty": "medium"
+    }
+  ]
+}

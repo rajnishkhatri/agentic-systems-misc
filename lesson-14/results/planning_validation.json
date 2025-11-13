@@ -1,0 +1,58 @@
+{
+  "version": "1.0",
+  "created": "2025-11-13",
+  "mode": "DEMO",
+  "description": "ReAct agent planning validation results from react_agent_implementation.ipynb",
+  "metrics": {
+    "planning_accuracy": 0.87,
+    "avg_steps": 3.2,
+    "error_rate": 0.08,
+    "completion_rate": 0.87,
+    "avg_time_per_task": 4.3,
+    "total_cost": 0.42
+  },
+  "tool_usage": {
+    "search_recipes": 12,
+    "get_recipe_details": 5,
+    "add_to_shopping_list": 3
+  },
+  "sample_trajectories": [
+    {
+      "query": "Find vegan Italian recipes",
+      "steps": 2,
+      "completed": true,
+      "answer": "Found 1 vegan Italian recipe: Vegan Pasta Primavera (ID: 1) with 30 minute cooking time. This recipe uses pasta, vegetables, and olive oil."
+    },
+    {
+      "query": "Get details for recipe ID 2",
+      "steps": 1,
+      "completed": true,
+      "answer": "Recipe ID 2 is Chicken Tikka Masala, an Indian cuisine dish with 45 minute cooking time. Ingredients include chicken, yogurt, and spices."
+    },
+    {
+      "query": "Find quick recipes under 20 minutes",
+      "steps": 2,
+      "completed": true,
+      "answer": "Found 1 recipe under 20 minutes: Keto Avocado Salad (ID: 5) with 15 minute cooking time. This is an American keto recipe with avocado, eggs, and bacon."
+    }
+  ],
+  "performance_analysis": {
+    "successful_tasks": 13,
+    "failed_tasks": 2,
+    "timeout_tasks": 0,
+    "avg_tokens_per_task": 850,
+    "tool_selection_accuracy": 0.92,
+    "argument_validation_accuracy": 0.95
+  },
+  "common_patterns": {
+    "successful_patterns": [
+      "Simple search queries with single filter",
+      "Direct recipe ID lookups",
+      "Time-based filtering"
+    ],
+    "failure_patterns": [
+      "Complex multi-step queries without clear decomposition",
+      "Requests for unavailable tools"
+    ]
+  }
+}

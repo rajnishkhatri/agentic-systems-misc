@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "created": "2025-11-13",
+  "mode": "DEMO",
+  "description": "Agent failure analysis results from agent_failure_analysis.ipynb",
+  "performance_metrics": {
+    "overall_success_rate": 0.14,
+    "planning_accuracy": 0.71,
+    "execution_reliability": 0.71,
+    "efficiency_score": 0.71,
+    "classification_accuracy": 1.0
+  },
+  "failure_breakdown": {
+    "planning_failures": 2,
+    "execution_failures": 2,
+    "efficiency_issues": 2,
+    "successes": 1
+  },
+  "category_distribution": {
+    "PLANNING": 2,
+    "EXECUTION": 2,
+    "EFFICIENCY": 2,
+    "SUCCESS": 1
+  },
+  "failure_types": {
+    "WRONG_TOOL": 1,
+    "INVALID_ARG_TYPE": 1,
+    "TIMEOUT": 1,
+    "SERVICE_UNAVAILABLE": 1,
+    "REDUNDANT_ACTION": 1,
+    "EXCESSIVE_STEPS": 1
+  },
+  "severity_distribution": {
+    "LOW": 1,
+    "MEDIUM": 2,
+    "HIGH": 2,
+    "CRITICAL": 2
+  },
+  "top_issues": [
+    "WRONG_TOOL: 1",
+    "INVALID_ARG_TYPE: 1",
+    "TIMEOUT: 1",
+    "SERVICE_UNAVAILABLE: 1",
+    "REDUNDANT_ACTION: 1"
+  ],
+  "recommended_actions": [
+    "Add validator agent before execution",
+    "Implement retry with exponential backoff",
+    "Optimize plan to reduce redundant actions",
+    "Add schema validation for tool arguments",
+    "Use circuit breaker pattern"
+  ],
+  "analysis_summary": {
+    "total_cases_analyzed": 7,
+    "unique_failure_modes": 6,
+    "avg_remediation_steps": 4,
+    "critical_failures": 2
+  }
+}

@@ -1,0 +1,2379 @@
+{
+  "version": "1.0",
+  "created": "2025-11-12",
+  "description": "Agent Efficiency Benchmark - 50 test cases comparing optimal vs suboptimal plans",
+  "statistics": {
+    "total_cases": 50,
+    "optimal_only": 20,
+    "suboptimal_redundant": 15,
+    "suboptimal_unnecessary": 10,
+    "suboptimal_wrong_order": 5
+  },
+  "efficiency_scoring": {
+    "formula": "base_efficiency = optimal_steps / actual_steps",
+    "redundancy_penalty": 0.2,
+    "unnecessary_penalty": 0.1,
+    "ordering_penalty": 0.15,
+    "range": [
+      0.0,
+      1.0
+    ]
+  },
+  "available_tools": [
+    {
+      "name": "search_recipes",
+      "description": "Search recipe database with filters",
+      "parameters": {
+        "ingredients": {
+          "type": "list[str]",
+          "required": false
+        },
+        "dietary_restrictions": {
+          "type": "list[str]",
+          "required": false
+        },
+        "cuisine": {
+          "type": "str",
+          "required": false
+        },
+        "meal_type": {
+          "type": "str",
+          "required": false
+        },
+        "max_cook_time": {
+          "type": "int",
+          "required": false
+        },
+        "max_results": {
+          "type": "int",
+          "required": false,
+          "default": 10
+        }
+      }
+    },
+    {
+      "name": "get_user_preferences",
+      "description": "Retrieve user dietary preferences and restrictions",
+      "parameters": {}
+    },
+    {
+      "name": "get_recipe_details",
+      "description": "Get full recipe information by ID",
+      "parameters": {
+        "recipe_id": {
+          "type": "int",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "add_to_shopping_list",
+      "description": "Add ingredients to shopping list",
+      "parameters": {
+        "ingredients": {
+          "type": "list[str]",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "check_ingredient_availability",
+      "description": "Check if ingredient is in stock",
+      "parameters": {
+        "ingredient": {
+          "type": "str",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "get_nutrition_info",
+      "description": "Get nutritional information for food",
+      "parameters": {
+        "food": {
+          "type": "str",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "filter_by_ingredients",
+      "description": "Filter recipes by available ingredients",
+      "parameters": {
+        "recipes": {
+          "type": "list",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "get_gita_verses",
+      "description": "Search Bhagavad Gita verses",
+      "parameters": {
+        "chapter": {
+          "type": "int",
+          "required": false
+        },
+        "verse": {
+          "type": "int",
+          "required": false
+        },
+        "keyword": {
+          "type": "str",
+          "required": false
+        }
+      }
+    }
+  ],
+  "test_cases": [
+    {
+      "id": "eff_001_optimal",
+      "task": "Find vegan recipes",
+      "optimal_plan": {
+        "goal": "Find vegan recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 1,
+        "category": "optimal_only"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "eff_002_optimal",
+      "task": "Find Italian recipes",
+      "optimal_plan": {
+        "goal": "Find Italian recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 1,
+        "category": "optimal_only"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "eff_003_optimal",
+      "task": "Find breakfast recipes",
+      "optimal_plan": {
+        "goal": "Find breakfast recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "breakfast"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 1,
+        "category": "optimal_only"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "eff_004_optimal",
+      "task": "Find quick recipes under 30 minutes",
+      "optimal_plan": {
+        "goal": "Find quick recipes under 30 minutes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "max_cook_time": 30
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 1,
+        "category": "optimal_only"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "eff_005_optimal",
+      "task": "Get user dietary preferences",
+      "optimal_plan": {
+        "goal": "Get user dietary preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 1,
+        "category": "optimal_only"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "eff_006_optimal",
+      "task": "Get recipe 123 details",
+      "optimal_plan": {
+        "goal": "Get recipe 123 details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 123
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 1,
+        "category": "optimal_only"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "eff_007_optimal",
+      "task": "Check if tomatoes are available",
+      "optimal_plan": {
+        "goal": "Check if tomatoes are available",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "tomatoes"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 1,
+        "category": "optimal_only"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "eff_008_optimal",
+      "task": "Get nutrition info for chicken",
+      "optimal_plan": {
+        "goal": "Get nutrition info for chicken",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_nutrition_info",
+            "args": {
+              "food": "chicken"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 1,
+        "category": "optimal_only"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "eff_009_optimal",
+      "task": "Search for karma yoga verses",
+      "optimal_plan": {
+        "goal": "Search for karma yoga verses",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_gita_verses",
+            "args": {
+              "keyword": "karma yoga"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 1,
+        "category": "optimal_only"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "eff_010_optimal",
+      "task": "Get Chapter 2 verses",
+      "optimal_plan": {
+        "goal": "Get Chapter 2 verses",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_gita_verses",
+            "args": {
+              "chapter": 2
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 1,
+        "category": "optimal_only"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "eff_011_optimal",
+      "task": "Find vegan recipes with user preferences",
+      "optimal_plan": {
+        "goal": "Find vegan recipes with user preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 2,
+        "category": "optimal_only"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_012_optimal",
+      "task": "Get recipe details and add to shopping list",
+      "optimal_plan": {
+        "goal": "Get recipe details and add to shopping list",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 456
+            }
+          },
+          {
+            "step": 2,
+            "tool": "add_to_shopping_list",
+            "args": {
+              "ingredients": [
+                "{{recipe_ingredients}}"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 2,
+        "category": "optimal_only"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_013_optimal",
+      "task": "Check ingredient availability and get nutrition",
+      "optimal_plan": {
+        "goal": "Check ingredient availability and get nutrition",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "chicken"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_nutrition_info",
+            "args": {
+              "food": "chicken"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 2,
+        "category": "optimal_only"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_014_optimal",
+      "task": "Find Italian dinner recipes",
+      "optimal_plan": {
+        "goal": "Find Italian dinner recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian",
+              "meal_type": "dinner"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": "{{top_result}}"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 2,
+        "category": "optimal_only"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_015_optimal",
+      "task": "Search Gita verses and get details",
+      "optimal_plan": {
+        "goal": "Search Gita verses and get details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_gita_verses",
+            "args": {
+              "keyword": "dharma"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_gita_verses",
+            "args": {
+              "chapter": "{{result_chapter}}",
+              "verse": "{{result_verse}}"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 2,
+        "category": "optimal_only"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_016_optimal",
+      "task": "Get preferences and find breakfast",
+      "optimal_plan": {
+        "goal": "Get preferences and find breakfast",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "breakfast"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 2,
+        "category": "optimal_only"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_017_optimal",
+      "task": "Find keto recipes with short cooking time",
+      "optimal_plan": {
+        "goal": "Find keto recipes with short cooking time",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "keto"
+              ],
+              "max_cook_time": 45
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": "{{best_match}}"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 2,
+        "category": "optimal_only"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_018_optimal",
+      "task": "Check pasta availability and search recipes",
+      "optimal_plan": {
+        "goal": "Check pasta availability and search recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "pasta"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "pasta"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 2,
+        "category": "optimal_only"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_019_optimal",
+      "task": "Get nutrition for salmon and find recipes",
+      "optimal_plan": {
+        "goal": "Get nutrition for salmon and find recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_nutrition_info",
+            "args": {
+              "food": "salmon"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "salmon"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 2,
+        "category": "optimal_only"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_020_optimal",
+      "task": "Search dessert recipes and get details",
+      "optimal_plan": {
+        "goal": "Search dessert recipes and get details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "dessert"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": "{{top_dessert}}"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "labels": {
+        "has_suboptimal": false,
+        "optimal_step_count": 2,
+        "category": "optimal_only"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_021_redundant",
+      "task": "Find vegan recipes matching user preferences",
+      "optimal_plan": {
+        "goal": "Find vegan recipes matching user preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find vegan recipes matching user preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 4,
+            "tool": "filter_by_ingredients",
+            "args": {
+              "recipes": "{{results}}"
+            }
+          }
+        ],
+        "step_count": 4,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Redundant get_user_preferences call at step 3"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 2,
+        "suboptimal_step_count": 4,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_022_redundant",
+      "task": "Find Italian pasta recipes",
+      "optimal_plan": {
+        "goal": "Find Italian pasta recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian",
+              "ingredients": [
+                "pasta"
+              ]
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find Italian pasta recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "pasta"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Could combine filters in single search_recipes call"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_023_redundant",
+      "task": "Check if tomatoes are available",
+      "optimal_plan": {
+        "goal": "Check if tomatoes are available",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "tomatoes"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Check if tomatoes are available",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "tomatoes"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "tomatoes"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Duplicate check for same ingredient"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_024_redundant",
+      "task": "Get recipe 789 details",
+      "optimal_plan": {
+        "goal": "Get recipe 789 details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 789
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Get recipe 789 details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 789
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 789
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Duplicate fetch of same recipe"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_025_redundant",
+      "task": "Find gluten-free recipes with preferences",
+      "optimal_plan": {
+        "goal": "Find gluten-free recipes with preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "gluten-free"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find gluten-free recipes with preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "gluten-free"
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 4,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "gluten-free"
+              ]
+            }
+          }
+        ],
+        "step_count": 4,
+        "efficiency_score": 0.1,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Two redundant calls (preferences at step 3, search at step 4)"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 2,
+        "suboptimal_step_count": 4,
+        "efficiency_difference": 0.9,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_026_redundant",
+      "task": "Find vegan recipes matching user preferences",
+      "optimal_plan": {
+        "goal": "Find vegan recipes matching user preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find vegan recipes matching user preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 4,
+            "tool": "filter_by_ingredients",
+            "args": {
+              "recipes": "{{results}}"
+            }
+          }
+        ],
+        "step_count": 4,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Redundant get_user_preferences call at step 3"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 2,
+        "suboptimal_step_count": 4,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_027_redundant",
+      "task": "Find Italian pasta recipes",
+      "optimal_plan": {
+        "goal": "Find Italian pasta recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian",
+              "ingredients": [
+                "pasta"
+              ]
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find Italian pasta recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "pasta"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Could combine filters in single search_recipes call"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_028_redundant",
+      "task": "Check if tomatoes are available",
+      "optimal_plan": {
+        "goal": "Check if tomatoes are available",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "tomatoes"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Check if tomatoes are available",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "tomatoes"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "tomatoes"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Duplicate check for same ingredient"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_029_redundant",
+      "task": "Get recipe 789 details",
+      "optimal_plan": {
+        "goal": "Get recipe 789 details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 789
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Get recipe 789 details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 789
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 789
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Duplicate fetch of same recipe"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_030_redundant",
+      "task": "Find gluten-free recipes with preferences",
+      "optimal_plan": {
+        "goal": "Find gluten-free recipes with preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "gluten-free"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find gluten-free recipes with preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "gluten-free"
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 4,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "gluten-free"
+              ]
+            }
+          }
+        ],
+        "step_count": 4,
+        "efficiency_score": 0.1,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Two redundant calls (preferences at step 3, search at step 4)"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 2,
+        "suboptimal_step_count": 4,
+        "efficiency_difference": 0.9,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_031_redundant",
+      "task": "Find vegan recipes matching user preferences",
+      "optimal_plan": {
+        "goal": "Find vegan recipes matching user preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find vegan recipes matching user preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 4,
+            "tool": "filter_by_ingredients",
+            "args": {
+              "recipes": "{{results}}"
+            }
+          }
+        ],
+        "step_count": 4,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Redundant get_user_preferences call at step 3"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 2,
+        "suboptimal_step_count": 4,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_032_redundant",
+      "task": "Find Italian pasta recipes",
+      "optimal_plan": {
+        "goal": "Find Italian pasta recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian",
+              "ingredients": [
+                "pasta"
+              ]
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find Italian pasta recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "pasta"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Could combine filters in single search_recipes call"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_033_redundant",
+      "task": "Check if tomatoes are available",
+      "optimal_plan": {
+        "goal": "Check if tomatoes are available",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "tomatoes"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Check if tomatoes are available",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "tomatoes"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "tomatoes"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Duplicate check for same ingredient"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_034_redundant",
+      "task": "Get recipe 789 details",
+      "optimal_plan": {
+        "goal": "Get recipe 789 details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 789
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Get recipe 789 details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 789
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 789
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Duplicate fetch of same recipe"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_035_redundant",
+      "task": "Find gluten-free recipes with preferences",
+      "optimal_plan": {
+        "goal": "Find gluten-free recipes with preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "gluten-free"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find gluten-free recipes with preferences",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "gluten-free"
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 4,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "gluten-free"
+              ]
+            }
+          }
+        ],
+        "step_count": 4,
+        "efficiency_score": 0.1,
+        "inefficiency_type": "REDUNDANT_CALLS",
+        "inefficiency_reason": "Two redundant calls (preferences at step 3, search at step 4)"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 2,
+        "suboptimal_step_count": 4,
+        "efficiency_difference": 0.9,
+        "category": "suboptimal_redundant"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_036_unnecessary",
+      "task": "Find vegan recipes",
+      "optimal_plan": {
+        "goal": "Find vegan recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find vegan recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.5,
+        "inefficiency_type": "UNNECESSARY_STEPS",
+        "inefficiency_reason": "get_user_preferences unnecessary when dietary restriction explicitly specified"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.5,
+        "category": "suboptimal_unnecessary"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_037_unnecessary",
+      "task": "Find Italian recipes",
+      "optimal_plan": {
+        "goal": "Find Italian recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find Italian recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "filter_by_ingredients",
+            "args": {
+              "recipes": "{{results}}"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.5,
+        "inefficiency_type": "UNNECESSARY_STEPS",
+        "inefficiency_reason": "filter_by_ingredients unnecessary without ingredient constraints"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.5,
+        "category": "suboptimal_unnecessary"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_038_unnecessary",
+      "task": "Get recipe 999 details",
+      "optimal_plan": {
+        "goal": "Get recipe 999 details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 999
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Get recipe 999 details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "max_results": 1
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 999
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.5,
+        "inefficiency_type": "UNNECESSARY_STEPS",
+        "inefficiency_reason": "search_recipes unnecessary when recipe ID known"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.5,
+        "category": "suboptimal_unnecessary"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_039_unnecessary",
+      "task": "Check if chicken is available",
+      "optimal_plan": {
+        "goal": "Check if chicken is available",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "chicken"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Check if chicken is available",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_nutrition_info",
+            "args": {
+              "food": "chicken"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "chicken"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.5,
+        "inefficiency_type": "UNNECESSARY_STEPS",
+        "inefficiency_reason": "get_nutrition_info unnecessary for availability check"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.5,
+        "category": "suboptimal_unnecessary"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_040_unnecessary",
+      "task": "Search for dharma verses in Gita",
+      "optimal_plan": {
+        "goal": "Search for dharma verses in Gita",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_gita_verses",
+            "args": {
+              "keyword": "dharma"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Search for dharma verses in Gita",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_gita_verses",
+            "args": {
+              "chapter": 1
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_gita_verses",
+            "args": {
+              "keyword": "dharma"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "UNNECESSARY_STEPS",
+        "inefficiency_reason": "Chapter 1 fetch unnecessary for keyword search"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_unnecessary"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_041_unnecessary",
+      "task": "Find vegan recipes",
+      "optimal_plan": {
+        "goal": "Find vegan recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find vegan recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.5,
+        "inefficiency_type": "UNNECESSARY_STEPS",
+        "inefficiency_reason": "get_user_preferences unnecessary when dietary restriction explicitly specified"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.5,
+        "category": "suboptimal_unnecessary"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_042_unnecessary",
+      "task": "Find Italian recipes",
+      "optimal_plan": {
+        "goal": "Find Italian recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find Italian recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "filter_by_ingredients",
+            "args": {
+              "recipes": "{{results}}"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.5,
+        "inefficiency_type": "UNNECESSARY_STEPS",
+        "inefficiency_reason": "filter_by_ingredients unnecessary without ingredient constraints"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.5,
+        "category": "suboptimal_unnecessary"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_043_unnecessary",
+      "task": "Get recipe 999 details",
+      "optimal_plan": {
+        "goal": "Get recipe 999 details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 999
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Get recipe 999 details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "max_results": 1
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 999
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.5,
+        "inefficiency_type": "UNNECESSARY_STEPS",
+        "inefficiency_reason": "search_recipes unnecessary when recipe ID known"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.5,
+        "category": "suboptimal_unnecessary"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_044_unnecessary",
+      "task": "Check if chicken is available",
+      "optimal_plan": {
+        "goal": "Check if chicken is available",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "chicken"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Check if chicken is available",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_nutrition_info",
+            "args": {
+              "food": "chicken"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "chicken"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.5,
+        "inefficiency_type": "UNNECESSARY_STEPS",
+        "inefficiency_reason": "get_nutrition_info unnecessary for availability check"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.5,
+        "category": "suboptimal_unnecessary"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_045_unnecessary",
+      "task": "Search for dharma verses in Gita",
+      "optimal_plan": {
+        "goal": "Search for dharma verses in Gita",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_gita_verses",
+            "args": {
+              "keyword": "dharma"
+            }
+          }
+        ],
+        "step_count": 1,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Search for dharma verses in Gita",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_gita_verses",
+            "args": {
+              "chapter": 1
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_gita_verses",
+            "args": {
+              "keyword": "dharma"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.3,
+        "inefficiency_type": "UNNECESSARY_STEPS",
+        "inefficiency_reason": "Chapter 1 fetch unnecessary for keyword search"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 1,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.7,
+        "category": "suboptimal_unnecessary"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "eff_046_wrong_order",
+      "task": "Find recipes with user preferences and add to shopping list",
+      "optimal_plan": {
+        "goal": "Find recipes with user preferences and add to shopping list",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": "{{preferences}}"
+            }
+          },
+          {
+            "step": 3,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": "{{top_result}}"
+            }
+          },
+          {
+            "step": 4,
+            "tool": "add_to_shopping_list",
+            "args": {
+              "ingredients": "{{recipe_ingredients}}"
+            }
+          }
+        ],
+        "step_count": 4,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find recipes with user preferences and add to shopping list",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {}
+          },
+          {
+            "step": 2,
+            "tool": "get_user_preferences",
+            "args": {}
+          },
+          {
+            "step": 3,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": "{{top_result}}"
+            }
+          },
+          {
+            "step": 4,
+            "tool": "add_to_shopping_list",
+            "args": {
+              "ingredients": "{{recipe_ingredients}}"
+            }
+          }
+        ],
+        "step_count": 4,
+        "efficiency_score": 0.85,
+        "inefficiency_type": "WRONG_ORDER",
+        "inefficiency_reason": "Should get_user_preferences before search_recipes to apply filters"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 4,
+        "suboptimal_step_count": 4,
+        "efficiency_difference": 0.15,
+        "category": "suboptimal_wrong_order"
+      },
+      "difficulty": "hard"
+    },
+    {
+      "id": "eff_047_wrong_order",
+      "task": "Check ingredient availability then find recipes",
+      "optimal_plan": {
+        "goal": "Check ingredient availability then find recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "pasta"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "pasta"
+              ]
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Check ingredient availability then find recipes",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "pasta"
+              ]
+            }
+          },
+          {
+            "step": 2,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "pasta"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.85,
+        "inefficiency_type": "WRONG_ORDER",
+        "inefficiency_reason": "Should check availability before searching recipes"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 2,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.15,
+        "category": "suboptimal_wrong_order"
+      },
+      "difficulty": "hard"
+    },
+    {
+      "id": "eff_048_wrong_order",
+      "task": "Get recipe details then add to shopping list",
+      "optimal_plan": {
+        "goal": "Get recipe details then add to shopping list",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 555
+            }
+          },
+          {
+            "step": 2,
+            "tool": "add_to_shopping_list",
+            "args": {
+              "ingredients": "{{recipe_ingredients}}"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Get recipe details then add to shopping list",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "add_to_shopping_list",
+            "args": {
+              "ingredients": []
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": 555
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.85,
+        "inefficiency_type": "WRONG_ORDER",
+        "inefficiency_reason": "Need recipe details before adding ingredients to shopping list"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 2,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.15,
+        "category": "suboptimal_wrong_order"
+      },
+      "difficulty": "hard"
+    },
+    {
+      "id": "eff_049_wrong_order",
+      "task": "Find keto recipes and get nutrition info",
+      "optimal_plan": {
+        "goal": "Find keto recipes and get nutrition info",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "keto"
+              ]
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": "{{top_result}}"
+            }
+          },
+          {
+            "step": 3,
+            "tool": "get_nutrition_info",
+            "args": {
+              "food": "{{recipe_name}}"
+            }
+          }
+        ],
+        "step_count": 3,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Find keto recipes and get nutrition info",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_nutrition_info",
+            "args": {
+              "food": "unknown"
+            }
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "keto"
+              ]
+            }
+          },
+          {
+            "step": 3,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": "{{top_result}}"
+            }
+          }
+        ],
+        "step_count": 3,
+        "efficiency_score": 0.85,
+        "inefficiency_type": "WRONG_ORDER",
+        "inefficiency_reason": "Should search and get recipe details before getting nutrition info"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 3,
+        "suboptimal_step_count": 3,
+        "efficiency_difference": 0.15,
+        "category": "suboptimal_wrong_order"
+      },
+      "difficulty": "hard"
+    },
+    {
+      "id": "eff_050_wrong_order",
+      "task": "Search Gita verses by chapter then get details",
+      "optimal_plan": {
+        "goal": "Search Gita verses by chapter then get details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_gita_verses",
+            "args": {
+              "chapter": 3
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_gita_verses",
+            "args": {
+              "chapter": 3,
+              "verse": "{{first_verse}}"
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 1.0
+      },
+      "suboptimal_plan": {
+        "goal": "Search Gita verses by chapter then get details",
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_gita_verses",
+            "args": {
+              "chapter": 3,
+              "verse": 1
+            }
+          },
+          {
+            "step": 2,
+            "tool": "get_gita_verses",
+            "args": {
+              "chapter": 3
+            }
+          }
+        ],
+        "step_count": 2,
+        "efficiency_score": 0.85,
+        "inefficiency_type": "WRONG_ORDER",
+        "inefficiency_reason": "Should browse chapter first to identify relevant verse"
+      },
+      "labels": {
+        "has_suboptimal": true,
+        "optimal_step_count": 2,
+        "suboptimal_step_count": 2,
+        "efficiency_difference": 0.15,
+        "category": "suboptimal_wrong_order"
+      },
+      "difficulty": "hard"
+    }
+  ]
+}

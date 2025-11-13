@@ -1,0 +1,355 @@
+```mermaid
+flowchart TD
+    Start([User Query: Plan weekly meals]) --> Orchestrator[Multi-Agent Orchestrator]
+
+    Orchestrator --> Init[Initialize Shared Memory]
+
+    Init --> PlanPhase[Planning Phase]
+
+    PlanPhase --> Planner[Planner Agent]
+
+    Planner --> PlanThought[Generate Thought:<br/>User needs 7 dinner ideas<br/>Must consider preferences]
+
+    PlanThought --> PlanAction[Create Plan:<br/>1. Get user preferences<br/>2. Generate 7 meal ideas<br/>3. Retrieve recipes<br/>4. Extract ingredients<br/>5. Create shopping list]
+
+    PlanAction --> StoreP lan[Store Plan in Memory]
+
+    StorePlan --> ValPhase[Validation Phase]
+
+    ValPhase --> Validator[Validator Agent]
+
+    Validator --> ReadPlan[Read Plan from Memory]
+
+    ReadPlan --> ValCheck[Validate Plan:<br/>✓ Schema correct?<br/>✓ Goal achievable?<br/>✓ Dependencies OK?<br/>✓ Efficient?]
+
+    ValCheck --> ValDecision{Validation Status?}
+
+    ValDecision -->|REJECTED| Feedback[Store Feedback:<br/>Missing nutrition check<br/>Should validate balance]
+
+    Feedback --> Retry{Retry < Max?}
+
+    Retry -->|Yes| Planner
+    Retry -->|No| Failed[Return Failure]
+
+    ValDecision -->|APPROVED| StoreApproval[Store Approval in Memory]
+
+    StoreApproval --> ExecPhase[Execution Phase]
+
+    ExecPhase --> Executor[Executor Agent]
+
+    Executor --> ReadApproved[Read Approved Plan]
+
+    ReadApproved --> ExecLoop[Execute Steps Sequentially]
+
+    ExecLoop --> Step1[Step 1: get_user_preferences]
+    Step1 --> Obs1[Observation: User prefers vegetarian, Italian, <30min]
+    Obs1 --> Store1[Store in Memory]
+
+    Store1 --> Step2[Step 2: generate_meal_ideas]
+    Step2 --> Obs2[Observation: 7 meal ideas generated]
+    Obs2 --> Store2[Store in Memory]
+
+    Store2 --> Step3[Step 3: retrieve_recipes]
+    Step3 --> Obs3[Observation: Retrieved 7 full recipes]
+    Obs3 --> Store3[Store in Memory]
+
+    Store3 --> Step4[Step 4: extract_ingredients]
+    Step4 --> Obs4[Observation: Extracted 45 unique ingredients]
+    Obs4 --> Store4[Store in Memory]
+
+    Store4 --> Step5[Step 5: create_shopping_list]
+    Step5 --> Obs5[Observation: Shopping list with 45 items]
+    Obs5 --> Store5[Store in Memory]
+
+    Store5 --> ExecCheck{All Steps OK?}
+
+    ExecCheck -->|Yes| Success[Execution Success]
+    ExecCheck -->|No| ExecFailed[Execution Failed]
+
+    Success --> Formatter[Formatter Agent]
+
+    Formatter --> ReadResults[Read All Results from Memory]
+
+    ReadResults --> Format[Format Output:<br/>- Weekly meal plan<br/>- Recipe details<br/>- Shopping list<br/>- Nutrition summary]
+
+    Format --> FinalOutput[Return Final Result]
+
+    Failed --> End([End: Failure])
+    ExecFailed --> End
+    FinalOutput --> End2([End: Success])
+
+    style Start fill:#e1f5ff
+    style End fill:#f8d7da
+    style End2 fill:#d4edda
+    style Orchestrator fill:#e3f2fd,stroke:#2196f3,stroke-width:3px
+    style Planner fill:#fff4e1,stroke:#ff9800,stroke-width:2px
+    style Validator fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+    style Executor fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style Formatter fill:#fce4ec,stroke:#e91e63,stroke-width:2px
+    style Init fill:#fff9c4
+    style StorePlan fill:#fff9c4
+    style StoreApproval fill:#fff9c4
+    style Store1 fill:#fff9c4
+    style Store2 fill:#fff9c4
+    style Store3 fill:#fff9c4
+    style Store4 fill:#fff9c4
+    style Store5 fill:#fff9c4
+    style Success fill:#d4edda
+    style Failed fill:#f8d7da
+    style ExecFailed fill:#f8d7da
+
+    classDef memoryStyle fill:#fff9c4,stroke:#fbc02d
+    classDef plannerStyle fill:#fff4e1,stroke:#ff9800
+    classDef validatorStyle fill:#f3e5f5,stroke:#9c27b0
+    classDef executorStyle fill:#e8f5e9,stroke:#4caf50
+    classDef formatterStyle fill:#fce4ec,stroke:#e91e63
+
+    class Init,StorePlan,StoreApproval,Store1,Store2,Store3,Store4,Store5,ReadPlan,ReadApproved,ReadResults memoryStyle
+    class Planner,PlanThought,PlanAction plannerStyle
+    class Validator,ValCheck validatorStyle
+    class Executor,Step1,Step2,Step3,Step4,Step5 executorStyle
+    class Formatter,Format formatterStyle
+```
+
+## Diagram Description
+
+This diagram illustrates **multi-agent orchestration** using the **Planner-Validator-Executor (PVE)** pattern with shared memory for complex task coordination.
+
+### Architecture Overview
+
+**Orchestrator (Central Coordinator)**
+- Manages workflow between specialized agents
+- Initializes and maintains shared memory
+- Controls phase transitions (Plan → Validate → Execute)
+- Handles retries and error recovery
+
+**Shared Memory (Communication Layer)**
+- Central store for agent communication
+- Persistent across agent executions
+- Enables asynchronous workflows
+- Stores: plans, validations, observations, results
+
+### Agent Responsibilities
+
+**1. Planner Agent** 🧠 (Yellow)
+- **Input**: User query, available tools, context
+- **Output**: Structured execution plan with steps
+- **Role**: Strategic thinking and high-level planning
+- **Example**: "Generate 7-step plan: preferences → ideas → recipes → ingredients → shopping list"
+
+**2. Validator Agent** 🔍 (Purple)
+- **Input**: Plan from Planner, tool schemas, validation criteria
+- **Output**: APPROVED or REJECTED with feedback
+- **Role**: Quality control before expensive execution
+- **Example**: "Plan missing nutrition validation step → REJECTED with feedback"
+
+**3. Executor Agent** ⚙️ (Green)
+- **Input**: Approved plan from Validator
+- **Output**: Execution results for each step
+- **Role**: Sequential tool execution with state management
+- **Example**: "Execute 5 steps, store observations in memory after each"
+
+**4. Formatter Agent** 📄 (Pink)
+- **Input**: All execution results from memory
+- **Output**: Formatted final result for user
+- **Role**: Synthesize and present results
+- **Example**: "Combine meal plan + recipes + shopping list into user-friendly format"
+
+### Workflow Phases
+
+**Phase 1: Planning (Planner Agent)**
+```
+Input: "Plan a week of vegetarian Italian dinners under 30 minutes"
+↓
+Planner generates 5-step plan
+↓
+Store plan in shared memory
+```
+
+**Phase 2: Validation (Validator Agent)**
+```
+Read plan from memory
+↓
+Validate: Schema ✓, Goal ✓, Dependencies ✓, Efficiency ✓
+↓
+Decision: APPROVED or REJECTED
+↓
+If REJECTED → Provide feedback → Retry planning (max 2 times)
+If APPROVED → Store approval → Proceed to execution
+```
+
+**Phase 3: Execution (Executor Agent)**
+```
+Read approved plan from memory
+↓
+For each step:
+  1. Execute tool call
+  2. Store observation in memory
+  3. Check for errors
+↓
+All steps complete → Success
+```
+
+**Phase 4: Formatting (Formatter Agent)**
+```
+Read all execution results from memory
+↓
+Synthesize into final output
+↓
+Return formatted result to user
+```
+
+### Shared Memory Pattern
+
+**Why Shared Memory?**
+- ✅ **Decoupling**: Agents don't need direct references to each other
+- ✅ **Asynchronous**: Agents work at own pace, read/write when ready
+- ✅ **Persistent**: Survives agent restarts or failures
+- ✅ **Observable**: Full execution history available for debugging
+- ✅ **Extensible**: New agents can read existing memory
+
+**Memory Operations:**
+```python
+# Planner writes
+memory.write("plan", plan_object)
+
+# Validator reads
+plan = memory.read("plan")
+
+# Validator writes
+memory.write("validation", validation_result)
+
+# Executor reads
+approved_plan = memory.read("plan")
+validation = memory.read("validation")
+
+# Executor writes after each step
+memory.write("step_1_result", preferences)
+memory.write("step_2_result", meal_ideas)
+# ...
+
+# Formatter reads all
+all_results = memory.query("step_*_result")
+```
+
+### Error Handling & Retry Logic
+
+**Planning Failures:**
+- Validator rejects plan → Store feedback in memory
+- Planner retries with feedback (max 2 attempts)
+- If still rejected → Return failure to user
+
+**Execution Failures:**
+- Step execution error → Store error in memory
+- Option 1: Stop execution, return partial results
+- Option 2: Skip failed step, continue (if non-critical)
+- Option 3: Retry step with exponential backoff
+
+### Performance Characteristics
+
+| Aspect | Single Agent | Multi-Agent (PVE) |
+|--------|-------------|-------------------|
+| **Success Rate** | Baseline | +15-25% (validation catches errors) |
+| **Avg Steps** | N/A (one shot) | 3-10 per agent |
+| **LLM Calls** | 1-2 | 5-15 (planning + validation + execution) |
+| **Cost** | $ | $$-$$$ |
+| **Debuggability** | Hard (monolithic) | Easy (per-agent logs) |
+| **Testability** | End-to-end only | Per-agent + integration |
+
+### Real-World Example
+
+**Query:** "Plan 7 vegetarian Italian dinners under 30 minutes with shopping list"
+
+**Execution Trace:**
+```
+Orchestrator initializes memory
+↓
+Planner creates 5-step plan (stored in memory)
+↓
+Validator checks plan:
+  - Schema: ✓ All steps have valid tool calls
+  - Goal: ✓ Plan achieves weekly meal planning + shopping list
+  - Dependencies: ✓ Steps ordered correctly (preferences before search)
+  - Efficiency: ✓ No redundant steps
+  Result: APPROVED
+↓
+Executor runs 5 steps:
+  Step 1: get_user_preferences() → {diet: "vegetarian", cuisine: "Italian", time: 30}
+  Step 2: generate_7_meal_ideas() → [meal1, meal2, ..., meal7]
+  Step 3: retrieve_full_recipes() → [recipe1, ..., recipe7]
+  Step 4: extract_ingredients() → [ingredient1, ..., ingredient45]
+  Step 5: create_shopping_list() → Shopping list with 45 items
+↓
+Formatter synthesizes:
+  - Weekly meal plan (7 days)
+  - Recipe details per meal
+  - Shopping list organized by category
+  - Nutrition summary (avg per meal)
+↓
+Return formatted result to user
+```
+
+### Usage Example
+
+```python
+from backend.multi_agent_framework import MultiAgentOrchestrator
+from backend.multi_agent_framework import PlannerAgent, ValidatorAgent, ExecutorAgent
+
+# Initialize agents
+planner = PlannerAgent(llm_model="gpt-4o-mini")
+validator = ValidatorAgent(llm_model="gpt-4o-mini")
+executor = ExecutorAgent(tools={
+    "get_user_preferences": get_user_preferences,
+    "search_recipes": search_recipes,
+    # ... other tools
+})
+
+# Create orchestrator
+orchestrator = MultiAgentOrchestrator(
+    planner=planner,
+    validator=validator,
+    executor=executor,
+    max_retries=2
+)
+
+# Run workflow
+result = orchestrator.run(
+    query="Plan 7 vegetarian dinners with shopping list",
+    tools=available_tools,
+    context={}
+)
+
+print(f"Success: {result['success']}")
+print(f"Plan: {result['plan']}")
+print(f"Validation: {result['validation']['status']}")
+print(f"Execution: {result['execution']['success']}")
+print(f"Memory: {result['memory']}")
+```
+
+### When to Use Multi-Agent Orchestration
+
+**✅ Use multi-agent when:**
+- Task has clear phases requiring different skills (planning ≠ validation ≠ execution)
+- Validation can catch costly errors before execution
+- Sub-tasks can run independently or in parallel
+- Debugging requires isolating which component failed
+- System needs to scale (add new agents without changing others)
+
+**❌ Don't use multi-agent when:**
+- Task is simple (single tool call sufficient)
+- No clear specialization needed (general-purpose agent works)
+- Cost/latency critical (coordination overhead not justified)
+- All agents would have identical capabilities (no specialization benefit)
+
+### Integration with Other Patterns
+
+**ReAct + Multi-Agent:**
+- Each agent can be a ReAct agent internally
+- Example: Executor uses ReAct loop for each step with adaptive planning
+
+**Reflexion + Multi-Agent:**
+- Add ReflectionAgent that analyzes failures and generates improvements
+- Store reflections in shared memory for future attempts
+- Multi-agent system learns from experience across orchestration runs
+
+See `react_reflexion_patterns.md` and `agent_planning_evaluation.md` for integration details.

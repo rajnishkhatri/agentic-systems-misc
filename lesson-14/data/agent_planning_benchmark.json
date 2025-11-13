@@ -1,0 +1,3306 @@
+{
+  "version": "1.0",
+  "created": "2025-11-12",
+  "description": "Agent Planning Validation Benchmark for Lesson 14 - 100 tasks testing plan correctness, tool selection, and goal alignment",
+  "statistics": {
+    "total_tasks": 100,
+    "recipe_domain": 60,
+    "gita_domain": 20,
+    "general_tasks": 20,
+    "correct_plans": 65,
+    "wrong_tool_selection": 15,
+    "invalid_arguments": 10,
+    "goal_misalignment": 5,
+    "incomplete_plans": 5
+  },
+  "available_tools": [
+    {
+      "name": "search_recipes",
+      "description": "Search recipe database with filters",
+      "parameters": {
+        "ingredients": {
+          "type": "list[str]",
+          "required": false
+        },
+        "dietary_restrictions": {
+          "type": "list[str]",
+          "required": false
+        },
+        "cuisine": {
+          "type": "str",
+          "required": false
+        },
+        "meal_type": {
+          "type": "str",
+          "required": false,
+          "options": [
+            "breakfast",
+            "lunch",
+            "dinner",
+            "dessert",
+            "snack"
+          ]
+        },
+        "max_cook_time": {
+          "type": "int",
+          "required": false,
+          "min": 1,
+          "max": 240
+        },
+        "max_results": {
+          "type": "int",
+          "required": false,
+          "default": 10,
+          "min": 1,
+          "max": 100
+        }
+      }
+    },
+    {
+      "name": "get_user_preferences",
+      "description": "Retrieve user dietary preferences and restrictions",
+      "parameters": {}
+    },
+    {
+      "name": "get_recipe_details",
+      "description": "Get full recipe information by ID",
+      "parameters": {
+        "recipe_id": {
+          "type": "int",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "check_ingredient_availability",
+      "description": "Check if ingredient is in stock",
+      "parameters": {
+        "ingredient": {
+          "type": "str",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "get_nutrition_info",
+      "description": "Get nutritional information for food",
+      "parameters": {
+        "food": {
+          "type": "str",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "search_web",
+      "description": "Search external web for general information",
+      "parameters": {
+        "query": {
+          "type": "str",
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "get_gita_verses",
+      "description": "Search Bhagavad Gita verses by chapter/verse/keyword",
+      "parameters": {
+        "chapter": {
+          "type": "int",
+          "required": false,
+          "min": 1,
+          "max": 18
+        },
+        "verse": {
+          "type": "int",
+          "required": false
+        },
+        "keyword": {
+          "type": "str",
+          "required": false
+        },
+        "max_results": {
+          "type": "int",
+          "required": false,
+          "default": 5
+        }
+      }
+    },
+    {
+      "name": "add_to_shopping_list",
+      "description": "Add ingredients to user's shopping list",
+      "parameters": {
+        "ingredients": {
+          "type": "list[str]",
+          "required": true
+        }
+      }
+    }
+  ],
+  "test_cases": [
+    {
+      "id": "plan_001",
+      "task": "Find vegan pasta recipes under 30 minutes",
+      "goal": "Retrieve vegan pasta recipes with cooking time <= 30 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "pasta"
+              ],
+              "dietary_restrictions": [
+                "vegan"
+              ],
+              "max_cook_time": 30
+            },
+            "rationale": "Search with all constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_002",
+      "task": "Find Italian dessert recipes",
+      "goal": "Retrieve Italian dessert recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian",
+              "meal_type": "dessert"
+            },
+            "rationale": "Search with cuisine and meal type filters"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_003",
+      "task": "What does Chapter 3 of the Bhagavad Gita teach about karma yoga?",
+      "goal": "Retrieve Bhagavad Gita verses about karma yoga from Chapter 3",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_gita_verses",
+            "args": {
+              "chapter": 3,
+              "keyword": "karma yoga"
+            },
+            "rationale": "Search Chapter 3 for karma yoga teachings"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_004",
+      "task": "Find breakfast recipes with eggs",
+      "goal": "Retrieve breakfast recipes containing eggs",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "eggs"
+              ],
+              "meal_type": "breakfast"
+            },
+            "rationale": "Search breakfast category with egg ingredient"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_005",
+      "task": "Find keto dinner recipes",
+      "goal": "Retrieve keto-friendly dinner recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "keto"
+              ],
+              "meal_type": "dinner"
+            },
+            "rationale": "Search dinners with keto diet constraint"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_021",
+      "task": "Find recipes I can make with my available ingredients",
+      "goal": "Search recipes using user's pantry ingredients",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_user_preferences",
+            "args": {},
+            "rationale": "Get user pantry"
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": "{{user_pantry}}"
+            },
+            "rationale": "Search with available ingredients"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_022",
+      "task": "Find gluten-free recipes and check if quinoa is available",
+      "goal": "Search gluten-free recipes, verify quinoa availability",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "gluten-free"
+              ],
+              "ingredients": [
+                "quinoa"
+              ]
+            },
+            "rationale": "Find gluten-free quinoa recipes"
+          },
+          {
+            "step": 2,
+            "tool": "check_ingredient_availability",
+            "args": {
+              "ingredient": "quinoa"
+            },
+            "rationale": "Verify quinoa stock"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_023",
+      "task": "Get nutrition info for avocado and find recipes using it",
+      "goal": "Retrieve avocado nutrition data and avocado recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "get_nutrition_info",
+            "args": {
+              "food": "avocado"
+            },
+            "rationale": "Get nutrition data"
+          },
+          {
+            "step": 2,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "avocado"
+              ]
+            },
+            "rationale": "Find avocado recipes"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_006",
+      "task": "Find Greek recipes",
+      "goal": "Retrieve Greek cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Greek"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_007",
+      "task": "Find Spanish recipes",
+      "goal": "Retrieve Spanish cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Spanish"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_008",
+      "task": "Find Korean recipes",
+      "goal": "Retrieve Korean cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Korean"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_009",
+      "task": "Find Vietnamese recipes",
+      "goal": "Retrieve Vietnamese cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Vietnamese"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_010",
+      "task": "Find Mediterranean recipes",
+      "goal": "Retrieve Mediterranean cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Mediterranean"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_011",
+      "task": "Find Lebanese recipes",
+      "goal": "Retrieve Lebanese cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Lebanese"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_012",
+      "task": "Find Moroccan recipes",
+      "goal": "Retrieve Moroccan cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Moroccan"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_013",
+      "task": "Find Brazilian recipes",
+      "goal": "Retrieve Brazilian cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Brazilian"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_014",
+      "task": "Find Turkish recipes",
+      "goal": "Retrieve Turkish cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Turkish"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_015",
+      "task": "Find Chinese recipes",
+      "goal": "Retrieve Chinese cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Chinese"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_016",
+      "task": "Find Mexican recipes",
+      "goal": "Retrieve Mexican cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Mexican"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_017",
+      "task": "Find Japanese recipes",
+      "goal": "Retrieve Japanese cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Japanese"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_018",
+      "task": "Find Thai recipes",
+      "goal": "Retrieve Thai cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Thai"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_019",
+      "task": "Find Indian recipes",
+      "goal": "Retrieve Indian cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Indian"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_020",
+      "task": "Find French recipes",
+      "goal": "Retrieve French cuisine recipes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "French"
+            },
+            "rationale": "Simple cuisine search"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_024",
+      "task": "Find recipes with chicken under 20 minutes",
+      "goal": "Retrieve recipes with chicken and cook time <= 20 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chicken"
+              ],
+              "max_cook_time": 20
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_025",
+      "task": "Find recipes with beef under 30 minutes",
+      "goal": "Retrieve recipes with beef and cook time <= 30 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "beef"
+              ],
+              "max_cook_time": 30
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_026",
+      "task": "Find recipes with fish under 45 minutes",
+      "goal": "Retrieve recipes with fish and cook time <= 45 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "fish"
+              ],
+              "max_cook_time": 45
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_027",
+      "task": "Find recipes with tofu under 60 minutes",
+      "goal": "Retrieve recipes with tofu and cook time <= 60 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "tofu"
+              ],
+              "max_cook_time": 60
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_028",
+      "task": "Find recipes with lentils under 20 minutes",
+      "goal": "Retrieve recipes with lentils and cook time <= 20 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "lentils"
+              ],
+              "max_cook_time": 20
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_029",
+      "task": "Find recipes with chickpeas under 30 minutes",
+      "goal": "Retrieve recipes with chickpeas and cook time <= 30 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chickpeas"
+              ],
+              "max_cook_time": 30
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_030",
+      "task": "Find recipes with chicken under 45 minutes",
+      "goal": "Retrieve recipes with chicken and cook time <= 45 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chicken"
+              ],
+              "max_cook_time": 45
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_031",
+      "task": "Find recipes with beef under 60 minutes",
+      "goal": "Retrieve recipes with beef and cook time <= 60 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "beef"
+              ],
+              "max_cook_time": 60
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_032",
+      "task": "Find recipes with fish under 20 minutes",
+      "goal": "Retrieve recipes with fish and cook time <= 20 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "fish"
+              ],
+              "max_cook_time": 20
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_033",
+      "task": "Find recipes with tofu under 30 minutes",
+      "goal": "Retrieve recipes with tofu and cook time <= 30 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "tofu"
+              ],
+              "max_cook_time": 30
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_034",
+      "task": "Find recipes with lentils under 45 minutes",
+      "goal": "Retrieve recipes with lentils and cook time <= 45 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "lentils"
+              ],
+              "max_cook_time": 45
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_035",
+      "task": "Find recipes with chickpeas under 60 minutes",
+      "goal": "Retrieve recipes with chickpeas and cook time <= 60 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chickpeas"
+              ],
+              "max_cook_time": 60
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_036",
+      "task": "Find recipes with chicken under 20 minutes",
+      "goal": "Retrieve recipes with chicken and cook time <= 20 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chicken"
+              ],
+              "max_cook_time": 20
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_037",
+      "task": "Find recipes with beef under 30 minutes",
+      "goal": "Retrieve recipes with beef and cook time <= 30 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "beef"
+              ],
+              "max_cook_time": 30
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_038",
+      "task": "Find recipes with fish under 45 minutes",
+      "goal": "Retrieve recipes with fish and cook time <= 45 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "fish"
+              ],
+              "max_cook_time": 45
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_039",
+      "task": "Find recipes with tofu under 60 minutes",
+      "goal": "Retrieve recipes with tofu and cook time <= 60 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "tofu"
+              ],
+              "max_cook_time": 60
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_040",
+      "task": "Find recipes with lentils under 20 minutes",
+      "goal": "Retrieve recipes with lentils and cook time <= 20 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "lentils"
+              ],
+              "max_cook_time": 20
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_041",
+      "task": "Find recipes with chickpeas under 30 minutes",
+      "goal": "Retrieve recipes with chickpeas and cook time <= 30 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chickpeas"
+              ],
+              "max_cook_time": 30
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_042",
+      "task": "Find recipes with chicken under 45 minutes",
+      "goal": "Retrieve recipes with chicken and cook time <= 45 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chicken"
+              ],
+              "max_cook_time": 45
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_043",
+      "task": "Find recipes with beef under 60 minutes",
+      "goal": "Retrieve recipes with beef and cook time <= 60 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "beef"
+              ],
+              "max_cook_time": 60
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_044",
+      "task": "Find recipes with fish under 20 minutes",
+      "goal": "Retrieve recipes with fish and cook time <= 20 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "fish"
+              ],
+              "max_cook_time": 20
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_045",
+      "task": "Find recipes with tofu under 30 minutes",
+      "goal": "Retrieve recipes with tofu and cook time <= 30 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "tofu"
+              ],
+              "max_cook_time": 30
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_046",
+      "task": "Find recipes with lentils under 45 minutes",
+      "goal": "Retrieve recipes with lentils and cook time <= 45 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "lentils"
+              ],
+              "max_cook_time": 45
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_047",
+      "task": "Find recipes with chickpeas under 60 minutes",
+      "goal": "Retrieve recipes with chickpeas and cook time <= 60 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chickpeas"
+              ],
+              "max_cook_time": 60
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_048",
+      "task": "Find recipes with chicken under 20 minutes",
+      "goal": "Retrieve recipes with chicken and cook time <= 20 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chicken"
+              ],
+              "max_cook_time": 20
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_049",
+      "task": "Find recipes with beef under 30 minutes",
+      "goal": "Retrieve recipes with beef and cook time <= 30 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "beef"
+              ],
+              "max_cook_time": 30
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_050",
+      "task": "Find recipes with fish under 45 minutes",
+      "goal": "Retrieve recipes with fish and cook time <= 45 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "fish"
+              ],
+              "max_cook_time": 45
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_051",
+      "task": "Find recipes with tofu under 60 minutes",
+      "goal": "Retrieve recipes with tofu and cook time <= 60 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "tofu"
+              ],
+              "max_cook_time": 60
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_052",
+      "task": "Find recipes with lentils under 20 minutes",
+      "goal": "Retrieve recipes with lentils and cook time <= 20 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "lentils"
+              ],
+              "max_cook_time": 20
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_053",
+      "task": "Find recipes with chickpeas under 30 minutes",
+      "goal": "Retrieve recipes with chickpeas and cook time <= 30 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chickpeas"
+              ],
+              "max_cook_time": 30
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_054",
+      "task": "Find recipes with chicken under 45 minutes",
+      "goal": "Retrieve recipes with chicken and cook time <= 45 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chicken"
+              ],
+              "max_cook_time": 45
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_055",
+      "task": "Find recipes with beef under 60 minutes",
+      "goal": "Retrieve recipes with beef and cook time <= 60 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "beef"
+              ],
+              "max_cook_time": 60
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_056",
+      "task": "Find recipes with fish under 20 minutes",
+      "goal": "Retrieve recipes with fish and cook time <= 20 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "fish"
+              ],
+              "max_cook_time": 20
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_057",
+      "task": "Find recipes with tofu under 30 minutes",
+      "goal": "Retrieve recipes with tofu and cook time <= 30 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "tofu"
+              ],
+              "max_cook_time": 30
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_058",
+      "task": "Find recipes with lentils under 45 minutes",
+      "goal": "Retrieve recipes with lentils and cook time <= 45 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "lentils"
+              ],
+              "max_cook_time": 45
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_059",
+      "task": "Find recipes with chickpeas under 60 minutes",
+      "goal": "Retrieve recipes with chickpeas and cook time <= 60 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chickpeas"
+              ],
+              "max_cook_time": 60
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_060",
+      "task": "Find recipes with chicken under 20 minutes",
+      "goal": "Retrieve recipes with chicken and cook time <= 20 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chicken"
+              ],
+              "max_cook_time": 20
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_061",
+      "task": "Find recipes with beef under 30 minutes",
+      "goal": "Retrieve recipes with beef and cook time <= 30 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "beef"
+              ],
+              "max_cook_time": 30
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_062",
+      "task": "Find recipes with fish under 45 minutes",
+      "goal": "Retrieve recipes with fish and cook time <= 45 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "fish"
+              ],
+              "max_cook_time": 45
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_063",
+      "task": "Find recipes with tofu under 60 minutes",
+      "goal": "Retrieve recipes with tofu and cook time <= 60 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "tofu"
+              ],
+              "max_cook_time": 60
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_064",
+      "task": "Find recipes with lentils under 20 minutes",
+      "goal": "Retrieve recipes with lentils and cook time <= 20 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "lentils"
+              ],
+              "max_cook_time": 20
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_065",
+      "task": "Find recipes with chickpeas under 30 minutes",
+      "goal": "Retrieve recipes with chickpeas and cook time <= 30 minutes",
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chickpeas"
+              ],
+              "max_cook_time": 30
+            },
+            "rationale": "Search with ingredient and time constraints"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "CORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "CORRECT",
+        "completeness": "COMPLETE",
+        "efficiency": "OPTIMAL"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_071_wrong_tool",
+      "task": "Find Italian recipes",
+      "goal": "Retrieve Italian cuisine recipes from database",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "Italian recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            },
+            "rationale": "Use recipe database"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Should use search_recipes not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_072_wrong_tool",
+      "task": "Find recipes with chicken",
+      "goal": "Search recipe database for chicken recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "chicken recipes"
+            },
+            "rationale": "Web search"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "ingredients": [
+                "chicken"
+              ]
+            },
+            "rationale": "Use search_recipes"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "search_web for external info, use search_recipes for recipes"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_073_wrong_tool",
+      "task": "Find vegan recipes",
+      "goal": "Search vegan recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "vegan recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_074_wrong_tool",
+      "task": "Find vegetarian recipes",
+      "goal": "Search vegetarian recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "vegetarian recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "vegetarian"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_075_wrong_tool",
+      "task": "Find gluten-free recipes",
+      "goal": "Search gluten-free recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "gluten-free recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "gluten-free"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_076_wrong_tool",
+      "task": "Find keto recipes",
+      "goal": "Search keto recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "keto recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "keto"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_077_wrong_tool",
+      "task": "Find paleo recipes",
+      "goal": "Search paleo recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "paleo recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "paleo"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_078_wrong_tool",
+      "task": "Find low-carb recipes",
+      "goal": "Search low-carb recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "low-carb recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "low-carb"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_079_wrong_tool",
+      "task": "Find dairy-free recipes",
+      "goal": "Search dairy-free recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "dairy-free recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "dairy-free"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_080_wrong_tool",
+      "task": "Find nut-free recipes",
+      "goal": "Search nut-free recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "nut-free recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "nut-free"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_081_wrong_tool",
+      "task": "Find soy-free recipes",
+      "goal": "Search soy-free recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "soy-free recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "soy-free"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_082_wrong_tool",
+      "task": "Find halal recipes",
+      "goal": "Search halal recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "halal recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "halal"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_083_wrong_tool",
+      "task": "Find kosher recipes",
+      "goal": "Search kosher recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "kosher recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "kosher"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_084_wrong_tool",
+      "task": "Find pescatarian recipes",
+      "goal": "Search pescatarian recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "pescatarian recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "pescatarian"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_085_wrong_tool",
+      "task": "Find whole30 recipes",
+      "goal": "Search whole30 recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_web",
+            "args": {
+              "query": "whole30 recipes"
+            },
+            "rationale": "Search web"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "dietary_restrictions": [
+                "whole30"
+              ]
+            },
+            "rationale": "Use search_recipes with diet filter"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "WRONG_TOOL",
+        "failure_reason": "Use search_recipes with dietary_restrictions, not search_web"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_086_invalid_args",
+      "task": "Find top 5 dessert recipes",
+      "goal": "Retrieve 5 dessert recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "dessert",
+              "max_results": "five"
+            },
+            "rationale": "Search desserts"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "dessert",
+              "max_results": 5
+            },
+            "rationale": "max_results must be int"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "TYPE_ERROR",
+        "failure_reason": "max_results expects int, got string"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_087_invalid_args",
+      "task": "Find recipes with 60 minute cooking time",
+      "goal": "Retrieve recipes with max cook time 60 minutes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "max_cook_time": "60 minutes"
+            },
+            "rationale": "Search with time limit"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "max_cook_time": 60
+            },
+            "rationale": "max_cook_time must be int (minutes)"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "TYPE_ERROR",
+        "failure_reason": "max_cook_time expects int, got string"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_088_invalid_args",
+      "task": "Find meal recipes",
+      "goal": "Search meal recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "appetizer"
+            },
+            "rationale": "Search meals"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "lunch"
+            },
+            "rationale": "meal_type must be from valid options"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "VALUE_ERROR",
+        "failure_reason": "meal_type must be breakfast/lunch/dinner/dessert/snack, not appetizer"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_089_invalid_args",
+      "task": "Find meal recipes",
+      "goal": "Search meal recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "supper"
+            },
+            "rationale": "Search meals"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "lunch"
+            },
+            "rationale": "meal_type must be from valid options"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "VALUE_ERROR",
+        "failure_reason": "meal_type must be breakfast/lunch/dinner/dessert/snack, not supper"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_090_invalid_args",
+      "task": "Find meal recipes",
+      "goal": "Search meal recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "brunch"
+            },
+            "rationale": "Search meals"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "lunch"
+            },
+            "rationale": "meal_type must be from valid options"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "VALUE_ERROR",
+        "failure_reason": "meal_type must be breakfast/lunch/dinner/dessert/snack, not brunch"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_091_invalid_args",
+      "task": "Find meal recipes",
+      "goal": "Search meal recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "tea"
+            },
+            "rationale": "Search meals"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "lunch"
+            },
+            "rationale": "meal_type must be from valid options"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "VALUE_ERROR",
+        "failure_reason": "meal_type must be breakfast/lunch/dinner/dessert/snack, not tea"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_092_invalid_args",
+      "task": "Find meal recipes",
+      "goal": "Search meal recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "beverage"
+            },
+            "rationale": "Search meals"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "lunch"
+            },
+            "rationale": "meal_type must be from valid options"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "VALUE_ERROR",
+        "failure_reason": "meal_type must be breakfast/lunch/dinner/dessert/snack, not beverage"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_093_invalid_args",
+      "task": "Find meal recipes",
+      "goal": "Search meal recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "main"
+            },
+            "rationale": "Search meals"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "lunch"
+            },
+            "rationale": "meal_type must be from valid options"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "VALUE_ERROR",
+        "failure_reason": "meal_type must be breakfast/lunch/dinner/dessert/snack, not main"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_094_invalid_args",
+      "task": "Find meal recipes",
+      "goal": "Search meal recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "side"
+            },
+            "rationale": "Search meals"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "lunch"
+            },
+            "rationale": "meal_type must be from valid options"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "VALUE_ERROR",
+        "failure_reason": "meal_type must be breakfast/lunch/dinner/dessert/snack, not side"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_095_invalid_args",
+      "task": "Find meal recipes",
+      "goal": "Search meal recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "course"
+            },
+            "rationale": "Search meals"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "lunch"
+            },
+            "rationale": "meal_type must be from valid options"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "VALUE_ERROR",
+        "failure_reason": "meal_type must be breakfast/lunch/dinner/dessert/snack, not course"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_096_goal_mismatch",
+      "task": "Find gluten-free breakfast recipes",
+      "goal": "Retrieve gluten-free breakfast recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "lunch"
+            },
+            "rationale": "Search lunch"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "breakfast",
+              "dietary_restrictions": [
+                "gluten-free"
+              ]
+            },
+            "rationale": "Must be breakfast AND gluten-free"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "WRONG_VALUES",
+        "failure_reason": "Wrong meal_type (lunch vs breakfast) and missing dietary restriction"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_097_goal_mismatch",
+      "task": "Find vegan dinner recipes",
+      "goal": "Search vegan dinner recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "breakfast"
+            },
+            "rationale": "Search meals"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "dinner",
+              "dietary_restrictions": [
+                "vegan"
+              ]
+            },
+            "rationale": "Must match meal type and diet"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "WRONG_VALUES",
+        "failure_reason": "Wrong meal_type and missing vegan restriction"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_098_goal_mismatch",
+      "task": "Find vegetarian dinner recipes",
+      "goal": "Search vegetarian dinner recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "breakfast"
+            },
+            "rationale": "Search meals"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "dinner",
+              "dietary_restrictions": [
+                "vegetarian"
+              ]
+            },
+            "rationale": "Must match meal type and diet"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "WRONG_VALUES",
+        "failure_reason": "Wrong meal_type and missing vegetarian restriction"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_099_goal_mismatch",
+      "task": "Find keto dinner recipes",
+      "goal": "Search keto dinner recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "breakfast"
+            },
+            "rationale": "Search meals"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "dinner",
+              "dietary_restrictions": [
+                "keto"
+              ]
+            },
+            "rationale": "Must match meal type and diet"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "WRONG_VALUES",
+        "failure_reason": "Wrong meal_type and missing keto restriction"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_100_goal_mismatch",
+      "task": "Find paleo dinner recipes",
+      "goal": "Search paleo dinner recipes",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "breakfast"
+            },
+            "rationale": "Search meals"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "meal_type": "dinner",
+              "dietary_restrictions": [
+                "paleo"
+              ]
+            },
+            "rationale": "Must match meal type and diet"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "argument_quality": "WRONG_VALUES",
+        "failure_reason": "Wrong meal_type and missing paleo restriction"
+      },
+      "difficulty": "easy"
+    },
+    {
+      "id": "plan_101_incomplete",
+      "task": "Find recipes and add ingredients to shopping list",
+      "goal": "Search recipes and add their ingredients to shopping list",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            },
+            "rationale": "Find recipes"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            },
+            "rationale": "Find recipes"
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": "{{selected}}"
+            },
+            "rationale": "Get ingredients"
+          },
+          {
+            "step": 3,
+            "tool": "add_to_shopping_list",
+            "args": {
+              "ingredients": "{{recipe_ingredients}}"
+            },
+            "rationale": "Add to list"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "completeness": "INCOMPLETE",
+        "failure_reason": "Missing steps to get details and add to shopping list"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_102_incomplete",
+      "task": "Find Italian recipes and check nutrition",
+      "goal": "Search Italian recipes and get nutrition info",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            },
+            "rationale": "Find recipes"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Italian"
+            },
+            "rationale": "Find recipes"
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": "{{selected}}"
+            },
+            "rationale": "Get recipe details"
+          },
+          {
+            "step": 3,
+            "tool": "get_nutrition_info",
+            "args": {
+              "food": "{{recipe_name}}"
+            },
+            "rationale": "Get nutrition data"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "completeness": "INCOMPLETE",
+        "failure_reason": "Missing steps to get recipe details and nutrition info"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_103_incomplete",
+      "task": "Find Chinese recipes and check nutrition",
+      "goal": "Search Chinese recipes and get nutrition info",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Chinese"
+            },
+            "rationale": "Find recipes"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Chinese"
+            },
+            "rationale": "Find recipes"
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": "{{selected}}"
+            },
+            "rationale": "Get recipe details"
+          },
+          {
+            "step": 3,
+            "tool": "get_nutrition_info",
+            "args": {
+              "food": "{{recipe_name}}"
+            },
+            "rationale": "Get nutrition data"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "completeness": "INCOMPLETE",
+        "failure_reason": "Missing steps to get recipe details and nutrition info"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_104_incomplete",
+      "task": "Find Mexican recipes and check nutrition",
+      "goal": "Search Mexican recipes and get nutrition info",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Mexican"
+            },
+            "rationale": "Find recipes"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Mexican"
+            },
+            "rationale": "Find recipes"
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": "{{selected}}"
+            },
+            "rationale": "Get recipe details"
+          },
+          {
+            "step": 3,
+            "tool": "get_nutrition_info",
+            "args": {
+              "food": "{{recipe_name}}"
+            },
+            "rationale": "Get nutrition data"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "completeness": "INCOMPLETE",
+        "failure_reason": "Missing steps to get recipe details and nutrition info"
+      },
+      "difficulty": "medium"
+    },
+    {
+      "id": "plan_105_incomplete",
+      "task": "Find Indian recipes and check nutrition",
+      "goal": "Search Indian recipes and get nutrition info",
+      "agent_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Indian"
+            },
+            "rationale": "Find recipes"
+          }
+        ]
+      },
+      "gold_plan": {
+        "steps": [
+          {
+            "step": 1,
+            "tool": "search_recipes",
+            "args": {
+              "cuisine": "Indian"
+            },
+            "rationale": "Find recipes"
+          },
+          {
+            "step": 2,
+            "tool": "get_recipe_details",
+            "args": {
+              "recipe_id": "{{selected}}"
+            },
+            "rationale": "Get recipe details"
+          },
+          {
+            "step": 3,
+            "tool": "get_nutrition_info",
+            "args": {
+              "food": "{{recipe_name}}"
+            },
+            "rationale": "Get nutrition data"
+          }
+        ]
+      },
+      "labels": {
+        "plan_correctness": "INCORRECT",
+        "tool_selection": "CORRECT",
+        "completeness": "INCOMPLETE",
+        "failure_reason": "Missing steps to get recipe details and nutrition info"
+      },
+      "difficulty": "medium"
+    }
+  ]
+}

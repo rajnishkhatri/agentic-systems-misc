@@ -127,7 +127,7 @@
   - [x] 2.21 Write README.md with lesson overview and quick start guide
   - [x] 2.22 Validate all Lesson 13 deliverables (tests pass 43/44, notebooks created, 500 test cases valid, ready for 80%+ attribution accuracy)
 
-- [ ] **3.0 Lesson 14: Agent Planning & Orchestration** (Week 3, Days 15-21)
+- [x] **3.0 Lesson 14: Agent Planning & Orchestration** (Week 3, Days 15-21) ✅ COMPLETED
   - [x] 3.1 Create Lesson 14 directory structure (directories: diagrams/, data/, results/)
   - [x] 3.2 Write concept tutorial: `agent_planning_evaluation.md` (22-25 min reading time)
   - [x] 3.3 Write concept tutorial: `react_reflexion_patterns.md` (20-25 min reading time)
@@ -144,12 +144,12 @@
   - [x] 3.14 [TDD-GREEN] Implement concrete agents: PlannerAgent, ValidatorAgent, ExecutorAgent, MemoryManager
   - [x] 3.15 [TDD-GREEN] Implement MultiAgentOrchestrator class with workflow execution
   - [x] 3.16 [TDD-REFACTOR] Refactor multi_agent_framework.py for extensibility and memory management
-  - [ ] 3.17 Create interactive notebook: `react_agent_implementation.ipynb` with DEMO/FULL modes (<10 min execution)
-  - [ ] 3.18 Create interactive notebook: `agent_failure_analysis.ipynb` with DEMO/FULL modes (<7 min execution)
-  - [ ] 3.19 Execute notebooks and generate results JSON files (planning_validation.json, agent_performance.json)
-  - [ ] 3.20 Write TUTORIAL_INDEX.md with learning objectives, prerequisites, recommended path, FAQ
-  - [ ] 3.21 Write README.md with lesson overview and quick start guide
-  - [ ] 3.22 Validate all Lesson 14 deliverables (tests pass, notebooks execute, 85%+ planning validation accuracy, agent benchmarks complete)
+  - [x] 3.17 Create interactive notebook: `react_agent_implementation.ipynb` with DEMO/FULL modes (<10 min execution)
+  - [x] 3.18 Create interactive notebook: `agent_failure_analysis.ipynb` with DEMO/FULL modes (<7 min execution)
+  - [x] 3.19 Execute notebooks and generate results JSON files (planning_validation.json, agent_performance.json)
+  - [x] 3.20 Write TUTORIAL_INDEX.md with learning objectives, prerequisites, recommended path, FAQ
+  - [x] 3.21 Write README.md with lesson overview and quick start guide
+  - [x] 3.22 Validate all Lesson 14 deliverables (tests pass, notebooks execute, 85%+ planning validation accuracy, agent benchmarks complete)
 
 - [ ] **4.0 Integration, Dashboard Extension & Cross-Lesson Testing** (Week 4, Days 22-28)
   - [ ] 4.1 Extend `lesson-9-11/evaluation_dashboard.py` with new RAG Metrics Section (hybrid retrieval, context quality, attribution rate, hallucination rate, context utilization)
