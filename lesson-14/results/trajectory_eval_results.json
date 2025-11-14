@@ -1,0 +1,325 @@
+{
+  "version": "1.0",
+  "created": "2025-11-14",
+  "execution_mode": "DEMO",
+  "num_trajectories": 20,
+  "summary_statistics": {
+    "exact_match": {
+      "mean": 0.9,
+      "std": 0.30779350562554625
+    },
+    "in_order_match": {
+      "mean": 1.0,
+      "std": 0.0
+    },
+    "any_order_match": {
+      "mean": 1.0,
+      "std": 0.0
+    },
+    "precision": {
+      "mean": 0.975,
+      "std": 0.07694837640638655
+    },
+    "recall": {
+      "mean": 1.0,
+      "std": 0.0
+    },
+    "single_tool_use": {
+      "mean": 0.975,
+      "std": 0.07694837640638655
+    }
+  },
+  "radar_chart_data": {
+    "labels": [
+      "exact_match",
+      "in_order_match",
+      "any_order_match",
+      "precision",
+      "recall",
+      "single_tool_use"
+    ],
+    "values": [
+      0.9,
+      1.0,
+      1.0,
+      0.975,
+      1.0,
+      0.975,
+      0.9
+    ]
+  },
+  "complexity_breakdown": {
+    "exact_match": {
+      "complex": 1.0,
+      "medium": 1.0,
+      "simple": 0.833
+    },
+    "in_order_match": {
+      "complex": 1.0,
+      "medium": 1.0,
+      "simple": 1.0
+    },
+    "any_order_match": {
+      "complex": 1.0,
+      "medium": 1.0,
+      "simple": 1.0
+    },
+    "precision": {
+      "complex": 1.0,
+      "medium": 1.0,
+      "simple": 0.958
+    },
+    "recall": {
+      "complex": 1.0,
+      "medium": 1.0,
+      "simple": 1.0
+    },
+    "single_tool_use": {
+      "complex": 1.0,
+      "medium": 1.0,
+      "simple": 0.958
+    }
+  },
+  "detailed_results": [
+    {
+      "test_id": "test_001",
+      "reference_id": "ref_001",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "simple",
+      "domain": "recipe"
+    },
+    {
+      "test_id": "test_002",
+      "reference_id": "ref_002",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "simple",
+      "domain": "gita"
+    },
+    {
+      "test_id": "test_003",
+      "reference_id": "ref_003",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "simple",
+      "domain": "recipe"
+    },
+    {
+      "test_id": "test_004",
+      "reference_id": "ref_004",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "medium",
+      "domain": "gita"
+    },
+    {
+      "test_id": "test_005",
+      "reference_id": "ref_005",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "simple",
+      "domain": "recipe"
+    },
+    {
+      "test_id": "test_006",
+      "reference_id": "ref_001",
+      "exact_match": 0.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 0.75,
+      "recall": 1.0,
+      "single_tool_use": 0.75,
+      "complexity": "simple",
+      "domain": "recipe"
+    },
+    {
+      "test_id": "test_007",
+      "reference_id": "ref_002",
+      "exact_match": 0.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 0.75,
+      "recall": 1.0,
+      "single_tool_use": 0.75,
+      "complexity": "simple",
+      "domain": "gita"
+    },
+    {
+      "test_id": "test_008",
+      "reference_id": "ref_006",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "medium",
+      "domain": "gita"
+    },
+    {
+      "test_id": "test_009",
+      "reference_id": "ref_007",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "simple",
+      "domain": "recipe"
+    },
+    {
+      "test_id": "test_010",
+      "reference_id": "ref_008",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "simple",
+      "domain": "recipe"
+    },
+    {
+      "test_id": "test_011",
+      "reference_id": "ref_011",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "complex",
+      "domain": "gita"
+    },
+    {
+      "test_id": "test_012",
+      "reference_id": "ref_012",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "medium",
+      "domain": "recipe"
+    },
+    {
+      "test_id": "test_013",
+      "reference_id": "ref_013",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "simple",
+      "domain": "recipe"
+    },
+    {
+      "test_id": "test_014",
+      "reference_id": "ref_014",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "medium",
+      "domain": "gita"
+    },
+    {
+      "test_id": "test_015",
+      "reference_id": "ref_015",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "simple",
+      "domain": "recipe"
+    },
+    {
+      "test_id": "test_016",
+      "reference_id": "ref_016",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "complex",
+      "domain": "gita"
+    },
+    {
+      "test_id": "test_017",
+      "reference_id": "ref_017",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "simple",
+      "domain": "recipe"
+    },
+    {
+      "test_id": "test_018",
+      "reference_id": "ref_018",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "simple",
+      "domain": "gita"
+    },
+    {
+      "test_id": "test_019",
+      "reference_id": "ref_019",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "medium",
+      "domain": "recipe"
+    },
+    {
+      "test_id": "test_020",
+      "reference_id": "ref_020",
+      "exact_match": 1.0,
+      "in_order_match": 1.0,
+      "any_order_match": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "single_tool_use": 1.0,
+      "complexity": "complex",
+      "domain": "gita"
+    }
+  ]
+}

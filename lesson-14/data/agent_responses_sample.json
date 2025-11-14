@@ -1,0 +1,750 @@
+{
+  "metadata": {
+    "description": "Sample agent responses for autorater calibration",
+    "total_responses": 50,
+    "query_types": ["planning", "tool_calling", "multi_step_reasoning", "information_retrieval"],
+    "quality_distribution": {
+      "excellent": 10,
+      "good": 15,
+      "fair": 15,
+      "poor": 10
+    }
+  },
+  "responses": [
+    {
+      "response_id": "resp_001",
+      "query": "Find the best Italian restaurants near Times Square that are open now",
+      "query_type": "multi_step_reasoning",
+      "agent_output": "I'll help you find Italian restaurants near Times Square that are currently open. Let me search for this information.\n\nFirst, I'll search for Italian restaurants in the Times Square area, then filter for those currently open.\n\nBased on my search, here are the top Italian restaurants near Times Square that are open now:\n1. Carmine's Italian Restaurant - 200 W 44th St (Open until 11 PM)\n2. Becco - 355 W 46th St (Open until 10:30 PM)\n3. Tony's Di Napoli - 147 W 43rd St (Open until 11 PM)\n\nAll three have excellent reviews and accept reservations.",
+      "tools_used": ["search_restaurants", "filter_by_location", "check_operating_hours"],
+      "reasoning_trace": [
+        "Parse query: Italian + Times Square + open now",
+        "Use search_restaurants with cuisine=Italian, location=Times Square",
+        "Filter results by current operating hours",
+        "Rank by rating and proximity",
+        "Format response with top 3 recommendations"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_002",
+      "query": "What's the weather like in Paris?",
+      "query_type": "information_retrieval",
+      "agent_output": "The current weather in Paris is partly cloudy with a temperature of 18°C (64°F). Light winds from the west at 10 km/h. No precipitation expected in the next few hours.",
+      "tools_used": ["get_weather"],
+      "reasoning_trace": [
+        "Parse query: weather + Paris",
+        "Call get_weather(location='Paris')",
+        "Format response with temperature and conditions"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_003",
+      "query": "Book a flight from NYC to London for next Tuesday",
+      "query_type": "planning",
+      "agent_output": "I'll help you book a flight from New York City to London for next Tuesday.\n\nFirst, let me search for available flights.\n\nI found several options:\n1. British Airways BA112 - Departs 8:00 PM, arrives 8:00 AM+1 (nonstop) - $650\n2. Virgin Atlantic VS4 - Departs 7:15 PM, arrives 7:15 AM+1 (nonstop) - $680\n3. Delta DL2 - Departs 9:30 PM, arrives 9:30 AM+1 (nonstop) - $625\n\nWould you like me to proceed with booking one of these flights? I'll need your passenger details and payment information to complete the booking.",
+      "tools_used": ["search_flights", "get_flight_details"],
+      "reasoning_trace": [
+        "Parse query: flight + NYC to London + next Tuesday",
+        "Calculate date for next Tuesday",
+        "Search flights for NYC-London on that date",
+        "Present top 3 options sorted by price",
+        "Request additional information before booking"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_004",
+      "query": "Calculate the area of a circle with radius 5",
+      "query_type": "tool_calling",
+      "agent_output": "The area of a circle with radius 5 is approximately 78.54 square units.\n\nCalculation: A = πr² = π × 5² = π × 25 ≈ 78.54",
+      "tools_used": ["calculator"],
+      "reasoning_trace": [
+        "Parse query: area of circle, radius=5",
+        "Apply formula A = πr²",
+        "Calculate: π × 5²",
+        "Format result with explanation"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_005",
+      "query": "Tell me about the history of the Eiffel Tower",
+      "query_type": "information_retrieval",
+      "agent_output": "The Eiffel Tower was built in 1889 for the World's Fair in Paris. It was designed by Gustave Eiffel and stands 324 meters tall. Initially criticized by Parisians, it has become one of the most iconic landmarks in the world.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: history + Eiffel Tower",
+        "Search knowledge base",
+        "Extract key historical facts",
+        "Format concise summary"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_006",
+      "query": "Find the cheapest hotel in Manhattan for this weekend",
+      "query_type": "multi_step_reasoning",
+      "agent_output": "I'll search for hotels in Manhattan for this weekend and sort by price.\n\nHere are the most affordable options:\n1. Pod 51 Hotel - $180/night - Midtown East\n2. The Jane Hotel - $195/night - West Village\n3. YOTEL New York - $210/night - Midtown West\n\nAll prices include taxes and fees. Would you like more details about any of these options?",
+      "tools_used": ["search_hotels", "filter_by_location", "sort_by_price"],
+      "reasoning_trace": [
+        "Parse query: hotel + Manhattan + this weekend + cheapest",
+        "Determine this weekend dates",
+        "Search hotels in Manhattan",
+        "Sort by price ascending",
+        "Return top 3 results"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_007",
+      "query": "What's 2+2?",
+      "query_type": "tool_calling",
+      "agent_output": "2 + 2 = 4",
+      "tools_used": ["calculator"],
+      "reasoning_trace": [
+        "Parse query: simple addition",
+        "Calculate 2+2",
+        "Return result"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_008",
+      "query": "Plan a 3-day itinerary for visiting Tokyo",
+      "query_type": "planning",
+      "agent_output": "Here's a 3-day Tokyo itinerary:\n\nDay 1: Traditional Tokyo\n- Morning: Senso-ji Temple in Asakusa\n- Afternoon: Imperial Palace and East Gardens\n- Evening: Dinner in Ginza\n\nDay 2: Modern Tokyo\n- Morning: Shibuya Crossing and shopping\n- Afternoon: Harajuku and Meiji Shrine\n- Evening: Shinjuku nightlife\n\nDay 3: Day trip\n- Visit Mount Fuji or Nikko\n\nThis covers the main highlights while allowing flexibility.",
+      "tools_used": ["travel_planner", "attraction_search"],
+      "reasoning_trace": [
+        "Parse query: itinerary + Tokyo + 3 days",
+        "Search popular Tokyo attractions",
+        "Group by themes and geography",
+        "Create day-by-day plan",
+        "Include variety of experiences"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_009",
+      "query": "Convert 100 USD to EUR",
+      "query_type": "tool_calling",
+      "agent_output": "100 USD is approximately 93.50 EUR at the current exchange rate (1 USD = 0.935 EUR).",
+      "tools_used": ["currency_converter"],
+      "reasoning_trace": [
+        "Parse query: convert USD to EUR",
+        "Get current exchange rate",
+        "Calculate: 100 × 0.935",
+        "Format result"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_010",
+      "query": "Find me a good movie to watch tonight",
+      "query_type": "information_retrieval",
+      "agent_output": "I'm not sure what kind of movies you enjoy. Could you tell me:\n1. What genre do you prefer? (action, comedy, drama, etc.)\n2. Any specific actors or directors you like?\n3. Are you looking for something new or a classic?\n\nThis will help me give you better recommendations.",
+      "tools_used": [],
+      "reasoning_trace": [
+        "Parse query: movie recommendation",
+        "Note lack of preferences",
+        "Request clarifying information",
+        "Prepare to search once preferences known"
+      ],
+      "ground_truth_quality": "fair"
+    },
+    {
+      "response_id": "resp_011",
+      "query": "What time is it in Tokyo right now?",
+      "query_type": "tool_calling",
+      "agent_output": "The current time in Tokyo is 3:45 AM (JST - Japan Standard Time).",
+      "tools_used": ["world_clock"],
+      "reasoning_trace": [
+        "Parse query: current time + Tokyo",
+        "Get Tokyo timezone (UTC+9)",
+        "Calculate current time",
+        "Format result"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_012",
+      "query": "Find research papers about machine learning published in 2024",
+      "query_type": "multi_step_reasoning",
+      "agent_output": "I'll search for machine learning research papers from 2024.\n\nTop recent papers:\n1. \"Attention Is All You Need v2\" - Transformers with improved efficiency\n2. \"Scaling Laws for Neural Language Models\" - Analysis of model scaling\n3. \"Federated Learning in Practice\" - Privacy-preserving ML\n\nWould you like abstracts or full details on any of these?",
+      "tools_used": ["academic_search", "filter_by_date", "rank_by_citations"],
+      "reasoning_trace": [
+        "Parse query: research papers + machine learning + 2024",
+        "Search academic database",
+        "Filter by publication year = 2024",
+        "Rank by relevance and citations",
+        "Return top 3 results"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_013",
+      "query": "Summarize the plot of The Matrix",
+      "query_type": "information_retrieval",
+      "agent_output": "The Matrix follows Neo, a computer hacker who discovers that reality is a simulation created by machines. He joins a rebellion led by Morpheus to free humanity from the Matrix. Neo learns he may be 'The One' prophesied to end the war between humans and machines.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: plot summary + The Matrix",
+        "Search knowledge base",
+        "Extract main plot points",
+        "Format concise summary"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_014",
+      "query": "Order me a pizza",
+      "query_type": "planning",
+      "agent_output": "I can't actually order a pizza for you, but I can help you find pizza places nearby. What toppings do you like and what's your delivery address?",
+      "tools_used": [],
+      "reasoning_trace": [
+        "Parse query: order pizza",
+        "Recognize limitation (can't place orders)",
+        "Offer alternative assistance",
+        "Request necessary information"
+      ],
+      "ground_truth_quality": "fair"
+    },
+    {
+      "response_id": "resp_015",
+      "query": "What's the capital of France?",
+      "query_type": "information_retrieval",
+      "agent_output": "The capital of France is Paris.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: capital + France",
+        "Retrieve fact from knowledge base",
+        "Return answer"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_016",
+      "query": "Compare iPhone 15 and Samsung Galaxy S24",
+      "query_type": "multi_step_reasoning",
+      "agent_output": "Here's a comparison:\n\niPhone 15:\n- Display: 6.1\" OLED\n- Processor: A17 Pro\n- Camera: 48MP main\n- Battery: All-day battery\n- Price: $799\n\nSamsung Galaxy S24:\n- Display: 6.2\" AMOLED\n- Processor: Snapdragon 8 Gen 3\n- Camera: 50MP main\n- Battery: 4000mAh\n- Price: $799\n\nBoth are excellent flagships. iPhone has better ecosystem integration, Samsung offers more customization.",
+      "tools_used": ["product_search", "product_comparison"],
+      "reasoning_trace": [
+        "Parse query: compare iPhone 15 vs Galaxy S24",
+        "Search specs for both devices",
+        "Extract key specifications",
+        "Format side-by-side comparison",
+        "Add brief recommendation"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_017",
+      "query": "Set a reminder for my dentist appointment tomorrow at 2 PM",
+      "query_type": "tool_calling",
+      "agent_output": "I've set a reminder for your dentist appointment tomorrow at 2:00 PM. You'll receive a notification 1 hour before.",
+      "tools_used": ["set_reminder"],
+      "reasoning_trace": [
+        "Parse query: reminder + dentist + tomorrow 2 PM",
+        "Calculate tomorrow's date",
+        "Set reminder for 2:00 PM",
+        "Add default 1-hour advance notification",
+        "Confirm action"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_018",
+      "query": "Explain quantum computing like I'm 5",
+      "query_type": "information_retrieval",
+      "agent_output": "Imagine you have a maze to solve. A regular computer tries one path at a time until it finds the exit. A quantum computer is like having magical clones that try ALL paths at once! This makes it super fast for certain types of problems. But quantum computers are very delicate - like trying to build with soap bubbles.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: explain quantum computing + ELI5",
+        "Search for quantum computing basics",
+        "Simplify using analogy",
+        "Use age-appropriate language",
+        "Format engaging explanation"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_019",
+      "query": "Find flights to Hawaii",
+      "query_type": "planning",
+      "agent_output": "I can help you find flights to Hawaii! I need a few more details:\n1. Which Hawaiian island? (Oahu, Maui, Kauai, Big Island)\n2. What's your departure city?\n3. When do you want to travel?\n4. How many passengers?\n\nOnce you provide these details, I'll search for the best options.",
+      "tools_used": [],
+      "reasoning_trace": [
+        "Parse query: flights to Hawaii",
+        "Identify missing information",
+        "List required parameters",
+        "Request clarification",
+        "Prepare to search when info provided"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_020",
+      "query": "What's the meaning of life?",
+      "query_type": "information_retrieval",
+      "agent_output": "The meaning of life is a profound philosophical question that has been debated for millennia. Different perspectives include:\n\n- Religious: Serving God or achieving spiritual enlightenment\n- Philosophical: Finding personal fulfillment and purpose\n- Existential: Creating your own meaning through choices\n- Scientific: Survival and reproduction from an evolutionary view\n- Literary: 42 (from Hitchhiker's Guide to the Galaxy)\n\nUltimately, the answer may be personal and unique to each individual.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: meaning of life",
+        "Recognize philosophical nature",
+        "Search multiple perspectives",
+        "Present balanced overview",
+        "Acknowledge subjective nature"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_021",
+      "query": "Calculate 15% tip on a $47.50 bill",
+      "query_type": "tool_calling",
+      "agent_output": "15% tip on $47.50 is $7.13.\n\nTotal with tip: $54.63",
+      "tools_used": ["calculator"],
+      "reasoning_trace": [
+        "Parse query: 15% tip on $47.50",
+        "Calculate: 47.50 × 0.15 = 7.125",
+        "Round to $7.13",
+        "Calculate total: 47.50 + 7.13",
+        "Format result"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_022",
+      "query": "Translate 'Hello, how are you?' to Spanish",
+      "query_type": "tool_calling",
+      "agent_output": "'Hello, how are you?' in Spanish is '¡Hola, ¿cómo estás?'",
+      "tools_used": ["translator"],
+      "reasoning_trace": [
+        "Parse query: translate to Spanish",
+        "Identify source text",
+        "Call translator",
+        "Return translation"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_023",
+      "query": "Find nearby gas stations",
+      "query_type": "multi_step_reasoning",
+      "agent_output": "I don't have access to your current location. Could you either:\n1. Enable location services, or\n2. Tell me your city/address\n\nThen I can find gas stations near you.",
+      "tools_used": [],
+      "reasoning_trace": [
+        "Parse query: nearby gas stations",
+        "Check for location data",
+        "Location not available",
+        "Request location information",
+        "Explain next steps"
+      ],
+      "ground_truth_quality": "fair"
+    },
+    {
+      "response_id": "resp_024",
+      "query": "Who won the 2024 Super Bowl?",
+      "query_type": "information_retrieval",
+      "agent_output": "The Kansas City Chiefs won Super Bowl LVIII in 2024, defeating the San Francisco 49ers 25-22 in overtime.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: 2024 Super Bowl winner",
+        "Search sports database",
+        "Extract result and score",
+        "Format answer"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_025",
+      "query": "Schedule a meeting with John for next Monday",
+      "query_type": "planning",
+      "agent_output": "I'll help schedule a meeting with John for next Monday. I need some additional information:\n1. What time works best?\n2. How long should the meeting be?\n3. What's the meeting topic/agenda?\n4. Should this be in-person or virtual?\n\nAlso, I'll need access to both your calendar and John's to find available times.",
+      "tools_used": [],
+      "reasoning_trace": [
+        "Parse query: schedule meeting + John + next Monday",
+        "Identify missing parameters (time, duration, type)",
+        "Request necessary information",
+        "Note need for calendar access",
+        "Prepare to check availability"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_026",
+      "query": "What are the symptoms of flu?",
+      "query_type": "information_retrieval",
+      "agent_output": "Common flu symptoms include:\n- Fever (usually high)\n- Cough\n- Sore throat\n- Body aches and muscle pain\n- Headache\n- Fatigue\n- Chills\n- Sometimes runny or stuffy nose\n\nSymptoms usually come on suddenly. If you're experiencing severe symptoms, consult a healthcare provider.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: flu symptoms",
+        "Search medical knowledge base",
+        "List common symptoms",
+        "Add medical disclaimer",
+        "Format readable list"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_027",
+      "query": "Play some jazz music",
+      "query_type": "tool_calling",
+      "agent_output": "I've started playing a jazz playlist featuring Miles Davis, John Coltrane, and Ella Fitzgerald. Enjoy!",
+      "tools_used": ["music_player"],
+      "reasoning_trace": [
+        "Parse query: play jazz music",
+        "Search jazz playlists",
+        "Start playback",
+        "Confirm action with artist examples"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_028",
+      "query": "How do I make chocolate chip cookies?",
+      "query_type": "information_retrieval",
+      "agent_output": "Here's a simple chocolate chip cookie recipe:\n\nIngredients:\n- 2 1/4 cups flour\n- 1 cup butter (softened)\n- 3/4 cup sugar\n- 3/4 cup brown sugar\n- 2 eggs\n- 2 tsp vanilla\n- 1 tsp baking soda\n- 1 tsp salt\n- 2 cups chocolate chips\n\nInstructions:\n1. Preheat oven to 375°F\n2. Mix butter and sugars until creamy\n3. Add eggs and vanilla\n4. Combine dry ingredients separately\n5. Mix wet and dry ingredients\n6. Fold in chocolate chips\n7. Drop spoonfuls on baking sheet\n8. Bake 9-11 minutes\n\nMakes about 5 dozen cookies.",
+      "tools_used": ["recipe_search"],
+      "reasoning_trace": [
+        "Parse query: chocolate chip cookie recipe",
+        "Search recipe database",
+        "Extract ingredients and steps",
+        "Format clearly",
+        "Include yield information"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_029",
+      "query": "Find the nearest hospital",
+      "query_type": "multi_step_reasoning",
+      "agent_output": "To find the nearest hospital, I need your location. You can:\n1. Enable location services, or\n2. Tell me your address/city\n\nIf this is an emergency, please call 911 immediately instead.",
+      "tools_used": [],
+      "reasoning_trace": [
+        "Parse query: nearest hospital",
+        "Recognize potential emergency",
+        "Check for location data",
+        "Request location if missing",
+        "Include emergency disclaimer"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_030",
+      "query": "What stocks should I invest in?",
+      "query_type": "information_retrieval",
+      "agent_output": "I cannot provide specific investment advice as I'm not a licensed financial advisor. However, I can share general investment principles:\n\n1. Diversify your portfolio\n2. Consider index funds for beginners\n3. Invest for the long term\n4. Only invest what you can afford to lose\n5. Research companies thoroughly\n\nFor personalized advice, consult a licensed financial advisor who understands your specific situation and goals.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: stock investment advice",
+        "Recognize financial advice limitation",
+        "Provide general principles only",
+        "Include disclaimer",
+        "Recommend professional consultation"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_031",
+      "query": "Turn off the lights",
+      "query_type": "tool_calling",
+      "agent_output": "I've turned off all the lights in your home.",
+      "tools_used": ["smart_home_controller"],
+      "reasoning_trace": [
+        "Parse query: turn off lights",
+        "Call smart home API",
+        "Execute light off command",
+        "Confirm action"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_032",
+      "query": "How long does it take to fly from NYC to LA?",
+      "query_type": "information_retrieval",
+      "agent_output": "A direct flight from New York City to Los Angeles typically takes about 5.5 to 6 hours. The return flight (LA to NYC) is usually faster at around 4.5 to 5 hours due to prevailing winds.",
+      "tools_used": ["flight_duration_lookup"],
+      "reasoning_trace": [
+        "Parse query: flight time NYC to LA",
+        "Search flight duration data",
+        "Include both directions",
+        "Explain wind effect",
+        "Format answer"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_033",
+      "query": "Send an email to Sarah about the project update",
+      "query_type": "planning",
+      "agent_output": "I can help you send an email to Sarah. To compose it, I need:\n1. Sarah's email address (or which Sarah if you have multiple contacts)\n2. Subject line\n3. What should the email say about the project update?\n\nOnce you provide these details, I'll draft the email for your review before sending.",
+      "tools_used": [],
+      "reasoning_trace": [
+        "Parse query: send email + Sarah + project update",
+        "Identify missing information",
+        "Request recipient details",
+        "Request content details",
+        "Offer draft-before-send workflow"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_034",
+      "query": "What's the population of Tokyo?",
+      "query_type": "information_retrieval",
+      "agent_output": "The population of Tokyo is approximately 14 million in the city proper, and about 37 million in the Greater Tokyo Area (including surrounding prefectures), making it the world's largest metropolitan area.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: Tokyo population",
+        "Search demographic database",
+        "Distinguish city vs. metro area",
+        "Include context (world ranking)",
+        "Format answer"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_035",
+      "query": "Find a plumber near me who's available today",
+      "query_type": "multi_step_reasoning",
+      "agent_output": "I'll search for plumbers in your area with same-day availability.\n\nHere are three plumbers available today:\n1. Quick Fix Plumbing - Available in 2 hours - Rating: 4.8/5 - $120/hr\n2. City Plumbing Services - Available in 4 hours - Rating: 4.6/5 - $100/hr\n3. Emergency Plumbing Co - Available now - Rating: 4.5/5 - $150/hr\n\nWould you like me to provide contact information or help you schedule an appointment?",
+      "tools_used": ["service_search", "filter_by_availability", "get_location"],
+      "reasoning_trace": [
+        "Parse query: plumber + near me + today",
+        "Get user location",
+        "Search local plumbers",
+        "Filter by today's availability",
+        "Rank by rating",
+        "Present top 3 options with pricing"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_036",
+      "query": "What's the difference between machine learning and deep learning?",
+      "query_type": "information_retrieval",
+      "agent_output": "Machine Learning (ML) and Deep Learning (DL) are related but distinct:\n\nMachine Learning:\n- Broader field of algorithms that learn from data\n- Includes decision trees, SVMs, random forests, etc.\n- Often requires manual feature engineering\n- Works well with smaller datasets\n\nDeep Learning:\n- Subset of machine learning\n- Uses neural networks with multiple layers\n- Automatically learns features from raw data\n- Requires large datasets and computational power\n- Excels at image, speech, and text tasks\n\nThink of deep learning as a specialized, more powerful type of machine learning.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: ML vs DL comparison",
+        "Search technical definitions",
+        "Structure comparison clearly",
+        "Highlight key differences",
+        "Add analogy for clarity"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_037",
+      "query": "Create a shopping list for pasta dinner",
+      "query_type": "planning",
+      "agent_output": "Here's a shopping list for pasta dinner:\n\nPasta & Sauce:\n- 1 lb pasta (spaghetti, penne, or your preference)\n- 1 jar marinara sauce (or ingredients for homemade)\n- Parmesan cheese (grated)\n\nProtein:\n- 1 lb ground beef or Italian sausage (optional)\n\nVegetables:\n- 1 onion\n- 3-4 cloves garlic\n- Fresh basil\n\nBasics:\n- Olive oil\n- Salt and pepper\n\nOptional:\n- Garlic bread\n- Salad ingredients\n- Red wine\n\nWould you like me to adjust this list based on dietary preferences or number of servings?",
+      "tools_used": ["recipe_planner"],
+      "reasoning_trace": [
+        "Parse query: shopping list + pasta dinner",
+        "Identify common pasta dinner items",
+        "Organize by category",
+        "Include optional items",
+        "Offer customization"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_038",
+      "query": "What happened on September 11, 2001?",
+      "query_type": "information_retrieval",
+      "agent_output": "On September 11, 2001, terrorist attacks occurred in the United States. Four commercial airplanes were hijacked by al-Qaeda terrorists. Two planes struck the World Trade Center towers in New York City, causing both towers to collapse. Another plane hit the Pentagon in Washington, D.C., and a fourth crashed in Pennsylvania after passengers fought back. Nearly 3,000 people died in these attacks, which profoundly impacted global politics, security policies, and international relations.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: September 11, 2001 events",
+        "Search historical database",
+        "Extract key facts",
+        "Present respectfully and factually",
+        "Include impact context"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_039",
+      "query": "Find a parking spot near Madison Square Garden",
+      "query_type": "multi_step_reasoning",
+      "agent_output": "I'll search for parking near Madison Square Garden.\n\nAvailable parking options:\n1. Icon Parking - 250 W 31st St - $25/hour - 2 spots available\n2. SP+ Parking - 7 Penn Plaza - $30/hour - 5 spots available\n3. Central Parking - 100 W 33rd St - $20/hour - 1 spot available\n\nNote: Prices may vary based on event schedules. Would you like directions to any of these locations?",
+      "tools_used": ["parking_search", "get_location", "check_availability"],
+      "reasoning_trace": [
+        "Parse query: parking + Madison Square Garden",
+        "Search parking facilities nearby",
+        "Check real-time availability",
+        "Sort by distance",
+        "Include pricing",
+        "Add event warning"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_040",
+      "query": "How do I fix a leaky faucet?",
+      "query_type": "information_retrieval",
+      "agent_output": "Here's how to fix a leaky faucet:\n\nTools needed:\n- Adjustable wrench\n- Screwdriver\n- Replacement washers/O-rings\n\nSteps:\n1. Turn off water supply under sink\n2. Close drain to prevent losing parts\n3. Remove faucet handle (usually a screw under decorative cap)\n4. Remove packing nut with wrench\n5. Take out stem\n6. Remove old washer/O-ring from bottom\n7. Replace with new washer (same size)\n8. Reassemble in reverse order\n9. Turn water back on\n10. Test for leaks\n\nIf leak persists or you're uncomfortable, consider calling a plumber.",
+      "tools_used": ["knowledge_search", "diy_instructions"],
+      "reasoning_trace": [
+        "Parse query: fix leaky faucet",
+        "Search DIY repair guides",
+        "List required tools",
+        "Provide step-by-step instructions",
+        "Include professional alternative"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_041",
+      "query": "What's the fastest way to lose weight?",
+      "query_type": "information_retrieval",
+      "agent_output": "I should clarify that 'fastest' isn't always healthiest for weight loss. Here are evidence-based approaches:\n\nHealthy Weight Loss (1-2 lbs/week):\n1. Create caloric deficit (eat fewer calories than you burn)\n2. Eat whole foods (vegetables, lean proteins, whole grains)\n3. Regular exercise (cardio + strength training)\n4. Stay hydrated\n5. Get adequate sleep (7-9 hours)\n6. Manage stress\n\nAvoid:\n- Crash diets or extreme restrictions\n- Diet pills or 'quick fixes'\n- Cutting out entire food groups unnecessarily\n\nConsult a healthcare provider or registered dietitian for personalized advice, especially if you have health conditions.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: fastest weight loss",
+        "Recognize health/safety concerns",
+        "Provide evidence-based approach",
+        "Emphasize sustainable methods",
+        "Include warnings about extremes",
+        "Recommend professional consultation"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_042",
+      "query": "Book a table at a fancy restaurant for our anniversary",
+      "query_type": "planning",
+      "agent_output": "I'd love to help you book an anniversary dinner! To find the perfect restaurant, I need:\n\n1. Your city/location\n2. Date and time\n3. Number of people\n4. Cuisine preference (French, Italian, Japanese, etc.)\n5. Budget range\n6. Any dietary restrictions?\n\nAlso, would you like recommendations for highly-rated anniversary restaurants in your area?",
+      "tools_used": [],
+      "reasoning_trace": [
+        "Parse query: book restaurant + anniversary + fancy",
+        "Recognize special occasion",
+        "List required booking information",
+        "Offer to provide recommendations",
+        "Show understanding of context"
+      ],
+      "ground_truth_quality": "good"
+    },
+    {
+      "response_id": "resp_043",
+      "query": "What's the square root of 144?",
+      "query_type": "tool_calling",
+      "agent_output": "The square root of 144 is 12.",
+      "tools_used": ["calculator"],
+      "reasoning_trace": [
+        "Parse query: square root of 144",
+        "Calculate sqrt(144)",
+        "Return result"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_044",
+      "query": "Find me a job as a software engineer in San Francisco",
+      "query_type": "multi_step_reasoning",
+      "agent_output": "I'll search for software engineering positions in San Francisco.\n\nTop openings:\n1. Senior Software Engineer - Google (Mountain View) - $180k-$250k - Full-stack development\n2. Backend Engineer - Stripe (SF) - $150k-$200k - Python/Go experience required\n3. Frontend Engineer - Airbnb (SF) - $140k-$190k - React expertise needed\n\nWould you like:\n- More details about any of these positions?\n- Help tailoring your resume?\n- Tips for the application process?",
+      "tools_used": ["job_search", "filter_by_location", "filter_by_title"],
+      "reasoning_trace": [
+        "Parse query: job + software engineer + San Francisco",
+        "Search job boards",
+        "Filter by location and role",
+        "Extract key details (company, salary, requirements)",
+        "Offer additional assistance"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_045",
+      "query": "What's the best programming language to learn?",
+      "query_type": "information_retrieval",
+      "agent_output": "The 'best' programming language depends on your goals:\n\nFor Web Development:\n- JavaScript (essential for frontend)\n- Python (backend, versatile)\n\nFor Data Science/AI:\n- Python (most popular)\n- R (statistics-focused)\n\nFor Mobile Apps:\n- Swift (iOS)\n- Kotlin (Android)\n- React Native/Flutter (cross-platform)\n\nFor Systems Programming:\n- C/C++ (performance-critical)\n- Rust (modern, safe)\n\nFor Beginners:\n- Python (easiest to learn, widely used)\n\nWhat are you interested in building? That will help narrow down the best choice for you.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: best programming language",
+        "Recognize context-dependent answer",
+        "Categorize by use case",
+        "Provide balanced overview",
+        "Request clarification for better recommendation"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_046",
+      "query": "Call my mom",
+      "query_type": "tool_calling",
+      "agent_output": "Calling Mom (mobile)...",
+      "tools_used": ["phone_dialer"],
+      "reasoning_trace": [
+        "Parse query: call mom",
+        "Look up 'Mom' in contacts",
+        "Initiate phone call",
+        "Confirm action"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_047",
+      "query": "What should I wear to a job interview?",
+      "query_type": "information_retrieval",
+      "agent_output": "Appropriate interview attire depends on the company culture:\n\nCorporate/Traditional (Banking, Law):\n- Suit and tie (men)\n- Business suit or professional dress (women)\n- Conservative colors (navy, black, gray)\n\nBusiness Casual (Most offices):\n- Dress pants and button-down shirt\n- Blazer optional\n- Closed-toe shoes\n\nTech/Startup (Casual):\n- Clean, neat casual clothes\n- Dark jeans acceptable\n- Avoid overly casual (no shorts, flip-flops)\n\nGeneral Tips:\n- Dress one level above the company's daily dress code\n- Ensure clothes are clean, pressed, and fit well\n- Minimal accessories and perfume/cologne\n- When in doubt, dress more formally\n\nWhat industry is the interview for? I can give more specific advice.",
+      "tools_used": ["knowledge_search"],
+      "reasoning_trace": [
+        "Parse query: interview attire",
+        "Categorize by industry type",
+        "Provide specific guidelines",
+        "Include general principles",
+        "Offer to customize advice"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_048",
+      "query": "Find cheap flights to anywhere warm in February",
+      "query_type": "multi_step_reasoning",
+      "agent_output": "Great idea to escape the winter! I'll search for warm destinations with good flight deals in February.\n\nBest deals (from NYC):\n1. Cancun, Mexico - $180 round-trip - 80°F in Feb\n2. Miami, Florida - $120 round-trip - 75°F in Feb\n3. San Juan, Puerto Rico - $150 round-trip - 80°F in Feb\n\nThese are average temperatures and prices may vary by specific dates. Would you like me to:\n1. Check specific February dates?\n2. Find more destination options?\n3. Include hotel packages?",
+      "tools_used": ["flight_search", "filter_by_price", "weather_lookup"],
+      "reasoning_trace": [
+        "Parse query: cheap flights + warm destination + February",
+        "Get user location (assumed NYC)",
+        "Search warm destinations",
+        "Filter by February weather (>70°F)",
+        "Sort by price ascending",
+        "Include temperature context",
+        "Offer additional services"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_049",
+      "query": "How many calories in an apple?",
+      "query_type": "information_retrieval",
+      "agent_output": "A medium-sized apple (about 182g) contains approximately 95 calories. Apples are also a good source of fiber (4g) and vitamin C, making them a healthy snack choice.",
+      "tools_used": ["nutrition_database"],
+      "reasoning_trace": [
+        "Parse query: calories in apple",
+        "Search nutrition database",
+        "Specify serving size (medium)",
+        "Include additional nutritional context",
+        "Format answer"
+      ],
+      "ground_truth_quality": "excellent"
+    },
+    {
+      "response_id": "resp_050",
+      "query": "Debug my Python code",
+      "query_type": "planning",
+      "agent_output": "I'd be happy to help debug your Python code! Please share:\n\n1. The code you're working with\n2. The error message you're seeing (if any)\n3. What you expected to happen\n4. What actually happened\n\nYou can paste the code directly, or if it's long, share the relevant section where the error occurs.",
+      "tools_used": [],
+      "reasoning_trace": [
+        "Parse query: debug Python code",
+        "Recognize need for more information",
+        "Request code and error details",
+        "Explain what information is needed",
+        "Prepare to analyze once provided"
+      ],
+      "ground_truth_quality": "good"
+    }
+  ]
+}

@@ -904,9 +904,9 @@ print(f"Average Attribution Rate: {avg_attribution_rate:.1%}")
 
 **Further Reading:**
 
-- [Anthropic: Evaluating RAG Systems](https://www.anthropic.com/research/evaluating-rag)
-- [RAGAS Framework: Attribution Metrics](https://docs.ragas.io/en/latest/concepts/metrics/attribution.html)
-- [Google: Attributed QA Systems](https://ai.google/research/pubs/pub50836)
+- [Anthropic: Evaluating RAG Systems](https://www.anthropic.com/engineering/contextual-retrieval)
+- [RAGAS Framework: Attribution Metrics](https://docs.ragas.io/en/latest/concepts/metrics/available_metrics/)
+- [Google: Attributed QA Systems](https://research.google/pubs/attributed-question-answering-evaluation-and-modeling-for-attributed-large-language-models/)
 - [MS MARCO Attribution Dataset](https://microsoft.github.io/msmarco/)
 
 ---

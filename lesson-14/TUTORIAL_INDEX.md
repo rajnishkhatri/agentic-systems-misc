@@ -24,6 +24,10 @@ By completing these tutorials, you will be able to:
 - ✅ Design multi-agent systems with role separation (Planner, Validator, Executor)
 - ✅ Measure agent performance with planning accuracy, tool call accuracy, and efficiency metrics
 - ✅ Debug agent failures using systematic root cause analysis and targeted remediations
+- ✅ Understand AgentOps evolution and agent observability architecture ⚡ NEW
+- ✅ Apply 6 trajectory metrics (Exact Match, In-Order, Any-Order, Precision, Recall, Single-Tool) ⚡ NEW
+- ✅ Select appropriate trajectory metrics based on use case requirements ⚡ NEW
+- ✅ Visualize agent performance with multi-dimensional radar charts ⚡ NEW
 
 ---
 
@@ -76,7 +80,39 @@ By completing these tutorials, you will be able to:
 
 ---
 
-### 4. ReAct Agent Implementation (Interactive Notebook)
+### 4. Agent Evaluation Fundamentals ⚡ NEW
+**File:** `agent_evaluation_fundamentals.md`
+**Reading Time:** 25-30 minutes
+**Topics:**
+- DevOps → MLOps → GenAIOps → AgentOps evolution
+- Agent success metrics (business KPIs, goals, telemetry)
+- Observability architecture (high-level KPIs + detailed traces)
+- Three pillars of agent evaluation (trajectory, final response, HITL)
+- Public benchmarks (BFCL, τ-bench, PlanBench, AgentBench)
+- Metrics-driven development for agents
+- Production readiness framework
+
+**When to use:** Essential foundation before implementing trajectory evaluation or agent monitoring.
+
+---
+
+### 5. Trajectory Evaluation Techniques ⚡ NEW
+**File:** `trajectory_evaluation_techniques.md`
+**Reading Time:** 20-25 minutes
+**Topics:**
+- Understanding agent trajectories and ground-truth requirements
+- Six trajectory metrics: Exact Match, In-Order Match, Any-Order Match, Precision, Recall, Single-Tool Use
+- Metric selection framework based on use case (compliance, efficiency, completeness)
+- Visualization with radar charts for multi-dimensional analysis
+- Limitations of ground-truth evaluation
+- Future direction: Agent-as-a-Judge for flexible trajectory assessment
+- Practical exercises with payment processing, e-commerce, and security workflows
+
+**When to use:** Learn before implementing trajectory-based agent evaluation or debugging agent behavior.
+
+---
+
+### 6. ReAct Agent Implementation (Interactive Notebook)
 **File:** [`react_agent_implementation.ipynb`](react_agent_implementation.ipynb)
 **Execution Time:** ~10 minutes
 **Cost:** $0.30-0.50 (DEMO mode, 3 tasks), $2.00-3.00 (FULL mode, 15 tasks)
@@ -92,7 +128,7 @@ By completing these tutorials, you will be able to:
 
 ---
 
-### 5. Agent Failure Analysis (Interactive Notebook)
+### 7. Agent Failure Analysis (Interactive Notebook)
 **File:** [`agent_failure_analysis.ipynb`](agent_failure_analysis.ipynb)
 **Execution Time:** ~7 minutes
 **Cost:** $0.30-0.40 (DEMO mode, 7 cases), $1.50-2.00 (FULL mode, 20 cases)

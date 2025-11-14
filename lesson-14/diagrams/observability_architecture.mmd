@@ -1,0 +1,176 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#E8F4F8'}}}%%
+graph TB
+    subgraph "Agent Observability Architecture"
+        Agent[AI Agent System] -->|Executes| Query[User Query]
+
+        subgraph AgentComponents["Agent Components"]
+            AC1[Query Classifier]
+            AC2[Retrieval Agent]
+            AC3[Tool Executor]
+            AC4[LLM Synthesis]
+            AC5[Validator Agent]
+        end
+
+        Agent --> AgentComponents
+
+        subgraph Telemetry["Telemetry Collection Layer"]
+            Tel1[OpenTelemetry Spans]
+            Tel2[Structured Logs]
+            Tel3[Metrics Emitter]
+            Tel4[Trace Context Propagation]
+        end
+
+        AgentComponents -->|Instrument| Telemetry
+
+        Telemetry -->|High-Level Metrics| Dashboard
+        Telemetry -->|Detailed Traces| TraceStorage
+
+        subgraph Dashboard["High-Level Observability Dashboards"]
+            D1["📊 Business Metrics<br/>• Revenue Impact<br/>• User Engagement DAU/MAU<br/>• Conversion Rates"]
+            D2["🎯 Goal-Level Metrics<br/>• Goal Completion Rate<br/>• Critical Task Success<br/>• User Journey Completion"]
+            D3["⚡ Application Telemetry<br/>• P50/P95/P99 Latency<br/>• Error Rate by Type<br/>• Throughput RPS"]
+            D4["👤 Human Feedback<br/>• Thumbs Up/Down Rate<br/>• NPS Score<br/>• User Satisfaction CSAT"]
+        end
+
+        Dashboard --> D1
+        Dashboard --> D2
+        Dashboard --> D3
+        Dashboard --> D4
+
+        subgraph TraceStorage["Detailed Trace Storage"]
+            TS1[Trace Database]
+            TS2[Log Aggregation]
+            TS3[Span Analytics]
+        end
+
+        TraceStorage --> TS1
+        TraceStorage --> TS2
+        TraceStorage --> TS3
+
+        subgraph AlertingMonitoring["Alerting & Monitoring"]
+            AM1["🚨 Real-Time Alerts<br/>• Goal completion rate drop<br/>• Latency spike P99 > threshold<br/>• Error rate increase"]
+            AM2["📈 Trend Analysis<br/>• Week-over-week performance<br/>• Model drift detection<br/>• User feedback trends"]
+            AM3["🔍 Anomaly Detection<br/>• Unexpected tool call patterns<br/>• Novel failure modes<br/>• Performance degradation"]
+        end
+
+        Dashboard --> AlertingMonitoring
+        TraceStorage --> AlertingMonitoring
+
+        AlertingMonitoring --> AM1
+        AlertingMonitoring --> AM2
+        AlertingMonitoring --> AM3
+
+        AM1 -->|Trigger| Incident[Incident Response]
+        AM2 -->|Identify| Analysis[Root Cause Analysis]
+        AM3 -->|Flag| Investigation[Deep Dive Investigation]
+
+        Incident --> DrillDown[Drill Down to Traces]
+        Analysis --> DrillDown
+        Investigation --> DrillDown
+
+        DrillDown --> TraceStorage
+
+        subgraph TraceDetail["Detailed Trace View"]
+            TD1["🔬 Single Query Trace<br/>• Timestamp: 2025-01-15 10:23:45<br/>• User Query: 'Book flight to Paris'<br/>• Query Classifier: 0.5s → 'flight_booking'<br/>• Flight API: 1.2s → 200 OK<br/>• LLM Synthesis: 0.8s → 500 tokens<br/>• Total Latency: 5.0s<br/>• Bottleneck: Flight API"]
+            TD2["📝 Contextual Information<br/>• User ID: user_12345<br/>• Session ID: sess_abc123<br/>• Agent Version: v2.3.1<br/>• LLM Model: claude-3-5-sonnet<br/>• Environment: production-us-west"]
+            TD3["❌ Error Details<br/>• Tool: check_availability<br/>• Status: 500 Internal Server Error<br/>• Retry Attempt: 1/3<br/>• Fallback: Use cached results"]
+        end
+
+        DrillDown --> TraceDetail
+        TraceDetail --> TD1
+        TraceDetail --> TD2
+        TraceDetail --> TD3
+
+        subgraph FeedbackLoop["Feedback Loop"]
+            FB1[Identify Issue in Traces]
+            FB2{Root Cause?}
+            FB3[Fix Prompt/Tool/Logic]
+            FB4[Deploy Update]
+            FB5[Verify Fix in Dashboard]
+        end
+
+        TD1 --> FeedbackLoop
+        TD3 --> FeedbackLoop
+        FeedbackLoop --> FB1
+        FB1 --> FB2
+        FB2 -->|Prompt Error| FB3
+        FB2 -->|Tool Failure| FB3
+        FB2 -->|Logic Bug| FB3
+        FB3 --> FB4
+        FB4 --> FB5
+        FB5 --> Dashboard
+    end
+
+    style Agent fill:#FFE6CC,stroke:#FF8C00,stroke-width:3px
+    style Dashboard fill:#90EE90,stroke:#228B22,stroke-width:2px
+    style TraceStorage fill:#E6F3FF,stroke:#4A90E2,stroke-width:2px
+    style AlertingMonitoring fill:#FFE6E6,stroke:#DC143C,stroke-width:2px
+    style DrillDown fill:#FFF4E6,stroke:#FFA500,stroke-width:2px
+    style TraceDetail fill:#F0E6FF,stroke:#9370DB,stroke-width:2px
+    style FeedbackLoop fill:#E6FFE6,stroke:#20B2AA,stroke-width:2px
+    style D1 fill:#FFF9E6
+    style D2 fill:#E6F9FF
+    style D3 fill:#FFE6F9
+    style D4 fill:#F0FFE6
+```
+
+**Diagram Purpose:** Illustrate the two-tier agent observability architecture combining high-level KPI dashboards with detailed trace debugging.
+
+**Architecture Layers:**
+
+**1. Agent Components (Top):**
+- Query Classifier, Retrieval Agent, Tool Executor, LLM Synthesis, Validator Agent
+- Each component is instrumented with telemetry
+
+**2. Telemetry Collection Layer:**
+- **OpenTelemetry Spans**: Distributed tracing across agent components
+- **Structured Logs**: JSON-formatted logs with context
+- **Metrics Emitter**: Real-time metric publishing
+- **Trace Context Propagation**: Maintains context across async operations
+
+**3. High-Level Observability Dashboards:**
+- **📊 Business Metrics**: Revenue, DAU, conversion rates
+- **🎯 Goal-Level Metrics**: Goal completion rate, task success
+- **⚡ Application Telemetry**: Latency (P50/P95/P99), error rates, throughput
+- **👤 Human Feedback**: Thumbs up/down, NPS, CSAT
+
+**4. Detailed Trace Storage:**
+- Trace Database (e.g., Jaeger, Tempo)
+- Log Aggregation (e.g., Elasticsearch, Loki)
+- Span Analytics (query and analyze traces)
+
+**5. Alerting & Monitoring:**
+- **🚨 Real-Time Alerts**: Goal completion drop, latency spike, error rate increase
+- **📈 Trend Analysis**: Week-over-week performance, drift detection
+- **🔍 Anomaly Detection**: Unexpected patterns, novel failures
+
+**6. Incident Response Workflow:**
+- Dashboard alerts trigger incident response
+- Root cause analysis identifies patterns
+- Drill down to specific trace details
+- View full context (timestamps, user info, errors)
+- Fix issue (prompt/tool/logic)
+- Deploy update and verify fix
+
+**Key Principles:**
+1. **High-Level for Trends**: Dashboards show aggregate metrics (always-on monitoring)
+2. **Detailed for Debugging**: Traces provide granular context (drill-down when issues arise)
+3. **Bidirectional Flow**: Alerts trigger trace investigation → fixes → dashboard validation
+
+**Example Use Case:**
+- Dashboard shows: "Goal completion rate dropped from 87% to 72% in last hour"
+- Alert triggers investigation
+- Drill down to traces reveals: "Flight API returning 500 errors"
+- Fix: Add retry logic with exponential backoff
+- Verify: Dashboard shows goal completion rate recovered to 85%
+
+**Referenced In:**
+- `agent_evaluation_fundamentals.md` (Section 4, Lines 250-370)
+- `human_in_the_loop_evaluation.md` (Section 5, Lines 735-756)
+
+**Rendering Notes:**
+- Flow from top (agent) to bottom (feedback loop)
+- Color-coded stages (green = healthy, red = alerts, purple = detailed analysis)
+- Emoji icons for visual scanning
+- Compatible with GitHub Markdown rendering

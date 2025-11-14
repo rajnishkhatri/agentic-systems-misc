@@ -1,0 +1,117 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#E8F4F8'}}}%%
+graph TD
+    Start[Start: Select Evaluation Method] --> Q1{What is your<br/>primary constraint?}
+
+    Q1 -->|Budget| Budget[Budget-Constrained]
+    Q1 -->|Time| Time[Time-Constrained]
+    Q1 -->|Quality| Quality[Quality-Constrained]
+
+    Budget --> Q2{Scale of<br/>evaluation?}
+    Q2 -->|< 100 responses| B1[Automated Autorater]
+    Q2 -->|100-1,000 responses| B2[Autorater + Active Learning]
+    Q2 -->|> 1,000 responses| B3[Autorater + 5% Random Sample]
+
+    Time --> Q3{Acceptable<br/>turnaround time?}
+    Q3 -->|Real-time<br/>minutes| T1[Automated Autorater Only]
+    Q3 -->|Same day<br/>hours| T2[Autorater + Human Spot Check]
+    Q3 -->|Days/Weeks| T3[Comprehensive Human Evaluation]
+
+    Quality --> Q4{Stakes of<br/>decision?}
+    Q4 -->|Low-stakes<br/>general queries| Q1A[Automated Sufficient]
+    Q4 -->|Medium-stakes<br/>user-facing| Q2A[Hybrid: Autorater + HITL]
+    Q4 -->|High-stakes<br/>medical/legal/financial| Q3A[Human-Primary Mandatory]
+
+    B1 --> Method1[Method: Autorater Only]
+    B2 --> Method2[Method: Active Learning]
+    B3 --> Method3[Method: Statistical Sampling]
+    T1 --> Method1
+    T2 --> Method4[Method: Hybrid Workflow]
+    T3 --> Method5[Method: Direct Assessment]
+    Q1A --> Method1
+    Q2A --> Method2
+    Q3A --> Method6[Method: Human Evaluation]
+
+    Method1 --> Trade1["Trade-offs:<br/>✅ Cost: $0.01-0.05/response<br/>✅ Speed: Real-time<br/>⚠️ Quality: Misses 10-15% nuanced failures<br/>❌ Risk: No human oversight"]
+
+    Method2 --> Trade2["Trade-offs:<br/>✅ Cost: $0.05-0.10/response<br/>✅ Speed: Near real-time<br/>✅ Quality: 90-95% effective coverage<br/>✅ Risk: Flags high-risk cases for review"]
+
+    Method3 --> Trade3["Trade-offs:<br/>✅ Cost: $0.03-0.07/response<br/>✅ Speed: Batch processing daily<br/>✅ Quality: Statistical confidence<br/>⚠️ Risk: May miss rare edge cases"]
+
+    Method4 --> Trade4["Trade-offs:<br/>⚠️ Cost: $0.08-0.15/response<br/>✅ Speed: Hours daily<br/>✅ Quality: High 95%+ coverage<br/>✅ Risk: Safety-critical reviewed"]
+
+    Method5 --> Trade5["Trade-offs:<br/>❌ Cost: $0.50-2.00/response<br/>❌ Speed: Days/weeks<br/>✅ Quality: Highest 98%+ accuracy<br/>✅ Risk: Full audit trail"]
+
+    Method6 --> Trade6["Trade-offs:<br/>❌ Cost: $1.00-5.00/response<br/>❌ Speed: Weeks<br/>✅ Quality: Expert-validated<br/>✅ Risk: Regulatory compliant"]
+
+    Trade1 --> Rec{Recommended<br/>Use Case?}
+    Trade2 --> Rec
+    Trade3 --> Rec
+    Trade4 --> Rec
+    Trade5 --> Rec
+    Trade6 --> Rec
+
+    Rec --> UC1["Use Case 1: Continuous Monitoring<br/>→ Method 3: Statistical Sampling"]
+    Rec --> UC2["Use Case 2: A/B Testing<br/>→ Method 2: Active Learning"]
+    Rec --> UC3["Use Case 3: Production Launch<br/>→ Method 5: Direct Assessment + User Study"]
+    Rec --> UC4["Use Case 4: Safety-Critical<br/>→ Method 6: Human Evaluation Mandatory"]
+    Rec --> UC5["Use Case 5: Iterative Development<br/>→ Method 4: Hybrid Workflow"]
+
+    style Start fill:#E8F4F8,stroke:#4A90E2,stroke-width:3px
+    style Method1 fill:#FFE6CC,stroke:#FF8C00
+    style Method2 fill:#90EE90,stroke:#228B22,stroke-width:2px
+    style Method3 fill:#D4E6F1,stroke:#4A90E2
+    style Method4 fill:#90EE90,stroke:#228B22,stroke-width:2px
+    style Method5 fill:#FFE6F0,stroke:#FF69B4
+    style Method6 fill:#FFE6F0,stroke:#FF69B4
+    style Trade2 fill:#E6FFE6,stroke:#228B22
+    style Trade4 fill:#E6FFE6,stroke:#228B22
+    style UC1 fill:#FFF4E6,stroke:#FFA500
+    style UC2 fill:#E6FFF0,stroke:#20B2AA
+    style UC3 fill:#E6F3FF,stroke:#4A90E2
+    style UC4 fill:#FFE6E6,stroke:#DC143C
+    style UC5 fill:#F0E6FF,stroke:#9370DB
+```
+
+**Diagram Purpose:** Decision tree to help practitioners select the appropriate evaluation method based on constraints (budget, time, quality) and use case requirements.
+
+**Key Decision Points:**
+
+**1. Primary Constraint:**
+- **Budget-Constrained**: Minimize cost per evaluation (favor automation)
+- **Time-Constrained**: Prioritize turnaround time (real-time vs. days)
+- **Quality-Constrained**: Prioritize accuracy and safety (favor human review)
+
+**2. Secondary Factors:**
+- **Scale**: Number of responses to evaluate (<100, 100-1K, >1K)
+- **Turnaround Time**: Real-time (minutes), same-day (hours), or extended (days/weeks)
+- **Stakes**: Low (general queries), medium (user-facing), high (medical/legal/financial)
+
+**Six Evaluation Methods:**
+
+| Method | Cost/Response | Speed | Quality | Best For |
+|--------|--------------|-------|---------|----------|
+| **1. Autorater Only** | $0.01-0.05 | Real-time | 85-90% | Low-stakes, continuous monitoring |
+| **2. Active Learning** | $0.05-0.10 | Near real-time | 90-95% | A/B testing, iterative development |
+| **3. Statistical Sampling** | $0.03-0.07 | Batch (daily) | 90% (confidence) | Large-scale monitoring |
+| **4. Hybrid Workflow** | $0.08-0.15 | Hours | 95%+ | Production systems |
+| **5. Direct Assessment** | $0.50-2.00 | Days/weeks | 98%+ | Launch validation, benchmarking |
+| **6. Human Evaluation Mandatory** | $1.00-5.00 | Weeks | Expert-validated | Safety-critical, regulatory compliance |
+
+**Recommended Use Cases:**
+1. **Continuous Monitoring**: Statistical Sampling (Method 3) - Balance cost and coverage
+2. **A/B Testing**: Active Learning (Method 2) - Focus on decision-critical examples
+3. **Production Launch**: Direct Assessment (Method 5) + User Study - Validate before rollout
+4. **Safety-Critical**: Human Evaluation Mandatory (Method 6) - No automation shortcuts
+5. **Iterative Development**: Hybrid Workflow (Method 4) - Fast feedback with quality
+
+**Referenced In:**
+- `human_in_the_loop_evaluation.md` (Section 5, Lines 667-756)
+- `agent_evaluation_fundamentals.md` (Section 7, Lines 532-608)
+- `autorater_final_response_eval.md` (Section 6, Lines 661-673)
+
+**Rendering Notes:**
+- Decision tree flows top-to-bottom
+- Color-coded methods (green = recommended, orange = acceptable, pink = expensive but necessary)
+- Trade-offs explicitly listed for each method
+- Compatible with GitHub Markdown rendering

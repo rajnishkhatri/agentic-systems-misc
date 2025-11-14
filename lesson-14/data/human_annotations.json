@@ -1,0 +1,512 @@
+{
+  "metadata": {
+    "description": "Human annotations for autorater calibration",
+    "total_annotations": 50,
+    "annotators": ["human_001", "human_002", "human_003"],
+    "annotation_date": "2024-11-14",
+    "criteria": ["accuracy", "completeness", "tool_usage", "reasoning_quality"],
+    "scoring_scale": "1-5 (1=Poor, 2=Fair, 3=Good, 4=Very Good, 5=Excellent)"
+  },
+  "annotations": [
+    {
+      "response_id": "resp_001",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Perfect response - comprehensive search, appropriate tools, clear presentation"
+    },
+    {
+      "response_id": "resp_002",
+      "accuracy": 5,
+      "completeness": 4,
+      "tool_usage": 5,
+      "reasoning_quality": 4,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Accurate weather info, could include forecast"
+    },
+    {
+      "response_id": "resp_003",
+      "accuracy": 4,
+      "completeness": 4,
+      "tool_usage": 4,
+      "reasoning_quality": 5,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Good flight search, correctly requests additional info before booking"
+    },
+    {
+      "response_id": "resp_004",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Correct calculation with clear explanation"
+    },
+    {
+      "response_id": "resp_005",
+      "accuracy": 5,
+      "completeness": 4,
+      "tool_usage": 4,
+      "reasoning_quality": 4,
+      "annotator_id": "human_002",
+      "confidence": "medium",
+      "notes": "Accurate but brief history, could be more detailed"
+    },
+    {
+      "response_id": "resp_006",
+      "accuracy": 4,
+      "completeness": 4,
+      "tool_usage": 5,
+      "reasoning_quality": 4,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Good hotel search with price sorting, helpful follow-up offer"
+    },
+    {
+      "response_id": "resp_007",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_003",
+      "confidence": "high",
+      "notes": "Correct and appropriately concise"
+    },
+    {
+      "response_id": "resp_008",
+      "accuracy": 4,
+      "completeness": 4,
+      "tool_usage": 4,
+      "reasoning_quality": 4,
+      "annotator_id": "human_002",
+      "confidence": "medium",
+      "notes": "Solid itinerary, good balance of activities"
+    },
+    {
+      "response_id": "resp_009",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Accurate conversion with exchange rate shown"
+    },
+    {
+      "response_id": "resp_010",
+      "accuracy": 3,
+      "completeness": 3,
+      "tool_usage": 2,
+      "reasoning_quality": 4,
+      "annotator_id": "human_003",
+      "confidence": "high",
+      "notes": "Correctly asks for preferences but could provide some general recommendations"
+    },
+    {
+      "response_id": "resp_011",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Accurate time with timezone clarification"
+    },
+    {
+      "response_id": "resp_012",
+      "accuracy": 4,
+      "completeness": 4,
+      "tool_usage": 5,
+      "reasoning_quality": 4,
+      "annotator_id": "human_002",
+      "confidence": "medium",
+      "notes": "Good search with relevant filters, helpful follow-up offer"
+    },
+    {
+      "response_id": "resp_013",
+      "accuracy": 5,
+      "completeness": 4,
+      "tool_usage": 4,
+      "reasoning_quality": 4,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Accurate summary, captures main plot points"
+    },
+    {
+      "response_id": "resp_014",
+      "accuracy": 4,
+      "completeness": 3,
+      "tool_usage": 2,
+      "reasoning_quality": 4,
+      "annotator_id": "human_003",
+      "confidence": "high",
+      "notes": "Correctly states limitation, offers alternative but could be more proactive"
+    },
+    {
+      "response_id": "resp_015",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Correct and appropriately concise"
+    },
+    {
+      "response_id": "resp_016",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Excellent comparison with key specs and balanced recommendation"
+    },
+    {
+      "response_id": "resp_017",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Reminder set correctly with helpful default notification"
+    },
+    {
+      "response_id": "resp_018",
+      "accuracy": 4,
+      "completeness": 4,
+      "tool_usage": 4,
+      "reasoning_quality": 5,
+      "annotator_id": "human_003",
+      "confidence": "high",
+      "notes": "Excellent ELI5 explanation with appropriate analogy"
+    },
+    {
+      "response_id": "resp_019",
+      "accuracy": 4,
+      "completeness": 4,
+      "tool_usage": 3,
+      "reasoning_quality": 4,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Correctly identifies missing info, could suggest popular islands"
+    },
+    {
+      "response_id": "resp_020",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 4,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "medium",
+      "notes": "Thoughtful response covering multiple perspectives"
+    },
+    {
+      "response_id": "resp_021",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Accurate calculation with helpful total included"
+    },
+    {
+      "response_id": "resp_022",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Accurate translation"
+    },
+    {
+      "response_id": "resp_023",
+      "accuracy": 3,
+      "completeness": 3,
+      "tool_usage": 2,
+      "reasoning_quality": 4,
+      "annotator_id": "human_003",
+      "confidence": "high",
+      "notes": "Correctly asks for location but could be more helpful"
+    },
+    {
+      "response_id": "resp_024",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Accurate sports fact with score details"
+    },
+    {
+      "response_id": "resp_025",
+      "accuracy": 4,
+      "completeness": 4,
+      "tool_usage": 3,
+      "reasoning_quality": 4,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Good info gathering, could suggest time slots"
+    },
+    {
+      "response_id": "resp_026",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Comprehensive symptom list with appropriate medical disclaimer"
+    },
+    {
+      "response_id": "resp_027",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_003",
+      "confidence": "high",
+      "notes": "Action completed with artist examples"
+    },
+    {
+      "response_id": "resp_028",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Complete recipe with clear instructions"
+    },
+    {
+      "response_id": "resp_029",
+      "accuracy": 4,
+      "completeness": 4,
+      "tool_usage": 3,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Excellent emergency awareness with 911 reminder"
+    },
+    {
+      "response_id": "resp_030",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Appropriate disclaimer with helpful general principles"
+    },
+    {
+      "response_id": "resp_031",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Action completed correctly"
+    },
+    {
+      "response_id": "resp_032",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_003",
+      "confidence": "high",
+      "notes": "Accurate flight time with wind effect explanation"
+    },
+    {
+      "response_id": "resp_033",
+      "accuracy": 4,
+      "completeness": 4,
+      "tool_usage": 3,
+      "reasoning_quality": 4,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Good info gathering with draft workflow"
+    },
+    {
+      "response_id": "resp_034",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Accurate with city vs metro distinction and context"
+    },
+    {
+      "response_id": "resp_035",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Excellent search with availability, ratings, pricing"
+    },
+    {
+      "response_id": "resp_036",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_003",
+      "confidence": "high",
+      "notes": "Clear technical comparison with good structure"
+    },
+    {
+      "response_id": "resp_037",
+      "accuracy": 4,
+      "completeness": 4,
+      "tool_usage": 4,
+      "reasoning_quality": 4,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Comprehensive list organized by category"
+    },
+    {
+      "response_id": "resp_038",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Respectful and factual historical summary"
+    },
+    {
+      "response_id": "resp_039",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Great parking search with real-time availability and event warning"
+    },
+    {
+      "response_id": "resp_040",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_003",
+      "confidence": "high",
+      "notes": "Detailed DIY instructions with professional fallback"
+    },
+    {
+      "response_id": "resp_041",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Excellent health advice with safety warnings and professional recommendation"
+    },
+    {
+      "response_id": "resp_042",
+      "accuracy": 4,
+      "completeness": 4,
+      "tool_usage": 3,
+      "reasoning_quality": 4,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Good info gathering with special occasion awareness"
+    },
+    {
+      "response_id": "resp_043",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Correct and concise"
+    },
+    {
+      "response_id": "resp_044",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Excellent job search with salary, requirements, helpful follow-up"
+    },
+    {
+      "response_id": "resp_045",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_003",
+      "confidence": "high",
+      "notes": "Comprehensive answer organized by use case with clarifying question"
+    },
+    {
+      "response_id": "resp_046",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Action completed correctly"
+    },
+    {
+      "response_id": "resp_047",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Thorough advice categorized by industry with general principles"
+    },
+    {
+      "response_id": "resp_048",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_001",
+      "confidence": "high",
+      "notes": "Excellent creative search combining price, weather, multiple filters"
+    },
+    {
+      "response_id": "resp_049",
+      "accuracy": 5,
+      "completeness": 5,
+      "tool_usage": 5,
+      "reasoning_quality": 5,
+      "annotator_id": "human_003",
+      "confidence": "high",
+      "notes": "Accurate with serving size and nutritional context"
+    },
+    {
+      "response_id": "resp_050",
+      "accuracy": 4,
+      "completeness": 4,
+      "tool_usage": 3,
+      "reasoning_quality": 4,
+      "annotator_id": "human_002",
+      "confidence": "high",
+      "notes": "Good info gathering for debugging task"
+    }
+  ]
+}

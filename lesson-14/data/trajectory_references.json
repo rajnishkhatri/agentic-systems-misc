@@ -1,0 +1,718 @@
+{
+  "version": "1.0",
+  "created": "2025-11-14",
+  "description": "Reference trajectories (ground truth) for trajectory evaluation - 50 samples across simple/medium/complex tasks",
+  "statistics": {
+    "total_references": 50,
+    "simple_tasks": 15,
+    "medium_tasks": 20,
+    "complex_tasks": 15,
+    "domains": {
+      "recipe": 25,
+      "gita": 15,
+      "general": 10
+    }
+  },
+  "references": [
+    {
+      "trajectory_id": "ref_001",
+      "task_description": "Find vegetarian pasta recipes",
+      "task_type": "recipe_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "List of vegetarian pasta recipes",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.5
+      }
+    },
+    {
+      "trajectory_id": "ref_002",
+      "task_description": "Look up Bhagavad Gita verse 2.47",
+      "task_type": "verse_lookup",
+      "complexity": "simple",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_verse", "format_response"],
+      "expected_outcome": "Verse 2.47 with translation and commentary",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 1.8
+      }
+    },
+    {
+      "trajectory_id": "ref_003",
+      "task_description": "What are gluten-free breakfast options under 30 minutes?",
+      "task_type": "filtered_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Gluten-free breakfast recipes under 30 min",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.2
+      }
+    },
+    {
+      "trajectory_id": "ref_004",
+      "task_description": "Explain the concept of dharma in the Gita",
+      "task_type": "thematic",
+      "complexity": "medium",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "expected_outcome": "Multi-verse explanation of dharma concept",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 4,
+        "expected_duration_seconds": 4.5
+      }
+    },
+    {
+      "trajectory_id": "ref_005",
+      "task_description": "Find Italian dessert recipes with no nuts",
+      "task_type": "filtered_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Italian desserts without nuts",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.3
+      }
+    },
+    {
+      "trajectory_id": "ref_006",
+      "task_description": "What does Krishna say about action without attachment?",
+      "task_type": "thematic",
+      "complexity": "medium",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "expected_outcome": "Karma Yoga teaching synthesis",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 4,
+        "expected_duration_seconds": 5.1
+      }
+    },
+    {
+      "trajectory_id": "ref_007",
+      "task_description": "Show me quick lunch recipes",
+      "task_type": "recipe_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Quick lunch recipe list",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.0
+      }
+    },
+    {
+      "trajectory_id": "ref_008",
+      "task_description": "Find vegan dinner recipes with tofu",
+      "task_type": "filtered_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Vegan tofu dinner recipes",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.4
+      }
+    },
+    {
+      "trajectory_id": "ref_009",
+      "task_description": "What is the meaning of yoga according to Krishna?",
+      "task_type": "thematic",
+      "complexity": "medium",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "expected_outcome": "Multi-verse yoga definition synthesis",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 4,
+        "expected_duration_seconds": 4.8
+      }
+    },
+    {
+      "trajectory_id": "ref_010",
+      "task_description": "Find low-carb Mexican recipes",
+      "task_type": "filtered_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Low-carb Mexican recipe list",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.1
+      }
+    },
+    {
+      "trajectory_id": "ref_011",
+      "task_description": "Compare Krishna's teachings on knowledge vs devotion",
+      "task_type": "philosophical",
+      "complexity": "complex",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "compare_perspectives", "synthesize_response", "validate_attribution", "format_response"],
+      "expected_outcome": "Comparative analysis of Jnana vs Bhakti yoga",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 6,
+        "expected_duration_seconds": 8.5
+      }
+    },
+    {
+      "trajectory_id": "ref_012",
+      "task_description": "Find Asian recipes with chicken under 45 minutes that are kid-friendly",
+      "task_type": "multi_filter_search",
+      "complexity": "medium",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "filter_kid_friendly", "rank_by_simplicity", "format_response"],
+      "expected_outcome": "Kid-friendly Asian chicken recipes under 45 min",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 5,
+        "expected_duration_seconds": 3.8
+      }
+    },
+    {
+      "trajectory_id": "ref_013",
+      "task_description": "What are healthy snack ideas?",
+      "task_type": "recipe_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Healthy snack recipe list",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 1.9
+      }
+    },
+    {
+      "trajectory_id": "ref_014",
+      "task_description": "Explain the three gunas in the Bhagavad Gita",
+      "task_type": "thematic",
+      "complexity": "medium",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "expected_outcome": "Explanation of sattva, rajas, tamas",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 4,
+        "expected_duration_seconds": 5.2
+      }
+    },
+    {
+      "trajectory_id": "ref_015",
+      "task_description": "Find Indian breakfast recipes",
+      "task_type": "recipe_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Indian breakfast recipe list",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.0
+      }
+    },
+    {
+      "trajectory_id": "ref_016",
+      "task_description": "How do I reconcile Krishna's advice on detachment with the need to support my family?",
+      "task_type": "philosophical",
+      "complexity": "complex",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "identify_context", "synthesize_practical_advice", "validate_attribution", "format_response"],
+      "expected_outcome": "Practical application of detachment teaching",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 6,
+        "expected_duration_seconds": 9.2
+      }
+    },
+    {
+      "trajectory_id": "ref_017",
+      "task_description": "Find dairy-free desserts",
+      "task_type": "filtered_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Dairy-free dessert recipes",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.2
+      }
+    },
+    {
+      "trajectory_id": "ref_018",
+      "task_description": "What does verse 18.66 say?",
+      "task_type": "verse_lookup",
+      "complexity": "simple",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_verse", "format_response"],
+      "expected_outcome": "Verse 18.66 with translation",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 1.7
+      }
+    },
+    {
+      "trajectory_id": "ref_019",
+      "task_description": "Find Mediterranean recipes with fish that are heart-healthy",
+      "task_type": "multi_filter_search",
+      "complexity": "medium",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "filter_heart_healthy", "rank_by_nutrition", "format_response"],
+      "expected_outcome": "Heart-healthy Mediterranean fish recipes",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 5,
+        "expected_duration_seconds": 4.1
+      }
+    },
+    {
+      "trajectory_id": "ref_020",
+      "task_description": "What is the relationship between self-knowledge and liberation in the Gita?",
+      "task_type": "philosophical",
+      "complexity": "complex",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "trace_logical_connection", "synthesize_response", "validate_attribution", "format_response"],
+      "expected_outcome": "Analysis of Atma-jnana and moksha relationship",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 6,
+        "expected_duration_seconds": 8.9
+      }
+    },
+    {
+      "trajectory_id": "ref_021",
+      "task_description": "Find quick breakfast smoothie recipes",
+      "task_type": "recipe_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Quick breakfast smoothie list",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 1.8
+      }
+    },
+    {
+      "trajectory_id": "ref_022",
+      "task_description": "Compare verses 3.5 and 5.8 on the nature of action",
+      "task_type": "verse_comparison",
+      "complexity": "medium",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_verse", "retrieve_verse", "compare_verses", "synthesize_response", "format_response"],
+      "expected_outcome": "Side-by-side comparison of two verses",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 6,
+        "expected_duration_seconds": 5.5
+      }
+    },
+    {
+      "trajectory_id": "ref_023",
+      "task_description": "Find keto-friendly dinner recipes",
+      "task_type": "filtered_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Keto dinner recipe list",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.3
+      }
+    },
+    {
+      "trajectory_id": "ref_024",
+      "task_description": "What does Krishna say about fear and courage?",
+      "task_type": "thematic",
+      "complexity": "medium",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "expected_outcome": "Teaching on fearlessness synthesis",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 4,
+        "expected_duration_seconds": 4.7
+      }
+    },
+    {
+      "trajectory_id": "ref_025",
+      "task_description": "Find high-protein vegetarian recipes for athletes",
+      "task_type": "multi_filter_search",
+      "complexity": "medium",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "filter_high_protein", "rank_by_nutrition", "format_response"],
+      "expected_outcome": "High-protein vegetarian athlete recipes",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 5,
+        "expected_duration_seconds": 3.9
+      }
+    },
+    {
+      "trajectory_id": "ref_026",
+      "task_description": "Trace the evolution of Krishna's teaching from Chapter 2 to Chapter 18",
+      "task_type": "philosophical",
+      "complexity": "complex",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_chapter_summary", "identify_key_verses", "trace_thematic_development", "synthesize_response", "validate_attribution", "format_response"],
+      "expected_outcome": "Thematic progression analysis across chapters",
+      "metadata": {
+        "num_tools": 3,
+        "num_steps": 7,
+        "expected_duration_seconds": 12.3
+      }
+    },
+    {
+      "trajectory_id": "ref_027",
+      "task_description": "Find Thai recipes with shrimp",
+      "task_type": "filtered_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Thai shrimp recipe list",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.1
+      }
+    },
+    {
+      "trajectory_id": "ref_028",
+      "task_description": "What is the significance of the Bhagavad Gita's opening verse?",
+      "task_type": "verse_analysis",
+      "complexity": "medium",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_verse", "retrieve_commentary", "synthesize_response", "format_response"],
+      "expected_outcome": "Analysis of verse 1.1 with context",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 5,
+        "expected_duration_seconds": 4.6
+      }
+    },
+    {
+      "trajectory_id": "ref_029",
+      "task_description": "Find paleo dessert recipes with chocolate",
+      "task_type": "filtered_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Paleo chocolate desserts",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.2
+      }
+    },
+    {
+      "trajectory_id": "ref_030",
+      "task_description": "How does the Gita reconcile free will with divine will?",
+      "task_type": "philosophical",
+      "complexity": "complex",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "identify_paradox", "synthesize_resolution", "validate_attribution", "format_response"],
+      "expected_outcome": "Philosophical reconciliation of free will paradox",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 6,
+        "expected_duration_seconds": 9.8
+      }
+    },
+    {
+      "trajectory_id": "ref_031",
+      "task_description": "Find Japanese recipes suitable for beginners",
+      "task_type": "multi_filter_search",
+      "complexity": "medium",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "filter_beginner_friendly", "rank_by_simplicity", "format_response"],
+      "expected_outcome": "Beginner-friendly Japanese recipes",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 5,
+        "expected_duration_seconds": 3.7
+      }
+    },
+    {
+      "trajectory_id": "ref_032",
+      "task_description": "What verses discuss the immortality of the soul?",
+      "task_type": "thematic",
+      "complexity": "medium",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "expected_outcome": "Verses on Atman immortality",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 4,
+        "expected_duration_seconds": 5.0
+      }
+    },
+    {
+      "trajectory_id": "ref_033",
+      "task_description": "Find whole30 compliant recipes",
+      "task_type": "filtered_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Whole30 recipe list",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.4
+      }
+    },
+    {
+      "trajectory_id": "ref_034",
+      "task_description": "Explain the symbolism of Arjuna's chariot and horses in Chapter 1",
+      "task_type": "verse_analysis",
+      "complexity": "medium",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_verse", "retrieve_commentary", "synthesize_response", "format_response"],
+      "expected_outcome": "Symbolic interpretation with commentary",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 5,
+        "expected_duration_seconds": 4.9
+      }
+    },
+    {
+      "trajectory_id": "ref_035",
+      "task_description": "Find budget-friendly meal prep recipes for a week",
+      "task_type": "multi_filter_search",
+      "complexity": "medium",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "filter_budget_friendly", "calculate_weekly_plan", "format_response"],
+      "expected_outcome": "7-day budget meal prep plan",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 5,
+        "expected_duration_seconds": 4.3
+      }
+    },
+    {
+      "trajectory_id": "ref_036",
+      "task_description": "What is the relationship between the three yogas (Karma, Jnana, Bhakti)?",
+      "task_type": "philosophical",
+      "complexity": "complex",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "compare_yoga_paths", "synthesize_integration", "validate_attribution", "format_response"],
+      "expected_outcome": "Integration of three yoga paths",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 6,
+        "expected_duration_seconds": 10.1
+      }
+    },
+    {
+      "trajectory_id": "ref_037",
+      "task_description": "Find French recipes for special occasions",
+      "task_type": "filtered_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "French special occasion recipes",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.0
+      }
+    },
+    {
+      "trajectory_id": "ref_038",
+      "task_description": "Compare what different commentators say about verse 9.26",
+      "task_type": "commentary_comparison",
+      "complexity": "medium",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_verse", "retrieve_multi_commentary", "compare_interpretations", "synthesize_response", "format_response"],
+      "expected_outcome": "Multi-commentator perspective comparison",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 6,
+        "expected_duration_seconds": 6.2
+      }
+    },
+    {
+      "trajectory_id": "ref_039",
+      "task_description": "Find air fryer recipes under 20 minutes",
+      "task_type": "filtered_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Quick air fryer recipes",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.1
+      }
+    },
+    {
+      "trajectory_id": "ref_040",
+      "task_description": "How does Krishna address Arjuna's grief and moral confusion in Chapter 2?",
+      "task_type": "philosophical",
+      "complexity": "complex",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_chapter_summary", "identify_key_arguments", "trace_logical_progression", "synthesize_response", "validate_attribution", "format_response"],
+      "expected_outcome": "Analysis of Krishna's counseling strategy",
+      "metadata": {
+        "num_tools": 3,
+        "num_steps": 7,
+        "expected_duration_seconds": 11.5
+      }
+    },
+    {
+      "trajectory_id": "ref_041",
+      "task_description": "Find kid-friendly lunch box ideas",
+      "task_type": "recipe_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Kid-friendly lunch recipes",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 1.9
+      }
+    },
+    {
+      "trajectory_id": "ref_042",
+      "task_description": "What does the Gita say about equanimity in success and failure?",
+      "task_type": "thematic",
+      "complexity": "medium",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "expected_outcome": "Teaching on samatvam (equanimity)",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 4,
+        "expected_duration_seconds": 4.8
+      }
+    },
+    {
+      "trajectory_id": "ref_043",
+      "task_description": "Find slow cooker recipes for busy weeknights",
+      "task_type": "multi_filter_search",
+      "complexity": "medium",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "filter_slow_cooker", "rank_by_ease", "format_response"],
+      "expected_outcome": "Easy slow cooker weeknight recipes",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 5,
+        "expected_duration_seconds": 3.8
+      }
+    },
+    {
+      "trajectory_id": "ref_044",
+      "task_description": "Analyze the literary structure and rhetorical devices in Chapter 11",
+      "task_type": "philosophical",
+      "complexity": "complex",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_chapter_summary", "identify_literary_devices", "analyze_structure", "synthesize_response", "validate_attribution", "format_response"],
+      "expected_outcome": "Literary analysis of Vishvarupa chapter",
+      "metadata": {
+        "num_tools": 3,
+        "num_steps": 7,
+        "expected_duration_seconds": 13.2
+      }
+    },
+    {
+      "trajectory_id": "ref_045",
+      "task_description": "Find sugar-free baking recipes",
+      "task_type": "filtered_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "Sugar-free baked goods",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 2.2
+      }
+    },
+    {
+      "trajectory_id": "ref_046",
+      "task_description": "What is the historical and cultural context of the Kurukshetra war?",
+      "task_type": "verse_analysis",
+      "complexity": "medium",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_historical_context", "retrieve_verse", "synthesize_response", "format_response"],
+      "expected_outcome": "Historical context explanation",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 5,
+        "expected_duration_seconds": 5.3
+      }
+    },
+    {
+      "trajectory_id": "ref_047",
+      "task_description": "Find protein-rich breakfast recipes for muscle building",
+      "task_type": "multi_filter_search",
+      "complexity": "medium",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "filter_high_protein", "rank_by_nutrition", "format_response"],
+      "expected_outcome": "High-protein muscle-building breakfast",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 5,
+        "expected_duration_seconds": 4.0
+      }
+    },
+    {
+      "trajectory_id": "ref_048",
+      "task_description": "How do the concepts of prakriti and purusha relate to modern psychology?",
+      "task_type": "philosophical",
+      "complexity": "complex",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_thematic_verses", "identify_modern_parallels", "synthesize_interdisciplinary_response", "validate_attribution", "format_response"],
+      "expected_outcome": "Interdisciplinary analysis of Samkhya concepts",
+      "metadata": {
+        "num_tools": 2,
+        "num_steps": 6,
+        "expected_duration_seconds": 9.5
+      }
+    },
+    {
+      "trajectory_id": "ref_049",
+      "task_description": "Find one-pot dinner recipes",
+      "task_type": "recipe_search",
+      "complexity": "simple",
+      "domain": "recipe",
+      "reference_actions": ["classify_query", "search_recipes", "format_response"],
+      "expected_outcome": "One-pot dinner recipe list",
+      "metadata": {
+        "num_tools": 1,
+        "num_steps": 3,
+        "expected_duration_seconds": 1.8
+      }
+    },
+    {
+      "trajectory_id": "ref_050",
+      "task_description": "Create a synthesis of the entire Bhagavad Gita's core message in modern terms",
+      "task_type": "philosophical",
+      "complexity": "complex",
+      "domain": "gita",
+      "reference_actions": ["classify_query", "retrieve_chapter_summaries", "identify_core_themes", "synthesize_modern_interpretation", "validate_attribution", "format_response"],
+      "expected_outcome": "Comprehensive modern synthesis of Gita teaching",
+      "metadata": {
+        "num_tools": 3,
+        "num_steps": 6,
+        "expected_duration_seconds": 14.7
+      }
+    }
+  ]
+}

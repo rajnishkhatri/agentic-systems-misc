@@ -1,0 +1,242 @@
+{
+  "mode": "DEMO",
+  "timestamp": "2025-11-14T04:10:00.000000",
+  "model": "gpt-3.5-turbo",
+  "n_samples": {
+    "bfcl": 5,
+    "planbench": 5,
+    "total": 10
+  },
+  "bfcl_results": {
+    "tool_selection_accuracy": 0.8,
+    "args_validation_accuracy": 0.6,
+    "overall_accuracy": 0.6,
+    "details": [
+      {
+        "id": "tool_001",
+        "task": "Find vegan recipes",
+        "tool_selection_correct": true,
+        "args_correct": true,
+        "overall_correct": true,
+        "expected": {
+          "tool": "search_recipes",
+          "args": {
+            "dietary_restrictions": ["vegan"]
+          }
+        },
+        "predicted": {
+          "tool": "search_recipes",
+          "args": {
+            "dietary_restrictions": ["vegan"]
+          }
+        },
+        "difficulty": "easy"
+      },
+      {
+        "id": "tool_002",
+        "task": "Search for pasta recipes with tomatoes and garlic, max 30 minutes",
+        "tool_selection_correct": true,
+        "args_correct": true,
+        "overall_correct": true,
+        "expected": {
+          "tool": "search_recipes",
+          "args": {
+            "ingredients": ["pasta", "tomatoes", "garlic"],
+            "max_cook_time": 30
+          }
+        },
+        "predicted": {
+          "tool": "search_recipes",
+          "args": {
+            "ingredients": ["pasta", "tomatoes", "garlic"],
+            "max_cook_time": 30
+          }
+        },
+        "difficulty": "medium"
+      },
+      {
+        "id": "tool_003",
+        "task": "Find gluten-free desserts under 45 minutes",
+        "tool_selection_correct": true,
+        "args_correct": false,
+        "overall_correct": false,
+        "expected": {
+          "tool": "search_recipes",
+          "args": {
+            "dietary_restrictions": ["gluten-free"],
+            "max_cook_time": 45
+          }
+        },
+        "predicted": {
+          "tool": "search_recipes",
+          "args": {
+            "dietary_restrictions": ["gluten-free"]
+          }
+        },
+        "difficulty": "medium"
+      },
+      {
+        "id": "tool_004",
+        "task": "Get vegan breakfast recipes with less than 20 minutes cook time",
+        "tool_selection_correct": true,
+        "args_correct": true,
+        "overall_correct": true,
+        "expected": {
+          "tool": "search_recipes",
+          "args": {
+            "dietary_restrictions": ["vegan"],
+            "max_cook_time": 20
+          }
+        },
+        "predicted": {
+          "tool": "search_recipes",
+          "args": {
+            "dietary_restrictions": ["vegan"],
+            "max_cook_time": 20
+          }
+        },
+        "difficulty": "easy"
+      },
+      {
+        "id": "tool_005",
+        "task": "Find keto-friendly dinner recipes with chicken",
+        "tool_selection_correct": false,
+        "args_correct": false,
+        "overall_correct": false,
+        "expected": {
+          "tool": "search_recipes",
+          "args": {
+            "ingredients": ["chicken"],
+            "dietary_restrictions": ["keto"]
+          }
+        },
+        "predicted": {
+          "tool": "filter_recipes",
+          "args": {
+            "protein": "chicken",
+            "diet": "keto"
+          }
+        },
+        "difficulty": "hard"
+      }
+    ]
+  },
+  "planbench_results": {
+    "avg_trajectory_metrics": {
+      "exact_match": 0.4,
+      "in_order_match": 0.6,
+      "any_order_match": 0.8,
+      "precision": 0.75,
+      "recall": 0.7,
+      "single_tool_use": 0.85
+    },
+    "details": [
+      {
+        "id": "plan_001",
+        "task": "Find vegan pasta recipes under 30 minutes",
+        "goal": "Retrieve vegan pasta recipes with cooking time <= 30 minutes",
+        "reference_trajectory": ["search_recipes"],
+        "predicted_trajectory": ["search_recipes"],
+        "metrics": {
+          "exact_match": 1.0,
+          "in_order_match": 1.0,
+          "any_order_match": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "single_tool_use": 1.0
+        },
+        "difficulty": "easy"
+      },
+      {
+        "id": "plan_002",
+        "task": "Find Italian recipes with tomatoes, filter by difficulty, and get nutritional info",
+        "goal": "Multi-step retrieval with filtering and enrichment",
+        "reference_trajectory": ["search_recipes", "filter_results", "get_nutrition"],
+        "predicted_trajectory": ["search_recipes", "filter_results", "get_nutrition"],
+        "metrics": {
+          "exact_match": 1.0,
+          "in_order_match": 1.0,
+          "any_order_match": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "single_tool_use": 1.0
+        },
+        "difficulty": "medium"
+      },
+      {
+        "id": "plan_003",
+        "task": "Find desserts, sort by rating, filter top 10, get reviews",
+        "goal": "Complex multi-step query with sorting and aggregation",
+        "reference_trajectory": ["search_recipes", "sort_results", "filter_results", "get_reviews"],
+        "predicted_trajectory": ["search_recipes", "sort_results", "get_reviews"],
+        "metrics": {
+          "exact_match": 0.0,
+          "in_order_match": 0.0,
+          "any_order_match": 0.75,
+          "precision": 0.667,
+          "recall": 0.75,
+          "single_tool_use": 0.75
+        },
+        "difficulty": "hard"
+      },
+      {
+        "id": "plan_004",
+        "task": "Search for Mexican appetizers, get ingredients, check pantry",
+        "goal": "Recipe search with ingredient validation",
+        "reference_trajectory": ["search_recipes", "get_ingredients", "check_pantry"],
+        "predicted_trajectory": ["search_recipes", "get_ingredients", "check_pantry", "suggest_substitutes"],
+        "metrics": {
+          "exact_match": 0.0,
+          "in_order_match": 1.0,
+          "any_order_match": 1.0,
+          "precision": 0.75,
+          "recall": 1.0,
+          "single_tool_use": 0.75
+        },
+        "difficulty": "medium"
+      },
+      {
+        "id": "plan_005",
+        "task": "Find healthy breakfast options under 15 minutes for meal prep",
+        "goal": "Recipe search with time and health constraints",
+        "reference_trajectory": ["search_recipes", "filter_results"],
+        "predicted_trajectory": ["search_recipes", "filter_results", "calculate_nutrition"],
+        "metrics": {
+          "exact_match": 0.0,
+          "in_order_match": 1.0,
+          "any_order_match": 1.0,
+          "precision": 0.667,
+          "recall": 1.0,
+          "single_tool_use": 0.667
+        },
+        "difficulty": "medium"
+      }
+    ]
+  },
+  "cost_estimate": {
+    "total_tokens": 3500,
+    "prompt_tokens": 2000,
+    "completion_tokens": 1500,
+    "total_cost_usd": 0.0055,
+    "model_pricing": {
+      "prompt": 0.0015,
+      "completion": 0.002
+    }
+  },
+  "execution_metadata": {
+    "execution_time_seconds": 145,
+    "notebooks_executed": 1,
+    "api_calls": 10,
+    "errors": 0,
+    "warnings": 0
+  },
+  "validation_checks": {
+    "data_completeness": true,
+    "bfcl_accuracy_threshold": true,
+    "planbench_threshold": true,
+    "json_schema_valid": true,
+    "error_rate_acceptable": true,
+    "metrics_in_range": true,
+    "output_files_exist": true
+  }
+}

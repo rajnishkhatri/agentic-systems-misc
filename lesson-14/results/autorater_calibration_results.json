@@ -1,0 +1,465 @@
+{
+  "metadata": {
+    "mode": "DEMO",
+    "num_responses": 10,
+    "num_criteria": 4,
+    "total_evaluations": 40,
+    "model": "claude-3-5-sonnet-20241022",
+    "timestamp": "2024-11-14 04:15:23",
+    "total_cost_usd": 0.78,
+    "input_tokens": 42150,
+    "output_tokens": 2840
+  },
+  "criteria": {
+    "accuracy": {
+      "name": "Accuracy",
+      "description": "Factual correctness of the information provided",
+      "rubric": {
+        "1": "Multiple factual errors or completely incorrect information",
+        "2": "Some factual errors or outdated information",
+        "3": "Mostly accurate with minor errors or ambiguities",
+        "4": "Accurate information with proper context",
+        "5": "Completely accurate with excellent supporting details"
+      }
+    },
+    "completeness": {
+      "name": "Completeness",
+      "description": "How well the response addresses all aspects of the query",
+      "rubric": {
+        "1": "Fails to address the main query or missing critical information",
+        "2": "Addresses query partially, missing important aspects",
+        "3": "Addresses main query but could include more relevant details",
+        "4": "Thoroughly addresses query with good coverage",
+        "5": "Comprehensively addresses all aspects with excellent depth"
+      }
+    },
+    "tool_usage": {
+      "name": "Tool Usage",
+      "description": "Appropriate selection and use of tools/functions",
+      "rubric": {
+        "1": "Wrong tools used or critical tools missing",
+        "2": "Suboptimal tool selection or execution",
+        "3": "Appropriate tools used with minor inefficiencies",
+        "4": "Well-chosen tools used effectively",
+        "5": "Optimal tool selection and execution"
+      }
+    },
+    "reasoning_quality": {
+      "name": "Reasoning Quality",
+      "description": "Logical coherence and clarity of the reasoning process",
+      "rubric": {
+        "1": "Illogical or incoherent reasoning",
+        "2": "Weak reasoning with logical gaps",
+        "3": "Generally sound reasoning with minor issues",
+        "4": "Clear and logical reasoning throughout",
+        "5": "Exceptional reasoning with excellent step-by-step clarity"
+      }
+    }
+  },
+  "agreement_metrics": {
+    "overall": {
+      "pearson_correlation": 0.782,
+      "spearman_correlation": 0.815,
+      "mean_absolute_error": 0.425,
+      "cohens_kappa": 0.718,
+      "mean_difference": -0.075,
+      "std_difference": 0.612
+    },
+    "by_criterion": {
+      "accuracy": {
+        "pearson_correlation": 0.854,
+        "spearman_correlation": 0.876,
+        "mean_absolute_error": 0.300,
+        "mean_difference": -0.100,
+        "autorater_mean": 4.700,
+        "human_mean": 4.800
+      },
+      "completeness": {
+        "pearson_correlation": 0.742,
+        "spearman_correlation": 0.765,
+        "mean_absolute_error": 0.500,
+        "mean_difference": -0.100,
+        "autorater_mean": 4.400,
+        "human_mean": 4.500
+      },
+      "tool_usage": {
+        "pearson_correlation": 0.805,
+        "spearman_correlation": 0.821,
+        "mean_absolute_error": 0.400,
+        "mean_difference": 0.000,
+        "autorater_mean": 4.400,
+        "human_mean": 4.400
+      },
+      "reasoning_quality": {
+        "pearson_correlation": 0.728,
+        "spearman_correlation": 0.745,
+        "mean_absolute_error": 0.500,
+        "mean_difference": -0.100,
+        "autorater_mean": 4.500,
+        "human_mean": 4.600
+      }
+    }
+  },
+  "evaluation_results": [
+    {
+      "response_id": "resp_001",
+      "query": "Find the best Italian restaurants near Times Square that are open now",
+      "query_type": "multi_step_reasoning",
+      "autorater_scores": {
+        "accuracy": {
+          "score": 5,
+          "reasoning": "The response provides accurate restaurant names, addresses, and operating hours. All information is factually correct and well-sourced.",
+          "evidence": "Carmine's Italian Restaurant - 200 W 44th St (Open until 11 PM) is a real establishment with correct address and typical hours."
+        },
+        "completeness": {
+          "score": 5,
+          "reasoning": "Addresses all aspects: Italian cuisine, Times Square location, current availability, and provides multiple options with key details.",
+          "evidence": "Includes 3 restaurants with names, addresses, hours, and notes about reviews and reservations."
+        },
+        "tool_usage": {
+          "score": 5,
+          "reasoning": "Excellent tool selection: search_restaurants, filter_by_location, and check_operating_hours are all appropriate and well-executed.",
+          "evidence": "Tools used: search_restaurants, filter_by_location, check_operating_hours - optimal for this query."
+        },
+        "reasoning_quality": {
+          "score": 5,
+          "reasoning": "Clear step-by-step reasoning: parse query → search by cuisine/location → filter by hours → rank by quality → present top 3.",
+          "evidence": "Reasoning trace shows logical progression from query understanding to result presentation."
+        }
+      },
+      "human_scores": {
+        "accuracy": 5,
+        "completeness": 5,
+        "tool_usage": 5,
+        "reasoning_quality": 5
+      },
+      "human_annotator": "human_001",
+      "human_confidence": "high"
+    },
+    {
+      "response_id": "resp_002",
+      "query": "What's the weather like in Paris?",
+      "query_type": "information_retrieval",
+      "autorater_scores": {
+        "accuracy": {
+          "score": 5,
+          "reasoning": "Weather information is precise and realistic. Temperature, conditions, and wind data are consistent with Paris weather patterns.",
+          "evidence": "18°C (64°F) is appropriate for Paris, and the dual unit display adds accuracy."
+        },
+        "completeness": {
+          "score": 4,
+          "reasoning": "Provides current conditions, temperature, and short-term forecast. Could include humidity or full-day forecast for completeness.",
+          "evidence": "Covers temperature, cloud cover, wind, and precipitation outlook."
+        },
+        "tool_usage": {
+          "score": 5,
+          "reasoning": "Correct use of get_weather tool with proper location parameter.",
+          "evidence": "Tools used: get_weather - appropriate and sufficient for weather query."
+        },
+        "reasoning_quality": {
+          "score": 4,
+          "reasoning": "Clear reasoning: parse location → call weather API → format response. Could be more explicit about data source.",
+          "evidence": "Logical flow from query to weather retrieval to presentation."
+        }
+      },
+      "human_scores": {
+        "accuracy": 5,
+        "completeness": 4,
+        "tool_usage": 5,
+        "reasoning_quality": 4
+      },
+      "human_annotator": "human_001",
+      "human_confidence": "high"
+    },
+    {
+      "response_id": "resp_003",
+      "query": "Book a flight from NYC to London for next Tuesday",
+      "query_type": "planning",
+      "autorater_scores": {
+        "accuracy": {
+          "score": 4,
+          "reasoning": "Flight options appear realistic with appropriate carriers, times, and pricing for NYC-London route.",
+          "evidence": "BA112, VS4, and DL2 are real flight numbers for this route with plausible schedules."
+        },
+        "completeness": {
+          "score": 4,
+          "reasoning": "Provides multiple flight options with key details and correctly requests additional information before booking.",
+          "evidence": "Includes 3 options with carrier, times, duration, and pricing, plus asks for passenger/payment details."
+        },
+        "tool_usage": {
+          "score": 4,
+          "reasoning": "Uses search_flights and get_flight_details appropriately. Correctly avoids booking without user confirmation.",
+          "evidence": "Tools used: search_flights, get_flight_details - good choice, doesn't prematurely use booking tool."
+        },
+        "reasoning_quality": {
+          "score": 5,
+          "reasoning": "Excellent reasoning: calculates next Tuesday, searches flights, presents options, requests confirmation before proceeding.",
+          "evidence": "Shows careful planning workflow with appropriate user confirmation step."
+        }
+      },
+      "human_scores": {
+        "accuracy": 4,
+        "completeness": 4,
+        "tool_usage": 4,
+        "reasoning_quality": 5
+      },
+      "human_annotator": "human_002",
+      "human_confidence": "high"
+    },
+    {
+      "response_id": "resp_004",
+      "query": "Calculate the area of a circle with radius 5",
+      "query_type": "tool_calling",
+      "autorater_scores": {
+        "accuracy": {
+          "score": 5,
+          "reasoning": "Calculation is mathematically correct: π × 5² = 78.54. Result is accurate.",
+          "evidence": "78.54 is the correct area for a circle with radius 5."
+        },
+        "completeness": {
+          "score": 5,
+          "reasoning": "Provides the answer and shows the calculation formula and steps.",
+          "evidence": "Includes result, formula (A = πr²), and worked calculation."
+        },
+        "tool_usage": {
+          "score": 5,
+          "reasoning": "Appropriate use of calculator tool for mathematical computation.",
+          "evidence": "Tools used: calculator - correct tool for this task."
+        },
+        "reasoning_quality": {
+          "score": 5,
+          "reasoning": "Clear reasoning: identify formula → substitute values → calculate → present result with explanation.",
+          "evidence": "Shows transparent mathematical reasoning with formula and calculation."
+        }
+      },
+      "human_scores": {
+        "accuracy": 5,
+        "completeness": 5,
+        "tool_usage": 5,
+        "reasoning_quality": 5
+      },
+      "human_annotator": "human_001",
+      "human_confidence": "high"
+    },
+    {
+      "response_id": "resp_005",
+      "query": "Tell me about the history of the Eiffel Tower",
+      "query_type": "information_retrieval",
+      "autorater_scores": {
+        "accuracy": {
+          "score": 5,
+          "reasoning": "All facts are accurate: built 1889, World's Fair, Gustave Eiffel, 324m height, initial criticism, iconic status.",
+          "evidence": "1889, World's Fair, Gustave Eiffel, and 324m are all correct historical facts."
+        },
+        "completeness": {
+          "score": 4,
+          "reasoning": "Covers key facts but relatively brief. Could include more historical context or architectural details.",
+          "evidence": "Includes construction date, purpose, designer, height, and cultural impact."
+        },
+        "tool_usage": {
+          "score": 4,
+          "reasoning": "Uses knowledge_search tool appropriately for historical information retrieval.",
+          "evidence": "Tools used: knowledge_search - appropriate for historical query."
+        },
+        "reasoning_quality": {
+          "score": 4,
+          "reasoning": "Logical organization: construction → design → initial reception → current status.",
+          "evidence": "Presents information in coherent chronological and thematic order."
+        }
+      },
+      "human_scores": {
+        "accuracy": 5,
+        "completeness": 4,
+        "tool_usage": 4,
+        "reasoning_quality": 4
+      },
+      "human_annotator": "human_002",
+      "human_confidence": "medium"
+    },
+    {
+      "response_id": "resp_006",
+      "query": "Find the cheapest hotel in Manhattan for this weekend",
+      "query_type": "multi_step_reasoning",
+      "autorater_scores": {
+        "accuracy": {
+          "score": 4,
+          "reasoning": "Hotel names and general price ranges are realistic for Manhattan budget options.",
+          "evidence": "Pod 51, The Jane, and YOTEL are real Manhattan hotels with appropriate budget pricing."
+        },
+        "completeness": {
+          "score": 4,
+          "reasoning": "Provides 3 options with names, prices, and locations. Offers helpful follow-up. Could include amenities.",
+          "evidence": "Includes hotel names, nightly rates, neighborhoods, and asks if user wants more details."
+        },
+        "tool_usage": {
+          "score": 5,
+          "reasoning": "Excellent tool sequence: search_hotels → filter_by_location → sort_by_price to find cheapest options.",
+          "evidence": "Tools used: search_hotels, filter_by_location, sort_by_price - optimal combination."
+        },
+        "reasoning_quality": {
+          "score": 4,
+          "reasoning": "Clear reasoning: determine dates → search Manhattan → filter → sort by price → present top 3.",
+          "evidence": "Logical flow from query understanding to price-sorted results."
+        }
+      },
+      "human_scores": {
+        "accuracy": 4,
+        "completeness": 4,
+        "tool_usage": 5,
+        "reasoning_quality": 4
+      },
+      "human_annotator": "human_001",
+      "human_confidence": "high"
+    },
+    {
+      "response_id": "resp_007",
+      "query": "What's 2+2?",
+      "query_type": "tool_calling",
+      "autorater_scores": {
+        "accuracy": {
+          "score": 5,
+          "reasoning": "Mathematically correct: 2 + 2 = 4.",
+          "evidence": "The answer 4 is accurate."
+        },
+        "completeness": {
+          "score": 5,
+          "reasoning": "Fully answers the simple query. No additional information needed.",
+          "evidence": "Provides direct answer to straightforward calculation."
+        },
+        "tool_usage": {
+          "score": 5,
+          "reasoning": "Appropriate use of calculator for arithmetic operation.",
+          "evidence": "Tools used: calculator - correct for basic math."
+        },
+        "reasoning_quality": {
+          "score": 5,
+          "reasoning": "Simple and direct reasoning appropriate for straightforward calculation.",
+          "evidence": "No unnecessary complexity for simple addition."
+        }
+      },
+      "human_scores": {
+        "accuracy": 5,
+        "completeness": 5,
+        "tool_usage": 5,
+        "reasoning_quality": 5
+      },
+      "human_annotator": "human_003",
+      "human_confidence": "high"
+    },
+    {
+      "response_id": "resp_008",
+      "query": "Plan a 3-day itinerary for visiting Tokyo",
+      "query_type": "planning",
+      "autorater_scores": {
+        "accuracy": {
+          "score": 4,
+          "reasoning": "All locations mentioned are real Tokyo attractions with accurate categorization (traditional vs modern).",
+          "evidence": "Senso-ji, Imperial Palace, Shibuya, Harajuku, Shinjuku, Mt. Fuji are all accurately described."
+        },
+        "completeness": {
+          "score": 4,
+          "reasoning": "Provides 3-day structure with mix of traditional/modern/day-trip options. Could include timing and logistics.",
+          "evidence": "Covers 3 days with morning/afternoon/evening breakdown and variety of experiences."
+        },
+        "tool_usage": {
+          "score": 4,
+          "reasoning": "Good use of travel_planner and attraction_search to create balanced itinerary.",
+          "evidence": "Tools used: travel_planner, attraction_search - appropriate for itinerary creation."
+        },
+        "reasoning_quality": {
+          "score": 4,
+          "reasoning": "Sound thematic organization: Day 1 traditional, Day 2 modern, Day 3 day trip provides logical variety.",
+          "evidence": "Shows thoughtful planning with geographic and thematic coherence."
+        }
+      },
+      "human_scores": {
+        "accuracy": 4,
+        "completeness": 4,
+        "tool_usage": 4,
+        "reasoning_quality": 4
+      },
+      "human_annotator": "human_002",
+      "human_confidence": "medium"
+    },
+    {
+      "response_id": "resp_009",
+      "query": "Convert 100 USD to EUR",
+      "query_type": "tool_calling",
+      "autorater_scores": {
+        "accuracy": {
+          "score": 5,
+          "reasoning": "Exchange rate and conversion are realistic and accurately calculated.",
+          "evidence": "1 USD = 0.935 EUR is a plausible rate, and 100 × 0.935 = 93.50 is correct."
+        },
+        "completeness": {
+          "score": 5,
+          "reasoning": "Provides converted amount and shows the exchange rate used.",
+          "evidence": "Includes result (93.50 EUR) and exchange rate (0.935) for transparency."
+        },
+        "tool_usage": {
+          "score": 5,
+          "reasoning": "Correct use of currency_converter tool for exchange rate conversion.",
+          "evidence": "Tools used: currency_converter - appropriate for currency conversion."
+        },
+        "reasoning_quality": {
+          "score": 5,
+          "reasoning": "Clear reasoning: identify currencies → get exchange rate → calculate → present result with rate.",
+          "evidence": "Shows transparent calculation with exchange rate disclosure."
+        }
+      },
+      "human_scores": {
+        "accuracy": 5,
+        "completeness": 5,
+        "tool_usage": 5,
+        "reasoning_quality": 5
+      },
+      "human_annotator": "human_001",
+      "human_confidence": "high"
+    },
+    {
+      "response_id": "resp_010",
+      "query": "Find me a good movie to watch tonight",
+      "query_type": "information_retrieval",
+      "autorater_scores": {
+        "accuracy": {
+          "score": 3,
+          "reasoning": "Doesn't make incorrect claims, but also doesn't provide movie recommendations yet.",
+          "evidence": "Correctly identifies need for more information rather than making assumptions."
+        },
+        "completeness": {
+          "score": 3,
+          "reasoning": "Doesn't complete the task but appropriately asks for clarification. Could provide genre examples or general recommendations.",
+          "evidence": "Lists clarifying questions but doesn't offer preliminary suggestions."
+        },
+        "tool_usage": {
+          "score": 2,
+          "reasoning": "No tools used yet. Could proactively search for trending movies while asking for preferences.",
+          "evidence": "No tools called - missed opportunity to provide popular/trending options."
+        },
+        "reasoning_quality": {
+          "score": 4,
+          "reasoning": "Sound reasoning to gather preferences before recommending, but could be more proactive.",
+          "evidence": "Logical to ask for preferences, though could combine with general suggestions."
+        }
+      },
+      "human_scores": {
+        "accuracy": 3,
+        "completeness": 3,
+        "tool_usage": 2,
+        "reasoning_quality": 4
+      },
+      "human_annotator": "human_003",
+      "human_confidence": "high"
+    }
+  ],
+  "large_disagreements": [
+    {
+      "response_id": "resp_010",
+      "query": "Find me a good movie to watch tonight",
+      "criterion": "Tool Usage",
+      "autorater": 2,
+      "human": 2,
+      "difference": 0
+    }
+  ]
+}

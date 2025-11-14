@@ -1,0 +1,126 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#E8F4F8','edgeLabelBackground':'#ffffff'}}}%%
+graph TB
+    subgraph "Agent Evaluation Framework: The Three Pillars"
+        A[Agent System] -->|Inherited Behaviors| B[Evaluation Strategy]
+
+        subgraph LLM["LLM Capabilities"]
+            L1[Reasoning Ability]
+            L2[Language Understanding]
+            L3[World Knowledge]
+            L4[Instruction Following]
+        end
+
+        subgraph Tools["Tool Integrations"]
+            T1[API Reliability]
+            T2[Data Quality]
+            T3[Latency]
+            T4[Authorization]
+        end
+
+        subgraph Orchestration["Orchestration Logic"]
+            O1[Prompt Engineering]
+            O2[Flow Control]
+            O3[Error Handling]
+            O4[Memory Management]
+        end
+
+        A --> LLM
+        A --> Tools
+        A --> Orchestration
+
+        B --> P1[Pillar 1: Assess Capabilities]
+        B --> P2[Pillar 2: Evaluate Trajectory]
+        B --> P3[Pillar 3: Evaluate Final Response]
+
+        subgraph Pillar1["Pillar 1: Assessing Agent Capabilities"]
+            C1[Public Benchmarks]
+            C2[BFCL: Tool Calling]
+            C3[PlanBench: Planning]
+            C4[AgentBench: Holistic]
+            C5[τ-bench: Failure Modes]
+            C1 --> C2
+            C1 --> C3
+            C1 --> C4
+            C1 --> C5
+        end
+
+        subgraph Pillar2["Pillar 2: Evaluating Trajectory & Tool Use"]
+            TM1[Trajectory Metrics]
+            TM2[Exact Match]
+            TM3[In-Order Match]
+            TM4[Precision/Recall]
+            TM5[Tool Selection Correctness]
+            TM6[Efficiency: Steps Count]
+            TM1 --> TM2
+            TM1 --> TM3
+            TM1 --> TM4
+            TM1 --> TM5
+            TM1 --> TM6
+        end
+
+        subgraph Pillar3["Pillar 3: Evaluating Final Response"]
+            FR1[Autoraters LLM-as-Judge]
+            FR2[Human Evaluation]
+            FR3[Accuracy & Completeness]
+            FR4[Safety & Guardrails]
+            FR5[Traditional NLG Metrics]
+            FR1 --> FR3
+            FR2 --> FR3
+            FR1 --> FR4
+            FR2 --> FR4
+            FR5 --> FR3
+        end
+
+        P1 --> Pillar1
+        P2 --> Pillar2
+        P3 --> Pillar3
+
+        Pillar1 -->|Baseline Assessment| Results[Comprehensive Agent Evaluation]
+        Pillar2 -->|Process Quality| Results
+        Pillar3 -->|Output Quality| Results
+
+        Results --> Feedback[Feedback Loops]
+        Feedback -->|Improve Prompts| Orchestration
+        Feedback -->|Fix Tool Integrations| Tools
+        Feedback -->|Update Agent Logic| A
+    end
+
+    style A fill:#FFE6CC,stroke:#FF8C00,stroke-width:3px
+    style B fill:#D4E6F1,stroke:#4A90E2,stroke-width:2px
+    style Results fill:#90EE90,stroke:#228B22,stroke-width:3px
+    style Pillar1 fill:#FFF4E6,stroke:#FFA500
+    style Pillar2 fill:#E6F3FF,stroke:#4A90E2
+    style Pillar3 fill:#FFE6F0,stroke:#FF69B4
+    style LLM fill:#F0E6FF,stroke:#9370DB
+    style Tools fill:#E6FFF0,stroke:#20B2AA
+    style Orchestration fill:#FFF0E6,stroke:#FF8C00
+```
+
+**Diagram Purpose:** Show the three-pillar agent evaluation framework and how agent behaviors inherit from LLM, tools, and orchestration components.
+
+**Key Components:**
+
+**Agent Behavior Sources (Top):**
+1. **LLM Capabilities**: Reasoning, language understanding, world knowledge, instruction following
+2. **Tool Integrations**: API reliability, data quality, latency, authorization
+3. **Orchestration Logic**: Prompt engineering, flow control, error handling, memory management
+
+**Three Pillars of Evaluation (Middle):**
+1. **Pillar 1 - Capabilities**: Public benchmarks (BFCL, PlanBench, AgentBench, τ-bench) assess what the agent CAN do
+2. **Pillar 2 - Trajectory**: Trajectory metrics (exact match, precision/recall, tool selection) evaluate what the agent DOES
+3. **Pillar 3 - Final Response**: Autoraters, human evaluation, and NLG metrics evaluate what the agent PRODUCES
+
+**Feedback Loops (Bottom):**
+- Results feed back to improve prompts, fix tools, and update agent logic
+- Continuous improvement cycle
+
+**Referenced In:**
+- `agent_evaluation_fundamentals.md` (Section 5, Lines 373-461)
+- `trajectory_evaluation_techniques.md` (Section 1, Lines 22-47)
+- `autorater_final_response_eval.md` (Section 2, Lines 66-112)
+
+**Rendering Notes:**
+- Color-coded subgraphs for visual distinction
+- Hierarchical flow from top (agent system) to bottom (feedback)
+- Compatible with GitHub Markdown rendering

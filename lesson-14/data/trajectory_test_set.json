@@ -1,0 +1,1915 @@
+{
+  "version": "1.0",
+  "created": "2025-11-14",
+  "description": "Test set for trajectory evaluation - 100 agent execution traces with expected metric scores",
+  "statistics": {
+    "total_tests": 100,
+    "exact_matches": 30,
+    "in_order_partial": 25,
+    "any_order_matches": 20,
+    "precision_recall_cases": 15,
+    "failure_cases": 10
+  },
+  "test_cases": [
+    {
+      "test_id": "test_001",
+      "reference_id": "ref_001",
+      "task_description": "Find vegetarian pasta recipes",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.3,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_002",
+      "reference_id": "ref_002",
+      "task_description": "Look up Bhagavad Gita verse 2.47",
+      "actual_actions": ["classify_query", "retrieve_verse", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.6,
+        "num_llm_calls": 1,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_003",
+      "reference_id": "ref_003",
+      "task_description": "What are gluten-free breakfast options under 30 minutes?",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.1,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_004",
+      "reference_id": "ref_004",
+      "task_description": "Explain the concept of dharma in the Gita",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.2,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_005",
+      "reference_id": "ref_005",
+      "task_description": "Find Italian dessert recipes with no nuts",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.4,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_006",
+      "reference_id": "ref_001",
+      "task_description": "Find vegetarian pasta recipes (with extra validation step)",
+      "actual_actions": ["classify_query", "search_recipes", "validate_results", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.8,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 0.75,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_007",
+      "reference_id": "ref_002",
+      "task_description": "Look up Bhagavad Gita verse 2.47 (with commentary retrieval)",
+      "actual_actions": ["classify_query", "retrieve_verse", "retrieve_commentary", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.5,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 0.75,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_008",
+      "reference_id": "ref_006",
+      "task_description": "What does Krishna say about action without attachment?",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.9,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_009",
+      "reference_id": "ref_007",
+      "task_description": "Show me quick lunch recipes",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.9,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_010",
+      "reference_id": "ref_008",
+      "task_description": "Find vegan dinner recipes with tofu",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.3,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_011",
+      "reference_id": "ref_011",
+      "task_description": "Compare Krishna's teachings on knowledge vs devotion",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "compare_perspectives", "synthesize_response", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 8.2,
+        "num_llm_calls": 5,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_012",
+      "reference_id": "ref_012",
+      "task_description": "Find Asian recipes with chicken under 45 minutes that are kid-friendly",
+      "actual_actions": ["classify_query", "search_recipes", "filter_kid_friendly", "rank_by_simplicity", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.6,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_013",
+      "reference_id": "ref_013",
+      "task_description": "What are healthy snack ideas?",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.8,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_014",
+      "reference_id": "ref_014",
+      "task_description": "Explain the three gunas in the Bhagavad Gita",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 5.0,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_015",
+      "reference_id": "ref_015",
+      "task_description": "Find Indian breakfast recipes",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.0,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_016",
+      "reference_id": "ref_016",
+      "task_description": "How do I reconcile Krishna's advice on detachment with the need to support my family?",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "identify_context", "synthesize_practical_advice", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 9.0,
+        "num_llm_calls": 5,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_017",
+      "reference_id": "ref_017",
+      "task_description": "Find dairy-free desserts",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.1,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_018",
+      "reference_id": "ref_018",
+      "task_description": "What does verse 18.66 say?",
+      "actual_actions": ["classify_query", "retrieve_verse", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.5,
+        "num_llm_calls": 1,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_019",
+      "reference_id": "ref_019",
+      "task_description": "Find Mediterranean recipes with fish that are heart-healthy",
+      "actual_actions": ["classify_query", "search_recipes", "filter_heart_healthy", "rank_by_nutrition", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.0,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_020",
+      "reference_id": "ref_020",
+      "task_description": "What is the relationship between self-knowledge and liberation in the Gita?",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "trace_logical_connection", "synthesize_response", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 8.7,
+        "num_llm_calls": 5,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_021",
+      "reference_id": "ref_021",
+      "task_description": "Find quick breakfast smoothie recipes",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.7,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_022",
+      "reference_id": "ref_022",
+      "task_description": "Compare verses 3.5 and 5.8 on the nature of action",
+      "actual_actions": ["classify_query", "retrieve_verse", "retrieve_verse", "compare_verses", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 5.3,
+        "num_llm_calls": 4,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_023",
+      "reference_id": "ref_023",
+      "task_description": "Find keto-friendly dinner recipes",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.2,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_024",
+      "reference_id": "ref_024",
+      "task_description": "What does Krishna say about fear and courage?",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.6,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_025",
+      "reference_id": "ref_025",
+      "task_description": "Find high-protein vegetarian recipes for athletes",
+      "actual_actions": ["classify_query", "search_recipes", "filter_high_protein", "rank_by_nutrition", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.7,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_026",
+      "reference_id": "ref_026",
+      "task_description": "Trace the evolution of Krishna's teaching from Chapter 2 to Chapter 18",
+      "actual_actions": ["classify_query", "retrieve_chapter_summary", "identify_key_verses", "trace_thematic_development", "synthesize_response", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 12.1,
+        "num_llm_calls": 7,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_027",
+      "reference_id": "ref_027",
+      "task_description": "Find Thai recipes with shrimp",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.0,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_028",
+      "reference_id": "ref_028",
+      "task_description": "What is the significance of the Bhagavad Gita's opening verse?",
+      "actual_actions": ["classify_query", "retrieve_verse", "retrieve_commentary", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.5,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_029",
+      "reference_id": "ref_029",
+      "task_description": "Find paleo dessert recipes with chocolate",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.1,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_030",
+      "reference_id": "ref_030",
+      "task_description": "How does the Gita reconcile free will with divine will?",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "identify_paradox", "synthesize_resolution", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 9.6,
+        "num_llm_calls": 5,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_031",
+      "reference_id": "ref_004",
+      "task_description": "Explain the concept of dharma in the Gita (out of order)",
+      "actual_actions": ["classify_query", "synthesize_response", "retrieve_thematic_verses", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.1,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_032",
+      "reference_id": "ref_006",
+      "task_description": "What does Krishna say about action without attachment? (out of order)",
+      "actual_actions": ["classify_query", "format_response", "retrieve_thematic_verses", "synthesize_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.8,
+        "num_llm_calls": 3,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_033",
+      "reference_id": "ref_009",
+      "task_description": "What is the meaning of yoga according to Krishna? (out of order)",
+      "actual_actions": ["classify_query", "synthesize_response", "retrieve_thematic_verses", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.5,
+        "num_llm_calls": 3,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_034",
+      "reference_id": "ref_011",
+      "task_description": "Compare Krishna's teachings on knowledge vs devotion (partial order)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "compare_perspectives", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 8.5,
+        "num_llm_calls": 5,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_035",
+      "reference_id": "ref_014",
+      "task_description": "Explain the three gunas in the Bhagavad Gita (out of order)",
+      "actual_actions": ["classify_query", "format_response", "retrieve_thematic_verses", "synthesize_response"],
+      "execution_metadata": {
+        "duration_seconds": 5.1,
+        "num_llm_calls": 3,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_036",
+      "reference_id": "ref_016",
+      "task_description": "Reconcile detachment with family support (partial order)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_practical_advice", "identify_context", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 9.1,
+        "num_llm_calls": 5,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_037",
+      "reference_id": "ref_020",
+      "task_description": "Self-knowledge and liberation relationship (partial order)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "trace_logical_connection", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 8.8,
+        "num_llm_calls": 5,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_038",
+      "reference_id": "ref_022",
+      "task_description": "Compare verses 3.5 and 5.8 (partial order)",
+      "actual_actions": ["classify_query", "retrieve_verse", "compare_verses", "retrieve_verse", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 5.4,
+        "num_llm_calls": 4,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_039",
+      "reference_id": "ref_024",
+      "task_description": "Krishna on fear and courage (out of order)",
+      "actual_actions": ["classify_query", "synthesize_response", "retrieve_thematic_verses", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.6,
+        "num_llm_calls": 3,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_040",
+      "reference_id": "ref_026",
+      "task_description": "Teaching evolution Chapter 2-18 (partial order)",
+      "actual_actions": ["classify_query", "retrieve_chapter_summary", "trace_thematic_development", "identify_key_verses", "synthesize_response", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 12.0,
+        "num_llm_calls": 7,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_041",
+      "reference_id": "ref_028",
+      "task_description": "Opening verse significance (out of order)",
+      "actual_actions": ["classify_query", "synthesize_response", "retrieve_verse", "retrieve_commentary", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.7,
+        "num_llm_calls": 3,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_042",
+      "reference_id": "ref_030",
+      "task_description": "Free will vs divine will (partial order)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_resolution", "identify_paradox", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 9.7,
+        "num_llm_calls": 5,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_043",
+      "reference_id": "ref_012",
+      "task_description": "Asian chicken recipes (partial order)",
+      "actual_actions": ["classify_query", "search_recipes", "rank_by_simplicity", "filter_kid_friendly", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.9,
+        "num_llm_calls": 3,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_044",
+      "reference_id": "ref_019",
+      "task_description": "Mediterranean fish recipes (out of order)",
+      "actual_actions": ["classify_query", "search_recipes", "rank_by_nutrition", "filter_heart_healthy", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.1,
+        "num_llm_calls": 3,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_045",
+      "reference_id": "ref_025",
+      "task_description": "High-protein vegetarian for athletes (out of order)",
+      "actual_actions": ["classify_query", "search_recipes", "rank_by_nutrition", "filter_high_protein", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.8,
+        "num_llm_calls": 3,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_046",
+      "reference_id": "ref_001",
+      "task_description": "Find vegetarian pasta recipes (missing classification)",
+      "actual_actions": ["search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.9,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.67,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_047",
+      "reference_id": "ref_002",
+      "task_description": "Look up verse 2.47 (missing format step)",
+      "actual_actions": ["classify_query", "retrieve_verse"],
+      "execution_metadata": {
+        "duration_seconds": 1.4,
+        "num_llm_calls": 1,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.67,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_048",
+      "reference_id": "ref_004",
+      "task_description": "Explain dharma (missing synthesis)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.8,
+        "num_llm_calls": 2,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.75,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_049",
+      "reference_id": "ref_011",
+      "task_description": "Compare knowledge vs devotion (missing validation)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "compare_perspectives", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 7.2,
+        "num_llm_calls": 4,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.83,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_050",
+      "reference_id": "ref_012",
+      "task_description": "Asian chicken recipes (missing filter)",
+      "actual_actions": ["classify_query", "search_recipes", "rank_by_simplicity", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.2,
+        "num_llm_calls": 3,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.8,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_051",
+      "reference_id": "ref_016",
+      "task_description": "Detachment and family (missing context identification)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_practical_advice", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 8.1,
+        "num_llm_calls": 4,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.83,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_052",
+      "reference_id": "ref_020",
+      "task_description": "Self-knowledge and liberation (missing trace)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 7.8,
+        "num_llm_calls": 4,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.83,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_053",
+      "reference_id": "ref_022",
+      "task_description": "Compare verses 3.5 and 5.8 (missing one verse retrieval)",
+      "actual_actions": ["classify_query", "retrieve_verse", "compare_verses", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.9,
+        "num_llm_calls": 3,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.83,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_054",
+      "reference_id": "ref_026",
+      "task_description": "Teaching evolution (missing key verse identification)",
+      "actual_actions": ["classify_query", "retrieve_chapter_summary", "trace_thematic_development", "synthesize_response", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 10.8,
+        "num_llm_calls": 6,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.86,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_055",
+      "reference_id": "ref_028",
+      "task_description": "Opening verse (missing commentary)",
+      "actual_actions": ["classify_query", "retrieve_verse", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.0,
+        "num_llm_calls": 2,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 1.0,
+        "recall": 0.8,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_056",
+      "reference_id": "ref_001",
+      "task_description": "Vegetarian pasta (extra validation and ranking)",
+      "actual_actions": ["classify_query", "search_recipes", "validate_results", "rank_by_rating", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.1,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 0.6,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_057",
+      "reference_id": "ref_002",
+      "task_description": "Verse 2.47 (extra cross-reference)",
+      "actual_actions": ["classify_query", "retrieve_verse", "cross_reference_verses", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.8,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 0.75,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_058",
+      "reference_id": "ref_004",
+      "task_description": "Dharma concept (extra validation)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 5.3,
+        "num_llm_calls": 4,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 0.8,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_059",
+      "reference_id": "ref_007",
+      "task_description": "Quick lunch (extra nutritional analysis)",
+      "actual_actions": ["classify_query", "search_recipes", "analyze_nutrition", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.7,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 0.75,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_060",
+      "reference_id": "ref_011",
+      "task_description": "Knowledge vs devotion (extra historical context)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "compare_perspectives", "add_historical_context", "synthesize_response", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 9.8,
+        "num_llm_calls": 6,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 0.86,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_061",
+      "reference_id": "ref_001",
+      "task_description": "Vegetarian pasta (wrong tool - used thematic search)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.2,
+        "num_llm_calls": 2,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 0.33,
+        "recall": 0.67,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_062",
+      "reference_id": "ref_002",
+      "task_description": "Verse 2.47 (wrong tool - used search_recipes)",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.1,
+        "num_llm_calls": 2,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 0.33,
+        "recall": 0.67,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_063",
+      "reference_id": "ref_004",
+      "task_description": "Dharma concept (wrong tool - used verse lookup)",
+      "actual_actions": ["classify_query", "retrieve_verse", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.5,
+        "num_llm_calls": 2,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 0.5,
+        "recall": 0.75,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_064",
+      "reference_id": "ref_011",
+      "task_description": "Knowledge vs devotion (wrong tool for comparison)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 7.1,
+        "num_llm_calls": 4,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 0.8,
+        "recall": 0.67,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_065",
+      "reference_id": "ref_012",
+      "task_description": "Asian chicken (wrong filtering tool)",
+      "actual_actions": ["classify_query", "search_recipes", "validate_results", "rank_by_simplicity", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.9,
+        "num_llm_calls": 3,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 0.6,
+        "recall": 0.8,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_066",
+      "reference_id": "ref_001",
+      "task_description": "Vegetarian pasta (completely wrong trajectory)",
+      "actual_actions": ["retrieve_verse", "synthesize_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.2,
+        "num_llm_calls": 1,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_067",
+      "reference_id": "ref_002",
+      "task_description": "Verse 2.47 (skipped all retrieval)",
+      "actual_actions": ["classify_query", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.1,
+        "num_llm_calls": 1,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 0.5,
+        "recall": 0.67,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_068",
+      "reference_id": "ref_004",
+      "task_description": "Dharma concept (only classification)",
+      "actual_actions": ["classify_query"],
+      "execution_metadata": {
+        "duration_seconds": 0.8,
+        "num_llm_calls": 1,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 0.25,
+        "recall": 0.25,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_069",
+      "reference_id": "ref_011",
+      "task_description": "Knowledge vs devotion (incomplete execution)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses"],
+      "execution_metadata": {
+        "duration_seconds": 3.1,
+        "num_llm_calls": 2,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 0.5,
+        "recall": 0.33,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_070",
+      "reference_id": "ref_016",
+      "task_description": "Detachment and family (early termination)",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "identify_context"],
+      "execution_metadata": {
+        "duration_seconds": 4.5,
+        "num_llm_calls": 2,
+        "success": false
+      },
+      "expected_metrics": {
+        "exact_match": 0.0,
+        "in_order_match": 0.0,
+        "any_order_match": 0.0,
+        "precision": 0.67,
+        "recall": 0.5,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_071",
+      "reference_id": "ref_003",
+      "task_description": "Gluten-free breakfast under 30 minutes",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.1,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_072",
+      "reference_id": "ref_005",
+      "task_description": "Italian desserts with no nuts",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.2,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_073",
+      "reference_id": "ref_008",
+      "task_description": "Vegan tofu dinner",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.3,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_074",
+      "reference_id": "ref_010",
+      "task_description": "Low-carb Mexican",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.0,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_075",
+      "reference_id": "ref_013",
+      "task_description": "Healthy snacks",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.8,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_076",
+      "reference_id": "ref_017",
+      "task_description": "Dairy-free desserts",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.1,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_077",
+      "reference_id": "ref_018",
+      "task_description": "Verse 18.66",
+      "actual_actions": ["classify_query", "retrieve_verse", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.6,
+        "num_llm_calls": 1,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_078",
+      "reference_id": "ref_021",
+      "task_description": "Quick breakfast smoothies",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.7,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_079",
+      "reference_id": "ref_023",
+      "task_description": "Keto-friendly dinners",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.2,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_080",
+      "reference_id": "ref_027",
+      "task_description": "Thai shrimp recipes",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.0,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_081",
+      "reference_id": "ref_029",
+      "task_description": "Paleo chocolate desserts",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.1,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_082",
+      "reference_id": "ref_031",
+      "task_description": "Beginner Japanese recipes",
+      "actual_actions": ["classify_query", "search_recipes", "filter_beginner_friendly", "rank_by_simplicity", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.6,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_083",
+      "reference_id": "ref_032",
+      "task_description": "Soul immortality verses",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.9,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_084",
+      "reference_id": "ref_033",
+      "task_description": "Whole30 recipes",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.3,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_085",
+      "reference_id": "ref_034",
+      "task_description": "Arjuna's chariot symbolism",
+      "actual_actions": ["classify_query", "retrieve_verse", "retrieve_commentary", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.8,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_086",
+      "reference_id": "ref_035",
+      "task_description": "Budget weekly meal prep",
+      "actual_actions": ["classify_query", "search_recipes", "filter_budget_friendly", "calculate_weekly_plan", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.2,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_087",
+      "reference_id": "ref_036",
+      "task_description": "Three yogas relationship",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "compare_yoga_paths", "synthesize_integration", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 9.9,
+        "num_llm_calls": 5,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_088",
+      "reference_id": "ref_037",
+      "task_description": "French special occasion recipes",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.9,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_089",
+      "reference_id": "ref_038",
+      "task_description": "Multi-commentator verse 9.26",
+      "actual_actions": ["classify_query", "retrieve_verse", "retrieve_multi_commentary", "compare_interpretations", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 6.1,
+        "num_llm_calls": 4,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_090",
+      "reference_id": "ref_039",
+      "task_description": "Air fryer recipes under 20 min",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.0,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_091",
+      "reference_id": "ref_040",
+      "task_description": "Krishna's counseling strategy Chapter 2",
+      "actual_actions": ["classify_query", "retrieve_chapter_summary", "identify_key_arguments", "trace_logical_progression", "synthesize_response", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 11.3,
+        "num_llm_calls": 6,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_092",
+      "reference_id": "ref_041",
+      "task_description": "Kid-friendly lunch box",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.8,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_093",
+      "reference_id": "ref_042",
+      "task_description": "Equanimity teaching",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 4.7,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_094",
+      "reference_id": "ref_043",
+      "task_description": "Slow cooker weeknights",
+      "actual_actions": ["classify_query", "search_recipes", "filter_slow_cooker", "rank_by_ease", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.7,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_095",
+      "reference_id": "ref_044",
+      "task_description": "Chapter 11 literary analysis",
+      "actual_actions": ["classify_query", "retrieve_chapter_summary", "identify_literary_devices", "analyze_structure", "synthesize_response", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 13.0,
+        "num_llm_calls": 7,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_096",
+      "reference_id": "ref_045",
+      "task_description": "Sugar-free baking",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 2.1,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    },
+    {
+      "test_id": "test_097",
+      "reference_id": "ref_046",
+      "task_description": "Kurukshetra historical context",
+      "actual_actions": ["classify_query", "retrieve_historical_context", "retrieve_verse", "synthesize_response", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 5.2,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_098",
+      "reference_id": "ref_047",
+      "task_description": "High-protein muscle breakfast",
+      "actual_actions": ["classify_query", "search_recipes", "filter_high_protein", "rank_by_nutrition", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 3.9,
+        "num_llm_calls": 3,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_099",
+      "reference_id": "ref_048",
+      "task_description": "Prakriti-purusha modern psychology",
+      "actual_actions": ["classify_query", "retrieve_thematic_verses", "identify_modern_parallels", "synthesize_interdisciplinary_response", "validate_attribution", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 9.4,
+        "num_llm_calls": 5,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": false
+      }
+    },
+    {
+      "test_id": "test_100",
+      "reference_id": "ref_049",
+      "task_description": "One-pot dinners",
+      "actual_actions": ["classify_query", "search_recipes", "format_response"],
+      "execution_metadata": {
+        "duration_seconds": 1.7,
+        "num_llm_calls": 2,
+        "success": true
+      },
+      "expected_metrics": {
+        "exact_match": 1.0,
+        "in_order_match": 1.0,
+        "any_order_match": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "single_tool_use": true
+      }
+    }
+  ]
+}

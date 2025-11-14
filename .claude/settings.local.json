@@ -14,9 +14,35 @@
       "Bash(git commit:*)",
       "Bash(awk:*)",
       "Bash(chmod:*)",
-      "Bash(ruff format:*)"
+      "Bash(ruff format:*)",
+      "Bash(cat:*)",
+      "Read(//Users/rajnishkhatri/Documents/**)",
+      "Bash(npx:*)",
+      "Bash(pip install:*)",
+      "Bash(source:*)",
+      "Bash(.venv/bin/python:*)",
+      "Bash(.venv/bin/pip:*)",
+      "Bash(tree:*)",
+      "Bash(grep:*)",
+      "Bash(git -C /Users/rajnishkhatri/Documents/recipe-chatbot log --oneline --graph -10)",
+      "Bash(test:*)",
+      "Bash(find:*)",
+      "Bash(python3:*)",
+      "Read(//Users/rajnishkhatri/**)",
+      "WebFetch(domain:code.claude.com)",
+      "Bash(ruff check:*)",
+      "Bash(jupyter nbconvert:*)",
+      "Read(//usr/local/lib/node_modules/@anthropic-ai/claude-code/**)",
+      "Read(//usr/local/lib/node_modules/@anthropic-ai/**)",
+      "Read(//usr/local/lib/node_modules/**)",
+      "Bash(export STATUSLINE_DEBUG=1)",
+      "Bash(bash:*)"
     ],
     "deny": [],
     "ask": []
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh"
   }
 }
