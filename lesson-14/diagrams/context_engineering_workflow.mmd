@@ -1,0 +1,55 @@
+graph LR
+    Query[User Query] --> Stage1[Stage 1: Selection]
+
+    %% Selection stage
+    Stage1 --> Rerank[Re-ranking<br/>BM25, Cross-encoder]
+    Stage1 --> MMR[MMR Selection<br/>λ parameter tuning]
+    Stage1 --> BusinessRules[Business Rules<br/>Domain filtering]
+    Stage1 --> Specialization[Specialization<br/>Metadata filtering]
+
+    Rerank --> Selected[Selected Documents]
+    MMR --> Selected
+    BusinessRules --> Selected
+    Specialization --> Selected
+
+    Selected --> Stage2[Stage 2: Compression]
+
+    %% Compression stage
+    Stage2 --> Summarization[Summarization<br/>Extractive/Abstractive]
+    Stage2 --> Dedup[Deduplication<br/>Exact & semantic match]
+    Stage2 --> LLMLingua[LLMLingua<br/>Token-level compression]
+
+    Summarization --> Compressed[Compressed Context]
+    Dedup --> Compressed
+    LLMLingua --> Compressed
+
+    Compressed --> Stage3[Stage 3: Ordering]
+
+    %% Ordering stage
+    Stage3 --> Primacy[Primacy Effect<br/>Important items first]
+    Stage3 --> Recency[Recency Effect<br/>Important items last]
+    Stage3 --> LostMiddle[Lost-in-Middle Fix<br/>Boundaries prioritized]
+
+    Primacy --> Final[Final Context]
+    Recency --> Final
+    LostMiddle --> Final
+
+    Final --> LLM[LLM Inference]
+
+    %% ROI metrics annotation
+    Stage2 -.->|ROI: $24 → $12 → $4.80| ROINote[5x Cost Savings<br/>Compression Ratio: 0.2]
+
+    %% Styling
+    classDef selection fill:#FFA07A,stroke:#FF6347,stroke-width:2px,color:#000
+    classDef compression fill:#FFD700,stroke:#FFA500,stroke-width:2px,color:#000
+    classDef ordering fill:#87CEEB,stroke:#4682B4,stroke-width:2px,color:#000
+    classDef intermediate fill:#E0E0E0,stroke:#808080,stroke-width:2px,color:#000
+    classDef endpoint fill:#90EE90,stroke:#228B22,stroke-width:3px,color:#000
+    classDef annotation fill:#FFF8DC,stroke:#DAA520,stroke-width:1px,color:#000,stroke-dasharray: 5 5
+
+    class Query,LLM endpoint
+    class Stage1,Rerank,MMR,BusinessRules,Specialization selection
+    class Stage2,Summarization,Dedup,LLMLingua compression
+    class Stage3,Primacy,Recency,LostMiddle ordering
+    class Selected,Compressed,Final intermediate
+    class ROINote annotation

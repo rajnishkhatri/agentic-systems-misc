@@ -1,0 +1,36 @@
+graph TD
+    Root[Agent Memory Systems]
+
+    %% Short-term memory branch
+    Root --> STM[Short-Term Memory]
+    STM --> Working[Working Memory]
+    Working --> WorkingDesc["Limited capacity<br/>Conversation history<br/>Persists across LLM calls"]
+
+    %% Long-term memory branch
+    Root --> LTM[Long-Term Memory]
+
+    LTM --> Episodic[Episodic Memory]
+    Episodic --> EpisodicDesc["Specific events & experiences<br/>Agent actions & outcomes<br/>Example: Last birthday party"]
+
+    LTM --> Semantic[Semantic Memory]
+    Semantic --> SemanticDesc["Knowledge about the world<br/>External databases (Wikipedia)<br/>Example: Capital of France"]
+
+    LTM --> Procedural[Procedural Memory]
+    Procedural --> ProceduralDesc["Patterns & procedures<br/>System prompts<br/>Example: How to write Python"]
+
+    %% Parametric memory (special case)
+    Root --> Parametric[Parametric Memory]
+    Parametric --> ParametricDesc["Model parameters<br/>Trained knowledge<br/>Instilled via fine-tuning"]
+
+    %% Styling
+    classDef shortTerm fill:#4A90E2,stroke:#2E5C8A,stroke-width:2px,color:#fff
+    classDef longTerm fill:#50C878,stroke:#2E7D4E,stroke-width:2px,color:#fff
+    classDef parametric fill:#9B59B6,stroke:#6C3483,stroke-width:2px,color:#fff
+    classDef description fill:#ECF0F1,stroke:#95A5A6,stroke-width:1px,color:#2C3E50
+    classDef root fill:#E74C3C,stroke:#C0392B,stroke-width:3px,color:#fff
+
+    class Root root
+    class STM,Working shortTerm
+    class LTM,Episodic,Semantic,Procedural longTerm
+    class Parametric parametric
+    class WorkingDesc,EpisodicDesc,SemanticDesc,ProceduralDesc,ParametricDesc description

@@ -1,0 +1,57 @@
+graph TD
+    Query["User Query:<br/>Explain flamingo behavior"] --> ReasoningTrace[Reasoning Trace<br/>Initial Analysis]
+
+    ReasoningTrace --> Branch{Multi-Branch<br/>Search Generation}
+
+    %% Branch 1
+    Branch -->|Branch 1| Search1["Search Query:<br/>Flamingo habitat<br/>and ecology"]
+    Search1 --> Retrieval1[Retrieve Documents<br/>Top-3 results]
+    Retrieval1 --> Docs1["Docs: habitat,<br/>migration, nesting"]
+
+    %% Branch 2
+    Branch -->|Branch 2| Search2["Search Query:<br/>Flamingo feeding<br/>behavior"]
+    Search2 --> Retrieval2[Retrieve Documents<br/>Top-3 results]
+    Retrieval2 --> Docs2["Docs: diet,<br/>filter-feeding,<br/>foraging"]
+
+    %% Branch 3
+    Branch -->|Branch 3| Search3["Search Query:<br/>Flamingo social<br/>structure"]
+    Search3 --> Retrieval3[Retrieve Documents<br/>Top-3 results]
+    Retrieval3 --> Docs3["Docs: flocking,<br/>courtship,<br/>communication"]
+
+    %% Reason-in-Documents module
+    Docs1 --> RiD[Reason-in-Documents<br/>Condensation Module]
+    Docs2 --> RiD
+    Docs3 --> RiD
+
+    RiD --> Condense[Condense & Reason:<br/>Extract key insights<br/>Cross-reference findings]
+
+    Condense --> Decision{Confidence<br/>Threshold Met?}
+
+    Decision -->|Yes| FinalReasoning[Final Reasoning Trace<br/>Comprehensive synthesis]
+    Decision -->|No<br/>Iterate| ReasoningTrace
+
+    FinalReasoning --> Response["Final Response:<br/>Complete explanation<br/>with citations"]
+
+    %% Overhead metrics annotation
+    Docs1 -.->|Overhead| Metrics["Token Overhead:<br/>Search: 45 tokens<br/>Retrieval: 337 tokens<br/>Condensation: 457 tokens<br/>Total: 243.9% vs baseline"]
+
+    %% Styling
+    classDef query fill:#E74C3C,stroke:#C0392B,stroke-width:2px,color:#fff
+    classDef reasoning fill:#3498DB,stroke:#2874A6,stroke-width:2px,color:#fff
+    classDef search fill:#F39C12,stroke:#D68910,stroke-width:2px,color:#000
+    classDef retrieval fill:#16A085,stroke:#138D75,stroke-width:2px,color:#fff
+    classDef documents fill:#9B59B6,stroke:#7D3C98,stroke-width:2px,color:#fff
+    classDef condensation fill:#E67E22,stroke:#CA6F1E,stroke-width:2px,color:#fff
+    classDef decision fill:#95A5A6,stroke:#7F8C8D,stroke-width:2px,color:#fff
+    classDef response fill:#27AE60,stroke:#1E8449,stroke-width:3px,color:#fff
+    classDef annotation fill:#FFF8DC,stroke:#DAA520,stroke-width:1px,color:#000,stroke-dasharray: 5 5
+
+    class Query query
+    class ReasoningTrace,FinalReasoning reasoning
+    class Search1,Search2,Search3 search
+    class Retrieval1,Retrieval2,Retrieval3 retrieval
+    class Docs1,Docs2,Docs3 documents
+    class RiD,Condense condensation
+    class Branch,Decision decision
+    class Response response
+    class Metrics annotation
