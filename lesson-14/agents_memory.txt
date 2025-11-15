@@ -1,0 +1,515 @@
+Among all the added modules to the augmented LLM, memory is a key component needed to go from an LLM to an Agent. By themselves, LLMs are forgetful entities; they do not remember past conversations, nor do they have access to all actions they have taken. If you were to locally load up an LLM and ask it to remember your name, it can’t–not without explicitly giving it memory. In contrast, the interactions that you might have with hosted LLMs, like ChatGPT and Claude, are not regular LLMs. Rather, they are LLMs augmented with modules like memory and tools. Figure 4-1 illustrates this forgetfulness well, as it demonstrates the interaction you might have with a regular LLM. As such, LLMs are stateless, and information is not persisted across calls.
+
+
+Over the years, there has been significant attention to aspects of agents like tool usage, reasoning LLMs, and multi-agent collaboration. Each is quite important by itself, but don’t underestimate the importance of memory. Without memory, a personal assistant agent wouldn’t be able to remember past conversations. Without memory, a coding agent wouldn’t understand your entire codebase. Without memory, an Agent would forget that it has already taken a given action and keep on repeating it.
+
+Memory can be quite difficult to define. From a narrow view, it relates to all historical information during the execution of an Agent. In this chapter, however, we take a broader perspective. Memory relates not only to all past actions of an Agent, but also external information beyond the agent-environment interactions. A coding agent’s memory would not only consist of the actions it has taken to fix your bugs, but also your hosted documentation and issues pages.
+
+Memory is not only the act of remembering information but also storing newly generated information. Likewise, often a choice has to be made on which information to store and how, and which information to remember. All these methodologies and choices have important implications on the Agent’s behavior. As shown in Figure 4-2, updating and using memory is an iterative process that requires careful handling of intermediate information.
+
+
+Memory allows the agent to remember past errors and failed experiences, so it can be more effective for handling similar tasks in the future. As such, memory enables Agents to learn and evolve as they remember more experiences. By interacting with the environment and storing the feedback, Agents learn from their previous experiences. Memory is, therefore, application-specific, and implementations may not only decide what to remember but also how it is remembered.
+
+Throughout this chapter, we will explore many types of memory modules, ranging from short-term and long-term memory to external memory modules, through methods like (agentic) retrieval-augmented generation. Seen in Figure 4-3, it forms the foundation of the LLM. After all, how would an LLM be able to use tools or create plans if it keeps forgetting them?
+
+A diagram of a memory processing model
+
+AI-generated content may be incorrect.
+Types of Memory
+
+Memory for LLMs tends to follow human memory types, as the agents that we attempt to create are often modeled after human behavior. Instead of going through all forms of human memory types, which there are many, the “Cognitive Architectures for Language Agents” paper describes four types of external memory that we often see back in Agents, namely short-term working memory and long-term memories: episodic, semantic, and procedural memory.1
+
+Working memory is a type of short-term memory that is typically defined as a system with limited capacity that temporarily holds information that we need for things like decision-making and reasoning. For LLMs, it is typically data that persists across LLM calls. More specifically, it is the chat history of the LLM that is being stored in memory and continuously fed back to the LLM.
+
+For long-term memory, there are three forms described:
+
+Episodic memory
+Involves remembering specific events and experiences from one’s past (e.g., your last birthday party). For agents, this typically involves specific actions the agent has taken thus far and their outcomes.
+
+Semantic memory
+Involves remembering knowledge about the world (e.g., the capital of France). For agents, this may involve querying an external database like Wikipedia or the codebase that you are working on.
+
+Procedural memory
+Involves remembering patterns of how to do things (e.g., writing code in Python). For agents, this can be information hidden in its parameters (also called parametric memory) or the system prompt, which persists across calls.
+
+Figure 4-4 shows an example of how these different forms of memory can be used and interpreted during a single agent’s session.
+
+
+As briefly mentioned previously, we can also consider the type of memory that the model already has, parametric memory.2 Without any memory modules, LLMs are trained to a certain extent to retain information. If you ask an LLM what the capital of France is, most LLMs will correctly remember that it is Paris. The answer is therefore contained within the parameters of the model and attempts to retrieve it. Although a relatively new field, it is technically possible to instill information into an LLM through supervised fine-tuning. Note that this is not a stable method, as we are not entirely sure beforehand which information gets retained explicitly and which information is incorrectly reconstructed.
+
+Although these memory types may differ, they may not always be stored as such. Depending on the specific implementation, they could be seen as one big pile of information or separated into different databases to be remembered for specific tasks and actions.
+
+Short-Term Memory
+
+Short-term memory in Agents is the information it has about recent interactions, typically the ongoing conversations with the user or the behavior of the LLM. In practice, this is the conversation history of the LLM, which serves as context for generating responses. Illustrated in Figure 4-5, they are generally formatted as messages demonstrating the differences between system prompts, the user’s query, and the LLM’s answer. It is a conversation where the user tells something about themselves, namely that they love flamingos.
+
+
+These messages are updated every time the user or assistant replies and are fed back into the LLM as input for the next query, as shown in Figure 4-6. The query (“What is my favorite animal?“) does not trigger the LLM to recall the past on its own. Rather, it is provided with the entire conversation history, which contains the relevant information, namely that the user loves flamingos. In other words, the LLM does not truly “remember” past conversations but is instead told what the conversation was by explicitly inserting it into the prompt.
+
+
+Most LLMs have a limited context window, which is the number of tokens that the LLM can process both and combine both the input and the output tokens as seen in Figure 4-7.
+
+
+In this example, a short query and answer are given which total 13 tokens out of a potential 8,192. Seen in Figure 4-8, there are many potential tokens that are left unused and could potentially be filled with additional information or reasoning tokens as discussed in Chapter 3.
+
+A row of rectangular objects
+
+AI-generated content may be incorrect.
+However, as the conversation history grows, so do the number of tokens. Eventually, and as shown in Figure 4-9, if the conversation history gets too large, it will not fit within the context windows. This might cut the answer short or even prevent the LLM from processing the prompt at all.
+
+A diagram of a diagram
+
+AI-generated content may be incorrect.
+Moreover, the more information put in the prompt, the more difficult it will be for the LLM to attend to everything.3 As a result, we cannot always put the entire conversation history into the prompt of the LLM. Instead, there are several techniques we can use to provide the conversation history without filling up the context window.
+
+The first technique for efficient short-term memory is rather straightforward: trimming the messages as they grow. Whenever the number of messages grows too large for the LLM’s context window to handle, we can decide to simply remove the first few interactions until it fits that window. Seen in Figure 4-10, this might remove quite a lot of information that may or may not be relevant to future queries.
+
+
+Instead, a common technique is to employ another LLM to summarize the conversation history. After each conversation turn, the same or another LLM will summarize it and add it to the full summary of the conversation (Figure 4-11).
+
+
+As illustrated in Figure 4-12, the created summary will be shown together with the query for the LLM to answer. This summary might still fill the context window over time as summaries are stacked on one another, but it is much slower than filling the context window with the raw conversation history.
+
+A black and blue rectangular object with black text
+
+AI-generated content may be incorrect.
+Stacking summaries is not the only method of summarization. Instead of adding a summary of the most recent query/answer pair each time, you can instead summarize the conversation history of the last 5 conversations. Likewise, you can decide to maintain one summary and ask the LLM to update it after each conversation. Figure 4-13 illustrates such a method where conservation turns 1 through 5 are summarized, but not turn 6.
+
+A black and white math equation
+
+AI-generated content may be incorrect.
+Although it may seem straightforward, maintaining the conversation history can be a difficult task and requires understanding what is important: the entire history, the recent history, or a summarized variant? For short conversations, maintaining the entire history would work, but that might not be the case for long sequences of actions.
+
+Long-Term Memory
+
+As the conversation history grows and the actions that an agent has taken, so does the need for long-term memory. Long-term memory typically involves maintaining one or more external databases that can be queried to extract additional information. This can contain information about previous traces or states of the agent (episodic memory) or information unrelated to the agent’s behavior but about the context of your application instead (semantic memory), like your organization’s documents.
+
+Retrieval-Augmented Generation (RAG)
+
+Arguably, the most common method for giving your agent, or any LLM for that matter, long-term memory is Retrieval-Augmented Generation (RAG).4 RAG typically consists of two stages: ingestion and inference.
+
+In ingestion, your external data, typically unstructured text, is embedded into numerical representations and stored in a database (see Figure 4-14). To create these representations, a special variant of an LLM is used, an embedding model. This embedding model is trained to create numerical representations such that words and phrases with similar meaning will have similar representations. This external database can be considered the long-term memory of the LLM, which can be queried for relevant information.
+
+
+Inference with RAG consists of four steps. In step 1, the user’s query is embedded using the same model as was used for embedding the external data. In step 2, the embedded query is compared to the external database, and the most relevant items in the database to the query are extracted.
+
+Defining relevancy in RAG systems can mean many things. In our example, it means the similarity between the query embeddings and the external embeddings. This similarity can be defined through the embeddings we created, but hybrid systems are also possible where embeddings are combined with traditional Bag-of-Words-like approaches.
+
+In step 3, the relevant items and the user’s query are combined into the prompt. This step is meant to provide the model with context for the generation step. Essentially, you tell the LLM that you have contextual information that it can use to derive its answer. Finally, in step 4, the augmented prompt is used by the model to generate the output. The added contextual information should generally result in more accurate and relevant responses, assuming that the contextual information is indeed relevant and correct. Figure 4-15 illustrates the four steps of inference with RAG.
+
+A diagram of a diagram
+
+AI-generated content may be incorrect.
+RAG is often used to minimize hallucination, which refers to the tendency of LLMs to confidently produce an answer that is actually incorrect. By providing the LLM with external information (which you assume to be true), the LLM is less likely to “make up” information.
+
+MEMORYBANK
+
+An interesting take on RAG for ChatBots is MemoryBank, a mechanism that allows LLMs to recall relevant memories as a long-term mechanism (external database) rather than a short-term mechanism (conversation history).5 Its experiences through conversations are stored in a separate database that allows the LLM to retrieve relevant memories. What sets it apart from regular RAG is that this memory is continuously updated to selectively preserve memory through an updating mechanism.
+
+This mechanism allows the MemoryBank to forget and reinforce memory inspired by the Ebbinghaus Forgetting Curve theory, which is a curve demonstrating the pace at which we tend to forget. The curve is often shown as being exponential, resulting in a loss of half of what we learn each day. A common way to prevent forgetting what you learnt, for instance when preparing for exams, is to actively recall the learned information frequently. This is referred to as spaced repetition, which tends to decrease the pace at which knowledge is forgotten. Figure 4-16 illustrates this knowledge decay and the effect of spaced repetition on this decay.
+
+
+MemoryBank borrows from this theory and frequently updates the long-term memory of an LLM based on which pieces of knowledge are (not) accessed. Specifically, this means that when a memory item is retrieved and used during conversations, it will persist longer in the MemoryBank. However, if the memory item hasn’t been retrieved for a while, then there is a chance the memory will be removed entirely.
+
+The authors use a few variants of memory (Figure 4-17):
+
+Conversation history — Raw multi-turn conversations
+Summaries of past events — These are generated by an LLM based on the conversation history
+User’s portrait — The personality traits and emotions of the user as summarized by the LLM based on the conversation history
+
+The summaries and conversation turns are embedded so that they can easily be retrieved. The user portrait is dynamically updated and always passed as additional context. Figure 4-18 shows a full overview of this pipeline. When a query is created, it is embedded, and related conversation turns and summaries are retrieved, together with the user portrait. When conversation turns are retrieved, their strength is updated, making them less likely to be removed from the MemoryBank. The retrieved context, together with the query, is used as input for the LLM to generate an answer.
+
+A diagram of a computer process
+
+AI-generated content may be incorrect.
+This form of memory demonstrates the potential complexity of RAG-like applications, where each use case necessitates different types of memories, summarizations, etc. As such, there are many forms of RAG, like Graph RAG and Multimodal RAG, that each require its own set of considerations. The RAG examples shown previously are often referred to as vanilla RAG or naive RAG for their straightforward implementation.
+
+Agentic RAG
+
+In vanilla RAG, the vector database can be considered the long-term memory of the LLM. However, the LLM is only given information that is relevant to the query and has no agency over what is being retrieved.
+
+In agentic RAG, there is an agent instead of an LLM that can access the external database as a tool and have control over which information it retrieves. Agency over what is being retrieved is given back to the agent, who typically has access to one or more external databases of information. Figure 4-19 illustrates this idea of having the agent select from which source to retrieve contextual information before deciding whether to generate the answer or to again retrieve additional information.
+
+
+In single-agent systems, agentic RAG is a router where you have several external knowledge sources, and the agent decides which one(s) to use. You are essentially adding all these knowledge sources and databases as tools instead of being a static step that runs before the LLM generates output. Moreover, such an agentic RAG system does not always have to run the agentic RAG based on the query itself. As seen in Figure 4-20, it may decide to extract information from one search and then run a subsequent search based on that information in another database.
+
+
+Agentic RAG does not limit itself to single-agent systems. In Multi-Agent RAG systems, multiple agents have the capabilities to extract information from external sources. Oftentimes, you have smaller retrieval agents that are being coordinated by a single agent with more capabilities. These smaller retrieval agents are each specialized in extracting specific information or working with specific knowledge sources (see Figure 4-21). Note that it does not always have to be a vector database as an external knowledge source; it can also be a web search or querying some API for information (like your Slack or Gmail).
+
+A diagram of a company
+
+AI-generated content may be incorrect.
+In other words, instead of querying the vector database through a static step only once, by hooking it as a tool, the agent can dynamically decide how many times it needs to query the semantic memory until it has enough context to answer a given query. Note how we discussed LLMs in the context of RAG but agents in the context of Agentic RAG instead. It demonstrates the agency and autonomy in accessing their respective RAG capabilities.
+
+Let’s go over some examples of how these agentic RAG systems work through impactful papers and implementations in the field.
+
+A-MEM
+
+An interesting approach to agentic RAG is A-MEM, an agentic memory system derived from the notetaking method known as Zettelkasten.6 Zettelkasten approaches note-taking as having three important components, namely atomicity, hypertextual notes, and personalization.
+
+Atomicity means that each Zettel (a note) should only contain one unit of knowledge, referred to as an atom. This note could, for example, contain a brief description of how memory works in agentic systems.
+
+Then, hypertextual notes refer to the idea that all notes refer to each other and may explain or expand on each other’s content. For instance, the previously created note can be connected to another note that has some information about RAG. Since both are memory systems, they are likely to be related. The ideas of atomicity and hypertextual notes are illustrated in Figure 4-22. Together, they may create an interconnected web of notes, ideas, and may create larger topics of interconnected notes.
+
+
+A-MEM uses this idea of note-taking to agentic memory by creating these interconnected notes. In the context of agents, each note contains the following information and can be considered a piece of memory:
+
+The original interaction with the environment (i.e., one turn)
+The timestamp of the interaction
+LLM-generated keywords that capture key concepts
+LLM-generated tags to categorize the interaction
+LLM-generated contextual description
+By focusing on a single unit, namely a single interaction, A-MEM adheres to the principle of atomicity.
+
+Then, all pieces of information are embedded so that they can be used to later on easily retrieve related information. Note that all information, except for the timestamp, is concatenated so that a single embedding is created for the entire note/memory (Figure 4-23).
+
+
+Interestingly, the authors use this generated note embedding as one of the main IDs of the note. To link this note to other memories, they run a similarity search between this note’s embeddings and all other memories and extract the top-k memories. After doing so, the LLM is asked to decide which of these candidate memories should be linked to the newly added memory.
+
+After the memory is added and linked to other memories, the LLM is prompted to update the LLM-generated tags, keywords, and description based on the newly added memory. This results in an evolutionary approach where newly added memories are linked to older memories, which are in turn updated to be in line with the newly added memories. Figure 4-24 illustrates this ever-evolving database of notes in the form of memories.
+
+
+This agentic RAG system allows the agent to access the A-MEM and search for memories that relate to the query. The links that are made between notes are used when retrieving relevant information. The agent can choose to retrieve all notes that have links to the retrieved note.
+
+We again see that these memory systems mirror aspects of human memory. Many insights from how we store and use knowledge often serve as inspiration for the design of agentic memory systems.
+
+Search-o1
+
+A recent approach to agentic RAG is search-o1, a method that attempts to retrieve relevant context and put it throughout the reasoning traces to enhance the reasoning LLM’s capabilities further.7 Instead of autonomously searching for relevant information and using it in the prompt of the model, the information can be searched and retrieved during the LLM’s reasoning process. The Agent is instructed to use the <|begin_search_query|> and <|end_search_query|> tokens to start a search and then use the <|begin_search_result|> and <|end_search_result|> tokens to indicate what the retrieved information is. Figure 4-25 demonstrates this agentic RAG during reasoning.
+
+
+By enabling RAG during reasoning, the model can iteratively refine its reasoning process until it is confident in the final result. This dynamic approach is different from regular agentic RAG because it can be done autonomously within a single call rather than iterating over calls.
+
+A downside to simply embedding documents within the reasoning traces is that the retrieved documents can be quite large and often contain irrelevant information and may therefore disrupt the reasoning flow. To solve this issue, the authors extend the reasoning agentic RAG by incorporating a Reason-in-Documents module. Using the search query, retrieved documents, and reasoning trace, this module attempts to condense all information into focused reasoning steps. The agent’s same reasoning LLM is used to process the retrieved documents to align with the model’s specific reasoning traces.
+
+With regular agentic RAG, information is just passed to the context without taking into account how the information needs to be processed. By enabling the same reasoning LLM to further process that information such that it fits within the reasoning traces, the flow of the traces can be kept intact. An overview of this system, called Search-o1, is given in Figure 4-26.
+
+A diagram of a search engine
+
+AI-generated content may be incorrect.
+Note that this is typically used for long-term memory or external semantic memory that the agent might need to answer a given query. For instance, when given the query “Why are flamingos pink?“, it will search for relevant information in Wikipedia during its reasoning process. The first result it finds mentions that it is due to specific pigments in their specific diet. It will use that information during its reasoning until it needs further clarification. For instance, a second call to a different external database (e.g., ArXiv) will clarify that the specific pigments are carotenoid pigments, which are commonly found in brine shrimp.
+
+This iterative process of querying information and compressing it within its reasoning process allows the model to reason about information when it is retrieved rather than stuffing all potential relevant information in the context.
+
+Context Engineering
+
+We have explored various types of memory that we can use to provide additional context to the Agent, including semantic memory, working memory, and other forms of memory. However, there might be more forms of context that we could give to the Agent, like:
+
+System prompt
+The core context and rules for the agent, which define how it should behave (procedural memory).
+
+Conversation history
+Both the conversation between the user and assistant, but also the LLM’s internal thoughts (working memory).
+
+Past experiences
+Storing specific events, actions, or observations from tool use or user-related facts (episodic memory).
+
+Retrieved information
+External information that is typically stored in a vector database and accessed through RAG-like techniques (semantic memory).
+
+This is not an exhaustive list, however. As the fields of LLMs and Agents grow, so do the sources of information that we could give to them. As such, we can provide the Agent with all kinds of information sources to produce the answer that we want. As illustrated in Figure 4-27, the user’s query or prompt is a subset of the LLM’s entire context.
+
+
+This context is given to the LLM, which in turn produces a list of tokens. As such, we can view an LLM as a function that takes several tokens (context), processes them, and outputs tokens. To optimize the output tokens for a given task, we can either optimize the LLM itself by training or fine-tuning it, or we can optimize the input, namely the context (Figure 4-28).
+
+
+To optimize the quality of the output (the output tokens), we can either optimize the LLM itself by training or fine-tuning it, or we can optimize what goes into the LLM, namely, the context. The act of optimizing input tokens so they produce the best possible output is called context engineering. Formally, it is finding the best context such that it maximizes the quality of the LLM’s output for a given task.8 As illustrated in Figure 4-29, where prompt engineering involves optimizing the system/user prompts, context engineering aims to optimize the entire context.
+
+A diagram of a software program
+
+AI-generated content may be incorrect.
+Context windows have grown larger, to the point where Google’s Gemini 1.5 already reached a context window of a million tokens in February 2024.9 It would be natural to conclude that context engineering means attempting to fill up this humongous context window with all kinds of information that relates to the task at hand. Moreover, there would be no more need for RAG since the context window is large enough to potentially hold your entire database.
+
+A common benchmark for evaluating long-context LLMs in 2023 and the beginning of 2024 was the Needle In A Haystack (NIAH) test.10 The test is rather straightforward; a random fact (needle) is placed somewhere in the middle of a long context window (haystack), and the model is asked to retrieve this statement. By iterating over different places and context lengths, we can measure how well LLMs perform over long contexts. It produced nicely looking visuals and was used by large LLM providers, like Anthropic’s Claude 2.111 and Google’s Gemini 1.512.
+
+An example of such a visual is shown in Figure 4-30, which shows the results for a typical Need in A Haystack test, where the upper right quadrant (needle at the top of the document and large context length) shows the degradation of LLMs at higher context lengths.
+
+A graph with different colored squares
+
+AI-generated content may be incorrect.
+However, finding the needle is merely a retrieval task and is not indicative of more complex forms of long-context understanding, such as reasoning over hundreds of thousands of tokens. This holds especially true for agents that have to take into account many forms and lengths of context, like semantic and working memory.
+
+Other benchmarks, like the RULER benchmark13, have since been released that introduce new tasks like multi-hop tracing and aggregation to test behaviors beyond simple retrieval. The RULER paper, for instance, demonstrated models that performed well on the Needle In A Haystack test, all showed significant performance drops as the context length increased when applied to the RULER benchmark. Many others (e.g., 14 and 15) found similar results and concluded that arbitrarily filling up the context window of LLMs would hurt performance. Some even called it “context rot”16, showcasing the importance of adding quality information. As such, there is a need to carefully construct and manage the model’s context window, thereby pointing to the importance of context engineering.
+
+Cost and latency are other reasons for managing the context window. You could theoretically stuff everything in a 2-million token context length, like your entire external database, the full conversation history, some additional examples, etc. However, the Agent’s LLM has to process all these tokens, which significantly reduces latency. Costs also increase, considering more VRAM is needed when you increase the context length. Just dumping everything in the context is, therefore, a recipe for failure.
+
+With context engineering, we aim to optimize the model’s context window with the right information, at the right place, and in the right format. It is the act of giving the LLM the appropriate context without overwhelming it. As such, and as shown in Figure 4-31, it is not about filling up the context window, but strategically choosing and placing information. Going back to our “LLM is a function” analogy, it is about optimizing the list of input tokens so that it produces the best possible output tokens.
+
+
+You do not want too much or too irrelevant information as the costs of compute go up and the performance goes down. Likewise, if you give the LLM too little context and in an inefficient form, it will operate without having a good understanding of the context. It is a careful balance of providing just enough relevant information to the LLM to have it perform optimally. In other words, context engineering is much of an architectural problem that needs to be solved with lots of moving parts, like efficiently tracking, storing, and retrieving all existing and created information.
+
+To help with context engineering, existing techniques for handling memory that focus on efficiency can be used. MemoryBank, for instance, dynamically adjusts the importance of memories and only keeps those that are truly important for the conversation history. Likewise, Search-o1 compresses the retrieved context and only gives back the relevant components without any noise. These dynamic memory techniques are exceptionally useful for context engineering as the information flows grow more complex.
+
+What is inside the context?
+
+We touched on it briefly before, but what exactly is inside the context? Let’s illustrate a full context with an example and make it as concrete as possible. Imagine you ask an agent to perform deep research on reasoning LLMs and provide you with an overview of common techniques that are used in the field. We are going to be using the messages format to illustrate how the input to the LLM is continuously updated with the appropriate context.
+
+Before starting with the example, let’s explore the template for the system prompt first:
+
+# Creating the system prompt
+SYSTEM_PROMPT = """
+You are a helpful research assistant. Your goal is to provide in-depth analyses on complex AI-related topics.
+ 
+<INSTRUCTIONS>
+* Create a plan for the user's query
+* Provide the necessary context
+* If you lack information, you can ask clarifying questions to the user
+* Prioritize clarity of content.
+* Make sure to use the current date to decide what is currently SOTA.
+</INSTRUCTIONS>
+ 
+<TOOLS>
+{information_about_tools}
+</TOOLS>
+ 
+<DATE>
+{current_date}
+</DATE>
+ 
+<USER_QUERY>
+{user_query}
+</USER_QUERY>
+ 
+Based on the provided context, start making a plan to research this and check with the user for revisions.
+"""
+ 
+Note how the system prompt contains various XML tags to indicate what kind of information they contain. However, information seems to be missing, like the current data, information about tools, and the user’s query. Other than the user’s query, this information needs to be first retrieved from an external source. After doing so, the system prompt is generated with all kinds of context and passed to the Agent’s LLM, which can be formatted as the following message.
+
+# 1. Create a plan
+messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+The LLM will generate a response with a short plan to research reasoning LLMs for the user to validate. Note that we will discuss planning and reflection in more detail in Chapter X. Let’s assume the interaction goes as follows:
+
+# 2. Reflect on the plan
+messages = [
+  {
+    "role": "system", "content": SYSTEM_PROMPT},
+  {
+    "role": "assistant", 
+    "content": """
+Here is my plan to research reasoning LLMs:
+* Query the ArXiv database for the 10 most recent papers on reasoning LLMs
+* Summarize the abstracts
+* Combine the summarizations for an overview
+"""
+  },
+  {
+    "role": "user", "content": "Search for surveys instead."
+  }
+]
+ 
+The LLM suggested extracting the 10 most recent papers, which the user found to be inefficient and asked to search for surveys instead. Now that the Agent has executed its first task, namely creating a plan using its LLM, this information can be stored externally so it can be retrieved later on if necessary.
+
+The plan is updated accordingly and kept in a special PLAN.md file that the Agent can update if necessary. Before it goes on and searches the ArXiv database, the current conversation history is cropped to only contain the SYSTEM_PROMPT and PLAN.md. This cropping can be a step executed by the Agent, but for the sake of simplicity, let’s assume that after the user provided feedback, a simple script is always run that crops out this interaction. Thus, we are left with:
+
+# 3. Crop context
+messages = [
+  {"role": "system", "content": SYSTEM_PROMPT},
+  {"role": "assistant", "content": PLAN.md},
+]
+ 
+ 
+The context is kept to a minimum because there is no need for the LLM to see both the old and new plans.
+
+Next, the Agent uses a tool (search_arxiv) to search for recent surveys on reasoning LLMs and extract the abstracts (ABSTRACTS).
+
+# 4. Search on ArXiv
+messages = [
+  {"role": "system", "content": SYSTEM_PROMPT},
+  {"role": "assistant", "content": PLAN.md},
+  {
+    "role": "assistant", "content": "<think>Let's search on ArXiv"
+    "tool_call": {
+      "name": "search_arxiv",
+      "arguments": { "search_term": "reasoning LLMs survey" }
+   },
+  {
+    "role": "tool",
+    "tool_call_id": "search_arxiv",
+    "content": ABSTRACTS
+  },
+]
+ 
+After the Agent has retrieved the abstracts, it decides to use another Agent to summarize the results.
+
+# 5. Call the summarization agent with the abstracts
+messages = [
+  {"role": "system", "content": SYSTEM_PROMPT},
+  {"role": "assistant", "content": PLAN.md},
+  {
+    "role": "assistant", "content": "<think>Let's search on ArXiv"
+    "tool_call": {
+      "name": "search_arxiv",
+      "arguments": { "search_term": "reasoning LLMs survey" }
+   },
+  {
+    "role": "tool",
+    "tool_call_id": "search_arxiv",
+    "content": ABSTRACTS
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "run_summarization_agent",
+    "content": ABSTRACTS
+  },
+]
+The summarization agent only needs to summarize the papers, so no other context is needed other than those papers to generate the summaries (SUMMARIES). As such, the messages of the summary agent that is created by run_summarization_agent could look like this:
+
+# 5a. Run the summarization agent
+messages_summary_agent = [
+  {"role": "system", "content": "You are a summarization expert."},
+  {"role": "user", "content": "Summarize these papers: PAPERS"},
+]
+The resulting summaries (SUMMARIES) are passed back to the original Agent to parse and create a nice overview for the user.
+
+# 6. Process summaries with the orchestrator (the original agent)
+messages = [
+  {"role": "system", "content": SYSTEM_PROMPT},
+  {"role": "assistant", "content": UPDATED_PLAN},
+  {"role": "assistant", "content": "I retrieved these summaries: SUMMARIES."},
+  {"role": "assistant", "content": "<think>Next, parsing summaries.</think>"},
+]
+Note how this final messages variable contains a small part of the conversation history. Only the most relevant pieces of information are kept, and any irrelevant traces (like the full traces of the summarization agent) are not added to the context. During the entire process, the context is carefully managed by either the Agent itself or through external software.
+
+Even in this simplified example, there is a lot of dynamic behavior between and within agents that update, store, and retrieve all kinds of context. Moreover, all contexts in this example are texts and can be processed using a standard LLM. For certain use cases, however, you might want it to be able to process more modalities like images and sound. We will cover multimodal LLMs in more detail in Chapters X and X.
+
+Context Engineering for Multi-Agent Systems
+
+As we will cover more in-depth in Chapter X, multi-agent systems are where multiple agents work together to solve a given problem. Our example of a deep research agent used a summarization agent in its system, thereby working together. What makes context engineering especially difficult in multi-agent systems is that not only the context of the main agents needs to be carefully managed, so do the contexts of all other agents in the system. Moreover, the interaction between agents is also part of the shared context between those respective agents.
+
+To manage this complex network of contexts, smaller agents can be used to handle some of the context “burden”, as we illustrated in the deep research agent. By using a smaller agent with a smaller LLM for specific tasks, part of the context can be handled separately, leaving significant compute for the main agent (also called the orchestrator agent). What makes these small and/or specialized agents great for context engineering is that they can work on smaller and more manageable contexts, have clear responsibilities, and are easier to test and debug. These systems can be more reliable by separating tasks instead of having one agent juggle all kinds of different tasks and contexts.
+
+Optimizing the Context
+
+Throughout this chapter, we covered many different methods and techniques for handling the memory and context of LLMs and Agents. Optimizing what and how you put into the context is a multi-faceted problem that requires an understanding of various parts of your agent’s architecture. Most strategies to optimize the context are built upon the main source of context, the memory modules of the Agent.
+
+Although there are many strategies, let’s explore the most common ones.
+
+Context Tracking and Storage
+
+Before you give the Agent a possible relevant context, it first needs to be tracked and stored somewhere. We covered most of it already, as this relates to various forms of memory, and in particular episodic memory, which contains the actions the agent has taken thus far. Although episodic memory is seen as long-term memory, it is highly related to the conversation history of the Agent, which tends to capture the actions of the agent.
+
+However, tracking the context goes beyond just the event traces of the agent. It also involves managing external knowledge sources, like a database of your proprietary data, which can serve as additional context. To set up these sources of knowledge, you will have to decide beforehand what kinds of information you want to track. Although it may seem obvious at first, there are many types of information you can track:
+
+Agent behavior
+Tool usage by the agent (and any sub-agents)
+Tool outputs and intermediate results
+Interactions between (sub-)agents
+Internal reasoning steps
+Conversation history
+Failures/successes
+User behavior
+User intent (explicit requests and goals)
+User feedback (edits, approvals, rejections)
+Knowledge sources
+Snapshots of your proprietary database(s) for reproducibility and auditing
+External documents (RAG, APIs, etc.)
+Structured artifacts like PLAN.md, REQUIREMENTS.md, etc.
+System-level
+Configuration (LLM hyperparameters, available tools, etc.)
+Policies (guardrails, constraints, etc.)
+All the above are merely examples of what you could possibly track. In practice, not everything is going to be useful, and at the same time, many other things should be included. As we will explore later on, tracking these kinds of contexts and information also helps communicate the user’s intent and debug these complex systems.
+
+Context Selection
+
+Assuming you have set up all your databases, the very first thing you can do to optimize the context is to have a system in place that selects the right context. As we discussed before, RAG is an amazing technique and example for selecting what is relevant. Although we have seen variants of RAG that improve on this, we haven’t yet explored how we can further improve this selection process.
+
+In RAG, the input documents are typically split into smaller parts, such as sentences or paragraphs, to isolate the information they contain and keep it to a single subject. However, when you then run a RAG pipeline, you typically get a collection of documents in return. For example, if we search a vector database for the “causes of climate change,” the system might return documents about greenhouse gases, industrial activity, and deforestation. Although those documents might not directly answer our question, they are related.
+
+To improve this process, we can use a re-ranker to refine the set of documents that were retrieved. This technique, often a language model, takes in both the query and retrieved documents to re-rank the retrieved documents based on their relevance to the query and to each other (see Figure 4-32). By providing the re-ranker with additional context (all retrieved documents), it can operate on far fewer documents than if we were to give it the entire database. Moreover, after the results have been re-ranked according to their relevance, we can choose to only keep the most relevant documents.
+
+
+Re-ranking is only one of the many ways to select and create the right context. We can also structure the output to ensure the responses of the Agent are broken up into logical parts and only contain the necessary components. Likewise, we can employ business rules that give additional weights to certain pieces of information that always provide important context (much like a system prompt).
+
+Note that selecting the right context can also mean selecting the right context for the right agent. By isolating the context across multiple specialized agents, each agent is able to focus on a smaller part of the problem without being overwhelmed by the full context.
+
+Context Compression
+
+The goal of context engineering is to find a balance between what you put in the context and how much. As such, compressing the context as much as possible is an important strategy for optimizing the context.
+
+A common way to handle compression is what we discussed at the beginning of this chapter, using an LLM to create summaries of your conversation history. As we explored in Search-o1, we can even compress the output of the RAG pipeline using an LLM to summarize the retrieved documents.
+
+Another method of compressing the context is by reducing redundancy. Even with a re-ranker, the top 5 most relevant results might all contain very similar documents. Together, they are not bigger than the sum of their parts but smaller instead because they contain similar information. As such, we do not only want the most relevant documents, but in a way that they are still documents that each contain a new piece of information.
+
+A common technique to use, whether they are the output documents of your RAG pipeline or other pieces of retrieved information, is called Maximal Marginal Relevance (MMR).17 This technique uses a precalculated relevance vector and redundancy matrix to balance the diversity of documents.
+
+First, the similarity between the retrieved document and query embeddings is calculated. This results in a relevance vector which has a value per document to indicate how similar/relevant the given document is to the query (see Figure 4-33).
+
+
+Second, the similarity between the retrieved documents is likewise calculated to construct a similarity matrix called the redundancy matrix. This matrix is used to potentially discard documents that are too similar to the ones we had already chosen (see Figure 4-34).
+
+
+Then, the relevance vector and redundancy matrix are used iteratively to decide which retrieved documents are similar enough to a given query but dissimilar to all other retrieved documents. An important component is the λ parameter, which we can tweak to decide how diverse the output should be (a higher score indicates higher diversity).
+
+Since we haven’t chosen any documents, we start by selecting the one with the highest score in the relevance vector, namely document 1. Then, we take the relevance vector and multiply it by (1- λ) to decide the importance of similarity over diversity. From the resulting scores (one for each document other than document 1), we subtract λ times the redundancy vector. This vector contains the highest scores in the redundancy matrix that relate to the documents we had already chosen (document 1). As demonstrated in Figure 4-35, document 3 is added as the next most diverse and relevant document.
+
+
+We continue this process, but instead of comparing to document 1 only, the redundancy vector contains the highest similarity scores that relate to either document 1 or 3, whichever is highest. This process is only repeated for the next document, since we wanted to bring down our original set of 5 documents to 3 in total.
+
+Like re-ranking, MMR is merely an example of a technique that can be used to compress the output. We are not limited to using LLMs to directly compress the retrieved documents; we can instead use techniques like MMR to simply ignore certain documents because they are too similar to each other. Likewise, deduplication techniques can be used to remove contexts that are essentially duplicates of one another.
+
+Context Ordering
+
+The order of the context is vital to the performance of your agent. Early research into the position of important information in prompts found that LLMs have a tendency to pay more attention to the beginning and end of a prompt.18 As a result, they often end up losing information in the middle, which they call the “lost-in-the-middle” phenomenon. Figure 4-36 is an annotated figure from the “Lost in the Middle: How Language Models Use Long Contexts” paper that nicely illustrates this concept.
+
+
+This tendency to focus on the beginning and end of prompts is similar to human behavior. The serial-position effect states that people generally recall the first (primacy effect) and last (recency effect) items in a series best, whereas the middle items are recalled worst.19 It is interesting to see how much of LLMs’ behavior follows similar human tendencies.
+
+Context as the Specification
+
+Arguably, one of the most important things about context engineering is that it requires a shift in mindset. The context that is given to the agent can be seen as a tool for communication. Not just for the agent, but to the people that you work with. More specifically, the context that you give to the agent, including the query, PLAN.md, REQUIREMENTS.md, codebase, etc., all serve as a tool to communicate what your intention is. For example, when you allow a coding agent to fully create a PR on its own, it does not suffice to go through the code itself to check whether everything is there. The initial query, PLAN.md, etc., all serve as the initial specification of the PR and should be tracked as well.
+
+As such, we can view the context of the agent as the specification of your feature. As agents are becoming more autonomous, it is important to track the intention of their behavior through the context that is given. Where we would view prompt engineering as user-facing, context engineering is a much more developer-oriented tool and requires careful communication of why the agent is executing certain tasks. The answer to the “why” starts with the user’s intention.
+
+Think about it like this: how strange it is that we tend to throw away the input to our function (the LLM) and only keep track of the output! Not only for reproducibility, but also for communication, it allows you to understand why the agent has chosen certain tools, executions, and outputs. Moreover, this transparency of intention also serves as a great tool for debugging your agent.
+
+Context, as the specification, brings about significant potential for domain-specific industries. The context that you give an agent changes drastically between use cases and applications. Health care requires a completely different context than law, for instance. As such, there is not a single framework for context engineering and instead requires developers to consider their domain-specific knowledge sources, like patient data in health care and research papers in academia.
+
+Summary
+
+In this chapter, we explored various methods for giving LLMs and Agents memory. We first covered various techniques for short-term memory, including the conversation history and methods for compressing it and keeping it manageable. Short-term memory is an important, but often underestimated component of enabling memory in intelligent systems.
+
+Then, we explored long-term memory, including methods for RAG (MemoryBank) and agentic RAG (A-MEM and Search-o1). These methods are often inspired by human memory systems and may include techniques for degrading memory or deciding what’s meant to be important.
+
+Finally, we explored context engineering as the next frontier in memory. Where we used to engineer our prompts ourselves, the entire context window now requires careful consideration. We covered why this context is important for agents and various methods for optimizing it.
+
+The context, being much more than just the user’s prompt, contains all previously discussed forms of memory and potentially even more, like tools. In the next chapter, we will explore how tools can further enhance the capabilities of LLMs as an important component of agents. Moreover, we will cover how these tools can be called and the best practices for doing so. In Chapter 6, we cover planning and reflection capabilities of agents, where memory plays an important role.
+
+1 Sumers, Theodore, et al. “Cognitive architectures for language agents.” Transactions on Machine Learning Research (2023).
+
+2 Zhang, Zeyu, et al. “A survey on the memory mechanism of large language model based agents.” ACM Transactions on Information Systems (2024).
+
+3 Hsieh, Cheng-Ping, et al. “RULER: What’s the Real Context Size of Your Long-Context Language Models?.” arXiv preprint arXiv:2404.06654 (2024).
+
+4 Lewis, Patrick, et al. “Retrieval-augmented generation for knowledge-intensive nlp tasks.” Advances in neural information processing systems 33 (2020): 9459-9474.
+
+5 Zhong, Wanjun, et al. “Memorybank: Enhancing large language models with long-term memory.” Proceedings of the AAAI Conference on Artificial Intelligence. Vol. 38. No. 17. 2024.
+
+6 Xu, Wujiang, et al. “A-mem: Agentic memory for llm agents.” arXiv preprint arXiv:2502.12110 (2025).
+
+7 Li, Xiaoxi, et al. “Search-o1: Agentic search-enhanced large reasoning models.” arXiv preprint arXiv:2501.05366 (2025).
+
+8 Mei, Lingrui, et al. “A Survey of Context Engineering for Large Language Models.” arXiv preprint arXiv:2507.13334 (2025).
+
+9 https://blog.google/technology/ai/google-gemini-next-generation-model-february-2024
+
+10 Gregory Kamradt. Needle In A Haystack- pressure testing LLMs. Github, 2023. URL https://github.com/gkamradt/LLMTest NeedleInAHaystack/tree/main
+
+11 Anthropic. Long context prompting for Claude2.1. Blog, 2023. URLhttps://www.anthropic. com/index/claude-2-1-prompting.
+
+12 Team, Gemini, et al. “Gemini 1.5: Unlocking multimodal understanding across millions of tokens of context.” arXiv preprint arXiv:2403.05530 (2024).
+
+13 Hsieh, Cheng-Ping, et al. “RULER: What’s the Real Context Size of Your Long-Context Language Models?.” arXiv preprint arXiv:2404.06654 (2024).
+
+14 Li, Tianle, et al. “Long-context llms struggle with long in-context learning.” arXiv preprint arXiv:2404.02060 (2024).
+
+15 Levy, Mosh, Alon Jacoby, and Yoav Goldberg. “Same task, more tokens: the impact of input length on the reasoning performance of large language models.” arXiv preprint arXiv:2402.14848 (2024).
+
+16 Hong, Kelly, Anton Troynikov, and Jeff Huber. Context Rot: How Increasing Input Tokens Impacts LLM Performance. Chroma, July 2025. https://research.trychroma.com/context-rot.
+
+17 Carbonell, Jaime, and Jade Goldstein. “The use of MMR, diversity-based reranking for reordering documents and producing summaries.” Proceedings of the 21st annual international ACM SIGIR conference on Research and development in information retrieval. 1998.
+
+18 Liu, Nelson F., et al. “Lost in the middle: How language models use long contexts.” arXiv preprint arXiv:2307.03172 (2023).
+
+19 Bennet B. Murdock Jr. 1962. The serial position effect of free recall. Journal of experimental psychology, 64(5):482.
+
+
