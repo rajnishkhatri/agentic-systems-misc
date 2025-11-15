@@ -1,0 +1,668 @@
+{
+  "dataset_name": "Multi-Agent Pattern Comparison Test Scenarios",
+  "version": "1.0",
+  "created_date": "2025-11-15",
+  "total_scenarios": 30,
+  "pattern_distribution": {
+    "hierarchical": 10,
+    "sequential": 5,
+    "collaborative": 5,
+    "competitive": 5,
+    "adaptive_loop": 5
+  },
+  "scenarios": [
+    {
+      "scenario_id": "query_001",
+      "query": "Plan a 7-day trip to Japan with $3000 budget including flights, accommodation, and activities",
+      "query_type": "complex_planning",
+      "expected_pattern": "hierarchical",
+      "difficulty": "hard",
+      "reference_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "decompose_task", "output": "Split into flights, accommodation, activities, budget tracking"},
+        {"step": 2, "agent": "flight_specialist", "action": "search_flights", "output": "3 flight options ($800-1200)"},
+        {"step": 3, "agent": "accommodation_specialist", "action": "search_hotels", "output": "5 hotel options ($600-1000 for 7 nights)"},
+        {"step": 4, "agent": "activity_specialist", "action": "search_activities", "output": "10 activity options ($500 total)"},
+        {"step": 5, "agent": "budget_tracker", "action": "validate_budget", "output": "Total: $2800, within budget"},
+        {"step": 6, "agent": "orchestrator", "action": "synthesize_plan", "output": "Complete 7-day itinerary"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "budget_constraint": true,
+        "latency_target": 12.0,
+        "cost_target": 0.25,
+        "agent_utilization": 5,
+        "quality_threshold": 0.85
+      }
+    },
+    {
+      "scenario_id": "query_002",
+      "query": "Write a comprehensive business plan for a tech startup focusing on AI-powered healthcare diagnostics",
+      "query_type": "complex_planning",
+      "expected_pattern": "hierarchical",
+      "difficulty": "hard",
+      "reference_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "decompose_task", "output": "Split into market research, technical feasibility, financial projections, competitive analysis"},
+        {"step": 2, "agent": "market_research_agent", "action": "analyze_market", "output": "Market size: $50B, growth: 15% CAGR"},
+        {"step": 3, "agent": "technical_agent", "action": "assess_feasibility", "output": "Technology: Feasible with existing ML models"},
+        {"step": 4, "agent": "financial_agent", "action": "create_projections", "output": "5-year revenue forecast"},
+        {"step": 5, "agent": "competitive_analyst", "action": "analyze_competitors", "output": "10 competitors identified"},
+        {"step": 6, "agent": "orchestrator", "action": "synthesize_plan", "output": "Complete business plan (30 pages)"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 15.0,
+        "cost_target": 0.35,
+        "agent_utilization": 5,
+        "quality_threshold": 0.90
+      }
+    },
+    {
+      "scenario_id": "query_003",
+      "query": "Organize a corporate conference for 500 attendees with venue, catering, speakers, and logistics",
+      "query_type": "complex_planning",
+      "expected_pattern": "hierarchical",
+      "difficulty": "hard",
+      "reference_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "decompose_task", "output": "Split into venue, catering, speakers, logistics, budget"},
+        {"step": 2, "agent": "venue_specialist", "action": "search_venues", "output": "5 venue options (capacity 500+)"},
+        {"step": 3, "agent": "catering_specialist", "action": "search_caterers", "output": "3 catering options ($50-80/person)"},
+        {"step": 4, "agent": "speaker_coordinator", "action": "find_speakers", "output": "10 potential speakers"},
+        {"step": 5, "agent": "logistics_manager", "action": "plan_logistics", "output": "Transportation, AV, registration plan"},
+        {"step": 6, "agent": "orchestrator", "action": "synthesize_plan", "output": "Complete conference plan"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 10.0,
+        "cost_target": 0.22,
+        "agent_utilization": 5,
+        "quality_threshold": 0.88
+      }
+    },
+    {
+      "scenario_id": "query_004",
+      "query": "Develop a comprehensive marketing strategy for launching a new SaaS product in the B2B market",
+      "query_type": "complex_planning",
+      "expected_pattern": "hierarchical",
+      "difficulty": "hard",
+      "reference_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "decompose_task", "output": "Split into target audience, channels, content, budget, metrics"},
+        {"step": 2, "agent": "audience_researcher", "action": "define_personas", "output": "3 buyer personas with pain points"},
+        {"step": 3, "agent": "channel_strategist", "action": "select_channels", "output": "LinkedIn, email, webinars, SEO"},
+        {"step": 4, "agent": "content_planner", "action": "create_content_plan", "output": "Content calendar for 6 months"},
+        {"step": 5, "agent": "budget_planner", "action": "allocate_budget", "output": "Budget allocation across channels"},
+        {"step": 6, "agent": "orchestrator", "action": "synthesize_strategy", "output": "Complete marketing strategy"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 11.0,
+        "cost_target": 0.24,
+        "agent_utilization": 5,
+        "quality_threshold": 0.87
+      }
+    },
+    {
+      "scenario_id": "query_005",
+      "query": "Design a machine learning pipeline for fraud detection in financial transactions",
+      "query_type": "technical_design",
+      "expected_pattern": "hierarchical",
+      "difficulty": "hard",
+      "reference_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "decompose_task", "output": "Split into data collection, feature engineering, model selection, deployment"},
+        {"step": 2, "agent": "data_engineer", "action": "design_data_pipeline", "output": "ETL pipeline design"},
+        {"step": 3, "agent": "ml_engineer", "action": "select_features", "output": "20 key features identified"},
+        {"step": 4, "agent": "model_architect", "action": "select_model", "output": "Gradient boosting + neural network ensemble"},
+        {"step": 5, "agent": "deployment_engineer", "action": "design_deployment", "output": "Real-time inference architecture"},
+        {"step": 6, "agent": "orchestrator", "action": "synthesize_pipeline", "output": "Complete ML pipeline design"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 9.0,
+        "cost_target": 0.20,
+        "agent_utilization": 5,
+        "quality_threshold": 0.92
+      }
+    },
+    {
+      "scenario_id": "query_006",
+      "query": "What is the capital of France?",
+      "query_type": "simple_factual",
+      "expected_pattern": "hierarchical",
+      "difficulty": "easy",
+      "reference_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "route_to_knowledge", "output": "Simple factual query"},
+        {"step": 2, "agent": "knowledge_retriever", "action": "retrieve_fact", "output": "Paris"},
+        {"step": 3, "agent": "orchestrator", "action": "return_response", "output": "The capital of France is Paris."}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 2.0,
+        "cost_target": 0.05,
+        "agent_utilization": 2,
+        "quality_threshold": 0.99
+      }
+    },
+    {
+      "scenario_id": "query_007",
+      "query": "Analyze customer sentiment from 10,000 product reviews and generate insights",
+      "query_type": "data_analysis",
+      "expected_pattern": "hierarchical",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "decompose_task", "output": "Split into preprocessing, sentiment analysis, insight generation"},
+        {"step": 2, "agent": "data_preprocessor", "action": "clean_reviews", "output": "10,000 clean reviews"},
+        {"step": 3, "agent": "sentiment_analyzer", "action": "analyze_sentiment", "output": "Sentiment scores: 60% positive, 30% neutral, 10% negative"},
+        {"step": 4, "agent": "insight_generator", "action": "extract_insights", "output": "Top 5 pain points and top 5 positive features"},
+        {"step": 5, "agent": "orchestrator", "action": "synthesize_report", "output": "Complete sentiment analysis report"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 8.0,
+        "cost_target": 0.18,
+        "agent_utilization": 4,
+        "quality_threshold": 0.85
+      }
+    },
+    {
+      "scenario_id": "query_008",
+      "query": "Create a personalized workout and nutrition plan for weight loss (30 lbs in 6 months)",
+      "query_type": "personalized_planning",
+      "expected_pattern": "hierarchical",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "decompose_task", "output": "Split into workout plan, nutrition plan, progress tracking"},
+        {"step": 2, "agent": "fitness_specialist", "action": "create_workout_plan", "output": "5-day workout routine"},
+        {"step": 3, "agent": "nutrition_specialist", "action": "create_meal_plan", "output": "Calorie deficit meal plan (1800 cal/day)"},
+        {"step": 4, "agent": "progress_tracker", "action": "design_tracking", "output": "Weekly weigh-ins and measurements"},
+        {"step": 5, "agent": "orchestrator", "action": "synthesize_plan", "output": "Complete 6-month weight loss plan"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 7.0,
+        "cost_target": 0.16,
+        "agent_utilization": 4,
+        "quality_threshold": 0.88
+      }
+    },
+    {
+      "scenario_id": "query_009",
+      "query": "Explain quantum computing to a 10-year-old using simple analogies",
+      "query_type": "educational_explanation",
+      "expected_pattern": "hierarchical",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "route_to_educator", "output": "Educational query for children"},
+        {"step": 2, "agent": "knowledge_retriever", "action": "retrieve_concepts", "output": "Quantum superposition, entanglement, qubits"},
+        {"step": 3, "agent": "simplifier", "action": "create_analogies", "output": "Coin flip analogy, Schrödinger's cat"},
+        {"step": 4, "agent": "orchestrator", "action": "format_explanation", "output": "Simple, engaging explanation"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 5.0,
+        "cost_target": 0.12,
+        "agent_utilization": 3,
+        "quality_threshold": 0.90
+      }
+    },
+    {
+      "scenario_id": "query_010",
+      "query": "Debug a production outage: API response time increased from 200ms to 5000ms",
+      "query_type": "troubleshooting",
+      "expected_pattern": "hierarchical",
+      "difficulty": "hard",
+      "reference_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "decompose_debugging", "output": "Split into database, network, application, infrastructure"},
+        {"step": 2, "agent": "database_specialist", "action": "check_db_performance", "output": "Query time normal (50ms avg)"},
+        {"step": 3, "agent": "network_specialist", "action": "check_network", "output": "Network latency normal (10ms)"},
+        {"step": 4, "agent": "app_specialist", "action": "check_application", "output": "Memory leak detected in cache layer"},
+        {"step": 5, "agent": "orchestrator", "action": "synthesize_diagnosis", "output": "Root cause: Memory leak. Solution: Restart service, fix cache TTL"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 6.0,
+        "cost_target": 0.15,
+        "agent_utilization": 4,
+        "quality_threshold": 0.95
+      }
+    },
+    {
+      "scenario_id": "query_011",
+      "query": "Summarize today's news headlines",
+      "query_type": "information_retrieval",
+      "expected_pattern": "sequential",
+      "difficulty": "easy",
+      "reference_trajectory": [
+        {"step": 1, "agent": "web_scraper", "action": "fetch_headlines", "output": "20 headlines from major news sites"},
+        {"step": 2, "agent": "summarizer", "action": "summarize_headlines", "output": "Top 5 news stories in bullet points"},
+        {"step": 3, "agent": "formatter", "action": "format_output", "output": "Formatted summary"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 4.0,
+        "cost_target": 0.08,
+        "agent_utilization": 3,
+        "quality_threshold": 0.85
+      }
+    },
+    {
+      "scenario_id": "query_012",
+      "query": "Translate this paragraph from English to Spanish and then to French",
+      "query_type": "sequential_processing",
+      "expected_pattern": "sequential",
+      "difficulty": "easy",
+      "reference_trajectory": [
+        {"step": 1, "agent": "english_to_spanish", "action": "translate", "output": "Spanish translation"},
+        {"step": 2, "agent": "spanish_to_french", "action": "translate", "output": "French translation"},
+        {"step": 3, "agent": "formatter", "action": "format_output", "output": "Both translations formatted"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 3.0,
+        "cost_target": 0.07,
+        "agent_utilization": 3,
+        "quality_threshold": 0.92
+      }
+    },
+    {
+      "scenario_id": "query_013",
+      "query": "Generate a sales report from raw transaction data, then create visualizations",
+      "query_type": "data_pipeline",
+      "expected_pattern": "sequential",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "data_processor", "action": "process_transactions", "output": "Cleaned transaction data"},
+        {"step": 2, "agent": "report_generator", "action": "create_report", "output": "Sales metrics and KPIs"},
+        {"step": 3, "agent": "visualization_creator", "action": "create_charts", "output": "5 charts (revenue, growth, top products)"},
+        {"step": 4, "agent": "formatter", "action": "combine_outputs", "output": "Complete sales report with visuals"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 6.0,
+        "cost_target": 0.14,
+        "agent_utilization": 4,
+        "quality_threshold": 0.88
+      }
+    },
+    {
+      "scenario_id": "query_014",
+      "query": "Convert this video to audio, transcribe it, and generate a summary",
+      "query_type": "media_processing",
+      "expected_pattern": "sequential",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "video_processor", "action": "extract_audio", "output": "Audio file (MP3)"},
+        {"step": 2, "agent": "transcription_agent", "action": "transcribe_audio", "output": "Full transcript"},
+        {"step": 3, "agent": "summarizer", "action": "summarize_transcript", "output": "3-paragraph summary"},
+        {"step": 4, "agent": "formatter", "action": "format_output", "output": "Formatted summary with timestamps"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 8.0,
+        "cost_target": 0.16,
+        "agent_utilization": 4,
+        "quality_threshold": 0.90
+      }
+    },
+    {
+      "scenario_id": "query_015",
+      "query": "Process customer feedback: extract entities, classify sentiment, identify issues, generate action items",
+      "query_type": "nlp_pipeline",
+      "expected_pattern": "sequential",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "entity_extractor", "action": "extract_entities", "output": "Product names, feature names, sentiment words"},
+        {"step": 2, "agent": "sentiment_classifier", "action": "classify_sentiment", "output": "Overall sentiment: Negative (-0.6)"},
+        {"step": 3, "agent": "issue_identifier", "action": "identify_issues", "output": "Main issue: Slow checkout process"},
+        {"step": 4, "agent": "action_generator", "action": "generate_actions", "output": "3 action items for product team"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 5.0,
+        "cost_target": 0.12,
+        "agent_utilization": 4,
+        "quality_threshold": 0.87
+      }
+    },
+    {
+      "scenario_id": "query_016",
+      "query": "Write a creative short story about a time-traveling detective",
+      "query_type": "creative_writing",
+      "expected_pattern": "collaborative",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "plot_designer", "action": "create_plot", "output": "Plot outline with 5 key events"},
+        {"step": 2, "agent": "character_developer", "action": "develop_characters", "output": "3 character profiles"},
+        {"step": 3, "agent": "dialogue_writer", "action": "write_dialogue", "output": "10 dialogue snippets"},
+        {"step": 4, "agent": "scene_writer", "action": "write_scenes", "output": "5 scenes (opening, conflict, climax, resolution)"},
+        {"step": 5, "agent": "editor", "action": "combine_and_polish", "output": "Complete short story (2000 words)"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 10.0,
+        "cost_target": 0.22,
+        "agent_utilization": 5,
+        "quality_threshold": 0.85
+      }
+    },
+    {
+      "scenario_id": "query_017",
+      "query": "Design a logo for a sustainable fashion brand targeting millennials",
+      "query_type": "creative_design",
+      "expected_pattern": "collaborative",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "brand_strategist", "action": "define_brand_values", "output": "Sustainability, authenticity, minimalism"},
+        {"step": 2, "agent": "color_specialist", "action": "select_colors", "output": "Earth tones: green, beige, brown"},
+        {"step": 3, "agent": "typography_specialist", "action": "select_fonts", "output": "Modern sans-serif with organic feel"},
+        {"step": 4, "agent": "icon_designer", "action": "design_icons", "output": "3 icon concepts (leaf, recycling, thread)"},
+        {"step": 5, "agent": "synthesizer", "action": "combine_elements", "output": "Final logo design with variations"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 9.0,
+        "cost_target": 0.20,
+        "agent_utilization": 5,
+        "quality_threshold": 0.88
+      }
+    },
+    {
+      "scenario_id": "query_018",
+      "query": "Compose a piece of music blending classical piano with electronic beats",
+      "query_type": "creative_composition",
+      "expected_pattern": "collaborative",
+      "difficulty": "hard",
+      "reference_trajectory": [
+        {"step": 1, "agent": "classical_composer", "action": "compose_piano_melody", "output": "Classical piano melody (Cmaj, 4/4 time)"},
+        {"step": 2, "agent": "electronic_producer", "action": "create_electronic_beats", "output": "Electronic drum pattern (120 BPM)"},
+        {"step": 3, "agent": "harmonizer", "action": "create_harmonies", "output": "String harmonies and bass line"},
+        {"step": 4, "agent": "mixing_engineer", "action": "mix_elements", "output": "Balanced mix with transitions"},
+        {"step": 5, "agent": "synthesizer", "action": "finalize_composition", "output": "Complete 3-minute track"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 12.0,
+        "cost_target": 0.26,
+        "agent_utilization": 5,
+        "quality_threshold": 0.82
+      }
+    },
+    {
+      "scenario_id": "query_019",
+      "query": "Brainstorm innovative features for a mobile app focused on mental health",
+      "query_type": "brainstorming",
+      "expected_pattern": "collaborative",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "ux_researcher", "action": "identify_user_needs", "output": "Top 5 user pain points"},
+        {"step": 2, "agent": "feature_ideator_1", "action": "generate_ideas", "output": "5 feature ideas (mood tracking, meditation)"},
+        {"step": 3, "agent": "feature_ideator_2", "action": "generate_ideas", "output": "5 feature ideas (journaling, community)"},
+        {"step": 4, "agent": "technical_evaluator", "action": "assess_feasibility", "output": "Feasibility scores for all ideas"},
+        {"step": 5, "agent": "synthesizer", "action": "combine_best_ideas", "output": "Top 5 innovative features with implementation notes"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 8.0,
+        "cost_target": 0.18,
+        "agent_utilization": 5,
+        "quality_threshold": 0.86
+      }
+    },
+    {
+      "scenario_id": "query_020",
+      "query": "Create a comprehensive onboarding program for new software engineers",
+      "query_type": "program_design",
+      "expected_pattern": "collaborative",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "curriculum_designer", "action": "outline_topics", "output": "10 key topics (codebase, tools, processes)"},
+        {"step": 2, "agent": "technical_trainer", "action": "create_technical_content", "output": "Technical training modules"},
+        {"step": 3, "agent": "culture_specialist", "action": "create_culture_content", "output": "Company values and team practices"},
+        {"step": 4, "agent": "mentor_coordinator", "action": "design_mentorship", "output": "Mentor matching and check-in schedule"},
+        {"step": 5, "agent": "synthesizer", "action": "combine_program", "output": "Complete 30-day onboarding program"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 9.0,
+        "cost_target": 0.20,
+        "agent_utilization": 5,
+        "quality_threshold": 0.89
+      }
+    },
+    {
+      "scenario_id": "query_021",
+      "query": "Generate the best possible title for this article: [article text about climate change]",
+      "query_type": "optimization",
+      "expected_pattern": "competitive",
+      "difficulty": "easy",
+      "reference_trajectory": [
+        {"step": 1, "agent": "title_generator_1", "action": "generate_title", "output": "Climate Crisis: 10 Actions We Must Take Now"},
+        {"step": 2, "agent": "title_generator_2", "action": "generate_title", "output": "How Climate Change Will Transform Our World by 2050"},
+        {"step": 3, "agent": "title_generator_3", "action": "generate_title", "output": "The Climate Emergency: Why We're Running Out of Time"},
+        {"step": 4, "agent": "evaluator", "action": "score_titles", "output": "Scores: 8.5, 9.2, 8.0"},
+        {"step": 5, "agent": "selector", "action": "select_best", "output": "Best title: How Climate Change Will Transform Our World by 2050"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 5.0,
+        "cost_target": 0.12,
+        "agent_utilization": 5,
+        "quality_threshold": 0.92
+      }
+    },
+    {
+      "scenario_id": "query_022",
+      "query": "Write the most compelling product description for a smart water bottle",
+      "query_type": "copywriting",
+      "expected_pattern": "competitive",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "copywriter_1", "action": "write_description", "output": "Description emphasizing health tracking"},
+        {"step": 2, "agent": "copywriter_2", "action": "write_description", "output": "Description emphasizing sustainability"},
+        {"step": 3, "agent": "copywriter_3", "action": "write_description", "output": "Description emphasizing smart features"},
+        {"step": 4, "agent": "evaluator", "action": "score_descriptions", "output": "Scores: 8.2, 7.8, 9.0"},
+        {"step": 5, "agent": "selector", "action": "select_best", "output": "Best description: Smart features version"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 6.0,
+        "cost_target": 0.15,
+        "agent_utilization": 5,
+        "quality_threshold": 0.90
+      }
+    },
+    {
+      "scenario_id": "query_023",
+      "query": "Create the optimal landing page headline for a B2B SaaS product",
+      "query_type": "marketing_optimization",
+      "expected_pattern": "competitive",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "headline_generator_1", "action": "generate_headline", "output": "Headline focusing on ROI"},
+        {"step": 2, "agent": "headline_generator_2", "action": "generate_headline", "output": "Headline focusing on time savings"},
+        {"step": 3, "agent": "headline_generator_3", "action": "generate_headline", "output": "Headline focusing on ease of use"},
+        {"step": 4, "agent": "ab_test_simulator", "action": "simulate_performance", "output": "Predicted CTR: 4.2%, 5.8%, 4.9%"},
+        {"step": 5, "agent": "selector", "action": "select_best", "output": "Best headline: Time savings version (5.8% CTR)"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 5.5,
+        "cost_target": 0.14,
+        "agent_utilization": 5,
+        "quality_threshold": 0.88
+      }
+    },
+    {
+      "scenario_id": "query_024",
+      "query": "Design the best user interface for a task management app",
+      "query_type": "design_optimization",
+      "expected_pattern": "competitive",
+      "difficulty": "hard",
+      "reference_trajectory": [
+        {"step": 1, "agent": "ui_designer_1", "action": "design_interface", "output": "Kanban-style interface"},
+        {"step": 2, "agent": "ui_designer_2", "action": "design_interface", "output": "List-based interface with filters"},
+        {"step": 3, "agent": "ui_designer_3", "action": "design_interface", "output": "Calendar-integrated interface"},
+        {"step": 4, "agent": "ux_evaluator", "action": "evaluate_designs", "output": "Usability scores: 8.5, 9.2, 8.0"},
+        {"step": 5, "agent": "selector", "action": "select_best", "output": "Best design: List-based with filters (9.2 usability)"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 10.0,
+        "cost_target": 0.22,
+        "agent_utilization": 5,
+        "quality_threshold": 0.85
+      }
+    },
+    {
+      "scenario_id": "query_025",
+      "query": "Generate the highest-quality code solution for implementing a binary search tree in Python",
+      "query_type": "code_generation",
+      "expected_pattern": "competitive",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "code_generator_1", "action": "generate_code", "output": "Recursive implementation"},
+        {"step": 2, "agent": "code_generator_2", "action": "generate_code", "output": "Iterative implementation"},
+        {"step": 3, "agent": "code_generator_3", "action": "generate_code", "output": "Balanced BST with rotations"},
+        {"step": 4, "agent": "code_evaluator", "action": "evaluate_code", "output": "Scores: 8.0 (complexity), 8.5 (readability), 9.5 (completeness)"},
+        {"step": 5, "agent": "selector", "action": "select_best", "output": "Best code: Balanced BST with rotations"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 7.0,
+        "cost_target": 0.16,
+        "agent_utilization": 5,
+        "quality_threshold": 0.93
+      }
+    },
+    {
+      "scenario_id": "query_026",
+      "query": "Find the best restaurants near me serving authentic Thai food",
+      "query_type": "search_refinement",
+      "expected_pattern": "adaptive_loop",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "search_agent", "action": "initial_search", "output": "10 Thai restaurants within 5 miles"},
+        {"step": 2, "agent": "evaluator", "action": "assess_quality", "output": "Only 3 have 4+ star ratings"},
+        {"step": 3, "agent": "search_agent", "action": "expand_search", "output": "Search within 10 miles"},
+        {"step": 4, "agent": "evaluator", "action": "assess_quality", "output": "Found 8 restaurants with 4+ stars"},
+        {"step": 5, "agent": "search_agent", "action": "refine_by_authenticity", "output": "Filter for chef-owned Thai restaurants"},
+        {"step": 6, "agent": "evaluator", "action": "finalize_results", "output": "Top 3 authentic Thai restaurants"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 6.0,
+        "cost_target": 0.14,
+        "agent_utilization": 2,
+        "quality_threshold": 0.90,
+        "refinement_iterations": 3
+      }
+    },
+    {
+      "scenario_id": "query_027",
+      "query": "Research the impact of AI on healthcare and refine findings until comprehensive",
+      "query_type": "research_refinement",
+      "expected_pattern": "adaptive_loop",
+      "difficulty": "hard",
+      "reference_trajectory": [
+        {"step": 1, "agent": "research_agent", "action": "initial_search", "output": "15 general articles about AI in healthcare"},
+        {"step": 2, "agent": "evaluator", "action": "assess_coverage", "output": "Missing: drug discovery, diagnostics, patient care"},
+        {"step": 3, "agent": "research_agent", "action": "targeted_search", "output": "10 articles on drug discovery"},
+        {"step": 4, "agent": "evaluator", "action": "assess_coverage", "output": "Still missing: diagnostics, patient care"},
+        {"step": 5, "agent": "research_agent", "action": "fill_gaps", "output": "20 articles covering all areas"},
+        {"step": 6, "agent": "evaluator", "action": "finalize_research", "output": "Comprehensive research on AI in healthcare"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 10.0,
+        "cost_target": 0.22,
+        "agent_utilization": 2,
+        "quality_threshold": 0.92,
+        "refinement_iterations": 3
+      }
+    },
+    {
+      "scenario_id": "query_028",
+      "query": "Optimize SQL query performance until it meets <100ms latency target",
+      "query_type": "iterative_optimization",
+      "expected_pattern": "adaptive_loop",
+      "difficulty": "hard",
+      "reference_trajectory": [
+        {"step": 1, "agent": "optimization_agent", "action": "analyze_query", "output": "Current latency: 500ms, missing indexes"},
+        {"step": 2, "agent": "evaluator", "action": "check_performance", "output": "Not meeting target (500ms > 100ms)"},
+        {"step": 3, "agent": "optimization_agent", "action": "add_indexes", "output": "Added indexes on frequently queried columns"},
+        {"step": 4, "agent": "evaluator", "action": "check_performance", "output": "Improved to 150ms, still not meeting target"},
+        {"step": 5, "agent": "optimization_agent", "action": "refactor_joins", "output": "Optimized JOIN operations"},
+        {"step": 6, "agent": "evaluator", "action": "check_performance", "output": "Achieved 80ms latency, target met!"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 8.0,
+        "cost_target": 0.18,
+        "agent_utilization": 2,
+        "quality_threshold": 0.95,
+        "refinement_iterations": 3
+      }
+    },
+    {
+      "scenario_id": "query_029",
+      "query": "Generate a comprehensive literature review on quantum computing, iteratively expanding coverage",
+      "query_type": "academic_research",
+      "expected_pattern": "adaptive_loop",
+      "difficulty": "hard",
+      "reference_trajectory": [
+        {"step": 1, "agent": "research_agent", "action": "initial_search", "output": "20 seminal papers on quantum computing"},
+        {"step": 2, "agent": "evaluator", "action": "assess_coverage", "output": "Coverage: 60%, missing recent advances (2020-2024)"},
+        {"step": 3, "agent": "research_agent", "action": "search_recent_papers", "output": "15 papers from 2020-2024"},
+        {"step": 4, "agent": "evaluator", "action": "assess_coverage", "output": "Coverage: 80%, missing quantum error correction"},
+        {"step": 5, "agent": "research_agent", "action": "targeted_gap_search", "output": "10 papers on quantum error correction"},
+        {"step": 6, "agent": "evaluator", "action": "finalize_review", "output": "Coverage: 95%, comprehensive literature review"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 12.0,
+        "cost_target": 0.26,
+        "agent_utilization": 2,
+        "quality_threshold": 0.95,
+        "refinement_iterations": 3
+      }
+    },
+    {
+      "scenario_id": "query_030",
+      "query": "Design a logo and refine it based on brand guidelines until approved",
+      "query_type": "creative_refinement",
+      "expected_pattern": "adaptive_loop",
+      "difficulty": "medium",
+      "reference_trajectory": [
+        {"step": 1, "agent": "design_agent", "action": "create_initial_design", "output": "Logo concept v1"},
+        {"step": 2, "agent": "evaluator", "action": "check_brand_alignment", "output": "Issues: Wrong color palette, font too casual"},
+        {"step": 3, "agent": "design_agent", "action": "refine_colors_fonts", "output": "Logo concept v2 with brand colors"},
+        {"step": 4, "agent": "evaluator", "action": "check_brand_alignment", "output": "Issues: Icon not aligned with brand values"},
+        {"step": 5, "agent": "design_agent", "action": "redesign_icon", "output": "Logo concept v3 with new icon"},
+        {"step": 6, "agent": "evaluator", "action": "final_approval", "output": "Approved! Logo meets all brand guidelines"}
+      ],
+      "evaluation_criteria": {
+        "task_completion": true,
+        "latency_target": 9.0,
+        "cost_target": 0.20,
+        "agent_utilization": 2,
+        "quality_threshold": 0.88,
+        "refinement_iterations": 3
+      }
+    }
+  ],
+  "metadata": {
+    "pattern_descriptions": {
+      "hierarchical": "Central orchestrator delegates subtasks to specialized agents and synthesizes results",
+      "sequential": "Tasks flow linearly from one agent to the next (A → B → C → D)",
+      "collaborative": "Multiple agents work together simultaneously on complementary aspects",
+      "competitive": "Multiple agents generate different solutions, best one is selected",
+      "adaptive_loop": "Agent iteratively refines output based on evaluation feedback until quality threshold met"
+    },
+    "evaluation_metrics": {
+      "task_completion": "Boolean indicating if task was successfully completed",
+      "latency_target": "Maximum acceptable latency in seconds",
+      "cost_target": "Maximum acceptable cost in dollars (API calls)",
+      "agent_utilization": "Number of agents involved in task execution",
+      "quality_threshold": "Minimum quality score (0-1) for task output",
+      "refinement_iterations": "Number of refinement loops (adaptive_loop pattern only)"
+    }
+  }
+}

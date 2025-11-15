@@ -1,0 +1,336 @@
+{
+  "case_study": "Automotive AI Assistant - Multi-Agent System",
+  "experiment_metadata": {
+    "mode": "DEMO",
+    "num_queries": 5,
+    "num_patterns": 5,
+    "simulation_type": "automotive_ai",
+    "timestamp": "2025-11-15 09:41:57"
+  },
+  "system_targets": {
+    "total_agents": 5,
+    "coordination_patterns": 5,
+    "target_latency": "< 5 seconds for 90% of queries",
+    "accuracy_target": "> 90% user satisfaction",
+    "cost_target": "< $0.10 per query average"
+  },
+  "pattern_metrics": {
+    "hierarchical": {
+      "count": 1,
+      "avg_latency": 3.5871348556188867,
+      "avg_cost": 0.08199165384271741,
+      "avg_accuracy": 0.95,
+      "avg_satisfaction": 0.92
+    },
+    "diamond": {
+      "count": 1,
+      "avg_latency": 4.089154390544802,
+      "avg_cost": 0.09736081882249527,
+      "avg_accuracy": 0.91,
+      "avg_satisfaction": 0.93
+    },
+    "peer_to_peer": {
+      "count": 1,
+      "avg_latency": 4.462152458441164,
+      "avg_cost": 0.10907483787300622,
+      "avg_accuracy": 0.94,
+      "avg_satisfaction": 0.93
+    },
+    "collaborative": {
+      "count": 1,
+      "avg_latency": 6.624332200542563,
+      "avg_cost": 0.1528692046279053,
+      "avg_accuracy": 0.9,
+      "avg_satisfaction": 0.92
+    },
+    "adaptive_loop": {
+      "count": 1,
+      "avg_latency": 3.2776573735185464,
+      "avg_cost": 0.07712134996514228,
+      "avg_accuracy": 0.94,
+      "avg_satisfaction": 0.93
+    }
+  },
+  "detailed_results": [
+    {
+      "query_id": "auto_001",
+      "query": "Is there a service area ahead with clean toilets?",
+      "pattern": "hierarchical",
+      "classification": "Facility search query",
+      "final_response": "Yes, Johnson Service Area 12 miles ahead (4.5\u2605 cleanliness)",
+      "trajectory": [
+        {
+          "step": 1,
+          "agent": "orchestrator",
+          "action": "classify_query",
+          "output": "Facility search query"
+        },
+        {
+          "step": 2,
+          "agent": "orchestrator",
+          "action": "route_to_specialists",
+          "output": "Send to navigation + facility_ratings"
+        },
+        {
+          "step": 3,
+          "agent": "navigation_agent",
+          "action": "find_service_areas",
+          "output": "3 service areas within 20 miles"
+        },
+        {
+          "step": 4,
+          "agent": "facility_ratings_agent",
+          "action": "check_ratings",
+          "output": "Area 2 has 4.5/5 rating for cleanliness"
+        },
+        {
+          "step": 5,
+          "agent": "orchestrator",
+          "action": "synthesize_response",
+          "output": "Yes, Johnson Service Area 12 miles ahead (4.5\u2605 cleanliness)"
+        }
+      ],
+      "latency": 3.5871348556188867,
+      "cost": 0.08199165384271741,
+      "accuracy": 0.95,
+      "user_satisfaction": 0.92,
+      "num_steps": 5,
+      "involved_agents": [
+        "orchestrator",
+        "navigation_agent",
+        "facility_ratings_agent"
+      ]
+    },
+    {
+      "query_id": "auto_007",
+      "query": "Should I rephrase that? Find me a gas station with good coffee",
+      "pattern": "diamond",
+      "classification": "General query",
+      "final_response": "Response synthesized from agent outputs",
+      "trajectory": [
+        {
+          "step": 1,
+          "agent": "orchestrator",
+          "action": "receive_query",
+          "output": "Original query"
+        },
+        {
+          "step": 2,
+          "agent": "orchestrator",
+          "action": "rephrase_for_clarity",
+          "output": "Rephrased: Find gas stations with coffee shops nearby"
+        },
+        {
+          "step": 3,
+          "agent": "navigation_agent",
+          "action": "search_gas_stations",
+          "output": "5 gas stations within 5 miles"
+        },
+        {
+          "step": 4,
+          "agent": "facility_ratings_agent",
+          "action": "filter_by_amenity",
+          "output": "3 have coffee shops with 4+ ratings"
+        },
+        {
+          "step": 5,
+          "agent": "orchestrator",
+          "action": "moderate_response",
+          "output": "Rephrased query found better results: Shell station 2 miles ahead (4.5\u2605 coffee)"
+        }
+      ],
+      "latency": 4.089154390544802,
+      "cost": 0.09736081882249527,
+      "accuracy": 0.91,
+      "user_satisfaction": 0.93,
+      "num_steps": 5,
+      "involved_agents": [
+        "orchestrator",
+        "navigation_agent",
+        "facility_ratings_agent"
+      ]
+    },
+    {
+      "query_id": "auto_010",
+      "query": "I need to find a specific type of repair shop - who can diagnose transmission issues?",
+      "pattern": "peer_to_peer",
+      "classification": "Specialized service search",
+      "final_response": "AutoFix Transmissions (4.7\u2605, 5 miles, transmission specialist)",
+      "trajectory": [
+        {
+          "step": 1,
+          "agent": "orchestrator",
+          "action": "classify_query",
+          "output": "Specialized service search"
+        },
+        {
+          "step": 2,
+          "agent": "vehicle_diagnostics_agent",
+          "action": "assess_issue",
+          "output": "Likely transmission problem, needs specialist"
+        },
+        {
+          "step": 3,
+          "agent": "vehicle_diagnostics_agent",
+          "action": "handoff_to_navigation",
+          "output": "Handoff: Find transmission specialists"
+        },
+        {
+          "step": 4,
+          "agent": "navigation_agent",
+          "action": "search_specialists",
+          "output": "3 transmission repair shops found"
+        },
+        {
+          "step": 5,
+          "agent": "navigation_agent",
+          "action": "handoff_to_ratings",
+          "output": "Handoff: Check shop ratings"
+        },
+        {
+          "step": 6,
+          "agent": "facility_ratings_agent",
+          "action": "rank_shops",
+          "output": "Top shop: AutoFix Transmissions (4.7\u2605, 5 miles)"
+        },
+        {
+          "step": 7,
+          "agent": "orchestrator",
+          "action": "synthesize_response",
+          "output": "AutoFix Transmissions (4.7\u2605, 5 miles, transmission specialist)"
+        }
+      ],
+      "latency": 4.462152458441164,
+      "cost": 0.10907483787300622,
+      "accuracy": 0.94,
+      "user_satisfaction": 0.93,
+      "num_steps": 7,
+      "involved_agents": [
+        "orchestrator",
+        "navigation_agent",
+        "facility_ratings_agent",
+        "vehicle_diagnostics_agent"
+      ]
+    },
+    {
+      "query_id": "auto_012",
+      "query": "Plan a road trip from SF to LA with scenic stops and good restaurants",
+      "pattern": "collaborative",
+      "classification": "General query",
+      "final_response": "Complete road trip itinerary with 5 stops + 8 restaurant options",
+      "trajectory": [
+        {
+          "step": 1,
+          "agent": "orchestrator",
+          "action": "decompose_task",
+          "output": "Split into route, scenic stops, restaurants"
+        },
+        {
+          "step": 2,
+          "agent": "navigation_agent",
+          "action": "plan_scenic_route",
+          "output": "Pacific Coast Highway route (7 hours)"
+        },
+        {
+          "step": 3,
+          "agent": "contextual_search_agent",
+          "action": "find_scenic_stops",
+          "output": "5 scenic viewpoints identified"
+        },
+        {
+          "step": 4,
+          "agent": "facility_ratings_agent",
+          "action": "find_restaurants",
+          "output": "8 highly-rated restaurants along route"
+        },
+        {
+          "step": 5,
+          "agent": "orchestrator",
+          "action": "synthesize_itinerary",
+          "output": "Complete road trip itinerary with 5 stops + 8 restaurant options"
+        }
+      ],
+      "latency": 6.624332200542563,
+      "cost": 0.1528692046279053,
+      "accuracy": 0.9,
+      "user_satisfaction": 0.92,
+      "num_steps": 5,
+      "involved_agents": [
+        "orchestrator",
+        "navigation_agent",
+        "facility_ratings_agent",
+        "contextual_search_agent"
+      ]
+    },
+    {
+      "query_id": "auto_016",
+      "query": "Find the best coffee shop near me",
+      "pattern": "adaptive_loop",
+      "classification": "General query",
+      "final_response": "Blue Bottle Coffee (4.7\u2605, 0.5 miles away)",
+      "trajectory": [
+        {
+          "step": 1,
+          "agent": "orchestrator",
+          "action": "route_to_search",
+          "output": "Send to contextual_search_agent"
+        },
+        {
+          "step": 2,
+          "agent": "contextual_search_agent",
+          "action": "initial_search",
+          "output": "10 coffee shops within 2 miles"
+        },
+        {
+          "step": 3,
+          "agent": "contextual_search_agent",
+          "action": "refine_by_rating",
+          "output": "Top 5 with 4+ stars"
+        },
+        {
+          "step": 4,
+          "agent": "contextual_search_agent",
+          "action": "refine_by_distance",
+          "output": "Closest high-rated: Blue Bottle (4.7\u2605, 0.5 miles)"
+        },
+        {
+          "step": 5,
+          "agent": "orchestrator",
+          "action": "return_response",
+          "output": "Blue Bottle Coffee (4.7\u2605, 0.5 miles away)"
+        }
+      ],
+      "latency": 3.2776573735185464,
+      "cost": 0.07712134996514228,
+      "accuracy": 0.94,
+      "user_satisfaction": 0.93,
+      "num_steps": 5,
+      "involved_agents": [
+        "orchestrator",
+        "contextual_search_agent"
+      ]
+    }
+  ],
+  "performance_summary": {
+    "total_queries": 5,
+    "avg_latency": 4.408086255733192,
+    "avg_cost": 0.1036835730262533,
+    "avg_accuracy": 0.9279999999999999,
+    "avg_satisfaction": 0.9259999999999999,
+    "latency_sla_compliance": 0.8,
+    "cost_sla_compliance": 0.6
+  },
+  "insights": {
+    "most_common_pattern": "hierarchical",
+    "most_expensive_pattern": "collaborative",
+    "fastest_pattern": "hierarchical",
+    "highest_accuracy_pattern": "adaptive_loop",
+    "pattern_selection_criteria": {
+      "simple_queries": "hierarchical (routing efficiency)",
+      "ambiguous_queries": "diamond (query clarification)",
+      "specialized_tasks": "peer_to_peer (expert handoff)",
+      "complex_multi_faceted": "collaborative (parallel processing)",
+      "quality_critical": "adaptive_loop (iterative refinement)"
+    }
+  }
+}

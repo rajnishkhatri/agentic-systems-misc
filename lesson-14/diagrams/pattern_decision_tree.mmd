@@ -1,0 +1,182 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#E8F4F8','primaryTextColor':'#000','primaryBorderColor':'#4A90E2','lineColor':'#4A90E2','secondaryColor':'#D4E6F1','tertiaryColor':'#FFF'}}}%%
+graph TD
+    Start["🤔 Choose Multi-Agent Pattern<br/><br/>❓ What is your primary constraint?"]
+
+    %% Constraint 1: Simplicity
+    C1{"🎯 Constraint:<br/>SIMPLICITY<br/>(easy to implement/debug)"}
+    Sequential["✅ Use <b>Sequential Pattern</b><br/><br/>📋 Example: Basic RAG pipeline<br/>• Query → Classify → Retrieve → Synthesize<br/><br/>✅ Pros:<br/>• Simple linear flow<br/>• Easy to debug<br/>• Deterministic<br/><br/>⚠️ Cons:<br/>• Slowest (no parallelization)<br/>• Single point of failure"]
+
+    %% Constraint 2: Latency
+    C2{"⚡ Constraint:<br/>LATENCY<br/>(must be fast)"}
+    C2a{"Can subtasks<br/>run in parallel?"}
+    C2b{"Need central<br/>coordination?"}
+
+    Hierarchical["✅ Use <b>Hierarchical Pattern</b><br/><br/>📋 Example: Financial analysis<br/>• Manager → (Financial + Market + Competitive) parallel<br/><br/>✅ Pros:<br/>• Parallel execution (40% faster)<br/>• Central oversight<br/>• Strategic routing<br/><br/>⚠️ Cons:<br/>• Manager = single point of failure<br/>• Coordination overhead"]
+
+    Competitive["✅ Use <b>Competitive Pattern</b><br/><br/>📋 Example: Multi-model contract review<br/>• (GPT-4 + Claude + Gemini) parallel → Judge<br/><br/>✅ Pros:<br/>• Parallel speed<br/>• Quality through diversity<br/>• Avoids single-model bias<br/><br/>⚠️ Cons:<br/>• Higher cost (4× LLM calls)<br/>• Need robust evaluator"]
+
+    SequentialOptimize["✅ Use <b>Sequential Pattern</b><br/>(optimize each agent)<br/><br/>📋 Note: If strict dependencies,<br/>parallelize within agents instead"]
+
+    %% Constraint 3: Quality
+    C3{"🎯 Constraint:<br/>QUALITY<br/>(accuracy critical)"}
+    C3a{"Need diverse<br/>perspectives?"}
+
+    Collaborative["✅ Use <b>Collaborative Pattern</b><br/><br/>📋 Example: Scientific research<br/>• 3 agents → Shared workspace → Peer review<br/><br/>✅ Pros:<br/>• Highest quality (cross-validation)<br/>• Creative problem-solving<br/>• Robust to failures<br/><br/>⚠️ Cons:<br/>• Highest latency (9-12s)<br/>• Highest cost (12 LLM calls)"]
+
+    CompetitiveQ["✅ Use <b>Competitive Pattern</b><br/><br/>📋 Example: High-stakes legal/medical<br/>• Multiple agents → Evaluator selects best<br/><br/>✅ Pros:<br/>• Quality through competition<br/>• Model-agnostic<br/>• 20-30% accuracy improvement<br/><br/>⚠️ Cons:<br/>• Higher cost<br/>• Evaluation complexity"]
+
+    %% Constraint 4: Cost
+    C4{"💰 Constraint:<br/>COST<br/>(limited budget)"}
+    SequentialCost["✅ Use <b>Sequential Pattern</b><br/><br/>📋 Optimize:<br/>• Use GPT-3.5 for simple tasks<br/>• Use GPT-4 only for complex reasoning<br/>• Cache frequent queries"]
+
+    HierarchicalCost["✅ Use <b>Hierarchical Pattern</b><br/>(with optimization)<br/><br/>📋 Optimize:<br/>• Minimize worker agents<br/>• Use cheaper models for workers<br/>• Expensive model only for synthesis"]
+
+    %% Constraint 5: Adaptability
+    C5{"🔄 Constraint:<br/>ADAPTABILITY<br/>(handle failures gracefully)"}
+    C5a{"Initial approach<br/>might fail?"}
+
+    AdaptiveLoop["✅ Use <b>Adaptive Loop Pattern</b><br/><br/>📋 Example: Search query expansion<br/>• Loop 1: Exact → Loop 2: Relaxed → Loop 3: Fallback<br/><br/>✅ Pros:<br/>• Handles zero results<br/>• Progressive refinement<br/>• Efficient (avg 2.5 loops)<br/><br/>⚠️ Cons:<br/>• Variable latency (2-8s)<br/>• Need refinement strategy"]
+
+    HierarchicalRedundancy["✅ Use <b>Hierarchical Pattern</b><br/>(with fallback agents)<br/><br/>📋 Example: Weather API failure<br/>• Primary Weather Agent<br/>• Backup Weather Agent (fallback)<br/><br/>✅ Pros:<br/>• Graceful degradation<br/>• High availability<br/><br/>⚠️ Cons:<br/>• Duplicate agents (higher cost)"]
+
+    %% Flow
+    Start --> C1
+    Start --> C2
+    Start --> C3
+    Start --> C4
+    Start --> C5
+
+    C1 -->|"Yes"| Sequential
+
+    C2 -->|"Yes"| C2a
+    C2a -->|"Yes"| C2b
+    C2b -->|"Yes"| Hierarchical
+    C2b -->|"No<br/>(independent tasks)"| Competitive
+    C2a -->|"No<br/>(strict dependencies)"| SequentialOptimize
+
+    C3 -->|"Yes"| C3a
+    C3a -->|"Yes<br/>(creative/research)"| Collaborative
+    C3a -->|"No<br/>(just avoid bias)"| CompetitiveQ
+
+    C4 -->|"Yes"| SequentialCost
+    C4 -->|"Moderate budget"| HierarchicalCost
+
+    C5 -->|"Yes"| C5a
+    C5a -->|"Yes<br/>(0 results common)"| AdaptiveLoop
+    C5a -->|"No<br/>(need redundancy)"| HierarchicalRedundancy
+
+    %% Summary Table
+    Summary["📊 <b>Pattern Comparison Table</b><br/><br/>| Pattern | Latency | Cost | Quality | Complexity |<br/>|---------|---------|------|---------|------------|<br/>| Sequential | Slow ❌ | Low ✅ | Good | Low ✅ |<br/>| Hierarchical | Medium | Medium | Very Good ✅ | Medium |<br/>| Collaborative | High ❌ | High ❌ | Excellent ✅ | High |<br/>| Competitive | Medium | High ❌ | Excellent ✅ | Medium |<br/>| Adaptive Loop | Variable | Low ✅ | Good | Medium |"]
+
+    classDef startStyle fill:#4A90E2,stroke:#2E5C8A,color:#fff,stroke-width:3px
+    classDef questionStyle fill:#FFF9E6,stroke:#F4C430,color:#000,stroke-width:2px
+    classDef patternStyle fill:#A8D5BA,stroke:#5FAD7A,color:#000,stroke-width:3px
+    classDef metaStyle fill:#D4E6F1,stroke:#7FB3D5,color:#000,stroke-width:1px,stroke-dasharray: 5 5
+
+    class Start startStyle
+    class C1,C2,C2a,C2b,C3,C3a,C4,C5,C5a questionStyle
+    class Sequential,Hierarchical,Competitive,Collaborative,AdaptiveLoop,SequentialOptimize,CompetitiveQ,SequentialCost,HierarchicalCost,HierarchicalRedundancy patternStyle
+    class Summary metaStyle
+```
+
+**Diagram Purpose:** Provide a comprehensive decision tree to help developers select the optimal multi-agent pattern based on their primary constraints (simplicity, latency, quality, cost, or adaptability), with concrete examples and trade-off analysis for each path.
+
+**Key Insights:**
+1. **Constraint-Driven Selection**: No single "best" pattern—choice depends on what matters most (speed vs. quality vs. cost vs. simplicity)
+2. **Multiple Decision Points**: Some constraints (latency, quality, adaptability) require additional questions to refine pattern choice
+3. **Pattern Optimizations**: Even within a pattern, optimization strategies vary (e.g., Sequential with cost optimization uses cheaper models)
+4. **Hybrid Approaches**: Production systems often combine patterns (e.g., Hierarchical with Adaptive Loop for fallback)
+5. **Trade-off Awareness**: Each leaf node shows pros/cons to help developers understand what they're gaining and sacrificing
+
+**Decision Path Examples:**
+
+**Path 1: Simplicity → Sequential**
+- **Scenario**: "I'm building my first multi-agent system and want something easy to debug"
+- **Pattern**: Sequential (linear pipeline)
+- **Example**: Basic RAG (Query → Classify → Retrieve → Synthesize)
+- **Why**: Deterministic flow, easy to debug, clear accountability
+
+**Path 2: Latency → Parallel Subtasks → Central Coordination → Hierarchical**
+- **Scenario**: "I need fast responses for financial analysis queries"
+- **Pattern**: Hierarchical (Manager delegates to parallel workers)
+- **Example**: Investment analysis (Manager → Financial + Market + Competitive agents parallel)
+- **Why**: 40% faster than sequential, central synthesis ensures coherent output
+
+**Path 3: Latency → Parallel Subtasks → Independent Tasks → Competitive**
+- **Scenario**: "I need fast, high-quality legal contract reviews"
+- **Pattern**: Competitive (Multiple agents race, evaluator selects best)
+- **Example**: 3 different LLMs (GPT-4, Claude, Gemini) analyze contract, judge selects best
+- **Why**: Parallel speed + quality through diversity, avoids single-model bias
+
+**Path 4: Quality → Diverse Perspectives → Collaborative**
+- **Scenario**: "I'm building a scientific research assistant that needs thorough analysis"
+- **Pattern**: Collaborative (Shared workspace, peer review)
+- **Example**: Drug discovery (Literature + Molecular + Clinical + Statistical agents collaborate)
+- **Why**: Cross-validation, creative synthesis, highest quality (but slowest and most expensive)
+
+**Path 5: Quality → Avoid Bias → Competitive**
+- **Scenario**: "I need high-quality outputs for medical diagnosis but don't need creative collaboration"
+- **Pattern**: Competitive (Multiple agents, select best)
+- **Example**: 3 diagnostic agents analyze symptoms, evaluator selects most accurate diagnosis
+- **Why**: 20-30% accuracy improvement over single-agent, model-agnostic
+
+**Path 6: Cost → Sequential with Optimization**
+- **Scenario**: "I have a tight budget but need multi-agent capabilities"
+- **Pattern**: Sequential (optimized for cost)
+- **Optimization**: Use GPT-3.5-Turbo for simple tasks (classification, routing), GPT-4 only for complex synthesis
+- **Savings**: 50-70% cost reduction vs. using GPT-4 for all agents
+
+**Path 7: Adaptability → Initial Failures Common → Adaptive Loop**
+- **Scenario**: "My search queries often return zero results and need iterative refinement"
+- **Pattern**: Adaptive Loop (Progressive query expansion)
+- **Example**: Restaurant search ("Italian vegan" → "Italian vegetarian" → "Italian plant-based")
+- **Why**: Handles zero-result failures gracefully, efficient (avg 2.5 loops vs. always running 4)
+
+**Path 8: Adaptability → Need Redundancy → Hierarchical with Fallbacks**
+- **Scenario**: "My external APIs are unreliable and I need high availability"
+- **Pattern**: Hierarchical (with backup agents)
+- **Example**: Weather queries (Primary: WeatherAPI.com, Backup: OpenWeatherMap)
+- **Why**: Graceful degradation, system remains operational during API outages
+
+**Pattern Comparison Table:**
+
+| Pattern | Latency | Cost | Quality | Complexity | Best For |
+|---------|---------|------|---------|------------|----------|
+| **Sequential** | Slow (10s) ❌ | Low ($0.03) ✅ | Good (75%) | Low ✅ | Simple workflows with strict dependencies |
+| **Hierarchical** | Medium (6s) | Medium ($0.07) | Very Good (85%) ✅ | Medium | Complex tasks needing coordination + parallel execution |
+| **Collaborative** | High (12s) ❌ | High ($0.12) ❌ | Excellent (90%) ✅ | High | Creative problem-solving, diverse expertise required |
+| **Competitive** | Medium (7s) | High ($0.12) ❌ | Excellent (92%) ✅ | Medium | Quality-critical tasks, high-stakes decisions |
+| **Adaptive Loop** | Variable (5s avg) | Low ($0.05) ✅ | Good (80%) | Medium | Queries that might fail, need iterative refinement |
+
+**When to Combine Patterns:**
+Most production systems use **pattern composition**:
+
+1. **Hierarchical (top-level) + Sequential/Competitive/Collaborative (subtasks)**:
+   - Orchestrator routes queries to pattern-specific workflows
+   - Example: Automotive AI (see automotive_ai_architecture.mmd)
+
+2. **Adaptive Loop + Any Pattern**:
+   - If initial pattern fails, retry with different approach
+   - Example: Search fails with Exact Match → Retry with Adaptive Loop
+
+3. **Competitive + Collaborative**:
+   - Multiple teams collaborate (Collaborative), then teams compete (Competitive)
+   - Example: Design competition where teams submit proposals, judge selects winner
+
+**Common Mistakes:**
+1. ❌ **Over-engineering**: Using Collaborative for simple queries (overkill)
+2. ❌ **Under-engineering**: Using Sequential for complex parallel tasks (too slow)
+3. ❌ **Ignoring cost**: Using Competitive for all queries (budget overrun)
+4. ❌ **No fallback**: Not handling pattern failures (system crashes)
+5. ❌ **Pattern lock-in**: Always using same pattern regardless of query type
+
+**Referenced In:** `multi_agent_design_patterns.md` (Pattern Selection Decision Tree, Lines 715-748)
+
+**Rendering Notes:**
+- Flowchart with decision diamonds (constraints) and rectangular leaf nodes (pattern recommendations)
+- Color coding: Blue (start), yellow (questions), green (patterns), light blue (summary table)
+- Each pattern leaf node includes example use case, pros, and cons
+- Comparison table summarizes all patterns in one view
+- Binary questions (Yes/No) to guide selection
+- Compatible with GitHub Markdown rendering

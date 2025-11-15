@@ -1,0 +1,104 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#E8F4F8','primaryTextColor':'#000','primaryBorderColor':'#4A90E2','lineColor':'#4A90E2','secondaryColor':'#D4E6F1','tertiaryColor':'#FFF'}}}%%
+graph TD
+    User["👤 User Query (Top Vertex):<br/>'Why is my tire pressure<br/>warning light on?'"]
+
+    subgraph Broadcast["Broadcast Phase (3-5s parallel)"]
+        Agent1["📘 Car Manual Agent<br/><small>Technical response</small>"]
+        Agent2["🧠 General Knowledge Agent<br/><small>Physics explanation</small>"]
+        Agent3["⚠️ Safety Agent<br/><small>Action recommendations</small>"]
+    end
+
+    subgraph Outputs["Raw Agent Outputs"]
+        Out1["📘 <b>Technical</b>:<br/>'TPMS alert. Tire at 1.8 bar<br/>(-18.75% below 2.2 bar spec).<br/>Underinflation reduces fuel<br/>efficiency, tire longevity,<br/>compromises handling.'"]
+
+        Out2["🧠 <b>Physics</b>:<br/>'Underinflated tires have<br/>increased rolling resistance<br/>and heat buildup. Affects<br/>contact patch with road.'"]
+
+        Out3["⚠️ <b>Safety</b>:<br/>'Check tire pressure ASAP.<br/>Reinflate to 2.2 bar at<br/>nearest service station.<br/>Safe to drive short distance.'"]
+    end
+
+    subgraph Moderation["Moderator / Evaluator Phase (2s)"]
+        Evaluator["🎯 Rephraser Agent<br/><b>Selects Best + Moderates Language</b>"]
+        Criteria["📊 Evaluation Criteria:<br/>• Technical accuracy<br/>• User-friendliness<br/>• Actionability"]
+    end
+
+    Response["✅ Final Response (Bottom Vertex):<br/><br/>'Your front right tire is a bit low (1.8 bar).<br/>Safe to keep driving, but add air at next<br/>petrol station. Low pressure affects fuel<br/>economy and tire wear.<br/>Want help finding a nearby place to fill up?'"]
+
+    User --> Agent1
+    User --> Agent2
+    User --> Agent3
+
+    Agent1 --> Out1
+    Agent2 --> Out2
+    Agent3 --> Out3
+
+    Out1 -.->|"Evaluate"| Evaluator
+    Out2 -.->|"Evaluate"| Evaluator
+    Out3 -.->|"Evaluate"| Evaluator
+
+    Criteria -.-> Evaluator
+    Evaluator --> Response
+    Response --> User2["👤 User receives answer"]
+
+    %% Pattern Characteristics
+    Chars["💎 <b>Diamond Pattern:</b><br/>• Top: Single query broadcast<br/>• Middle: Parallel processing<br/>• Bottom: Best selection<br/>• Shape: ◇ (diamond)"]
+
+    UseCase["✅ <b>When to Use:</b><br/>• Quality-critical tasks<br/>• Multiple valid approaches<br/>• Avoid single-model bias<br/>• High-stakes decisions<br/><br/>⚠️ <b>Trade-off:</b><br/>• 4 LLM calls (3 agents + moderator)<br/>• Higher cost, higher quality"]
+
+    classDef userStyle fill:#D4E6F1,stroke:#7FB3D5,color:#000,stroke-width:2px
+    classDef agentStyle fill:#E8F4F8,stroke:#4A90E2,color:#000,stroke-width:2px
+    classDef moderatorStyle fill:#4A90E2,stroke:#2E5C8A,color:#fff,stroke-width:3px
+    classDef outputStyle fill:#A8D5BA,stroke:#5FAD7A,color:#000,stroke-width:2px
+    classDef metaStyle fill:#FFF9E6,stroke:#F4C430,color:#000,stroke-width:1px,stroke-dasharray: 5 5
+    classDef rawStyle fill:#FFE6E6,stroke:#FF6B6B,color:#000,stroke-width:1px
+
+    class User,User2 userStyle
+    class Agent1,Agent2,Agent3 agentStyle
+    class Evaluator moderatorStyle
+    class Response outputStyle
+    class Out1,Out2,Out3 rawStyle
+    class Criteria,Chars,UseCase metaStyle
+```
+
+**Diagram Purpose:** Illustrate the Diamond (Competitive + Selection) pattern where multiple agents independently process the same query in parallel, and a moderator/evaluator selects the best response or merges best elements to ensure quality and user-friendliness.
+
+**Key Insights:**
+1. **Diamond Shape (◇)**: Query broadcasts from top vertex → Multiple agents process in parallel (middle vertices) → Moderator selects best (converges at bottom vertex) → Single output
+2. **Quality Through Diversity**: Three independent approaches (technical manual, physics explanation, safety recommendations) provide complementary perspectives
+3. **Response Moderation**: Rephraser agent doesn't just select—it translates technical accuracy into user-friendly language
+4. **Parallel Efficiency**: All three agents run simultaneously (3-5s), moderator adds 2s overhead (total: 5-7s)
+5. **Evaluation Criteria**: Moderator judges outputs on technical accuracy, user-friendliness, and actionability
+6. **High-Stakes Use Case**: Automotive safety-critical information requires balance of technical correctness and clear communication
+
+**Real-World Example (Automotive AI):**
+- **User Query**: "Why is my tire pressure warning light on?"
+- **Car Manual Agent** (Technical): "TPMS alert indicates tire at 1.8 bar, 18.75% below spec. Underinflation reduces fuel efficiency and tire longevity."
+- **General Knowledge Agent** (Physics): "Underinflated tires have increased rolling resistance and heat buildup."
+- **Safety Agent** (Action): "Check tire pressure ASAP. Reinflate to 2.2 bar. Safe to drive short distance."
+- **Rephraser Moderator**: Combines technical accuracy (from manual) with user-friendly language → "Your front right tire is a bit low (1.8 bar). Safe to keep driving, but add air at next petrol station."
+
+**Pattern Variants:**
+1. **Best Selection**: Evaluator picks single best response (used in example above)
+2. **Response Merging**: Evaluator synthesizes best elements from all responses
+3. **Majority Voting**: Select response with highest consensus (for categorical outputs)
+
+**When to Use:**
+- ✅ Quality more important than speed/cost
+- ✅ Multiple valid approaches exist
+- ✅ Want to avoid single-model bias
+- ✅ High-stakes decisions (legal, medical, safety)
+- ❌ Avoid if budget is tight (4× LLM calls vs. single-agent)
+
+**Cost-Quality Trade-off:**
+- **Cost**: 4 LLM calls (3 agents + 1 moderator) = ~$0.12
+- **Latency**: 5-7s (parallel agents + moderator)
+- **Quality**: 20-30% higher accuracy in high-stakes tasks (Google case studies)
+
+**Referenced In:** `multi_agent_design_patterns.md` (Pattern 4: Competitive - Diamond Pattern, Lines 526-548)
+
+**Rendering Notes:**
+- Diamond shape created by single-input → multiple-parallel → single-output flow
+- Color coding: Light blue (agents), dark blue (moderator), red boxes (raw outputs show unfiltered responses)
+- Dotted arrows to moderator show evaluation phase
+- Metadata boxes explain pattern characteristics and usage criteria
+- Compatible with GitHub Markdown rendering

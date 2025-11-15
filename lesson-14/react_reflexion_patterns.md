@@ -569,9 +569,12 @@ Score:
         action_count = sum(1 for item in trajectory if item["type"] == "action")
         error_count = sum(1 for item in trajectory if "error" in str(item).lower())
 
-        # Penalize excessive steps and errors
-        efficiency = 1.0 - (error_count * 0.2) - max(0, (action_count - 5) * 0.05)
-        return max(0.0, efficiency)
+    # Penalize errors, excessive actions beyond 5, and unacted thoughts
+    penalty = (error_count * 0.2)
+    + max(0, (action_count - 5) * 0.05) 
+    + max(0, (thought_count - action_count) * 0.05)
+    efficiency = 1.0 - penalty
+    return max(0.0, min(1.0, efficiency))
 ```
 
 **2. Self-Reflection Generator**

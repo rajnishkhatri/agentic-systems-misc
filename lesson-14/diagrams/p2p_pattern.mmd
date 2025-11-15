@@ -1,0 +1,132 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#E8F4F8','primaryTextColor':'#000','primaryBorderColor':'#4A90E2','lineColor':'#4A90E2','secondaryColor':'#D4E6F1','tertiaryColor':'#FFF'}}}%%
+sequenceDiagram
+    participant User as 👤 User
+    participant GeneralAgent as 🤖 General Agent
+    participant FinanceAgent as 💰 Finance Specialist
+    participant Memory as 🧠 Context Manager
+
+    Note over User,Memory: Peer-to-Peer Handoff Pattern
+
+    %% Initial Query
+    User->>GeneralAgent: "What's the best way to<br/>save for retirement?"
+    activate GeneralAgent
+
+    GeneralAgent->>GeneralAgent: Classify domain:<br/>"finance" detected
+    Note right of GeneralAgent: ⚠️ Needs specialist expertise
+
+    %% Context Preparation
+    GeneralAgent->>Memory: Prepare handoff context:<br/>• User query<br/>• Conversation history (5 turns)<br/>• User profile (age: 35, risk: moderate)
+    activate Memory
+    Memory-->>GeneralAgent: Context package ready
+    deactivate Memory
+
+    %% Handoff to Specialist
+    GeneralAgent->>FinanceAgent: 🔄 HANDOFF<br/>Query + Context
+    Note over GeneralAgent,FinanceAgent: Context Transfer:<br/>✅ User query<br/>✅ Conversation history<br/>✅ User preferences<br/>✅ Session state
+    deactivate GeneralAgent
+    activate FinanceAgent
+
+    %% Specialist Processing
+    FinanceAgent->>FinanceAgent: Access user profile:<br/>• Age: 35 (30 years to retirement)<br/>• Risk tolerance: Moderate<br/>• Income: $80k/year
+    FinanceAgent->>FinanceAgent: Generate personalized plan:<br/>• 401(k): $19,500/year<br/>• Roth IRA: $6,000/year<br/>• Index funds: 70/30 stocks/bonds
+
+    %% Response
+    FinanceAgent->>User: "Based on your age (35) and moderate risk<br/>tolerance, I recommend:<br/>1. Max 401(k): $19.5k/year (employer match)<br/>2. Roth IRA: $6k/year (tax-free growth)<br/>3. Index funds: 70% stocks, 30% bonds<br/><br/>💡 Tip: Increase stocks allocation early,<br/>shift to bonds closer to retirement."
+    deactivate FinanceAgent
+
+    %% Multi-Turn Context Switching
+    Note over User,FinanceAgent: ─── Multi-Turn Example ───
+
+    User->>FinanceAgent: "What about crypto?"
+    activate FinanceAgent
+    FinanceAgent->>User: "Crypto can be 5-10% of portfolio<br/>for moderate risk. Consider Bitcoin/Ethereum<br/>only. Avoid altcoins."
+    deactivate FinanceAgent
+
+    User->>FinanceAgent: "Actually, what's the weather like tomorrow?"
+    activate FinanceAgent
+    FinanceAgent->>FinanceAgent: Classify domain:<br/>"weather" detected
+    Note right of FinanceAgent: ⚠️ Out of my expertise
+
+    FinanceAgent->>Memory: Prepare handoff context
+    activate Memory
+    Memory-->>FinanceAgent: Context ready
+    deactivate Memory
+
+    FinanceAgent->>GeneralAgent: 🔄 HANDOFF BACK<br/>Query + Context
+    Note over FinanceAgent,GeneralAgent: Return to General Agent
+    deactivate FinanceAgent
+    activate GeneralAgent
+
+    GeneralAgent->>User: "Partly cloudy, high of 72°F.<br/>No rain expected."
+    deactivate GeneralAgent
+
+    %% Pattern Benefits Box
+    Note over User,Memory: ✅ <b>Benefits:</b><br/>• Clean context transfer (no info loss)<br/>• Specialist expertise when needed<br/>• Bidirectional handoff (to and from specialists)<br/>• Conversation continuity maintained<br/><br/>⚠️ <b>Challenges:</b><br/>• Context size management (token limits)<br/>• Handoff overhead (1-2s per transfer)<br/>• Requires robust context serialization
+```
+
+**Diagram Purpose:** Illustrate the Peer-to-Peer (P2P) Handoff pattern where agents transfer conversations and context to specialists when domain expertise is needed, maintaining conversation continuity across multiple agent handoffs.
+
+**Key Insights:**
+1. **Conversational Transfer**: Unlike delegation (background task), handoff transfers the entire user conversation to a specialist agent
+2. **Context Preservation**: Critical information (query, conversation history, user profile, session state) must be explicitly packaged and transferred
+3. **Bidirectional Handoff**: Agents can hand off TO specialists and receive handoffs BACK when queries change domains
+4. **Domain Classification**: Originating agent must detect when query exceeds its expertise ("finance" → FinanceAgent, "weather" → back to GeneralAgent)
+5. **Multi-Turn Continuity**: Specialist maintains conversation context across multiple user turns until domain changes
+6. **Clean Interface**: Handoff mechanism standardizes context transfer format (prevents information loss)
+
+**Real-World Example:**
+- **Turn 1**: User asks general agent about retirement savings → General agent detects "finance" domain → Hands off to Finance Specialist with full context (user query + age 35 + moderate risk tolerance)
+- **Turn 2-3**: User continues finance discussion with specialist → Specialist maintains conversation context
+- **Turn 4**: User asks about weather → Finance specialist detects out-of-domain query → Hands back to General agent
+
+**Context Package Format:**
+```python
+handoff_context = {
+    "query": "What's the best way to save for retirement?",
+    "conversation_history": [
+        {"role": "user", "content": "..."},
+        {"role": "assistant", "content": "..."}
+    ],  # Last 5-10 turns
+    "user_profile": {
+        "age": 35,
+        "risk_tolerance": "moderate",
+        "income": 80000
+    },
+    "session_state": {
+        "topic": "retirement_planning",
+        "user_preferences": {...}
+    }
+}
+```
+
+**When to Use:**
+- ✅ User conversations span multiple domains (finance → weather → product questions)
+- ✅ Need specialist expertise for specific topics
+- ✅ Conversation continuity is critical (can't lose context)
+- ✅ Clear domain boundaries (easy to classify queries)
+- ❌ Avoid if context grows too large (token limit issues)
+- ❌ Avoid if handoff overhead (1-2s) is unacceptable
+
+**Comparison to Other Patterns:**
+- **vs. Delegation**: Delegation = background task assignment (no conversation transfer). Handoff = transfer conversation control.
+- **vs. Agent-as-Tool**: Tool = synchronous function call. Handoff = asynchronous conversation transfer with state.
+- **vs. Hierarchical**: Hierarchical = manager coordinates workers. P2P = agents transfer control directly to each other.
+
+**Handoff Overhead:**
+- **Context Transfer Time**: 0.5-1s (serialize context, transfer to new agent)
+- **Agent Initialization**: 0.5-1s (specialist loads context, prepares response)
+- **Total Overhead**: 1-2s per handoff
+- **Mitigation**: Cache user profiles, use lightweight context formats, pre-warm specialist agents
+
+**Referenced In:**
+- `multi_agent_fundamentals.md` (Component 5: Flow/Routing - Handoff, Lines 602-619)
+- `multi_agent_design_patterns.md` (Pattern variations, Lines 756-787)
+
+**Rendering Notes:**
+- Sequence diagram format shows temporal flow and agent activation
+- Activate/deactivate blocks show which agent is "in control" at each step
+- Context Manager shown as separate participant (manages handoff state)
+- Multi-turn example demonstrates bidirectional handoff
+- Note boxes explain handoff mechanism and pattern benefits
+- Compatible with GitHub Markdown rendering

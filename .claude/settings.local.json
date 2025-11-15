@@ -36,7 +36,8 @@
       "Read(//usr/local/lib/node_modules/@anthropic-ai/**)",
       "Read(//usr/local/lib/node_modules/**)",
       "Bash(export STATUSLINE_DEBUG=1)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(uv run pytest:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,0 +1,545 @@
+{
+  "case_study": "Automotive AI Assistant - Multi-Agent System",
+  "version": "1.0",
+  "created_date": "2025-11-15",
+  "source": "Google AgentCompanion Whitepaper (Topic 07: Case Studies - Automotive AI)",
+  "description": "Real-world automotive AI system using 5 specialized agents coordinated through multiple patterns",
+  "system_architecture": {
+    "total_agents": 5,
+    "coordination_patterns": 5,
+    "target_latency": "< 5 seconds for 90% of queries",
+    "accuracy_target": "> 90% user satisfaction",
+    "cost_target": "< $0.10 per query average"
+  },
+  "agents": [
+    {
+      "agent_id": "orchestrator",
+      "role": "central_coordinator",
+      "capabilities": [
+        "query_classification",
+        "agent_routing",
+        "context_management",
+        "response_synthesis",
+        "error_handling"
+      ],
+      "pattern": "hierarchical",
+      "description": "Central coordinator that routes queries to specialized agents and synthesizes final responses"
+    },
+    {
+      "agent_id": "navigation_agent",
+      "role": "route_specialist",
+      "capabilities": [
+        "route_planning",
+        "traffic_analysis",
+        "alternative_routes",
+        "eta_calculation",
+        "poi_search"
+      ],
+      "pattern": "sequential",
+      "description": "Handles all navigation-related queries including routes, traffic, and POI searches"
+    },
+    {
+      "agent_id": "facility_ratings_agent",
+      "role": "amenity_specialist",
+      "capabilities": [
+        "facility_search",
+        "rating_retrieval",
+        "amenity_filtering",
+        "review_analysis",
+        "quality_assessment"
+      ],
+      "pattern": "collaborative",
+      "description": "Searches and evaluates facilities like rest stops, gas stations, restaurants based on ratings and amenities"
+    },
+    {
+      "agent_id": "vehicle_diagnostics_agent",
+      "role": "vehicle_specialist",
+      "capabilities": [
+        "sensor_data_analysis",
+        "fault_detection",
+        "maintenance_prediction",
+        "performance_monitoring",
+        "safety_alerts"
+      ],
+      "pattern": "adaptive_loop",
+      "description": "Monitors vehicle sensors, detects issues, and provides maintenance recommendations"
+    },
+    {
+      "agent_id": "contextual_search_agent",
+      "role": "search_specialist",
+      "capabilities": [
+        "semantic_search",
+        "query_expansion",
+        "result_ranking",
+        "personalization",
+        "multi-source_aggregation"
+      ],
+      "pattern": "adaptive_loop",
+      "description": "Performs iterative search refinement to find most relevant results for complex queries"
+    }
+  ],
+  "test_queries": [
+    {
+      "query_id": "auto_001",
+      "query": "Is there a service area ahead with clean toilets?",
+      "query_type": "facility_search",
+      "involved_agents": ["orchestrator", "navigation_agent", "facility_ratings_agent"],
+      "coordination_pattern": "hierarchical",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "classify_query", "output": "Facility search query"},
+        {"step": 2, "agent": "orchestrator", "action": "route_to_specialists", "output": "Send to navigation + facility_ratings"},
+        {"step": 3, "agent": "navigation_agent", "action": "find_service_areas", "output": "3 service areas within 20 miles"},
+        {"step": 4, "agent": "facility_ratings_agent", "action": "check_ratings", "output": "Area 2 has 4.5/5 rating for cleanliness"},
+        {"step": 5, "agent": "orchestrator", "action": "synthesize_response", "output": "Yes, Johnson Service Area 12 miles ahead (4.5★ cleanliness)"}
+      ],
+      "metrics": {
+        "latency": 3.5,
+        "cost": 0.08,
+        "accuracy": 0.95,
+        "user_satisfaction": 0.92
+      }
+    },
+    {
+      "query_id": "auto_002",
+      "query": "What's the fastest route to downtown avoiding tolls?",
+      "query_type": "navigation",
+      "involved_agents": ["orchestrator", "navigation_agent"],
+      "coordination_pattern": "hierarchical",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "classify_query", "output": "Navigation query with constraints"},
+        {"step": 2, "agent": "orchestrator", "action": "route_to_navigation", "output": "Send to navigation_agent"},
+        {"step": 3, "agent": "navigation_agent", "action": "calculate_routes", "output": "3 toll-free routes"},
+        {"step": 4, "agent": "navigation_agent", "action": "select_fastest", "output": "Route via Highway 101 (25 min)"},
+        {"step": 5, "agent": "orchestrator", "action": "return_response", "output": "Route via Highway 101, 25 minutes, no tolls"}
+      ],
+      "metrics": {
+        "latency": 2.8,
+        "cost": 0.06,
+        "accuracy": 0.98,
+        "user_satisfaction": 0.96
+      }
+    },
+    {
+      "query_id": "auto_003",
+      "query": "My engine light is on, what should I do?",
+      "query_type": "vehicle_diagnostics",
+      "involved_agents": ["orchestrator", "vehicle_diagnostics_agent"],
+      "coordination_pattern": "hierarchical",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "classify_query", "output": "Vehicle diagnostics query"},
+        {"step": 2, "agent": "orchestrator", "action": "route_to_diagnostics", "output": "Send to vehicle_diagnostics_agent"},
+        {"step": 3, "agent": "vehicle_diagnostics_agent", "action": "read_error_codes", "output": "Error code: P0420 (Catalyst efficiency below threshold)"},
+        {"step": 4, "agent": "vehicle_diagnostics_agent", "action": "assess_severity", "output": "Low severity, safe to drive"},
+        {"step": 5, "agent": "orchestrator", "action": "synthesize_response", "output": "Catalytic converter efficiency issue (P0420). Safe to drive, schedule maintenance soon."}
+      ],
+      "metrics": {
+        "latency": 3.2,
+        "cost": 0.07,
+        "accuracy": 0.94,
+        "user_satisfaction": 0.90
+      }
+    },
+    {
+      "query_id": "auto_004",
+      "query": "Find me a highly-rated Italian restaurant within 10 miles",
+      "query_type": "poi_search",
+      "involved_agents": ["orchestrator", "navigation_agent", "facility_ratings_agent"],
+      "coordination_pattern": "hierarchical",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "classify_query", "output": "POI search with quality constraint"},
+        {"step": 2, "agent": "orchestrator", "action": "route_to_specialists", "output": "Send to navigation + facility_ratings"},
+        {"step": 3, "agent": "navigation_agent", "action": "search_poi", "output": "8 Italian restaurants within 10 miles"},
+        {"step": 4, "agent": "facility_ratings_agent", "action": "rank_by_rating", "output": "Top 3: Mario's (4.8★), Luigi's (4.6★), Pasta House (4.5★)"},
+        {"step": 5, "agent": "orchestrator", "action": "synthesize_response", "output": "Mario's Italian Kitchen (4.8★, 5 miles away)"}
+      ],
+      "metrics": {
+        "latency": 4.0,
+        "cost": 0.09,
+        "accuracy": 0.93,
+        "user_satisfaction": 0.94
+      }
+    },
+    {
+      "query_id": "auto_005",
+      "query": "What's my estimated arrival time considering current traffic?",
+      "query_type": "eta_calculation",
+      "involved_agents": ["orchestrator", "navigation_agent"],
+      "coordination_pattern": "hierarchical",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "classify_query", "output": "ETA calculation query"},
+        {"step": 2, "agent": "orchestrator", "action": "route_to_navigation", "output": "Send to navigation_agent"},
+        {"step": 3, "agent": "navigation_agent", "action": "analyze_traffic", "output": "Heavy traffic on I-5 (+15 min delay)"},
+        {"step": 4, "agent": "navigation_agent", "action": "calculate_eta", "output": "ETA: 3:45 PM (45 minutes from now)"},
+        {"step": 5, "agent": "orchestrator", "action": "return_response", "output": "You'll arrive at 3:45 PM (45 min, heavy traffic on I-5)"}
+      ],
+      "metrics": {
+        "latency": 2.5,
+        "cost": 0.05,
+        "accuracy": 0.97,
+        "user_satisfaction": 0.95
+      }
+    },
+    {
+      "query_id": "auto_006",
+      "query": "I need urgent help, my car is overheating!",
+      "query_type": "emergency",
+      "involved_agents": ["orchestrator", "vehicle_diagnostics_agent", "navigation_agent"],
+      "coordination_pattern": "hierarchical",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "classify_query", "output": "Emergency diagnostics query"},
+        {"step": 2, "agent": "orchestrator", "action": "route_to_diagnostics", "output": "High priority to vehicle_diagnostics_agent"},
+        {"step": 3, "agent": "vehicle_diagnostics_agent", "action": "read_sensors", "output": "Coolant temp: 240°F (critical)"},
+        {"step": 4, "agent": "vehicle_diagnostics_agent", "action": "safety_assessment", "output": "STOP IMMEDIATELY - engine damage risk"},
+        {"step": 5, "agent": "navigation_agent", "action": "find_safe_location", "output": "Pull over at next exit (0.5 miles)"},
+        {"step": 6, "agent": "orchestrator", "action": "emergency_response", "output": "STOP IMMEDIATELY! Pull over at next exit. Coolant system failure."}
+      ],
+      "metrics": {
+        "latency": 2.0,
+        "cost": 0.08,
+        "accuracy": 0.99,
+        "user_satisfaction": 0.98
+      }
+    },
+    {
+      "query_id": "auto_007",
+      "query": "Should I rephrase that? Find me a gas station with good coffee",
+      "query_type": "query_clarification",
+      "involved_agents": ["orchestrator", "navigation_agent", "facility_ratings_agent"],
+      "coordination_pattern": "diamond",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "receive_query", "output": "Original query"},
+        {"step": 2, "agent": "orchestrator", "action": "rephrase_for_clarity", "output": "Rephrased: Find gas stations with coffee shops nearby"},
+        {"step": 3, "agent": "navigation_agent", "action": "search_gas_stations", "output": "5 gas stations within 5 miles"},
+        {"step": 4, "agent": "facility_ratings_agent", "action": "filter_by_amenity", "output": "3 have coffee shops with 4+ ratings"},
+        {"step": 5, "agent": "orchestrator", "action": "moderate_response", "output": "Rephrased query found better results: Shell station 2 miles ahead (4.5★ coffee)"}
+      ],
+      "metrics": {
+        "latency": 4.2,
+        "cost": 0.10,
+        "accuracy": 0.91,
+        "user_satisfaction": 0.93
+      }
+    },
+    {
+      "query_id": "auto_008",
+      "query": "Help me understand this warning: 'Low tire pressure detected'",
+      "query_type": "explanation",
+      "involved_agents": ["orchestrator", "vehicle_diagnostics_agent"],
+      "coordination_pattern": "diamond",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "receive_query", "output": "Explanation request"},
+        {"step": 2, "agent": "orchestrator", "action": "rephrase_technical", "output": "Simplified: What does low tire pressure mean and what should I do?"},
+        {"step": 3, "agent": "vehicle_diagnostics_agent", "action": "check_tire_sensors", "output": "Front left: 25 PSI (recommended: 35 PSI)"},
+        {"step": 4, "agent": "vehicle_diagnostics_agent", "action": "generate_explanation", "output": "Tire needs air, safe to drive to gas station"},
+        {"step": 5, "agent": "orchestrator", "action": "moderate_response", "output": "Your front left tire is low (25 PSI, should be 35). Safe to drive, but fill at next gas station."}
+      ],
+      "metrics": {
+        "latency": 3.0,
+        "cost": 0.07,
+        "accuracy": 0.96,
+        "user_satisfaction": 0.94
+      }
+    },
+    {
+      "query_id": "auto_009",
+      "query": "Rephrase: Where can I charge my EV?",
+      "query_type": "query_refinement",
+      "involved_agents": ["orchestrator", "navigation_agent", "facility_ratings_agent"],
+      "coordination_pattern": "diamond",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "receive_query", "output": "EV charging query"},
+        {"step": 2, "agent": "orchestrator", "action": "rephrase_for_context", "output": "Rephrased: Find available EV charging stations along my route"},
+        {"step": 3, "agent": "navigation_agent", "action": "search_charging_stations", "output": "4 charging stations along route"},
+        {"step": 4, "agent": "facility_ratings_agent", "action": "check_availability", "output": "2 stations have available chargers"},
+        {"step": 5, "agent": "orchestrator", "action": "moderate_response", "output": "Rephrased query: 2 available charging stations found along route (8 and 15 miles ahead)"}
+      ],
+      "metrics": {
+        "latency": 3.8,
+        "cost": 0.09,
+        "accuracy": 0.92,
+        "user_satisfaction": 0.91
+      }
+    },
+    {
+      "query_id": "auto_010",
+      "query": "I need to find a specific type of repair shop - who can diagnose transmission issues?",
+      "query_type": "specialized_service",
+      "involved_agents": ["orchestrator", "navigation_agent", "facility_ratings_agent", "vehicle_diagnostics_agent"],
+      "coordination_pattern": "peer_to_peer",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "classify_query", "output": "Specialized service search"},
+        {"step": 2, "agent": "vehicle_diagnostics_agent", "action": "assess_issue", "output": "Likely transmission problem, needs specialist"},
+        {"step": 3, "agent": "vehicle_diagnostics_agent", "action": "handoff_to_navigation", "output": "Handoff: Find transmission specialists"},
+        {"step": 4, "agent": "navigation_agent", "action": "search_specialists", "output": "3 transmission repair shops found"},
+        {"step": 5, "agent": "navigation_agent", "action": "handoff_to_ratings", "output": "Handoff: Check shop ratings"},
+        {"step": 6, "agent": "facility_ratings_agent", "action": "rank_shops", "output": "Top shop: AutoFix Transmissions (4.7★, 5 miles)"},
+        {"step": 7, "agent": "orchestrator", "action": "synthesize_response", "output": "AutoFix Transmissions (4.7★, 5 miles, transmission specialist)"}
+      ],
+      "metrics": {
+        "latency": 4.5,
+        "cost": 0.11,
+        "accuracy": 0.94,
+        "user_satisfaction": 0.93
+      }
+    },
+    {
+      "query_id": "auto_011",
+      "query": "My check engine light came on, then the oil pressure warning appeared - what's happening?",
+      "query_type": "complex_diagnostics",
+      "involved_agents": ["orchestrator", "vehicle_diagnostics_agent", "navigation_agent"],
+      "coordination_pattern": "peer_to_peer",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "classify_query", "output": "Complex multi-symptom diagnostics"},
+        {"step": 2, "agent": "vehicle_diagnostics_agent", "action": "diagnose_primary_issue", "output": "Critical: Low oil pressure detected"},
+        {"step": 3, "agent": "vehicle_diagnostics_agent", "action": "handoff_to_navigation", "output": "Emergency: Find nearest safe stop + mechanic"},
+        {"step": 4, "agent": "navigation_agent", "action": "find_emergency_services", "output": "Safe pullover 0.3 miles, mechanic 2 miles"},
+        {"step": 5, "agent": "orchestrator", "action": "emergency_response", "output": "CRITICAL: Low oil pressure! Pull over immediately at next exit (0.3 mi). Nearest mechanic: 2 miles."}
+      ],
+      "metrics": {
+        "latency": 2.2,
+        "cost": 0.09,
+        "accuracy": 0.98,
+        "user_satisfaction": 0.97
+      }
+    },
+    {
+      "query_id": "auto_012",
+      "query": "Plan a road trip from SF to LA with scenic stops and good restaurants",
+      "query_type": "complex_planning",
+      "involved_agents": ["orchestrator", "navigation_agent", "facility_ratings_agent", "contextual_search_agent"],
+      "coordination_pattern": "collaborative",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "decompose_task", "output": "Split into route, scenic stops, restaurants"},
+        {"step": 2, "agent": "navigation_agent", "action": "plan_scenic_route", "output": "Pacific Coast Highway route (7 hours)"},
+        {"step": 3, "agent": "contextual_search_agent", "action": "find_scenic_stops", "output": "5 scenic viewpoints identified"},
+        {"step": 4, "agent": "facility_ratings_agent", "action": "find_restaurants", "output": "8 highly-rated restaurants along route"},
+        {"step": 5, "agent": "orchestrator", "action": "synthesize_itinerary", "output": "Complete road trip itinerary with 5 stops + 8 restaurant options"}
+      ],
+      "metrics": {
+        "latency": 6.5,
+        "cost": 0.15,
+        "accuracy": 0.90,
+        "user_satisfaction": 0.92
+      }
+    },
+    {
+      "query_id": "auto_013",
+      "query": "Find a family-friendly restaurant with outdoor seating and vegetarian options",
+      "query_type": "multi_constraint_search",
+      "involved_agents": ["orchestrator", "navigation_agent", "facility_ratings_agent", "contextual_search_agent"],
+      "coordination_pattern": "collaborative",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "decompose_constraints", "output": "Family-friendly + outdoor + vegetarian"},
+        {"step": 2, "agent": "navigation_agent", "action": "search_nearby_restaurants", "output": "15 restaurants within 5 miles"},
+        {"step": 3, "agent": "facility_ratings_agent", "action": "filter_by_amenities", "output": "5 with outdoor seating"},
+        {"step": 4, "agent": "contextual_search_agent", "action": "check_menu_options", "output": "2 have extensive vegetarian menus"},
+        {"step": 5, "agent": "orchestrator", "action": "synthesize_results", "output": "Green Garden Cafe (4.6★, outdoor seating, vegetarian menu, kid-friendly)"}
+      ],
+      "metrics": {
+        "latency": 5.2,
+        "cost": 0.12,
+        "accuracy": 0.89,
+        "user_satisfaction": 0.90
+      }
+    },
+    {
+      "query_id": "auto_014",
+      "query": "I'm planning a long drive - check my vehicle's readiness and recommend service stops",
+      "query_type": "trip_preparation",
+      "involved_agents": ["orchestrator", "vehicle_diagnostics_agent", "navigation_agent", "facility_ratings_agent"],
+      "coordination_pattern": "collaborative",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "decompose_task", "output": "Vehicle check + route planning + service stops"},
+        {"step": 2, "agent": "vehicle_diagnostics_agent", "action": "full_system_check", "output": "All systems OK, oil change due in 500 miles"},
+        {"step": 3, "agent": "navigation_agent", "action": "plan_route", "output": "300 mile journey, 5 hours"},
+        {"step": 4, "agent": "facility_ratings_agent", "action": "recommend_service_stops", "output": "2 rest areas, 1 gas station (midpoint)"},
+        {"step": 5, "agent": "orchestrator", "action": "synthesize_plan", "output": "Vehicle ready! 300mi trip, stop at Johnson Gas Station (midpoint) for fuel."}
+      ],
+      "metrics": {
+        "latency": 4.8,
+        "cost": 0.11,
+        "accuracy": 0.93,
+        "user_satisfaction": 0.94
+      }
+    },
+    {
+      "query_id": "auto_015",
+      "query": "What are the best features to use for a mountain drive?",
+      "query_type": "feature_recommendation",
+      "involved_agents": ["orchestrator", "vehicle_diagnostics_agent", "contextual_search_agent"],
+      "coordination_pattern": "collaborative",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "classify_query", "output": "Feature recommendation for terrain"},
+        {"step": 2, "agent": "vehicle_diagnostics_agent", "action": "check_available_features", "output": "Hill descent control, sport mode, AWD available"},
+        {"step": 3, "agent": "contextual_search_agent", "action": "research_best_practices", "output": "Recommend: Sport mode for power, hill descent for safety"},
+        {"step": 4, "agent": "orchestrator", "action": "synthesize_recommendations", "output": "For mountain driving: Enable sport mode (more power), use hill descent control on steep grades, AWD is active."}
+      ],
+      "metrics": {
+        "latency": 3.6,
+        "cost": 0.08,
+        "accuracy": 0.91,
+        "user_satisfaction": 0.89
+      }
+    },
+    {
+      "query_id": "auto_016",
+      "query": "Find the best coffee shop near me",
+      "query_type": "search_refinement",
+      "involved_agents": ["orchestrator", "contextual_search_agent"],
+      "coordination_pattern": "adaptive_loop",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "route_to_search", "output": "Send to contextual_search_agent"},
+        {"step": 2, "agent": "contextual_search_agent", "action": "initial_search", "output": "10 coffee shops within 2 miles"},
+        {"step": 3, "agent": "contextual_search_agent", "action": "refine_by_rating", "output": "Top 5 with 4+ stars"},
+        {"step": 4, "agent": "contextual_search_agent", "action": "refine_by_distance", "output": "Closest high-rated: Blue Bottle (4.7★, 0.5 miles)"},
+        {"step": 5, "agent": "orchestrator", "action": "return_response", "output": "Blue Bottle Coffee (4.7★, 0.5 miles away)"}
+      ],
+      "metrics": {
+        "latency": 3.4,
+        "cost": 0.08,
+        "accuracy": 0.94,
+        "user_satisfaction": 0.93
+      }
+    },
+    {
+      "query_id": "auto_017",
+      "query": "My tire pressure keeps dropping - should I get it checked immediately?",
+      "query_type": "diagnostic_refinement",
+      "involved_agents": ["orchestrator", "vehicle_diagnostics_agent"],
+      "coordination_pattern": "adaptive_loop",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "route_to_diagnostics", "output": "Send to vehicle_diagnostics_agent"},
+        {"step": 2, "agent": "vehicle_diagnostics_agent", "action": "check_current_pressure", "output": "30 PSI (recommended: 35 PSI)"},
+        {"step": 3, "agent": "vehicle_diagnostics_agent", "action": "analyze_pressure_history", "output": "Dropped 5 PSI in 2 days (abnormal)"},
+        {"step": 4, "agent": "vehicle_diagnostics_agent", "action": "assess_severity", "output": "Likely slow leak, get checked within 24 hours"},
+        {"step": 5, "agent": "orchestrator", "action": "return_response", "output": "Yes, get checked soon. Tire lost 5 PSI in 2 days (likely slow leak). Safe to drive, but visit mechanic within 24 hours."}
+      ],
+      "metrics": {
+        "latency": 2.8,
+        "cost": 0.07,
+        "accuracy": 0.96,
+        "user_satisfaction": 0.95
+      }
+    },
+    {
+      "query_id": "auto_018",
+      "query": "Show me electric vehicle charging stations that are actually working",
+      "query_type": "availability_verification",
+      "involved_agents": ["orchestrator", "navigation_agent", "contextual_search_agent"],
+      "coordination_pattern": "adaptive_loop",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "route_to_search", "output": "Send to navigation + contextual_search"},
+        {"step": 2, "agent": "navigation_agent", "action": "find_charging_stations", "output": "8 charging stations within 10 miles"},
+        {"step": 3, "agent": "contextual_search_agent", "action": "check_realtime_status", "output": "Only 3 have available chargers now"},
+        {"step": 4, "agent": "contextual_search_agent", "action": "verify_working_status", "output": "1 has reported issues, 2 are verified working"},
+        {"step": 5, "agent": "orchestrator", "action": "return_verified_results", "output": "2 verified working stations: Tesla Supercharger (5 mi, 4 available), ChargePoint (7 mi, 2 available)"}
+      ],
+      "metrics": {
+        "latency": 4.0,
+        "cost": 0.10,
+        "accuracy": 0.97,
+        "user_satisfaction": 0.96
+      }
+    },
+    {
+      "query_id": "auto_019",
+      "query": "I'm hearing a strange noise when I brake - what could it be?",
+      "query_type": "iterative_diagnosis",
+      "involved_agents": ["orchestrator", "vehicle_diagnostics_agent"],
+      "coordination_pattern": "adaptive_loop",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "route_to_diagnostics", "output": "Send to vehicle_diagnostics_agent"},
+        {"step": 2, "agent": "vehicle_diagnostics_agent", "action": "initial_diagnosis", "output": "Could be: worn brake pads, warped rotors, or debris"},
+        {"step": 3, "agent": "vehicle_diagnostics_agent", "action": "check_brake_sensors", "output": "Brake pad wear: 20% remaining (low)"},
+        {"step": 4, "agent": "vehicle_diagnostics_agent", "action": "refine_diagnosis", "output": "Most likely: worn brake pads (squealing indicator)"},
+        {"step": 5, "agent": "vehicle_diagnostics_agent", "action": "assess_urgency", "output": "Safe to drive, replace within 1-2 weeks"},
+        {"step": 6, "agent": "orchestrator", "action": "return_response", "output": "Likely worn brake pads (20% remaining). Safe to drive, but schedule brake replacement within 1-2 weeks."}
+      ],
+      "metrics": {
+        "latency": 3.2,
+        "cost": 0.08,
+        "accuracy": 0.93,
+        "user_satisfaction": 0.92
+      }
+    },
+    {
+      "query_id": "auto_020",
+      "query": "Help me find the absolute best sushi restaurant in the area",
+      "query_type": "optimization_search",
+      "involved_agents": ["orchestrator", "facility_ratings_agent", "contextual_search_agent"],
+      "coordination_pattern": "adaptive_loop",
+      "expected_trajectory": [
+        {"step": 1, "agent": "orchestrator", "action": "route_to_specialists", "output": "Send to facility_ratings + contextual_search"},
+        {"step": 2, "agent": "facility_ratings_agent", "action": "search_sushi_restaurants", "output": "12 sushi restaurants found"},
+        {"step": 3, "agent": "facility_ratings_agent", "action": "rank_by_rating", "output": "Top 5 with 4.5+ stars"},
+        {"step": 4, "agent": "contextual_search_agent", "action": "analyze_reviews", "output": "Sushi Zen has best quality reviews (omakase, fresh fish)"},
+        {"step": 5, "agent": "contextual_search_agent", "action": "check_availability", "output": "Sushi Zen has reservations available tonight"},
+        {"step": 6, "agent": "orchestrator", "action": "return_best_option", "output": "Sushi Zen (4.9★, 3 miles) - Best in area. Known for omakase and daily fresh fish. Reservations available."}
+      ],
+      "metrics": {
+        "latency": 4.8,
+        "cost": 0.12,
+        "accuracy": 0.95,
+        "user_satisfaction": 0.96
+      }
+    }
+  ],
+  "pattern_usage": {
+    "hierarchical": {
+      "count": 6,
+      "query_ids": ["auto_001", "auto_002", "auto_003", "auto_004", "auto_005", "auto_006"],
+      "description": "Orchestrator routes queries to specialized agents and synthesizes final responses"
+    },
+    "diamond": {
+      "count": 3,
+      "query_ids": ["auto_007", "auto_008", "auto_009"],
+      "description": "Query rephrasing or moderation before agent processing to improve response quality"
+    },
+    "peer_to_peer": {
+      "count": 2,
+      "query_ids": ["auto_010", "auto_011"],
+      "description": "Agents hand off tasks to each other based on expertise (diagnostics → navigation → ratings)"
+    },
+    "collaborative": {
+      "count": 4,
+      "query_ids": ["auto_012", "auto_013", "auto_014", "auto_015"],
+      "description": "Multiple agents work together on complementary aspects of complex queries"
+    },
+    "adaptive_loop": {
+      "count": 5,
+      "query_ids": ["auto_016", "auto_017", "auto_018", "auto_019", "auto_020"],
+      "description": "Iterative search refinement or diagnostic analysis until quality threshold met"
+    }
+  },
+  "performance_summary": {
+    "total_queries": 20,
+    "average_latency": 3.68,
+    "average_cost": 0.092,
+    "average_accuracy": 0.94,
+    "average_user_satisfaction": 0.93,
+    "latency_sla_compliance": 1.0,
+    "cost_sla_compliance": 0.95,
+    "accuracy_sla_compliance": 0.95
+  },
+  "insights": {
+    "most_common_pattern": "hierarchical",
+    "most_expensive_pattern": "collaborative",
+    "fastest_pattern": "hierarchical",
+    "highest_accuracy_pattern": "adaptive_loop",
+    "pattern_selection_criteria": {
+      "simple_queries": "hierarchical (routing efficiency)",
+      "ambiguous_queries": "diamond (query clarification)",
+      "specialized_tasks": "peer_to_peer (expert handoff)",
+      "complex_multi_faceted": "collaborative (parallel processing)",
+      "quality_critical": "adaptive_loop (iterative refinement)"
+    }
+  },
+  "metadata": {
+    "agent_count": 5,
+    "pattern_count": 5,
+    "query_count": 20,
+    "evaluation_metrics": ["latency", "cost", "accuracy", "user_satisfaction"],
+    "real_world_domain": "automotive_ai_assistant",
+    "source_whitepaper": "Google AgentCompanion (February 2025), Topic 07: Case Studies"
+  }
+}

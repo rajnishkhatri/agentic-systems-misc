@@ -1,0 +1,91 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#E8F4F8','primaryTextColor':'#000','primaryBorderColor':'#4A90E2','lineColor':'#4A90E2','secondaryColor':'#D4E6F1','tertiaryColor':'#FFF'}}}%%
+graph TD
+    User["👤 User Query:<br/>'Should I invest in Tesla stock?'"]
+
+    subgraph Phase1["Phase 1: Planning (1s)"]
+        Manager1["🎯 Manager Agent<br/><b>Analyzes Query</b>"]
+        Plan["📋 Strategy:<br/>1. Financial data<br/>2. Market trends<br/>3. Competitive analysis"]
+    end
+
+    subgraph Phase2["Phase 2: Parallel Delegation (2-3s)"]
+        Worker1["💰 Financial Data Agent<br/><small>Fetch P/E, revenue, debt</small>"]
+        Worker2["📈 Market Trends Agent<br/><small>EV industry growth</small>"]
+        Worker3["🏢 Competitive Intelligence<br/><small>Tesla vs. competitors</small>"]
+    end
+
+    subgraph Phase3["Phase 3: Synthesis (2s)"]
+        Manager2["🎯 Manager Agent<br/><b>Combines Results</b>"]
+        Response["✅ Final Response:<br/>'Moderate risk, suitable for<br/>growth-focused portfolios'"]
+    end
+
+    User --> Manager1
+    Manager1 --> Plan
+    Plan -.->|"Delegate Task 1"| Worker1
+    Plan -.->|"Delegate Task 2"| Worker2
+    Plan -.->|"Delegate Task 3"| Worker3
+
+    Worker1 -.->|"P/E: 67<br/>(high vs. 15 avg)"| Manager2
+    Worker2 -.->|"EV market: 12% CAGR<br/>Tesla: 18% share"| Manager2
+    Worker3 -.->|"Competition:<br/>Ford F-150, GM Ultium"| Manager2
+
+    Manager2 --> Response
+    Response --> User2["👤 User receives answer"]
+
+    %% Timing annotations
+    T1["⏱️ Total: 5-6s<br/>(vs. 10s sequential)"]
+    T1 -.->|"40% faster"| Phase2
+
+    %% Advantages box
+    Advantages["✅ <b>Advantages:</b><br/>• Central coordination<br/>• Parallel execution<br/>• Strategic routing<br/>• Synthesis quality"]
+
+    Disadvantages["⚠️ <b>Trade-offs:</b><br/>• Manager = single point of failure<br/>• 5 LLM calls (vs. 1 single-agent)<br/>• Coordination complexity"]
+
+    classDef userStyle fill:#D4E6F1,stroke:#7FB3D5,color:#000,stroke-width:2px
+    classDef managerStyle fill:#4A90E2,stroke:#2E5C8A,color:#fff,stroke-width:3px
+    classDef workerStyle fill:#E8F4F8,stroke:#4A90E2,color:#000,stroke-width:2px
+    classDef outputStyle fill:#A8D5BA,stroke:#5FAD7A,color:#000,stroke-width:2px
+    classDef metaStyle fill:#FFF9E6,stroke:#F4C430,color:#000,stroke-width:1px,stroke-dasharray: 5 5
+
+    class User,User2 userStyle
+    class Manager1,Manager2 managerStyle
+    class Worker1,Worker2,Worker3 workerStyle
+    class Response outputStyle
+    class Plan,T1,Advantages,Disadvantages metaStyle
+```
+
+**Diagram Purpose:** Illustrate the Hierarchical (Manager-Worker) multi-agent pattern where a central manager coordinates task decomposition, delegates to specialist workers in parallel, and synthesizes their outputs into a coherent response.
+
+**Key Insights:**
+1. **Three-Phase Workflow**: Planning (manager analyzes) → Delegation (workers execute in parallel) → Synthesis (manager combines)
+2. **Parallel Efficiency**: Workers run simultaneously, reducing latency from 10s (sequential) to 5-6s (40% faster)
+3. **Central Coordination**: Manager agent makes strategic decisions (which workers to involve, how to synthesize)
+4. **Strategic Task Allocation**: Manager delegates based on query requirements (financial data, market trends, competitive intelligence for investment question)
+5. **Quality Through Synthesis**: Manager doesn't just concatenate worker outputs—it creates a coherent investment recommendation
+6. **Trade-off**: Higher cost (5 LLM calls vs. 1) and single point of failure (manager crash = system failure), but significantly better quality and speed
+
+**Real-World Example:**
+- **Query**: "Should I invest in Tesla stock?"
+- **Manager Analysis**: Requires financial metrics + market context + competitive landscape
+- **Parallel Workers**:
+  - Financial Data Agent → Tesla's P/E ratio (67 vs. industry avg 15), revenue growth (24% YoY)
+  - Market Trends Agent → EV industry growth (12% CAGR), Tesla market share (18%)
+  - Competitive Intelligence → Ford F-150 Lightning, GM Ultium platform
+- **Manager Synthesis**: "Tesla's P/E is high but growth strong. EV market expanding, but competition intensifying. Recommendation: Moderate risk, suitable for growth portfolios."
+
+**When to Use:**
+- ✅ Complex tasks needing central coordination
+- ✅ Subtasks can run in parallel
+- ✅ Need to synthesize diverse outputs
+- ❌ Avoid if manager overhead exceeds benefits
+
+**Referenced In:** `multi_agent_design_patterns.md` (Pattern 2: Hierarchical, Lines 138-305)
+
+**Rendering Notes:**
+- Top-to-bottom flow shows temporal sequence
+- Dotted arrows indicate parallel delegation (all three workers start simultaneously)
+- Subgraphs group workflow phases visually
+- Timing annotation shows 40% latency improvement over sequential
+- Color coding: Blue (manager), light blue (workers), green (output)
+- Advantages/disadvantages boxes provide pattern evaluation context
+- Compatible with GitHub Markdown rendering

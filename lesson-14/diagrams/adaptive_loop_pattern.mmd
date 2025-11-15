@@ -1,0 +1,159 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#E8F4F8','primaryTextColor':'#000','primaryBorderColor':'#4A90E2','lineColor':'#4A90E2','secondaryColor':'#D4E6F1','tertiaryColor':'#FFF'}}}%%
+graph TD
+    User["👤 User Query:<br/>'Find a nice Italian restaurant<br/>with vegan options'"]
+
+    Start["🚀 Adaptive Search Agent"]
+
+    subgraph Loop1["Loop 1: Exact Match (2s)"]
+        Q1["🔍 Search Query:<br/>'Italian restaurants vegan'"]
+        R1["📊 Results:<br/>0 restaurants found<br/>❌ Below threshold (need ≥3)"]
+        Check1{"Quality Check:<br/>Results ≥ threshold?"}
+    end
+
+    subgraph Loop2["Loop 2: Slight Relaxation (2s)"]
+        Refine1["🔄 Refine Query:<br/>Expand 'vegan' → 'vegetarian options'"]
+        Q2["🔍 Search Query:<br/>'Italian restaurants vegetarian options'"]
+        R2["📊 Results:<br/>2 restaurants found<br/>❌ Below threshold (need ≥3)"]
+        Check2{"Quality Check:<br/>Results ≥ threshold?"}
+    end
+
+    subgraph Loop3["Loop 3: Broader Search (2s)"]
+        Refine2["🔄 Refine Query:<br/>Remove constraint, add filter<br/>'Italian restaurants' + plant-based menu"]
+        Q3["🔍 Search Query:<br/>'Italian restaurants' (filter: plant-based)"]
+        R3["📊 Results:<br/>5 restaurants found<br/>✅ Above threshold!"]
+        Check3{"Quality Check:<br/>Results ≥ threshold?"}
+    end
+
+    subgraph Loop4["Loop 4: Fallback (2s) - NOT EXECUTED"]
+        Refine3["🔄 Fallback Strategy:<br/>Search 'vegan restaurants' +<br/>filter for Italian cuisine"]
+        Q4["🔍 Search Query:<br/>'Vegan restaurants Italian cuisine'"]
+        R4["📊 Results:<br/>3 restaurants found"]
+    end
+
+    Success["✅ Success (Loop 3):<br/>5 results meet quality threshold"]
+
+    Response["📝 Final Response:<br/><br/>'Found 5 Italian restaurants with plant-based options:<br/><br/>🏆 Top Pick: Cucina Verde<br/>• Italian-vegan fusion<br/>• 4.8★ rating (320 reviews)<br/>• Vegan pasta, risotto, pizzas<br/>• $$ (moderate pricing)<br/><br/>Also showing 4 more options...'"]
+
+    %% Flow
+    User --> Start
+    Start --> Q1
+    Q1 --> R1
+    R1 --> Check1
+
+    Check1 -->|"NO (0 < 3)"| Refine1
+    Refine1 --> Q2
+    Q2 --> R2
+    R2 --> Check2
+
+    Check2 -->|"NO (2 < 3)"| Refine2
+    Refine2 --> Q3
+    Q3 --> R3
+    R3 --> Check3
+
+    Check3 -->|"YES (5 ≥ 3)"| Success
+    Check3 -.->|"NO (would trigger Loop 4)"| Refine3
+    Refine3 -.-> Q4
+    Q4 -.-> R4
+
+    Success --> Response
+    Response --> User2["👤 User receives answer"]
+
+    %% Pattern Characteristics
+    Chars["🔁 <b>Adaptive Loop Pattern:</b><br/>• Iterative refinement (max 4 loops)<br/>• Quality threshold (relevance ≥ 0.7)<br/>• Progressive relaxation (specific → general)<br/>• Early termination (stop when threshold met)<br/>• Fallback strategy (alternative approach)"]
+
+    RefineStrategy["🎯 <b>Refinement Strategies:</b><br/>1. Expand synonyms (vegan → vegetarian)<br/>2. Remove constraints (drop 'vegan')<br/>3. Add filters (plant-based menu mentions)<br/>4. Broaden domain (Italian → vegan + Italian)"]
+
+    UseCase["✅ <b>When to Use:</b><br/>• Initial approach might fail (0 results)<br/>• Iterative refinement improves quality<br/>• Feedback loop available (measure quality)<br/>• Willing to trade latency for quality<br/><br/>⚠️ <b>Trade-offs:</b><br/>• Variable latency (2-8s, avg 2.5 loops)<br/>• Avg cost: 2.5 LLM calls (efficient!)<br/>• Quality: 80% (good but not highest)"]
+
+    classDef userStyle fill:#D4E6F1,stroke:#7FB3D5,color:#000,stroke-width:2px
+    classDef loopStyle fill:#E8F4F8,stroke:#4A90E2,color:#000,stroke-width:2px
+    classDef successStyle fill:#A8D5BA,stroke:#5FAD7A,color:#000,stroke-width:3px
+    classDef failStyle fill:#FFE6E6,stroke:#FF6B6B,color:#000,stroke-width:2px
+    classDef metaStyle fill:#FFF9E6,stroke:#F4C430,color:#000,stroke-width:1px,stroke-dasharray: 5 5
+    classDef checkStyle fill:#FFF,stroke:#4A90E2,color:#000,stroke-width:2px,shape:diamond
+
+    class User,User2 userStyle
+    class Q1,R1,Q2,R2,Q3,R3,Start loopStyle
+    class Success,Response successStyle
+    class Check1,Check2,Check3 checkStyle
+    class Q4,R4,Refine3 failStyle
+    class Chars,RefineStrategy,UseCase metaStyle
+```
+
+**Diagram Purpose:** Illustrate the Adaptive Loop (Iterative Refinement) pattern where an agent progressively refines its approach through multiple iterations until satisfactory results are achieved, using quality thresholds and fallback strategies.
+
+**Key Insights:**
+1. **Iterative Refinement**: Agent doesn't give up after first failure—it adapts query and retries (up to 4 loops)
+2. **Quality Threshold**: Each loop checks if results meet minimum standard (e.g., ≥3 restaurants, avg relevance ≥0.7)
+3. **Early Termination**: Loop stops as soon as threshold is met (Loop 3 succeeded, so Loop 4 never executes)
+4. **Progressive Relaxation**: Each loop broadens search criteria:
+   - Loop 1: Exact match ("Italian vegan") → 0 results
+   - Loop 2: Synonym expansion ("vegetarian options") → 2 results
+   - Loop 3: Remove constraint + filter ("Italian" + plant-based menu) → 5 results ✅
+   - Loop 4: Fallback (would search "vegan restaurants" + Italian filter) ← NOT NEEDED
+5. **Variable Latency**: System trades latency for quality (2-8s depending on how many loops needed)
+6. **Cost Efficiency**: Only pays for loops actually executed (avg 2.5 loops vs. always running 4)
+
+**Real-World Example (Automotive AI - Restaurant Search):**
+- **User Query**: "Find a nice Italian restaurant with vegan options"
+- **Loop 1**: Search "Italian restaurants vegan" → 0 results (very specific query, no exact matches)
+- **Loop 2**: Expand "vegan" to "vegetarian options" → 2 results (still below threshold of 3)
+- **Loop 3**: Broaden to "Italian restaurants" + filter for "plant-based menu mentions" → 5 results ✅ (meets threshold!)
+- **Agent Presents Best Matches**: "Found 5 Italian restaurants with plant-based options. Top pick: Cucina Verde (Italian-vegan fusion, 4.8★)"
+
+**Quality Threshold Calculation:**
+```python
+def check_quality_threshold(results: list, min_count: int = 3, min_relevance: float = 0.7) -> bool:
+    """Check if search results meet quality standards."""
+    if len(results) < min_count:
+        return False  # Not enough results
+
+    avg_relevance = sum(r["relevance_score"] for r in results) / len(results)
+    return avg_relevance >= min_relevance
+```
+
+**Refinement Strategies (from specific to general):**
+1. **Synonym Expansion**: "vegan" → "vegetarian", "plant-based", "dairy-free"
+2. **Constraint Removal**: Drop least critical requirement ("vegan" in this case)
+3. **Filter Addition**: Use metadata filters instead of keyword search
+4. **Fallback Approach**: Completely different search strategy (vegan restaurants + Italian cuisine filter)
+
+**When to Use:**
+- ✅ Initial approach might fail (zero results common)
+- ✅ Iterative refinement improves quality (search query expansion)
+- ✅ Feedback loop available (can measure result quality/relevance)
+- ✅ Willing to trade latency for quality (2-8s acceptable)
+- ❌ Avoid if latency is critical (<2s hard requirement)
+- ❌ Avoid if refinement strategy is unclear (how to improve query?)
+
+**Cost-Quality-Latency Trade-off:**
+- **Latency**: Variable (2s × avg 2.5 loops = 5s typical, max 8s)
+- **Cost**: 2.5 LLM calls on average (efficient compared to other patterns)
+- **Quality**: 80% success rate (good but not highest—Collaborative/Competitive higher)
+
+**Comparison to Other Patterns:**
+- **vs. Sequential**: Sequential = fixed pipeline. Adaptive = dynamic retry logic.
+- **vs. Collaborative**: Collaborative = multiple agents refine together. Adaptive = single agent self-refines.
+- **vs. Diamond**: Diamond = run all approaches in parallel. Adaptive = try approaches sequentially until one works.
+
+**Failure Modes:**
+1. **Max Loops Exceeded**: All 4 loops fail to meet threshold → Return best results from all loops with warning
+2. **Refinement Strategy Exhausted**: Agent can't think of more ways to refine → Fallback to alternative approach
+3. **Quality Degradation**: Later loops produce worse results than earlier loops → Return best loop's results
+
+**Production Optimizations:**
+- **Caching**: Store frequent queries to avoid re-running loops
+- **Adaptive Thresholds**: Lower threshold if max loops exceeded (better to return 2 results than 0)
+- **Parallel Exploration**: Run multiple refinement strategies in parallel (hybrid with Diamond pattern)
+
+**Referenced In:** `multi_agent_design_patterns.md` (Pattern 5: Adaptive Loop, Lines 632-711)
+
+**Rendering Notes:**
+- Flowchart shows sequential loop execution (top to bottom)
+- Decision diamonds (⬥) show quality threshold checks
+- Dotted arrows show conditional path (Loop 4 not executed in this example)
+- Color coding: Blue (active loops), red (inactive/fallback), green (success)
+- Loop subgraphs show temporal progression
+- Metadata boxes explain refinement strategies and trade-offs
+- Compatible with GitHub Markdown rendering

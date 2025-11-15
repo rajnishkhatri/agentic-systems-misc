@@ -1,0 +1,409 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#E8F4F8','primaryTextColor':'#000','primaryBorderColor':'#4A90E2','lineColor':'#4A90E2','secondaryColor':'#D4E6F1','tertiaryColor':'#FFF'}}}%%
+graph TD
+    UserReport["🚨 User Reports Failure:<br/>'Travel booking failed'"]
+
+    subgraph Phase1["Phase 1: Initial Triage (30s-1min)"]
+        Step1["📊 Step 1: Check Observability Logs<br/><small>Which agent(s) were involved?</small>"]
+
+        LogQuery["🔍 Query observability system:<br/>• Filter by query_id or user_id<br/>• Get full agent execution trace<br/>• Identify all agents called"]
+
+        TraceResult["📝 Trace Result Example:<br/>1. ClassifierAgent ✅ (1.2s)<br/>2. PlannerAgent ✅ (0.8s)<br/>3. FlightSearchAgent ✅ (2.5s)<br/>4. HotelSearchAgent ❌ FAILED (timeout)<br/>5. BookingAgent ⏸️ NEVER EXECUTED"]
+    end
+
+    subgraph Phase2["Phase 2: Identify Failure Point (1-2min)"]
+        Step2["🎯 Step 2: Reconstruct Trajectory<br/><small>Was it failure or incorrect routing?</small>"]
+
+        FailureType{"What type of failure?"}
+
+        F1["🔴 Agent Crashed<br/>(uncaught exception)"]
+        F2["⏱️ Agent Timeout<br/>(exceeded 10s limit)"]
+        F3["🔀 Wrong Routing<br/>(incorrect agent selected)"]
+        F4["📦 Context Loss<br/>(handoff issue)"]
+        F5["❌ External API Failure<br/>(Booking.com down)"]
+    end
+
+    subgraph Phase3["Phase 3: Root Cause Analysis (2-5min)"]
+        Step3["🔬 Step 3: Isolate Agent & Analyze"]
+
+        Crash["🔴 <b>Agent Crash Analysis:</b><br/>• Check agent logs for stack trace<br/>• Identify exception type<br/>• Review input that triggered crash<br/>• Common: TypeError, AttributeError"]
+
+        Timeout["⏱️ <b>Timeout Analysis:</b><br/>• Check agent latency metrics<br/>• Identify slow step (API call? LLM?)<br/>• Review network logs<br/>• Common: External API delay"]
+
+        Routing["🔀 <b>Wrong Routing Analysis:</b><br/>• Check classifier output<br/>• Was query ambiguous?<br/>• Review routing logic<br/>• Test classifier on similar queries"]
+
+        Context["📦 <b>Context Loss Analysis:</b><br/>• Check handoff logs<br/>• Was context serialized correctly?<br/>• Review context size (token limit?)<br/>• Inspect context transfer mechanism"]
+
+        API["❌ <b>External API Failure:</b><br/>• Check API health status<br/>• Review API response (500 error?)<br/>• Verify API key validity<br/>• Test fallback agent (if exists)"]
+    end
+
+    subgraph Phase4["Phase 4: Reproduce & Test (5-10min)"]
+        Step4["🧪 Step 4: Isolate Agent (Unit Test)"]
+
+        UnitTest["🔬 Create unit test:<br/>1. Extract agent input from logs<br/>2. Run agent in isolation<br/>3. Verify it reproduces failure<br/>4. Test with edge cases"]
+
+        Reproduce{"Can reproduce<br/>failure?"}
+    end
+
+    subgraph Phase5["Phase 5: Fix & Deploy (10-30min)"]
+        Step5["🔧 Step 5: Fix & Redeploy"]
+
+        FixCrash["🔴 <b>Fix Crash:</b><br/>• Add input validation<br/>• Add try-except block<br/>• Add defensive null checks<br/>• Test with original input"]
+
+        FixTimeout["⏱️ <b>Fix Timeout:</b><br/>• Increase timeout threshold<br/>• Optimize slow operation<br/>• Add caching layer<br/>• Implement fallback"]
+
+        FixRouting["🔀 <b>Fix Routing:</b><br/>• Improve classifier training<br/>• Add routing rules<br/>• Update agent descriptions<br/>• Add fallback routing"]
+
+        FixContext["📦 <b>Fix Context Loss:</b><br/>• Improve serialization<br/>• Add context compression<br/>• Increase token limit<br/>• Prioritize critical fields"]
+
+        FixAPI["❌ <b>Fix API Failure:</b><br/>• Add retry logic (exponential backoff)<br/>• Implement fallback agent<br/>• Cache recent results<br/>• Add API health check"]
+    end
+
+    subgraph Phase6["Phase 6: Validate & Monitor (ongoing)"]
+        Step6["✅ Step 6: Validate Fix & Monitor"]
+
+        Validate["🧪 Validation steps:<br/>1. Run regression tests<br/>2. Test with original failing query<br/>3. Deploy to staging<br/>4. Monitor for 24 hours<br/>5. Deploy to production"]
+
+        Monitor["📊 Ongoing monitoring:<br/>• Track agent success rates<br/>• Alert on failures (>5% rate)<br/>• Review slow agents weekly<br/>• Update failure playbook"]
+    end
+
+    %% Flow
+    UserReport --> Step1
+    Step1 --> LogQuery
+    LogQuery --> TraceResult
+    TraceResult --> Step2
+
+    Step2 --> FailureType
+    FailureType -->|"Crash"| F1
+    FailureType -->|"Timeout"| F2
+    FailureType -->|"Wrong Agent"| F3
+    FailureType -->|"Context Lost"| F4
+    FailureType -->|"API Failure"| F5
+
+    F1 --> Step3
+    F2 --> Step3
+    F3 --> Step3
+    F4 --> Step3
+    F5 --> Step3
+
+    Step3 --> Crash
+    Step3 --> Timeout
+    Step3 --> Routing
+    Step3 --> Context
+    Step3 --> API
+
+    Crash --> Step4
+    Timeout --> Step4
+    Routing --> Step4
+    Context --> Step4
+    API --> Step4
+
+    Step4 --> UnitTest
+    UnitTest --> Reproduce
+
+    Reproduce -->|"Yes"| Step5
+    Reproduce -->|"No (Heisenbug)"| LogMoreData["📝 Add more logging<br/>and wait for next occurrence"]
+
+    Step5 --> FixCrash
+    Step5 --> FixTimeout
+    Step5 --> FixRouting
+    Step5 --> FixContext
+    Step5 --> FixAPI
+
+    FixCrash --> Step6
+    FixTimeout --> Step6
+    FixRouting --> Step6
+    FixContext --> Step6
+    FixAPI --> Step6
+
+    Step6 --> Validate
+    Validate --> Monitor
+    Monitor --> Success["✅ Issue Resolved"]
+
+    %% Debugging Tools
+    Tools["🛠️ <b>Essential Debugging Tools:</b><br/><br/>1. <b>Observability Layer</b> (ObservabilityLayer class):<br/>   • trace_agent_call() - Log every agent execution<br/>   • get_agent_performance_summary() - Success rates<br/>   • debug_failed_query() - Full trace reconstruction<br/><br/>2. <b>Logging Best Practices</b>:<br/>   • Log input/output for every agent<br/>   • Log timing metrics (start, end, duration)<br/>   • Log errors with full stack traces<br/>   • Use correlation IDs (query_id) to link logs<br/><br/>3. <b>Unit Testing Framework</b>:<br/>   • Test agents in isolation<br/>   • Mock external APIs<br/>   • Test edge cases (empty input, null, timeout)<br/><br/>4. <b>Monitoring Dashboard</b>:<br/>   • Real-time agent health metrics<br/>   • Latency percentiles (p50, p95, p99)<br/>   • Error rate alerts (>5% = page engineer)<br/>   • Cost tracking per agent"]
+
+    TimeSavings["⏱️ <b>Time Comparison:</b><br/><br/>Single-Agent System:<br/>• Check logs → Find error → Fix (5 min)<br/><br/>Multi-Agent System (without observability):<br/>• Which agent failed? (10 min guessing)<br/>• Check 5+ agent logs (15 min)<br/>• Reproduce failure (10 min)<br/>• Fix (10 min)<br/>• <b>Total: 45 min</b> ❌<br/><br/>Multi-Agent System (WITH observability):<br/>• Check trace (30 sec)<br/>• Identify failed agent (1 min)<br/>• Reproduce (5 min)<br/>• Fix (10 min)<br/>• <b>Total: 16.5 min</b> ✅<br/><br/>🎯 <b>Observability reduces debugging time by 63%</b>"]
+
+    classDef userStyle fill:#FFE6E6,stroke:#FF6B6B,color:#000,stroke-width:2px
+    classDef phaseStyle fill:#E8F4F8,stroke:#4A90E2,color:#000,stroke-width:2px
+    classDef failureStyle fill:#FFF9E6,stroke:#F4C430,color:#000,stroke-width:2px
+    classDef fixStyle fill:#A8D5BA,stroke:#5FAD7A,color:#000,stroke-width:2px
+    classDef successStyle fill:#4A90E2,stroke:#2E5C8A,color:#fff,stroke-width:3px
+    classDef metaStyle fill:#D4E6F1,stroke:#7FB3D5,color:#000,stroke-width:1px,stroke-dasharray: 5 5
+
+    class UserReport userStyle
+    class Step1,LogQuery,TraceResult,Step2,Step3,Step4,UnitTest,Step6,Validate,Monitor phaseStyle
+    class FailureType,Reproduce failureStyle
+    class F1,F2,F3,F4,F5,Crash,Timeout,Routing,Context,API,FixCrash,FixTimeout,FixRouting,FixContext,FixAPI fixStyle
+    class Success successStyle
+    class Tools,TimeSavings,LogMoreData metaStyle
+```
+
+**Diagram Purpose:** Provide a comprehensive, step-by-step debugging workflow for multi-agent systems, covering failure identification, root cause analysis, reproduction, fixing, and validation, with emphasis on observability-driven debugging to reduce mean-time-to-resolution (MTTR).
+
+**Key Insights:**
+1. **Observability is Critical**: Without comprehensive logging, debugging multi-agent systems takes 3× longer (45 min vs. 16.5 min)
+2. **6-Phase Workflow**: Initial Triage → Identify Failure Point → Root Cause Analysis → Reproduce & Test → Fix & Deploy → Validate & Monitor
+3. **5 Common Failure Types**: Agent crash, timeout, wrong routing, context loss, external API failure—each requires different debugging approach
+4. **Trace Reconstruction**: Observability layer allows replaying full agent execution path to identify where system diverged from expected behavior
+5. **Unit Testing in Production**: Extract real-world failure inputs from logs to create regression tests
+6. **Heisenbug Handling**: If failure can't be reproduced, add more logging and wait for next occurrence (don't guess!)
+
+**Detailed Workflow Explanation:**
+
+**Phase 1: Initial Triage (30s-1min)**
+- **Goal**: Quickly identify which agent(s) were involved in failure
+- **Tools**: Observability dashboard, query_id filtering
+- **Output**: Full execution trace showing all agents called, their status (✅/❌), and timing
+- **Example Trace**:
+  ```
+  query_id: abc123
+  1. ClassifierAgent ✅ (1.2s) - Classified as "travel_booking"
+  2. PlannerAgent ✅ (0.8s) - Created plan: [search_flights, search_hotels, book]
+  3. FlightSearchAgent ✅ (2.5s) - Found 5 flight options
+  4. HotelSearchAgent ❌ FAILED (timeout after 10s)
+  5. BookingAgent ⏸️ NEVER EXECUTED (blocked by hotel search failure)
+  ```
+
+**Phase 2: Identify Failure Point (1-2min)**
+- **Goal**: Categorize failure type to guide analysis
+- **Decision Tree**:
+  - **Agent Crashed**: Stack trace in logs → uncaught exception
+  - **Agent Timeout**: Latency > threshold (e.g., 10s)
+  - **Wrong Routing**: Incorrect agent selected by classifier
+  - **Context Loss**: Handoff failed, missing information
+  - **External API Failure**: Third-party service returned error
+
+**Phase 3: Root Cause Analysis (2-5min)**
+- **Goal**: Understand WHY the failure occurred
+
+**Crash Analysis**:
+```python
+# Example stack trace
+File "hotel_search_agent.py", line 45, in search_hotels
+    max_price = query["budget"]["accommodation"]
+KeyError: 'accommodation'  # User didn't specify accommodation budget
+
+# Root cause: Missing input validation
+```
+
+**Timeout Analysis**:
+```python
+# Example latency breakdown
+HotelSearchAgent total: 10.2s
+  ├── Booking.com API: 9.8s ← SLOW!
+  ├── Result parsing: 0.3s
+  └── Response generation: 0.1s
+
+# Root cause: Booking.com API slow response (network issue or API degradation)
+```
+
+**Routing Analysis**:
+```python
+# Example classifier error
+User query: "What's the weather in Paris?"
+Classifier output: "travel_booking" ❌ (should be "weather")
+
+# Root cause: Ambiguous query classification (Paris = city name, confused with travel)
+```
+
+**Context Loss Analysis**:
+```python
+# Example handoff failure
+GeneralAgent → FinanceAgent handoff
+Context sent: {"query": "...", "user_preferences": {...}}
+Context received: {"query": "..."}  # user_preferences MISSING!
+
+# Root cause: Context serialization bug (user_preferences not serialized correctly)
+```
+
+**API Failure Analysis**:
+```python
+# Example API error
+Booking.com API response: HTTP 503 Service Unavailable
+Error message: "API rate limit exceeded"
+
+# Root cause: Hit API rate limit (100 requests/hour)
+```
+
+**Phase 4: Reproduce & Test (5-10min)**
+- **Goal**: Confirm root cause by reproducing failure in isolation
+- **Process**:
+  1. Extract agent input from logs (exact payload that triggered failure)
+  2. Run agent in unit test with extracted input
+  3. Verify failure reproduces
+  4. Test edge cases (null input, empty values, boundary conditions)
+
+**Heisenbug Scenario**:
+If failure cannot be reproduced:
+- Add more detailed logging (log intermediate steps, not just input/output)
+- Add timing instrumentation (identify slow operations)
+- Wait for next occurrence with enhanced logging
+- DO NOT deploy speculative fixes (will make debugging harder)
+
+**Phase 5: Fix & Deploy (10-30min)**
+- **Goal**: Implement fix appropriate to failure type
+
+**Fix Examples**:
+
+**Crash Fix**:
+```python
+# BEFORE (crashes on missing key)
+def search_hotels(query):
+    max_price = query["budget"]["accommodation"]  # KeyError if missing
+    return search(max_price)
+
+# AFTER (defensive coding)
+def search_hotels(query: dict) -> list:
+    """Search hotels with budget constraint."""
+    if not isinstance(query, dict):
+        raise TypeError("query must be a dict")
+
+    # Defensive default
+    max_price = query.get("budget", {}).get("accommodation", 200)
+
+    return search(max_price)
+```
+
+**Timeout Fix**:
+```python
+# BEFORE (no timeout, no fallback)
+def search_hotels(query):
+    return booking_api.search(query)  # Blocks indefinitely if API slow
+
+# AFTER (timeout + fallback)
+def search_hotels(query):
+    try:
+        # Add 5s timeout
+        return booking_api.search(query, timeout=5)
+    except TimeoutError:
+        # Fallback to cached results
+        logger.warning("Booking API timeout, using cached results")
+        return cache.get_recent_hotels(query["location"])
+```
+
+**Routing Fix**:
+```python
+# BEFORE (ambiguous classification)
+def classify_query(query: str) -> str:
+    # LLM classifies "weather in Paris" as "travel_booking" (wrong!)
+    return llm.classify(query)
+
+# AFTER (add routing rules + fallback)
+def classify_query(query: str) -> str:
+    # Rule-based pre-check for common patterns
+    if "weather" in query.lower():
+        return "weather"
+    elif "forecast" in query.lower():
+        return "weather"
+
+    # Fallback to LLM classification
+    return llm.classify(query)
+```
+
+**Context Loss Fix**:
+```python
+# BEFORE (incomplete serialization)
+def handoff_to_agent(target_agent, context):
+    # Only sends query, drops user_preferences
+    target_agent.process({"query": context["query"]})
+
+# AFTER (comprehensive serialization)
+def handoff_to_agent(target_agent, context):
+    # Serialize ALL context fields
+    handoff_context = {
+        "query": context["query"],
+        "user_preferences": context.get("user_preferences", {}),
+        "conversation_history": context.get("conversation_history", []),
+        "session_state": context.get("session_state", {})
+    }
+
+    # Validate before sending
+    assert "query" in handoff_context
+
+    target_agent.process(handoff_context)
+```
+
+**API Failure Fix**:
+```python
+# BEFORE (no retry, no fallback)
+def search_hotels(query):
+    return booking_api.search(query)
+
+# AFTER (retry + exponential backoff + fallback)
+def search_hotels(query):
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            return booking_api.search(query)
+        except APIError as e:
+            if attempt < max_retries - 1:
+                wait = 2 ** attempt  # Exponential backoff (1s, 2s, 4s)
+                logger.warning(f"API error, retry {attempt+1}/{max_retries} in {wait}s")
+                time.sleep(wait)
+            else:
+                # Fallback to alternative API
+                logger.error("Booking API exhausted, using Airbnb fallback")
+                return airbnb_api.search(query)
+```
+
+**Phase 6: Validate & Monitor (ongoing)**
+- **Goal**: Ensure fix works and doesn't introduce regressions
+- **Validation Steps**:
+  1. Run regression test suite (all existing tests still pass)
+  2. Test with original failing query (verify fix works)
+  3. Deploy to staging environment (test with real traffic for 1 hour)
+  4. Monitor error rates (should drop to <1%)
+  5. Deploy to production with canary rollout (10% → 50% → 100%)
+  6. Monitor for 24 hours (watch for new failures or performance regression)
+
+**Ongoing Monitoring**:
+- **Success Rate Alerts**: Page engineer if agent success rate drops below 95%
+- **Latency Alerts**: Page if p99 latency exceeds 10s
+- **Cost Alerts**: Warn if daily cost exceeds budget by 20%
+- **Weekly Reviews**: Analyze slow agents, update failure playbook
+
+**Time Comparison:**
+
+| Scenario | Without Observability | With Observability | Time Saved |
+|----------|----------------------|-------------------|------------|
+| Single-Agent System | 5 min | 5 min | 0% |
+| Multi-Agent System | 45 min | 16.5 min | **63%** ✅ |
+
+**Key Takeaway**: Observability is not optional for multi-agent systems—it's critical infrastructure that reduces debugging time by 63%.
+
+**Essential Debugging Tools:**
+
+1. **ObservabilityLayer Class** (from `multi_agent_challenges_evaluation.md`, lines 632-722):
+   - `trace_agent_call()`: Log every agent execution with timing
+   - `get_agent_performance_summary()`: Aggregate success rates and latency
+   - `debug_failed_query()`: Reconstruct full trace for failed queries
+
+2. **Logging Best Practices**:
+   - Log input and output for every agent
+   - Use structured logging (JSON format for easy parsing)
+   - Include correlation IDs (query_id) to link logs across agents
+   - Log timing metrics (start time, end time, duration)
+   - Log errors with full stack traces
+
+3. **Unit Testing Framework**:
+   - Test agents in isolation (mock external dependencies)
+   - Test edge cases (null, empty, boundary values)
+   - Test failure scenarios (API timeout, invalid input)
+
+4. **Monitoring Dashboard**:
+   - Real-time agent health metrics (success rate, latency, cost)
+   - Percentile latency (p50, p95, p99)
+   - Error rate trends (identify degradation early)
+   - Cost tracking per agent (identify expensive agents)
+
+**Referenced In:** `multi_agent_challenges_evaluation.md` (Challenge 6: Complexity, Lines 605-722)
+
+**Rendering Notes:**
+- Top-to-bottom flowchart shows 6-phase debugging workflow
+- Color coding: Red (user report/failure), blue (phases), yellow (decision points), green (fixes), dark blue (success)
+- Subgraphs group related steps (triage, analysis, fix, validate)
+- Metadata boxes provide tool recommendations and time comparisons
+- Decision diamonds show branching paths based on failure type
+- Compatible with GitHub Markdown rendering

@@ -1,0 +1,89 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#E8F4F8','primaryTextColor':'#000','primaryBorderColor':'#4A90E2','lineColor':'#4A90E2','secondaryColor':'#D4E6F1','tertiaryColor':'#FFF'}}}%%
+graph TB
+    subgraph MAS["Multi-Agent System Architecture"]
+        Core["🤖 Multi-Agent<br/>System Core"]
+
+        %% Top Row - User Interface & Communication
+        C1["📱 Interaction Wrapper<br/><small>UI/API Interface</small>"]
+        C2["🧠 Memory Management<br/><small>Short/Long-Term + Reflection</small>"]
+        C3["💭 Cognitive Functionality<br/><small>CoT, ReAct, Planning</small>"]
+
+        %% Middle Row - Tools & Routing
+        C4["🔧 Tool Integration<br/><small>Registry, Discovery, Tool RAG</small>"]
+        C5["🔀 Flow / Routing<br/><small>Delegation, Handoff, Agent-as-Tool</small>"]
+        C6["🔄 Feedback Loops<br/><small>User Feedback, Performance Analysis</small>"]
+
+        %% Bottom Row - Communication & Discovery
+        C7["💬 Agent Communication Protocol<br/><small>Message Format, Consensus</small>"]
+        C8["🌐 Remote Communication<br/><small>Async Tasks, Cross-Org</small>"]
+        C9["📚 Agent & Tool Registry<br/><small>Mesh, Ontology, Metrics</small>"]
+
+        %% Connections from Core to Components
+        Core --> C1
+        Core --> C2
+        Core --> C3
+        Core --> C4
+        Core --> C5
+        Core --> C6
+        Core --> C7
+        Core --> C8
+        Core --> C9
+
+        %% Inter-component relationships (key dependencies)
+        C1 -.->|User Input| C2
+        C2 -.->|Context| C3
+        C3 -.->|Needs Tools| C4
+        C4 -.->|Tool Selection| C9
+        C5 -.->|Task Assignment| C7
+        C7 -.->|Remote Tasks| C8
+        C6 -.->|Performance Data| C9
+    end
+
+    %% External Interactions
+    User["👤 User / External System"]
+    Agents["👥 Other Agents"]
+    Tools["🛠️ External Tools & APIs"]
+
+    User <-->|"Input/Output"| C1
+    Agents <-->|"Messages"| C7
+    Tools <-->|"API Calls"| C4
+
+    classDef coreStyle fill:#4A90E2,stroke:#2E5C8A,color:#fff,stroke-width:3px
+    classDef componentStyle fill:#E8F4F8,stroke:#4A90E2,color:#000,stroke-width:2px
+    classDef externalStyle fill:#D4E6F1,stroke:#7FB3D5,color:#000,stroke-width:2px
+
+    class Core coreStyle
+    class C1,C2,C3,C4,C5,C6,C7,C8,C9 componentStyle
+    class User,Agents,Tools externalStyle
+```
+
+**Diagram Purpose:** Visualize the 9 core architectural components that every robust multi-agent system must implement, showing how they interconnect to enable agent collaboration, tool integration, and system-wide coordination.
+
+**Key Insights:**
+1. **Interaction Wrapper** serves as the gateway between users/systems and the multi-agent core
+2. **Memory Management** maintains state across interactions (short-term sessions, long-term knowledge, reflection for learning)
+3. **Cognitive Functionality** powers reasoning through Chain-of-Thought (CoT), ReAct patterns, and planning subsystems
+4. **Tool Integration** enables agents to use external capabilities via registry, dynamic discovery, and Tool RAG
+5. **Flow/Routing** governs task distribution through delegation (background tasks), handoff (conversation transfer), and agent-as-tool patterns
+6. **Feedback Loops** enable continuous improvement via user ratings, performance metrics, and prompt refinement
+7. **Agent Communication Protocol** standardizes inter-agent messaging with structured formats and consensus mechanisms
+8. **Remote Communication** supports cross-organization collaboration with async tasks, durable state, and negotiation protocols
+9. **Agent & Tool Registry** manages discovery in large-scale systems through ontologies, capability descriptions, and performance tracking
+
+**Component Interactions:**
+- User input flows through Interaction Wrapper → Memory → Cognitive processing
+- Cognitive agents discover tools via Tool Integration and Registry
+- Flow/Routing uses Communication Protocol to coordinate agents
+- Feedback Loops inform Registry metrics for intelligent routing
+- Remote Communication extends local coordination to distributed systems
+
+**Referenced In:** `multi_agent_fundamentals.md` (Section 6: Nine Architectural Components, Lines 346-884)
+
+**Rendering Notes:**
+- Central core node connects radially to all 9 components
+- Dotted lines show key data flows between components
+- External entities (User, Agents, Tools) connect at boundaries
+- Color scheme: Blue core, light blue components, lighter blue externals
+- Icons (emoji) aid quick visual identification of component types
+- Compatible with GitHub Markdown rendering

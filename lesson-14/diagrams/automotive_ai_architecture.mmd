@@ -1,0 +1,203 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#E8F4F8','primaryTextColor':'#000','primaryBorderColor':'#4A90E2','lineColor':'#4A90E2','secondaryColor':'#D4E6F1','tertiaryColor':'#FFF'}}}%%
+graph TB
+    User["👤 Driver"]
+
+    subgraph UI["User Interaction Layer"]
+        Voice["🎤 Voice Input<br/>(NLU)"]
+        Display["📺 Dashboard Display"]
+    end
+
+    subgraph Core["🎯 Central Orchestrator (Hierarchical Pattern)"]
+        Orchestrator["🧠 Orchestrator Agent<br/><small>Routes queries to specialists</small>"]
+        Classifier["🔍 Query Classifier<br/><small>Categorizes intent</small>"]
+    end
+
+    subgraph Specialists["Specialized Agents"]
+        Navigation["🗺️ Navigation Agent<br/><small>Routes, POIs, Traffic</small>"]
+        Weather["🌦️ Weather Agent<br/><small>Forecasts, Alerts</small>"]
+        CarManual["📘 Car Manual Agent<br/><small>Technical docs</small>"]
+        POI["📍 POI Agent<br/><small>Places, Ratings</small>"]
+        FacilityRatings["⭐ Facility Ratings<br/><small>Cleanliness, Amenities</small>"]
+    end
+
+    %% Pattern-Specific Workflows
+    subgraph Sequential["Pattern 1️⃣: Sequential (Simple Queries)"]
+        Seq["Navigation Agent → Response<br/><small>Example: 'What's my next turn?'</small>"]
+    end
+
+    subgraph Hierarchical["Pattern 2️⃣: Hierarchical (Complex Queries)"]
+        Hier["Orchestrator delegates in parallel:<br/>Navigation + EV Charging + Traffic<br/><small>Example: 'Plan route with charging stations'</small>"]
+    end
+
+    subgraph Competitive["Pattern 3️⃣: Competitive/Diamond (Safety-Critical)"]
+        Comp["Car Manual + Safety + Knowledge<br/>→ Validator selects best<br/><small>Example: 'How do I handle aquaplaning?'</small>"]
+    end
+
+    subgraph Adaptive["Pattern 4️⃣: Adaptive Loop (Ambiguous Queries)"]
+        Adapt["Loop 1: Exact → Loop 2: Relaxed<br/>→ Loop 3: Fallback<br/><small>Example: 'Find Italian restaurant vegan'</small>"]
+    end
+
+    subgraph Collaborative["Pattern 5️⃣: Collaborative (Multi-Domain)"]
+        Collab["Navigation + Facility Ratings + POI<br/>→ Response Mixer synthesizes<br/><small>Example: 'Service area with toilets & food'</small>"]
+    end
+
+    %% External Integrations
+    subgraph External["External Services"]
+        Maps["🗺️ Google Maps API"]
+        WeatherAPI["🌦️ Weather API"]
+        PlacesAPI["📍 Places API"]
+        CarDB["🚗 Car Database<br/>(Manuals, Specs)"]
+    end
+
+    %% Connections
+    User --> Voice
+    Voice --> Orchestrator
+    Orchestrator --> Classifier
+
+    Classifier -->|"Simple query"| Sequential
+    Classifier -->|"Complex query"| Hierarchical
+    Classifier -->|"Safety-critical"| Competitive
+    Classifier -->|"Ambiguous"| Adaptive
+    Classifier -->|"Multi-domain"| Collaborative
+
+    Sequential --> Navigation
+    Hierarchical -.-> Navigation
+    Hierarchical -.-> Weather
+    Hierarchical -.-> POI
+    Competitive -.-> CarManual
+    Adaptive -.-> POI
+    Collaborative -.-> Navigation
+    Collaborative -.-> FacilityRatings
+    Collaborative -.-> POI
+
+    Navigation --> Maps
+    Weather --> WeatherAPI
+    POI --> PlacesAPI
+    CarManual --> CarDB
+
+    Navigation --> Display
+    Weather --> Display
+    CarManual --> Display
+    POI --> Display
+    FacilityRatings --> Display
+
+    Display --> User
+
+    %% Pattern Examples
+    Examples["📋 <b>Real-World Query Examples:</b><br/><br/>1️⃣ <b>Sequential</b>: 'What's my next turn?'<br/>   → Navigation Agent → Response (2s)<br/><br/>2️⃣ <b>Hierarchical</b>: 'Plan route with charging stations'<br/>   → Orchestrator → Navigation + EV Charging + Traffic (parallel)<br/>   → Synthesize (5-6s)<br/><br/>3️⃣ <b>Diamond</b>: 'How do I handle aquaplaning?'<br/>   → Car Manual + Safety + Knowledge (parallel)<br/>   → Validator selects best (7s)<br/><br/>4️⃣ <b>Adaptive</b>: 'Find Italian restaurant vegan options'<br/>   → Loop 1 (exact) → Loop 2 (relaxed) → Loop 3 (fallback) (5-8s)<br/><br/>5️⃣ <b>Collaborative</b>: 'Service area with clean toilets and food'<br/>   → Navigation + Facility Ratings + POI<br/>   → Response Mixer synthesizes (9-12s)"]
+
+    SystemMetrics["📊 <b>System Metrics:</b><br/>• Agents: 5 specialized + 1 orchestrator<br/>• External APIs: 4 (Maps, Weather, Places, Car DB)<br/>• Patterns: All 5 patterns integrated<br/>• Avg Query Time: 2-12s (depends on pattern)<br/>• Avg Cost: $0.03-$0.12 per query<br/>• Quality: 90%+ accuracy (cross-validation)"]
+
+    classDef userStyle fill:#D4E6F1,stroke:#7FB3D5,color:#000,stroke-width:2px
+    classDef coreStyle fill:#4A90E2,stroke:#2E5C8A,color:#fff,stroke-width:3px
+    classDef agentStyle fill:#E8F4F8,stroke:#4A90E2,color:#000,stroke-width:2px
+    classDef patternStyle fill:#FFF9E6,stroke:#F4C430,color:#000,stroke-width:2px
+    classDef externalStyle fill:#FFE6F2,stroke:#E91E63,color:#000,stroke-width:2px
+    classDef metaStyle fill:#A8D5BA,stroke:#5FAD7A,color:#000,stroke-width:1px,stroke-dasharray: 5 5
+
+    class User userStyle
+    class Voice,Display userStyle
+    class Orchestrator,Classifier coreStyle
+    class Navigation,Weather,CarManual,POI,FacilityRatings agentStyle
+    class Sequential,Hierarchical,Competitive,Adaptive,Collaborative patternStyle
+    class Maps,WeatherAPI,PlacesAPI,CarDB externalStyle
+    class Examples,SystemMetrics metaStyle
+```
+
+**Diagram Purpose:** Illustrate a production-grade Automotive AI Assistant that integrates all 5 multi-agent design patterns (Sequential, Hierarchical, Competitive/Diamond, Adaptive Loop, Collaborative) to handle diverse user queries with optimal pattern selection based on query characteristics.
+
+**Key Insights:**
+1. **Unified Architecture**: Single system dynamically selects pattern based on query type (simple, complex, safety-critical, ambiguous, multi-domain)
+2. **Central Orchestrator**: Hierarchical pattern at the top level (orchestrator routes to specialists), but specialists use other patterns for their tasks
+3. **5 Specialized Agents**: Navigation, Weather, Car Manual, POI (points of interest), Facility Ratings—each with domain expertise
+4. **Pattern Routing Logic**:
+   - **Sequential**: Simple, single-domain queries ("What's my next turn?")
+   - **Hierarchical**: Complex queries requiring coordination ("Plan route with charging stations")
+   - **Competitive/Diamond**: Safety-critical queries needing validation ("How to handle aquaplaning?")
+   - **Adaptive Loop**: Ambiguous queries that might fail initially ("Find Italian vegan restaurant")
+   - **Collaborative**: Multi-domain queries requiring synthesis ("Service area with toilets and food")
+5. **External API Integration**: Agents use external services (Google Maps, Weather API, Places API, Car Database) for real-time data
+6. **Cost-Latency-Quality Trade-offs**: System optimizes for each query (2s for simple, 12s for complex collaborative queries)
+
+**Real-World Query Examples:**
+
+**1. Sequential Pattern (2s, $0.03):**
+- **Query**: "What's my next turn?"
+- **Flow**: Navigation Agent → Response
+- **Why Sequential**: Single-domain, simple lookup, no coordination needed
+
+**2. Hierarchical Pattern (5-6s, $0.07):**
+- **Query**: "Plan route to Paris with EV charging stations"
+- **Flow**: Orchestrator → (Navigation Agent + EV Charging API Agent + Traffic Agent) parallel → Synthesize
+- **Why Hierarchical**: Complex task, multiple subtasks can run in parallel, need synthesis
+
+**3. Competitive/Diamond Pattern (7s, $0.12):**
+- **Query**: "How do I handle aquaplaning?"
+- **Flow**: (Car Manual Agent + Safety Agent + Knowledge Agent) parallel → Validator selects best → Rephraser moderates
+- **Why Competitive**: Safety-critical, need multiple perspectives, technical accuracy + user-friendliness
+
+**4. Adaptive Loop Pattern (5-8s, $0.05):**
+- **Query**: "Find Italian restaurant with vegan options"
+- **Flow**: Loop 1 (exact) → Loop 2 (relaxed) → Loop 3 (fallback)
+- **Why Adaptive**: Ambiguous query, initial search might fail (0 results), iterative refinement needed
+
+**5. Collaborative Pattern (9-12s, $0.12):**
+- **Query**: "Find service area with clean toilets and good food"
+- **Flow**: (Navigation Agent + Facility Ratings Agent + POI Agent) → Shared Workspace → Response Mixer
+- **Why Collaborative**: Multi-domain (location + cleanliness + food quality), need synthesis from diverse expertise
+
+**Pattern Selection Decision Tree (Built-in to Orchestrator):**
+```python
+def select_pattern(query: str, classification: dict) -> str:
+    """Orchestrator's pattern selection logic."""
+    if classification["complexity"] == "simple":
+        return "sequential"
+    elif classification["safety_critical"]:
+        return "competitive_diamond"
+    elif classification["domains"] > 1:
+        return "collaborative"
+    elif classification["ambiguous"] or classification["might_fail"]:
+        return "adaptive_loop"
+    else:
+        return "hierarchical"
+```
+
+**System Metrics:**
+- **Agents**: 6 total (1 orchestrator + 5 specialists)
+- **External APIs**: 4 (Google Maps, Weather API, Places API, Car Database)
+- **Patterns**: All 5 patterns integrated and dynamically selected
+- **Query Time**: 2-12s (depends on pattern selected)
+- **Cost**: $0.03-$0.12 per query (depends on pattern and agent count)
+- **Quality**: 90%+ accuracy (cross-validation and pattern-specific optimizations)
+
+**Production Deployment Considerations:**
+1. **Caching**: Frequent queries (weather, common routes) cached to reduce latency
+2. **Fallback Handling**: If primary pattern fails, fallback to simpler pattern (e.g., Collaborative → Sequential)
+3. **Monitoring**: Track pattern usage, success rates, latency per pattern
+4. **Cost Optimization**: Use cheaper models (GPT-3.5) for simple agents, expensive models (GPT-4) for synthesis/validation
+5. **Multi-Turn Context**: Orchestrator maintains conversation state across turns (see P2P handoff pattern)
+
+**When NOT to Use This Architecture:**
+- ❌ All queries are simple single-domain (over-engineered, use single-agent or sequential only)
+- ❌ Budget is very tight (multiple agents = higher cost)
+- ❌ Latency must be <2s for all queries (complex patterns take 7-12s)
+- ❌ Team lacks expertise to maintain multi-agent systems (high operational complexity)
+
+**Scalability:**
+- **Horizontal**: Add new specialist agents (e.g., MusicAgent, CalendarAgent) without changing orchestrator
+- **Vertical**: Improve individual agents without affecting others (modular architecture)
+- **Geographic**: Deploy region-specific agents (e.g., European POI agent, Asian Weather agent)
+
+**Referenced In:**
+- `multi_agent_design_patterns.md` (Section: Real-World Pattern Combinations, Lines 756-787)
+- All 5 pattern tutorials (Sequential, Hierarchical, Competitive, Adaptive, Collaborative)
+
+**Rendering Notes:**
+- Top-to-bottom flow: User → Orchestrator → Pattern Selection → Specialists → External APIs → Response
+- Color coding: Blue (core orchestrator), light blue (agents), yellow (patterns), pink (external APIs), green (metadata)
+- Subgraphs group related components (UI, core, specialists, patterns, external services)
+- Dotted arrows show optional/conditional flows
+- Real-world examples box provides concrete use cases
+- System metrics box provides performance benchmarks
+- Compatible with GitHub Markdown rendering

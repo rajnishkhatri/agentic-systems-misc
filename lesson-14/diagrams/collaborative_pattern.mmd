@@ -1,0 +1,153 @@
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#E8F4F8','primaryTextColor':'#000','primaryBorderColor':'#4A90E2','lineColor':'#4A90E2','secondaryColor':'#D4E6F1','tertiaryColor':'#FFF'}}}%%
+graph TB
+    User["👤 User Query:<br/>'How do I handle aquaplaning?'"]
+
+    subgraph SharedWorkspace["🗂️ Shared Workspace (Collaborative Memory)"]
+        Query["📝 Query:<br/>'How do I handle aquaplaning?'"]
+        Contributions["📚 Contributions (Round 1)"]
+        Feedback["💬 Peer Review (Round 2)"]
+        Consensus["✅ Consensus (Round 3)"]
+    end
+
+    subgraph Round1["Round 1: Independent Contributions (3-4s)"]
+        Agent1["📘 Car Manual Agent"]
+        Agent2["🧠 Knowledge Agent"]
+        Agent3["⚠️ Safety Agent"]
+
+        C1["💡 Contribution 1:<br/>'Your Audi has ESC and ABS<br/>to help prevent aquaplaning.'<br/>🎯 Confidence: 0.9"]
+
+        C2["💡 Contribution 2:<br/>'Aquaplaning = tires lose contact<br/>with road due to water buildup.'<br/>🎯 Confidence: 0.95"]
+
+        C3["💡 Contribution 3:<br/>'Ease off accelerator, avoid sudden<br/>braking/steering, steer gently.'<br/>🎯 Confidence: 0.92"]
+    end
+
+    subgraph Round2["Round 2: Peer Review (Optional) (2-3s)"]
+        Review["🔍 Agents review each other's contributions:<br/>• Agent1: ✅ Validates safety tips<br/>• Agent2: ✅ Confirms physics explanation<br/>• Agent3: ⚠️ Suggests adding 'reduce speed'"]
+    end
+
+    subgraph Synthesis["Round 3: Response Mixer Synthesis (2s)"]
+        Mixer["🎨 Response Mixer Agent"]
+        Final["✨ Coherent Response:<br/><br/>'If you experience aquaplaning (when tires<br/>lose contact with road due to water), ease off<br/>accelerator, avoid sudden braking/steering, and<br/>gently steer in desired direction. Your Audi's<br/>ESC and ABS will help maintain control, but<br/>proper technique is essential.'"]
+    end
+
+    User --> Query
+    Query --> Agent1
+    Query --> Agent2
+    Query --> Agent3
+
+    Agent1 --> C1
+    Agent2 --> C2
+    Agent3 --> C3
+
+    C1 --> Contributions
+    C2 --> Contributions
+    C3 --> Contributions
+
+    Contributions --> Review
+    Review --> Consensus
+
+    Consensus --> Mixer
+    Mixer --> Final
+    Final --> User2["👤 User receives answer"]
+
+    %% Pattern Characteristics
+    Chars["🤝 <b>Collaborative Pattern:</b><br/>• Shared workspace (all agents access)<br/>• Bidirectional communication<br/>• Peer review (agents critique each other)<br/>• Consensus building<br/>• Iterative refinement (3 rounds typical)"]
+
+    Benefits["✅ <b>Benefits:</b><br/>• Leverages diverse expertise<br/>• Cross-validation improves quality<br/>• Robust to individual failures<br/>• Creative problem-solving<br/><br/>⚠️ <b>Trade-offs:</b><br/>• Higher latency (3 rounds × 2-3s = 7-9s)<br/>• Coordination complexity<br/>• 9-12 LLM calls (3 agents × 3 rounds)"]
+
+    classDef userStyle fill:#D4E6F1,stroke:#7FB3D5,color:#000,stroke-width:2px
+    classDef agentStyle fill:#E8F4F8,stroke:#4A90E2,color:#000,stroke-width:2px
+    classDef workspaceStyle fill:#FFF9E6,stroke:#F4C430,color:#000,stroke-width:3px
+    classDef contributionStyle fill:#FFE6F2,stroke:#E91E63,color:#000,stroke-width:2px
+    classDef mixerStyle fill:#4A90E2,stroke:#2E5C8A,color:#fff,stroke-width:3px
+    classDef outputStyle fill:#A8D5BA,stroke:#5FAD7A,color:#000,stroke-width:2px
+    classDef metaStyle fill:#FFF,stroke:#999,color:#000,stroke-width:1px,stroke-dasharray: 5 5
+
+    class User,User2 userStyle
+    class Agent1,Agent2,Agent3 agentStyle
+    class SharedWorkspace,Query,Contributions,Feedback,Consensus workspaceStyle
+    class C1,C2,C3 contributionStyle
+    class Mixer mixerStyle
+    class Final outputStyle
+    class Chars,Benefits metaStyle
+```
+
+**Diagram Purpose:** Illustrate the Collaborative (Shared Workspace) pattern where multiple agents contribute independently to a shared memory space, engage in peer review, and build consensus through iterative refinement to produce high-quality synthesized responses.
+
+**Key Insights:**
+1. **Shared Workspace**: Central repository where all agents can read and write contributions (unlike parallel patterns where agents work in isolation)
+2. **Three-Round Workflow**:
+   - Round 1: Independent contributions (each agent adds expertise)
+   - Round 2: Peer review (agents critique and validate each other's contributions)
+   - Round 3: Synthesis (Response Mixer creates coherent output)
+3. **Bidirectional Communication**: Agents don't just output—they read others' contributions and provide feedback
+4. **Confidence Scoring**: Each contribution includes confidence level (0.0-1.0) to weight synthesis
+5. **Peer Review Mechanism**: Agents validate correctness (✅ confirms physics explanation) and suggest improvements (⚠️ add "reduce speed")
+6. **Quality Through Diversity**: Combining car manual (vehicle-specific), general knowledge (physics), and safety expertise produces comprehensive answer
+
+**Real-World Example (Automotive AI):**
+- **User Query**: "How do I handle aquaplaning?"
+- **Agent 1 (Car Manual)**: "Your Audi has ESC and ABS to prevent aquaplaning." (Confidence: 0.9)
+- **Agent 2 (Knowledge)**: "Aquaplaning occurs when tires lose road contact due to water." (Confidence: 0.95)
+- **Agent 3 (Safety)**: "Ease off accelerator, avoid sudden movements, steer gently." (Confidence: 0.92)
+- **Peer Review**: Agents validate each other's facts, Agent 3 suggests adding "reduce speed"
+- **Response Mixer**: Synthesizes all contributions into natural language response that integrates vehicle features, physics explanation, and actionable safety tips
+
+**Synthesis Requirements:**
+The Response Mixer must:
+1. **Integrate all key points** (no contribution ignored)
+2. **Maintain logical flow** (what → why → how)
+3. **Avoid redundancy** (don't repeat same info from multiple agents)
+4. **Use natural language** (not bullet lists or technical jargon)
+5. **Prioritize by confidence** (higher confidence contributions featured prominently)
+
+**When to Use:**
+- ✅ No single agent has complete information
+- ✅ Multiple perspectives improve outcome (creative writing, scientific research, complex troubleshooting)
+- ✅ Cross-validation needed (agents check each other's work)
+- ✅ Quality more important than speed
+- ❌ Avoid if latency is critical (3 rounds = 7-12s total)
+- ❌ Avoid for simple queries where one agent suffices
+
+**Cost-Quality-Latency Trade-off:**
+- **Latency**: 7-12s (3 rounds × 2-4s per round)
+- **Cost**: 9-12 LLM calls (3 agents × 3 rounds + synthesis)
+- **Quality**: Highest among all patterns (cross-validation reduces errors by 30-40%)
+
+**Comparison to Other Patterns:**
+- **vs. Diamond**: Diamond = independent + select best. Collaborative = shared workspace + iterative refinement.
+- **vs. Hierarchical**: Hierarchical = manager coordinates. Collaborative = peers work together as equals.
+- **vs. Sequential**: Sequential = linear handoff. Collaborative = concurrent contributions with feedback.
+
+**Shared Workspace Data Structure:**
+```python
+shared_workspace = {
+    "query": "How do I handle aquaplaning?",
+    "contributions": [
+        {"agent": "car_manual", "content": "...", "confidence": 0.9},
+        {"agent": "knowledge", "content": "...", "confidence": 0.95},
+        {"agent": "safety", "content": "...", "confidence": 0.92}
+    ],
+    "peer_reviews": [
+        {"reviewer": "agent_1", "target": "agent_3", "feedback": "✅ Valid safety tips"},
+        {"reviewer": "agent_3", "target": "agent_2", "feedback": "⚠️ Add 'reduce speed'"}
+    ],
+    "consensus": {
+        "agreed_points": ["ESC/ABS helpful", "ease off accelerator", "avoid sudden movements"],
+        "disagreements": [],
+        "synthesis_ready": True
+    }
+}
+```
+
+**Referenced In:** `multi_agent_design_patterns.md` (Pattern 3: Collaborative, Lines 308-491)
+
+**Rendering Notes:**
+- Shared workspace shown as central yellow box (all agents contribute to it)
+- Three distinct rounds shown as subgraphs (temporal progression)
+- Contributions shown in pink boxes (individual agent outputs)
+- Response Mixer shown in blue (synthesis agent)
+- Dotted arrows show information flow through workspace
+- Metadata boxes explain pattern characteristics and trade-offs
+- Compatible with GitHub Markdown rendering

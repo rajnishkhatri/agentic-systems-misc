@@ -1,0 +1,366 @@
+{
+  "experiment_metadata": {
+    "mode": "DEMO",
+    "num_scenarios": 5,
+    "num_patterns": 5,
+    "total_executions": 25,
+    "simulation_type": "theoretical",
+    "timestamp": "2025-11-15 09:25:04"
+  },
+  "pattern_metrics": {
+    "hierarchical": {
+      "avg_latency": 14.077611602197498,
+      "avg_cost": 0.25588956265398316,
+      "avg_quality": 0.9339999999999999,
+      "avg_agents": 5.0
+    },
+    "diamond": {
+      "avg_latency": 6.625707054901061,
+      "avg_cost": 0.23244103654387235,
+      "avg_quality": 0.9640000000000001,
+      "avg_agents": 3.0
+    },
+    "p2p": {
+      "avg_latency": 10.586668799950102,
+      "avg_cost": 0.24757213943848555,
+      "avg_quality": 0.8539999999999999,
+      "avg_agents": 6.0
+    },
+    "collaborative": {
+      "avg_latency": 12.691092490812057,
+      "avg_cost": 0.18049324921435908,
+      "avg_quality": 0.914,
+      "avg_agents": 3.0
+    },
+    "adaptive_loop": {
+      "avg_latency": 24.76473544427839,
+      "avg_cost": 0.2370202931211403,
+      "avg_quality": 0.9799999999999999,
+      "avg_agents": 4.0
+    }
+  },
+  "detailed_results": [
+    {
+      "scenario_id": "query_001",
+      "query": "Plan a 7-day trip to Japan with $3000 budget including flights, accommodation, and activities",
+      "pattern": "hierarchical",
+      "latency": 14.328039634627435,
+      "cost": 0.2487506881011708,
+      "quality": 0.9,
+      "agent_count": 5,
+      "success": true
+    },
+    {
+      "scenario_id": "query_001",
+      "query": "Plan a 7-day trip to Japan with $3000 budget including flights, accommodation, and activities",
+      "pattern": "diamond",
+      "latency": 6.653477533207859,
+      "cost": 0.221782584440262,
+      "quality": 0.9299999999999999,
+      "agent_count": 3,
+      "success": true
+    },
+    {
+      "scenario_id": "query_001",
+      "query": "Plan a 7-day trip to Japan with $3000 budget including flights, accommodation, and activities",
+      "pattern": "p2p",
+      "latency": 11.378000125339344,
+      "cost": 0.2528444472297632,
+      "quality": 0.82,
+      "agent_count": 6,
+      "success": true
+    },
+    {
+      "scenario_id": "query_001",
+      "query": "Plan a 7-day trip to Japan with $3000 budget including flights, accommodation, and activities",
+      "pattern": "collaborative",
+      "latency": 13.747954853119227,
+      "cost": 0.187472111633444,
+      "quality": 0.88,
+      "agent_count": 3,
+      "success": true
+    },
+    {
+      "scenario_id": "query_001",
+      "query": "Plan a 7-day trip to Japan with $3000 budget including flights, accommodation, and activities",
+      "pattern": "adaptive_loop",
+      "latency": 25.5252685711642,
+      "cost": 0.2320478961014927,
+      "quality": 0.95,
+      "agent_count": 4,
+      "success": true
+    },
+    {
+      "scenario_id": "query_002",
+      "query": "Write a comprehensive business plan for a tech startup focusing on AI-powered healthcare diagnostics",
+      "pattern": "hierarchical",
+      "latency": 19.519991229867532,
+      "cost": 0.27111098930371574,
+      "quality": 0.9500000000000001,
+      "agent_count": 5,
+      "success": true
+    },
+    {
+      "scenario_id": "query_002",
+      "query": "Write a comprehensive business plan for a tech startup focusing on AI-powered healthcare diagnostics",
+      "pattern": "diamond",
+      "latency": 8.749006101008993,
+      "cost": 0.23330682936023978,
+      "quality": 0.98,
+      "agent_count": 3,
+      "success": true
+    },
+    {
+      "scenario_id": "query_002",
+      "query": "Write a comprehensive business plan for a tech startup focusing on AI-powered healthcare diagnostics",
+      "pattern": "p2p",
+      "latency": 13.903414598701055,
+      "cost": 0.24717181508801872,
+      "quality": 0.87,
+      "agent_count": 6,
+      "success": true
+    },
+    {
+      "scenario_id": "query_002",
+      "query": "Write a comprehensive business plan for a tech startup focusing on AI-powered healthcare diagnostics",
+      "pattern": "collaborative",
+      "latency": 17.8578712058986,
+      "cost": 0.19481314042798473,
+      "quality": 0.93,
+      "agent_count": 3,
+      "success": true
+    },
+    {
+      "scenario_id": "query_002",
+      "query": "Write a comprehensive business plan for a tech startup focusing on AI-powered healthcare diagnostics",
+      "pattern": "adaptive_loop",
+      "latency": 33.03446941878783,
+      "cost": 0.2402506866820933,
+      "quality": 1.0,
+      "agent_count": 4,
+      "success": true
+    },
+    {
+      "scenario_id": "query_003",
+      "query": "Organize a corporate conference for 500 attendees with venue, catering, speakers, and logistics",
+      "pattern": "hierarchical",
+      "latency": 12.431644480752514,
+      "cost": 0.2589925933490107,
+      "quality": 0.93,
+      "agent_count": 5,
+      "success": true
+    },
+    {
+      "scenario_id": "query_003",
+      "query": "Organize a corporate conference for 500 attendees with venue, catering, speakers, and logistics",
+      "pattern": "diamond",
+      "latency": 5.489392573248593,
+      "cost": 0.21957570292994372,
+      "quality": 0.96,
+      "agent_count": 3,
+      "success": true
+    },
+    {
+      "scenario_id": "query_003",
+      "query": "Organize a corporate conference for 500 attendees with venue, catering, speakers, and logistics",
+      "pattern": "p2p",
+      "latency": 8.852874089614687,
+      "cost": 0.23607664238972498,
+      "quality": 0.85,
+      "agent_count": 6,
+      "success": true
+    },
+    {
+      "scenario_id": "query_003",
+      "query": "Organize a corporate conference for 500 attendees with venue, catering, speakers, and logistics",
+      "pattern": "collaborative",
+      "latency": 10.957224573698905,
+      "cost": 0.17930003847870937,
+      "quality": 0.91,
+      "agent_count": 3,
+      "success": true
+    },
+    {
+      "scenario_id": "query_003",
+      "query": "Organize a corporate conference for 500 attendees with venue, catering, speakers, and logistics",
+      "pattern": "adaptive_loop",
+      "latency": 20.388789166014018,
+      "cost": 0.22242315453833472,
+      "quality": 0.98,
+      "agent_count": 4,
+      "success": true
+    },
+    {
+      "scenario_id": "query_004",
+      "query": "Develop a comprehensive marketing strategy for launching a new SaaS product in the B2B market",
+      "pattern": "hierarchical",
+      "latency": 13.65507895976404,
+      "cost": 0.2586189196925008,
+      "quality": 0.92,
+      "agent_count": 5,
+      "success": true
+    },
+    {
+      "scenario_id": "query_004",
+      "query": "Develop a comprehensive marketing strategy for launching a new SaaS product in the B2B market",
+      "pattern": "diamond",
+      "latency": 6.968541702590839,
+      "cost": 0.2534015164578487,
+      "quality": 0.95,
+      "agent_count": 3,
+      "success": true
+    },
+    {
+      "scenario_id": "query_004",
+      "query": "Develop a comprehensive marketing strategy for launching a new SaaS product in the B2B market",
+      "pattern": "p2p",
+      "latency": 10.254157043511375,
+      "cost": 0.24858562529724543,
+      "quality": 0.84,
+      "agent_count": 6,
+      "success": true
+    },
+    {
+      "scenario_id": "query_004",
+      "query": "Develop a comprehensive marketing strategy for launching a new SaaS product in the B2B market",
+      "pattern": "collaborative",
+      "latency": 11.791775969063101,
+      "cost": 0.17541484912655853,
+      "quality": 0.9,
+      "agent_count": 3,
+      "success": true
+    },
+    {
+      "scenario_id": "query_004",
+      "query": "Develop a comprehensive marketing strategy for launching a new SaaS product in the B2B market",
+      "pattern": "adaptive_loop",
+      "latency": 24.303523651076976,
+      "cost": 0.241026680837127,
+      "quality": 0.97,
+      "agent_count": 4,
+      "success": true
+    },
+    {
+      "scenario_id": "query_005",
+      "query": "Design a machine learning pipeline for fraud detection in financial transactions",
+      "pattern": "hierarchical",
+      "latency": 10.453303705975964,
+      "cost": 0.2419746228235177,
+      "quality": 0.9700000000000001,
+      "agent_count": 5,
+      "success": true
+    },
+    {
+      "scenario_id": "query_005",
+      "query": "Design a machine learning pipeline for fraud detection in financial transactions",
+      "pattern": "diamond",
+      "latency": 5.26811736444902,
+      "cost": 0.23413854953106755,
+      "quality": 1.0,
+      "agent_count": 3,
+      "success": true
+    },
+    {
+      "scenario_id": "query_005",
+      "query": "Design a machine learning pipeline for fraud detection in financial transactions",
+      "pattern": "p2p",
+      "latency": 8.544898142584048,
+      "cost": 0.2531821671876755,
+      "quality": 0.89,
+      "agent_count": 6,
+      "success": true
+    },
+    {
+      "scenario_id": "query_005",
+      "query": "Design a machine learning pipeline for fraud detection in financial transactions",
+      "pattern": "collaborative",
+      "latency": 9.100635852280439,
+      "cost": 0.16546610640509887,
+      "quality": 0.9500000000000001,
+      "agent_count": 3,
+      "success": true
+    },
+    {
+      "scenario_id": "query_005",
+      "query": "Design a machine learning pipeline for fraud detection in financial transactions",
+      "pattern": "adaptive_loop",
+      "latency": 20.57162641434893,
+      "cost": 0.2493530474466537,
+      "quality": 1.0,
+      "agent_count": 4,
+      "success": true
+    }
+  ],
+  "pattern_rankings": {
+    "fastest": "diamond",
+    "cheapest": "collaborative",
+    "highest_quality": "adaptive_loop"
+  },
+  "recommendations": {
+    "hierarchical": {
+      "description": "Complex tasks with clear subtask decomposition. Trade higher latency for better quality and coordination.",
+      "use_when": [
+        "Task can be broken into independent subtasks",
+        "Need specialist expertise",
+        "Quality matters more than speed"
+      ],
+      "avoid_when": [
+        "Real-time response required",
+        "Simple tasks",
+        "Limited budget"
+      ]
+    },
+    "diamond": {
+      "description": "Optimization problems where you need the best of multiple approaches. Higher cost due to parallel execution.",
+      "use_when": [
+        "Need highest quality output",
+        "Multiple valid approaches exist",
+        "Budget allows parallel calls"
+      ],
+      "avoid_when": [
+        "Cost-sensitive application",
+        "Single obvious solution",
+        "Time is critical"
+      ]
+    },
+    "p2p": {
+      "description": "Sequential pipelines with clear handoff points. Lower coordination overhead but context transfer risk.",
+      "use_when": [
+        "Clear processing pipeline",
+        "Each step depends on previous",
+        "Cost optimization important"
+      ],
+      "avoid_when": [
+        "Complex context needed throughout",
+        "Steps can be parallelized",
+        "High accuracy required"
+      ]
+    },
+    "collaborative": {
+      "description": "Creative tasks requiring multiple perspectives. Good balance of quality and agent utilization.",
+      "use_when": [
+        "Creative or brainstorming tasks",
+        "Multiple viewpoints add value",
+        "Moderate complexity"
+      ],
+      "avoid_when": [
+        "Single correct answer",
+        "Coordination overhead too high",
+        "Simple factual queries"
+      ]
+    },
+    "adaptive_loop": {
+      "description": "Quality-critical tasks where iterative refinement is acceptable. Variable latency based on convergence.",
+      "use_when": [
+        "Quality threshold must be met",
+        "Iterative improvement possible",
+        "Time is flexible"
+      ],
+      "avoid_when": [
+        "Fixed latency requirement",
+        "First attempt usually sufficient",
+        "High cost sensitivity"
+      ]
+    }
+  }
+}
