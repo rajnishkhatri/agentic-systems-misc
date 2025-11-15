@@ -1,0 +1,178 @@
+## Relevant Files
+
+### Primary Tutorial Files
+- `lesson-14/memory_systems_fundamentals.md` - Primary tutorial covering memory theory, techniques, exercises, and cross-references.
+- `lesson-14/context_engineering_guide.md` - Tutorial detailing context selection/compression/ordering strategies and ROI examples.
+- `lesson-14/memory_systems_implementation.ipynb` - Interactive notebook implementing Chroma setup, Search-o1 pattern, exercises, and metrics export.
+
+### Diagram Files
+- `lesson-14/diagrams/memory_types_taxonomy.mmd` - Mermaid source for memory types hierarchy visualization.
+- `lesson-14/diagrams/memory_types_taxonomy.png` - PNG export for presentations.
+- `lesson-14/diagrams/memory_types_taxonomy.svg` - SVG export for scalability.
+- `lesson-14/diagrams/context_engineering_workflow.mmd` - Mermaid source illustrating context selection → compression → ordering pipeline.
+- `lesson-14/diagrams/context_engineering_workflow.png` - PNG export for presentations.
+- `lesson-14/diagrams/context_engineering_workflow.svg` - SVG export for scalability.
+- `lesson-14/diagrams/search_o1_architecture.mmd` - Mermaid source for Search-o1 reasoning workflow.
+- `lesson-14/diagrams/search_o1_architecture.png` - PNG export for presentations.
+- `lesson-14/diagrams/search_o1_architecture.svg` - SVG export for scalability.
+
+### Output & Data Files
+- `lesson-14/results/memory_systems_demo_results.json` - Notebook output file aligned with evaluation dashboard schema.
+
+### Integration Files (Existing files requiring updates)
+- `lesson-14/TUTORIAL_INDEX.md` - Lesson index requiring new Section E, learning path, FAQ updates.
+- `lesson-14/04_Agentic_RAG.md` - Needs forward reference section pointing to new memory tutorials.
+- `lesson-14/multi_agent_fundamentals.md` - Needs expanded "Component 1: Memory" subsection with deep-dive link.
+- `TUTORIAL_CHANGELOG.md` - Needs new Lesson 14 memory systems section with update triggers.
+
+### Reference Files (Canonical sources)
+- `lesson-14/agents_memory.txt` - Canonical theory source to cite throughout tutorials.
+- `lesson-14/COMPASS_ARTIFACT_ANALYSIS.md` - Source for cost/ROI data referenced in decision matrix and context ROI sections.
+
+### Test & Validation Files (To be created)
+- `tests/test_memory_systems_notebook.py` - Unit tests for notebook helper functions (MMR calculation, token counting, etc.).
+- `lesson-14/scripts/validate_notebook_execution.py` - Script to validate DEMO (<10 min) and FULL (30-40 min) execution times.
+- `lesson-14/scripts/validate_json_schema.py` - Script to validate `memory_systems_demo_results.json` matches dashboard schema.
+- `lesson-14/scripts/validate_citations.py` - Script to verify all citations to `agents_memory.txt` and `COMPASS_ARTIFACT_ANALYSIS.md` are correct.
+
+### Notes
+
+#### Terminology & Alignment
+- Keep terminology aligned with `agents_memory.txt` (working vs episodic vs semantic memory, "context engineering" naming).
+- Verify diagram terminology matches canonical source (Task 4.5).
+- Validate all citations reference correct line numbers (Tasks 1.8, 2.8, 6.3).
+
+#### Time & Cost Estimates
+- Validate estimated reading/execution times manually and note any assumptions in commit messages.
+- **Reading times:** memory_systems_fundamentals.md (30-35 min), context_engineering_guide.md (25-30 min).
+- **Execution times:** Notebook DEMO mode (<10 min), FULL mode (30-40 min).
+- Add cost warning messages for FULL mode (Task 3.15).
+
+#### Diagram Requirements
+- When adding Mermaid diagrams, validate syntax first (Task 4.4a).
+- Run `mmdc` locally to ensure rendering and export to PNG/SVG (Tasks 4.4b-d).
+- Ensure consistent styling across all 3 diagrams (Task 4.5).
+
+#### Defensive Coding Requirements
+- Notebook code must include defensive programming per CLAUDE.md 5-step pattern:
+  - **Step 1:** Type hints on ALL functions (Task 3.7)
+  - **Step 2:** Input validation with guard clauses (Task 3.8)
+  - **Step 3:** Error handling with specific exceptions (Task 3.8)
+  - **Step 4:** Docstrings following defensive template (Task 3.9)
+  - **Step 5:** Unit tests for helper functions (Task 3.10)
+- Optional LLM usage flags per PRD guidance (Task 3.14).
+
+#### TDD Workflow
+- Follow RED → GREEN → REFACTOR cycle for all notebook code.
+- Write tests BEFORE implementation (Task 3.10 before Tasks 3.1-3.6).
+- Test naming convention: `test_should_[result]_when_[condition]()`
+- Example: `test_should_calculate_mmr_when_valid_vectors()`, `test_should_raise_error_when_empty_documents()`
+
+#### Quality Gates
+- Run Ruff formatting on notebook code (Task 6.1).
+- Run markdown linter on all .md files (Tasks 1.9, 2.9, 5.5a).
+- Validate all relative links work (Task 5.5b).
+- Run spell check on tutorials (Task 5.5c).
+- Verify JSON schema compliance (Tasks 3.13, 6.8).
+
+#### Integration Testing
+- Test complete learning path end-to-end (Task 5.9).
+- Load JSON in dashboard and verify display (Task 5.10).
+- Verify all cross-references work (click-through test, Task 6.5).
+
+#### Pattern Library References
+- TDD Workflow: `/patterns/tdd-workflow.md`
+- ThreadPoolExecutor Parallel: `/patterns/threadpool-parallel.md` (if parallel processing needed)
+- Abstract Base Class: `/patterns/abstract-base-class.md` (if framework needed)
+
+## Tasks
+
+- [ ] 0.0 **Pre-Implementation Research & Analysis**
+  - [ ] 0.1 Deep-read `agents_memory.txt` (complete 50+ lines) and extract key terminology, concepts, and line references for citations. Document: (1) Five memory types definitions, (2) Short-term vs long-term distinctions, (3) Context engineering mentions with line numbers, (4) Specific examples to reference (e.g., flamingo conversation). Create reference summary document.
+  - [ ] 0.2 Analyze `COMPASS_ARTIFACT_ANALYSIS.md` and extract specific cost/ROI metrics for citations. Document: (1) Context compression ROI example ($24 → $12 → $4.80), (2) Vector database comparison metrics, (3) Query latency data, (4) Production deployment insights. Create metrics reference table.
+  - [ ] 0.3 Review existing `04_Agentic_RAG.md` structure (sections, headings, examples) and identify exact integration points for forward references. Document: (1) Section where deep-dive link should be added, (2) Existing RAG patterns mentioned, (3) Cross-reference format to match.
+  - [ ] 0.4 Study `TUTORIAL_INDEX.md` patterns from lessons 9, 10, 14 and document required structure. Document: (1) Overview format (learning time, difficulty, prerequisites), (2) Learning objectives checklist format, (3) Tutorials section structure (file, reading time, topics, "when to use"), (4) Learning path format, (5) FAQ format. Create structure template.
+  - [ ] 0.5 Examine existing `lesson-14/results/*.json` files (trajectory_eval_results.json, etc.) and document schema requirements. Document: (1) Required top-level keys (version, created, execution_mode, etc.), (2) summary_statistics structure, (3) radar_chart_data format, (4) detailed_results array structure. Create schema template.
+  - [ ] 0.6 Review `lesson-9-11/evaluation_dashboard.py` data loading functions to understand JSON schema expectations. Document: (1) Required fields for dashboard display, (2) Error handling expectations, (3) Status codes ("ok", "no_data", "invalid", "error"), (4) Validation requirements. Create dashboard integration checklist.
+
+- [ ] 1.0 **Author `memory_systems_fundamentals.md`**
+  - [x] 1.1 Draft introduction explaining why memory matters (reference agents_memory.txt lines 1-13), covering five memory types (working, episodic, semantic, procedural, parametric from lines 20-40) with direct citations. Include: (1) LLM statelessness problem, (2) Agent vs LLM distinction, (3) Memory types overview table, (4) Real-world agent examples requiring memory.
+  - [x] 1.2 Build short-term memory section with trimming vs summarization techniques plus conversation history code example. Include: (1) Working memory definition (agents_memory.txt lines 22-23), (2) Context window limits diagram, (3) Trimming strategies (FIFO, sliding window, token budgets), (4) Summarization strategies (rolling summaries, compression), (5) Executable Python example showing conversation history management.
+  - [x] 1.3 Create long-term memory section reviewing classic RAG, summarizing 04_Agentic_RAG.md (2-3 paragraphs), and diving into MemoryBank, A-MEM, Search-o1 patterns. Include: (1) Episodic vs semantic vs procedural memory (agents_memory.txt lines 26-33), (2) Classic RAG recap with cross-reference, (3) MemoryBank pattern description, (4) A-MEM pattern description, (5) Search-o1 pattern (detailed, as this is implemented in notebook).
+  - [x] 1.4a Research and document Pinecone, Weaviate, Chroma features/costs. Create comparison table with: (1) Deployment model (cloud vs local vs hybrid), (2) Cost structure (free tier, pricing), (3) Key features, (4) Performance characteristics, (5) Use case fit. Extract metrics from COMPASS_ARTIFACT_ANALYSIS.md where available.
+  - [x] 1.4b Research and document Qdrant, Milvus, pgvector features/costs. Create comparison table with same structure as 1.4a: (1) Deployment model, (2) Cost structure, (3) Key features, (4) Performance characteristics, (5) Use case fit.
+  - [x] 1.4c Extract specific metrics from `COMPASS_ARTIFACT_ANALYSIS.md` for vector DB decision matrix. Document: (1) Query latency benchmarks, (2) Cost comparisons, (3) Scalability metrics, (4) Production deployment insights from case studies.
+  - [x] 1.4d Assemble final vector DB decision matrix combining data from 1.4a-c. Include: (1) Comparison table (6 DBs × 5-7 criteria), (2) 80/20 rule guidance ("For 80% of use cases, Chroma is sufficient because..."), (3) Decision tree (if needs X, choose Y), (4) Recommendation by use case (prototyping vs production vs hybrid).
+  - [x] 1.5a Design and write Exercise 1: Token cost math. Provide: (1) Scenario with conversation history growth, (2) Calculate tokens over N turns, (3) Compare trimming vs summarization costs, (4) Expected answer with calculations. Ground in lesson-14 datasets (e.g., Bhagavad Gita Q&A conversations).
+  - [x] 1.5b Design and write Exercise 2: Memory architecture design. Provide: (1) Agent use case description (e.g., recipe recommendation agent), (2) Prompt to design memory architecture (short-term + long-term), (3) Guidance on what to include (vector DB choice, retrieval strategy, etc.), (4) Example solution with rationale.
+  - [x] 1.5c Design and write Exercise 3: Memory pattern selection. Provide: (1) Three scenarios with different requirements, (2) Prompt to select appropriate memory pattern (MemoryBank vs A-MEM vs Search-o1), (3) Justification requirements, (4) Expected answers with trade-off analysis.
+  - [x] 1.6 Ensure ≥5 explicit cross-links to `agents_memory.txt` (with line numbers) plus recap link to `04_Agentic_RAG.md`. Add: (1) Navigation links to other tutorials, (2) Forward reference to notebook, (3) Back reference to 04_Agentic_RAG.md. Count and document all cross-references.
+  - [x] 1.7 Validate 30-35 min reading time by manual read-through. Perform: (1) Self-read at normal pace with timer, (2) Adjust content if outside range (add/cut sections), (3) Document actual reading time and assumptions (e.g., "assumes familiarity with RAG basics").
+  - [x] 1.8 Verify all `agents_memory.txt` citations point to correct line numbers. For each citation: (1) Open agents_memory.txt, (2) Navigate to cited line number, (3) Verify content matches description, (4) Update if mismatch. Create citation verification checklist.
+  - [x] 1.9 Run markdown linter (`markdownlint` or `remark-lint`) and fix formatting issues. Fix: (1) Heading hierarchy, (2) List formatting, (3) Code block syntax, (4) Link formatting, (5) Trailing whitespace. Document any suppressed warnings.
+
+- [ ] 2.0 **Author `context_engineering_guide.md`**
+  - [x] 2.1 Explain context engineering vs prompt engineering, emphasizing cost/latency drivers and citing `agents_memory.txt` lines 194-243. Include: (1) Definitions and distinctions, (2) Cost impact examples (context size × API pricing), (3) Latency impact (longer context = longer processing), (4) When to optimize context vs prompt, (5) Direct citations with line numbers.
+  - [x] 2.2 Document context selection techniques (re-ranking, MMR, business rules, specialization) with λ tuning guidance and cross-references. Include: (1) Re-ranking algorithms (BM25, cross-encoder), (2) MMR formula and λ parameter explanation (λ=0 pure relevance, λ=1 pure diversity, typical λ=0.3-0.7), (3) Business rules examples, (4) Specialization strategies (domain-specific filtering), (5) Cross-reference to notebook MMR exercise.
+  - [x] 2.3 Provide context compression strategies (summarization, dedup, LLMLingua) plus ROI math ($24 → $12 → $4.80) tied to Compass data. Include: (1) Summarization approach (extractive vs abstractive), (2) Deduplication techniques (exact match, semantic similarity), (3) LLMLingua method overview, (4) ROI calculation walkthrough with actual numbers from COMPASS_ARTIFACT_ANALYSIS.md, (5) When to use each strategy.
+  - [x] 2.4 Describe context ordering strategies addressing lost-in-the-middle, primacy/recency effects, and reference supporting diagram. Include: (1) Lost-in-the-middle research summary, (2) Primacy effect (first items prioritized), (3) Recency effect (last items prioritized), (4) Optimal ordering strategies (important info at boundaries), (5) Cross-reference to context_engineering_workflow.mmd diagram.
+  - [x] 2.5 Detail "context as specification" concepts (domain tailoring, multi-agent coordination) with at least five citations to `agents_memory.txt`. Include: (1) Using context to specify behavior vs hardcoding, (2) Domain tailoring examples (Bhagavad Gita context for religious queries), (3) Multi-agent coordination via shared context, (4) Benefits and trade-offs, (5) Minimum 5 direct citations with line numbers.
+  - [x] 2.6 Include executable MMR example (relevance vector + redundancy matrix). Provide: (1) Sample query vector, (2) Sample document vectors (5-10 documents), (3) Relevance scores calculation, (4) Redundancy matrix calculation, (5) MMR selection algorithm pseudocode, (6) Step-by-step walkthrough, (7) Cross-reference to notebook implementation.
+  - [x] 2.7 Validate 25-30 min reading time by manual read-through. Perform: (1) Self-read at normal pace with timer, (2) Adjust content if outside range, (3) Document actual reading time and assumptions.
+  - [x] 2.8 Verify all cross-references and citations are correct. Check: (1) All `agents_memory.txt` citations have correct line numbers, (2) All COMPASS_ARTIFACT_ANALYSIS.md data references are accurate, (3) All relative links to other tutorials work, (4) All diagram references exist. Create verification checklist.
+  - [x] 2.9 Run markdown linter and fix formatting issues. Fix: (1) Heading hierarchy, (2) List formatting, (3) Code block syntax, (4) Link formatting, (5) Trailing whitespace.
+
+- [ ] 3.0 **Build `memory_systems_implementation.ipynb`**
+  - [ ] 3.1 Implement configuration cells with EXECUTION_MODE (DEMO/FULL) controlling query/document counts, timing, and optional cost estimates. Include: (1) Mode selector (DEMO/FULL enum or string), (2) Query count config (DEMO: 10, FULL: 50), (3) Document count config (DEMO: 100, FULL: 500), (4) Timing flags (measure execution time), (5) Cost estimation flags (calculate API costs if LLM used), (6) Configuration validation (raise error if invalid mode).
+  - [ ] 3.2 Set up local Chroma persistent client, ingest lesson-14 datasets, and demonstrate metadata-filtered retrieval. Include: (1) Chroma client initialization with persistent storage path, (2) Collection creation with embedding function, (3) Ingest sample data from lesson-14 (e.g., multi_agent_fundamentals.md chunks), (4) Basic retrieval example, (5) Metadata-filtered retrieval example (e.g., filter by complexity or domain), (6) Error handling for missing data.
+  - [ ] 3.3 Create working memory management utilities (trimming, summarization simulations) with token usage visualizations. Include: (1) Trimming function (FIFO, sliding window, token budget), (2) Summarization simulation (mock LLM call, show token reduction), (3) Token counting utility (tiktoken or similar), (4) Visualization: conversation history growth over turns, (5) Visualization: token usage comparison (no trimming vs trimming vs summarization), (6) Type hints and input validation.
+  - [ ] 3.4a Implement search query token calculation for Search-o1. Include: (1) Function to tokenize search queries, (2) Calculate token count per query, (3) Aggregate tokens across multiple search branches, (4) Store token counts in metrics dict, (5) Type hints and docstrings.
+  - [ ] 3.4b Implement document retrieval simulation for Search-o1. Include: (1) Mock retrieval from Chroma (use actual data from 3.2), (2) Select top-k documents per query, (3) Track retrieved document IDs, (4) Calculate retrieval tokens (documents × avg tokens), (5) Store in metrics dict.
+  - [ ] 3.4c Implement Reason-in-Documents condensation logic for Search-o1. Include: (1) Mock condensation step (simulate LLM reasoning over documents), (2) Calculate condensation ratio (input tokens → output tokens), (3) Track condensed output size, (4) Store in metrics dict, (5) Flamingo example walkthrough.
+  - [ ] 3.4d Calculate and visualize Search-o1 overhead metrics. Include: (1) Total overhead = search tokens + retrieval tokens + condensation tokens, (2) Overhead vs baseline comparison, (3) Visualization: token breakdown (search, retrieval, condensation), (4) Visualization: overhead percentage, (5) Interpretation guidance (when is overhead justified?).
+  - [ ] 3.5 Add context engineering exercises: MMR selection comparison, compression ROI calculator, and multi-agent memory coordination demo. Include: (1) Exercise 1: Implement MMR and compare λ values (0.3, 0.5, 0.7), (2) Exercise 2: Calculate compression ROI with user inputs (input tokens, compression ratio, API cost per token), (3) Exercise 3: Simulate multi-agent coordination with shared vs private memory, (4) Interactive widgets if possible (ipywidgets), (5) Expected outputs and interpretations.
+  - [ ] 3.6 Generate metrics/plots and export `results/memory_systems_demo_results.json` following dashboard schema. Include: (1) Summary statistics (mean/std for key metrics), (2) Radar chart data (labels, values), (3) Complexity breakdown if applicable, (4) detailed_results array with per-test metrics, (5) Metadata (version, created date, execution_mode, num_trajectories), (6) Validate schema matches existing lesson-14/results/*.json structure.
+  - [ ] 3.7 Add type hints to ALL notebook functions. For each function: (1) Add parameter type hints, (2) Add return type hint, (3) Use `list[T]`, `dict[K, V]`, `Optional[T]` or `T | None` syntax, (4) Document complex types with TypeAlias if needed, (5) Verify no type errors with mypy or Pylance.
+  - [ ] 3.8 Add input validation and error handling to all functions. For each function: (1) Add guard clauses at function start (check for None, empty collections, invalid ranges), (2) Raise descriptive exceptions (ValueError, TypeError) with clear messages, (3) Use specific exception types (not bare except), (4) Add error handling for external calls (Chroma, file I/O), (5) Log errors if appropriate.
+  - [ ] 3.9 Add docstrings following defensive template to all functions. For each function: (1) Brief description, (2) Args section with type and description, (3) Returns section with type and description, (4) Raises section listing exceptions, (5) Example usage if complex. Follow Google or NumPy style consistently.
+  - [ ] 3.10 Create unit tests for notebook helper functions (MMR, token counting, etc.) in `tests/test_memory_systems_notebook.py`. Write tests for: (1) MMR calculation with known inputs/outputs, (2) Token counting utility, (3) Trimming logic, (4) Configuration validation, (5) JSON export function. Use test naming convention: `test_should_[result]_when_[condition]()`. Achieve ≥90% coverage of helper functions.
+  - [ ] 3.11 Test DEMO mode execution completes in <10 minutes. Perform: (1) Run notebook in DEMO mode end-to-end, (2) Measure actual execution time, (3) If >10 min, reduce query/document counts, (4) Verify all cells execute without errors, (5) Document actual time in notebook metadata or comment.
+  - [ ] 3.12 Test FULL mode execution completes in 30-40 minutes. Perform: (1) Run notebook in FULL mode end-to-end (budget 1 hour), (2) Measure actual execution time, (3) Adjust if outside 30-40 min range, (4) Verify all cells execute without errors, (5) Document actual time.
+  - [ ] 3.13 Validate JSON output matches dashboard schema. Perform: (1) Load generated `memory_systems_demo_results.json`, (2) Check all required keys exist (version, created, execution_mode, summary_statistics, radar_chart_data, detailed_results), (3) Verify data types match schema, (4) Validate values are reasonable (no NaN, inf, null where unexpected), (5) Run validation script if available (Task 3.10 or separate script).
+  - [ ] 3.14 Test optional LLM flag works correctly. Perform: (1) Run notebook with LLM flag enabled (if API key available), (2) Verify LLM calls execute and return valid responses, (3) Run notebook with LLM flag disabled, (4) Verify graceful degradation (mock responses or skip LLM sections), (5) Ensure no crashes when API key missing.
+  - [ ] 3.15 Add cost warning messages for FULL mode. Include: (1) Warning cell at top of notebook ("FULL mode may incur costs: estimated $X"), (2) Estimated cost calculation based on tokens and API pricing, (3) User confirmation prompt ("Set EXECUTION_MODE='DEMO' to avoid costs"), (4) Display current mode clearly in output.
+
+- [ ] 4.0 **Produce Mermaid diagrams in `lesson-14/diagrams/`**
+  - [ ] 4.1 Implement `memory_types_taxonomy.mmd` per provided structure with consistent styling and agents_memory terminology. Include: (1) Five memory types hierarchy (working, episodic, semantic, procedural, parametric), (2) Clear visual distinction between short-term and long-term, (3) Terminology matches agents_memory.txt exactly, (4) Color coding (e.g., short-term in blue, long-term in green), (5) Graph direction (top-down or left-right), (6) Annotations with brief descriptions.
+  - [ ] 4.2 Implement `context_engineering_workflow.mmd` showing selection → compression → ordering pipeline with color cues. Include: (1) Three-stage pipeline (selection, compression, ordering), (2) Techniques shown within each stage (e.g., selection: re-ranking, MMR), (3) Color cues for each stage (e.g., selection=yellow, compression=orange, ordering=blue), (4) Arrows showing flow, (5) Annotations for key decisions (e.g., "λ parameter tuning here").
+  - [ ] 4.3 Implement `search_o1_architecture.mmd` capturing branching logic, Reason-in-Documents module, and loopback to reasoning trace. Include: (1) Query → multiple search branches, (2) Each branch retrieves documents, (3) Reason-in-Documents module condenses, (4) Loopback to reasoning trace, (5) Decision points (e.g., "if confidence low, search again"), (6) Color coding for different components.
+  - [ ] 4.4a Validate Mermaid syntax for all 3 diagrams. Perform: (1) Use Mermaid CLI (`mmdc --validate`) or online editor to check syntax, (2) Fix any syntax errors, (3) Ensure diagrams render without warnings, (4) Check for balanced brackets, quotes, semicolons.
+  - [ ] 4.4b Render diagrams locally with `mmdc` to confirm GitHub compatibility. Perform: (1) Run `mmdc -i memory_types_taxonomy.mmd -o memory_types_taxonomy.png`, (2) Repeat for other 2 diagrams, (3) Open PNG files to verify rendering quality, (4) Check for any rendering issues (cutoff text, overlapping nodes), (5) Adjust diagram if needed.
+  - [ ] 4.4c Export diagrams to PNG format for presentations. Perform: (1) Use `mmdc -i <file>.mmd -o <file>.png -b transparent` for transparency, (2) Verify PNG resolution is adequate (≥1920px width for complex diagrams), (3) Optimize file size if >500KB (use pngquant or similar), (4) Store in `lesson-14/diagrams/`.
+  - [ ] 4.4d Export diagrams to SVG format for scalability. Perform: (1) Use `mmdc -i <file>.mmd -o <file>.svg`, (2) Verify SVG renders correctly in browser, (3) Check file size is reasonable (<100KB), (4) Store in `lesson-14/diagrams/`.
+  - [ ] 4.5 Verify diagram terminology matches `agents_memory.txt`. For each diagram: (1) List all memory-related terms used in diagram, (2) Cross-reference with agents_memory.txt definitions, (3) Ensure exact match (e.g., "working memory" not "short-term cache"), (4) Update diagrams if terminology misaligned, (5) Document verification in checklist.
+
+- [ ] 5.0 **Integrate memory track across existing docs**
+  - [ ] 5.1 Update `lesson-14/TUTORIAL_INDEX.md` with Section E (tutorials 16-18: memory_systems_fundamentals.md, context_engineering_guide.md, memory_systems_implementation.ipynb), learning path #5 ("Memory Systems Deep Dive"), and FAQ entries Q11-Q13 referencing relevant files. Include: (1) Section E header following existing pattern, (2) Tutorial 16-18 entries with file, reading time, topics, "when to use", (3) Learning Path #5 with step-by-step instructions (estimated time: 4-5 hours), (4) FAQ Q11: "When should I optimize context vs prompt?", (5) FAQ Q12: "Which vector DB should I use?", (6) FAQ Q13: "How do I reduce memory costs?".
+  - [ ] 5.2 Append "Deep Dive: Memory Systems Implementation" section to `lesson-14/04_Agentic_RAG.md` with learning path steps and relative links. Include: (1) New section header at end of file, (2) Brief overview (2-3 sentences) explaining memory systems as next step after RAG, (3) Learning path steps: (a) Read memory_systems_fundamentals.md, (b) Read context_engineering_guide.md, (c) Run memory_systems_implementation.ipynb, (4) Relative links to all 3 files, (5) Cross-reference to TUTORIAL_INDEX.md.
+  - [ ] 5.3 Expand "Component 1: Memory" in `lesson-14/multi_agent_fundamentals.md` by adding code snippet, coordination discussion, and deep-dive link. Include: (1) Code snippet showing memory initialization (e.g., Chroma client setup), (2) Multi-agent coordination discussion (2-3 paragraphs on shared vs private memory), (3) Deep-dive link to memory_systems_fundamentals.md, (4) Cross-reference to context_engineering_guide.md for cost optimization.
+  - [ ] 5.4 Create/update `lesson-14/results/memory_systems_demo_results.json` placeholder (if absent) to document expected output schema. Include: (1) version, created, execution_mode fields, (2) summary_statistics with mean/std for key metrics (e.g., mmr_relevance, compression_ratio, search_o1_overhead), (3) radar_chart_data with labels and values, (4) detailed_results array with sample entries, (5) Comments documenting each field's purpose.
+  - [ ] 5.5a Run markdown linter (`markdownlint`) on all updated files. Perform: (1) Lint TUTORIAL_INDEX.md, 04_Agentic_RAG.md, multi_agent_fundamentals.md, (2) Fix heading hierarchy, list formatting, link formatting, (3) Document any suppressed warnings.
+  - [ ] 5.5b Validate all relative links work correctly. Perform: (1) Extract all relative links from updated files (e.g., `../lesson-10/TUTORIAL_INDEX.md`), (2) Verify each file exists at specified path, (3) Test links in GitHub preview or VS Code preview, (4) Fix broken links, (5) Create link validation report.
+  - [ ] 5.5c Run spell check on all tutorial files. Perform: (1) Use cspell or aspell on .md files, (2) Ignore technical terms (add to custom dictionary: Chroma, Qdrant, Milvus, pgvector, LLMLingua, BERTScore), (3) Fix typos, (4) Document spell check results.
+  - [ ] 5.6 Verify `TUTORIAL_INDEX.md` follows established pattern from lessons 9, 10. Perform: (1) Compare structure side-by-side with lesson-9/TUTORIAL_INDEX.md and lesson-10/TUTORIAL_INDEX.md, (2) Ensure consistent sections (Overview, Learning Objectives, Tutorials, Learning Path, FAQ), (3) Match formatting (bullet styles, heading levels), (4) Verify prerequisite cross-references exist, (5) Document any intentional deviations.
+  - [ ] 5.7 Add "What's New" section to `TUTORIAL_INDEX.md`. Include: (1) Section header near top (after Overview), (2) Date of addition, (3) Summary of new content (3 tutorials, 1 notebook, 3 diagrams), (4) Key features highlighted (Search-o1 implementation, vector DB decision matrix, context engineering ROI), (5) Reading/execution time estimates.
+  - [ ] 5.8 Update `TUTORIAL_CHANGELOG.md` with Lesson 14 memory systems section. Include: (1) New "Lesson 14: Memory Systems" section, (2) Last Updated date, (3) Status (✅ Complete after all tasks done), (4) Triggers for Update list (e.g., "Changes to agents_memory.txt → Update memory_systems_fundamentals.md", "Changes to memory_systems_implementation.ipynb → Update context_engineering_guide.md cross-references"), (5) Update History entry with creation date and summary.
+  - [ ] 5.9 Test complete learning path by reading tutorials in recommended order. Perform: (1) Follow Learning Path #5 steps sequentially, (2) Time each step (reading + execution), (3) Note any confusion points or broken flows, (4) Verify cross-references are helpful and not redundant, (5) Adjust content or learning path based on findings, (6) Document actual total time (target: 4-5 hours).
+  - [ ] 5.10 Load `memory_systems_demo_results.json` in dashboard and verify it displays correctly. Perform: (1) Run `python lesson-9-11/evaluation_dashboard.py`, (2) Navigate to dashboard in browser, (3) Verify Lesson 14 memory systems section appears, (4) Check summary statistics display correctly, (5) Check radar chart renders, (6) Check detailed results table is populated, (7) Fix any display issues or schema mismatches.
+
+- [ ] 6.0 **Final Quality Gates & Validation**
+  - [ ] 6.1 Run Ruff formatting on all Python code (notebook cells). Perform: (1) Extract Python code from notebook to .py file or run `nbqa ruff format lesson-14/memory_systems_implementation.ipynb`, (2) Fix any formatting violations (line length, indentation, spacing), (3) Re-run to confirm 0 violations, (4) Document Ruff version and config used.
+  - [ ] 6.2 Run pytest for all test files created. Perform: (1) Run `pytest tests/test_memory_systems_notebook.py -v --cov`, (2) Verify all tests pass (target: 100%), (3) Check code coverage (target: ≥90% for helper functions), (4) Fix any failing tests, (5) Generate coverage report and document results.
+  - [ ] 6.3 Verify all 5+ citations to `agents_memory.txt` exist and are correct. Perform: (1) Extract all citations from memory_systems_fundamentals.md and context_engineering_guide.md (e.g., "agents_memory.txt lines 194-243"), (2) For each citation, open agents_memory.txt and verify line numbers match content, (3) Count total citations (must be ≥5 per tutorial), (4) Update citations if incorrect, (5) Create citation verification table.
+  - [ ] 6.4 Verify all cost/ROI references to `COMPASS_ARTIFACT_ANALYSIS.md` are accurate. Perform: (1) Extract all cost/ROI claims from tutorials (e.g., "$24 → $12 → $4.80"), (2) Cross-reference with COMPASS_ARTIFACT_ANALYSIS.md data, (3) Verify numbers match source, (4) Update if misaligned, (5) Document source line numbers for each claim.
+  - [ ] 6.5 Verify all cross-references between files work (click-through test). Perform: (1) List all cross-reference links in tutorials (relative paths like `../lesson-10/TUTORIAL_INDEX.md`, internal links like `#section-name`), (2) Click each link in GitHub preview or VS Code preview, (3) Verify destination exists and is correct section/file, (4) Fix broken links, (5) Create cross-reference validation checklist (expected: 20+ links across all files).
+  - [ ] 6.6 Verify reading time estimates are accurate (manual timing). Perform: (1) Read memory_systems_fundamentals.md at normal pace with timer (target: 30-35 min), (2) Read context_engineering_guide.md at normal pace with timer (target: 25-30 min), (3) Document actual times and any assumptions (e.g., "assumes RAG familiarity"), (4) Adjust content or time estimates if significantly off, (5) Add time estimate assumptions to tutorial metadata.
+  - [ ] 6.7 Verify execution time estimates are accurate (DEMO <10min, FULL 30-40min). Perform: (1) Run notebook in DEMO mode end-to-end with timer (target: <10 min), (2) Run notebook in FULL mode end-to-end with timer (target: 30-40 min), (3) Document actual times on different hardware if possible, (4) Adjust mode configs if times significantly off, (5) Document hardware specs used for timing (CPU, RAM).
+  - [ ] 6.8 Verify JSON schema compliance with dashboard expectations. Perform: (1) Run JSON schema validation script (Task 3.13 or create new), (2) Load JSON in dashboard (Task 5.10), (3) Verify all required fields present and correct types, (4) Check for any validation warnings in dashboard console, (5) Fix schema issues, (6) Document schema version used.
+  - [ ] 6.9 Generate final validation report documenting all quality checks. Include: (1) Checklist of all quality gates (6.1-6.8) with pass/fail status, (2) Test results summary (pytest coverage, test count, pass rate), (3) Time estimates summary (reading times, execution times), (4) Citation/link verification summary (total count, broken count, fixed count), (5) Any known issues or limitations, (6) Sign-off statement ("All quality gates passed, ready for production").
