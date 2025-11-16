@@ -49,7 +49,16 @@
       "Bash(ruff:*)",
       "Bash(nbqa ruff check:*)",
       "Bash(nbqa ruff:*)",
-      "Bash(echo \"Exit code: $?\")"
+      "Bash(echo \"Exit code: $?\")",
+      "Read(///**)",
+      "Bash(git -C lesson-14 mv agent_planning_evaluation.md section-a-foundation/tutorials/01_agent_planning_evaluation.md)",
+      "Bash(git -C lesson-14 mv react_reflexion_patterns.md section-a-foundation/tutorials/02_react_reflexion_patterns.md)",
+      "Bash(git -C lesson-14 mv multi_agent_orchestration.md section-a-foundation/tutorials/03_multi_agent_orchestration.md)",
+      "Bash(git -C lesson-14 mv agent_evaluation_fundamentals.md section-a-foundation/tutorials/04_agent_evaluation_fundamentals.md)",
+      "Bash(git -C lesson-14 mv trajectory_evaluation_techniques.md section-a-foundation/tutorials/05_trajectory_evaluation_techniques.md)",
+      "Bash(git -C lesson-14 mv 01_AgentOps_Operations.md section-a-foundation/tutorials/06_AgentOps_Operations.md)",
+      "Bash(git mv:*)",
+      "Bash(rm:*)"
     ],
     "deny": [],
     "ask": []

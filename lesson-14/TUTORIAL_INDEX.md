@@ -139,7 +139,7 @@ By completing these tutorials, you will be able to:
 
 ### 1. Agent Planning Evaluation ⭐ CORE
 
-**File:** `agent_planning_evaluation.md`
+**File:** `section-a-foundation/tutorials/01_agent_planning_evaluation.md`
 **Reading Time:** 22-25 minutes
 **Difficulty:** ⭐⭐⭐
 **Topics:**
@@ -157,7 +157,7 @@ By completing these tutorials, you will be able to:
 
 ### 2. ReAct & Reflexion Patterns ⭐ CORE
 
-**File:** `react_reflexion_patterns.md`
+**File:** `section-a-foundation/tutorials/02_react_reflexion_patterns.md`
 **Reading Time:** 20-25 minutes
 **Difficulty:** ⭐⭐⭐
 **Topics:**
@@ -176,7 +176,7 @@ By completing these tutorials, you will be able to:
 
 ### 3. Multi-Agent Orchestration ⭐ CORE
 
-**File:** `multi_agent_orchestration.md`
+**File:** `section-a-foundation/tutorials/03_multi_agent_orchestration.md`
 **Reading Time:** 18-22 minutes
 **Difficulty:** ⭐⭐⭐
 **Topics:**
@@ -195,7 +195,7 @@ By completing these tutorials, you will be able to:
 
 ### 4. Agent Evaluation Fundamentals ⭐ CORE
 
-**File:** `agent_evaluation_fundamentals.md`
+**File:** `section-a-foundation/tutorials/04_agent_evaluation_fundamentals.md`
 **Reading Time:** 25-30 minutes
 **Difficulty:** ⭐⭐⭐⭐
 **Topics:**
@@ -214,7 +214,7 @@ By completing these tutorials, you will be able to:
 
 ### 5. Trajectory Evaluation Techniques ⭐ CORE
 
-**File:** `trajectory_evaluation_techniques.md`
+**File:** `section-a-foundation/tutorials/05_trajectory_evaluation_techniques.md`
 **Reading Time:** 20-25 minutes
 **Difficulty:** ⭐⭐⭐⭐
 **Topics:**
@@ -233,7 +233,7 @@ By completing these tutorials, you will be able to:
 
 ### 6. AgentOps & Operations (Google Companion Topic 01)
 
-**File:** `01_AgentOps_Operations.md`
+**File:** `section-a-foundation/tutorials/06_AgentOps_Operations.md`
 **Reading Time:** 20-25 minutes
 **Difficulty:** ⭐⭐⭐⭐
 **Source:** Google's Agents Companion Whitepaper
@@ -254,7 +254,7 @@ By completing these tutorials, you will be able to:
 
 ### 7. Multi-Agent Fundamentals ⚡ NEW
 
-**File:** `multi_agent_fundamentals.md`
+**File:** `section-b-multi-agent/tutorials/07_multi_agent_fundamentals.md`
 **Reading Time:** 25-30 minutes
 **Difficulty:** ⭐⭐⭐⭐
 **Topics:**
@@ -273,7 +273,7 @@ By completing these tutorials, you will be able to:
 
 ### 8. Multi-Agent Design Patterns ⚡ NEW
 
-**File:** `multi_agent_design_patterns.md`
+**File:** `section-b-multi-agent/tutorials/08_multi_agent_design_patterns.md`
 **Reading Time:** 22-28 minutes
 **Difficulty:** ⭐⭐⭐⭐
 **Topics:**
@@ -294,7 +294,7 @@ By completing these tutorials, you will be able to:
 
 ### 9. Multi-Agent Challenges & Evaluation ⚡ NEW
 
-**File:** `multi_agent_challenges_evaluation.md`
+**File:** `section-b-multi-agent/tutorials/09_multi_agent_challenges_evaluation.md`
 **Reading Time:** 20-25 minutes
 **Difficulty:** ⭐⭐⭐⭐⭐
 **Topics:**
@@ -317,7 +317,7 @@ By completing these tutorials, you will be able to:
 
 ### 10. Multi-Agent Architectures (Google Companion Topic 03)
 
-**File:** `03_Multi_Agent_Architectures.md`
+**File:** `section-b-multi-agent/tutorials/10_Multi_Agent_Architectures.md`
 **Reading Time:** 35-45 minutes
 **Difficulty:** ⭐⭐⭐⭐⭐
 **Source:** Google's Agents Companion Whitepaper
@@ -336,7 +336,7 @@ By completing these tutorials, you will be able to:
 
 ### 11. Agentic RAG (Google Companion Topic 04)
 
-**File:** `04_Agentic_RAG.md`
+**File:** `section-b-multi-agent/tutorials/11_Agentic_RAG.md`
 **Reading Time:** 25-35 minutes
 **Difficulty:** ⭐⭐⭐⭐
 **Source:** Google's Agents Companion Whitepaper
@@ -355,7 +355,7 @@ By completing these tutorials, you will be able to:
 
 ### 12. Contract-Based Agents (Google Companion Topic 06)
 
-**File:** `06_Contract_Based_Agents.md`
+**File:** `section-b-multi-agent/tutorials/12_Contract_Based_Agents.md`
 **Reading Time:** 30-40 minutes
 **Difficulty:** ⭐⭐⭐⭐⭐
 **Source:** Google's Agents Companion Whitepaper
@@ -375,7 +375,7 @@ By completing these tutorials, you will be able to:
 
 ### 13. Enterprise Applications (Google Companion Topic 05)
 
-**File:** `05_Enterprise_Applications.md`
+**File:** `section-b-multi-agent/tutorials/13_Enterprise_Applications.md`
 **Reading Time:** 25-30 minutes
 **Difficulty:** ⭐⭐⭐
 **Source:** Google's Agents Companion Whitepaper
@@ -396,7 +396,7 @@ By completing these tutorials, you will be able to:
 
 ### 14. Agent Evaluation Methodology (Google Companion Topic 02)
 
-**File:** `02_Agent_Evaluation_Methodology.md`
+**File:** `section-c-advanced-evaluation/tutorials/14_Agent_Evaluation_Methodology.md`
 **Reading Time:** 30-40 minutes
 **Difficulty:** ⭐⭐⭐⭐⭐
 **Source:** Google's Agents Companion Whitepaper
@@ -415,7 +415,7 @@ By completing these tutorials, you will be able to:
 
 ### 15. Autorater-Based Final Response Evaluation ⚡ NEW
 
-**File:** `autorater_final_response_eval.md`
+**File:** `section-c-advanced-evaluation/tutorials/15_autorater_final_response_eval.md`
 **Reading Time:** 18-22 minutes
 **Difficulty:** ⭐⭐⭐⭐
 **Prerequisites:** HW3 (LLM-as-Judge), Lesson 10 (Judge Prompt Engineering), Trajectory Eval (#5)
@@ -435,7 +435,7 @@ By completing these tutorials, you will be able to:
 
 ### 16. Human-in-the-Loop Evaluation ⚡ NEW
 
-**File:** `human_in_the_loop_evaluation.md`
+**File:** `section-c-advanced-evaluation/tutorials/16_human_in_the_loop_evaluation.md`
 **Reading Time:** 18-22 minutes
 **Difficulty:** ⭐⭐⭐⭐
 **Prerequisites:** Agent Eval Fundamentals (#4), Trajectory Eval (#5), Autorater (#15), Lesson 11 (Elo Ranking)
@@ -455,7 +455,7 @@ By completing these tutorials, you will be able to:
 
 ### 17. Vertex AI Ecosystem (Google Companion Topic 08)
 
-**File:** `08_Vertex_AI_Ecosystem.md`
+**File:** `section-c-advanced-evaluation/tutorials/17_Vertex_AI_Ecosystem.md`
 **Reading Time:** 15-20 minutes
 **Difficulty:** ⭐⭐⭐
 **Source:** Google's Agents Companion Whitepaper
@@ -479,7 +479,7 @@ By completing these tutorials, you will be able to:
 
 #### 18. ReAct Agent Implementation ⭐ CORE
 
-**File:** [`react_agent_implementation.ipynb`](react_agent_implementation.ipynb)
+**File:** [`section-a-foundation/notebooks/18_react_agent_implementation.ipynb`](section-a-foundation/notebooks/18_react_agent_implementation.ipynb)
 **Execution Time:** ~10 minutes (DEMO), ~25 minutes (FULL)
 **Cost:** $0.30-0.50 (DEMO, 3 tasks), $2.00-3.00 (FULL, 15 tasks)
 **Topics:**
@@ -497,7 +497,7 @@ By completing these tutorials, you will be able to:
 
 #### 19. Agent Failure Analysis ⭐ CORE
 
-**File:** [`agent_failure_analysis.ipynb`](agent_failure_analysis.ipynb)
+**File:** [`section-a-foundation/notebooks/19_agent_failure_analysis.ipynb`](section-a-foundation/notebooks/19_agent_failure_analysis.ipynb)
 **Execution Time:** ~7 minutes (DEMO), ~15 minutes (FULL)
 **Cost:** $0.00 (simulated failures, no API calls)
 **Topics:**
@@ -516,7 +516,7 @@ By completing these tutorials, you will be able to:
 
 #### 20. Trajectory Evaluation Tutorial ⚡ NEW
 
-**File:** [`trajectory_evaluation_tutorial.ipynb`](trajectory_evaluation_tutorial.ipynb)
+**File:** [`section-a-foundation/notebooks/20_trajectory_evaluation_tutorial.ipynb`](section-a-foundation/notebooks/20_trajectory_evaluation_tutorial.ipynb)
 **Execution Time:** ~3 minutes (DEMO, 20 trajectories), ~8 minutes (FULL, 100 trajectories)
 **Cost:** $0.00 (rule-based metrics, no API calls)
 **Topics:**
@@ -534,7 +534,7 @@ By completing these tutorials, you will be able to:
 
 #### 21. Automotive AI Case Study ⚡ NEW
 
-**File:** [`automotive_ai_case_study.ipynb`](automotive_ai_case_study.ipynb)
+**File:** [`section-b-multi-agent/notebooks/21_automotive_ai_case_study.ipynb`](section-b-multi-agent/notebooks/21_automotive_ai_case_study.ipynb)
 **Execution Time:** ~10-15 minutes
 **Cost:** $0.50-1.00 (simulated agent interactions)
 **Topics:**
@@ -552,7 +552,7 @@ By completing these tutorials, you will be able to:
 
 #### 22. Autorater Calibration ⚡ NEW
 
-**File:** [`autorater_calibration.ipynb`](autorater_calibration.ipynb)
+**File:** [`section-c-advanced-evaluation/notebooks/22_autorater_calibration.ipynb`](section-c-advanced-evaluation/notebooks/22_autorater_calibration.ipynb)
 **Execution Time:** ~8-12 minutes
 **Cost:** $0.80-1.50 (autorater evaluation of sample responses)
 **Topics:**
@@ -570,7 +570,7 @@ By completing these tutorials, you will be able to:
 
 #### 23. Benchmark Evaluation ⚡ NEW
 
-**File:** [`benchmark_evaluation.ipynb`](benchmark_evaluation.ipynb)
+**File:** [`section-c-advanced-evaluation/notebooks/23_benchmark_evaluation.ipynb`](section-c-advanced-evaluation/notebooks/23_benchmark_evaluation.ipynb)
 **Execution Time:** ~5-10 minutes
 **Cost:** $0.00 (evaluates pre-generated agent trajectories)
 **Topics:**
@@ -588,7 +588,7 @@ By completing these tutorials, you will be able to:
 
 #### 24. Multi-Agent Patterns Comparison ⚡ NEW
 
-**File:** [`multi_agent_patterns_comparison.ipynb`](multi_agent_patterns_comparison.ipynb)
+**File:** [`section-b-multi-agent/notebooks/24_multi_agent_patterns_comparison.ipynb`](section-b-multi-agent/notebooks/24_multi_agent_patterns_comparison.ipynb)
 **Execution Time:** ~7-12 minutes
 **Cost:** $1.00-2.00 (evaluates 4 patterns across multiple scenarios)
 **Topics:**
@@ -604,25 +604,11 @@ By completing these tutorials, you will be able to:
 
 ---
 
-#### 25. Agent Failure Analysis (Test Version)
-
-**File:** [`agent_failure_analysis_test.ipynb`](agent_failure_analysis_test.ipynb)
-**Note:** Extended test version with additional failure scenarios
-
----
-
-#### 26. ReAct Agent Implementation (Test Version)
-
-**File:** [`react_agent_implementation_test.ipynb`](react_agent_implementation_test.ipynb)
-**Note:** Extended test version with additional agent tasks
-
----
-
 ## Section E: Memory Systems ⚡ NEW
 
 ### 27. Memory Systems Fundamentals ⭐ CORE
 
-**File:** `memory_systems_fundamentals.md`
+**File:** `section-e-memory-systems/tutorials/27_memory_systems_fundamentals.md`
 **Reading Time:** 30-35 minutes
 **Difficulty:** ⭐⭐⭐⭐
 **Topics:**
@@ -653,7 +639,7 @@ By completing these tutorials, you will be able to:
 
 ### 28. Context Engineering Guide ⭐ CORE
 
-**File:** `context_engineering_guide.md`
+**File:** `section-e-memory-systems/tutorials/28_context_engineering_guide.md`
 **Reading Time:** 25-30 minutes
 **Difficulty:** ⭐⭐⭐⭐
 **Topics:**
@@ -684,7 +670,7 @@ By completing these tutorials, you will be able to:
 
 ### 29. Memory Systems Implementation (Interactive) ⭐ HANDS-ON
 
-**File:** `memory_systems_implementation.ipynb`
+**File:** `section-e-memory-systems/notebooks/29_memory_systems_implementation.ipynb`
 **Execution Time:** DEMO <10 min, FULL 30-40 min
 **Difficulty:** ⭐⭐⭐⭐
 **Topics:**
@@ -720,15 +706,15 @@ By completing these tutorials, you will be able to:
 ### Core Agent Workflows
 
 **1. ReAct Agent Workflow**
-**File:** `diagrams/react_agent_workflow.mmd`
+**File:** `section-a-foundation/diagrams/react_agent_workflow.mmd`
 **Description:** Flowchart showing Thought-Action-Observation loop with decision points for task completion vs. replanning.
 
 **2. Agent Failure Modes Taxonomy**
-**File:** `diagrams/agent_failure_modes_taxonomy.mmd`
+**File:** `section-a-foundation/diagrams/agent_failure_modes_taxonomy.mmd`
 **Description:** Comprehensive taxonomy of 15 failure types across 3 categories (Planning, Execution, Efficiency) with examples and remediation strategies.
 
 **3. Debugging Workflow ⚡ NEW**
-**File:** `diagrams/debugging_workflow.mmd`
+**File:** `section-a-foundation/diagrams/debugging_workflow.mmd`
 **Description:** Systematic debugging workflow for agent failures with root cause analysis steps.
 
 ---
@@ -736,35 +722,35 @@ By completing these tutorials, you will be able to:
 ### Multi-Agent Patterns
 
 **4. Multi-Agent Orchestration**
-**File:** `diagrams/multi_agent_orchestration.mmd`
+**File:** `section-b-multi-agent/diagrams/multi_agent_orchestration.mmd`
 **Description:** Architecture diagram of Planner-Validator-Executor pattern with communication flows.
 
 **5. Multi-Agent Core Components ⚡ NEW**
-**File:** `diagrams/multi_agent_core_components.mmd`
+**File:** `section-b-multi-agent/diagrams/multi_agent_core_components.mmd`
 **Description:** 9 core components diagram (memory, cognition, tools, routing, communication, registry, monitoring, orchestration, security).
 
 **6. Hierarchical Pattern ⚡ NEW**
-**File:** `diagrams/hierarchical_pattern.mmd`
+**File:** `section-b-multi-agent/diagrams/hierarchical_pattern.mmd`
 **Description:** Manager-Worker pattern with central coordination and task delegation flows.
 
 **7. Diamond Pattern ⚡ NEW**
-**File:** `diagrams/diamond_pattern.mmd`
+**File:** `section-b-multi-agent/diagrams/diamond_pattern.mmd`
 **Description:** Split-Process-Merge pattern for parallel processing with convergence.
 
 **8. Peer-to-Peer Pattern ⚡ NEW**
-**File:** `diagrams/p2p_pattern.mmd`
+**File:** `section-b-multi-agent/diagrams/p2p_pattern.mmd`
 **Description:** Collaborative pattern with multi-directional agent communication.
 
 **9. Collaborative Pattern ⚡ NEW**
-**File:** `diagrams/collaborative_pattern.mmd`
+**File:** `section-b-multi-agent/diagrams/collaborative_pattern.mmd`
 **Description:** Round-robin collaboration pattern for creative problem-solving.
 
 **10. Adaptive Loop Pattern ⚡ NEW**
-**File:** `diagrams/adaptive_loop_pattern.mmd`
+**File:** `section-b-multi-agent/diagrams/adaptive_loop_pattern.mmd`
 **Description:** Dynamic pattern with feedback loops and adaptive routing.
 
 **11. Pattern Decision Tree ⚡ NEW**
-**File:** `diagrams/pattern_decision_tree.mmd`
+**File:** `section-b-multi-agent/diagrams/pattern_decision_tree.mmd`
 **Description:** Decision tree for selecting appropriate multi-agent pattern based on task characteristics.
 
 ---
@@ -772,19 +758,19 @@ By completing these tutorials, you will be able to:
 ### Evaluation & Observability
 
 **12. Agent Evaluation Components ⚡ NEW**
-**File:** `diagrams/agent_evaluation_components.mmd`
+**File:** `section-a-foundation/diagrams/agent_evaluation_components.mmd`
 **Description:** Complete evaluation framework showing trajectory, autorater, and HITL evaluation components.
 
 **13. Evaluation Method Tradeoffs ⚡ NEW**
-**File:** `diagrams/evaluation_method_tradeoffs.mmd`
+**File:** `section-a-foundation/diagrams/evaluation_method_tradeoffs.mmd`
 **Description:** Comparison chart showing cost, latency, quality, and coverage tradeoffs across evaluation methods.
 
 **14. Observability Architecture ⚡ NEW**
-**File:** `diagrams/observability_architecture.mmd`
+**File:** `section-a-foundation/diagrams/observability_architecture.mmd`
 **Description:** Agent observability architecture with high-level KPIs and detailed execution traces.
 
 **15. AgentOps Evolution ⚡ NEW**
-**File:** `diagrams/agentops_evolution.mmd`
+**File:** `section-a-foundation/diagrams/agentops_evolution.mmd`
 **Description:** Evolution diagram from DevOps → MLOps → FMOps → GenAIOps → AgentOps.
 
 ---
@@ -792,7 +778,7 @@ By completing these tutorials, you will be able to:
 ### Case Studies
 
 **16. Automotive AI Architecture ⚡ NEW**
-**File:** `diagrams/automotive_ai_architecture.mmd`
+**File:** `section-b-multi-agent/diagrams/automotive_ai_architecture.mmd`
 **Description:** Complete automotive AI system with 5 specialized agents and 5 coordination patterns.
 
 ---
@@ -800,15 +786,15 @@ By completing these tutorials, you will be able to:
 ### Memory Systems Diagrams ⚡ NEW
 
 **17. Memory Types Taxonomy**
-**File:** `diagrams/memory_types_taxonomy.mmd`
+**File:** `section-e-memory-systems/diagrams/memory_types_taxonomy.mmd`
 **Description:** Hierarchical visualization of 5 memory types (working, episodic, semantic, procedural, parametric) showing distinction between short-term and long-term memory with multi-agent examples.
 
 **18. Context Engineering Workflow**
-**File:** `diagrams/context_engineering_workflow.mmd`
+**File:** `section-e-memory-systems/diagrams/context_engineering_workflow.mmd`
 **Description:** Three-stage pipeline diagram showing context selection (re-ranking, MMR, business rules) → compression (summarization, deduplication, LLMLingua) → ordering (primacy/recency effects) with color-coded stages.
 
 **19. Search-o1 Architecture**
-**File:** `diagrams/search_o1_architecture.mmd`
+**File:** `section-e-memory-systems/diagrams/search_o1_architecture.mmd`
 **Description:** Flowchart of Search-o1 pattern showing branching logic for search query generation, document retrieval, Reason-in-Documents module condensation, and loopback to reasoning trace.
 
 ---
@@ -840,7 +826,7 @@ By completing these tutorials, you will be able to:
 │ 1. Read: multi_agent_fundamentals.md (30 min)      │
 │ 2. Read: multi_agent_design_patterns.md (25 min)   │
 │ 3. Read: multi_agent_challenges_evaluation.md (25) │
-│ 4. Study: diagrams/pattern_decision_tree.mmd       │
+│ 4. Study: section-b-multi-agent/diagrams/pattern_decision_tree.mmd       │
 │ 5. Study: 5 pattern diagrams (hierarchical, etc.)  │
 │ 6. Run: automotive_ai_case_study.ipynb             │
 │ 7. Run: multi_agent_patterns_comparison.ipynb      │
@@ -896,8 +882,8 @@ By completing these tutorials, you will be able to:
 │                                                     │
 │ 1. Read: react_reflexion_patterns.md               │
 │ 2. Read: trajectory_evaluation_techniques.md       │
-│ 3. Study: diagrams/react_agent_workflow.mmd        │
-│ 4. Study: diagrams/agent_failure_modes_taxonomy.mmd│
+│ 3. Study: section-a-foundation/diagrams/react_agent_workflow.mmd        │
+│ 4. Study: section-a-foundation/diagrams/agent_failure_modes_taxonomy.mmd│
 └─────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────┐
@@ -1179,7 +1165,7 @@ Section E (Memory Systems)
 ### 1. Planning Validation Results
 
 **File:** `results/planning_validation.json`
-**Generated By:** `react_agent_implementation.ipynb`
+**Generated By:** `section-a-foundation/notebooks/18_react_agent_implementation.ipynb`
 **Metrics:** Planning accuracy, tool selection accuracy, avg steps, completion rate
 
 ---
@@ -1187,7 +1173,7 @@ Section E (Memory Systems)
 ### 2. Agent Performance Results
 
 **File:** `results/agent_performance.json`
-**Generated By:** `agent_failure_analysis.ipynb`
+**Generated By:** `section-a-foundation/notebooks/19_agent_failure_analysis.ipynb`
 **Metrics:** Failure breakdown (Planning/Execution/Efficiency), top failure types, severity distribution
 
 ---
@@ -1195,7 +1181,7 @@ Section E (Memory Systems)
 ### 3. Trajectory Evaluation Results ⚡ NEW
 
 **File:** `results/trajectory_eval_results.json`
-**Generated By:** `trajectory_evaluation_tutorial.ipynb`
+**Generated By:** `section-a-foundation/notebooks/20_trajectory_evaluation_tutorial.ipynb`
 **Metrics:** 6 trajectory metric scores across test set, failure pattern analysis
 
 ---
@@ -1203,7 +1189,7 @@ Section E (Memory Systems)
 ### 4. Automotive AI Results ⚡ NEW
 
 **File:** `results/automotive_ai_results.json`
-**Generated By:** `automotive_ai_case_study.ipynb`
+**Generated By:** `section-b-multi-agent/notebooks/21_automotive_ai_case_study.ipynb`
 **Metrics:** Pattern distribution, coordination overhead, response quality by pattern
 
 ---
@@ -1211,7 +1197,7 @@ Section E (Memory Systems)
 ### 5. Autorater Calibration Results ⚡ NEW
 
 **File:** `results/autorater_calibration_results.json`
-**Generated By:** `autorater_calibration.ipynb`
+**Generated By:** `section-c-advanced-evaluation/notebooks/22_autorater_calibration.ipynb`
 **Metrics:** Inter-annotator agreement (Cohen's Kappa), systematic biases, calibration adjustments
 
 ---
@@ -1219,7 +1205,7 @@ Section E (Memory Systems)
 ### 6. Benchmark Results ⚡ NEW
 
 **File:** `results/benchmark_results.json`
-**Generated By:** `benchmark_evaluation.ipynb`
+**Generated By:** `section-c-advanced-evaluation/notebooks/23_benchmark_evaluation.ipynb`
 **Metrics:** Comprehensive performance across all benchmarks (planning, tool calls, efficiency)
 
 ---
@@ -1227,7 +1213,7 @@ Section E (Memory Systems)
 ### 7. Multi-Agent Pattern Comparison ⚡ NEW
 
 **File:** `results/multi_agent_pattern_comparison.json`
-**Generated By:** `multi_agent_patterns_comparison.ipynb`
+**Generated By:** `section-b-multi-agent/notebooks/24_multi_agent_patterns_comparison.ipynb`
 **Metrics:** Latency, cost, quality, complexity scores for 4 patterns across scenarios
 
 ---
@@ -1235,7 +1221,7 @@ Section E (Memory Systems)
 ### 8. Memory Systems Demo Results ⚡ NEW
 
 **File:** `results/memory_systems_demo_results.json`
-**Generated By:** `memory_systems_implementation.ipynb`
+**Generated By:** `section-e-memory-systems/notebooks/29_memory_systems_implementation.ipynb`
 **Metrics:** Token usage (baseline vs compressed), retrieval quality (precision@5, recall@5), Search-o1 overhead (<10%), MMR redundancy reduction (≥30%), context compression ratio (≥50%)
 **Dashboard Integration:** Displays memory optimization metrics, cost savings, and ROI calculations
 
@@ -1334,7 +1320,7 @@ else:
 - ✅ Examples: Translation (multiple models, select best), creative writing
 - ❌ Avoid: When cost is a constraint (runs multiple agents for same task)
 
-**See:** `diagrams/pattern_decision_tree.mmd` for decision framework
+**See:** `section-b-multi-agent/diagrams/pattern_decision_tree.mmd` for decision framework
 
 ---
 
@@ -1466,7 +1452,7 @@ def execute_tool(tool_name, args):
 5. **Adjust prompts** to reduce disagreement
 6. **Re-run and validate** until agreement >0.7 (substantial agreement)
 
-**Practical Notebook:** `autorater_calibration.ipynb`
+**Practical Notebook:** `section-c-advanced-evaluation/notebooks/22_autorater_calibration.ipynb`
 
 **See:** Autorater Eval (#15), HITL Eval (#16)
 
@@ -1491,7 +1477,7 @@ def execute_tool(tool_name, args):
 **How they complement:**
 
 - **Learn theory** from Google Companion → **Implement** with core Lesson 14
-- **Example:** Google Topic 02 (Evaluation Methodology) → `trajectory_evaluation_tutorial.ipynb`
+- **Example:** Google Topic 02 (Evaluation Methodology) → `section-a-foundation/notebooks/20_trajectory_evaluation_tutorial.ipynb`
 
 ---
 
