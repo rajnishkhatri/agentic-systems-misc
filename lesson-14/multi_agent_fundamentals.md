@@ -3,6 +3,7 @@
 **Reading Time:** 25-30 minutes
 **Prerequisites:** Basic understanding of LLMs and single-agent systems
 **Learning Objectives:**
+
 - Understand what multi-agent systems are and why they matter
 - Compare multi-agent vs. single-agent architectures
 - Identify 4 core agent types and their responsibilities
@@ -20,6 +21,7 @@ Break down complex problems into distinct tasks handled by specialized agents, e
 
 **Real-World Analogy:**
 Think of building a house. You don't hire one person to do everything—you hire a team:
+
 - **Architect** (Planner Agent): Designs blueprint and coordinates workflow
 - **Contractor** (Manager Agent): Delegates tasks to specialists
 - **Electrician, Plumber, Carpenter** (Execution Agents): Specialized workers
@@ -34,17 +36,20 @@ Multi-agent systems apply this same principle to AI workflows.
 ### Single-Agent System
 
 **Characteristics:**
+
 - One LLM handles all aspects of a task
 - Monolithic architecture
 - General-purpose capabilities
 
 **Limitations:**
+
 - **Limited specialization depth**: Jack of all trades, master of none
 - **Harder to optimize** for specific domains
 - **Single point of failure**: If the agent fails, the entire system fails
 - **Difficult to scale**: Can't add new capabilities without retraining
 
 **Example Workflow:**
+
 ```
 User Query → Single LLM Agent → Response
 ```
@@ -53,12 +58,14 @@ User Query → Single LLM Agent → Response
 
 **Definition:**
 Multiple independent entities (agents), each with its own:
+
 - Unique role and context
 - Potentially different LLM (e.g., GPT-4 for planning, Claude for reasoning, Gemini for search)
 - Specialized capabilities (domain expertise, tool access)
 - Communication protocol for collaboration
 
 **Example Workflow:**
+
 ```
 User Query → Classifier Agent → Routing Decision
                 ├── Domain Expert Agent 1
@@ -75,11 +82,13 @@ User Query → Classifier Agent → Routing Decision
 **How:** Agents can **cross-check** each other's work through consensus mechanisms.
 
 **Why It Matters:**
+
 - Multiple perspectives reduce individual model biases
 - Hallucinations can be caught by validator agents
 - Majority voting or weighted consensus improves reliability
 
 **Example:**
+
 ```python
 # Three agents analyze financial risk
 agent_a_risk_score = 0.72  # GPT-4
@@ -96,11 +105,13 @@ average_risk = sum([agent_a_risk_score, agent_b_risk_score, agent_c_risk_score])
 **How:** Agents work in **parallel** on independent subtasks.
 
 **Why It Matters:**
+
 - Faster task completion (10-task workflow can run 10 tasks simultaneously)
 - Resource optimization (use powerful models only when needed)
 - Better cost management (cheap models for simple tasks, expensive models for complex reasoning)
 
 **Example:**
+
 ```python
 # Sequential (Single-Agent): 10 seconds total
 task1 (2s) → task2 (3s) → task3 (5s)
@@ -116,11 +127,13 @@ task1 (2s) → task2 (3s) → task3 (5s)
 **How:** Large tasks broken into smaller, **manageable subtasks**.
 
 **Why It Matters:**
+
 - Each agent focuses on specific aspect (depth of expertise)
 - Reduces cognitive load on any single model
 - Enables specialized domain knowledge
 
 **Example: Legal Document Analysis**
+
 ```
 Complex Legal Query
     ├── Precedent Search Agent → Find relevant case law
@@ -134,11 +147,13 @@ Complex Legal Query
 **How:** Easily add more agents with new capabilities.
 
 **Why It Matters:**
+
 - Horizontal scaling without retraining base models
 - Modular architecture (plug-and-play new agents)
 - Can handle growing domains without system redesign
 
 **Example:**
+
 ```python
 # Add new capability without touching existing agents
 agent_registry = {
@@ -153,11 +168,13 @@ agent_registry = {
 **How:** If one agent fails, others can **take over responsibilities**.
 
 **Why It Matters:**
+
 - Redundancy for critical functions
 - Graceful degradation (partial functionality instead of total failure)
 - System remains operational during agent maintenance
 
 **Example:**
+
 ```python
 def get_weather(location: str) -> dict:
     try:
@@ -172,11 +189,13 @@ def get_weather(location: str) -> dict:
 **How:** Combining perspectives from multiple agents.
 
 **Why It Matters:**
+
 - Cross-validation of outputs (one agent checks another)
 - Diverse training data reduces model-specific biases
 - More reliable and trustworthy results
 
 **Example:**
+
 ```python
 # Agent A generates response
 response = generation_agent.create_answer(query)
@@ -203,6 +222,7 @@ Multi-agent systems typically include four core agent types, each with specializ
 **Responsibility:** Breaking down high-level objectives into structured sub-tasks.
 
 **Capabilities:**
+
 - **Task decomposition**: Convert complex goal into actionable steps
 - **Dependency analysis**: Determine which tasks must happen first
 - **Resource allocation**: Assign tasks to appropriate agents
@@ -222,6 +242,7 @@ Planner Agent Output:
 ```
 
 **Code Example:**
+
 ```python
 class PlannerAgent:
     def decompose_task(self, goal: str) -> list[dict]:
@@ -244,6 +265,7 @@ class PlannerAgent:
 **Responsibility:** Optimize knowledge acquisition by dynamically fetching relevant data.
 
 **Capabilities:**
+
 - **Semantic search** across knowledge bases
 - **API calls** to external data sources
 - **Query refinement and expansion** (if initial search fails)
@@ -254,6 +276,7 @@ class PlannerAgent:
 Traditional RAG retrieves documents once. Agentic RAG uses retriever agents to **iteratively refine searches** until sufficient context is found.
 
 **Code Example:**
+
 ```python
 class RetrieverAgent:
     def retrieve_with_refinement(self, query: str, min_relevance: float = 0.7) -> list:
@@ -279,6 +302,7 @@ class RetrieverAgent:
 **Responsibility:** Perform computations, generate responses, or interact with APIs.
 
 **Capabilities:**
+
 - **Data processing and transformation** (filter, aggregate, format)
 - **API invocation** (CRUD operations on databases/services)
 - **Response generation** (text, code, visualizations)
@@ -315,6 +339,7 @@ class PaymentExecutionAgent:
 **Responsibility:** Monitor and validate responses for coherence and alignment with objectives.
 
 **Capabilities:**
+
 - **Quality assessment** (accuracy, relevance, completeness)
 - **Hallucination detection** (claims not supported by sources)
 - **Bias checking** (detect unfair or prejudiced outputs)
@@ -352,6 +377,7 @@ Every robust multi-agent system includes these core architectural elements.
 **Purpose:** Interface between agent and environment (users, systems, APIs).
 
 **Responsibilities:**
+
 - Manage communication (input/output)
 - Adapt to various modalities (text, voice, images, video)
 - Protocol handling (HTTP, gRPC, WebSocket)
@@ -403,9 +429,31 @@ class MultiModalWrapper:
 
 **Purpose:** Maintain state across interactions and learn from past experiences.
 
+#### Memory in Multi-Agent Systems
+
+In multi-agent architectures, memory can be **shared** (centralized knowledge base accessible to all agents) or **private** (each agent maintains independent memory stores). The choice profoundly impacts coordination, performance, and cost.
+
+**Shared Memory Architecture:**
+
+- All agents query the same vector database (e.g., Chroma) for semantic/episodic memory
+- **Advantages:** Consistent knowledge, reduced duplication, easier synchronization
+- **Trade-offs:** Contention for resources, potential coupling between agents, requires coordination protocol
+- **Example:** Bhagavad Gita chatbot uses shared semantic memory (verse embeddings) across all agents—Query Classifier, Retrieval Agent, and Synthesis Agent all access the same Chroma collection to ensure consistent verse references
+
+**Private Memory Architecture:**
+
+- Each agent maintains its own memory store (isolated working memory, specialized knowledge bases)
+- **Advantages:** No coordination overhead, agents can specialize without conflicts, parallel scaling
+- **Trade-offs:** Knowledge duplication, risk of inconsistency, harder to share learned insights
+- **Example:** In the travel planning exercise below, each specialist agent (FlightSearchAgent, HotelSearchAgent) maintains private caches of API results to avoid re-querying expensive endpoints, while sharing a common long-term user preference database
+
+**Hybrid Approach (Recommended):**
+Most production systems use **hybrid memory**: shared semantic/episodic stores for common knowledge, private working memory per agent/session. For instance, a customer support system shares the product documentation vector DB (semantic memory) but keeps each customer's conversation history isolated (working memory) to prevent cross-contamination and maintain privacy.
+
 **Three Types of Memory:**
 
 #### Short-Term Memory (Working Memory)
+
 - **Purpose:** Immediate context for current task
 - **Scope:** Single session or conversation
 - **Examples:** Current conversation history, API cache, session state
@@ -431,6 +479,7 @@ class ShortTermMemory:
 ```
 
 #### Long-Term Memory (Persistent Knowledge)
+
 - **Purpose:** Learned patterns and experiences
 - **Scope:** Cross-session, persistent storage
 - **Examples:** User profiles, learned skills, reference data
@@ -453,6 +502,7 @@ class LongTermMemory:
 ```
 
 #### Reflection (Memory Promotion)
+
 - **Purpose:** Decide which short-term items to promote to long-term
 - **Examples:** Frequent preferences → User profile, Common errors → Skills
 
@@ -473,16 +523,172 @@ class MemoryReflection:
                 )
 ```
 
+#### Vector Database for Multi-Agent Memory
+
+Production multi-agent systems typically use **vector databases** (Chroma, Pinecone, Weaviate) for scalable semantic and episodic memory. Here's how to initialize a shared memory store accessible to all agents:
+
+```python
+from pathlib import Path
+import chromadb
+from chromadb.config import Settings
+from typing import Any
+
+class MultiAgentMemoryStore:
+    """Shared vector database for multi-agent semantic/episodic memory.
+
+    Supports metadata filtering so agents can query their own episodic memory
+    or shared semantic knowledge without interference.
+    """
+
+    def __init__(self, db_path: str):
+        """Initialize persistent Chroma client.
+
+        Args:
+            db_path: Path to persistent storage directory
+
+        Raises:
+            ValueError: If db_path is empty
+            OSError: If db_path cannot be created
+        """
+        # Step 1: Input validation (defensive)
+        if not db_path:
+            raise ValueError("db_path cannot be empty")
+
+        # Step 2: Set up storage path
+        storage_path = Path(db_path)
+        storage_path.mkdir(parents=True, exist_ok=True)
+
+        # Step 3: Initialize Chroma client
+        self.client = chromadb.PersistentClient(
+            path=str(storage_path),
+            settings=Settings(
+                anonymized_telemetry=False,  # Privacy
+                allow_reset=True  # Allow cleanup in dev/test
+            )
+        )
+
+        # Step 4: Create/get shared collection
+        self.collection = self.client.get_or_create_collection(
+            name="multi_agent_memory",
+            metadata={"description": "Shared episodic and semantic memory"}
+        )
+
+    def store_episodic_memory(
+        self,
+        agent_id: str,
+        event: str,
+        outcome: dict[str, Any]
+    ) -> None:
+        """Store agent's past experience for future reference.
+
+        Args:
+            agent_id: Unique agent identifier (e.g., "planner_agent_001")
+            event: Description of event (e.g., "Attempted booking flight LAX->NYC")
+            outcome: Result metadata (success, error, cost, latency)
+
+        Raises:
+            TypeError: If outcome is not a dict
+        """
+        if not isinstance(outcome, dict):
+            raise TypeError("outcome must be a dict")
+
+        self.collection.add(
+            documents=[event],
+            metadatas=[{
+                "agent_id": agent_id,
+                "memory_type": "episodic",
+                **outcome  # Include success, error, timestamp, etc.
+            }],
+            ids=[f"{agent_id}_{hash(event)}"]
+        )
+
+    def retrieve_similar_experiences(
+        self,
+        query: str,
+        agent_id: str | None = None,
+        n_results: int = 5
+    ) -> list[dict]:
+        """Retrieve similar past experiences for reasoning.
+
+        Args:
+            query: Description of current situation
+            agent_id: Filter to specific agent's memory (None = all agents)
+            n_results: Number of similar experiences to retrieve
+
+        Returns:
+            List of similar experiences with metadata
+        """
+        where_filter = {"memory_type": "episodic"}
+        if agent_id:
+            where_filter["agent_id"] = agent_id
+
+        results = self.collection.query(
+            query_texts=[query],
+            n_results=n_results,
+            where=where_filter
+        )
+
+        return results
+
+# Usage Example: Multi-Agent System with Shared Memory
+memory_store = MultiAgentMemoryStore(db_path="./data/agent_memory")
+
+# Agent 1: Planner stores decision outcome
+memory_store.store_episodic_memory(
+    agent_id="planner_agent",
+    event="Chose hierarchical pattern for 10-task workflow",
+    outcome={"success": True, "completion_time_sec": 45.2, "cost_usd": 0.12}
+)
+
+# Agent 2: Similar agent retrieves past decisions
+similar_cases = memory_store.retrieve_similar_experiences(
+    query="How to organize 8-task workflow?",
+    agent_id="planner_agent",  # Filter to planner's own experiences
+    n_results=3
+)
+# Returns: Previous hierarchical vs sequential pattern decisions
+```
+
+**When to Use Vector DB vs In-Memory Storage:**
+
+- **Vector DB (Chroma, Pinecone):** Large-scale systems (>10K memories), semantic search required, multi-session persistence
+- **In-Memory (dict, list):** Small-scale prototypes (<100 memories), session-only memory, no semantic search needed
+- **Decision Matrix:** See [Memory Systems Fundamentals](memory_systems_fundamentals.md#vector-db-decision-matrix-tasks-14a14d) for full comparison
+
+**Deep Dive: Memory Systems Implementation**
+
+To master memory systems in multi-agent architectures, follow this learning path:
+
+1. **[Memory Systems Fundamentals](memory_systems_fundamentals.md)** (~30-35 min)
+   - Understand 5 memory types (working, episodic, semantic, procedural, parametric)
+   - Learn vector database decision matrix (Chroma, Pinecone, Weaviate, Qdrant, Milvus, pgvector)
+   - Study Search-o1 reasoning pattern with memory integration
+
+2. **[Context Engineering Guide](context_engineering_guide.md)** (~25-30 min)
+   - Optimize context selection (re-ranking, MMR, business rules)
+   - Implement context compression for cost reduction (ROI: $24 → $12 → $4.80)
+   - Master context ordering strategies (combat lost-in-the-middle effect)
+
+3. **[Memory Systems Implementation Notebook](memory_systems_implementation.ipynb)** (~45 min DEMO mode, ~3 hours FULL mode)
+   - Hands-on Chroma setup with lesson-14 datasets
+   - Implement working memory management (trimming, summarization)
+   - Build Search-o1 pattern with token overhead tracking
+   - Practice MMR selection and compression ROI calculation
+
+**Estimated Total Learning Time:** 4-5 hours
+
 ### 3. Cognitive Functionality
 
 **Purpose:** Enable reasoning, planning, and self-correction.
 
 **Underpinned by:**
+
 - **Chain-of-Thought (CoT)**: Step-by-step reasoning
 - **ReAct**: Reasoning + Acting in interleaved fashion
 - **Planner subsystem**: Decompose complex tasks
 
 **Capabilities:**
+
 - Self-correction (detect and fix mistakes)
 - User intent refinement (ask clarifying questions)
 - Multi-step problem solving
@@ -528,6 +734,7 @@ class ReActAgent:
 **Purpose:** Enable agents to use external tools, expanding capabilities beyond NLP.
 
 **Components:**
+
 - **Tool registry**: Available tools and their descriptions
 - **Dynamic discovery**: Find new tools at runtime
 - **Tool RAG**: Retrieve relevant tools based on task context
@@ -581,6 +788,7 @@ relevant_tools = registry.discover("I need to check the weather in Paris")
 **Mechanisms:**
 
 #### Delegation (Background Task)
+
 - Manager assigns task to worker agent
 - Worker runs in background, returns result later
 
@@ -598,6 +806,7 @@ class ManagerAgent:
 ```
 
 #### Handoff (Transfer Conversation)
+
 - Transfer user interaction to another agent
 - Includes conversation context
 
@@ -620,6 +829,7 @@ class GeneralAgent:
 ```
 
 #### Agent-as-Tool
+
 - Use another agent like a function call
 - No conversation transfer, just get result
 
@@ -642,6 +852,7 @@ class OrchestratorAgent:
 **Purpose:** Enable continuous learning and adaptation.
 
 **Mechanisms for Gen AI Agents:**
+
 - Process interaction outcomes (user ratings, success metrics)
 - Refine decision-making strategies
 - Incorporate past performance into future decisions
@@ -687,6 +898,7 @@ class FeedbackLoop:
 **Purpose:** Structured communication among agents for consensus and collaboration.
 
 **Key Features:**
+
 - **Message format**: Standardized structure (JSON, Protocol Buffers)
 - **Task sharing**: Assign work between agents
 - **Knowledge sharing**: Share learned insights
@@ -755,6 +967,7 @@ class ConsensusProtocol:
 **Purpose:** Enable collaboration between agents across different organizations or systems.
 
 **Requirements:**
+
 - **Asynchronous tasks**: Durable task state (survive restarts)
 - **Notifications**: Update users while offline
 - **Negotiation**: Support for bringing user into session
@@ -807,6 +1020,7 @@ class RemoteAgentClient:
 **Purpose:** Manage discovery, registration, and selection from large pool of tools/agents.
 
 **Components:**
+
 - **Ontology**: Taxonomy of capabilities (categories, tags)
 - **Descriptions**: What each agent/tool does
 - **Requirements**: Input/output formats, dependencies
@@ -890,6 +1104,7 @@ best_weather_agent = registry.discover("weather_forecast", max_cost=0.002)[0]
 Build a multi-agent system that helps users plan international trips.
 
 **Requirements:**
+
 1. Handle complex queries like "Plan a 10-day trip to Japan in April for 2 adults with $5,000 budget"
 2. Coordinate multiple aspects: flights, hotels, activities, budget tracking
 3. Provide personalized recommendations based on user preferences
@@ -898,7 +1113,9 @@ Build a multi-agent system that helps users plan international trips.
 **Your Task:**
 
 ### Step 1: Identify Agent Types
+
 For each agent type (Planner, Retriever, Execution, Evaluator), define:
+
 - What specific agents do you need?
 - What are their responsibilities?
 - What tools do they need access to?
@@ -927,6 +1144,7 @@ Evaluator Agents:
 ```
 
 ### Step 2: Design Communication Flow
+
 Choose a multi-agent pattern (Sequential, Hierarchical, Collaborative, or Competitive) and justify your choice.
 
 **Example Answer:**
@@ -955,6 +1173,7 @@ Flow:
 ```
 
 ### Step 3: Map Architectural Components
+
 For each of the 9 architectural components, describe how it applies to your system.
 
 **Example Answer:**
@@ -998,7 +1217,9 @@ For each of the 9 architectural components, describe how it applies to your syst
 ```
 
 ### Step 4: Identify Challenges
+
 What could go wrong? How would you handle:
+
 - Budget constraints (plan exceeds $5,000)
 - API failures (Booking.com down)
 - Conflicting preferences (user wants luxury hotel + budget trip)
@@ -1065,10 +1286,12 @@ Multi-agent systems are like orchestrating a symphony—each instrument (agent) 
 ---
 
 **Related Tutorials:**
+
 - [Multi-Agent Design Patterns](multi_agent_design_patterns.md) - When to use each coordination pattern
 - [Multi-Agent Challenges & Evaluation](multi_agent_challenges_evaluation.md) - Debugging and metrics
 - [Automotive AI Case Study](automotive_ai_case_study.ipynb) - Real-world implementation
 
 **References:**
+
 - Google's "Agents Companion" Whitepaper (February 2025)
 - Topic 03: Multi-Agent Architectures

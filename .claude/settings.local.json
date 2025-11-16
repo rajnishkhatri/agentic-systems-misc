@@ -37,7 +37,19 @@
       "Read(//usr/local/lib/node_modules/**)",
       "Bash(export STATUSLINE_DEBUG=1)",
       "Bash(bash:*)",
-      "Bash(uv run pytest:*)"
+      "Bash(uv run pytest:*)",
+      "Bash(time jupyter nbconvert:*)",
+      "Bash(for:*)",
+      "Bash(do echo \"=== Validating $file ===\")",
+      "Bash(echo \"✅ $file rendered successfully\")",
+      "Bash(done)",
+      "Bash(ls:*)",
+      "Bash(tee:*)",
+      "Bash(curl:*)",
+      "Bash(ruff:*)",
+      "Bash(nbqa ruff check:*)",
+      "Bash(nbqa ruff:*)",
+      "Bash(echo \"Exit code: $?\")"
     ],
     "deny": [],
     "ask": []

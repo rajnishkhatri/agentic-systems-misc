@@ -76,6 +76,15 @@ class TestConfigurationValidation:
         with pytest.raises(ValueError, match="EXECUTION_MODE must be 'DEMO' or 'FULL'"):
             validate_execution_mode(mode, raise_on_invalid=True)
 
+    def test_should_raise_error_when_mode_not_string(self) -> None:
+        """Test that non-string mode raises TypeError."""
+        # Given: non-string mode
+        mode = 123
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="mode must be a string"):
+            validate_execution_mode(mode)
+
 
 class TestMMRCalculations:
     """Test Maximum Marginal Relevance (MMR) calculations."""
@@ -132,6 +141,39 @@ class TestMMRCalculations:
         with pytest.raises(ValueError, match="lambda_param must be in range \\[0, 1\\]"):
             calculate_mmr_score(relevance, max_redundancy, lambda_param)
 
+    def test_should_raise_error_when_inputs_not_numeric(self) -> None:
+        """Test that non-numeric inputs raise TypeError."""
+        # Given: non-numeric input
+        relevance = "0.8"
+        max_redundancy = 0.6
+        lambda_param = 0.5
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="All inputs must be numeric"):
+            calculate_mmr_score(relevance, max_redundancy, lambda_param)
+
+    def test_should_raise_error_when_relevance_out_of_range(self) -> None:
+        """Test that relevance outside [0, 1] raises ValueError."""
+        # Given: relevance > 1
+        relevance = 1.5
+        max_redundancy = 0.6
+        lambda_param = 0.5
+
+        # When/Then: should raise ValueError
+        with pytest.raises(ValueError, match="relevance must be in range \\[0, 1\\]"):
+            calculate_mmr_score(relevance, max_redundancy, lambda_param)
+
+    def test_should_raise_error_when_max_redundancy_out_of_range(self) -> None:
+        """Test that max_redundancy outside [0, 1] raises ValueError."""
+        # Given: max_redundancy > 1
+        relevance = 0.8
+        max_redundancy = 1.5
+        lambda_param = 0.5
+
+        # When/Then: should raise ValueError
+        with pytest.raises(ValueError, match="max_redundancy must be in range \\[0, 1\\]"):
+            calculate_mmr_score(relevance, max_redundancy, lambda_param)
+
     def test_should_select_top_k_documents_with_mmr(self) -> None:
         """Test MMR document selection returns correct count."""
         # Given: query embedding, document embeddings, and k
@@ -178,6 +220,54 @@ class TestMMRCalculations:
 
         # When/Then: should raise ValueError
         with pytest.raises(ValueError, match="documents cannot be empty"):
+            select_documents_mmr(query_embedding, doc_embeddings, k, lambda_param)
+
+    def test_should_raise_error_when_query_embedding_not_list(self) -> None:
+        """Test that non-list query_embedding raises TypeError."""
+        # Given: non-list query_embedding
+        query_embedding = "invalid"
+        doc_embeddings = [[0.9, 0.1, 0.0]]
+        k = 1
+        lambda_param = 0.5
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="query_embedding must be a list"):
+            select_documents_mmr(query_embedding, doc_embeddings, k, lambda_param)
+
+    def test_should_raise_error_when_doc_embeddings_not_list(self) -> None:
+        """Test that non-list doc_embeddings raises TypeError."""
+        # Given: non-list doc_embeddings
+        query_embedding = [0.5, 0.5, 0.5]
+        doc_embeddings = "invalid"
+        k = 1
+        lambda_param = 0.5
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="doc_embeddings must be a list"):
+            select_documents_mmr(query_embedding, doc_embeddings, k, lambda_param)
+
+    def test_should_raise_error_when_k_not_integer(self) -> None:
+        """Test that non-integer k raises TypeError."""
+        # Given: non-integer k
+        query_embedding = [0.5, 0.5, 0.5]
+        doc_embeddings = [[0.9, 0.1, 0.0]]
+        k = "3"
+        lambda_param = 0.5
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="k must be an integer"):
+            select_documents_mmr(query_embedding, doc_embeddings, k, lambda_param)
+
+    def test_should_raise_error_when_k_negative(self) -> None:
+        """Test that k <= 0 raises ValueError."""
+        # Given: k = 0
+        query_embedding = [0.5, 0.5, 0.5]
+        doc_embeddings = [[0.9, 0.1, 0.0]]
+        k = 0
+        lambda_param = 0.5
+
+        # When/Then: should raise ValueError
+        with pytest.raises(ValueError, match="k must be positive"):
             select_documents_mmr(query_embedding, doc_embeddings, k, lambda_param)
 
 
@@ -285,6 +375,26 @@ class TestConversationTrimming:
         with pytest.raises(ValueError, match="messages cannot be empty"):
             trim_conversation_history(messages, max_tokens)
 
+    def test_should_raise_error_when_messages_not_list(self) -> None:
+        """Test that non-list messages raises TypeError."""
+        # Given: non-list messages
+        messages = "not a list"
+        max_tokens = 100
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="messages must be a list"):
+            trim_conversation_history(messages, max_tokens)
+
+    def test_should_raise_error_when_max_tokens_not_integer(self) -> None:
+        """Test that non-integer max_tokens raises TypeError."""
+        # Given: non-integer max_tokens
+        messages = [{"role": "user", "content": "Hello"}]
+        max_tokens = "100"
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="max_tokens must be an integer"):
+            trim_conversation_history(messages, max_tokens)
+
 
 class TestSummarizationSimulation:
     """Test conversation summarization simulation."""
@@ -335,6 +445,36 @@ class TestSummarizationSimulation:
 
         # When/Then: should raise ValueError
         with pytest.raises(ValueError, match="compression_ratio must be in range \\(0, 1\\)"):
+            simulate_summarization(messages, compression_ratio)
+
+    def test_should_raise_error_when_messages_not_list_in_summarization(self) -> None:
+        """Test that non-list messages raises TypeError in summarization."""
+        # Given: non-list messages
+        messages = "not a list"
+        compression_ratio = 0.5
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="messages must be a list"):
+            simulate_summarization(messages, compression_ratio)
+
+    def test_should_raise_error_when_compression_ratio_not_numeric(self) -> None:
+        """Test that non-numeric compression_ratio raises TypeError."""
+        # Given: non-numeric compression_ratio
+        messages = [{"role": "user", "content": "Hello"}]
+        compression_ratio = "0.5"
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="compression_ratio must be numeric"):
+            simulate_summarization(messages, compression_ratio)
+
+    def test_should_raise_error_when_messages_empty_in_summarization(self) -> None:
+        """Test that empty messages raises ValueError in summarization."""
+        # Given: empty messages
+        messages = []
+        compression_ratio = 0.5
+
+        # When/Then: should raise ValueError
+        with pytest.raises(ValueError, match="messages cannot be empty"):
             simulate_summarization(messages, compression_ratio)
 
 
@@ -388,6 +528,29 @@ class TestSearchO1Overhead:
         with pytest.raises(ValueError, match="Token counts must be non-negative"):
             calculate_search_o1_overhead(search_tokens, retrieval_tokens, condensation_tokens)
 
+    def test_should_raise_error_when_token_counts_not_integers(self) -> None:
+        """Test that non-integer token counts raise TypeError."""
+        # Given: non-integer token count
+        search_tokens = "50"
+        retrieval_tokens = 100
+        condensation_tokens = 50
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="Token counts must be integers"):
+            calculate_search_o1_overhead(search_tokens, retrieval_tokens, condensation_tokens)
+
+    def test_should_raise_error_when_baseline_tokens_negative(self) -> None:
+        """Test that negative baseline_tokens raises ValueError."""
+        # Given: negative baseline_tokens
+        search_tokens = 50
+        retrieval_tokens = 100
+        condensation_tokens = 50
+        baseline_tokens = -100
+
+        # When/Then: should raise ValueError
+        with pytest.raises(ValueError, match="baseline_tokens must be non-negative"):
+            calculate_search_o1_overhead(search_tokens, retrieval_tokens, condensation_tokens, baseline_tokens)
+
 
 class TestCompressionROI:
     """Test compression ROI calculations."""
@@ -437,6 +600,50 @@ class TestCompressionROI:
 
         # When/Then: should raise ValueError
         with pytest.raises(ValueError, match="compressed_tokens cannot exceed original_tokens"):
+            calculate_compression_roi(original_tokens, compressed_tokens, cost_per_1k_tokens)
+
+    def test_should_raise_error_when_token_counts_not_integers_in_roi(self) -> None:
+        """Test that non-integer token counts raise TypeError in ROI."""
+        # Given: non-integer token count
+        original_tokens = "1000"
+        compressed_tokens = 250
+        cost_per_1k_tokens = 0.03
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="Token counts must be integers"):
+            calculate_compression_roi(original_tokens, compressed_tokens, cost_per_1k_tokens)
+
+    def test_should_raise_error_when_cost_per_1k_not_numeric(self) -> None:
+        """Test that non-numeric cost_per_1k_tokens raises TypeError."""
+        # Given: non-numeric cost
+        original_tokens = 1000
+        compressed_tokens = 250
+        cost_per_1k_tokens = "0.03"
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="cost_per_1k_tokens must be numeric"):
+            calculate_compression_roi(original_tokens, compressed_tokens, cost_per_1k_tokens)
+
+    def test_should_raise_error_when_tokens_negative_in_roi(self) -> None:
+        """Test that negative tokens raise ValueError in ROI."""
+        # Given: negative tokens
+        original_tokens = -1000
+        compressed_tokens = 250
+        cost_per_1k_tokens = 0.03
+
+        # When/Then: should raise ValueError
+        with pytest.raises(ValueError, match="Token counts must be non-negative"):
+            calculate_compression_roi(original_tokens, compressed_tokens, cost_per_1k_tokens)
+
+    def test_should_raise_error_when_cost_negative_in_roi(self) -> None:
+        """Test that negative cost raises ValueError in ROI."""
+        # Given: negative cost
+        original_tokens = 1000
+        compressed_tokens = 250
+        cost_per_1k_tokens = -0.03
+
+        # When/Then: should raise ValueError
+        with pytest.raises(ValueError, match="cost_per_1k_tokens must be non-negative"):
             calculate_compression_roi(original_tokens, compressed_tokens, cost_per_1k_tokens)
 
 
@@ -521,3 +728,81 @@ class TestJSONExport:
                 detailed_results,
                 execution_mode,
             )
+
+    def test_should_raise_error_when_output_path_not_path_object(self) -> None:
+        """Test that non-Path output_path raises TypeError."""
+        # Given: string instead of Path
+        output_path = "/tmp/test.json"
+        summary_stats = {"metric": {"mean": 0.85, "std": 0.12}}
+        radar_data = {"labels": ["metric"], "values": [0.85]}
+        detailed_results = []
+        execution_mode = "DEMO"
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="output_path must be a Path object"):
+            export_results_json(output_path, summary_stats, radar_data, detailed_results, execution_mode)
+
+    def test_should_raise_error_when_summary_stats_not_dict(self) -> None:
+        """Test that non-dict summary_statistics raises TypeError."""
+        # Given: list instead of dict
+        output_path = Path("/tmp/test.json")
+        summary_stats = []
+        radar_data = {"labels": [], "values": []}
+        detailed_results = []
+        execution_mode = "DEMO"
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="summary_statistics must be a dict"):
+            export_results_json(output_path, summary_stats, radar_data, detailed_results, execution_mode)
+
+    def test_should_raise_error_when_radar_data_not_dict(self) -> None:
+        """Test that non-dict radar_chart_data raises TypeError."""
+        # Given: list instead of dict
+        output_path = Path("/tmp/test.json")
+        summary_stats = {}
+        radar_data = []
+        detailed_results = []
+        execution_mode = "DEMO"
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="radar_chart_data must be a dict"):
+            export_results_json(output_path, summary_stats, radar_data, detailed_results, execution_mode)
+
+    def test_should_raise_error_when_detailed_results_not_list(self) -> None:
+        """Test that non-list detailed_results raises TypeError."""
+        # Given: dict instead of list
+        output_path = Path("/tmp/test.json")
+        summary_stats = {}
+        radar_data = {"labels": [], "values": []}
+        detailed_results = {}
+        execution_mode = "DEMO"
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="detailed_results must be a list"):
+            export_results_json(output_path, summary_stats, radar_data, detailed_results, execution_mode)
+
+    def test_should_raise_error_when_execution_mode_not_string(self) -> None:
+        """Test that non-string execution_mode raises TypeError."""
+        # Given: int instead of string
+        output_path = Path("/tmp/test.json")
+        summary_stats = {}
+        radar_data = {"labels": [], "values": []}
+        detailed_results = []
+        execution_mode = 123
+
+        # When/Then: should raise TypeError
+        with pytest.raises(TypeError, match="execution_mode must be a string"):
+            export_results_json(output_path, summary_stats, radar_data, detailed_results, execution_mode)
+
+    def test_should_raise_error_when_radar_data_missing_labels(self) -> None:
+        """Test that radar_chart_data without labels raises ValueError."""
+        # Given: radar_data missing 'labels'
+        output_path = Path("/tmp/test.json")
+        summary_stats = {}
+        radar_data = {"values": [0.85]}  # Missing 'labels'
+        detailed_results = []
+        execution_mode = "DEMO"
+
+        # When/Then: should raise ValueError
+        with pytest.raises(ValueError, match="radar_chart_data must contain 'labels' and 'values' keys"):
+            export_results_json(output_path, summary_stats, radar_data, detailed_results, execution_mode)

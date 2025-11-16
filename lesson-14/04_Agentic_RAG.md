@@ -21,6 +21,7 @@ Agentic RAG represents a significant advancement in Retrieval-Augmented Generati
 **Approach**: Static, single-pass retrieval
 
 **Process**:
+
 ```
 User Query
     ↓
@@ -36,12 +37,14 @@ Generate response
 ```
 
 **Limitations**:
+
 1. **Ambiguous Queries**: Single search may miss relevant documents
 2. **Multi-Step Queries**: Can't decompose complex questions
 3. **Multi-Perspective Queries**: Doesn't explore different angles
 4. **No Validation**: Hallucinations and contradictions not detected
 
 **Example Failure**:
+
 ```
 Query: "What are the best practices for scaling microservices in cloud environments?"
 
@@ -60,6 +63,7 @@ Traditional RAG:
 **Approach**: Dynamic, iterative retrieval with autonomous agents
 
 **Process**:
+
 ```
 User Query
     ↓
@@ -89,6 +93,7 @@ Synthesize response
 ```
 
 **Example Success**:
+
 ```
 Query: "What are the best practices for scaling microservices in cloud environments?"
 
@@ -122,6 +127,7 @@ Agentic RAG:
 **Solution**: Agents generate **multiple query refinements** to retrieve more relevant results.
 
 **How It Works**:
+
 ```python
 # Original query
 user_query = "How do I improve my RAG system?"
@@ -145,11 +151,13 @@ final_results = rerank(deduplicate(all_results), top_k=10)
 ```
 
 **Benefits**:
+
 - Captures multiple interpretations of ambiguous queries
 - Ensures comprehensive retrieval (reduces missed relevant documents)
 - Adapts to user intent through iterative refinement
 
 **Example**:
+
 ```
 Query: "Tell me about Apple"
 
@@ -172,6 +180,7 @@ Expanded Queries:
 **Solution**: Agents **decompose queries** into logical steps, retrieving information sequentially.
 
 **How It Works**:
+
 ```python
 # Complex query requiring multi-step reasoning
 query = "Compare the environmental impact of electric vs. gasoline cars, considering manufacturing and lifecycle."
@@ -193,11 +202,13 @@ final_answer = synthesize(results, context=step_5)
 ```
 
 **Benefits**:
+
 - Handles complex, multi-faceted questions
 - Builds knowledge incrementally (like human research)
 - Each step informs the next (adaptive retrieval)
 
 **Example**:
+
 ```
 Query: "What caused the 2008 financial crisis and how were similar issues addressed in the 2020s?"
 
@@ -220,6 +231,7 @@ Multi-Step Reasoning:
 **Solution**: Agents **dynamically select best knowledge sources** based on context.
 
 **How It Works**:
+
 ```python
 # Agent evaluates query characteristics
 query_analysis = {
@@ -245,6 +257,7 @@ results = multi_source_search(query, sources)
 ```
 
 **Source Types**:
+
 - **Vector databases**: Semantic search (unstructured text)
 - **Relational databases**: Structured queries (SQL)
 - **Web search**: Recent updates, external sources
@@ -252,11 +265,13 @@ results = multi_source_search(query, sources)
 - **Document stores**: Full-text search
 
 **Benefits**:
+
 - Optimizes retrieval based on query type
 - Leverages best source for each use case
 - Reduces irrelevant results (precision improvement)
 
 **Example**:
+
 ```
 Query 1: "What is the capital of France?" (factual, static)
 → Agent selects: Knowledge graph (fast, structured)
@@ -275,6 +290,7 @@ Query 3: "Show me sales data for Q3 2024 by region" (structured, analytical)
 **Solution**: **Evaluator agents** cross-check knowledge before integrating into response.
 
 **How It Works**:
+
 ```python
 # Retrieve potential answers from multiple sources
 retrieved_docs = [
@@ -299,17 +315,20 @@ response = synthesize(filtered_docs)
 ```
 
 **Validation Techniques**:
+
 - **Cross-source verification**: Check if multiple sources agree
 - **Authority checking**: Prefer authoritative sources (official docs, peer-reviewed)
 - **Logical consistency**: Detect contradictory statements
 - **Grounding validation**: Ensure claims are supported by retrieved text
 
 **Benefits**:
+
 - Reduces hallucinations in final response
 - Increases trustworthiness (citations to validated sources)
 - Detects and resolves contradictions
 
 **Example**:
+
 ```
 Query: "What is the recommended dosage of aspirin for heart disease prevention?"
 
@@ -350,9 +369,11 @@ Final Response:
 ### High-Value Use Cases
 
 #### 1. Legal Research
+
 **Why**: Queries require multi-step reasoning, authoritative sources, and contradiction detection.
 
 **Example**:
+
 ```
 Query: "What are the legal precedents for data privacy violations in healthcare under HIPAA?"
 
@@ -365,9 +386,11 @@ Agentic RAG:
 ```
 
 #### 2. Scientific Discovery
+
 **Why**: Constantly evolving knowledge, need for recent updates, cross-validation critical.
 
 **Example**:
+
 ```
 Query: "What are the latest findings on mRNA vaccine efficacy against COVID-19 variants?"
 
@@ -380,9 +403,11 @@ Agentic RAG:
 ```
 
 #### 3. Business Intelligence
+
 **Why**: Multi-source data (structured + unstructured), recency matters, validation needed.
 
 **Example**:
+
 ```
 Query: "Compare our sales performance to competitors in Q3 2024"
 
@@ -397,6 +422,7 @@ Agentic RAG:
 ### When Traditional RAG Is Sufficient
 
 **Use Traditional RAG when**:
+
 - Queries are simple and factual ("What is X?")
 - Single knowledge source is adequate
 - Low-stakes applications (no critical decisions)
@@ -422,12 +448,14 @@ Agentic RAG:
 **Solution**: **Vertex AI Layout Parser** for semantic chunking.
 
 **Features**:
+
 - Handles complex document layouts (multi-column, embedded tables)
 - Extracts embedded images (charts, diagrams)
 - Semantic chunker keeps chunks on-topic
 - Hierarchy of headings preserves structure
 
 **Example**:
+
 ```
 # Bad Chunking (Fixed Size)
 Chunk 1: "...end of section on budgets. 3.2 Risk Management Risk management is critical..."
@@ -446,6 +474,7 @@ Chunk 2: "3.2 Risk Management [complete section, 600 tokens]"
 **Solution**: Enrich chunks with metadata for boosting, burying, and filtering.
 
 **Metadata Examples**:
+
 - **Synonyms**: "LLM" → "Large Language Model", "GPT"
 - **Keywords**: "Machine Learning", "Natural Language Processing"
 - **Authors**: "Yann LeCun", "Andrew Ng"
@@ -454,12 +483,14 @@ Chunk 2: "3.2 Risk Management [complete section, 600 tokens]"
 - **Categories**: "Healthcare", "Finance", "Legal"
 
 **Benefits**:
+
 - **Boost**: Prioritize recent documents or authoritative authors
 - **Bury**: Deprioritize outdated or low-quality sources
 - **Filter**: Restrict search to specific categories or date ranges
 - **User/Agent Control**: Allow filtering in query ("Show recent papers on topic X")
 
 **Example**:
+
 ```python
 chunk_with_metadata = {
     "text": "Agentic RAG improves retrieval accuracy...",
@@ -486,15 +517,18 @@ results = vector_search(
 **Solution**: Fine-tune embedding model or add search adaptor to adjust embedding space.
 
 **Approach**:
+
 - **Fine-Tuning**: Train embedding model on domain-specific data (medical, legal, financial)
 - **Search Adaptor**: Layer on top of embeddings that transforms space for better domain alignment
 
 **Benefits**:
+
 - Domain-specific terms better represented (e.g., "hedging" in finance vs. gardening)
 - Improved semantic similarity for specialized vocabularies
 - Higher retrieval precision for domain queries
 
 **Example**:
+
 ```
 Query: "What are the implications of Basel III for risk-weighted assets?"
 
@@ -514,11 +548,13 @@ Fine-Tuned Financial Embedding:
 **Solution**: Upgrade to **Vertex AI Vector Search** for ultra-fast, high-quality retrieval.
 
 **Trade-off**:
+
 - Vector search uses approximate nearest neighbor (ANN)
 - Speed vs. accuracy trade-off (faster = less accurate)
 - **Vertex AI Vector Search**: Optimizes both speed AND accuracy
 
 **Benefits**:
+
 - Lower latency (sub-100ms for millions of vectors)
 - Higher top-k (retrieve 100+ candidates for re-ranking)
 - Better quality (more accurate ANN algorithms)
@@ -530,6 +566,7 @@ Fine-Tuned Financial Embedding:
 **Solution**: **Re-rank** top-k results with more sophisticated model.
 
 **How It Works**:
+
 ```
 1. Vector Search: Retrieve top-100 candidates (fast, approximate)
     ↓
@@ -539,16 +576,19 @@ Fine-Tuned Financial Embedding:
 ```
 
 **Ranker Types**:
+
 - **Cross-encoder**: Scores query-document pairs (more accurate, slower)
 - **LLM-based ranker**: Uses LLM to score relevance
 - **Learning-to-rank**: Trained on click data or human feedback
 
 **Benefits**:
+
 - Top results are highest quality (precision improvement)
 - Compensates for approximation errors in vector search
 - Can incorporate additional signals (freshness, authority)
 
 **Example**:
+
 ```
 Query: "How to deploy Kubernetes on AWS?"
 
@@ -573,6 +613,7 @@ After Re-Ranking (Cross-Encoder):
 **Solution**: **Grounding check** ensures each phrase is citable.
 
 **How It Works**:
+
 ```python
 generated_response = "The Eiffel Tower is 324 meters tall and was completed in 1889."
 
@@ -591,6 +632,7 @@ for claim in claims:
 ```
 
 **Benefits**:
+
 - Prevents hallucinations in generated responses
 - Increases trust (all claims are cited)
 - Enables fact-checking (show sources for each claim)
@@ -604,19 +646,21 @@ for claim in claims:
 **Description**: Google-quality search for your enterprise data.
 
 **Features**:
+
 - All 6 optimization techniques built-in (no development time)
 - Semantic chunking, metadata enrichment, fast vector search, rankers, grounding checks
 - Automatic data refresh, access control, scalability
 
 **Use Case**: Enterprises wanting production-ready search without building from scratch.
 
-**Reference**: https://cloud.google.com/enterprise-search
+**Reference**: <https://cloud.google.com/enterprise-search>
 
 ### Search Builder APIs
 
 **Description**: Standalone APIs for developers building custom search engines.
 
 **Components**:
+
 - Layout Parser API
 - Embedding API (with fine-tuning)
 - Vector Search API
@@ -625,26 +669,28 @@ for claim in claims:
 
 **Use Case**: Developers who want control over each component.
 
-**Reference**: https://cloud.google.com/generative-ai-app-builder/docs/builder-apis
+**Reference**: <https://cloud.google.com/generative-ai-app-builder/docs/builder-apis>
 
 ### RAG Engine
 
 **Description**: LlamaIndex-like Python interface for orchestrating RAG pipelines.
 
 **Features**:
+
 - Python-based API for chaining components
 - Integrates with Vertex AI Search and Builder APIs
 - Supports custom retrieval logic
 
 **Use Case**: Data scientists and ML engineers building experimental RAG systems.
 
-**Reference**: https://cloud.google.com/vertex-ai/generative-ai/docs/rag-overview
+**Reference**: <https://cloud.google.com/vertex-ai/generative-ai/docs/rag-overview>
 
 ---
 
 ## Implementation Roadmap
 
 ### Stage 1: Optimize Traditional RAG
+
 1. ✅ Implement semantic chunking (Vertex AI Layout Parser)
 2. ✅ Add metadata to chunks (keywords, dates, categories)
 3. ✅ Fine-tune embeddings for domain (if needed)
@@ -655,6 +701,7 @@ for claim in claims:
 **Goal**: Achieve high baseline RAG performance before adding agents.
 
 ### Stage 2: Add Agentic Capabilities
+
 1. ✅ Implement query expansion (retrieval agent generates multiple queries)
 2. ✅ Add multi-step reasoning (decompose complex queries)
 3. ✅ Implement adaptive source selection (vector DB, SQL, web search)
@@ -663,6 +710,7 @@ for claim in claims:
 **Goal**: Handle complex, ambiguous, multi-step queries with validation.
 
 ### Stage 3: Production Deployment
+
 1. ✅ Instrument observability (see Topic 1: AgentOps)
 2. ✅ Set up evaluation (trajectory + response, see Topic 2)
 3. ✅ Human-in-the-loop validation
@@ -697,9 +745,50 @@ for claim in claims:
 - Figure 9: Agentic RAG diagram from Vectorize.io
 - Figure 10: RAG and search components (Vertex AI Search, RAG Engine)
 - Vectorize blog: "How I finally got agentic RAG to work right"
-- Vertex AI Search: https://cloud.google.com/enterprise-search
-- Search Builder APIs: https://cloud.google.com/generative-ai-app-builder/docs/builder-apis
-- RAG Engine: https://cloud.google.com/vertex-ai/generative-ai/docs/rag-overview
+- Vertex AI Search: <https://cloud.google.com/enterprise-search>
+- Search Builder APIs: <https://cloud.google.com/generative-ai-app-builder/docs/builder-apis>
+- RAG Engine: <https://cloud.google.com/vertex-ai/generative-ai/docs/rag-overview>
+
+---
+
+## Deep Dive: Memory Systems Implementation
+
+RAG retrieval is just one component of agent memory architecture. To build production-ready agentic systems, you need to understand **how agents manage both short-term (working memory) and long-term (episodic, semantic, procedural) memory**, optimize context engineering for cost/latency, and implement advanced memory patterns like Search-o1.
+
+This deep dive extends the RAG concepts above with a comprehensive exploration of memory systems, context optimization strategies, and hands-on implementation.
+
+### Learning Path
+
+Follow this sequence for a complete understanding of memory systems:
+
+**Step 1: Understand Memory Fundamentals (30-35 min read)**
+
+- Read [Memory Systems Fundamentals](memory_systems_fundamentals.md)
+- Learn the five memory types (working, episodic, semantic, procedural, parametric)
+- Explore memory patterns: MemoryBank, A-MEM, Search-o1
+- Compare vector database options with decision matrix
+
+**Step 2: Master Context Engineering (25-30 min read)**
+
+- Read [Context Engineering Guide](context_engineering_guide.md)
+- Learn context selection (re-ranking, MMR, λ tuning)
+- Understand compression strategies with ROI math ($24 → $12 → $4.80)
+- Apply context ordering to avoid lost-in-the-middle effects
+
+**Step 3: Implement Memory Systems (DEMO: <10 min, FULL: 30-40 min)**
+
+- Run [Memory Systems Implementation Notebook](memory_systems_implementation.ipynb)
+- Set up local Chroma with persistent storage
+- Implement Search-o1 pattern with token overhead analysis
+- Complete exercises: MMR selection, compression ROI, multi-agent coordination
+
+**Additional Resources:**
+
+- See [Tutorial Index](TUTORIAL_INDEX.md) for complete learning paths and FAQs
+- Visual diagrams: Memory types taxonomy, context engineering workflow, Search-o1 architecture
+- Integration: Results export to evaluation dashboard for metrics tracking
+
+**Total Time Investment:** 4-5 hours (reading + hands-on implementation)
 
 ---
 

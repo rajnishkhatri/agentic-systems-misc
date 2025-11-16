@@ -1,0 +1,71 @@
+{
+  "version": "1.0",
+  "created": "2025-11-16",
+  "execution_mode": "FULL",
+  "num_trajectories": 5,
+  "summary_statistics": {
+    "trimming_reduction": {
+      "mean": 0.5628415300546448,
+      "std": 0.05
+    },
+    "summarization_reduction": {
+      "mean": 0.7049180327868853,
+      "std": 0.08
+    },
+    "mmr_diversity_impact": {
+      "mean": 0.8,
+      "std": 0.12
+    },
+    "compression_roi": {
+      "mean": 0.0375,
+      "std": 0.018371173070873836
+    },
+    "search_o1_overhead_pct": {
+      "mean": 242.59890113960833,
+      "std": 0.6804117621615465
+    }
+  },
+  "radar_chart_data": {
+    "labels": [
+      "trimming_reduction",
+      "summarization_reduction",
+      "mmr_diversity_impact",
+      "compression_roi",
+      "search_o1_overhead_pct"
+    ],
+    "values": [
+      0.5628415300546448,
+      0.7049180327868853,
+      0.8,
+      0.0375,
+      242.59890113960833
+    ]
+  },
+  "detailed_results": [
+    {
+      "exercise": "Working Memory - Trimming",
+      "metric": "token_reduction",
+      "value": 0.5628415300546448
+    },
+    {
+      "exercise": "Working Memory - Summarization",
+      "metric": "token_reduction",
+      "value": 0.7049180327868853
+    },
+    {
+      "exercise": "Context Engineering - MMR",
+      "metric": "diversity_impact",
+      "value": 0.8
+    },
+    {
+      "exercise": "Compression ROI",
+      "metric": "cost_savings_usd",
+      "value": 0.0375
+    },
+    {
+      "exercise": "Search-o1 Pattern",
+      "metric": "overhead_percentage",
+      "value": 242.59890113960833
+    }
+  ]
+}

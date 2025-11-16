@@ -1,0 +1,111 @@
+flowchart TD
+    Start([User Query: Plan weekly meals]) --> Orchestrator[Multi-Agent Orchestrator]
+
+    Orchestrator --> Init[Initialize Shared Memory]
+
+    Init --> PlanPhase[Planning Phase]
+
+    PlanPhase --> Planner[Planner Agent]
+
+    Planner --> PlanThought[Generate Thought:<br/>User needs 7 dinner ideas<br/>Must consider preferences]
+
+    PlanThought --> PlanAction[Create Plan:<br/>1. Get user preferences<br/>2. Generate 7 meal ideas<br/>3. Retrieve recipes<br/>4. Extract ingredients<br/>5. Create shopping list]
+
+    PlanAction --> StorePlan[Store Plan in Memory]
+
+    StorePlan --> ValPhase[Validation Phase]
+
+    ValPhase --> Validator[Validator Agent]
+
+    Validator --> ReadPlan[Read Plan from Memory]
+
+    ReadPlan --> ValCheck[Validate Plan:<br/>✓ Schema correct?<br/>✓ Goal achievable?<br/>✓ Dependencies OK?<br/>✓ Efficient?]
+
+    ValCheck --> ValDecision{Validation Status?}
+
+    ValDecision -->|REJECTED| Feedback[Store Feedback:<br/>Missing nutrition check<br/>Should validate balance]
+
+    Feedback --> Retry{Retry < Max?}
+
+    Retry -->|Yes| Planner
+    Retry -->|No| Failed[Return Failure]
+
+    ValDecision -->|APPROVED| StoreApproval[Store Approval in Memory]
+
+    StoreApproval --> ExecPhase[Execution Phase]
+
+    ExecPhase --> Executor[Executor Agent]
+
+    Executor --> ReadApproved[Read Approved Plan]
+
+    ReadApproved --> ExecLoop[Execute Steps Sequentially]
+
+    ExecLoop --> Step1[Step 1: get_user_preferences]
+    Step1 --> Obs1[Observation: User prefers vegetarian, Italian, <30min]
+    Obs1 --> Store1[Store in Memory]
+
+    Store1 --> Step2[Step 2: generate_meal_ideas]
+    Step2 --> Obs2[Observation: 7 meal ideas generated]
+    Obs2 --> Store2[Store in Memory]
+
+    Store2 --> Step3[Step 3: retrieve_recipes]
+    Step3 --> Obs3[Observation: Retrieved 7 full recipes]
+    Obs3 --> Store3[Store in Memory]
+
+    Store3 --> Step4[Step 4: extract_ingredients]
+    Step4 --> Obs4[Observation: Extracted 45 unique ingredients]
+    Obs4 --> Store4[Store in Memory]
+
+    Store4 --> Step5[Step 5: create_shopping_list]
+    Step5 --> Obs5[Observation: Shopping list with 45 items]
+    Obs5 --> Store5[Store in Memory]
+
+    Store5 --> ExecCheck{All Steps OK?}
+
+    ExecCheck -->|Yes| Success[Execution Success]
+    ExecCheck -->|No| ExecFailed[Execution Failed]
+
+    Success --> Formatter[Formatter Agent]
+
+    Formatter --> ReadResults[Read All Results from Memory]
+
+    ReadResults --> Format[Format Output:<br/>- Weekly meal plan<br/>- Recipe details<br/>- Shopping list<br/>- Nutrition summary]
+
+    Format --> FinalOutput[Return Final Result]
+
+    Failed --> End([End: Failure])
+    ExecFailed --> End
+    FinalOutput --> End2([End: Success])
+
+    style Start fill:#e1f5ff
+    style End fill:#f8d7da
+    style End2 fill:#d4edda
+    style Orchestrator fill:#e3f2fd,stroke:#2196f3,stroke-width:3px
+    style Planner fill:#fff4e1,stroke:#ff9800,stroke-width:2px
+    style Validator fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+    style Executor fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style Formatter fill:#fce4ec,stroke:#e91e63,stroke-width:2px
+    style Init fill:#fff9c4
+    style StorePlan fill:#fff9c4
+    style StoreApproval fill:#fff9c4
+    style Store1 fill:#fff9c4
+    style Store2 fill:#fff9c4
+    style Store3 fill:#fff9c4
+    style Store4 fill:#fff9c4
+    style Store5 fill:#fff9c4
+    style Success fill:#d4edda
+    style Failed fill:#f8d7da
+    style ExecFailed fill:#f8d7da
+
+    classDef memoryStyle fill:#fff9c4,stroke:#fbc02d
+    classDef plannerStyle fill:#fff4e1,stroke:#ff9800
+    classDef validatorStyle fill:#f3e5f5,stroke:#9c27b0
+    classDef executorStyle fill:#e8f5e9,stroke:#4caf50
+    classDef formatterStyle fill:#fce4ec,stroke:#e91e63
+
+    class Init,StorePlan,StoreApproval,Store1,Store2,Store3,Store4,Store5,ReadPlan,ReadApproved,ReadResults memoryStyle
+    class Planner,PlanThought,PlanAction plannerStyle
+    class Validator,ValCheck validatorStyle
+    class Executor,Step1,Step2,Step3,Step4,Step5 executorStyle
+    class Formatter,Format formatterStyle
+

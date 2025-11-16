@@ -81,6 +81,28 @@ This file tracks when tutorials need updates after code changes, ensuring docume
 
 ---
 
+## Lesson 14: Memory Systems & Context Engineering
+
+**Last Updated:** 2025-11-15
+**Status:** ✅ Complete
+
+### Triggers for Update
+- Changes to `lesson-14/agents_memory.txt` canonical source → Update `memory_systems_fundamentals.md` citations and terminology
+- Changes to `lesson-14/COMPASS_ARTIFACT_ANALYSIS.md` cost/ROI data → Update `context_engineering_guide.md` ROI examples and decision matrix
+- Changes to `lesson-14/memory_systems_implementation.ipynb` → Update cross-references in `context_engineering_guide.md` and `TUTORIAL_INDEX.md`
+- Modifications to Chroma setup or memory patterns → Update notebook exercises and `memory_systems_fundamentals.md` pattern descriptions
+- New memory techniques or vector databases added → Update decision matrix in `memory_systems_fundamentals.md` and FAQ in `TUTORIAL_INDEX.md`
+- Changes to `lesson-14/diagrams/*.mmd` diagrams → Re-export PNG/SVG and verify terminology alignment with `agents_memory.txt`
+- Changes to `lesson-14/results/memory_systems_demo_results.json` schema → Update schema documentation and dashboard integration
+- Updates to `lesson-14/04_Agentic_RAG.md` → Verify forward references to memory tutorials remain accurate
+- Updates to `lesson-14/multi_agent_fundamentals.md` → Verify Component 1 (Memory) section remains consistent with memory tutorials
+- Test failures in `tests/test_memory_systems_notebook.py` → Review notebook helper functions and defensive coding
+
+### Update History
+- **2025-11-15:** Initial creation with 3 tutorials (memory_systems_fundamentals.md, context_engineering_guide.md, memory_systems_implementation.ipynb), 3 diagrams (memory_types_taxonomy, context_engineering_workflow, search_o1_architecture), JSON schema documentation, 17 unit tests for notebook helpers, integration with TUTORIAL_INDEX.md Learning Path #5, expanded multi_agent_fundamentals.md Component 1 section, forward references from 04_Agentic_RAG.md ✅
+
+---
+
 ## General Infrastructure
 
 ### Triggers for Update
