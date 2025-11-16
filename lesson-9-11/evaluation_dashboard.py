@@ -1,9 +1,9 @@
 """
-Evaluation Dashboard - Unified metrics display for HW3-5 and Lessons 9-11.
+Evaluation Dashboard - Unified metrics display for HW3-5 and Lessons 9-14.
 
 This FastHTML dashboard provides a comprehensive view of all evaluation metrics
 across the AI Dev Evals tutorial system. Features:
-- Metrics from HW3 (judge evaluation), HW4 (RAG), Lesson 9-11
+- Metrics from HW3 (judge evaluation), HW4 (RAG), Lessons 9-11, Lesson 14 (memory systems)
 - Auto-refresh every 5 seconds
 - PDF/HTML export
 - Keyboard shortcuts (r=refresh, e=export, f=filter, ?=help)
@@ -208,8 +208,43 @@ def load_lesson11_metrics() -> dict[str, Any]:
         return {"status": "error", "message": f"Error loading Lesson 11 metrics: {e}"}
 
 
+def load_lesson14_metrics() -> dict[str, Any]:
+    """Load Lesson 14 metrics (memory systems & context engineering).
+
+    Returns:
+        Dictionary with memory systems metrics, context engineering ROI, Search-o1 overhead
+
+    Raises:
+        FileNotFoundError: If metrics file doesn't exist
+        json.JSONDecodeError: If file is not valid JSON
+    """
+    metrics_path = PROJECT_ROOT / "lesson-14" / "results" / "memory_systems_demo_results.json"
+
+    if not metrics_path.exists():
+        return {
+            "status": "no_data",
+            "message": "No Lesson 14 metrics found. Run lesson-14/memory_systems_implementation.ipynb first.",
+        }
+
+    try:
+        with open(metrics_path) as f:
+            data = json.load(f)
+
+        # Validate required fields
+        required_fields = ["summary_statistics", "radar_chart_data", "detailed_results"]
+        if not all(field in data for field in required_fields):
+            return {
+                "status": "invalid",
+                "message": "Missing required fields in Lesson 14 metrics",
+            }
+
+        return {"status": "ok", "data": data}
+    except (json.JSONDecodeError, OSError) as e:
+        return {"status": "error", "message": f"Error loading Lesson 14 metrics: {e}"}
+
+
 def load_all_metrics() -> dict[str, Any]:
-    """Load all metrics from HW3-5 and Lessons 9-11.
+    """Load all metrics from HW3-5 and Lessons 9-14.
 
     Returns:
         Dictionary containing all metrics and metadata
@@ -221,6 +256,7 @@ def load_all_metrics() -> dict[str, Any]:
         "lesson9": load_lesson9_metrics(),
         "lesson10": load_lesson10_metrics(),
         "lesson11": load_lesson11_metrics(),
+        "lesson14": load_lesson14_metrics(),
     }
 
 
@@ -237,7 +273,7 @@ def calculate_total_cost(metrics: dict[str, Any]) -> dict[str, float]:
     total = 0.0
 
     # Extract costs from each section
-    for key in ["hw3", "hw4", "lesson9", "lesson10", "lesson11"]:
+    for key in ["hw3", "hw4", "lesson9", "lesson10", "lesson11", "lesson14"]:
         if metrics[key]["status"] == "ok":
             data = metrics[key]["data"]
             lesson_cost = data.get("total_cost", 0.0)
@@ -462,8 +498,8 @@ def render_lesson11_section(lesson11_data: dict[str, Any]) -> Div:
         )
 
     data = lesson11_data["data"]
-    elo_rankings = data.get("elo_rankings", {})
-    bt_rankings = data.get("bradley_terry_rankings", {})
+    elo_rankings = data.get("elo_rankings", [])
+    bt_rankings = data.get("bradley_terry_rankings", [])
 
     return Div(
         H2("Lesson 11: Comparative Evaluation & Leaderboards"),
@@ -474,11 +510,11 @@ def render_lesson11_section(lesson11_data: dict[str, Any]) -> Div:
                 *[
                     Tr(
                         Td(i + 1),
-                        Td(entry["model"]),
-                        Td(f"{entry['rating']:.0f}"),
+                        Td(entry.get("model", "N/A")),
+                        Td(f"{entry.get('rating', 0):.0f}"),
                         Td(f"±{entry.get('confidence_interval', 0):.0f}"),
                     )
-                    for i, entry in enumerate(list(elo_rankings.items())[:3])
+                    for i, entry in enumerate(elo_rankings[:3])
                 ]
             ),
             cls="ranking-table",
@@ -490,11 +526,107 @@ def render_lesson11_section(lesson11_data: dict[str, Any]) -> Div:
                 *[
                     Tr(
                         Td(i + 1),
-                        Td(entry["model"]),
-                        Td(f"{entry['skill']:.3f}"),
+                        Td(entry.get("model", "N/A")),
+                        Td(f"{entry.get('skill', 0.0):.3f}"),
                         Td(f"{entry.get('win_rate', 0.0):.2%}"),
                     )
-                    for i, entry in enumerate(list(bt_rankings.items())[:3])
+                    for i, entry in enumerate(bt_rankings[:3])
+                ]
+            ),
+            cls="ranking-table",
+        ),
+        cls="metrics-section",
+    )
+
+
+def render_lesson14_section(lesson14_data: dict[str, Any]) -> Div:
+    """Render Lesson 14 metrics section.
+
+    Args:
+        lesson14_data: Lesson 14 metrics dictionary
+
+    Returns:
+        Div element containing Lesson 14 section
+    """
+    if lesson14_data["status"] != "ok":
+        return Div(
+            H2("Lesson 14: Memory Systems & Context Engineering"),
+            P(lesson14_data["message"], cls="error-message"),
+            cls="metrics-section",
+        )
+
+    data = lesson14_data["data"]
+    summary_stats = data.get("summary_statistics", {})
+
+    # Extract metrics with safe defaults
+    trimming_reduction = summary_stats.get("trimming_reduction", {})
+    summarization_reduction = summary_stats.get("summarization_reduction", {})
+    mmr_diversity = summary_stats.get("mmr_diversity_impact", {})
+    compression_roi = summary_stats.get("compression_roi", {})
+    search_o1_overhead = summary_stats.get("search_o1_overhead_pct", {})
+
+    return Div(
+        H2("Lesson 14: Memory Systems & Context Engineering"),
+        Div(
+            P(
+                f"Execution Mode: {data.get('execution_mode', 'N/A')} | "
+                f"Trajectories: {data.get('num_trajectories', 0)}",
+                cls="metric-card-subtitle",
+            ),
+            cls="metrics-grid",
+        ),
+        H3("Working Memory Management"),
+        Div(
+            render_metric_card(
+                "Trimming Reduction",
+                f"{trimming_reduction.get('mean', 0.0):.1%}",
+                "Token savings via FIFO/sliding window",
+            ),
+            render_metric_card(
+                "Summarization Reduction",
+                f"{summarization_reduction.get('mean', 0.0):.1%}",
+                "Token savings via compression",
+            ),
+            cls="metrics-grid",
+        ),
+        H3("Context Engineering"),
+        Div(
+            render_metric_card(
+                "MMR Diversity Impact",
+                f"{mmr_diversity.get('mean', 0.0):.1%}",
+                "Relevance vs. diversity balance",
+            ),
+            render_metric_card(
+                "Compression ROI",
+                f"${compression_roi.get('mean', 0.0):.4f}",
+                "Cost savings per query",
+            ),
+            cls="metrics-grid",
+        ),
+        H3("Search-o1 Pattern Analysis"),
+        Div(
+            render_metric_card(
+                "Search-o1 Overhead",
+                f"{search_o1_overhead.get('mean', 0.0):.1f}%",
+                "Additional tokens vs. baseline RAG",
+            ),
+            cls="metrics-grid",
+        ),
+        H3("Detailed Results"),
+        Table(
+            Thead(Tr(Th("Exercise"), Th("Metric"), Th("Value"))),
+            Tbody(
+                *[
+                    Tr(
+                        Td(result.get("exercise", "N/A")),
+                        Td(result.get("metric", "N/A")),
+                        Td(
+                            f"{result.get('value', 0.0):.3f}"
+                            if isinstance(result.get("value"), (int, float))
+                            else str(result.get("value", "N/A"))
+                        ),
+                    )
+                    for result in data.get("detailed_results", [])
                 ]
             ),
             cls="ranking-table",
@@ -571,6 +703,8 @@ def render_footer() -> Footer:
             A("Lesson 10", href="../lesson-10/TUTORIAL_INDEX.md"),
             " | ",
             A("Lesson 11", href="../lesson-11/TUTORIAL_INDEX.md"),
+            " | ",
+            A("Lesson 14", href="../lesson-14/TUTORIAL_INDEX.md"),
             " | ",
             A("GitHub", href="https://github.com/anthropics/courses"),
         ),
@@ -923,6 +1057,7 @@ def get():
             render_lesson9_section(metrics["lesson9"]),
             render_lesson10_section(metrics["lesson10"]),
             render_lesson11_section(metrics["lesson11"]),
+            render_lesson14_section(metrics["lesson14"]),
             render_cost_tracker(metrics),
             cls="container",
         ),
