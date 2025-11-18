@@ -112,12 +112,12 @@
     - Calculate current reading time for lesson-9/ tutorials (word count ÷ 200 WPM)
     - Document expected outputs in `.claude/commands/validate-tutorial-expected-output.md` (this becomes test oracle)
     - **Dependency:** This MUST complete before Task 4.8 (testing /validate-tutorial command)
-  - [ ] 4.1 Create `.claude/commands/validate-tutorial.md` with command structure (usage, parameters, output format)
-  - [ ] 4.2 Implement TUTORIAL_INDEX.md structure validation (check required sections: objectives, prerequisites, learning paths, FAQs)
-  - [ ] 4.3 Implement notebook execution check using `jupyter nbconvert --execute` with <5min timeout
-  - [ ] 4.4 Implement cross-link validation (verify relative paths resolve correctly)
-  - [ ] 4.5 Implement Mermaid diagram syntax validation (parse .mmd files for syntax errors)
-  - [ ] 4.6 Implement reading time calculation (word count ÷ 200 WPM, target 15-30 min)
+  - [x] 4.1 Create `.claude/commands/validate-tutorial.md` with command structure (usage, parameters, output format)
+  - [x] 4.2 Implement TUTORIAL_INDEX.md structure validation (check required sections: objectives, prerequisites, learning paths, FAQs)
+  - [x] 4.3 Implement notebook execution check using `jupyter nbconvert --execute` with <5min timeout
+  - [x] 4.4 Implement cross-link validation (verify relative paths resolve correctly)
+  - [x] 4.5 Implement Mermaid diagram syntax validation (parse .mmd files for syntax errors)
+  - [x] 4.6 Implement reading time calculation (word count ÷ 200 WPM, target 15-30 min)
   - [ ] 4.7 Create ✅/❌ report template with actionable fix suggestions
   - [ ] 4.7.1 **ERROR HANDLING** - Graceful failure for /validate-tutorial edge cases
     - Handle missing directory: Return actionable error "Directory not found: [path]. Did you mean lesson-9/?"
