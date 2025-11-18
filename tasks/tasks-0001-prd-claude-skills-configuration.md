@@ -79,7 +79,7 @@
   - [x] 2.9 Validate skill provides correct guidance without duplicating CLAUDE.md content
 
 ### 3.0 TDD Methodology & Pattern Application Skills
-- [ ] 3.0 TDD Methodology & Pattern Application Skills
+- [x] 3.0 TDD Methodology & Pattern Application Skills
   - [x] 3.1 Create `.claude/skills/tdd-methodology/` directory structure
   - [x] 3.2 Write TDD SKILL.md with YAML frontmatter (activation_context: "write test", "implement function", "add feature", "refactor", "TDD")
   - [x] 3.3 Create `references/phase-rules.md` documenting RED/GREEN/REFACTOR phase constraints
