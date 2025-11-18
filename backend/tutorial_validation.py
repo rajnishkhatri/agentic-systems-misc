@@ -9,6 +9,7 @@ This module provides functions to validate tutorial structure, including:
 - Tutorial count analysis
 - Notebook execution validation
 - Reading time calculation (word count ÷ 200 WPM)
+- Validation report generation with ✅/❌ status and recommendations
 """
 
 import re
@@ -486,6 +487,192 @@ def calculate_reading_time(file_path: str, wpm: int = 200) -> dict[str, Any]:
 
     # Step 8: Return result
     return result
+
+
+def generate_validation_report(
+    directory: str,
+    tutorial_index_result: dict[str, Any] | None = None,
+    notebook_results: list[dict[str, Any]] | None = None,
+    cross_link_result: dict[str, Any] | None = None,
+    mermaid_result: dict[str, Any] | None = None,
+    reading_time_results: list[dict[str, Any]] | None = None,
+    validation_time: float = 0.0,
+) -> str:
+    """
+    Generate a formatted validation report with ✅/❌ status and actionable suggestions.
+
+    Args:
+        directory: Path to the tutorial directory being validated
+        tutorial_index_result: Result from validate_tutorial_index_structure()
+        notebook_results: List of results from validate_notebook_execution()
+        cross_link_result: Result from validate_cross_links()
+        mermaid_result: Result from validate_mermaid_diagrams()
+        reading_time_results: List of results from calculate_reading_time()
+        validation_time: Total validation time in seconds
+
+    Returns:
+        Formatted report string with status symbols and recommendations
+
+    Raises:
+        TypeError: If directory is not a string
+
+    Example:
+        >>> report = generate_validation_report("lesson-9/", tutorial_index_result={...})
+        >>> print(report)
+        📋 Tutorial Validation Report: lesson-9/
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        ...
+    """
+    # Step 1: Type checking (defensive)
+    if not isinstance(directory, str):
+        raise TypeError("directory must be a string")
+
+    # Step 2: Initialize report components
+    lines = []
+    warnings = []
+    errors = []
+    overall_status = "✅ PASS"
+
+    # Step 3: Header
+    lines.append(f"📋 Tutorial Validation Report: {directory}")
+    lines.append("━" * 60)
+    lines.append("")
+
+    # Step 4: TUTORIAL_INDEX.md Structure Validation
+    if tutorial_index_result:
+        lines.append("1. TUTORIAL_INDEX.md Structure")
+        if tutorial_index_result.get("valid"):
+            lines.append("   ✅ All required sections present (10/10)")
+            if tutorial_index_result.get("has_learning_time"):
+                lines.append(f"   - Learning time: {tutorial_index_result['learning_time']}")
+            if tutorial_index_result.get("has_difficulty"):
+                lines.append(f"   - Difficulty: {tutorial_index_result['difficulty']}")
+            if tutorial_index_result.get("tutorial_count", 0) > 0:
+                lines.append(f"   - {tutorial_index_result['tutorial_count']} tutorials documented")
+        else:
+            overall_status = "❌ FAIL"
+            missing = tutorial_index_result.get("missing_sections", [])
+            lines.append(f"   ❌ Missing sections: {', '.join(missing)}")
+            errors.append("Add missing TUTORIAL_INDEX.md sections")
+            lines.append("   💡 Recommendation: Add missing sections using template")
+            lines.append("      See: .claude/skills/tutorial-standards/references/tutorial-index-template.md")
+        lines.append("")
+
+    # Step 5: Notebook Execution Validation
+    if notebook_results:
+        lines.append("2. Notebook Execution")
+        successful = sum(1 for r in notebook_results if r.get("executed"))
+        total = len(notebook_results)
+
+        if successful == total:
+            lines.append(f"   ✅ All notebooks executed ({successful}/{total})")
+        else:
+            overall_status = "⚠️ PASS (with warnings)" if overall_status == "✅ PASS" else overall_status
+            lines.append(f"   ⚠️ {successful}/{total} notebooks executed")
+
+        for result in notebook_results:
+            nb_name = Path(result["notebook_path"]).name
+            if result.get("executed"):
+                exec_time = result.get("execution_time", 0)
+                lines.append(f"   ✅ {nb_name} ({exec_time:.2f}s)")
+            else:
+                status = result.get("status", "error")
+                error = result.get("error", "Unknown error")
+                if status == "timeout":
+                    lines.append(f"   ⏱️ {nb_name} (exceeded timeout)")
+                    warnings.append(f"Optimize {nb_name} or increase timeout")
+                else:
+                    lines.append(f"   ❌ {nb_name}")
+                    lines.append(f"      Error: {error[:100]}")
+                    errors.append(f"Fix execution error in {nb_name}")
+        lines.append("")
+
+    # Step 6: Cross-Link Validation
+    if cross_link_result:
+        lines.append("3. Cross-Links")
+        total_links = cross_link_result.get("total_links", 0)
+        broken_links = cross_link_result.get("broken_links", 0)
+        valid_links = total_links - broken_links
+
+        if cross_link_result.get("valid"):
+            if total_links > 0:
+                lines.append(f"   ✅ All links valid ({total_links}/{total_links})")
+            else:
+                lines.append("   ✅ No cross-links to validate")
+        else:
+            overall_status = "⚠️ PASS (with warnings)" if overall_status == "✅ PASS" else overall_status
+            percentage = (valid_links / total_links * 100) if total_links > 0 else 0
+            lines.append(f"   ⚠️ {valid_links}/{total_links} links valid ({percentage:.1f}%)")
+
+            for invalid in cross_link_result.get("invalid_paths", [])[:3]:  # Show first 3
+                link = invalid["link"]
+                lines.append(f"      ❌ {link}")
+                warnings.append(f"Fix broken link: {link}")
+
+            if broken_links > 3:
+                lines.append(f"      ... and {broken_links - 3} more broken links")
+        lines.append("")
+
+    # Step 7: Mermaid Diagram Validation
+    if mermaid_result:
+        lines.append("4. Mermaid Diagrams")
+        total_diagrams = mermaid_result.get("total_diagrams", 0)
+        invalid_diagrams = mermaid_result.get("invalid_diagrams", 0)
+
+        if total_diagrams == 0:
+            lines.append("   ℹ️ No Mermaid diagrams to validate")
+        elif mermaid_result.get("valid"):
+            lines.append(f"   ✅ All diagrams valid ({total_diagrams}/{total_diagrams})")
+        else:
+            overall_status = "❌ FAIL" if invalid_diagrams == total_diagrams else "⚠️ PASS (with warnings)"
+            lines.append(f"   ❌ {total_diagrams - invalid_diagrams}/{total_diagrams} diagrams valid")
+
+            for error in mermaid_result.get("errors", [])[:2]:  # Show first 2
+                file = Path(error["file"]).name
+                lines.append(f"      ❌ {file}")
+                lines.append(f"         {error['error'][:80]}")
+                errors.append(f"Fix Mermaid syntax in {file}")
+                lines.append("         💡 Validate at: https://mermaid.live")
+        lines.append("")
+
+    # Step 8: Reading Time Calculation
+    if reading_time_results:
+        lines.append("5. Reading Time")
+        total_words = sum(r.get("word_count", 0) for r in reading_time_results)
+        total_minutes = sum(r.get("reading_time_minutes", 0) for r in reading_time_results)
+
+        too_long = [r for r in reading_time_results if r.get("status") == "too_long"]
+        optimal = [r for r in reading_time_results if r.get("status") == "optimal"]
+
+        if too_long:
+            overall_status = "⚠️ PASS (with warnings)" if overall_status == "✅ PASS" else overall_status
+            lines.append(f"   ⚠️ Total reading time: ~{total_minutes:.0f} min ({total_words:,} words)")
+            for result in too_long[:2]:  # Show first 2
+                time = result["reading_time_minutes"]
+                lines.append(f"      ⚠️ File exceeds 30 min target ({time:.0f} min)")
+                warnings.append("Consider splitting long tutorials")
+        else:
+            lines.append(f"   ✅ Reading time within range (~{total_minutes:.0f} min, {total_words:,} words)")
+        lines.append("")
+
+    # Step 9: Overall Status and Recommendations
+    lines.append("━" * 60)
+    lines.append(f"Overall: {overall_status}")
+    lines.append("")
+
+    if warnings or errors:
+        lines.append("Recommendations:")
+        for i, error in enumerate(errors[:5], 1):
+            lines.append(f"  {i}. {error}")
+        for i, warning in enumerate(warnings[:3], len(errors) + 1):
+            lines.append(f"  {i}. {warning}")
+        lines.append("")
+
+    if validation_time > 0:
+        lines.append(f"Validation completed in {validation_time:.1f}s")
+
+    # Step 10: Return formatted report
+    return "\n".join(lines)
 
 
 def validate_notebook_execution(notebook_path: str, timeout: int = 300) -> dict[str, Any]:

@@ -11,6 +11,7 @@ import pytest
 
 from backend.tutorial_validation import (
     calculate_reading_time,
+    generate_validation_report,
     validate_cross_links,
     validate_mermaid_diagrams,
     validate_notebook_execution,
@@ -1131,3 +1132,303 @@ def test_should_use_custom_wpm() -> None:
         # Test with 500 WPM (faster reading)
         result_500 = calculate_reading_time(str(md_file), wpm=500)
         assert result_500["reading_time_minutes"] == 2.0
+
+
+# ============================================================================
+# Validation Report Generation Tests
+# ============================================================================
+
+
+def test_should_generate_pass_report_when_all_valid() -> None:
+    """Test that report shows ✅ PASS when all validations pass."""
+    tutorial_index_result = {
+        "valid": True,
+        "missing_sections": [],
+        "found_sections": 10,
+        "has_learning_time": True,
+        "learning_time": "3-4 hours",
+        "has_difficulty": True,
+        "difficulty": "Intermediate",
+        "tutorial_count": 5,
+    }
+
+    notebook_results = [
+        {
+            "executed": True,
+            "execution_time": 2.84,
+            "status": "success",
+            "notebook_path": "lesson-9/perplexity.ipynb",
+        }
+    ]
+
+    cross_link_result = {"valid": True, "total_links": 12, "broken_links": 0, "invalid_paths": []}
+
+    mermaid_result = {"valid": True, "total_diagrams": 2, "invalid_diagrams": 0, "errors": []}
+
+    reading_time_results = [{"word_count": 4000, "reading_time_minutes": 20.0, "status": "optimal"}]
+
+    report = generate_validation_report(
+        directory="lesson-9/",
+        tutorial_index_result=tutorial_index_result,
+        notebook_results=notebook_results,
+        cross_link_result=cross_link_result,
+        mermaid_result=mermaid_result,
+        reading_time_results=reading_time_results,
+        validation_time=8.2,
+    )
+
+    assert "📋 Tutorial Validation Report: lesson-9/" in report
+    assert "✅ PASS" in report
+    assert "All required sections present (10/10)" in report
+    assert "All notebooks executed (1/1)" in report
+    assert "All links valid (12/12)" in report
+    assert "All diagrams valid (2/2)" in report
+    assert "Reading time within range" in report
+    assert "Validation completed in 8.2s" in report
+
+
+def test_should_generate_fail_report_when_invalid() -> None:
+    """Test that report shows ❌ FAIL when validation fails."""
+    tutorial_index_result = {
+        "valid": False,
+        "missing_sections": ["FAQ", "Common Pitfalls"],
+        "found_sections": 8,
+    }
+
+    report = generate_validation_report(directory="lesson-10/", tutorial_index_result=tutorial_index_result)
+
+    assert "❌ FAIL" in report
+    assert "Missing sections: FAQ, Common Pitfalls" in report
+    assert "Add missing sections using template" in report
+    assert "Recommendations:" in report
+
+
+def test_should_generate_warning_report_when_issues_exist() -> None:
+    """Test that report shows ⚠️ PASS with warnings when minor issues exist."""
+    notebook_results = [
+        {
+            "executed": True,
+            "execution_time": 2.5,
+            "status": "success",
+            "notebook_path": "lesson-9/notebook1.ipynb",
+        },
+        {
+            "executed": False,
+            "execution_time": 0,
+            "status": "error",
+            "error": "OPENAI_API_KEY not set",
+            "notebook_path": "lesson-9/notebook2.ipynb",
+        },
+    ]
+
+    report = generate_validation_report(directory="lesson-9/", notebook_results=notebook_results)
+
+    assert "⚠️ PASS (with warnings)" in report
+    assert "1/2 notebooks executed" in report
+    assert "notebook2.ipynb" in report
+    assert "OPENAI_API_KEY" in report
+
+
+def test_should_show_broken_links_in_report() -> None:
+    """Test that broken links are displayed with actionable suggestions."""
+    cross_link_result = {
+        "valid": False,
+        "total_links": 12,
+        "broken_links": 2,
+        "invalid_paths": [
+            {"link": "../lesson-9-11/README.md", "resolved_path": "/path/to/README.md", "error": "File not found"},
+            {"link": "../lesson-10/tutorial.md", "resolved_path": "/path/to/tutorial.md", "error": "File not found"},
+        ],
+    }
+
+    report = generate_validation_report(directory="lesson-9/", cross_link_result=cross_link_result)
+
+    assert "10/12 links valid (83.3%)" in report
+    assert "../lesson-9-11/README.md" in report
+    assert "../lesson-10/tutorial.md" in report
+    assert "Fix broken link" in report
+
+
+def test_should_show_mermaid_errors_in_report() -> None:
+    """Test that Mermaid syntax errors are displayed with suggestions."""
+    mermaid_result = {
+        "valid": False,
+        "total_diagrams": 3,
+        "invalid_diagrams": 1,
+        "errors": [
+            {
+                "file": "lesson-9/diagrams/broken.mmd",
+                "error": "Syntax Error: Line 42: Unexpected token '}'",
+            }
+        ],
+    }
+
+    report = generate_validation_report(directory="lesson-9/", mermaid_result=mermaid_result)
+
+    assert "2/3 diagrams valid" in report
+    assert "broken.mmd" in report
+    assert "Syntax Error" in report
+    assert "https://mermaid.live" in report
+
+
+def test_should_show_timeout_warnings_in_report() -> None:
+    """Test that notebook timeouts are shown with warnings."""
+    notebook_results = [
+        {
+            "executed": False,
+            "execution_time": 305,
+            "status": "timeout",
+            "error": "Notebook execution exceeded timeout (300s)",
+            "notebook_path": "lesson-9/slow_notebook.ipynb",
+        }
+    ]
+
+    report = generate_validation_report(directory="lesson-9/", notebook_results=notebook_results)
+
+    assert "⏱️ slow_notebook.ipynb" in report
+    assert "exceeded timeout" in report
+    assert "Optimize" in report or "increase timeout" in report
+
+
+def test_should_show_reading_time_warnings() -> None:
+    """Test that long reading times are shown with warnings."""
+    reading_time_results = [
+        {"word_count": 8000, "reading_time_minutes": 40.0, "status": "too_long"},
+        {"word_count": 4000, "reading_time_minutes": 20.0, "status": "optimal"},
+    ]
+
+    report = generate_validation_report(directory="lesson-9/", reading_time_results=reading_time_results)
+
+    assert "⚠️ Total reading time: ~60 min (12,000 words)" in report
+    assert "File exceeds 30 min target (40 min)" in report
+    assert "splitting long tutorials" in report
+
+
+def test_should_handle_no_cross_links() -> None:
+    """Test that report handles tutorials with no cross-links."""
+    cross_link_result = {"valid": True, "total_links": 0, "broken_links": 0, "invalid_paths": []}
+
+    report = generate_validation_report(directory="lesson-9/", cross_link_result=cross_link_result)
+
+    assert "No cross-links to validate" in report
+    assert "✅" in report
+
+
+def test_should_handle_no_mermaid_diagrams() -> None:
+    """Test that report handles tutorials with no Mermaid diagrams."""
+    mermaid_result = {"valid": True, "total_diagrams": 0, "invalid_diagrams": 0, "errors": []}
+
+    report = generate_validation_report(directory="lesson-9/", mermaid_result=mermaid_result)
+
+    assert "No Mermaid diagrams to validate" in report
+    assert "ℹ️" in report
+
+
+def test_should_limit_recommendations_count() -> None:
+    """Test that report limits recommendations to avoid overwhelming output."""
+    # Create many broken links
+    invalid_paths = [
+        {"link": f"../broken-{i}.md", "resolved_path": f"/path/{i}.md", "error": "Not found"} for i in range(10)
+    ]
+
+    cross_link_result = {"valid": False, "total_links": 10, "broken_links": 10, "invalid_paths": invalid_paths}
+
+    report = generate_validation_report(directory="lesson-9/", cross_link_result=cross_link_result)
+
+    # Should show first 3 broken links
+    assert "../broken-0.md" in report
+    assert "../broken-1.md" in report
+    assert "../broken-2.md" in report
+
+    # Should show "... and X more broken links"
+    assert "and 7 more broken links" in report
+
+
+def test_should_raise_error_for_invalid_directory_type() -> None:
+    """Test that report generation raises TypeError for non-string directory."""
+    with pytest.raises(TypeError, match="directory must be a string"):
+        generate_validation_report(directory=None)  # type: ignore
+
+
+def test_should_generate_minimal_report_when_no_results() -> None:
+    """Test that report can be generated with minimal data."""
+    report = generate_validation_report(directory="lesson-9/")
+
+    assert "📋 Tutorial Validation Report: lesson-9/" in report
+    assert "✅ PASS" in report
+    assert "━" in report  # Separator lines
+
+
+def test_should_prioritize_errors_over_warnings() -> None:
+    """Test that errors appear before warnings in recommendations."""
+    tutorial_index_result = {"valid": False, "missing_sections": ["FAQ"]}
+
+    cross_link_result = {"valid": False, "total_links": 5, "broken_links": 1, "invalid_paths": [{"link": "test.md"}]}
+
+    report = generate_validation_report(
+        directory="lesson-9/", tutorial_index_result=tutorial_index_result, cross_link_result=cross_link_result
+    )
+
+    assert "Recommendations:" in report
+    # Errors should come first
+    recommendations_start = report.index("Recommendations:")
+    error_pos = report.index("Add missing TUTORIAL_INDEX.md sections", recommendations_start)
+    warning_pos = report.index("Fix broken link", recommendations_start)
+    assert error_pos < warning_pos
+
+
+def test_should_include_all_validation_sections() -> None:
+    """Test that report includes all 5 validation check sections."""
+    tutorial_index_result = {"valid": True}
+    notebook_results = [{"executed": True, "notebook_path": "test.ipynb"}]
+    cross_link_result = {"valid": True, "total_links": 0}
+    mermaid_result = {"valid": True, "total_diagrams": 0}
+    reading_time_results = [{"word_count": 1000, "reading_time_minutes": 5.0, "status": "too_short"}]
+
+    report = generate_validation_report(
+        directory="lesson-9/",
+        tutorial_index_result=tutorial_index_result,
+        notebook_results=notebook_results,
+        cross_link_result=cross_link_result,
+        mermaid_result=mermaid_result,
+        reading_time_results=reading_time_results,
+    )
+
+    assert "1. TUTORIAL_INDEX.md Structure" in report
+    assert "2. Notebook Execution" in report
+    assert "3. Cross-Links" in report
+    assert "4. Mermaid Diagrams" in report
+    assert "5. Reading Time" in report
+
+
+def test_should_format_report_with_proper_indentation() -> None:
+    """Test that report has proper indentation and formatting."""
+    tutorial_index_result = {"valid": True, "has_learning_time": True, "learning_time": "3-4 hours"}
+
+    report = generate_validation_report(directory="lesson-9/", tutorial_index_result=tutorial_index_result)
+
+    # Check indentation (3 spaces for main items, 6 for sub-items)
+    assert "   ✅" in report  # Main item indentation
+    assert "   -" in report  # Sub-item indentation
+
+    # Check separator lines
+    assert "━" * 60 in report
+
+
+def test_should_truncate_long_error_messages() -> None:
+    """Test that long error messages are truncated for readability."""
+    notebook_results = [
+        {
+            "executed": False,
+            "status": "error",
+            "error": "A" * 200,  # Very long error message
+            "notebook_path": "test.ipynb",
+        }
+    ]
+
+    report = generate_validation_report(directory="lesson-9/", notebook_results=notebook_results)
+
+    # Error should be truncated to 100 characters
+    lines = report.split("\n")
+    error_line = [line for line in lines if "Error:" in line][0]
+    assert len(error_line) < 120  # Truncated to ~100 chars + "Error: " prefix
