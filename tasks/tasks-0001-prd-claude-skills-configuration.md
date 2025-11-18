@@ -67,16 +67,16 @@
     - **Rationale:** Lightweight "before state" sufficient for qualitative Phase 1 validation; detailed metrics deferred to Phase 2
 
 ### 2.0 Tutorial Standards Skill Implementation
-- [ ] 2.0 Tutorial Standards Skill Implementation
-  - [ ] 2.1 Create `.claude/skills/tutorial-standards/` directory structure
-  - [ ] 2.2 Write SKILL.md with YAML frontmatter (activation_context: "create tutorial", "TUTORIAL_INDEX", "add notebook", "write lesson")
-  - [ ] 2.3 Create `references/tutorial-index-template.md` documenting required TUTORIAL_INDEX.md sections (objectives, prerequisites, learning paths, FAQs)
-  - [ ] 2.4 Create `references/notebook-standards.md` documenting Jupyter notebook requirements (setup cell, cost warning, <5min execution, validation assertions)
-  - [ ] 2.5 Create `references/cross-linking-rules.md` documenting relative path conventions for tutorial navigation
-  - [ ] 2.6 Copy `lesson-9/TUTORIAL_INDEX.md` to `examples/lesson-9-tutorial-index.md` as reference implementation
-  - [ ] 2.7 Add reference to CLAUDE.md:347-435 (Tutorial Workflow section) in SKILL.md
-  - [ ] 2.8 Test skill activation with scenarios: "create tutorial", "add notebook", "missing TUTORIAL_INDEX"
-  - [ ] 2.9 Validate skill provides correct guidance without duplicating CLAUDE.md content
+- [x] 2.0 Tutorial Standards Skill Implementation
+  - [x] 2.1 Create `.claude/skills/tutorial-standards/` directory structure
+  - [x] 2.2 Write SKILL.md with YAML frontmatter (activation_context: "create tutorial", "TUTORIAL_INDEX", "add notebook", "write lesson")
+  - [x] 2.3 Create `references/tutorial-index-template.md` documenting required TUTORIAL_INDEX.md sections (objectives, prerequisites, learning paths, FAQs)
+  - [x] 2.4 Create `references/notebook-standards.md` documenting Jupyter notebook requirements (setup cell, cost warning, <5min execution, validation assertions)
+  - [x] 2.5 Create `references/cross-linking-rules.md` documenting relative path conventions for tutorial navigation
+  - [x] 2.6 Copy `lesson-9/TUTORIAL_INDEX.md` to `examples/lesson-9-tutorial-index.md` as reference implementation
+  - [x] 2.7 Add reference to CLAUDE.md:347-435 (Tutorial Workflow section) in SKILL.md
+  - [x] 2.8 Test skill activation with scenarios: "create tutorial", "add notebook", "missing TUTORIAL_INDEX"
+  - [x] 2.9 Validate skill provides correct guidance without duplicating CLAUDE.md content
 
 ### 3.0 TDD Methodology & Pattern Application Skills
 - [ ] 3.0 TDD Methodology & Pattern Application Skills
