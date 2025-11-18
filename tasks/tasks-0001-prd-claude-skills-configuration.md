@@ -104,7 +104,7 @@
 
 ### 4.0 Slash Commands Suite Implementation
 - [ ] 4.0 Slash Commands Suite Implementation
-  - [ ] 4.0.5 **BASELINE VALIDATION** - Establish lesson-9/ as gold standard before implementing /validate-tutorial
+  - [x] 4.0.5 **BASELINE VALIDATION** - Establish lesson-9/ as gold standard before implementing /validate-tutorial
     - Manually validate lesson-9/TUTORIAL_INDEX.md structure (verify has all required sections)
     - Execute all lesson-9/ notebooks manually (jupyter nbconvert --execute) and document expected execution time
     - Check all cross-links in lesson-9/ tutorials manually (verify relative paths resolve correctly)
