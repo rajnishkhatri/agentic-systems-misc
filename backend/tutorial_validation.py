@@ -274,7 +274,33 @@ def validate_mermaid_diagrams(directory_path: str) -> dict[str, Any]:
     directory = Path(directory_path)
     if not directory.exists():
         result["valid"] = False
-        result["error"] = f"Directory not found: {directory_path}"
+
+        # Provide actionable error with directory suggestions
+        error_msg = f"Directory not found: {directory_path}"
+
+        # Try to find similar directories in current working directory
+        try:
+            cwd = Path.cwd()
+            # Look for lesson-* and homeworks/hw* directories
+            lesson_dirs = sorted([d.name for d in cwd.glob("lesson-*") if d.is_dir()])
+            homework_dirs = sorted([d.name for d in (cwd / "homeworks").glob("hw*") if d.is_dir()]) if (cwd / "homeworks").exists() else []
+
+            available_dirs = lesson_dirs + [f"homeworks/{hw}" for hw in homework_dirs]
+
+            if available_dirs:
+                error_msg += f". Available: {', '.join(available_dirs[:5])}"
+
+                # Fuzzy match suggestion
+                dir_name = Path(directory_path).name
+                if dir_name.startswith("lesson-"):
+                    similar = [d for d in lesson_dirs if d.startswith("lesson-")]
+                    if similar:
+                        error_msg += f". Did you mean {similar[0]}?"
+        except Exception:
+            # If directory listing fails, just use basic error message
+            pass
+
+        result["error"] = error_msg
         return result
 
     if not directory.is_dir():
@@ -334,6 +360,8 @@ def validate_mermaid_diagrams(directory_path: str) -> dict[str, Any]:
                 # If mmdc returns non-zero, there's a syntax error
                 if process.returncode != 0:
                     error_msg = process.stderr if process.stderr else "Unknown syntax error"
+                    # Add mermaid.live suggestion
+                    error_msg += "\nSuggestion: Validate syntax at https://mermaid.live"
                     errors.append({"file": str(mmd_file), "error": error_msg})
 
                 # Clean up output file if it was created
@@ -731,7 +759,10 @@ def validate_notebook_execution(notebook_path: str, timeout: int = 300) -> dict[
             timeout=5,
         )
     except (subprocess.TimeoutExpired, subprocess.CalledProcessError, FileNotFoundError) as e:
-        result["error"] = f"jupyter nbconvert not available: {e}"
+        result["error"] = (
+            f"jupyter nbconvert not available: {e}. "
+            f"Install with: pip install jupyter nbconvert"
+        )
         return result
 
     # Step 5: Execute notebook with timeout
@@ -772,7 +803,10 @@ def validate_notebook_execution(notebook_path: str, timeout: int = 300) -> dict[
         result["execution_time"] = execution_time
         result["executed"] = False
         result["status"] = "timeout"
-        result["error"] = f"Notebook execution exceeded timeout ({timeout}s)"
+        result["error"] = (
+            f"Notebook execution exceeded timeout ({timeout}s). "
+            f"Suggestion: Optimize notebook to run faster or increase timeout threshold."
+        )
 
     except Exception as e:
         execution_time = time.time() - start_time

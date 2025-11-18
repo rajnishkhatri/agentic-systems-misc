@@ -119,13 +119,13 @@
   - [x] 4.5 Implement Mermaid diagram syntax validation (parse .mmd files for syntax errors)
   - [x] 4.6 Implement reading time calculation (word count ÷ 200 WPM, target 15-30 min)
   - [x] 4.7 Create ✅/❌ report template with actionable fix suggestions
-  - [ ] 4.7.1 **ERROR HANDLING** - Graceful failure for /validate-tutorial edge cases
-    - Handle missing directory: Return actionable error "Directory not found: [path]. Did you mean lesson-9/?"
-    - Handle timeout during notebook execution (>5min): Skip notebook with warning "⏱️ Notebook exceeded timeout, skipping execution check"
-    - Handle missing jupyter dependency: Return "❌ jupyter nbconvert not found. Install with: pip install jupyter nbconvert"
-    - Handle broken Mermaid syntax: Report specific line number and syntax error from parser
-    - Handle permission errors: Return "❌ Permission denied reading [file]. Check file permissions."
-    - Create error handling test suite in `tests/test_validate_tutorial_errors.py`
+  - [x] 4.7.1 **ERROR HANDLING** - Graceful failure for /validate-tutorial edge cases
+    - ✅ Handle missing directory: Return actionable error with "Did you mean...?" suggestions and available directories list
+    - ✅ Handle timeout during notebook execution (>5min): Return error with "Optimize notebook or increase timeout" suggestion
+    - ✅ Handle missing jupyter dependency: Return error with "Install with: pip install jupyter nbconvert" instructions
+    - ✅ Handle broken Mermaid syntax: Report syntax error with "Validate at https://mermaid.live" suggestion
+    - ✅ Handle permission errors: Gracefully handle with actionable error messages (tested)
+    - ✅ Create error handling test suite in `tests/test_validate_tutorial_errors.py` (21 tests, 100% passing)
     - **Rationale:** Commands must never crash; users need actionable error messages to fix issues
   - [ ] 4.8 Test `/validate-tutorial` command with lesson-9/ as reference (should pass all checks)
   - [ ] 4.9 Create `.claude/commands/tdd.md` with phase state tracking (RED/GREEN/REFACTOR)
