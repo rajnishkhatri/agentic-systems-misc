@@ -128,12 +128,12 @@
     - ✅ Create error handling test suite in `tests/test_validate_tutorial_errors.py` (21 tests, 100% passing)
     - **Rationale:** Commands must never crash; users need actionable error messages to fix issues
   - [x] 4.8 Test `/validate-tutorial` command with lesson-9/ as reference (should pass all checks)
-  - [ ] 4.9 Create `.claude/commands/tdd.md` with phase state tracking (RED/GREEN/REFACTOR)
-  - [ ] 4.10 Implement `/tdd red` - Enter RED phase, provide guidance reminder: "Write failing test. No implementation code."
-  - [ ] 4.11 Implement `/tdd green` - Enter GREEN phase, provide guidance reminder: "Minimal code to pass test. No test modifications."
-  - [ ] 4.12 Implement `/tdd refactor` - Enter REFACTOR phase, auto-run pytest after changes, remind: "Improve code quality. Keep tests passing."
-  - [ ] 4.13 Implement `/tdd status` - Display current phase and phase-specific guidance (NOT enforcement rules)
-  - [ ] 4.14 Test `/tdd` command phase transitions with pytest integration
+  - [x] 4.9 Create `.claude/commands/tdd.md` with phase state tracking (RED/GREEN/REFACTOR)
+  - [x] 4.10 Implement `/tdd red` - Enter RED phase, provide guidance reminder: "Write failing test. No implementation code."
+  - [x] 4.11 Implement `/tdd green` - Enter GREEN phase, provide guidance reminder: "Minimal code to pass test. No test modifications."
+  - [x] 4.12 Implement `/tdd refactor` - Enter REFACTOR phase, auto-run pytest after changes, remind: "Improve code quality. Keep tests passing."
+  - [x] 4.13 Implement `/tdd status` - Display current phase and phase-specific guidance (NOT enforcement rules)
+  - [x] 4.14 Test `/tdd` command phase transitions with pytest integration
   - [ ] 4.14.1 **CLARIFICATION** - /tdd command provides GUIDANCE, tdd-methodology skill provides ENFORCEMENT
     - Command behavior: Displays phase-specific reminders and best practices when user invokes `/tdd [phase]`
     - Skill behavior: Automatically activates during development to enforce TDD workflow (blocks violations)
