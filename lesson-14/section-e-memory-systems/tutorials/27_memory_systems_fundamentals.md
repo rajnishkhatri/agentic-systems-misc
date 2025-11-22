@@ -53,7 +53,7 @@ Working memory is the finite buffer of recent turns that we keep feeding back in
 
 | Strategy | Best For | Implementation Notes | Trade-offs |
 | --- | --- | --- | --- |
-| FIFO (“hard cutoff”) | Low-stakes chats where only the latest turns matter. | Maintain queue of messages up to `max_messages` or `max_tokens`, drop oldest first.`agents_memory.txt` lines 65-68. | Risk of trimming away key facts (e.g., the flamingo preference) if they occurred early. |
+| FIFO (“hard cutoff”) | Low-stakes chats where only the latest turns matter. | Maintain queue of messages up to `max_messages` or `max_tokens`, drop oldest first. | Risk of trimming away key facts (e.g., the flamingo preference) if they occurred early. |
 | Sliding window | Agents that need the freshest N turns regardless of earlier context. | Keep rolling window by slicing last `n` turns per role; optionally pin system/tool outputs so they never slide out. | Slightly more complex bookkeeping; still loses older-but-important nuggets. |
 | Token budgets | Any agent with mixed-length turns and multimodal payloads. | Track cumulative token cost (input + output) and trim until under `budget_tokens`; pair with priority flags for “never drop” items (system prompt, goals). | Requires token estimation function (e.g., `tiktoken`); adds minor overhead but best fidelity. |
 
@@ -259,9 +259,9 @@ Match each scenario to MemoryBank, A-MEM, or Search-o1. Explain your rationale a
 
 | Scenario | Requirements | Recommended pattern | Why |
 | --- | --- | --- | --- |
-| A personal wellness assistant logs emotions, sleep, exercise, and therapy notes, surfacing trends weekly. Users want empathetic recall of past struggles plus privacy controls. | Needs selective retention + decay, structured “user portrait,” and ability to forget stale notes quickly. | **MemoryBank** | Built-in spaced repetition keeps relevant experiences hot while aging out sensitive data; portraits capture personality for empathetic dialogs. `agents_memory.txt` lines 105-125. |
-| A legal-research analyst investigates case law, creating cross-referenced briefs that must link related precedents and allow revisiting chains of thought months later. | Requires atomic knowledge units, backlinks, and evolving knowledge graph. | **A-MEM** | Zettelkasten-style notes map perfectly to legal citations; similarity-linked memories accelerate discovery of related precedents. `agents_memory.txt` lines 146-174. |
-| A strategy agent drafts 20-page market analyses, calling external search mid-thought to fetch latest financial numbers, condensing results directly into the reasoning trace. | Needs iterative retrieval during reasoning, search-token tracking, and compression of bulky docs. | **Search-o1** | Inserts `&lt;&#124;begin_search_query&#124;&gt;` tokens wherever reasoning needs context, then Reason-in-Documents compresses outputs to keep CoT tractable. `agents_memory.txt` lines 176-192. |
+| A personal wellness assistant logs emotions, sleep, exercise, and therapy notes, surfacing trends weekly. Users want empathetic recall of past struggles plus privacy controls. | Needs selective retention + decay, structured “user portrait,” and ability to forget stale notes quickly. | **MemoryBank** | Built-in spaced repetition keeps relevant experiences hot while aging out sensitive data; portraits capture personality for empathetic dialogs.  |
+| A legal-research analyst investigates case law, creating cross-referenced briefs that must link related precedents and allow revisiting chains of thought months later. | Requires atomic knowledge units, backlinks, and evolving knowledge graph. | **A-MEM** | Zettelkasten-style notes map perfectly to legal citations; similarity-linked memories accelerate discovery of related precedents. |
+| A strategy agent drafts 20-page market analyses, calling external search mid-thought to fetch latest financial numbers, condensing results directly into the reasoning trace. | Needs iterative retrieval during reasoning, search-token tracking, and compression of bulky docs. | **Search-o1** | Inserts `&lt;&#124;begin_search_query&#124;&gt;` tokens wherever reasoning needs context, then Reason-in-Documents compresses outputs to keep CoT tractable.  |
 
 **Trade-off discussion.**
 

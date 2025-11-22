@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context Engineering Workflow</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1600px;
+            width: 95%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .diagram-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 700px;
+        }
+        
+        .mermaid {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 8px;
+        }
+        
+        .legend h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .legend-color {
+            width: 40px;
+            height: 30px;
+            border-radius: 5px;
+            margin-right: 15px;
+            border: 2px solid #95a5a6;
+        }
+        
+        .color-selection { background: #FFA07A; }
+        .color-compression { background: #FFD700; }
+        .color-ordering { background: #87CEEB; }
+        .color-intermediate { background: #E0E0E0; }
+        .color-endpoint { background: #90EE90; }
+        
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        button {
+            background: #16a085;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #138d75;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .info-box h4 {
+            margin-top: 0;
+            color: #0c5460;
+        }
+        
+        .roi-highlight {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .roi-highlight h4 {
+            margin-top: 0;
+            color: #155724;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .controls {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Context Engineering Workflow</h1>
+        <p class="subtitle">Three-Stage Pipeline: Selection → Compression → Ordering</p>
+        
+        <div class="info-box">
+            <h4>Workflow Overview</h4>
+            <p>This diagram illustrates a three-stage context engineering pipeline that optimizes how documents are prepared for LLM inference. Each stage employs specific techniques to ensure the most relevant, concise, and well-structured context is provided to the language model.</p>
+        </div>
+        
+        <div class="roi-highlight">
+            <h4>💰 ROI Impact</h4>
+            <p><strong>Cost Reduction:</strong> $24 → $12 → $4.80 (5x cost savings)</p>
+            <p><strong>Compression Ratio:</strong> 0.2 (80% token reduction)</p>
+        </div>
+        
+        <div class="diagram-container">
+            <div class="mermaid">
+graph LR
+    Query[User Query] --> Stage1[Stage 1: Selection]
+
+    %% Selection stage
+    Stage1 --> Rerank[Re-ranking<br/>BM25, Cross-encoder]
+    Stage1 --> MMR[MMR Selection<br/>λ parameter tuning]
+    Stage1 --> BusinessRules[Business Rules<br/>Domain filtering]
+    Stage1 --> Specialization[Specialization<br/>Metadata filtering]
+
+    Rerank --> Selected[Selected Documents]
+    MMR --> Selected
+    BusinessRules --> Selected
+    Specialization --> Selected
+
+    Selected --> Stage2[Stage 2: Compression]
+
+    %% Compression stage
+    Stage2 --> Summarization[Summarization<br/>Extractive/Abstractive]
+    Stage2 --> Dedup[Deduplication<br/>Exact & semantic match]
+    Stage2 --> LLMLingua[LLMLingua<br/>Token-level compression]
+
+    Summarization --> Compressed[Compressed Context]
+    Dedup --> Compressed
+    LLMLingua --> Compressed
+
+    Compressed --> Stage3[Stage 3: Ordering]
+
+    %% Ordering stage
+    Stage3 --> Primacy[Primacy Effect<br/>Important items first]
+    Stage3 --> Recency[Recency Effect<br/>Important items last]
+    Stage3 --> LostMiddle[Lost-in-Middle Fix<br/>Boundaries prioritized]
+
+    Primacy --> Final[Final Context]
+    Recency --> Final
+    LostMiddle --> Final
+
+    Final --> LLM[LLM Inference]
+
+    %% ROI metrics annotation
+    Stage2 -.->|ROI: $24 → $12 → $4.80| ROINote[5x Cost Savings<br/>Compression Ratio: 0.2]
+
+    %% Styling
+    classDef selection fill:#FFA07A,stroke:#FF6347,stroke-width:2px,color:#000
+    classDef compression fill:#FFD700,stroke:#FFA500,stroke-width:2px,color:#000
+    classDef ordering fill:#87CEEB,stroke:#4682B4,stroke-width:2px,color:#000
+    classDef intermediate fill:#E0E0E0,stroke:#808080,stroke-width:2px,color:#000
+    classDef endpoint fill:#90EE90,stroke:#228B22,stroke-width:3px,color:#000
+    classDef annotation fill:#FFD54F,stroke:#333,stroke-width:2px,color:#000,font-weight:bold
+
+    class Query,LLM endpoint
+    class Stage1,Rerank,MMR,BusinessRules,Specialization selection
+    class Stage2,Summarization,Dedup,LLMLingua compression
+    class Stage3,Primacy,Recency,LostMiddle ordering
+    class Selected,Compressed,Final intermediate
+    class ROINote annotation
+            </div>
+        </div>
+        
+        <div class="legend">
+            <h3>Stage Legend</h3>
+            <div class="legend-item">
+                <div class="legend-color color-endpoint"></div>
+                <span><strong>Endpoints:</strong> Query input and LLM inference</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-selection"></div>
+                <span><strong>Stage 1 - Selection:</strong> Techniques for choosing relevant documents (Re-ranking, MMR, Business Rules, Specialization)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-compression"></div>
+                <span><strong>Stage 2 - Compression:</strong> Methods to reduce context size (Summarization, Deduplication, LLMLingua)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-ordering"></div>
+                <span><strong>Stage 3 - Ordering:</strong> Strategies for context arrangement (Primacy, Recency, Lost-in-Middle Fix)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-intermediate"></div>
+                <span><strong>Intermediate States:</strong> Documents between stages</span>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h4>Key Techniques Explained</h4>
+            <ul>
+                <li><strong>MMR (Maximal Marginal Relevance):</strong> Balances relevance and diversity with λ parameter</li>
+                <li><strong>BM25:</strong> Traditional probabilistic ranking function</li>
+                <li><strong>Cross-encoder:</strong> Neural re-ranking model for fine-grained relevance</li>
+                <li><strong>LLMLingua:</strong> Token-level compression that preserves semantic meaning</li>
+                <li><strong>Lost-in-Middle:</strong> Addresses the phenomenon where LLMs miss information in the middle of long contexts</li>
+            </ul>
+        </div>
+        
+        <div class="controls">
+            <button onclick="window.print()">Print Diagram</button>
+            <button onclick="downloadSVG()">Download as SVG</button>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+        
+        function downloadSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'context_engineering_workflow.svg';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

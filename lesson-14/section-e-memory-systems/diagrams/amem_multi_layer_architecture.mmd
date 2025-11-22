@@ -1,0 +1,139 @@
+graph TD
+    %% ============================================================
+    %% A-MEM Multi-Layer Architecture (Section 1.4a Visualization)
+    %% ============================================================
+    %% This diagram shows the complete 5-layer A-MEM system with
+    %% color-coded components and data flow from user query to response.
+    %%
+    %% Based on: lesson-14/section-e-memory-systems/tutorials/
+    %%           30_advanced_memory_systems_deep_dive.md (Section 1.4a)
+    %% ============================================================
+
+    %% Layer 1: User Interaction (Yellow)
+    UserQuery["👤 User Query<br/>Natural language input<br/>Example: 'Karma yoga and<br/>detachment in Chapter 3'"]
+    UserResponse["✅ User Response<br/>Grounded, citation-backed answer<br/>with linked context"]
+
+    %% Layer 2: Agent Reasoning (Blue - ReAct Loop)
+    Observe["🔍 Observe<br/>Parse query & retrieve<br/>current context"]
+    Think["💭 Think<br/>Generate reasoning trace<br/>'Need karma yoga commentary →<br/>Search A-MEM → Synthesize'"]
+    Act["⚡ Act<br/>Execute parallel actions:<br/>1. Search memory<br/>2. Create note (optional)"]
+    ToolResults["📊 Tool Results<br/>Collect context bundle<br/>from retrieval layer"]
+
+    %% Layer 3: A-MEM Core Operations (Purple)
+    NoteCreator["📝 Note Creator<br/>LLM extract: keywords, tags, description<br/>Temperature: 0.2 (deterministic)<br/>Latency: ~300ms"]
+    LinkEvaluator["🔗 Link Evaluator<br/>ANN search → top-12 candidates<br/>LLM link approval (confidence ≥0.65)<br/>Latency: ~500ms"]
+    EvolutionEngine["🔄 Evolution Engine<br/>Background metadata refresh<br/>Update keywords/tags for linked notes<br/>Continuous learning loop"]
+
+    %% Layer 4: Retrieval Orchestrator (Light Purple)
+    SemanticSearch["🔎 Semantic Search<br/>Embed query → Vector DB<br/>Cosine similarity → top-k<br/>Latency: ~50ms"]
+    LinkExpansion["🕸️ Link Expansion<br/>Graph Store → traverse depth 1-2<br/>Recover structurally related notes<br/>Latency: ~100ms"]
+    MMR["🎯 MMR Deduplication<br/>Maximal Marginal Relevance<br/>λ=0.5 (relevance vs diversity)<br/>Remove redundancy"]
+
+    %% Layer 5: Persistent Storage (Green + Red)
+    VectorDB["💾 Vector DB (ChromaDB)<br/>768-dim (sentence-transformers)<br/>or 3072-dim (OpenAI)<br/>Sub-100ms ANN search"]
+    GraphStore["🗄️ Graph Store (Neo4j/SQLite)<br/>Adjacency lists<br/>Edge: relation, weight, rationale<br/>Bidirectional traversal"]
+
+    %% Context Bundle
+    ContextBundle["📦 Context Bundle<br/>Vector results + graph-expanded notes<br/>Deduplicated + ranked by MMR"]
+
+    %% Synthesis
+    Synthesis["🧠 Agent Synthesis<br/>Combine context → Generate response<br/>with citations"]
+
+    %% ============================================================
+    %% Data Flow Connections
+    %% ============================================================
+
+    %% Layer 1 → Layer 2
+    UserQuery --> Observe
+
+    %% Layer 2: ReAct Loop
+    Observe --> Think
+    Think --> Act
+
+    %% Layer 2 → Layer 3 (Note Creation Path)
+    Act -->|Create Note| NoteCreator
+    NoteCreator --> LinkEvaluator
+    LinkEvaluator --> EvolutionEngine
+
+    %% Layer 2 → Layer 4 (Search Path)
+    Act -->|Search Memory| SemanticSearch
+    Act -->|Search Memory| LinkExpansion
+
+    %% Layer 3 → Layer 5 (Write Operations)
+    NoteCreator -->|Store Embedding| VectorDB
+    LinkEvaluator -->|Write Links| GraphStore
+    EvolutionEngine -.->|Refresh Metadata| VectorDB
+
+    %% Layer 4 → Layer 5 (Read Operations)
+    SemanticSearch --> VectorDB
+    LinkExpansion --> GraphStore
+
+    %% Layer 4 → Context Bundle
+    SemanticSearch --> MMR
+    LinkExpansion --> MMR
+    VectorDB -.->|Top-k Results| MMR
+    GraphStore -.->|Neighbor Notes| MMR
+    MMR --> ContextBundle
+
+    %% Layer 4 → Layer 2
+    ContextBundle --> ToolResults
+
+    %% Layer 2: Complete Loop
+    ToolResults --> Think
+    Think --> Synthesis
+
+    %% Layer 2 → Layer 1
+    Synthesis --> UserResponse
+
+    %% Continuous Learning Feedback Loop
+    EvolutionEngine -.->|Enrich Knowledge Graph| LinkExpansion
+
+    %% ============================================================
+    %% Annotations
+    %% ============================================================
+
+    Annotation1["⏱️ Performance Metrics<br/>━━━━━━━━━━━━━━━━<br/>Ingestion: 800-1200ms<br/>Retrieval: 150-250ms (depth-1)<br/>Graph Density: 4-8 links/note<br/>Multi-hop QA: +12-18% accuracy"]
+
+    Annotation2["🎨 Layer Color Code<br/>━━━━━━━━━━━━━━━━<br/>🟨 Yellow: User Interface<br/>🔵 Blue: Agent Intelligence<br/>🟣 Purple: Memory Operations<br/>🟪 Light Purple: Retrieval<br/>🟢 Green: Vector Storage<br/>🔴 Red: Graph Storage"]
+
+    %% Position annotations (no arrows, just informational)
+    VectorDB -.-> Annotation1
+    GraphStore -.-> Annotation2
+
+    %% ============================================================
+    %% Styling (Color-coded by layer)
+    %% ============================================================
+
+    %% Layer 1: User Interaction (Yellow #FFD93D)
+    classDef userLayer fill:#FFD93D,stroke:#FFC107,stroke-width:3px,color:#000,font-weight:bold
+
+    %% Layer 2: Agent Reasoning (Blue #4A90E2)
+    classDef agentLayer fill:#4A90E2,stroke:#2E5C8A,stroke-width:2px,color:#fff,font-weight:bold
+
+    %% Layer 3: A-MEM Core Operations (Purple #7B68EE)
+    classDef memoryOps fill:#7B68EE,stroke:#5A4FCF,stroke-width:2px,color:#fff,font-weight:bold
+
+    %% Layer 4: Retrieval Orchestrator (Light Purple #9370DB)
+    classDef retrievalLayer fill:#9370DB,stroke:#7B5FB8,stroke-width:2px,color:#fff,font-weight:bold
+
+    %% Layer 5a: Vector DB (Green #50C878)
+    classDef vectorStorage fill:#50C878,stroke:#2E7D4E,stroke-width:2px,color:#fff,font-weight:bold
+
+    %% Layer 5b: Graph Store (Red #FF6B6B)
+    classDef graphStorage fill:#FF6B6B,stroke:#C0392B,stroke-width:2px,color:#fff,font-weight:bold
+
+    %% Context & Synthesis
+    classDef contextSynthesis fill:#E67E22,stroke:#CA6F1E,stroke-width:2px,color:#fff,font-weight:bold
+
+    %% Annotations
+    classDef annotation fill:#FFD54F,stroke:#333,stroke-width:2px,color:#000,font-size:11px
+
+    %% Apply classes
+    class UserQuery,UserResponse userLayer
+    class Observe,Think,Act,ToolResults agentLayer
+    class NoteCreator,LinkEvaluator,EvolutionEngine memoryOps
+    class SemanticSearch,LinkExpansion,MMR retrievalLayer
+    class VectorDB vectorStorage
+    class GraphStore graphStorage
+    class ContextBundle,Synthesis contextSynthesis
+    class Annotation1,Annotation2 annotation

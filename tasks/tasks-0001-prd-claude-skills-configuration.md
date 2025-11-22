@@ -134,17 +134,18 @@
   - [x] 4.12 Implement `/tdd refactor` - Enter REFACTOR phase, auto-run pytest after changes, remind: "Improve code quality. Keep tests passing."
   - [x] 4.13 Implement `/tdd status` - Display current phase and phase-specific guidance (NOT enforcement rules)
   - [x] 4.14 Test `/tdd` command phase transitions with pytest integration
-  - [ ] 4.14.1 **CLARIFICATION** - /tdd command provides GUIDANCE, tdd-methodology skill provides ENFORCEMENT
-    - Command behavior: Displays phase-specific reminders and best practices when user invokes `/tdd [phase]`
-    - Skill behavior: Automatically activates during development to enforce TDD workflow (blocks violations)
-    - Relationship: Command is manual "what should I do now?", Skill is automatic "you must follow this rule"
-    - Update command documentation to clarify it's a guidance tool, not a blocker
+  - [x] 4.14.1 **CLARIFICATION** - /tdd command provides GUIDANCE, tdd-methodology skill provides ENFORCEMENT
+    - ✅ Command behavior: Displays phase-specific reminders and best practices when user invokes `/tdd [phase]`
+    - ✅ Skill behavior: Automatically activates during development to enforce TDD workflow (blocks violations)
+    - ✅ Relationship: Command is manual "what should I do now?", Skill is automatic "you must follow this rule"
+    - ✅ Updated command documentation (.claude/commands/tdd.md) to clarify it's a guidance tool, not a blocker
+    - ✅ Updated skill documentation (.claude/skills/tdd-methodology/SKILL.md) to clarify automatic enforcement role
     - **Rationale:** Commands should help users, not restrict them; skills handle enforcement
-  - [ ] 4.15 Create `.claude/commands/pattern.md` for pattern discovery and application
-  - [ ] 4.16 Implement `/pattern` - List all patterns from patterns/README.md with complexity ratings
-  - [ ] 4.17 Implement `/pattern [name]` - Show pattern details (use case, complexity, examples, file:line references)
-  - [ ] 4.18 Implement `/pattern [name] apply` - Copy template to inline application with defensive coding
-  - [ ] 4.19 Test `/pattern` command with all 3 patterns (TDD, ThreadPoolExecutor, ABC)
+  - [x] 4.15 Create `.claude/commands/pattern.md` for pattern discovery and application
+  - [x] 4.16 Implement `/pattern` - List all patterns from patterns/README.md with complexity ratings
+  - [x] 4.17 Implement `/pattern [name]` - Show pattern details (use case, complexity, examples, file:line references)
+  - [x] 4.18 Implement `/pattern [name] apply` - Copy template to inline application with defensive coding
+  - [x] 4.19 Test `/pattern` command with all 3 patterns (TDD, ThreadPoolExecutor, ABC)
 
 ### 5.0 Testing & Quality Validation
 - [ ] 5.0 Testing & Quality Validation

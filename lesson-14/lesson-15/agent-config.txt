@@ -1,0 +1,63 @@
+Agent Configuration
+
+An agent configuration, as shown in Figure 6-20, defines the characteristics and attributes of an agent. While an agent’s configuration can vary, there are several core attributes that are minimally defined:
+
+Identity, description, and purpose
+Task execution strategy
+Security configuration
+Policies and certification
+Agent and tool visibility
+
+Figure 6-20. Agent configuration
+
+Identity, Description, and Purpose
+
+Every agent is assigned a unique identifier known as its fully qualified name within the agent ecosystem. The fully qualified name is composed of two key elements: a namespace and a local name, which together create a robust system for distinguishing agents within a complex network.
+
+Namespaces play an important role in this identification framework by grouping related agents together. This grouping makes it easier to manage large numbers of agents, as each namespace provides a contextual boundary within which agents operate. The local name is the component of the fully qualified name that uniquely identifies an agent within its namespace.
+
+An agent’s description is a human readable overview of an agent and can include anything that the agent creator deems useful. In many ways it acts as an overall summary of the agent.
+
+An agent’s purpose is an explicit and detailed definition of what an agent is supposed to do. Its primary purpose is to set clear expectations for an agent’s outcomes and outputs. In addition, an agent’s purpose serves as the baseline for governance, laying the foundation for how agents are managed and held accountable. With a well-defined purpose, it becomes easier to establish policies, monitor performance, and address any deviations from expected behavior.
+
+We suggest that an agent’s approach (in fact, as much of its configuration as possible) be defined using natural language, making the process both intuitive and accessible. This approach simplifies the task for agent creators by allowing them to describe an agent’s purpose and functions in everyday language. It also enhances the system’s compatibility with LLMs, which can interpret and interact with these descriptions easily.
+
+In our agent ecosystem, an agent’s configuration is maintained through a centralized registry and marketplace. The registry acts as a detailed, searchable database where information about agents—and even tools—is stored and updated. The key to finding an agent is to have useful and detailed information, which is where the purpose and description come in - they are the primary search criteria that lets agents to locate one another. Meanwhile, the marketplace is designed to let people discover agents (again, using purpose and description as key search fields) that meet their specific needs, serving as an accessible interface where potential users can browse and find agents they may wish to interact with.
+
+Task Execution Strategy
+
+Once an agent has been identified using its purpose and descriptive information, it can be selected to fulfill a specific task (via task-management process explained earlier). The strategy then comes into play by defining a clear strategy for task execution.
+
+The task-fulfillment strategy is a set of detailed, step-by-step instructions that describe exactly how the agent will complete its assigned task. These instructions break down the overall goal into smaller, manageable actions, providing the guidance needed for end-to-end task fulfillment.
+
+Like other parts of the agent configuration, the approach is also written in natural language. By using everyday language to outline strategies and steps, agent creators can easily articulate their ideas without needing specialized coding knowledge. Now, while natural language can sometimes be ambiguous, this very characteristic offers unique advantages when interacting with LLMs. The inherent flexibility of natural language allows an agent’s LLM to interpret instructions in a broader context, giving it the latitude to execute tasks even without a fully detailed end-to-end process.
+
+Ultimately, the combination of a well-defined strategy and natural language instructions empowers the agent to carry out its tasks dynamically and with a degree of autonomy. This approach not only streamlines the process of task execution, but also enables the agent to adjust and refine its actions as needed, ensuring that it remains responsive to unexpected challenges and changes in the task environment.
+
+Security Configuration
+
+There are several components in an agent’s security configuration, including its role and specific security characteristics.
+
+An agent’s role defines the responsibilities and actions the agent is expected to perform, much like a human role within an organization. Just as human roles delineate duties and authority, an agent’s role provides structure and helps ensure that interactions and operations align with overall system objectives.
+
+Obviously, security is a paramount concern in any agent ecosystem, and several options are available to protect both agents and the data they handle. An agent’s configuration lets you determine the security characteristics of your agent. For example, the mutual Transport Layer Security (mTLS) attribute determines how to secure communications by ensuring that both the client and server communicate using encryption. Additionally, incorporating OAUTH2 enables controlled access, ensuring that only authorized actors—whether agents or human users—can interact with a specific agent.
+
+Furthermore, an agent’s fully qualified name, discussed earlier, can be used to integrate with an enterprise identity book of record, providing a way to verify credentials and confirm the agent’s designated role. This integration ensures that the agent’s identity is authenticated within the broader enterprise security framework, similar to how employee credentials are managed in a corporate directory.
+
+Policy and Certification
+
+Agent configuration attributes related to policies serve as guardrails that guide an agent’s actions and decisions, aligning its behavior with the strategic objectives of the organization. Typically, the policies attached to an agent outline specific obligations that may be derived from regulatory requirements, corporate guidelines, or ethical standards. They provide a framework within which agents must operate, ensuring that all actions adhere to established rules and norms.
+
+Certification attributes complement these policies by documenting the validation process of an agent’s compliance. They indicate which individual or authority has certified that the agent meets its designated purpose and adheres to its governing policies, along with the timestamp of that certification. This layer of verification builds trust within the ecosystem, as it offers transparency and assurance that agents are not only properly configured but also continuously aligned with both organizational and ethical standards.
+
+Agent and Tool Visibility
+
+Agent and tool definitions are centrally maintained in a registry, which serves as the central database of configuration data for the agent ecosystem. This registry acts as a comprehensive directory, ensuring that all agents and tools are clearly documented, making it easier for both automated systems and human operators to discover, reference, and manage these components.
+
+Agent visibility specifically defines which other agents a given agent is allowed to collaborate with. More specifically, when an agent is determining a task plan, one of the steps is to identify other agents that it can collaborate with to fulfill a request. By controlling agent visibility, organizations can limit interactions to those that are necessary and appropriate for the task at hand, thus enhancing security and efficiency within the ecosystem. Similarly, tool visibility outlines the specific tools an agent is permitted to interact with or consume.
+
+Ideally an agent ecosystem implements a zero-trust security posture, which means that, by default, no agents or tools are visible to any given agent unless explicitly allowed. Zero trust is a security principle that assumes no implicit trust is granted to any entity—whether inside or outside the network—and requires continuous verification for every access attempt. This model minimizes risk by ensuring that agents start with no inherent permissions, reducing the potential for unauthorized actions and limiting any possible damage from compromised agents.
+
+To support this zero-trust model, an agent is configured with zero agents and zero tools visible, essentially rendering it inactive until specific permissions are granted. This deliberate restriction ensures that an agent cannot cause any unintended consequences or security breaches without explicit authorization.
+
+Visibility for agents and tools can be defined using various methods, including fully qualified names or regular expressions (regex). Fully qualified names provide a precise and unambiguous way to specify which agents or tools are accessible, while regex offers a flexible approach to matching patterns in agent names (for example, it is relatively straightforward to create a regex to provide visibility to agents or tools with a specific namespace).

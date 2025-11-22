@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search O1 Architecture</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1600px;
+            width: 95%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .diagram-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 700px;
+        }
+        
+        .mermaid {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 8px;
+        }
+        
+        .legend h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .legend-color {
+            width: 40px;
+            height: 30px;
+            border-radius: 5px;
+            margin-right: 15px;
+            border: 2px solid #95a5a6;
+        }
+        
+        .color-query { background: #E74C3C; }
+        .color-reasoning { background: #3498DB; }
+        .color-search { background: #F39C12; }
+        .color-retrieval { background: #16A085; }
+        .color-documents { background: #9B59B6; }
+        .color-condensation { background: #E67E22; }
+        .color-decision { background: #95A5A6; }
+        .color-response { background: #27AE60; }
+        
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        .info-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .info-box h4 {
+            margin-top: 0;
+            color: #856404;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .controls {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search O1 Architecture</h1>
+        <p class="subtitle">Multi-Branch Search with Reason-in-Documents Module</p>
+        
+        <div class="info-box">
+            <h4>Architecture Overview</h4>
+            <p>This diagram illustrates a sophisticated search architecture that uses multi-branch retrieval and reasoning condensation. The system generates multiple search queries in parallel, retrieves documents for each branch, and uses a Reason-in-Documents module to synthesize findings before generating a final response.</p>
+            <p><strong>Token Overhead:</strong> 243.9% vs baseline (Search: 45 tokens, Retrieval: 337 tokens, Condensation: 457 tokens)</p>
+        </div>
+        
+        <div class="diagram-container">
+            <div class="mermaid">
+graph TD
+    Query["User Query:<br/>Explain flamingo behavior"] --> ReasoningTrace[Reasoning Trace<br/>Initial Analysis]
+
+    ReasoningTrace --> Branch{Multi-Branch<br/>Search Generation}
+
+    %% Branch 1
+    Branch -->|Branch 1| Search1["Search Query:<br/>Flamingo habitat<br/>and ecology"]
+    Search1 --> Retrieval1[Retrieve Documents<br/>Top-3 results]
+    Retrieval1 --> Docs1["Docs: habitat,<br/>migration, nesting"]
+
+    %% Branch 2
+    Branch -->|Branch 2| Search2["Search Query:<br/>Flamingo feeding<br/>behavior"]
+    Search2 --> Retrieval2[Retrieve Documents<br/>Top-3 results]
+    Retrieval2 --> Docs2["Docs: diet,<br/>filter-feeding,<br/>foraging"]
+
+    %% Branch 3
+    Branch -->|Branch 3| Search3["Search Query:<br/>Flamingo social<br/>structure"]
+    Search3 --> Retrieval3[Retrieve Documents<br/>Top-3 results]
+    Retrieval3 --> Docs3["Docs: flocking,<br/>courtship,<br/>communication"]
+
+    %% Reason-in-Documents module
+    Docs1 --> RiD[Reason-in-Documents<br/>Condensation Module]
+    Docs2 --> RiD
+    Docs3 --> RiD
+
+    RiD --> Condense[Condense & Reason:<br/>Extract key insights<br/>Cross-reference findings]
+
+    Condense --> Decision{Confidence<br/>Threshold Met?}
+
+    Decision -->|Yes| FinalReasoning[Final Reasoning Trace<br/>Comprehensive synthesis]
+    Decision -->|No<br/>Iterate| ReasoningTrace
+
+    FinalReasoning --> Response["Final Response:<br/>Complete explanation<br/>with citations"]
+
+    %% Overhead metrics annotation
+    Docs1 -.->|Overhead| Metrics["Token Overhead:<br/>Search: 45 tokens<br/>Retrieval: 337 tokens<br/>Condensation: 457 tokens<br/>Total: 243.9% vs baseline"]
+
+    %% Styling
+    classDef query fill:#E74C3C,stroke:#C0392B,stroke-width:2px,color:#fff
+    classDef reasoning fill:#3498DB,stroke:#2874A6,stroke-width:2px,color:#fff
+    classDef search fill:#F39C12,stroke:#D68910,stroke-width:2px,color:#000
+    classDef retrieval fill:#16A085,stroke:#138D75,stroke-width:2px,color:#fff
+    classDef documents fill:#9B59B6,stroke:#7D3C98,stroke-width:2px,color:#fff
+    classDef condensation fill:#E67E22,stroke:#CA6F1E,stroke-width:2px,color:#fff
+    classDef decision fill:#95A5A6,stroke:#7F8C8D,stroke-width:2px,color:#fff
+    classDef response fill:#27AE60,stroke:#1E8449,stroke-width:3px,color:#fff
+    classDef annotation fill:#FFD54F,stroke:#333,stroke-width:2px,color:#000,font-weight:bold
+
+    class Query query
+    class ReasoningTrace,FinalReasoning reasoning
+    class Search1,Search2,Search3 search
+    class Retrieval1,Retrieval2,Retrieval3 retrieval
+    class Docs1,Docs2,Docs3 documents
+    class RiD,Condense condensation
+    class Branch,Decision decision
+    class Response response
+    class Metrics annotation
+            </div>
+        </div>
+        
+        <div class="legend">
+            <h3>Component Legend</h3>
+            <div class="legend-item">
+                <div class="legend-color color-query"></div>
+                <span><strong>Query:</strong> User input</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-reasoning"></div>
+                <span><strong>Reasoning:</strong> Analysis and synthesis steps</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-search"></div>
+                <span><strong>Search:</strong> Query generation for each branch</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-retrieval"></div>
+                <span><strong>Retrieval:</strong> Document fetching process</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-documents"></div>
+                <span><strong>Documents:</strong> Retrieved content</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-condensation"></div>
+                <span><strong>Condensation:</strong> Reason-in-Documents module</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-decision"></div>
+                <span><strong>Decision:</strong> Branch points in the workflow</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-response"></div>
+                <span><strong>Response:</strong> Final output</span>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="window.print()">Print Diagram</button>
+            <button onclick="downloadSVG()">Download as SVG</button>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+        
+        function downloadSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'search_o1_architecture.svg';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

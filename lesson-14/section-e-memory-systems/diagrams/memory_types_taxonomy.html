@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Memory Systems Taxonomy</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1400px;
+            width: 95%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .diagram-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 600px;
+        }
+        
+        .mermaid {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 8px;
+        }
+        
+        .legend h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .legend-color {
+            width: 40px;
+            height: 30px;
+            border-radius: 5px;
+            margin-right: 15px;
+            border: 2px solid #95a5a6;
+        }
+        
+        .color-root { background: #E74C3C; }
+        .color-short { background: #4A90E2; }
+        .color-long { background: #50C878; }
+        .color-parametric { background: #9B59B6; }
+        .color-description { background: #ECF0F1; }
+        
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .controls {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Agent Memory Systems Taxonomy</h1>
+        <p class="subtitle">A comprehensive visualization of memory types in AI agent systems</p>
+        
+        <div class="diagram-container">
+            <div class="mermaid">
+graph TD
+    Root[Agent Memory Systems]
+
+    %% Short-term memory branch
+    Root --> STM[Short-Term Memory]
+    STM --> Working[Working Memory]
+    Working --> WorkingDesc["Limited capacity<br/>Conversation history<br/>Persists across LLM calls"]
+
+    %% Long-term memory branch
+    Root --> LTM[Long-Term Memory]
+
+    LTM --> Episodic[Episodic Memory]
+    Episodic --> EpisodicDesc["Specific events & experiences<br/>Agent actions & outcomes<br/>Example: Last birthday party"]
+
+    LTM --> Semantic[Semantic Memory]
+    Semantic --> SemanticDesc["Knowledge about the world<br/>External databases (Wikipedia)<br/>Example: Capital of France"]
+
+    LTM --> Procedural[Procedural Memory]
+    Procedural --> ProceduralDesc["Patterns & procedures<br/>System prompts<br/>Example: How to write Python"]
+
+    %% Parametric memory (special case)
+    Root --> Parametric[Parametric Memory]
+    Parametric --> ParametricDesc["Model parameters<br/>Trained knowledge<br/>Instilled via fine-tuning"]
+
+    %% Styling
+    classDef shortTerm fill:#4A90E2,stroke:#2E5C8A,stroke-width:2px,color:#fff
+    classDef longTerm fill:#50C878,stroke:#2E7D4E,stroke-width:2px,color:#fff
+    classDef parametric fill:#9B59B6,stroke:#6C3483,stroke-width:2px,color:#fff
+    classDef description fill:#FFD54F,stroke:#333,stroke-width:2px,color:#000,font-weight:bold
+    classDef root fill:#E74C3C,stroke:#C0392B,stroke-width:3px,color:#fff
+
+    class Root root
+    class STM,Working shortTerm
+    class LTM,Episodic,Semantic,Procedural longTerm
+    class Parametric parametric
+    class WorkingDesc,EpisodicDesc,SemanticDesc,ProceduralDesc,ParametricDesc description
+            </div>
+        </div>
+        
+        <div class="legend">
+            <h3>Color Legend</h3>
+            <div class="legend-item">
+                <div class="legend-color color-root"></div>
+                <span><strong>Root Node:</strong> Main memory system category</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-short"></div>
+                <span><strong>Short-Term Memory:</strong> Temporary, limited capacity storage</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-long"></div>
+                <span><strong>Long-Term Memory:</strong> Persistent storage (Episodic, Semantic, Procedural)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-parametric"></div>
+                <span><strong>Parametric Memory:</strong> Knowledge embedded in model weights</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-description"></div>
+                <span><strong>Descriptions:</strong> Detailed explanations and examples</span>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="window.print()">Print Diagram</button>
+            <button onclick="downloadSVG()">Download as SVG</button>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+        
+        function downloadSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'memory_types_taxonomy.svg';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }
+        }
+    </script>
+</body>
+</html>
+

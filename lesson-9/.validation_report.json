@@ -1,0 +1,87 @@
+{
+  "directory": "lesson-9",
+  "timestamp": "2025-11-19 15:45:41",
+  "elapsed_time": 9.03,
+  "results": {
+    "tutorial_index": {
+      "valid": true,
+      "sections_found": 10,
+      "sections_total": 10,
+      "missing_sections": [],
+      "learning_time": "** ~3-4 hours\n**Difficulty:** I",
+      "difficulty": null
+    },
+    "notebooks": {
+      "total": 2,
+      "executed": 1,
+      "failed": 0,
+      "skipped": 1,
+      "details": [
+        {
+          "name": "similarity_measurements_tutorial.ipynb",
+          "status": "SKIPPED",
+          "execution_time": 4.88,
+          "reason": "Missing API key or environment variable"
+        },
+        {
+          "name": "perplexity_calculation_tutorial.ipynb",
+          "status": "SUCCESS",
+          "execution_time": 2.71
+        }
+      ]
+    },
+    "cross_links": {
+      "total": 54,
+      "valid": 52,
+      "broken": 2,
+      "broken_links": [
+        {
+          "link": "../lesson-9-11/README.md",
+          "source": "README.md",
+          "target": "/Users/rajnishkhatri/Documents/recipe-chatbot/lesson-9-11/README.md"
+        },
+        {
+          "link": "../lesson-9-11/README.md",
+          "source": "README.md",
+          "target": "/Users/rajnishkhatri/Documents/recipe-chatbot/lesson-9-11/README.md"
+        }
+      ]
+    },
+    "mermaid": {
+      "total": 1,
+      "valid": 1,
+      "invalid": 0,
+      "details": [
+        {
+          "name": "evaluation_taxonomy.mmd",
+          "status": "VALID",
+          "node_count": 18
+        }
+      ]
+    },
+    "reading_time": {
+      "total_words": 7179,
+      "reading_time_minutes": 35.9,
+      "files": [
+        {
+          "name": "evaluation_fundamentals.md",
+          "words": 2528,
+          "reading_time": 12.6
+        },
+        {
+          "name": "exact_evaluation_methods.md",
+          "words": 2375,
+          "reading_time": 11.9
+        },
+        {
+          "name": "language_modeling_metrics.md",
+          "words": 2276,
+          "reading_time": 11.4
+        }
+      ]
+    }
+  },
+  "warnings": [],
+  "errors": [],
+  "status": "PASS_WITH_WARNINGS"
+}

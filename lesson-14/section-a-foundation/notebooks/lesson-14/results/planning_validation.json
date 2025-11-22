@@ -1,0 +1,36 @@
+{
+  "version": "1.0",
+  "created": "2025-11-16",
+  "mode": "DEMO",
+  "metrics": {
+    "planning_accuracy": 0.6666666666666666,
+    "avg_steps": 4.333333333333333,
+    "error_rate": 0.46153846153846156,
+    "completion_rate": 0.6666666666666666
+  },
+  "tool_usage": {
+    "search_recipes": 10,
+    "None": 1,
+    "get_recipe_details": 2
+  },
+  "sample_trajectories": [
+    {
+      "query": "Find vegan Italian recipes",
+      "steps": 4,
+      "completed": true,
+      "answer": "Here are some popular vegan Italian recipes you can try:\n\n1. **Vegan Pasta Primavera**: A mix of seasonal vegetables sautéed and tossed with pasta and olive oil.\n2. **Vegan Risotto**: Creamy risotto m"
+    },
+    {
+      "query": "Get details for recipe ID 2",
+      "steps": 4,
+      "completed": true,
+      "answer": "Failed to complete task after 3 errors"
+    },
+    {
+      "query": "Find quick recipes under 20 minutes",
+      "steps": 5,
+      "completed": false,
+      "answer": "Max steps (5) reached without completion"
+    }
+  ]
+}
