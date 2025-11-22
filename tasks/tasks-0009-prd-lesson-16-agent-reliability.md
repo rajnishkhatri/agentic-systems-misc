@@ -94,7 +94,7 @@
   - [x] 2.1 Set up test infrastructure (`test_reliability_components.py` with fixtures for mocks, temp dirs, sample schemas)
   - [x] 2.2 TDD: Retry Logic with Exponential Backoff (FR4.1) - Write 6 tests, implement async retry with backoff/jitter, defensive coding
   - [x] 2.3 TDD: Circuit Breaker Pattern (FR4.2) - Write 7 tests, implement state machine (CLOSED→OPEN→HALF_OPEN), fallback handling
-  - [ ] 2.4 TDD: Deterministic Checkpointing (FR4.3) - Write 7 tests, implement JSON serialization with Pydantic validation, idempotent saves
+  - [x] 2.4 TDD: Deterministic Checkpointing (FR4.3) - Write 7 tests, implement JSON serialization with Pydantic validation, idempotent saves
   - [ ] 2.5 TDD: Output Validation Schemas (FR4.4) - Write 6 tests, create InvoiceExtraction/FraudDetection schemas, custom validators
   - [ ] 2.6 TDD: Error Isolation (FR4.5) - Write 6 tests, implement Result[T,E] type, safe_agent_call wrapper, critical vs optional agents
   - [ ] 2.7 TDD: Audit Logging (FR4.6) - Write 6 tests, implement structured JSON logging, PII redaction, workflow tracing

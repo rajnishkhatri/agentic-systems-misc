@@ -410,7 +410,128 @@ async def test_should_use_fallback_when_provided() -> None:
 
 
 # =============================================================================
-# Task 2.4: Deterministic Checkpointing (7 tests)
+# Task 2.4: Deterministic Checkpointing (7 tests) - FR4.3
+# =============================================================================
+
+
+@pytest.mark.asyncio
+async def test_should_save_checkpoint_when_state_provided(temp_dir: Path) -> None:
+    """Test that checkpoint saves state to JSON file."""
+    from backend.reliability.checkpoint import save_checkpoint
+
+    state = {"step": 1, "vendor": "Acme Corp", "amount": 1234.56}
+    checkpoint_path = temp_dir / "checkpoint.json"
+
+    await save_checkpoint(state, checkpoint_path)
+
+    assert checkpoint_path.exists()
+    import json
+    saved_data = json.loads(checkpoint_path.read_text())
+    assert saved_data == state
+
+
+@pytest.mark.asyncio
+async def test_should_load_checkpoint_when_file_exists(temp_dir: Path) -> None:
+    """Test that checkpoint loads state from JSON file."""
+    from backend.reliability.checkpoint import load_checkpoint, save_checkpoint
+
+    original_state = {"step": 2, "vendor": "ACME Inc", "validated": True}
+    checkpoint_path = temp_dir / "checkpoint.json"
+
+    await save_checkpoint(original_state, checkpoint_path)
+    loaded_state = await load_checkpoint(checkpoint_path)
+
+    assert loaded_state == original_state
+
+
+@pytest.mark.asyncio
+async def test_should_return_none_when_checkpoint_missing(temp_dir: Path) -> None:
+    """Test that load_checkpoint returns None if file doesn't exist."""
+    from backend.reliability.checkpoint import load_checkpoint
+
+    checkpoint_path = temp_dir / "nonexistent.json"
+
+    result = await load_checkpoint(checkpoint_path)
+
+    assert result is None
+
+
+@pytest.mark.asyncio
+async def test_should_be_idempotent_when_saving_same_state(temp_dir: Path) -> None:
+    """Test that saving the same state multiple times produces identical file."""
+    from backend.reliability.checkpoint import save_checkpoint
+
+    state = {"step": 3, "data": [1, 2, 3]}
+    checkpoint_path = temp_dir / "idempotent.json"
+
+    # Save state twice
+    await save_checkpoint(state, checkpoint_path)
+    first_content = checkpoint_path.read_text()
+
+    await save_checkpoint(state, checkpoint_path)
+    second_content = checkpoint_path.read_text()
+
+    # Content should be identical (deterministic JSON serialization)
+    assert first_content == second_content
+
+
+@pytest.mark.asyncio
+async def test_should_validate_state_with_pydantic_when_schema_provided(
+    temp_dir: Path, sample_invoice_schema: type[BaseModel]
+) -> None:
+    """Test that checkpoint validates state against Pydantic schema."""
+    from backend.reliability.checkpoint import save_checkpoint
+
+    valid_state = {
+        "invoice_id": "INV-001",
+        "vendor": "Acme Corp",
+        "amount": 1234.56,
+        "date": "2024-01-15",
+        "line_items": [{"item": "Widget", "qty": 10}],
+    }
+    checkpoint_path = temp_dir / "validated.json"
+
+    # Should save successfully with valid state
+    await save_checkpoint(valid_state, checkpoint_path, schema=sample_invoice_schema)
+
+    assert checkpoint_path.exists()
+
+
+@pytest.mark.asyncio
+async def test_should_raise_validation_error_when_schema_violated(
+    temp_dir: Path, sample_invoice_schema: type[BaseModel]
+) -> None:
+    """Test that checkpoint raises ValidationError for invalid state."""
+    from pydantic import ValidationError
+
+    from backend.reliability.checkpoint import save_checkpoint
+
+    invalid_state = {
+        "invoice_id": "INV-001",
+        # Missing required fields: vendor, amount, date, line_items
+    }
+    checkpoint_path = temp_dir / "invalid.json"
+
+    with pytest.raises(ValidationError):
+        await save_checkpoint(invalid_state, checkpoint_path, schema=sample_invoice_schema)
+
+
+@pytest.mark.asyncio
+async def test_should_create_parent_directories_when_missing(temp_dir: Path) -> None:
+    """Test that save_checkpoint creates parent directories if they don't exist."""
+    from backend.reliability.checkpoint import save_checkpoint
+
+    state = {"step": 1, "data": "test"}
+    # Nested path that doesn't exist yet
+    checkpoint_path = temp_dir / "nested" / "dirs" / "checkpoint.json"
+
+    await save_checkpoint(state, checkpoint_path)
+
+    assert checkpoint_path.exists()
+    assert checkpoint_path.parent.exists()
+
+
+# =============================================================================
 # Task 2.5: Output Validation Schemas (6 tests)
 # Task 2.6: Error Isolation (6 tests)
 # Task 2.7: Audit Logging (6 tests)
