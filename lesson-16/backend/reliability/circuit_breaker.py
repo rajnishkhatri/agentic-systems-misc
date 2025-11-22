@@ -67,7 +67,7 @@ class CircuitBreaker:
         # Type checking
         if not isinstance(failure_threshold, int):
             raise TypeError("failure_threshold must be an integer")
-        if not isinstance(timeout, (int, float)):
+        if not isinstance(timeout, int | float):
             raise TypeError("timeout must be a number")
 
         # Input validation

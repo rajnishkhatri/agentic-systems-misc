@@ -31,6 +31,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -182,7 +183,7 @@ class AuditLogger:
         redacted = data.copy()
 
         # Define PII field patterns and redaction rules
-        pii_patterns = {
+        pii_patterns: dict[str, Callable[[str], str]] = {
             "ssn": lambda s: self._mask_string(s, keep_start=3, keep_end=3),
             "credit_card": lambda s: self._mask_string(s, keep_start=3, keep_end=3),
             "phone": lambda s: self._mask_string(s, keep_start=3, keep_end=3),

@@ -934,14 +934,630 @@ def test_should_validate_input_types_and_raise_errors_for_invalid_data() -> None
 
 
 # =============================================================================
-# Task 2.8: Fallback Strategies (5 tests)
-# Task 2.9: Integration tests (4 tests)
+# Task 2.8: Fallback Strategies (FR4.7) - 5 Tests
+# =============================================================================
 
 
-def test_infrastructure_setup_complete() -> None:
-    """Verify test infrastructure is properly configured.
+def test_should_return_cached_value_when_agent_fails_with_cache_fallback() -> None:
+    """Test cache fallback strategy returns cached value on agent failure."""
+    from backend.reliability.fallback import FallbackHandler, FallbackStrategy
 
-    This meta-test ensures all fixtures are available.
+    handler = FallbackHandler(strategy=FallbackStrategy.CACHE)
+
+    # Simulate cached value
+    cache_key = "invoice_extract_inv123"
+    cached_value = {"vendor": "Acme Corp", "amount": 1500.00}
+    handler.set_cache(cache_key, cached_value, ttl_seconds=60)
+
+    # Simulate agent failure
+    def failing_agent() -> dict[str, Any]:
+        raise RuntimeError("LLM API timeout")
+
+    # Should return cached value instead of raising
+    result = handler.execute_with_fallback(failing_agent, cache_key=cache_key)
+    assert result == cached_value
+    assert handler.get_metrics()["fallback_triggered"] is True
+    assert handler.get_metrics()["fallback_source"] == "cache"
+
+
+def test_should_return_default_value_when_agent_fails_with_default_fallback() -> None:
+    """Test default fallback strategy returns predefined default value."""
+    from backend.reliability.fallback import FallbackHandler, FallbackStrategy
+
+    default_value = {"vendor": "Unknown", "amount": 0.0, "confidence": 0.0}
+    handler = FallbackHandler(strategy=FallbackStrategy.DEFAULT, default_value=default_value)
+
+    # Simulate agent failure
+    def failing_agent() -> dict[str, Any]:
+        raise ValueError("Invalid input format")
+
+    result = handler.execute_with_fallback(failing_agent)
+    assert result == default_value
+    assert handler.get_metrics()["fallback_triggered"] is True
+    assert handler.get_metrics()["fallback_source"] == "default"
+
+
+def test_should_skip_step_and_return_none_when_agent_fails_with_skip_fallback() -> None:
+    """Test skip fallback strategy returns None for optional agents."""
+    from backend.reliability.fallback import FallbackHandler, FallbackStrategy
+
+    handler = FallbackHandler(strategy=FallbackStrategy.SKIP)
+
+    # Simulate optional agent failure (e.g., sentiment analysis)
+    def failing_optional_agent() -> dict[str, Any]:
+        raise ConnectionError("Sentiment API unavailable")
+
+    result = handler.execute_with_fallback(failing_optional_agent)
+    assert result is None
+    assert handler.get_metrics()["fallback_triggered"] is True
+    assert handler.get_metrics()["fallback_source"] == "skip"
+    assert handler.get_metrics()["skipped"] is True
+
+
+def test_should_request_human_review_when_agent_fails_with_human_fallback() -> None:
+    """Test human-in-loop fallback creates review request."""
+    from backend.reliability.fallback import FallbackHandler, FallbackStrategy
+
+    handler = FallbackHandler(strategy=FallbackStrategy.HUMAN_IN_LOOP)
+
+    # Simulate high-stakes agent failure (e.g., fraud detection)
+    task_data = {"transaction_id": "TXN-12345", "amount": 25000.00}
+
+    def failing_critical_agent() -> dict[str, Any]:
+        raise ValueError("Ambiguous fraud pattern - confidence < 0.6")
+
+    result = handler.execute_with_fallback(failing_critical_agent, task_data=task_data)
+
+    # Should return review request instead of result
+    assert result["status"] == "pending_human_review"
+    assert result["task_data"] == task_data
+    assert "error" in result
+    assert handler.get_metrics()["fallback_triggered"] is True
+    assert handler.get_metrics()["fallback_source"] == "human_in_loop"
+    assert handler.get_metrics()["human_review_requested"] is True
+
+
+def test_should_raise_error_for_invalid_fallback_configuration() -> None:
+    """Test defensive coding with input validation for fallback strategies."""
+    from backend.reliability.fallback import FallbackHandler, FallbackStrategy
+
+    # Invalid strategy type
+    with pytest.raises(TypeError, match="strategy must be FallbackStrategy enum"):
+        FallbackHandler(strategy="cache")  # type: ignore
+
+    # DEFAULT strategy without default_value
+    with pytest.raises(ValueError, match="default_value required for DEFAULT strategy"):
+        FallbackHandler(strategy=FallbackStrategy.DEFAULT)
+
+    # Negative TTL for cache
+    handler = FallbackHandler(strategy=FallbackStrategy.CACHE)
+    with pytest.raises(ValueError, match="ttl_seconds must be positive"):
+        handler.set_cache("key", {"data": "value"}, ttl_seconds=-10)
+
+    # Invalid key type for set_cache
+    with pytest.raises(TypeError, match="key must be a string"):
+        handler.set_cache(123, {"data": "value"})  # type: ignore
+
+    # Cache fallback without cache_key
+    def failing_agent() -> dict[str, Any]:
+        raise RuntimeError("Error")
+
+    with pytest.raises(ValueError, match="cache_key required for CACHE fallback"):
+        handler.execute_with_fallback(failing_agent)
+
+    # Cache miss should raise
+    with pytest.raises(ValueError, match="Cache miss for key"):
+        handler.execute_with_fallback(failing_agent, cache_key="nonexistent_key")
+
+
+def test_should_handle_cache_expiry_correctly() -> None:
+    """Test cache TTL expiration behavior."""
+    from backend.reliability.fallback import FallbackHandler, FallbackStrategy
+
+    handler = FallbackHandler(strategy=FallbackStrategy.CACHE)
+
+    # Set cache with very short TTL
+    handler.set_cache("test_key", {"value": 123}, ttl_seconds=1)
+
+    # Should retrieve immediately
+    assert handler.get_cache("test_key") == {"value": 123}
+
+    # Wait for expiry
+    time.sleep(1.1)
+
+    # Should return None after expiry
+    assert handler.get_cache("test_key") is None
+
+    # Non-existent key
+    assert handler.get_cache("nonexistent") is None
+
+
+def test_should_cache_successful_agent_result() -> None:
+    """Test that successful agent execution caches result with CACHE strategy."""
+    from backend.reliability.fallback import FallbackHandler, FallbackStrategy
+
+    handler = FallbackHandler(strategy=FallbackStrategy.CACHE)
+
+    cache_key = "success_test"
+    expected_result = {"vendor": "Success Corp", "amount": 999.99}
+
+    def successful_agent() -> dict[str, Any]:
+        return expected_result
+
+    # Execute and verify result
+    result = handler.execute_with_fallback(successful_agent, cache_key=cache_key)
+    assert result == expected_result
+
+    # Verify cached
+    cached = handler.get_cache(cache_key)
+    assert cached == expected_result
+
+    # Fallback should not be triggered
+    assert handler.get_metrics()["fallback_triggered"] is False
+
+
+def test_should_reset_metrics_correctly() -> None:
+    """Test metrics reset functionality."""
+    from backend.reliability.fallback import FallbackHandler, FallbackStrategy
+
+    handler = FallbackHandler(strategy=FallbackStrategy.SKIP)
+
+    # Trigger fallback
+    def failing_agent() -> dict[str, Any]:
+        raise RuntimeError("Error")
+
+    handler.execute_with_fallback(failing_agent)
+
+    # Verify metrics set
+    metrics = handler.get_metrics()
+    assert metrics["fallback_triggered"] is True
+    assert metrics["skipped"] is True
+
+    # Reset
+    handler.reset_metrics()
+
+    # Verify reset
+    metrics = handler.get_metrics()
+    assert metrics["fallback_triggered"] is False
+    assert metrics["fallback_source"] is None
+    assert metrics["skipped"] is False
+    assert metrics["human_review_requested"] is False
+
+
+# =============================================================================
+# Task 2.9: Integration tests (4 tests verifying all 7 components work together)
+# =============================================================================
+
+
+@pytest.mark.asyncio
+async def test_should_process_invoice_successfully_when_all_components_integrated(
+    temp_dir: Path,
+) -> None:
+    """Integration test: All 7 reliability components work together in invoice workflow.
+
+    This test demonstrates a complete invoice processing workflow using:
+    - FR4.1: Retry with exponential backoff
+    - FR4.2: Circuit breaker protection
+    - FR4.3: Deterministic checkpointing
+    - FR4.4: Pydantic validation
+    - FR4.5: Error isolation
+    - FR4.6: Audit logging
+    - FR4.7: Fallback strategies
+
+    Workflow:
+    1. Extract vendor from invoice (with retry)
+    2. Validate amount (with schema validation)
+    3. Route for approval (with checkpointing)
+    4. All steps protected by circuit breaker and audit logging
     """
-    # Test will pass if fixtures are properly defined
-    assert True
+    from backend.reliability.audit_log import AuditLogger
+    from backend.reliability.checkpoint import load_checkpoint, save_checkpoint
+    from backend.reliability.circuit_breaker import CircuitBreaker
+    from backend.reliability.fallback import FallbackHandler, FallbackStrategy
+    from backend.reliability.isolation import Result, safe_agent_call
+    from backend.reliability.retry import retry_with_backoff
+
+    # Setup components
+    circuit_breaker = CircuitBreaker(failure_threshold=3, timeout=5.0)
+    audit_logger = AuditLogger(workflow_id="invoice_001")
+    fallback_handler = FallbackHandler(
+        strategy=FallbackStrategy.DEFAULT, default_value={"vendor": "Unknown", "amount": 0.0}
+    )
+
+    # Workflow state
+    workflow_id = "invoice_001"
+    state: dict[str, Any] = {
+        "workflow_id": workflow_id,
+        "invoice_text": "Invoice from Acme Corp for $1,234.56",
+        "step": 0,
+    }
+
+    # Step 1: Extract vendor with retry and circuit breaker
+    async def extract_vendor(invoice_text: str) -> dict[str, Any]:
+        """Extract vendor from invoice with retry protection."""
+        return {"vendor": "Acme Corp", "confidence": 0.95}
+
+    # Execute step 1 with circuit breaker and retry
+    result = await circuit_breaker.call(
+        retry_with_backoff, extract_vendor, state["invoice_text"], max_retries=2, base_delay=0.01
+    )
+    state["vendor_data"] = result
+    state["step"] = 1
+
+    # Log step 1
+    audit_logger.log_step(
+        agent_name="vendor_extractor",
+        step="extract_vendor",
+        input_data={"invoice_text": state["invoice_text"]},
+        output=result,
+        duration_ms=100,
+    )
+
+    # Checkpoint after step 1
+    checkpoint_path_1 = temp_dir / f"{workflow_id}_step1.json"
+    await save_checkpoint(state, checkpoint_path_1)
+
+    # Step 2: Validate amount with Pydantic schema
+    class AmountValidation(BaseModel):
+        """Schema for amount validation."""
+
+        amount: float
+        currency: str = "USD"
+
+        class Config:
+            """Pydantic config."""
+
+            frozen = True
+
+    def validate_amount(invoice_text: str) -> dict[str, Any]:
+        """Extract and validate amount."""
+        # Simulate extraction
+        amount_data = AmountValidation(amount=1234.56, currency="USD")
+        return amount_data.model_dump()
+
+    # Execute step 2 with error isolation
+    async def validate_amount_async(input_data: dict[str, Any]) -> dict[str, Any]:
+        """Extract and validate amount."""
+        invoice_text = input_data.get("invoice_text", "")
+        # Simulate extraction
+        amount_data = AmountValidation(amount=1234.56, currency="USD")
+        return amount_data.model_dump()
+
+    amount_result: Result[dict[str, Any], Exception] = await safe_agent_call(
+        validate_amount_async,
+        agent_name="amount_validator",
+        input_data={"invoice_text": state["invoice_text"]},
+    )
+
+    assert amount_result.is_success()
+    state["amount_data"] = amount_result.value
+    state["step"] = 2
+
+    # Log step 2
+    audit_logger.log_step(
+        agent_name="amount_validator",
+        step="validate_amount",
+        input_data={"invoice_text": state["invoice_text"]},
+        output=state["amount_data"],
+        duration_ms=75,
+    )
+
+    # Checkpoint after step 2
+    checkpoint_path_2 = temp_dir / f"{workflow_id}_step2.json"
+    await save_checkpoint(state, checkpoint_path_2)
+
+    # Step 3: Route for approval with fallback
+    def route_approval(amount: float) -> dict[str, Any]:
+        """Route invoice for approval based on amount."""
+        if amount > 10000:
+            return {"approver": "CFO", "priority": "high"}
+        elif amount > 1000:
+            return {"approver": "Manager", "priority": "medium"}
+        return {"approver": "Supervisor", "priority": "low"}
+
+    # Execute step 3 with fallback protection
+    routing_result = fallback_handler.execute_with_fallback(
+        lambda: route_approval(state["amount_data"]["amount"])
+    )
+    state["routing"] = routing_result
+    state["step"] = 3
+
+    # Log step 3
+    audit_logger.log_step(
+        agent_name="approval_router",
+        step="route_approval",
+        input_data={"amount": state["amount_data"]["amount"]},
+        output=routing_result,
+        duration_ms=50,
+    )
+
+    # Final checkpoint
+    checkpoint_path_3 = temp_dir / f"{workflow_id}_step3.json"
+    await save_checkpoint(state, checkpoint_path_3)
+
+    # Verify workflow completed successfully
+    assert state["step"] == 3
+    assert state["vendor_data"]["vendor"] == "Acme Corp"
+    assert state["amount_data"]["amount"] == 1234.56
+    assert state["routing"]["approver"] == "Manager"
+
+    # Verify all checkpoints saved
+    assert checkpoint_path_1.exists()
+    assert checkpoint_path_2.exists()
+    assert checkpoint_path_3.exists()
+
+    # Verify checkpoint contents
+    loaded_state_1 = await load_checkpoint(checkpoint_path_1)
+    assert loaded_state_1 is not None
+    assert loaded_state_1["step"] == 1
+
+    # Verify audit logs created
+    trace = audit_logger.get_workflow_trace()
+    assert len(trace) == 3
+    assert trace[0]["agent_name"] == "vendor_extractor"
+    assert trace[1]["agent_name"] == "amount_validator"
+    assert trace[2]["agent_name"] == "approval_router"
+
+    # Verify circuit breaker stayed closed
+    assert circuit_breaker.state == "CLOSED"
+
+
+@pytest.mark.asyncio
+async def test_should_recover_from_checkpoint_when_workflow_fails_midway(
+    temp_dir: Path,
+) -> None:
+    """Integration test: Workflow recovery from checkpoint after failure.
+
+    Demonstrates:
+    - FR4.3: Deterministic checkpointing allows workflow resumption
+    - FR4.1: Retry logic helps recover from transient failures
+    - FR4.6: Audit logs track recovery attempts
+    """
+    from backend.reliability.audit_log import AuditLogger
+    from backend.reliability.checkpoint import load_checkpoint, save_checkpoint
+    from backend.reliability.retry import retry_with_backoff
+
+    audit_logger = AuditLogger(workflow_id="invoice_002")
+    workflow_id = "invoice_002"
+
+    # Initial workflow execution - save checkpoint at step 1
+    state_step1: dict[str, Any] = {
+        "workflow_id": workflow_id,
+        "vendor": "TechCorp",
+        "amount": 5000.0,
+        "step": 1,
+    }
+    checkpoint_path_1 = temp_dir / f"{workflow_id}_step1.json"
+    await save_checkpoint(state_step1, checkpoint_path_1)
+
+    audit_logger.log_step(
+        agent_name="vendor_extractor",
+        step="extract_vendor",
+        input_data={"invoice_text": "Invoice from TechCorp"},
+        output={"vendor": "TechCorp"},
+        duration_ms=120,
+    )
+
+    # Simulate failure at step 2 (before checkpoint)
+    # Agent crashes, workflow interrupted
+
+    # Recovery: Load from last checkpoint
+    loaded_state = await load_checkpoint(checkpoint_path_1)
+    assert loaded_state is not None
+    assert loaded_state["vendor"] == "TechCorp"
+    assert loaded_state["step"] == 1
+
+    # Resume from step 2 with retry protection
+    attempt_counter = {"count": 0}
+
+    async def process_amount(amount: float) -> dict[str, Any]:
+        """Process amount with retry protection."""
+        attempt_counter["count"] += 1
+
+        # Fail first 2 attempts, succeed on 3rd
+        if attempt_counter["count"] < 3:
+            raise RuntimeError(f"Transient error (attempt {attempt_counter['count']})")
+
+        return {"processed_amount": amount * 1.05, "tax_included": True}
+
+    # Execute with retry
+    result = await retry_with_backoff(
+        process_amount, loaded_state["amount"], max_retries=3, base_delay=0.01
+    )
+    loaded_state["processed_amount"] = result["processed_amount"]
+    loaded_state["step"] = 2
+
+    # Save checkpoint after successful recovery
+    checkpoint_path_2 = temp_dir / f"{workflow_id}_step2.json"
+    await save_checkpoint(loaded_state, checkpoint_path_2)
+
+    audit_logger.log_step(
+        agent_name="amount_processor",
+        step="process_amount",
+        input_data={"amount": loaded_state["amount"]},
+        output=result,
+        duration_ms=180,
+    )
+
+    # Verify recovery successful
+    assert loaded_state["step"] == 2
+    assert loaded_state["processed_amount"] == 5250.0  # 5000 * 1.05
+
+    # Verify both checkpoints exist
+    assert checkpoint_path_1.exists()
+    assert checkpoint_path_2.exists()
+
+    # Verify audit trail shows recovery
+    trace = audit_logger.get_workflow_trace()
+    assert len(trace) == 2
+    assert trace[0]["step"] == "extract_vendor"
+    assert trace[1]["step"] == "process_amount"
+
+
+@pytest.mark.asyncio
+async def test_should_isolate_errors_when_optional_agent_fails(temp_dir: Path) -> None:
+    """Integration test: Error isolation prevents optional agent failure from crashing workflow.
+
+    Demonstrates:
+    - FR4.5: Error isolation with Result types
+    - FR4.7: Fallback strategies for graceful degradation
+    - FR4.6: Audit logs track partial failures
+    - FR4.3: Checkpointing continues despite optional failures
+    """
+    from backend.reliability.audit_log import AuditLogger
+    from backend.reliability.checkpoint import save_checkpoint
+    from backend.reliability.fallback import FallbackHandler, FallbackStrategy
+    from backend.reliability.isolation import safe_agent_call
+
+    audit_logger = AuditLogger(workflow_id="invoice_003")
+    fallback_handler = FallbackHandler(
+        strategy=FallbackStrategy.DEFAULT, default_value={"enrichment": "unavailable"}
+    )
+    workflow_id = "invoice_003"
+
+    # Workflow state
+    state: dict[str, Any] = {"workflow_id": workflow_id, "vendor": "SupplyCo", "amount": 2500.0}
+
+    # Critical agent: Must succeed
+    async def extract_invoice_number(input_data: dict[str, Any]) -> dict[str, Any]:
+        """Critical agent - extract invoice number."""
+        vendor = input_data.get("vendor", "")
+        return {"invoice_number": "INV-2024-001", "vendor": vendor}
+
+    critical_result = await safe_agent_call(
+        extract_invoice_number,
+        agent_name="invoice_number_extractor",
+        input_data={"vendor": state["vendor"]},
+    )
+    assert critical_result.is_success()
+    state["invoice_data"] = critical_result.value
+
+    # Checkpoint after critical step
+    checkpoint_path_1 = temp_dir / f"{workflow_id}_step1.json"
+    await save_checkpoint(state, checkpoint_path_1)
+
+    audit_logger.log_step(
+        agent_name="invoice_number_extractor",
+        step="extract_invoice_number",
+        input_data={"vendor": state["vendor"]},
+        output=critical_result.value,
+        duration_ms=90,
+    )
+
+    # Optional agent: Failure should be isolated
+    async def enrich_vendor_data(input_data: dict[str, Any]) -> dict[str, Any]:
+        """Optional agent - enrich vendor data (may fail)."""
+        raise RuntimeError("External API unavailable")
+
+    optional_result = await safe_agent_call(
+        enrich_vendor_data,
+        agent_name="vendor_enricher",
+        input_data={"vendor": state["vendor"]},
+    )
+    assert optional_result.is_failure()
+    assert "External API unavailable" in str(optional_result.error)
+
+    # Use fallback for optional agent failure
+    def sync_enrich_vendor() -> dict[str, Any]:
+        """Sync wrapper that raises same error."""
+        raise RuntimeError("External API unavailable")
+
+    state["vendor_enrichment"] = fallback_handler.execute_with_fallback(sync_enrich_vendor)
+
+    # Checkpoint continues despite optional failure
+    checkpoint_path_2 = temp_dir / f"{workflow_id}_step2.json"
+    await save_checkpoint(state, checkpoint_path_2)
+
+    audit_logger.log_step(
+        agent_name="vendor_enricher",
+        step="enrich_vendor",
+        input_data={"vendor": state["vendor"]},
+        output=state["vendor_enrichment"],
+        duration_ms=200,
+        error=RuntimeError("External API unavailable"),
+    )
+
+    # Verify workflow completed with graceful degradation
+    assert state["invoice_data"]["invoice_number"] == "INV-2024-001"
+    assert state["vendor_enrichment"]["enrichment"] == "unavailable"  # Fallback value
+
+    # Verify checkpoints saved
+    assert checkpoint_path_1.exists()
+    assert checkpoint_path_2.exists()
+
+    # Verify audit logs show both success and fallback
+    trace = audit_logger.get_workflow_trace()
+    assert len(trace) == 2
+    assert trace[0]["agent_name"] == "invoice_number_extractor"
+    assert trace[0]["error"] is None
+    assert trace[1]["agent_name"] == "vendor_enricher"
+    assert "External API unavailable" in trace[1]["error"]
+
+
+@pytest.mark.asyncio
+async def test_should_open_circuit_breaker_when_cascading_failures_detected(
+    temp_dir: Path,
+) -> None:
+    """Integration test: Circuit breaker prevents cascading failures across agents.
+
+    Demonstrates:
+    - FR4.2: Circuit breaker opens after threshold failures
+    - FR4.1: Retry attempts exhaust before circuit opens
+    - FR4.6: Audit logs track failure cascade
+    - FR4.7: Fallback activated when circuit open
+    """
+    from backend.reliability.audit_log import AuditLogger
+    from backend.reliability.circuit_breaker import CircuitBreaker, CircuitBreakerOpenError
+    from backend.reliability.fallback import FallbackHandler, FallbackStrategy
+    from backend.reliability.retry import retry_with_backoff
+
+    circuit_breaker = CircuitBreaker(failure_threshold=3, timeout=1.0)
+    audit_logger = AuditLogger(workflow_id="invoice_004")
+    fallback_handler = FallbackHandler(strategy=FallbackStrategy.SKIP)
+    workflow_id = "invoice_004"
+
+    # Agent that always fails (simulating external API down)
+    async def failing_external_api(invoice_id: str) -> dict[str, Any]:
+        """External API call that always fails."""
+        raise RuntimeError("External service unavailable")
+
+    # Execute multiple failing calls to trigger circuit breaker
+    failure_count = 0
+    for i in range(5):
+        try:
+            await circuit_breaker.call(
+                retry_with_backoff, failing_external_api, f"INV-{i:03d}", max_retries=1, base_delay=0.01
+            )
+        except (RuntimeError, CircuitBreakerOpenError) as e:
+            failure_count += 1
+            # Only log if not already open (avoid logging rejected calls)
+            if not isinstance(e, CircuitBreakerOpenError):
+                audit_logger.log_step(
+                    agent_name="external_api",
+                    step=f"call_{i + 1}",
+                    input_data={"invoice_id": f"INV-{i:03d}"},
+                    output=None,
+                    duration_ms=50,
+                    error=RuntimeError("External service unavailable"),
+                )
+
+    # Verify circuit breaker opened after threshold
+    assert circuit_breaker.state == "OPEN"
+    assert failure_count >= 3  # At least threshold failures
+
+    # Verify audit logs captured failures (only up to circuit open point)
+    trace = audit_logger.get_workflow_trace()
+    assert len(trace) >= 3  # At least threshold failures logged
+    assert all("External service unavailable" in log["error"] for log in trace)
+
+    # Verify workflow can continue with fallback (circuit breaker blocks further calls)
+    with pytest.raises(CircuitBreakerOpenError, match="Circuit breaker is OPEN"):
+        await circuit_breaker.call(failing_external_api, "INV-999")
+
+    # Fallback strategy allows workflow to continue
+    def sync_failing_api() -> dict[str, Any]:
+        """Sync wrapper for failing API."""
+        raise RuntimeError("External service unavailable")
+
+    fallback_result = fallback_handler.execute_with_fallback(sync_failing_api)
+    assert fallback_result is None  # SKIP strategy returns None

@@ -19,14 +19,13 @@ Usage:
 """
 
 # Task 2.0 Components - Progressive exports as modules are implemented
-from .retry import retry_with_backoff
-from .circuit_breaker import CircuitBreaker, CircuitBreakerOpenError
-from .checkpoint import save_checkpoint, load_checkpoint
-from .validation import InvoiceExtraction, FraudDetection
-from .isolation import Result, safe_agent_call
 from .audit_log import AuditLogger
-
-# from .fallback import FallbackStrategy
+from .checkpoint import load_checkpoint, save_checkpoint
+from .circuit_breaker import CircuitBreaker, CircuitBreakerOpenError
+from .fallback import FallbackHandler, FallbackStrategy
+from .isolation import Result, safe_agent_call
+from .retry import retry_with_backoff
+from .validation import FraudDetection, InvoiceExtraction
 
 __all__ = [
     # Task 2.2 - Retry Logic (FR4.1)
@@ -45,5 +44,7 @@ __all__ = [
     "safe_agent_call",
     # Task 2.7 - Audit Logging (FR4.6)
     "AuditLogger",
-    # "FallbackStrategy",
+    # Task 2.8 - Fallback Strategies (FR4.7)
+    "FallbackStrategy",
+    "FallbackHandler",
 ]

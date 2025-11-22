@@ -26,7 +26,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from pydantic import BaseModel, ValidationError
 
@@ -95,6 +95,6 @@ async def load_checkpoint(checkpoint_path: Path) -> dict[str, Any] | None:
 
     # Read and parse JSON
     json_content = checkpoint_path.read_text()
-    state = json.loads(json_content)
+    state = cast(dict[str, Any], json.loads(json_content))
 
     return state

@@ -501,15 +501,164 @@ def test_should_raise_when_invalid_workflow_type(workflow_state_factory: Callabl
 
 
 # =============================================================================
-# Placeholder Tests for Task 3.2-3.7 (Orchestration Patterns)
+# Task 3.2: Abstract Base Class Tests (7 Tests)
+# =============================================================================
+
+
+def test_should_raise_when_orchestrator_abc_instantiated_directly() -> None:
+    """Test that Orchestrator ABC cannot be instantiated without implementing abstract methods."""
+    from backend.orchestrators.base import Orchestrator
+
+    # Attempt to instantiate abstract class should raise TypeError
+    with pytest.raises(TypeError, match="Can't instantiate abstract class"):
+        Orchestrator(name="test_orchestrator")
+
+
+async def test_should_register_agent_when_register_agent_called() -> None:
+    """Test that orchestrator can register named agents."""
+    from backend.orchestrators.base import Orchestrator
+
+    # Create a minimal concrete implementation for testing
+    class TestOrchestrator(Orchestrator):
+        async def _execute(self, task: dict[str, Any]) -> dict[str, Any]:
+            return {"status": "success"}
+
+    orchestrator = TestOrchestrator(name="test")
+    mock_agent = AsyncMock(return_value={"result": "test"})
+
+    # Register agent
+    orchestrator.register_agent("test_agent", mock_agent)
+
+    # Verify agent is registered
+    assert "test_agent" in orchestrator.agents
+    assert orchestrator.agents["test_agent"] is mock_agent
+
+
+async def test_should_aggregate_results_when_aggregate_results_called() -> None:
+    """Test that orchestrator aggregates multiple agent results."""
+    from backend.orchestrators.base import Orchestrator
+
+    class TestOrchestrator(Orchestrator):
+        async def _execute(self, task: dict[str, Any]) -> dict[str, Any]:
+            return {"status": "success"}
+
+    orchestrator = TestOrchestrator(name="test")
+
+    # Create sample results
+    results = [
+        {"agent": "agent1", "output": "result1", "status": "success"},
+        {"agent": "agent2", "output": "result2", "status": "success"},
+        {"agent": "agent3", "output": "result3", "status": "success"},
+    ]
+
+    # Aggregate results
+    aggregated = orchestrator.aggregate_results(results)
+
+    # Verify aggregation
+    assert "results" in aggregated
+    assert len(aggregated["results"]) == 3
+    assert aggregated["total_agents"] == 3
+    assert aggregated["successful_agents"] == 3
+
+
+async def test_should_log_execution_when_log_step_called() -> None:
+    """Test that orchestrator logs execution steps."""
+    from backend.orchestrators.base import Orchestrator
+
+    class TestOrchestrator(Orchestrator):
+        async def _execute(self, task: dict[str, Any]) -> dict[str, Any]:
+            return {"status": "success"}
+
+    orchestrator = TestOrchestrator(name="test")
+
+    # Log execution step
+    orchestrator.log_step(step="step_1", status="success", output={"data": "test"})
+
+    # Verify log entry
+    assert len(orchestrator.execution_log) == 1
+    assert orchestrator.execution_log[0]["step"] == "step_1"
+    assert orchestrator.execution_log[0]["status"] == "success"
+    assert "timestamp" in orchestrator.execution_log[0]
+
+
+async def test_should_integrate_retry_when_retry_configured(mock_intermittent_agent: Callable) -> None:
+    """Test that orchestrator integrates retry logic from reliability framework."""
+    from backend.orchestrators.base import Orchestrator
+
+    class TestOrchestrator(Orchestrator):
+        async def _execute(self, task: dict[str, Any]) -> dict[str, Any]:
+            # Use retry wrapper
+            agent = self.agents["test_agent"]
+            result = await self.with_retry(agent, task)
+            return result
+
+    orchestrator = TestOrchestrator(name="test")
+
+    # Register agent that fails 2 times then succeeds
+    failing_agent = mock_intermittent_agent(2)
+    orchestrator.register_agent("test_agent", failing_agent)
+
+    # Execute with retry
+    task = {"task_id": "test"}
+    result = await orchestrator.execute(task)
+
+    # Verify retry succeeded
+    assert result["status"] == "success"
+    assert result["result"] == "Recovered after retries"
+    assert failing_agent.call_count == 3  # 2 failures + 1 success
+
+
+async def test_should_integrate_circuit_breaker_when_breaker_configured(mock_failing_agent: AsyncMock) -> None:
+    """Test that orchestrator integrates circuit breaker from reliability framework."""
+    from backend.orchestrators.base import Orchestrator
+    from backend.reliability.circuit_breaker import CircuitBreakerOpenError
+
+    class TestOrchestrator(Orchestrator):
+        async def _execute(self, task: dict[str, Any]) -> dict[str, Any]:
+            agent = self.agents["test_agent"]
+            result = await self.with_circuit_breaker(agent, task)
+            return result
+
+    orchestrator = TestOrchestrator(name="test")
+    orchestrator.register_agent("test_agent", mock_failing_agent)
+
+    # Execute multiple times to trigger circuit breaker
+    task = {"task_id": "test"}
+
+    # First few failures should attempt call
+    for _ in range(3):
+        with pytest.raises(RuntimeError, match="Agent execution failed"):
+            await orchestrator.execute(task)
+
+    # Circuit breaker should now be OPEN - subsequent calls fail fast
+    with pytest.raises(CircuitBreakerOpenError, match="Circuit breaker is OPEN"):
+        await orchestrator.execute(task)
+
+
+async def test_should_validate_task_input_when_execute_called() -> None:
+    """Test that orchestrator validates task input before execution."""
+    from backend.orchestrators.base import Orchestrator
+
+    class TestOrchestrator(Orchestrator):
+        async def _execute(self, task: dict[str, Any]) -> dict[str, Any]:
+            # Base class should validate before this runs
+            return {"status": "success"}
+
+    orchestrator = TestOrchestrator(name="test")
+
+    # Invalid task input - not a dict
+    with pytest.raises(TypeError, match="task must be a dictionary"):
+        await orchestrator.execute("not a dict")  # type: ignore
+
+    # Invalid task input - missing task_id
+    with pytest.raises(ValueError, match="task must contain 'task_id'"):
+        await orchestrator.execute({})
+
+
+# =============================================================================
+# Placeholder Tests for Task 3.3-3.7 (Orchestration Patterns)
 # =============================================================================
 # These tests will be implemented in subsequent subtasks following TDD methodology
-
-
-@pytest.mark.skip(reason="Task 3.2 - Abstract Base Class not yet implemented")
-def test_should_enforce_abstract_methods_when_orchestrator_instantiated() -> None:
-    """Test that Orchestrator ABC enforces execute() abstract method."""
-    pass
 
 
 @pytest.mark.skip(reason="Task 3.3 - Sequential Orchestrator not yet implemented")
