@@ -824,7 +824,7 @@ async def test_should_track_execution_log_when_steps_complete(
     orchestrator.register_agent("router", mock_agent_registry["router"])
 
     # Execute workflow
-    result = await orchestrator.execute(sample_invoice_task)
+    await orchestrator.execute(sample_invoice_task)
 
     # Verify execution log contains entries for all 3 steps
     assert len(orchestrator.execution_log) >= 3
@@ -1262,15 +1262,470 @@ async def test_should_raise_when_no_planner_registered(
 
 
 # =============================================================================
-# Placeholder Tests for Task 3.5-3.7 (Orchestration Patterns)
+# Task 3.5: Iterative Refinement (ReAct/Reflexion) Tests (9 Tests - FR3.3)
 # =============================================================================
-# These tests will be implemented in subsequent subtasks following TDD methodology
 
 
-@pytest.mark.skip(reason="Task 3.5 - Iterative Orchestrator not yet implemented")
-def test_should_refine_iteratively_when_iterative_orchestrator_runs() -> None:
+async def test_should_execute_action_reflection_refinement_loop_when_iterative_orchestrator_runs(
+    mock_reconciliation_agent: AsyncMock,
+    sample_reconciliation_task: dict[str, Any],
+) -> None:
     """Test that iterative orchestrator performs action-reflection-refinement loop."""
-    pass
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    orchestrator = IterativeOrchestrator(name="reconciliation_workflow", max_iterations=3)
+
+    # Configure agent to improve discrepancy each iteration
+    call_count = 0
+
+    async def iterative_agent(task: dict[str, Any]) -> dict[str, Any]:
+        nonlocal call_count
+        call_count += 1
+        # Improve discrepancy each iteration: 10.0 → 5.0 → 0.5 → converged
+        discrepancies = [10.0, 5.0, 0.5]
+        discrepancy = discrepancies[min(call_count - 1, len(discrepancies) - 1)]
+
+        return {
+            "status": "success",
+            "discrepancy_amount": discrepancy,
+            "match_confidence": 0.95 if discrepancy < 1.0 else 0.70,
+            "iteration": call_count,
+            "reflection": f"Reduced discrepancy to ${discrepancy}",
+        }
+
+    orchestrator.register_agent("reconciliation_agent", iterative_agent)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_reconciliation_task)
+
+    # Verify action-reflection-refinement loop executed
+    assert result["status"] == "success"
+    assert "iterations" in result
+    assert len(result["iterations"]) == 3  # 3 iterations to converge
+
+    # Verify convergence achieved
+    assert result["converged"] is True
+    assert result["final_discrepancy"] < 1.0
+
+
+async def test_should_enforce_max_iteration_limit_when_not_converged(
+    sample_reconciliation_task: dict[str, Any],
+) -> None:
+    """Test that iterative orchestrator enforces max iteration limit."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    orchestrator = IterativeOrchestrator(name="reconciliation_workflow", max_iterations=5)
+
+    # Create agent that never converges (always high discrepancy)
+    non_converging_agent = AsyncMock(
+        return_value={
+            "status": "success",
+            "discrepancy_amount": 100.0,  # Never converges
+            "match_confidence": 0.30,
+            "reflection": "Still high discrepancy",
+        }
+    )
+
+    orchestrator.register_agent("reconciliation_agent", non_converging_agent)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_reconciliation_task)
+
+    # Verify max iterations enforced
+    assert len(result["iterations"]) == 5  # Stopped at max_iterations
+    assert result["converged"] is False  # Did not converge
+    assert non_converging_agent.call_count == 5
+
+
+async def test_should_detect_convergence_when_discrepancy_below_threshold(
+    sample_reconciliation_task: dict[str, Any],
+) -> None:
+    """Test that iterative orchestrator detects convergence when criteria met."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    orchestrator = IterativeOrchestrator(
+        name="reconciliation_workflow",
+        max_iterations=5,
+        convergence_threshold=0.01,  # Converge when discrepancy < $0.01
+    )
+
+    # Create agent that converges in 2 iterations
+    call_count = 0
+
+    async def converging_agent(task: dict[str, Any]) -> dict[str, Any]:
+        nonlocal call_count
+        call_count += 1
+        # Iteration 1: 5.0, Iteration 2: 0.005 (converged)
+        discrepancies = [5.0, 0.005]
+        discrepancy = discrepancies[min(call_count - 1, len(discrepancies) - 1)]
+
+        return {
+            "status": "success",
+            "discrepancy_amount": discrepancy,
+            "match_confidence": 0.99 if discrepancy < 0.01 else 0.75,
+            "reflection": "Converged" if discrepancy < 0.01 else "Refining",
+        }
+
+    orchestrator.register_agent("reconciliation_agent", converging_agent)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_reconciliation_task)
+
+    # Verify early convergence (stopped at iteration 2, not 5)
+    assert result["converged"] is True
+    assert len(result["iterations"]) == 2  # Stopped early due to convergence
+    assert result["final_discrepancy"] < 0.01
+
+
+async def test_should_validate_progress_when_checking_refinement(
+    sample_reconciliation_task: dict[str, Any],
+) -> None:
+    """Test that iterative orchestrator validates progress between iterations."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    orchestrator = IterativeOrchestrator(name="reconciliation_workflow", max_iterations=4)
+
+    # Create agent that shows progressive improvement
+    iteration_discrepancies = [20.0, 15.0, 8.0, 2.0]  # Decreasing each iteration
+    call_count = 0
+
+    async def progressive_agent(task: dict[str, Any]) -> dict[str, Any]:
+        nonlocal call_count
+        discrepancy = iteration_discrepancies[call_count]
+        call_count += 1
+
+        return {
+            "status": "success",
+            "discrepancy_amount": discrepancy,
+            "match_confidence": 0.95 if discrepancy < 5.0 else 0.70,
+            "reflection": f"Iteration {call_count}: ${discrepancy}",
+        }
+
+    orchestrator.register_agent("reconciliation_agent", progressive_agent)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_reconciliation_task)
+
+    # Verify progress tracking
+    assert "iterations" in result
+    assert len(result["iterations"]) == 4
+
+    # Verify each iteration shows improvement
+    for i in range(1, len(result["iterations"])):
+        prev_discrepancy = result["iterations"][i - 1]["discrepancy_amount"]
+        curr_discrepancy = result["iterations"][i]["discrepancy_amount"]
+        assert curr_discrepancy < prev_discrepancy, f"No progress at iteration {i}"
+
+
+async def test_should_pass_reflection_to_next_iteration_when_refining(
+    sample_reconciliation_task: dict[str, Any],
+) -> None:
+    """Test that iterative orchestrator passes reflection context to next iteration."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    orchestrator = IterativeOrchestrator(name="reconciliation_workflow", max_iterations=3)
+
+    # Track task passed to agent at each iteration
+    task_history = []
+
+    async def reflection_agent(task: dict[str, Any]) -> dict[str, Any]:
+        task_history.append(task)
+
+        iteration_num = len(task_history)
+        return {
+            "status": "success",
+            "discrepancy_amount": 10.0 / iteration_num,  # Improve each iteration
+            "reflection": f"Iteration {iteration_num} reflection: Try adjusting date",
+        }
+
+    orchestrator.register_agent("reconciliation_agent", reflection_agent)
+
+    # Execute workflow
+    await orchestrator.execute(sample_reconciliation_task)
+
+    # Verify reflection passed to subsequent iterations
+    assert len(task_history) >= 2
+
+    # Second iteration should have reflection from first
+    second_iteration_task = task_history[1]
+    assert "previous_reflection" in second_iteration_task
+    assert "Iteration 1 reflection" in second_iteration_task["previous_reflection"]
+
+
+async def test_should_handle_account_reconciliation_use_case_when_complete_workflow(
+    sample_reconciliation_task: dict[str, Any],
+) -> None:
+    """Test iterative orchestrator with complete account reconciliation workflow."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    orchestrator = IterativeOrchestrator(
+        name="account_reconciliation",
+        max_iterations=3,
+        convergence_threshold=0.01,
+    )
+
+    # Simulate realistic reconciliation: date mismatch resolved iteratively
+    iteration_count = 0
+
+    async def reconciliation_agent(task: dict[str, Any]) -> dict[str, Any]:
+        nonlocal iteration_count
+        iteration_count += 1
+
+        # Iteration 1: Detect date mismatch (discrepancy $1234.56)
+        # Iteration 2: Adjust for posting date offset (discrepancy $0.06 - rounding)
+        # Iteration 3: Apply rounding adjustment (discrepancy $0.00 - converged)
+        scenarios = [
+            {
+                "discrepancy_amount": 1234.56,
+                "resolution_status": "date_mismatch_detected",
+                "reflection": "Bank date 2024-11-20 vs Ledger date 2024-11-22 - posting date offset",
+            },
+            {
+                "discrepancy_amount": 0.06,
+                "resolution_status": "amount_rounding_issue",
+                "reflection": "Bank $1234.50 vs Ledger $1234.56 - rounding difference",
+            },
+            {
+                "discrepancy_amount": 0.00,
+                "resolution_status": "perfect_match",
+                "reflection": "Matched after date+amount adjustments",
+            },
+        ]
+
+        scenario = scenarios[min(iteration_count - 1, len(scenarios) - 1)]
+
+        return {
+            "status": "success",
+            "bank_transaction_id": "BANK-001",
+            "ledger_entry_id": "LED-001",
+            "discrepancy_amount": scenario["discrepancy_amount"],
+            "resolution_status": scenario["resolution_status"],
+            "match_confidence": 0.99 if scenario["discrepancy_amount"] < 0.01 else 0.80,
+            "reflection": scenario["reflection"],
+        }
+
+    orchestrator.register_agent("reconciliation_agent", reconciliation_agent)
+
+    # Execute complete workflow
+    result = await orchestrator.execute(sample_reconciliation_task)
+
+    # Verify workflow completed successfully
+    assert result["status"] == "success"
+    assert result["converged"] is True
+    assert len(result["iterations"]) == 3  # 3 iterations to resolve
+
+    # Verify final reconciliation match
+    assert result["final_discrepancy"] < 0.01
+    assert result["resolution_status"] == "perfect_match"
+
+
+async def test_should_stop_when_convergence_achieved_early(
+    sample_reconciliation_task: dict[str, Any],
+) -> None:
+    """Test that iterative orchestrator stops early when convergence achieved."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    orchestrator = IterativeOrchestrator(
+        name="reconciliation_workflow",
+        max_iterations=10,  # High limit
+        convergence_threshold=0.01,
+    )
+
+    # Agent converges in 2 iterations
+    call_count = 0
+
+    async def fast_converging_agent(task: dict[str, Any]) -> dict[str, Any]:
+        nonlocal call_count
+        call_count += 1
+
+        # Iteration 1: 50.0, Iteration 2: 0.001 (converged)
+        discrepancy = 50.0 if call_count == 1 else 0.001
+
+        return {
+            "status": "success",
+            "discrepancy_amount": discrepancy,
+            "reflection": "Converged" if discrepancy < 0.01 else "Refining",
+        }
+
+    orchestrator.register_agent("reconciliation_agent", fast_converging_agent)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_reconciliation_task)
+
+    # Verify early stop (2 iterations, not 10)
+    assert result["converged"] is True
+    assert len(result["iterations"]) == 2
+    assert call_count == 2  # Agent called only 2 times
+
+
+async def test_should_track_iteration_history_when_refining(
+    sample_reconciliation_task: dict[str, Any],
+) -> None:
+    """Test that iterative orchestrator tracks complete iteration history."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    orchestrator = IterativeOrchestrator(name="reconciliation_workflow", max_iterations=4)
+
+    iteration_num = 0
+
+    async def tracking_agent(task: dict[str, Any]) -> dict[str, Any]:
+        nonlocal iteration_num
+        iteration_num += 1
+
+        return {
+            "status": "success",
+            "iteration": iteration_num,
+            "discrepancy_amount": 20.0 / iteration_num,
+            "reflection": f"Iteration {iteration_num} complete",
+            "action_taken": f"Adjustment {iteration_num}",
+        }
+
+    orchestrator.register_agent("reconciliation_agent", tracking_agent)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_reconciliation_task)
+
+    # Verify iteration history tracked
+    assert "iterations" in result
+    assert len(result["iterations"]) == 4
+
+    # Verify each iteration has required fields
+    for i, iteration in enumerate(result["iterations"]):
+        assert iteration["iteration"] == i + 1
+        assert "discrepancy_amount" in iteration
+        assert "reflection" in iteration
+        assert "action_taken" in iteration
+
+
+async def test_should_raise_when_no_agent_registered_for_iterative_orchestrator(
+    sample_reconciliation_task: dict[str, Any],
+) -> None:
+    """Test that iterative orchestrator raises error when no agent registered."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    orchestrator = IterativeOrchestrator(name="empty_workflow")
+
+    # Attempt to execute without registered agent
+    with pytest.raises(ValueError, match="No agents registered"):
+        await orchestrator.execute(sample_reconciliation_task)
+
+
+async def test_should_raise_when_max_iterations_invalid() -> None:
+    """Test that iterative orchestrator validates max_iterations parameter."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    # Test invalid type
+    with pytest.raises(TypeError, match="max_iterations must be an integer"):
+        IterativeOrchestrator(name="test", max_iterations="invalid")  # type: ignore
+
+    # Test invalid value (< 1)
+    with pytest.raises(ValueError, match="max_iterations must be at least 1"):
+        IterativeOrchestrator(name="test", max_iterations=0)
+
+
+async def test_should_raise_when_convergence_threshold_invalid() -> None:
+    """Test that iterative orchestrator validates convergence_threshold parameter."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    # Test invalid type
+    with pytest.raises(TypeError, match="convergence_threshold must be a number"):
+        IterativeOrchestrator(name="test", convergence_threshold="invalid")  # type: ignore
+
+    # Test invalid value (< 0)
+    with pytest.raises(ValueError, match="convergence_threshold must be non-negative"):
+        IterativeOrchestrator(name="test", convergence_threshold=-1.0)
+
+
+async def test_should_handle_agent_failure_during_iteration(
+    sample_reconciliation_task: dict[str, Any],
+) -> None:
+    """Test that iterative orchestrator handles agent failures during iteration."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    orchestrator = IterativeOrchestrator(name="reconciliation_workflow", max_iterations=3)
+
+    # Create agent that fails on iteration 2
+    call_count = 0
+
+    async def failing_agent(task: dict[str, Any]) -> dict[str, Any]:
+        nonlocal call_count
+        call_count += 1
+
+        if call_count == 2:
+            raise RuntimeError("Agent failed on iteration 2")
+
+        return {
+            "status": "success",
+            "discrepancy_amount": 10.0,
+            "reflection": f"Iteration {call_count}",
+        }
+
+    orchestrator.register_agent("reconciliation_agent", failing_agent)
+
+    # Execute workflow - should fail on iteration 2
+    with pytest.raises(RuntimeError, match="Agent failed on iteration 2"):
+        await orchestrator.execute(sample_reconciliation_task)
+
+    # Verify execution log contains failure
+    assert len(orchestrator.execution_log) == 2  # Iteration 1 success, iteration 2 failure
+    assert orchestrator.execution_log[1]["status"] == "failure"
+
+
+async def test_should_handle_missing_discrepancy_field_when_checking_convergence(
+    sample_reconciliation_task: dict[str, Any],
+) -> None:
+    """Test that convergence check handles missing discrepancy_amount field."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    orchestrator = IterativeOrchestrator(name="reconciliation_workflow", max_iterations=2)
+
+    # Create agent that returns output WITHOUT discrepancy_amount field
+    async def incomplete_agent(task: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "status": "success",
+            # Missing "discrepancy_amount" field
+            "reflection": "Processing",
+        }
+
+    orchestrator.register_agent("reconciliation_agent", incomplete_agent)
+
+    # Execute workflow - should run all iterations (no convergence without discrepancy field)
+    result = await orchestrator.execute(sample_reconciliation_task)
+
+    # Verify did not converge (missing field prevents convergence detection)
+    assert result["converged"] is False
+    assert len(result["iterations"]) == 2  # Ran all max_iterations
+
+
+async def test_should_handle_invalid_discrepancy_type_when_checking_convergence(
+    sample_reconciliation_task: dict[str, Any],
+) -> None:
+    """Test that convergence check handles invalid discrepancy_amount type."""
+    from backend.orchestrators.iterative import IterativeOrchestrator
+
+    orchestrator = IterativeOrchestrator(name="reconciliation_workflow", max_iterations=2)
+
+    # Create agent that returns non-numeric discrepancy_amount
+    async def invalid_type_agent(task: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "status": "success",
+            "discrepancy_amount": "not_a_number",  # Invalid type
+            "reflection": "Processing",
+        }
+
+    orchestrator.register_agent("reconciliation_agent", invalid_type_agent)
+
+    # Execute workflow - should run all iterations (invalid type prevents convergence detection)
+    result = await orchestrator.execute(sample_reconciliation_task)
+
+    # Verify did not converge (invalid type prevents convergence detection)
+    assert result["converged"] is False
+    assert len(result["iterations"]) == 2  # Ran all max_iterations
+
+
+# =============================================================================
+# Placeholder Tests for Task 3.6-3.7 (Orchestration Patterns)
+# =============================================================================
 
 
 @pytest.mark.skip(reason="Task 3.6 - State Machine Orchestrator not yet implemented")
