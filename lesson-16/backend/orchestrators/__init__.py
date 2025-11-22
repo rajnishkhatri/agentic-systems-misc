@@ -32,16 +32,20 @@ from .sequential import SequentialOrchestrator
 # Task 3.4: Hierarchical Orchestrator implemented
 from .hierarchical import HierarchicalOrchestrator
 
-# Task 3.5-3.7: Pattern implementations (to be completed)
-# from .iterative import IterativeOrchestrator
-# from .state_machine import StateMachineOrchestrator
-# from .voting import VotingOrchestrator
+# Task 3.5: Iterative Refinement Orchestrator implemented
+from .iterative import IterativeOrchestrator
+
+# Task 3.6: State Machine Orchestrator implemented
+from .state_machine import StateMachineOrchestrator
+
+# Task 3.7: Voting Orchestrator implemented
+from .voting import VotingOrchestrator
 
 __all__ = [
     "Orchestrator",
     "SequentialOrchestrator",
     "HierarchicalOrchestrator",
-    # "IterativeOrchestrator",
-    # "StateMachineOrchestrator",
-    # "VotingOrchestrator",
+    "IterativeOrchestrator",
+    "StateMachineOrchestrator",
+    "VotingOrchestrator",
 ]

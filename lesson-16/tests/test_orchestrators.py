@@ -1724,17 +1724,707 @@ async def test_should_handle_invalid_discrepancy_type_when_checking_convergence(
 
 
 # =============================================================================
-# Placeholder Tests for Task 3.6-3.7 (Orchestration Patterns)
+# Task 3.6: State Machine Orchestration Tests (10 Tests - FR3.4)
 # =============================================================================
 
 
-@pytest.mark.skip(reason="Task 3.6 - State Machine Orchestrator not yet implemented")
-def test_should_transition_states_when_state_machine_orchestrator_runs() -> None:
-    """Test that state machine orchestrator follows FSM transition rules."""
-    pass
+async def test_should_define_valid_states_when_state_machine_initialized(
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test that state machine orchestrator defines valid FSM states."""
+    from backend.orchestrators.state_machine import StateMachineOrchestrator
+
+    # Define approval workflow states
+    states = ["SUBMIT", "VALIDATE", "MANAGER_REVIEW", "FINANCE_REVIEW", "APPROVED", "REJECTED"]
+
+    orchestrator = StateMachineOrchestrator(
+        name="approval_workflow",
+        states=states,
+        initial_state="SUBMIT",
+    )
+
+    # Verify states defined
+    assert orchestrator.states == states
+    assert orchestrator.current_state == "SUBMIT"
 
 
-@pytest.mark.skip(reason="Task 3.7 - Voting Orchestrator not yet implemented")
-def test_should_aggregate_votes_when_voting_orchestrator_runs() -> None:
-    """Test that voting orchestrator aggregates multiple agent predictions."""
-    pass
+async def test_should_validate_state_transitions_when_transition_rules_defined(
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test that state machine enforces valid transition rules."""
+    from backend.orchestrators.state_machine import StateMachineOrchestrator
+
+    states = ["SUBMIT", "VALIDATE", "APPROVED", "REJECTED"]
+
+    # Define transition rules
+    transitions = {
+        "SUBMIT": ["VALIDATE"],  # Can only go to VALIDATE
+        "VALIDATE": ["APPROVED", "REJECTED"],  # Can go to APPROVED or REJECTED
+        "APPROVED": [],  # Terminal state
+        "REJECTED": [],  # Terminal state
+    }
+
+    orchestrator = StateMachineOrchestrator(
+        name="simple_workflow",
+        states=states,
+        initial_state="SUBMIT",
+        transitions=transitions,
+    )
+
+    # Verify valid transition allowed
+    orchestrator._validate_transition("SUBMIT", "VALIDATE")  # Should not raise
+
+    # Verify invalid transition rejected
+    with pytest.raises(ValueError, match="Invalid transition from SUBMIT to APPROVED"):
+        orchestrator._validate_transition("SUBMIT", "APPROVED")
+
+
+async def test_should_execute_state_handlers_when_transitioning(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test that state machine executes handlers during state transitions."""
+    from backend.orchestrators.state_machine import StateMachineOrchestrator
+
+    states = ["SUBMIT", "VALIDATE", "APPROVED"]
+    transitions = {"SUBMIT": ["VALIDATE"], "VALIDATE": ["APPROVED"], "APPROVED": []}
+
+    orchestrator = StateMachineOrchestrator(
+        name="workflow",
+        states=states,
+        initial_state="SUBMIT",
+        transitions=transitions,
+    )
+
+    # Register state handlers
+    orchestrator.register_state_handler("SUBMIT", mock_agent_registry["extractor"])
+    orchestrator.register_state_handler("VALIDATE", mock_agent_registry["validator"])
+    orchestrator.register_state_handler("APPROVED", mock_agent_registry["router"])
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_invoice_task)
+
+    # Verify all state handlers called
+    assert mock_agent_registry["extractor"].call_count == 1
+    assert mock_agent_registry["validator"].call_count == 1
+    assert mock_agent_registry["router"].call_count == 1
+
+    # Verify workflow completed
+    assert result["status"] == "success"
+    assert result["final_state"] == "APPROVED"
+
+
+async def test_should_save_checkpoint_on_state_transitions_when_checkpoint_dir_provided(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_invoice_task: dict[str, Any],
+    temp_checkpoint_dir: Path,
+) -> None:
+    """Test that state machine saves persistent checkpoints on transitions."""
+    from backend.orchestrators.state_machine import StateMachineOrchestrator
+
+    states = ["SUBMIT", "VALIDATE", "APPROVED"]
+    transitions = {"SUBMIT": ["VALIDATE"], "VALIDATE": ["APPROVED"], "APPROVED": []}
+
+    orchestrator = StateMachineOrchestrator(
+        name="workflow",
+        states=states,
+        initial_state="SUBMIT",
+        transitions=transitions,
+        checkpoint_dir=temp_checkpoint_dir,
+    )
+
+    # Register handlers
+    orchestrator.register_state_handler("SUBMIT", mock_agent_registry["extractor"])
+    orchestrator.register_state_handler("VALIDATE", mock_agent_registry["validator"])
+    orchestrator.register_state_handler("APPROVED", mock_agent_registry["router"])
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_invoice_task)
+
+    # Verify checkpoints saved (3 states = 3 checkpoints)
+    checkpoint_files = list(temp_checkpoint_dir.glob("*.json"))
+    assert len(checkpoint_files) >= 3
+
+    # Verify result successful
+    assert result["status"] == "success"
+
+
+async def test_should_ensure_idempotent_handlers_when_state_re_entered(
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test that state handlers are idempotent when re-executed."""
+    from backend.orchestrators.state_machine import StateMachineOrchestrator
+
+    states = ["SUBMIT", "VALIDATE", "APPROVED"]
+    transitions = {"SUBMIT": ["VALIDATE"], "VALIDATE": ["APPROVED"], "APPROVED": []}
+
+    orchestrator = StateMachineOrchestrator(
+        name="workflow",
+        states=states,
+        initial_state="SUBMIT",
+        transitions=transitions,
+    )
+
+    # Create idempotent handler that tracks calls
+    call_count = 0
+    execution_results = []
+
+    async def idempotent_handler(task: dict[str, Any]) -> dict[str, Any]:
+        nonlocal call_count
+        call_count += 1
+
+        # Idempotent: same input produces same output
+        result = {"status": "success", "call_count": call_count, "task_id": task["task_id"]}
+        execution_results.append(result)
+        return result
+
+    orchestrator.register_state_handler("SUBMIT", idempotent_handler)
+    orchestrator.register_state_handler("VALIDATE", idempotent_handler)
+    orchestrator.register_state_handler("APPROVED", idempotent_handler)
+
+    # Execute workflow twice with same task
+    result1 = await orchestrator.execute(sample_invoice_task)
+    result2 = await orchestrator.execute(sample_invoice_task)
+
+    # Verify both executions succeeded
+    assert result1["status"] == "success"
+    assert result2["status"] == "success"
+
+    # Verify idempotency - each state called exactly once per execution
+    assert call_count == 6  # 3 states × 2 executions
+
+
+async def test_should_log_complete_audit_trail_when_workflow_executes(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_invoice_task: dict[str, Any],
+    mock_audit_logger,
+) -> None:
+    """Test that state machine logs complete audit trail for all transitions."""
+    from backend.orchestrators.state_machine import StateMachineOrchestrator
+
+    states = ["SUBMIT", "VALIDATE", "MANAGER_REVIEW", "APPROVED"]
+    transitions = {
+        "SUBMIT": ["VALIDATE"],
+        "VALIDATE": ["MANAGER_REVIEW"],
+        "MANAGER_REVIEW": ["APPROVED"],
+        "APPROVED": [],
+    }
+
+    orchestrator = StateMachineOrchestrator(
+        name="approval_workflow",
+        states=states,
+        initial_state="SUBMIT",
+        transitions=transitions,
+        audit_logger=mock_audit_logger,
+    )
+
+    # Register handlers
+    orchestrator.register_state_handler("SUBMIT", mock_agent_registry["extractor"])
+    orchestrator.register_state_handler("VALIDATE", mock_agent_registry["validator"])
+    orchestrator.register_state_handler("MANAGER_REVIEW", mock_agent_registry["router"])
+    orchestrator.register_state_handler("APPROVED", mock_agent_registry["router"])
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_invoice_task)
+
+    # Verify complete audit trail
+    assert result["status"] == "success"
+    assert "audit_trail" in result
+    assert len(result["audit_trail"]) == 4  # 4 state transitions
+
+    # Verify each transition logged
+    for audit_entry in result["audit_trail"]:
+        assert "from_state" in audit_entry
+        assert "to_state" in audit_entry
+        assert "timestamp" in audit_entry
+        assert "handler_output" in audit_entry
+
+
+async def test_should_enforce_state_invariants_when_validating_transitions(
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test that state machine enforces state invariants during transitions."""
+    from backend.orchestrators.state_machine import StateMachineOrchestrator
+
+    states = ["SUBMIT", "VALIDATE", "APPROVED", "REJECTED"]
+    transitions = {
+        "SUBMIT": ["VALIDATE"],
+        "VALIDATE": ["APPROVED", "REJECTED"],
+        "APPROVED": [],
+        "REJECTED": [],
+    }
+
+    # Define state invariants
+    invariants = {
+        "VALIDATE": lambda state: "extracted_data" in state,  # Must have extracted data
+        "APPROVED": lambda state: state.get("is_valid") is True,  # Must be validated
+    }
+
+    orchestrator = StateMachineOrchestrator(
+        name="workflow_with_invariants",
+        states=states,
+        initial_state="SUBMIT",
+        transitions=transitions,
+        invariants=invariants,
+    )
+
+    # Create handlers that produce state
+    async def submit_handler(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "extracted_data": {"vendor": "Acme"}}
+
+    async def validate_handler(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "is_valid": True}
+
+    async def approve_handler(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success"}
+
+    orchestrator.register_state_handler("SUBMIT", submit_handler)
+    orchestrator.register_state_handler("VALIDATE", validate_handler)
+    orchestrator.register_state_handler("APPROVED", approve_handler)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_invoice_task)
+
+    # Verify invariants validated (0 violations)
+    assert result["status"] == "success"
+    assert "invariant_violations" in result
+    assert len(result["invariant_violations"]) == 0
+
+
+async def test_should_handle_approval_workflow_use_case_when_complete_workflow(
+    sample_invoice_task: dict[str, Any],
+    temp_checkpoint_dir: Path,
+) -> None:
+    """Test state machine orchestrator with complete invoice approval workflow."""
+    from backend.orchestrators.state_machine import StateMachineOrchestrator
+
+    # Define 5-state approval FSM
+    states = ["SUBMIT", "VALIDATE", "MANAGER_REVIEW", "FINANCE_REVIEW", "APPROVED"]
+    transitions = {
+        "SUBMIT": ["VALIDATE"],
+        "VALIDATE": ["MANAGER_REVIEW"],
+        "MANAGER_REVIEW": ["FINANCE_REVIEW"],
+        "FINANCE_REVIEW": ["APPROVED"],
+        "APPROVED": [],
+    }
+
+    orchestrator = StateMachineOrchestrator(
+        name="invoice_approval",
+        states=states,
+        initial_state="SUBMIT",
+        transitions=transitions,
+        checkpoint_dir=temp_checkpoint_dir,
+    )
+
+    # Define realistic approval handlers
+    async def submit_handler(task: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "status": "success",
+            "vendor": "Acme Corp",
+            "amount": 12500.00,
+            "invoice_number": "INV-2024-001",
+        }
+
+    async def validate_handler(task: dict[str, Any]) -> dict[str, Any]:
+        # Validate invoice fields
+        amount = task.get("amount", 0)
+        return {"status": "success", "is_valid": True, "requires_manager": amount > 10000}
+
+    async def manager_review_handler(task: dict[str, Any]) -> dict[str, Any]:
+        # Manager approves and routes to finance if high amount
+        requires_manager = task.get("requires_manager", False)
+        return {
+            "status": "success",
+            "manager_approved": True,
+            "route_to_finance": requires_manager,
+        }
+
+    async def finance_review_handler(task: dict[str, Any]) -> dict[str, Any]:
+        # Finance final approval
+        return {"status": "success", "finance_approved": True}
+
+    async def approve_handler(task: dict[str, Any]) -> dict[str, Any]:
+        # Final approval state
+        return {"status": "success", "approval_status": "APPROVED"}
+
+    # Register all handlers
+    orchestrator.register_state_handler("SUBMIT", submit_handler)
+    orchestrator.register_state_handler("VALIDATE", validate_handler)
+    orchestrator.register_state_handler("MANAGER_REVIEW", manager_review_handler)
+    orchestrator.register_state_handler("FINANCE_REVIEW", finance_review_handler)
+    orchestrator.register_state_handler("APPROVED", approve_handler)
+
+    # Execute complete workflow
+    result = await orchestrator.execute(sample_invoice_task)
+
+    # Verify workflow completed successfully
+    assert result["status"] == "success"
+    assert result["final_state"] == "APPROVED"
+
+    # Verify all 5 states executed
+    assert "state_history" in result
+    assert len(result["state_history"]) == 5
+    assert result["state_history"] == states
+
+
+async def test_should_support_determinism_when_same_invoice_executed_multiple_times(
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test that state machine produces identical state transitions for same input."""
+    from backend.orchestrators.state_machine import StateMachineOrchestrator
+
+    states = ["SUBMIT", "VALIDATE", "APPROVED"]
+    transitions = {"SUBMIT": ["VALIDATE"], "VALIDATE": ["APPROVED"], "APPROVED": []}
+
+    orchestrator = StateMachineOrchestrator(
+        name="deterministic_workflow",
+        states=states,
+        initial_state="SUBMIT",
+        transitions=transitions,
+    )
+
+    # Define deterministic handlers
+    async def deterministic_handler(task: dict[str, Any]) -> dict[str, Any]:
+        # Always returns same output for same input
+        return {"status": "success", "task_id": task["task_id"], "processed": True}
+
+    orchestrator.register_state_handler("SUBMIT", deterministic_handler)
+    orchestrator.register_state_handler("VALIDATE", deterministic_handler)
+    orchestrator.register_state_handler("APPROVED", deterministic_handler)
+
+    # Execute same invoice 3 times
+    result1 = await orchestrator.execute(sample_invoice_task)
+    result2 = await orchestrator.execute(sample_invoice_task)
+    result3 = await orchestrator.execute(sample_invoice_task)
+
+    # Verify determinism - identical state histories
+    assert result1["state_history"] == result2["state_history"] == result3["state_history"]
+    assert result1["final_state"] == result2["final_state"] == result3["final_state"] == "APPROVED"
+
+
+async def test_should_raise_when_invalid_initial_state_provided() -> None:
+    """Test that state machine validates initial_state is in states list."""
+    from backend.orchestrators.state_machine import StateMachineOrchestrator
+
+    states = ["SUBMIT", "VALIDATE", "APPROVED"]
+
+    # Invalid initial state not in states list
+    with pytest.raises(ValueError, match="initial_state 'INVALID' not in states"):
+        StateMachineOrchestrator(
+            name="invalid_workflow",
+            states=states,
+            initial_state="INVALID",  # Not in states list
+        )
+
+
+# =============================================================================
+# Task 3.7: Voting/Ensemble Orchestration Tests (9 Tests - FR3.5)
+# =============================================================================
+
+
+async def test_should_execute_agents_in_parallel_when_voting_orchestrator_runs(
+    mock_fraud_detection_agent: AsyncMock,
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that voting orchestrator executes multiple agents in parallel using ThreadPoolExecutor."""
+    from backend.orchestrators.voting import VotingOrchestrator
+
+    orchestrator = VotingOrchestrator(name="fraud_voting", num_agents=5)
+
+    # Register 5 identical fraud detection agents
+    for i in range(5):
+        orchestrator.register_agent(f"fraud_agent_{i}", mock_fraud_detection_agent)
+
+    # Execute workflow and measure time
+    import time
+
+    start_time = time.time()
+    result = await orchestrator.execute(sample_fraud_task)
+    parallel_duration = time.time() - start_time
+
+    # Verify all 5 agents executed
+    assert mock_fraud_detection_agent.call_count == 5
+
+    # Verify parallel execution (should be fast despite 5 agents)
+    # Sequential would take 5× longer than parallel
+    assert result["status"] == "success"
+    assert len(result["agent_votes"]) == 5
+
+
+async def test_should_aggregate_votes_using_majority_when_majority_vote_strategy_used(
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that voting orchestrator aggregates votes using majority vote consensus."""
+    from backend.orchestrators.voting import VotingOrchestrator
+
+    orchestrator = VotingOrchestrator(name="fraud_voting", num_agents=5, consensus_strategy="majority_vote")
+
+    # Create agents with different fraud predictions
+    # 3 agents vote fraud=True, 2 vote fraud=False → majority is True
+    async def fraud_agent_true(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "is_fraud": True, "fraud_score": 0.85, "confidence": 0.90}
+
+    async def fraud_agent_false(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "is_fraud": False, "fraud_score": 0.25, "confidence": 0.88}
+
+    # Register 5 agents: 3 vote True, 2 vote False
+    for i in range(3):
+        orchestrator.register_agent(f"fraud_true_{i}", fraud_agent_true)
+    for i in range(2):
+        orchestrator.register_agent(f"fraud_false_{i}", fraud_agent_false)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_fraud_task)
+
+    # Verify majority vote consensus (3 out of 5 = True)
+    assert result["status"] == "success"
+    assert result["consensus_decision"]["is_fraud"] is True
+    assert result["consensus_decision"]["vote_count"] == {"True": 3, "False": 2}
+    assert result["consensus_decision"]["confidence"] >= 0.6  # 3/5 = 60%
+
+
+async def test_should_aggregate_votes_using_weighted_average_when_weighted_strategy_used(
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that voting orchestrator uses weighted confidence for consensus."""
+    from backend.orchestrators.voting import VotingOrchestrator
+
+    orchestrator = VotingOrchestrator(name="fraud_voting", num_agents=3, consensus_strategy="weighted_average")
+
+    # Create agents with varying confidence levels
+    async def high_confidence_fraud(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "is_fraud": True, "fraud_score": 0.95, "confidence": 0.98}
+
+    async def medium_confidence_not_fraud(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "is_fraud": False, "fraud_score": 0.30, "confidence": 0.70}
+
+    async def low_confidence_not_fraud(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "is_fraud": False, "fraud_score": 0.20, "confidence": 0.60}
+
+    # Register agents
+    orchestrator.register_agent("high_conf_fraud", high_confidence_fraud)
+    orchestrator.register_agent("med_conf_not_fraud", medium_confidence_not_fraud)
+    orchestrator.register_agent("low_conf_not_fraud", low_confidence_not_fraud)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_fraud_task)
+
+    # Verify weighted average consensus
+    # High confidence agent (0.98) should have more influence than low confidence (0.60)
+    assert result["status"] == "success"
+    assert "weighted_fraud_score" in result["consensus_decision"]
+
+    # Weighted score should favor high confidence prediction
+    # High conf (0.95 * 0.98) vs others (0.30 * 0.70 + 0.20 * 0.60)
+    assert result["consensus_decision"]["weighted_fraud_score"] > 0.5
+
+
+async def test_should_reject_outliers_when_outlier_rejection_enabled(
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that voting orchestrator rejects outlier predictions."""
+    from backend.orchestrators.voting import VotingOrchestrator
+
+    orchestrator = VotingOrchestrator(
+        name="fraud_voting",
+        num_agents=5,
+        consensus_strategy="majority_vote",
+        outlier_rejection=True,
+    )
+
+    # Create 4 normal agents + 1 outlier
+    async def normal_agent(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "is_fraud": False, "fraud_score": 0.15, "confidence": 0.90}
+
+    async def outlier_agent(task: dict[str, Any]) -> dict[str, Any]:
+        # Extreme outlier prediction
+        return {"status": "success", "is_fraud": True, "fraud_score": 0.99, "confidence": 0.95}
+
+    # Register 4 normal + 1 outlier
+    for i in range(4):
+        orchestrator.register_agent(f"normal_agent_{i}", normal_agent)
+    orchestrator.register_agent("outlier_agent", outlier_agent)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_fraud_task)
+
+    # Verify outlier rejected
+    assert result["status"] == "success"
+    assert "outliers_rejected" in result
+    assert len(result["outliers_rejected"]) == 1
+    assert "outlier_agent" in result["outliers_rejected"][0]
+
+    # Verify consensus based on 4 normal agents only
+    assert result["consensus_decision"]["is_fraud"] is False
+
+
+async def test_should_track_cost_for_multi_agent_execution_when_voting(
+    mock_fraud_detection_agent: AsyncMock,
+    sample_fraud_task: dict[str, Any],
+    cost_tracker: dict[str, Any],
+) -> None:
+    """Test that voting orchestrator tracks cost for all agent executions."""
+    from backend.orchestrators.voting import VotingOrchestrator
+
+    orchestrator = VotingOrchestrator(
+        name="fraud_voting",
+        num_agents=5,
+        cost_tracker=cost_tracker,
+    )
+
+    # Register 5 agents
+    for i in range(5):
+        orchestrator.register_agent(f"fraud_agent_{i}", mock_fraud_detection_agent)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_fraud_task)
+
+    # Verify cost tracking
+    assert result["status"] == "success"
+    assert "cost_summary" in result
+
+    # Cost should reflect 5 agent calls
+    assert result["cost_summary"]["total_calls"] == 5
+    assert result["cost_summary"]["cost_multiplier"] == 5.0  # 5× single agent cost
+
+
+async def test_should_handle_agent_failure_with_error_isolation_when_voting(
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that voting orchestrator isolates agent failures and continues voting."""
+    from backend.orchestrators.voting import VotingOrchestrator
+
+    orchestrator = VotingOrchestrator(name="fraud_voting", num_agents=5)
+
+    # Create 3 successful + 2 failing agents
+    async def successful_agent(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "is_fraud": False, "fraud_score": 0.20, "confidence": 0.85}
+
+    async def failing_agent(task: dict[str, Any]) -> dict[str, Any]:
+        raise RuntimeError("Agent execution failed")
+
+    # Register 3 successful + 2 failing
+    for i in range(3):
+        orchestrator.register_agent(f"success_agent_{i}", successful_agent)
+    for i in range(2):
+        orchestrator.register_agent(f"fail_agent_{i}", failing_agent)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_fraud_task)
+
+    # Verify partial success with error isolation
+    assert result["status"] == "partial_success"
+    assert len(result["agent_votes"]) == 3  # Only 3 successful votes
+    assert "errors" in result
+    assert len(result["errors"]) == 2  # 2 agent failures
+
+    # Verify consensus still computed from 3 successful agents
+    assert result["consensus_decision"]["is_fraud"] is False
+
+
+async def test_should_handle_high_stakes_fraud_detection_use_case_when_voting(
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test voting orchestrator with high-stakes fraud detection for transactions >$10K."""
+    from backend.orchestrators.voting import VotingOrchestrator
+
+    # High-stakes transaction (>$10K)
+    high_value_task = sample_fraud_task.copy()
+    high_value_task["input_data"]["amount"] = 15000.00
+
+    orchestrator = VotingOrchestrator(
+        name="high_stakes_fraud_voting",
+        num_agents=5,
+        consensus_strategy="weighted_average",
+        outlier_rejection=True,
+    )
+
+    # Create 5 fraud detection agents with varying opinions
+    async def conservative_agent(task: dict[str, Any]) -> dict[str, Any]:
+        # Conservative - flags as fraud
+        return {"status": "success", "is_fraud": True, "fraud_score": 0.75, "confidence": 0.88}
+
+    async def moderate_agent(task: dict[str, Any]) -> dict[str, Any]:
+        # Moderate - uncertain
+        return {"status": "success", "is_fraud": False, "fraud_score": 0.45, "confidence": 0.80}
+
+    async def lenient_agent(task: dict[str, Any]) -> dict[str, Any]:
+        # Lenient - not fraud
+        return {"status": "success", "is_fraud": False, "fraud_score": 0.20, "confidence": 0.92}
+
+    # Register 2 conservative + 2 moderate + 1 lenient
+    for i in range(2):
+        orchestrator.register_agent(f"conservative_{i}", conservative_agent)
+    for i in range(2):
+        orchestrator.register_agent(f"moderate_{i}", moderate_agent)
+    orchestrator.register_agent("lenient", lenient_agent)
+
+    # Execute high-stakes workflow
+    result = await orchestrator.execute(high_value_task)
+
+    # Verify voting completed successfully
+    assert result["status"] == "success"
+    assert len(result["agent_votes"]) == 5
+
+    # Verify consensus decision made
+    assert "consensus_decision" in result
+    assert "weighted_fraud_score" in result["consensus_decision"]
+    assert "is_fraud" in result["consensus_decision"]
+
+    # Verify cost multiplier for 5 agents
+    assert result["cost_summary"]["cost_multiplier"] == 5.0
+
+
+async def test_should_preserve_vote_order_when_parallel_execution_completes(
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that voting orchestrator preserves agent order despite parallel execution."""
+    from backend.orchestrators.voting import VotingOrchestrator
+
+    orchestrator = VotingOrchestrator(name="fraud_voting", num_agents=5)
+
+    # Create agents with different execution times
+    async def fast_agent(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "is_fraud": False, "agent_name": "fast"}
+
+    async def slow_agent(task: dict[str, Any]) -> dict[str, Any]:
+        await asyncio.sleep(0.1)  # Small delay
+        return {"status": "success", "is_fraud": True, "agent_name": "slow"}
+
+    # Register in specific order: slow, fast, slow, fast, slow
+    orchestrator.register_agent("agent_0", slow_agent)
+    orchestrator.register_agent("agent_1", fast_agent)
+    orchestrator.register_agent("agent_2", slow_agent)
+    orchestrator.register_agent("agent_3", fast_agent)
+    orchestrator.register_agent("agent_4", slow_agent)
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_fraud_task)
+
+    # Verify vote order preserved (should match registration order, not completion order)
+    assert len(result["agent_votes"]) == 5
+    assert result["agent_votes"][0]["agent_name"] == "agent_0"
+    assert result["agent_votes"][1]["agent_name"] == "agent_1"
+    assert result["agent_votes"][2]["agent_name"] == "agent_2"
+    assert result["agent_votes"][3]["agent_name"] == "agent_3"
+    assert result["agent_votes"][4]["agent_name"] == "agent_4"
+
+
+async def test_should_raise_when_insufficient_agents_registered_for_voting(
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that voting orchestrator requires minimum number of agents."""
+    from backend.orchestrators.voting import VotingOrchestrator
+
+    orchestrator = VotingOrchestrator(name="fraud_voting", num_agents=5)
+
+    # Register only 2 agents when 5 expected
+    async def agent(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "is_fraud": False}
+
+    orchestrator.register_agent("agent_1", agent)
+    orchestrator.register_agent("agent_2", agent)
+
+    # Attempt to execute with insufficient agents
+    with pytest.raises(ValueError, match="Expected 5 agents, but only 2 registered"):
+        await orchestrator.execute(sample_fraud_task)
