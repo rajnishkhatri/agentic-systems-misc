@@ -656,15 +656,240 @@ async def test_should_validate_task_input_when_execute_called() -> None:
 
 
 # =============================================================================
-# Placeholder Tests for Task 3.3-3.7 (Orchestration Patterns)
+# Task 3.3: Sequential Orchestration Tests (8 Tests - FR3.1)
+# =============================================================================
+
+
+async def test_should_execute_agents_in_order_when_sequential_orchestrator_runs(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test that sequential orchestrator executes agents in registered order."""
+    from backend.orchestrators.sequential import SequentialOrchestrator
+
+    orchestrator = SequentialOrchestrator(name="invoice_workflow")
+
+    # Register agents in specific order: extract → validate → route
+    orchestrator.register_agent("extractor", mock_agent_registry["extractor"])
+    orchestrator.register_agent("validator", mock_agent_registry["validator"])
+    orchestrator.register_agent("router", mock_agent_registry["router"])
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_invoice_task)
+
+    # Verify all agents called exactly once in order
+    assert mock_agent_registry["extractor"].call_count == 1
+    assert mock_agent_registry["validator"].call_count == 1
+    assert mock_agent_registry["router"].call_count == 1
+
+    # Verify result contains all step outputs
+    assert result["status"] == "success"
+    assert "steps" in result
+    assert len(result["steps"]) == 3
+
+
+async def test_should_save_checkpoint_after_each_step_when_checkpoint_dir_provided(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_invoice_task: dict[str, Any],
+    temp_checkpoint_dir: Path,
+) -> None:
+    """Test that sequential orchestrator saves checkpoint after each step."""
+    from backend.orchestrators.sequential import SequentialOrchestrator
+
+    orchestrator = SequentialOrchestrator(name="invoice_workflow", checkpoint_dir=temp_checkpoint_dir)
+
+    # Register 3 agents
+    orchestrator.register_agent("extractor", mock_agent_registry["extractor"])
+    orchestrator.register_agent("validator", mock_agent_registry["validator"])
+    orchestrator.register_agent("router", mock_agent_registry["router"])
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_invoice_task)
+
+    # Verify checkpoints saved (3 agents = 3 checkpoints)
+    checkpoint_files = list(temp_checkpoint_dir.glob("*.json"))
+    assert len(checkpoint_files) >= 3  # At least one checkpoint per step
+
+    # Verify result successful
+    assert result["status"] == "success"
+
+
+async def test_should_terminate_early_when_validation_fails(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test that sequential orchestrator terminates early on validation failure."""
+    from backend.orchestrators.sequential import SequentialOrchestrator
+
+    orchestrator = SequentialOrchestrator(name="invoice_workflow", validate_steps=True)
+
+    # Configure validator to fail
+    mock_agent_registry["validator"].return_value = {
+        "is_valid": False,
+        "validation_errors": ["Amount exceeds threshold"],
+    }
+
+    # Register agents
+    orchestrator.register_agent("extractor", mock_agent_registry["extractor"])
+    orchestrator.register_agent("validator", mock_agent_registry["validator"])
+    orchestrator.register_agent("router", mock_agent_registry["router"])  # Should NOT be called
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_invoice_task)
+
+    # Verify extractor and validator called, but NOT router (early termination)
+    assert mock_agent_registry["extractor"].call_count == 1
+    assert mock_agent_registry["validator"].call_count == 1
+    assert mock_agent_registry["router"].call_count == 0  # Early termination
+
+    # Verify result indicates failure and includes error
+    assert result["status"] == "validation_failed"
+    assert "error" in result
+    assert "validation_errors" in result
+
+
+async def test_should_pass_output_to_next_step_when_executing_chain(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test that sequential orchestrator passes each step's output to the next step."""
+    from backend.orchestrators.sequential import SequentialOrchestrator
+
+    orchestrator = SequentialOrchestrator(name="invoice_workflow")
+
+    # Register agents
+    orchestrator.register_agent("extractor", mock_agent_registry["extractor"])
+    orchestrator.register_agent("validator", mock_agent_registry["validator"])
+
+    # Execute workflow
+    await orchestrator.execute(sample_invoice_task)
+
+    # Verify validator received extractor's output
+    validator_call_args = mock_agent_registry["validator"].call_args
+    assert validator_call_args is not None
+
+    # Validator should receive task with extractor's output in context
+    passed_task = validator_call_args[0][0]
+    assert "previous_output" in passed_task or "extracted_data" in passed_task
+
+
+async def test_should_restore_from_checkpoint_when_workflow_resumes(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_invoice_task: dict[str, Any],
+    temp_checkpoint_dir: Path,
+) -> None:
+    """Test that sequential orchestrator can resume from checkpoint after failure."""
+    from backend.orchestrators.sequential import SequentialOrchestrator
+
+    # First execution: fail at step 2
+    orchestrator1 = SequentialOrchestrator(name="invoice_workflow", checkpoint_dir=temp_checkpoint_dir)
+
+    orchestrator1.register_agent("extractor", mock_agent_registry["extractor"])
+
+    # Validator fails on first attempt
+    failing_validator = AsyncMock(side_effect=RuntimeError("Temporary failure"))
+    orchestrator1.register_agent("validator", failing_validator)
+
+    # Execute and expect failure
+    with pytest.raises(RuntimeError, match="Temporary failure"):
+        await orchestrator1.execute(sample_invoice_task)
+
+    # Second execution: resume from checkpoint
+    orchestrator2 = SequentialOrchestrator(name="invoice_workflow", checkpoint_dir=temp_checkpoint_dir)
+
+    # Use same agents, but validator now succeeds
+    orchestrator2.register_agent("extractor", mock_agent_registry["extractor"])
+    orchestrator2.register_agent("validator", mock_agent_registry["validator"])
+    orchestrator2.register_agent("router", mock_agent_registry["router"])
+
+    # Resume execution
+    result = await orchestrator2.execute(sample_invoice_task)
+
+    # Verify workflow completed successfully
+    assert result["status"] == "success"
+
+
+async def test_should_track_execution_log_when_steps_complete(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test that sequential orchestrator logs each step execution."""
+    from backend.orchestrators.sequential import SequentialOrchestrator
+
+    orchestrator = SequentialOrchestrator(name="invoice_workflow")
+
+    # Register agents
+    orchestrator.register_agent("extractor", mock_agent_registry["extractor"])
+    orchestrator.register_agent("validator", mock_agent_registry["validator"])
+    orchestrator.register_agent("router", mock_agent_registry["router"])
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_invoice_task)
+
+    # Verify execution log contains entries for all 3 steps
+    assert len(orchestrator.execution_log) >= 3
+
+    # Verify log entries have expected structure
+    for log_entry in orchestrator.execution_log:
+        assert "step" in log_entry
+        assert "status" in log_entry
+        assert "timestamp" in log_entry
+
+
+async def test_should_handle_invoice_processing_use_case_when_all_steps_succeed(
+    mock_invoice_extraction_agent: AsyncMock,
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test sequential orchestrator with complete invoice processing workflow."""
+    from backend.orchestrators.sequential import SequentialOrchestrator
+
+    orchestrator = SequentialOrchestrator(name="invoice_processing")
+
+    # Create validation agent that checks extracted data
+    validator = AsyncMock(return_value={"is_valid": True, "validation_errors": []})
+
+    # Create routing agent that determines approval path
+    router = AsyncMock(return_value={"route": "finance_approval", "approver": "CFO", "reason": "amount > $1000"})
+
+    # Register agents for invoice workflow
+    orchestrator.register_agent("extract_invoice", mock_invoice_extraction_agent)
+    orchestrator.register_agent("validate_extraction", validator)
+    orchestrator.register_agent("route_for_approval", router)
+
+    # Execute complete workflow
+    result = await orchestrator.execute(sample_invoice_task)
+
+    # Verify all agents called
+    assert mock_invoice_extraction_agent.call_count == 1
+    assert validator.call_count == 1
+    assert router.call_count == 1
+
+    # Verify workflow completed successfully
+    assert result["status"] == "success"
+    assert "steps" in result
+    assert len(result["steps"]) == 3
+
+    # Verify final output contains routing decision
+    assert "route" in result["final_output"]
+
+
+async def test_should_raise_when_no_agents_registered(
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test that sequential orchestrator raises error when no agents registered."""
+    from backend.orchestrators.sequential import SequentialOrchestrator
+
+    orchestrator = SequentialOrchestrator(name="empty_workflow")
+
+    # Attempt to execute without registered agents
+    with pytest.raises(ValueError, match="No agents registered"):
+        await orchestrator.execute(sample_invoice_task)
+
+
+# =============================================================================
+# Placeholder Tests for Task 3.4-3.7 (Orchestration Patterns)
 # =============================================================================
 # These tests will be implemented in subsequent subtasks following TDD methodology
-
-
-@pytest.mark.skip(reason="Task 3.3 - Sequential Orchestrator not yet implemented")
-def test_should_execute_steps_sequentially_when_sequential_orchestrator_runs() -> None:
-    """Test that sequential orchestrator executes steps in order."""
-    pass
 
 
 @pytest.mark.skip(reason="Task 3.4 - Hierarchical Orchestrator not yet implemented")

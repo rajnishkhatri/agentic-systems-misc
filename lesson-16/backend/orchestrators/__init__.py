@@ -26,8 +26,10 @@ Usage:
 # Task 3.2: Base Orchestrator ABC implemented
 from .base import Orchestrator
 
-# Task 3.3-3.7: Pattern implementations (to be completed)
-# from .sequential import SequentialOrchestrator
+# Task 3.3: Sequential Orchestrator implemented
+from .sequential import SequentialOrchestrator
+
+# Task 3.4-3.7: Pattern implementations (to be completed)
 # from .hierarchical import HierarchicalOrchestrator
 # from .iterative import IterativeOrchestrator
 # from .state_machine import StateMachineOrchestrator
@@ -35,7 +37,7 @@ from .base import Orchestrator
 
 __all__ = [
     "Orchestrator",
-    # "SequentialOrchestrator",
+    "SequentialOrchestrator",
     # "HierarchicalOrchestrator",
     # "IterativeOrchestrator",
     # "StateMachineOrchestrator",
