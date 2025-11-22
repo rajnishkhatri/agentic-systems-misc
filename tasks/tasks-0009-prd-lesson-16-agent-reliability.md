@@ -98,11 +98,11 @@
   - [x] 2.5 TDD: Output Validation Schemas (FR4.4) - Write 6 tests, create InvoiceExtraction/FraudDetection schemas, custom validators
   - [x] 2.6 TDD: Error Isolation (FR4.5) - Write 6 tests, implement Result[T,E] type, safe_agent_call wrapper, critical vs optional agents
   - [x] 2.7 TDD: Audit Logging (FR4.6) - Write 6 tests, implement structured JSON logging, PII redaction, workflow tracing
-  - [ ] 2.8 TDD: Fallback Strategies (FR4.7) - Write 5 tests, implement cache/default/skip/human-in-loop strategies
-  - [ ] 2.9 Integration tests (4 tests verifying all 7 components work together in invoice processing workflow)
+  - [x] 2.8 TDD: Fallback Strategies (FR4.7) - Write 5 tests, implement cache/default/skip/human-in-loop strategies
+  - [x] 2.9 Integration tests (4 tests verifying all 7 components work together in invoice processing workflow)
   - [ ] 2.10 Update package exports in `__init__.py`, verify imports, run coverage (target: ≥90%), Ruff/mypy validation
 - [ ] 3.0 Backend: Orchestration Patterns (5 Patterns - FR3)
-  - [ ] 3.1 Set up orchestrator test infrastructure (`test_orchestrators.py` with fixtures for mock agents, tasks, reliability components, financial workflows)
+  - [x] 3.1 Set up orchestrator test infrastructure (`test_orchestrators.py` with fixtures for mock agents, tasks, reliability components, financial workflows)
   - [ ] 3.2 TDD: Abstract Base Class for Orchestrators (base.py) - Write 7 tests, implement Orchestrator ABC with @abstractmethod execute(), shared functionality (agent registration, result aggregation, logging), integration hooks for reliability components
   - [ ] 3.3 TDD: Sequential Orchestration (FR3.1) - Write 8 tests, implement linear chain execution, checkpointing after each step, early termination on validation failures, invoice processing use case
   - [ ] 3.4 TDD: Hierarchical Delegation Pattern (FR3.2) - Write 9 tests, implement planner-specialist architecture, async parallel execution (ThreadPoolExecutor), planner output validation, fraud detection use case
