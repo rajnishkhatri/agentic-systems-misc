@@ -29,8 +29,10 @@ from .base import Orchestrator
 # Task 3.3: Sequential Orchestrator implemented
 from .sequential import SequentialOrchestrator
 
-# Task 3.4-3.7: Pattern implementations (to be completed)
-# from .hierarchical import HierarchicalOrchestrator
+# Task 3.4: Hierarchical Orchestrator implemented
+from .hierarchical import HierarchicalOrchestrator
+
+# Task 3.5-3.7: Pattern implementations (to be completed)
 # from .iterative import IterativeOrchestrator
 # from .state_machine import StateMachineOrchestrator
 # from .voting import VotingOrchestrator
@@ -38,7 +40,7 @@ from .sequential import SequentialOrchestrator
 __all__ = [
     "Orchestrator",
     "SequentialOrchestrator",
-    # "HierarchicalOrchestrator",
+    "HierarchicalOrchestrator",
     # "IterativeOrchestrator",
     # "StateMachineOrchestrator",
     # "VotingOrchestrator",

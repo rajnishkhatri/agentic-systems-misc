@@ -887,15 +887,384 @@ async def test_should_raise_when_no_agents_registered(
 
 
 # =============================================================================
-# Placeholder Tests for Task 3.4-3.7 (Orchestration Patterns)
+# Task 3.4: Hierarchical Delegation Pattern Tests (9 Tests - FR3.2)
+# =============================================================================
+
+
+async def test_should_create_task_list_when_planner_validates_output(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that planner creates validated task list for specialists."""
+    from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+
+    orchestrator = HierarchicalOrchestrator(name="fraud_detection")
+
+    # Configure planner to return validated task list
+    mock_agent_registry["planner"].return_value = {
+        "status": "success",
+        "tasks": [
+            {"specialist": "transaction_analysis", "input": sample_fraud_task["input_data"]},
+            {"specialist": "merchant_verification", "input": sample_fraud_task["input_data"]},
+            {"specialist": "user_behavior_check", "input": sample_fraud_task["input_data"]},
+        ],
+    }
+
+    # Register planner
+    orchestrator.register_agent("planner", mock_agent_registry["planner"])
+
+    # Register specialists
+    orchestrator.register_agent("transaction_analysis", mock_agent_registry["specialist_1"])
+    orchestrator.register_agent("merchant_verification", mock_agent_registry["specialist_2"])
+    orchestrator.register_agent("user_behavior_check", mock_agent_registry["specialist_3"])
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_fraud_task)
+
+    # Verify planner called to create task list
+    assert mock_agent_registry["planner"].call_count == 1
+
+    # Verify result contains validated task assignments
+    assert result["status"] == "success"
+    assert "specialist_results" in result
+    assert len(result["specialist_results"]) == 3
+
+
+async def test_should_execute_specialists_in_parallel_when_tasks_assigned(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that specialists execute in parallel using ThreadPoolExecutor pattern."""
+    from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+
+    orchestrator = HierarchicalOrchestrator(name="fraud_detection")
+
+    # Configure planner
+    mock_agent_registry["planner"].return_value = {
+        "status": "success",
+        "tasks": [
+            {"specialist": "transaction_analysis", "input": sample_fraud_task["input_data"]},
+            {"specialist": "merchant_verification", "input": sample_fraud_task["input_data"]},
+            {"specialist": "user_behavior_check", "input": sample_fraud_task["input_data"]},
+        ],
+    }
+
+    # Register planner and specialists
+    orchestrator.register_agent("planner", mock_agent_registry["planner"])
+    orchestrator.register_agent("transaction_analysis", mock_agent_registry["specialist_1"])
+    orchestrator.register_agent("merchant_verification", mock_agent_registry["specialist_2"])
+    orchestrator.register_agent("user_behavior_check", mock_agent_registry["specialist_3"])
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_fraud_task)
+
+    # Verify all 3 specialists called
+    assert mock_agent_registry["specialist_1"].call_count == 1
+    assert mock_agent_registry["specialist_2"].call_count == 1
+    assert mock_agent_registry["specialist_3"].call_count == 1
+
+    # Verify parallel execution (all specialists in result)
+    assert len(result["specialist_results"]) == 3
+
+
+async def test_should_reduce_latency_when_parallel_vs_sequential(
+    mock_slow_agent: AsyncMock,
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that parallel execution achieves 30% latency reduction vs sequential."""
+    from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+
+    orchestrator = HierarchicalOrchestrator(name="fraud_detection")
+
+    # Configure planner
+    planner = AsyncMock(
+        return_value={
+            "status": "success",
+            "tasks": [
+                {"specialist": "specialist_1", "input": sample_fraud_task["input_data"]},
+                {"specialist": "specialist_2", "input": sample_fraud_task["input_data"]},
+                {"specialist": "specialist_3", "input": sample_fraud_task["input_data"]},
+            ],
+        }
+    )
+
+    # Register planner and slow specialists (0.5s each)
+    orchestrator.register_agent("planner", planner)
+    orchestrator.register_agent("specialist_1", mock_slow_agent)
+    orchestrator.register_agent("specialist_2", mock_slow_agent)
+    orchestrator.register_agent("specialist_3", mock_slow_agent)
+
+    # Execute workflow and measure time
+    import time
+
+    start_time = time.time()
+    result = await orchestrator.execute(sample_fraud_task)
+    parallel_duration = time.time() - start_time
+
+    # Sequential would take ~1.5s (3 × 0.5s), parallel should take ~0.5s
+    # Verify parallel execution completes faster than sequential
+    # With overhead, parallel should be < 1.0s (allowing 0.5s for overhead)
+    assert parallel_duration < 1.0, f"Parallel execution took {parallel_duration:.2f}s, expected < 1.0s"
+
+    # Verify successful execution
+    assert result["status"] == "success"
+    assert len(result["specialist_results"]) == 3
+
+
+async def test_should_isolate_error_when_specialist_fails(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that specialist failure doesn't crash orchestrator (error isolation)."""
+    from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+
+    orchestrator = HierarchicalOrchestrator(name="fraud_detection")
+
+    # Configure planner
+    mock_agent_registry["planner"].return_value = {
+        "status": "success",
+        "tasks": [
+            {"specialist": "transaction_analysis", "input": sample_fraud_task["input_data"]},
+            {"specialist": "merchant_verification", "input": sample_fraud_task["input_data"]},
+            {"specialist": "user_behavior_check", "input": sample_fraud_task["input_data"]},
+        ],
+    }
+
+    # Register planner
+    orchestrator.register_agent("planner", mock_agent_registry["planner"])
+
+    # Register specialists - specialist_2 fails
+    orchestrator.register_agent("transaction_analysis", mock_agent_registry["specialist_1"])
+
+    failing_specialist = AsyncMock(side_effect=RuntimeError("Merchant API unavailable"))
+    orchestrator.register_agent("merchant_verification", failing_specialist)
+
+    orchestrator.register_agent("user_behavior_check", mock_agent_registry["specialist_3"])
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_fraud_task)
+
+    # Verify orchestrator didn't crash - partial success
+    assert result["status"] == "partial_success"
+
+    # Verify successful specialists completed
+    assert mock_agent_registry["specialist_1"].call_count == 1
+    assert mock_agent_registry["specialist_3"].call_count == 1
+
+    # Verify failure recorded but isolated
+    assert "errors" in result
+    assert len(result["errors"]) == 1
+    assert "Merchant API unavailable" in result["errors"][0]
+
+    # Verify successful results still present
+    successful_results = [r for r in result["specialist_results"] if r.get("status") == "success"]
+    assert len(successful_results) == 2
+
+
+async def test_should_validate_planner_output_when_planner_executes(
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that orchestrator validates planner output schema with Pydantic."""
+    from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+
+    orchestrator = HierarchicalOrchestrator(name="fraud_detection")
+
+    # Configure planner with INVALID output (missing required fields)
+    invalid_planner = AsyncMock(
+        return_value={
+            "status": "success",
+            # Missing "tasks" field - invalid schema
+        }
+    )
+
+    orchestrator.register_agent("planner", invalid_planner)
+
+    # Execute workflow - should detect invalid planner output
+    with pytest.raises(ValueError, match="Planner output validation failed|missing 'tasks'"):
+        await orchestrator.execute(sample_fraud_task)
+
+
+async def test_should_aggregate_specialist_results_when_all_complete(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that orchestrator aggregates specialist outputs into final decision."""
+    from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+
+    orchestrator = HierarchicalOrchestrator(name="fraud_detection")
+
+    # Configure planner
+    mock_agent_registry["planner"].return_value = {
+        "status": "success",
+        "tasks": [
+            {"specialist": "transaction_analysis", "input": sample_fraud_task["input_data"]},
+            {"specialist": "merchant_verification", "input": sample_fraud_task["input_data"]},
+            {"specialist": "user_behavior_check", "input": sample_fraud_task["input_data"]},
+        ],
+    }
+
+    # Configure specialists with fraud signals
+    mock_agent_registry["specialist_1"].return_value = {
+        "status": "success",
+        "fraud_score": 0.7,
+        "analysis": "High transaction velocity detected",
+    }
+    mock_agent_registry["specialist_2"].return_value = {
+        "status": "success",
+        "fraud_score": 0.3,
+        "analysis": "Merchant verified",
+    }
+    mock_agent_registry["specialist_3"].return_value = {
+        "status": "success",
+        "fraud_score": 0.5,
+        "analysis": "User behavior normal",
+    }
+
+    # Register planner and specialists
+    orchestrator.register_agent("planner", mock_agent_registry["planner"])
+    orchestrator.register_agent("transaction_analysis", mock_agent_registry["specialist_1"])
+    orchestrator.register_agent("merchant_verification", mock_agent_registry["specialist_2"])
+    orchestrator.register_agent("user_behavior_check", mock_agent_registry["specialist_3"])
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_fraud_task)
+
+    # Verify aggregation contains all specialist results
+    assert result["status"] == "success"
+    assert len(result["specialist_results"]) == 3
+
+    # Verify final aggregation computed (e.g., average fraud score)
+    assert "final_decision" in result
+    assert "aggregated_fraud_score" in result["final_decision"]
+
+    # Average fraud score should be (0.7 + 0.3 + 0.5) / 3 = 0.5
+    assert abs(result["final_decision"]["aggregated_fraud_score"] - 0.5) < 0.01
+
+
+async def test_should_handle_fraud_detection_use_case_when_complete_workflow(
+    mock_fraud_detection_agent: AsyncMock,
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test hierarchical orchestrator with complete fraud detection workflow."""
+    from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+
+    orchestrator = HierarchicalOrchestrator(name="fraud_detection")
+
+    # Create planner that analyzes transaction and creates specialist tasks
+    planner = AsyncMock(
+        return_value={
+            "status": "success",
+            "tasks": [
+                {"specialist": "transaction_pattern_analysis", "input": sample_fraud_task["input_data"]},
+                {"specialist": "merchant_risk_assessment", "input": sample_fraud_task["input_data"]},
+                {"specialist": "user_behavior_profiling", "input": sample_fraud_task["input_data"]},
+            ],
+        }
+    )
+
+    # Create specialist agents for fraud detection
+    transaction_specialist = AsyncMock(
+        return_value={
+            "status": "success",
+            "fraud_score": 0.15,
+            "risk_factors": ["high_velocity"],
+            "confidence": 0.88,
+        }
+    )
+
+    merchant_specialist = AsyncMock(
+        return_value={
+            "status": "success",
+            "fraud_score": 0.25,
+            "risk_factors": ["new_merchant"],
+            "confidence": 0.92,
+        }
+    )
+
+    user_specialist = AsyncMock(
+        return_value={"status": "success", "fraud_score": 0.10, "risk_factors": [], "confidence": 0.95}
+    )
+
+    # Register planner and specialists
+    orchestrator.register_agent("planner", planner)
+    orchestrator.register_agent("transaction_pattern_analysis", transaction_specialist)
+    orchestrator.register_agent("merchant_risk_assessment", merchant_specialist)
+    orchestrator.register_agent("user_behavior_profiling", user_specialist)
+
+    # Execute complete workflow
+    result = await orchestrator.execute(sample_fraud_task)
+
+    # Verify all agents called
+    assert planner.call_count == 1
+    assert transaction_specialist.call_count == 1
+    assert merchant_specialist.call_count == 1
+    assert user_specialist.call_count == 1
+
+    # Verify workflow completed successfully
+    assert result["status"] == "success"
+    assert len(result["specialist_results"]) == 3
+
+    # Verify final fraud decision made
+    assert "final_decision" in result
+    assert "is_fraud" in result["final_decision"]
+    assert "aggregated_fraud_score" in result["final_decision"]
+
+
+async def test_should_preserve_result_order_when_parallel_execution_completes(
+    mock_agent_registry: dict[str, AsyncMock],
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that specialist results preserve task order despite parallel execution."""
+    from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+
+    orchestrator = HierarchicalOrchestrator(name="fraud_detection")
+
+    # Configure planner with specific task order
+    mock_agent_registry["planner"].return_value = {
+        "status": "success",
+        "tasks": [
+            {"specialist": "specialist_1", "input": sample_fraud_task["input_data"]},
+            {"specialist": "specialist_2", "input": sample_fraud_task["input_data"]},
+            {"specialist": "specialist_3", "input": sample_fraud_task["input_data"]},
+        ],
+    }
+
+    # Register planner and specialists
+    orchestrator.register_agent("planner", mock_agent_registry["planner"])
+    orchestrator.register_agent("specialist_1", mock_agent_registry["specialist_1"])
+    orchestrator.register_agent("specialist_2", mock_agent_registry["specialist_2"])
+    orchestrator.register_agent("specialist_3", mock_agent_registry["specialist_3"])
+
+    # Execute workflow
+    result = await orchestrator.execute(sample_fraud_task)
+
+    # Verify result order matches task order (specialist_1, specialist_2, specialist_3)
+    assert result["specialist_results"][0]["specialist"] == "specialist_1"
+    assert result["specialist_results"][1]["specialist"] == "specialist_2"
+    assert result["specialist_results"][2]["specialist"] == "specialist_3"
+
+
+async def test_should_raise_when_no_planner_registered(
+    sample_fraud_task: dict[str, Any],
+) -> None:
+    """Test that hierarchical orchestrator requires planner agent."""
+    from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+
+    orchestrator = HierarchicalOrchestrator(name="fraud_detection")
+
+    # Register specialists but NO planner
+    specialist = AsyncMock(return_value={"status": "success"})
+    orchestrator.register_agent("specialist_1", specialist)
+
+    # Attempt to execute without planner
+    with pytest.raises(ValueError, match="Planner agent 'planner' not registered"):
+        await orchestrator.execute(sample_fraud_task)
+
+
+# =============================================================================
+# Placeholder Tests for Task 3.5-3.7 (Orchestration Patterns)
 # =============================================================================
 # These tests will be implemented in subsequent subtasks following TDD methodology
-
-
-@pytest.mark.skip(reason="Task 3.4 - Hierarchical Orchestrator not yet implemented")
-def test_should_delegate_to_specialists_when_hierarchical_orchestrator_runs() -> None:
-    """Test that hierarchical orchestrator delegates to specialists in parallel."""
-    pass
 
 
 @pytest.mark.skip(reason="Task 3.5 - Iterative Orchestrator not yet implemented")
