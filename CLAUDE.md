@@ -344,6 +344,244 @@ When generating code, check if a pattern applies and use the template from the p
 - **Documentation**: Keep CLAUDE.md updated with project patterns
 - **Code Patterns**: Follow documented patterns from `/patterns/` directory
 
+---
+
+## Context Engineering Principles
+
+**Core Thesis:**
+> "Bigger models aren't enough. Intelligence emerges from orchestration."
+
+This project implements **Context Engineering** - the discipline of managing what information gets included in an LLM's context window, how it's structured, and when it's retrieved.
+
+### Critical Distinctions
+
+**Before writing any context-aware code, read:** [google-context/TERMINOLOGY.md](google-context/TERMINOLOGY.md)
+
+#### 1. Session History vs. Context Window
+
+| Session History | Context Window |
+|----------------|---------------|
+| Full conversation log (50K tokens) | Curated subset sent to LLM (8K tokens) |
+| Stored in database | Sent at inference time |
+| Grows unbounded | Fixed size constraint |
+| Raw material | Refined input |
+
+**Example:**
+```python
+# ❌ WRONG: Sending entire session history
+response = llm.generate(messages=session_history)  # 50K tokens!
+
+# ✅ RIGHT: Compress and curate
+context_window = session.get_context_window()  # 8K tokens
+response = llm.generate(messages=context_window)
+```
+
+#### 2. Memory vs. RAG (Knowledge Retrieval)
+
+| Memory | RAG |
+|--------|-----|
+| User-specific facts | General knowledge |
+| "User prefers Sivananda translations" | "Chapter 3 discusses karma yoga" |
+| Personal assistant | Research librarian |
+| Cross-session persistence | Domain knowledge retrieval |
+
+**Example:**
+```python
+# Memory: User-specific
+memory = "User is beginner in Bhagavad Gita study"
+
+# RAG: General knowledge
+rag_result = "Chapter 2, Verse 47: You have right to work, not to fruits thereof"
+```
+
+#### 3. Proactive vs. Reactive Memory Retrieval
+
+| Proactive | Reactive |
+|-----------|----------|
+| Auto-load memories into context | Agent tool call retrieves on-demand |
+| Higher token usage | Lower token usage |
+| No misses (memories always available) | Requires smart agent to know when to retrieve |
+| Good for critical preferences | Good for optional enhancements |
+
+### Protected Context Pattern
+
+**Rule:** Events that must survive compression across long conversations.
+
+**Protected Event Types:**
+- **Turn 0**: Initial user objectives
+- **`event_type == "constraint"`**: Explicit user constraints
+- **`event_type == "auth_checkpoint"`**: Authentication state
+- **Goal statements**: User's learning goals
+
+**Code:**
+```python
+def identify_protected_context(event: dict[str, Any]) -> dict[str, Any]:
+    """Identify if an event contains protected context.
+
+    Args:
+        event: Conversation event with turn, role, content, event_type
+
+    Returns:
+        Dict with is_protected flag and reason
+    """
+    # Step 1: Type checking (defensive)
+    if not isinstance(event, dict):
+        raise TypeError("event must be a dict")
+
+    # Step 2: Check protection criteria
+    event_type = event["event_type"]
+    turn = event["turn"]
+
+    # Initial objectives (turn 0)
+    if turn == 0:
+        return {"is_protected": True, "reason": "initial_objective"}
+
+    # Explicit constraints
+    if event_type == "constraint":
+        return {"is_protected": True, "reason": "explicit_constraint"}
+
+    # Authentication checkpoints
+    if event_type == "auth_checkpoint":
+        return {"is_protected": True, "reason": "authentication"}
+
+    # Step 3: Default to not protected
+    return {"is_protected": False, "reason": "compressible"}
+```
+
+**See:** [patterns/context-engineering-sessions.md](patterns/context-engineering-sessions.md)
+
+### Memory Provenance (Mandatory)
+
+**Rule:** Every memory must have full lineage tracking for audit and trustworthiness.
+
+**Mandatory Metadata:**
+```python
+@dataclass
+class MemoryProvenance:
+    memory_id: str  # UUID
+    source_session_id: str  # Which session extracted this
+    extraction_timestamp: datetime  # When
+    confidence_score: float  # 0.0-1.0
+    validation_status: Literal["agent_inferred", "user_confirmed", "disputed"]
+    confidence_history: list[dict[str, float | str]]  # Evolution over time
+```
+
+**Confidence Evolution Rules:**
+- **user_confirmed**: +0.1 boost (capped at 1.0)
+- **disputed**: -0.2 penalty (floored at 0.0)
+- **agent_inferred**: No adjustment
+
+**Example:**
+```python
+# Day 1: Agent infers preference
+provenance = MemoryProvenance(
+    memory_id="mem_123",
+    source_session_id="sess_day1",
+    extraction_timestamp=datetime.now(),
+    confidence_score=0.7,
+    validation_status="agent_inferred"
+)
+
+# Day 5: User confirms
+provenance.add_confidence_update(0.9, "User confirmed")
+provenance.validation_status = "user_confirmed"
+
+# Effective confidence: 0.9 + 0.1 = 1.0 (boost for user_confirmed)
+print(provenance.effective_confidence)  # 1.0
+```
+
+**See:** [patterns/context-engineering-memory.md](patterns/context-engineering-memory.md)
+
+### PII Redaction for Spiritual Context
+
+**Rule:** Redact personally identifiable information while preserving spiritual/emotional context.
+
+**What to Redact:**
+- Emails: `john@example.com` → `[EMAIL_REDACTED]`
+- Phone numbers: `555-1234` → `[PHONE_REDACTED]`
+- Full names: `John Smith` → `[NAME_REDACTED]`
+- Addresses: `123 Main Street` → `[LOCATION_REDACTED]`
+
+**What NOT to Redact (Whitelist):**
+- Bhagavad Gita characters: Arjuna, Krishna, Sanjaya
+- Philosophical terms: Brahman, Atman, Karma, Dharma
+- Emotional context: anxiety, fear, confusion
+- Situational context: job interview, family conflict
+
+**Code:**
+```python
+class PIIRedactor:
+    def __init__(self) -> None:
+        self.email_pattern = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
+        self.phone_pattern = re.compile(r'\b(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3,4}[-.\s]?\d{4}\b')
+        self.name_pattern = re.compile(r'\b[A-Z][a-z]+ (?:[A-Z]\. )?[A-Z][a-z]+\b')
+
+        # Whitelist for Gita characters and terms
+        self.whitelist = {"Arjuna", "Krishna", "Brahman", "Karma", "Dharma"}
+
+    def redact(self, text: str) -> tuple[str, bool]:
+        pii_found = False
+        redacted_text = text
+
+        # Redact emails, phones, locations
+        if self.email_pattern.search(redacted_text):
+            redacted_text = self.email_pattern.sub("[EMAIL_REDACTED]", redacted_text)
+            pii_found = True
+
+        # Redact names (with whitelist check)
+        for name in self.name_pattern.findall(redacted_text):
+            if name not in self.whitelist:
+                redacted_text = redacted_text.replace(name, "[NAME_REDACTED]")
+                pii_found = True
+
+        return redacted_text, pii_found
+```
+
+**Example:**
+```python
+user_message = "I'm John Smith at john@email.com. I'm anxious about my job interview. Can Krishna's teachings help?"
+
+redactor = PIIRedactor()
+redacted, pii_found = redactor.redact(user_message)
+
+# Result:
+# "[NAME_REDACTED] at [EMAIL_REDACTED]. I'm anxious about my job interview. Can Krishna's teachings help?"
+# Krishna preserved (whitelist), John Smith redacted, emotional context preserved
+```
+
+### Implementation Checklist
+
+When implementing context-aware AI systems:
+
+- [ ] **Read terminology first**: [google-context/TERMINOLOGY.md](google-context/TERMINOLOGY.md)
+- [ ] **Sessions pattern**: Compress at 95% threshold, protect turn 0 and constraints
+- [ ] **Memory provenance**: Track source_session_id, confidence_score, validation_status
+- [ ] **PII redaction**: Redact identifiers, preserve domain-specific terms (whitelist)
+- [ ] **Confidence evolution**: Implement boost/penalty rules for validation status
+- [ ] **Token efficiency**: Target 6x reduction (50K → 8K) while preserving intelligence
+- [ ] **Test coverage**: ≥90% for sessions and memory modules
+
+### Learning Resources
+
+**Quick Start (30 minutes):**
+1. Read [TERMINOLOGY.md](google-context/TERMINOLOGY.md) - Critical distinctions
+2. Review visual diagrams (session_vs_context.svg, memory_vs_rag.svg)
+3. Study Bhagavad Gita chatbot case study
+
+**Implementation (2-3 hours):**
+1. [Sessions Pattern](patterns/context-engineering-sessions.md) - Multi-turn conversations
+2. [Memory Pattern](patterns/context-engineering-memory.md) - Long-term persistence
+3. Run tests: `pytest tests/sessions/ tests/memory/ -v --cov`
+
+**Full Mastery (4-6 hours):**
+1. Complete implementation path above
+2. Study advanced topics (performance optimization, conflict resolution)
+3. Analyze case studies (Bhagavad Gita, Banking Fraud, Healthcare Triage)
+
+**Navigation Hub:** [google-context/TUTORIAL_INDEX.md](google-context/TUTORIAL_INDEX.md)
+
+---
+
 ## Tutorial Workflow
 
 ### Using the Tutorial System
