@@ -1,0 +1,2628 @@
+[
+  {
+    "invoice_id": "INV-2024-000",
+    "vendor": "Fusion Enterprises",
+    "amount": 4083.48,
+    "date": "2024-06-21",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 3,
+        "unit_price": 4083.48
+      }
+    ],
+    "has_ocr_error": true,
+    "has_missing_fields": true,
+    "is_duplicate": false,
+    "ocr_error_field": "vendor",
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "missing_required_fields"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-001",
+    "vendor": "Titan Corporation",
+    "amount": 11060.69,
+    "date": "2024-11-08",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 4,
+        "unit_price": 11060.69
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-002",
+    "vendor": "Infinity Services",
+    "amount": 419.68,
+    "date": "2024-12-29",
+    "line_items": [
+      {
+        "description": "Professional Services",
+        "quantity": 6,
+        "unit_price": 419.68
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-003",
+    "vendor": "Fusion Enterprises",
+    "amount": 890.27,
+    "date": "2024-06-20",
+    "line_items": [
+      {
+        "description": "Development Services",
+        "quantity": 5,
+        "unit_price": 568.88
+      },
+      {
+        "description": "Software License",
+        "quantity": 8,
+        "unit_price": 321.39
+      }
+    ],
+    "has_ocr_error": true,
+    "has_missing_fields": true,
+    "is_duplicate": false,
+    "ocr_error_field": "vendor",
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "missing_required_fields"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-004",
+    "vendor": "Innovative Solutions",
+    "amount": 433.2,
+    "date": "2024-04-11",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 2,
+        "unit_price": 300.68
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 5,
+        "unit_price": 132.52
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-005",
+    "vendor": "Acme Corp",
+    "amount": 229.88,
+    "date": "2024-01-09",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 4,
+        "unit_price": 127.35
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 5,
+        "unit_price": 37.46
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 4,
+        "unit_price": 65.07
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-006",
+    "vendor": "Fusion Enterprises",
+    "amount": 4083.48,
+    "date": "2024-06-21",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 3,
+        "unit_price": 4083.48
+      }
+    ],
+    "has_ocr_error": true,
+    "has_missing_fields": true,
+    "is_duplicate": true,
+    "ocr_error_field": "vendor",
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "duplicate_invoice"
+    },
+    "duplicate_of": "INV-2024-000"
+  },
+  {
+    "invoice_id": "INV-2024-007",
+    "vendor": "Innovative Solutions",
+    "amount": 433.2,
+    "date": "2024-04-11",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 2,
+        "unit_price": 300.68
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 5,
+        "unit_price": 132.52
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": true,
+    "gold_label": {
+      "is_valid": false,
+      "reason": "duplicate_invoice"
+    },
+    "duplicate_of": "INV-2024-004"
+  },
+  {
+    "invoice_id": "INV-2024-008",
+    "vendor": "Nexus Solutions",
+    "amount": 173.29,
+    "date": "2024-03-25",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 9,
+        "unit_price": 61.67
+      },
+      {
+        "description": "Training Session",
+        "quantity": 10,
+        "unit_price": 111.62
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-009",
+    "vendor": "Dynamic Partners",
+    "amount": 79.39,
+    "date": "2024-05-26",
+    "line_items": [
+      {
+        "description": "Software License",
+        "quantity": 2,
+        "unit_price": 79.39
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-010",
+    "vendor": "Nexus Solutions",
+    "amount": 1259.48,
+    "date": "2024-07-28",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 5,
+        "unit_price": 879.68
+      },
+      {
+        "description": "Software License",
+        "quantity": 2,
+        "unit_price": 261.47
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 5,
+        "unit_price": 118.33
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-011",
+    "vendor": "Momentum Enterprises",
+    "amount": 2484.47,
+    "date": "2024-04-16",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 2,
+        "unit_price": 2484.47
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-012",
+    "vendor": "Premier Services",
+    "amount": 704.87,
+    "date": "2024-01-10",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 1,
+        "unit_price": 480.3
+      },
+      {
+        "description": "Maintenance Fee",
+        "quantity": 1,
+        "unit_price": 121.17
+      },
+      {
+        "description": "Consulting Services",
+        "quantity": 6,
+        "unit_price": 103.4
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-013",
+    "vendor": "Strategic Consulting",
+    "amount": 422.65,
+    "date": "2024-03-05",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 3,
+        "unit_price": 422.65
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-014",
+    "vendor": "Catalyst Consulting",
+    "amount": 139.58,
+    "date": "2024-02-04",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 4,
+        "unit_price": 139.58
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-015",
+    "vendor": "Dynamic Partners",
+    "amount": 1091.69,
+    "date": "2024-12-12",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 4,
+        "unit_price": 1091.69
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-016",
+    "vendor": "Phoenix Corporation",
+    "amount": 331.54,
+    "date": "2024-02-01",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 2,
+        "unit_price": 183.16
+      },
+      {
+        "description": "Cloud Services",
+        "quantity": 2,
+        "unit_price": 98.25
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 4,
+        "unit_price": 50.13
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-017",
+    "vendor": "Titan Corporation",
+    "amount": 680.29,
+    "date": "2024-03-07",
+    "line_items": [
+      {
+        "description": "Maintenance Fee",
+        "quantity": 7,
+        "unit_price": 680.29
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": true,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "ocr_error_field": "vendor",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "ocr_error_detected"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-018",
+    "vendor": "Horizon Technologies",
+    "amount": 5370.86,
+    "date": "2024-02-01",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 4,
+        "unit_price": 3175.71
+      },
+      {
+        "description": "Support Contract",
+        "quantity": 4,
+        "unit_price": 2195.15
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-019",
+    "vendor": "Innovative Solutions",
+    "amount": 3986.25,
+    "date": "2024-08-18",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 1,
+        "unit_price": 1351.99
+      },
+      {
+        "description": "Support Contract",
+        "quantity": 3,
+        "unit_price": 1811.31
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 8,
+        "unit_price": 822.95
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-020",
+    "vendor": "Catalyst Consulting",
+    "amount": 139.58,
+    "date": "2024-02-04",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 4,
+        "unit_price": 139.58
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": true,
+    "has_missing_fields": false,
+    "is_duplicate": true,
+    "gold_label": {
+      "is_valid": false,
+      "reason": "duplicate_invoice"
+    },
+    "duplicate_of": "INV-2024-014",
+    "ocr_error_field": "vendor"
+  },
+  {
+    "invoice_id": "INV-2024-021",
+    "vendor": "TechSolutions Ltd",
+    "amount": 221.16,
+    "date": "2024-08-12",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 8,
+        "unit_price": 151.04
+      },
+      {
+        "description": "Training Session",
+        "quantity": 4,
+        "unit_price": 25.38
+      },
+      {
+        "description": "Software License",
+        "quantity": 10,
+        "unit_price": 44.74
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-022",
+    "vendor": "TechSolutions Ltd",
+    "amount": 221.16,
+    "date": "2024-08-12",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 8,
+        "unit_price": 151.04
+      },
+      {
+        "description": "Training Session",
+        "quantity": 4,
+        "unit_price": 25.38
+      },
+      {
+        "description": "Software License",
+        "quantity": 10,
+        "unit_price": 44.74
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": true,
+    "gold_label": {
+      "is_valid": false,
+      "reason": "duplicate_invoice"
+    },
+    "duplicate_of": "INV-2024-021"
+  },
+  {
+    "invoice_id": "INV-2024-023",
+    "vendor": "Optimal Systems",
+    "amount": 565.68,
+    "date": "2024-10-11",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 10,
+        "unit_price": 565.68
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-024",
+    "vendor": "Paradigm Solutions",
+    "amount": 1098.15,
+    "date": "2024-04-24",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 7,
+        "unit_price": 346.9
+      },
+      {
+        "description": "Development Services",
+        "quantity": 9,
+        "unit_price": 422.92
+      },
+      {
+        "description": "Cloud Services",
+        "quantity": 5,
+        "unit_price": 328.33
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-025",
+    "vendor": "Innovative Solutions",
+    "amount": 761.85,
+    "date": "2024-10-07",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 1,
+        "unit_price": 511.66
+      },
+      {
+        "description": "Maintenance Fee",
+        "quantity": 10,
+        "unit_price": 250.19
+      }
+    ],
+    "has_ocr_error": false,
+    "has_missing_fields": true,
+    "is_duplicate": false,
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "missing_required_fields"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-026",
+    "vendor": "Innovative Solutions",
+    "amount": 702.36,
+    "date": "2024-11-25",
+    "line_items": [
+      {
+        "description": "Maintenance Fee",
+        "quantity": 9,
+        "unit_price": 290.77
+      },
+      {
+        "description": "Training Session",
+        "quantity": 10,
+        "unit_price": 411.59
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-027",
+    "vendor": "Infinity Services",
+    "amount": 128.11,
+    "date": "2024-11-30",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 9,
+        "unit_price": 128.11
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-028",
+    "vendor": "Innovative Solutions",
+    "amount": 46.22,
+    "date": "2024-12-06",
+    "line_items": [
+      {
+        "description": "Software License",
+        "quantity": 2,
+        "unit_price": 18.51
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 5,
+        "unit_price": 27.71
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": true,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "ocr_error_field": "vendor",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "ocr_error_detected"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-029",
+    "vendor": "Summit Partners",
+    "amount": 830.43,
+    "date": "2024-11-06",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 3,
+        "unit_price": 252.34
+      },
+      {
+        "description": "Cloud Services",
+        "quantity": 10,
+        "unit_price": 299.59
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 3,
+        "unit_price": 278.5
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": true,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "ocr_error_field": "vendor",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "ocr_error_detected"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-030",
+    "vendor": "Paradigm Solutions",
+    "amount": 6944.73,
+    "date": "2024-08-21",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 6,
+        "unit_price": 2776.59
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 10,
+        "unit_price": 2551.1
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 4,
+        "unit_price": 1617.04
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-031",
+    "vendor": "Atlas Services",
+    "amount": 178.14,
+    "date": "2024-02-04",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 5,
+        "unit_price": 110.61
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 2,
+        "unit_price": 67.53
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-032",
+    "vendor": "Optimal Systems",
+    "amount": 924.62,
+    "date": "2024-04-29",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 1,
+        "unit_price": 924.62
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-033",
+    "vendor": "Phoenix Corporation",
+    "amount": 1444.03,
+    "date": "2024-08-12",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 6,
+        "unit_price": 825.71
+      },
+      {
+        "description": "Software License",
+        "quantity": 2,
+        "unit_price": 618.32
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-034",
+    "vendor": "Momentum Enterprises",
+    "amount": 30.37,
+    "date": "2024-06-27",
+    "line_items": [
+      {
+        "description": "Cloud Services",
+        "quantity": 7,
+        "unit_price": 17.96
+      },
+      {
+        "description": "Development Services",
+        "quantity": 9,
+        "unit_price": 12.41
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-035",
+    "vendor": "Premier Services",
+    "amount": 2373.53,
+    "date": "2024-07-13",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 6,
+        "unit_price": 1364.17
+      },
+      {
+        "description": "Cloud Services",
+        "quantity": 10,
+        "unit_price": 476.94
+      },
+      {
+        "description": "Cloud Services",
+        "quantity": 2,
+        "unit_price": 532.42
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-036",
+    "vendor": "Apex Systems",
+    "amount": 766.4,
+    "date": "2024-05-07",
+    "line_items": [
+      {
+        "description": "Professional Services",
+        "quantity": 7,
+        "unit_price": 268.94
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 10,
+        "unit_price": 284.01
+      },
+      {
+        "description": "Development Services",
+        "quantity": 5,
+        "unit_price": 213.45
+      }
+    ],
+    "has_ocr_error": false,
+    "has_missing_fields": true,
+    "is_duplicate": false,
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "missing_required_fields"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-037",
+    "vendor": "Acme Corp",
+    "amount": 3669.65,
+    "date": "2024-09-13",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 9,
+        "unit_price": 1749.92
+      },
+      {
+        "description": "Maintenance Fee",
+        "quantity": 3,
+        "unit_price": 1919.73
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": true,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "ocr_error_field": "vendor",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "ocr_error_detected"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-038",
+    "vendor": "Global Industries",
+    "amount": 202.34,
+    "date": "2024-12-26",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 3,
+        "unit_price": 202.34
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": true,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "ocr_error_field": "vendor",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "ocr_error_detected"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-039",
+    "vendor": "Paradigm Solutions",
+    "amount": 2819.17,
+    "date": "2024-01-28",
+    "line_items": [
+      {
+        "description": "Professional Services",
+        "quantity": 8,
+        "unit_price": 2819.17
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-040",
+    "vendor": "Nexus Solutions",
+    "amount": 173.29,
+    "date": "2024-03-25",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 9,
+        "unit_price": 61.67
+      },
+      {
+        "description": "Training Session",
+        "quantity": 10,
+        "unit_price": 111.62
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": true,
+    "gold_label": {
+      "is_valid": false,
+      "reason": "duplicate_invoice"
+    },
+    "duplicate_of": "INV-2024-008"
+  },
+  {
+    "invoice_id": "INV-2024-041",
+    "vendor": "Sterling Group",
+    "amount": 12598.26,
+    "date": "2024-02-28",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 8,
+        "unit_price": 5035.26
+      },
+      {
+        "description": "Maintenance Fee",
+        "quantity": 9,
+        "unit_price": 2672.28
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 10,
+        "unit_price": 4890.72
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-042",
+    "vendor": "Titan Corporation",
+    "amount": 4034.29,
+    "date": "2024-01-25",
+    "line_items": [
+      {
+        "description": "Maintenance Fee",
+        "quantity": 8,
+        "unit_price": 2658.13
+      },
+      {
+        "description": "Training Session",
+        "quantity": 4,
+        "unit_price": 1376.16
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-043",
+    "vendor": "Pinnacle Systems",
+    "amount": 1513.74,
+    "date": "2024-02-22",
+    "line_items": [
+      {
+        "description": "Training Session",
+        "quantity": 4,
+        "unit_price": 1513.74
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-044",
+    "vendor": "Atlas Services",
+    "amount": 2625.39,
+    "date": "2024-11-28",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 2,
+        "unit_price": 948.09
+      },
+      {
+        "description": "Cloud Services",
+        "quantity": 9,
+        "unit_price": 781.53
+      },
+      {
+        "description": "Maintenance Fee",
+        "quantity": 7,
+        "unit_price": 895.77
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-045",
+    "vendor": "Zenith Partners",
+    "amount": 494.37,
+    "date": "2024-02-08",
+    "line_items": [
+      {
+        "description": "Cloud Services",
+        "quantity": 5,
+        "unit_price": 242.63
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 7,
+        "unit_price": 251.74
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-046",
+    "vendor": "Elite Consulting",
+    "amount": 218.71,
+    "date": "2024-06-29",
+    "line_items": [
+      {
+        "description": "Software License",
+        "quantity": 7,
+        "unit_price": 103.74
+      },
+      {
+        "description": "Cloud Services",
+        "quantity": 7,
+        "unit_price": 114.97
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-047",
+    "vendor": "Momentum Enterprises",
+    "amount": 2397.79,
+    "date": "2024-01-18",
+    "line_items": [
+      {
+        "description": "Software License",
+        "quantity": 2,
+        "unit_price": 1260.65
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 8,
+        "unit_price": 633.5
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 1,
+        "unit_price": 503.64
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-048",
+    "vendor": "Apex Systems",
+    "amount": 338.8,
+    "date": "2024-12-02",
+    "line_items": [
+      {
+        "description": "Maintenance Fee",
+        "quantity": 1,
+        "unit_price": 214.79
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 1,
+        "unit_price": 124.01
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": true,
+    "is_duplicate": false,
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "missing_required_fields"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-049",
+    "vendor": "Titan Corporation",
+    "amount": 11060.69,
+    "date": "2024-11-08",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 4,
+        "unit_price": 11060.69
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": true,
+    "gold_label": {
+      "is_valid": false,
+      "reason": "duplicate_invoice"
+    },
+    "duplicate_of": "INV-2024-001"
+  },
+  {
+    "invoice_id": "INV-2024-050",
+    "vendor": "Momentum Enterprises",
+    "amount": 2484.47,
+    "date": "2024-04-16",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 2,
+        "unit_price": 2484.47
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": true,
+    "gold_label": {
+      "is_valid": false,
+      "reason": "duplicate_invoice"
+    },
+    "duplicate_of": "INV-2024-011"
+  },
+  {
+    "invoice_id": "INV-2024-051",
+    "vendor": "Optimal Systems",
+    "amount": 472.76,
+    "date": "2024-09-04",
+    "line_items": [
+      {
+        "description": "Development Services",
+        "quantity": 2,
+        "unit_price": 173.56
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 5,
+        "unit_price": 299.2
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-052",
+    "vendor": "Innovative Solutions",
+    "amount": 681.15,
+    "date": "2024-04-05",
+    "line_items": [
+      {
+        "description": "Development Services",
+        "quantity": 4,
+        "unit_price": 681.15
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-053",
+    "vendor": "Paradigm Solutions",
+    "amount": 1161.6,
+    "date": "2024-01-10",
+    "line_items": [
+      {
+        "description": "Cloud Services",
+        "quantity": 2,
+        "unit_price": 596.01
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 6,
+        "unit_price": 565.59
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-054",
+    "vendor": "Catalyst Consulting",
+    "amount": 1124.0,
+    "date": "2024-08-15",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 5,
+        "unit_price": 416.39
+      },
+      {
+        "description": "Development Services",
+        "quantity": 9,
+        "unit_price": 707.61
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-055",
+    "vendor": "Sterling Group",
+    "amount": 442.9,
+    "date": "2024-10-19",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 8,
+        "unit_price": 289.06
+      },
+      {
+        "description": "Development Services",
+        "quantity": 10,
+        "unit_price": 153.84
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": true,
+    "is_duplicate": false,
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "missing_required_fields"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-056",
+    "vendor": "Strategic Consulting",
+    "amount": 2180.82,
+    "date": "2024-08-17",
+    "line_items": [
+      {
+        "description": "Development Services",
+        "quantity": 5,
+        "unit_price": 898.2
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 1,
+        "unit_price": 1282.62
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": true,
+    "is_duplicate": false,
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "missing_required_fields"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-057",
+    "vendor": "Catalyst Consulting",
+    "amount": 76.65,
+    "date": "2024-05-15",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 5,
+        "unit_price": 47.31
+      },
+      {
+        "description": "Support Contract",
+        "quantity": 7,
+        "unit_price": 29.34
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-058",
+    "vendor": "Global Industries",
+    "amount": 66.34,
+    "date": "2024-04-26",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 6,
+        "unit_price": 46.35
+      },
+      {
+        "description": "Cloud Services",
+        "quantity": 8,
+        "unit_price": 19.99
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-059",
+    "vendor": "Sterling Group",
+    "amount": 1176.66,
+    "date": "2024-01-17",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 8,
+        "unit_price": 440.14
+      },
+      {
+        "description": "Development Services",
+        "quantity": 9,
+        "unit_price": 302.42
+      },
+      {
+        "description": "Development Services",
+        "quantity": 5,
+        "unit_price": 434.1
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-060",
+    "vendor": "Zenith Partners",
+    "amount": 2684.49,
+    "date": "2024-11-12",
+    "line_items": [
+      {
+        "description": "Training Session",
+        "quantity": 1,
+        "unit_price": 2684.49
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-061",
+    "vendor": "Quantum Industries",
+    "amount": 343.21,
+    "date": "2024-01-24",
+    "line_items": [
+      {
+        "description": "Maintenance Fee",
+        "quantity": 8,
+        "unit_price": 142.0
+      },
+      {
+        "description": "Software License",
+        "quantity": 5,
+        "unit_price": 87.78
+      },
+      {
+        "description": "Maintenance Fee",
+        "quantity": 2,
+        "unit_price": 113.43
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": true,
+    "is_duplicate": false,
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "missing_required_fields"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-062",
+    "vendor": "Momentum Enterprises",
+    "amount": 2484.47,
+    "date": "2024-04-16",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 2,
+        "unit_price": 2484.47
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": true,
+    "gold_label": {
+      "is_valid": false,
+      "reason": "duplicate_invoice"
+    },
+    "duplicate_of": "INV-2024-011"
+  },
+  {
+    "invoice_id": "INV-2024-063",
+    "vendor": "Infinity Services",
+    "amount": 1541.23,
+    "date": "2024-04-24",
+    "line_items": [
+      {
+        "description": "Development Services",
+        "quantity": 4,
+        "unit_price": 836.16
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 7,
+        "unit_price": 705.07
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-064",
+    "vendor": "Momentum Enterprises",
+    "amount": 25.65,
+    "date": "2024-07-21",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 4,
+        "unit_price": 8.31
+      },
+      {
+        "description": "Training Session",
+        "quantity": 2,
+        "unit_price": 9.54
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 4,
+        "unit_price": 7.8
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-065",
+    "vendor": "Synergy Solutions",
+    "amount": 6187.32,
+    "date": "2024-05-09",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 5,
+        "unit_price": 6187.32
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-066",
+    "vendor": "Phoenix Corporation",
+    "amount": 331.54,
+    "date": "2024-02-01",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 2,
+        "unit_price": 183.16
+      },
+      {
+        "description": "Cloud Services",
+        "quantity": 2,
+        "unit_price": 98.25
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 4,
+        "unit_price": 50.13
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": true,
+    "gold_label": {
+      "is_valid": false,
+      "reason": "duplicate_invoice"
+    },
+    "duplicate_of": "INV-2024-016"
+  },
+  {
+    "invoice_id": "INV-2024-067",
+    "vendor": "Quantum Industries",
+    "amount": 21.72,
+    "date": "2024-10-19",
+    "line_items": [
+      {
+        "description": "Hardware Purchase",
+        "quantity": 5,
+        "unit_price": 8.47
+      },
+      {
+        "description": "Consulting Services",
+        "quantity": 1,
+        "unit_price": 8.36
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 5,
+        "unit_price": 4.89
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-068",
+    "vendor": "Vertex Technologies",
+    "amount": 1613.23,
+    "date": "2024-09-22",
+    "line_items": [
+      {
+        "description": "Training Session",
+        "quantity": 9,
+        "unit_price": 743.7
+      },
+      {
+        "description": "Maintenance Fee",
+        "quantity": 2,
+        "unit_price": 448.67
+      },
+      {
+        "description": "Development Services",
+        "quantity": 1,
+        "unit_price": 420.86
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-069",
+    "vendor": "Phoenix Corporation",
+    "amount": 331.54,
+    "date": "2024-02-01",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 2,
+        "unit_price": 183.16
+      },
+      {
+        "description": "Cloud Services",
+        "quantity": 2,
+        "unit_price": 98.25
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 4,
+        "unit_price": 50.13
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": true,
+    "gold_label": {
+      "is_valid": false,
+      "reason": "duplicate_invoice"
+    },
+    "duplicate_of": "INV-2024-016"
+  },
+  {
+    "invoice_id": "INV-2024-070",
+    "vendor": "Elite Consulting",
+    "amount": 535.57,
+    "date": "2024-05-25",
+    "line_items": [
+      {
+        "description": "Hardware Purchase",
+        "quantity": 8,
+        "unit_price": 535.57
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-071",
+    "vendor": "Elite Consulting",
+    "amount": 139.07,
+    "date": "2024-10-09",
+    "line_items": [
+      {
+        "description": "Maintenance Fee",
+        "quantity": 6,
+        "unit_price": 139.07
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-072",
+    "vendor": "Infinity Services",
+    "amount": 1456.9,
+    "date": "2024-12-30",
+    "line_items": [
+      {
+        "description": "Professional Services",
+        "quantity": 9,
+        "unit_price": 823.2
+      },
+      {
+        "description": "Software License",
+        "quantity": 8,
+        "unit_price": 633.7
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-073",
+    "vendor": "Dynamic Partners",
+    "amount": 129.72,
+    "date": "2024-04-02",
+    "line_items": [
+      {
+        "description": "Maintenance Fee",
+        "quantity": 7,
+        "unit_price": 84.03
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 6,
+        "unit_price": 14.7
+      },
+      {
+        "description": "Development Services",
+        "quantity": 8,
+        "unit_price": 30.99
+      }
+    ],
+    "has_ocr_error": false,
+    "has_missing_fields": true,
+    "is_duplicate": false,
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "missing_required_fields"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-074",
+    "vendor": "Pinnacle Systems",
+    "amount": 230.0,
+    "date": "2024-10-17",
+    "line_items": [
+      {
+        "description": "Development Services",
+        "quantity": 4,
+        "unit_price": 230.0
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-075",
+    "vendor": "Momentum Enterprises",
+    "amount": 453.79,
+    "date": "2024-10-19",
+    "line_items": [
+      {
+        "description": "Hardware Purchase",
+        "quantity": 8,
+        "unit_price": 308.04
+      },
+      {
+        "description": "Training Session",
+        "quantity": 9,
+        "unit_price": 145.75
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-076",
+    "vendor": "Advanced Technologies",
+    "amount": 514.71,
+    "date": "2024-12-29",
+    "line_items": [
+      {
+        "description": "Professional Services",
+        "quantity": 4,
+        "unit_price": 514.71
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-077",
+    "vendor": "Apex Systems",
+    "amount": 920.59,
+    "date": "2024-01-10",
+    "line_items": [
+      {
+        "description": "Software License",
+        "quantity": 5,
+        "unit_price": 374.56
+      },
+      {
+        "description": "Development Services",
+        "quantity": 10,
+        "unit_price": 322.39
+      },
+      {
+        "description": "Maintenance Fee",
+        "quantity": 3,
+        "unit_price": 223.64
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-078",
+    "vendor": "Innovative Solutions",
+    "amount": 418.4,
+    "date": "2024-01-31",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 10,
+        "unit_price": 271.06
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 4,
+        "unit_price": 147.34
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": true,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "ocr_error_field": "vendor",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "ocr_error_detected"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-079",
+    "vendor": "Elite Consulting",
+    "amount": 1745.47,
+    "date": "2024-02-19",
+    "line_items": [
+      {
+        "description": "Hardware Purchase",
+        "quantity": 9,
+        "unit_price": 1745.47
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-080",
+    "vendor": "Catalyst Consulting",
+    "amount": 1297.64,
+    "date": "2024-03-04",
+    "line_items": [
+      {
+        "description": "Hardware Purchase",
+        "quantity": 7,
+        "unit_price": 1297.64
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": true,
+    "is_duplicate": false,
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "missing_required_fields"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-081",
+    "vendor": "Atlas Services",
+    "amount": 458.99,
+    "date": "2024-10-27",
+    "line_items": [
+      {
+        "description": "Professional Services",
+        "quantity": 6,
+        "unit_price": 295.47
+      },
+      {
+        "description": "Maintenance Fee",
+        "quantity": 9,
+        "unit_price": 90.05
+      },
+      {
+        "description": "Software License",
+        "quantity": 10,
+        "unit_price": 73.47
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-082",
+    "vendor": "Vertex Technologies",
+    "amount": 1328.58,
+    "date": "2024-03-25",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 8,
+        "unit_price": 1328.58
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-083",
+    "vendor": "Dynamic Partners",
+    "amount": 79.39,
+    "date": "2024-05-26",
+    "line_items": [
+      {
+        "description": "Software License",
+        "quantity": 2,
+        "unit_price": 79.39
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": true,
+    "gold_label": {
+      "is_valid": false,
+      "reason": "duplicate_invoice"
+    },
+    "duplicate_of": "INV-2024-009"
+  },
+  {
+    "invoice_id": "INV-2024-084",
+    "vendor": "Acme Corp",
+    "amount": 3925.02,
+    "date": "2024-12-20",
+    "line_items": [
+      {
+        "description": "Hardware Purchase",
+        "quantity": 3,
+        "unit_price": 2421.77
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 10,
+        "unit_price": 498.46
+      },
+      {
+        "description": "Support Contract",
+        "quantity": 8,
+        "unit_price": 1004.79
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": true,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "ocr_error_field": "vendor",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "ocr_error_detected"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-085",
+    "vendor": "Horizon Technologies",
+    "amount": 5327.92,
+    "date": "2024-09-11",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 8,
+        "unit_price": 2763.27
+      },
+      {
+        "description": "Development Services",
+        "quantity": 5,
+        "unit_price": 1739.07
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 5,
+        "unit_price": 825.58
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-086",
+    "vendor": "Acme Corp",
+    "amount": 592.33,
+    "date": "2024-05-20",
+    "line_items": [
+      {
+        "description": "Development Services",
+        "quantity": 5,
+        "unit_price": 313.21
+      },
+      {
+        "description": "Training Session",
+        "quantity": 1,
+        "unit_price": 279.12
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": true,
+    "is_duplicate": false,
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "missing_required_fields"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-087",
+    "vendor": "Premier Services",
+    "amount": 4887.95,
+    "date": "2024-03-14",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 10,
+        "unit_price": 2983.1
+      },
+      {
+        "description": "Cloud Services",
+        "quantity": 4,
+        "unit_price": 1904.85
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-088",
+    "vendor": "Velocity Technologies",
+    "amount": 833.84,
+    "date": "2024-04-10",
+    "line_items": [
+      {
+        "description": "Software License",
+        "quantity": 10,
+        "unit_price": 513.18
+      },
+      {
+        "description": "Cloud Services",
+        "quantity": 3,
+        "unit_price": 320.66
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-089",
+    "vendor": "Quantum Industries",
+    "amount": 7435.91,
+    "date": "2024-06-20",
+    "line_items": [
+      {
+        "description": "Training Session",
+        "quantity": 3,
+        "unit_price": 3809.72
+      },
+      {
+        "description": "Training Session",
+        "quantity": 8,
+        "unit_price": 3626.19
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-090",
+    "vendor": "Quantum Industries",
+    "amount": 674.97,
+    "date": "2024-06-29",
+    "line_items": [
+      {
+        "description": "Professional Services",
+        "quantity": 9,
+        "unit_price": 398.02
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 1,
+        "unit_price": 123.61
+      },
+      {
+        "description": "Training Session",
+        "quantity": 9,
+        "unit_price": 153.34
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-091",
+    "vendor": "Synergy Solutions",
+    "amount": 127.85,
+    "date": "2024-11-22",
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 8,
+        "unit_price": 127.85
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-092",
+    "vendor": "Acme Corp",
+    "amount": 917.81,
+    "date": "2024-11-28",
+    "line_items": [
+      {
+        "description": "Training Session",
+        "quantity": 7,
+        "unit_price": 577.8
+      },
+      {
+        "description": "Software License",
+        "quantity": 1,
+        "unit_price": 117.87
+      },
+      {
+        "description": "Training Session",
+        "quantity": 8,
+        "unit_price": 222.14
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": true,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "ocr_error_field": "vendor",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "ocr_error_detected"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-093",
+    "vendor": "Paradigm Solutions",
+    "amount": 618.72,
+    "date": "2024-07-13",
+    "line_items": [
+      {
+        "description": "Professional Services",
+        "quantity": 2,
+        "unit_price": 365.44
+      },
+      {
+        "description": "Development Services",
+        "quantity": 7,
+        "unit_price": 160.45
+      },
+      {
+        "description": "Training Session",
+        "quantity": 1,
+        "unit_price": 92.83
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-094",
+    "vendor": "Premier Services",
+    "amount": 388.0,
+    "date": "2024-05-27",
+    "line_items": [
+      {
+        "description": "Cloud Services",
+        "quantity": 1,
+        "unit_price": 256.34
+      },
+      {
+        "description": "Support Contract",
+        "quantity": 2,
+        "unit_price": 60.47
+      },
+      {
+        "description": "Maintenance Fee",
+        "quantity": 2,
+        "unit_price": 71.19
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-095",
+    "vendor": "Apex Systems",
+    "amount": 264.95,
+    "date": "2024-04-02",
+    "line_items": [
+      {
+        "description": "Development Services",
+        "quantity": 4,
+        "unit_price": 264.95
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-096",
+    "vendor": "Horizon Technologies",
+    "amount": 1081.17,
+    "date": "2024-09-14",
+    "line_items": [
+      {
+        "description": "Hardware Purchase",
+        "quantity": 3,
+        "unit_price": 325.58
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 2,
+        "unit_price": 389.95
+      },
+      {
+        "description": "Software License",
+        "quantity": 3,
+        "unit_price": 365.64
+      }
+    ],
+    "status": "pending",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-097",
+    "vendor": "Vanguard Industries",
+    "amount": 1691.34,
+    "date": "2024-09-30",
+    "line_items": [
+      {
+        "description": "Hardware Purchase",
+        "quantity": 7,
+        "unit_price": 1691.34
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": true,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "ocr_error_field": "vendor",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "ocr_error_detected"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-098",
+    "vendor": "Vertex Technologies",
+    "amount": 381.76,
+    "date": "2024-09-24",
+    "line_items": [
+      {
+        "description": "Development Services",
+        "quantity": 1,
+        "unit_price": 191.47
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 5,
+        "unit_price": 190.29
+      }
+    ],
+    "status": "approved",
+    "has_ocr_error": false,
+    "has_missing_fields": true,
+    "is_duplicate": false,
+    "missing_field": "status",
+    "gold_label": {
+      "is_valid": false,
+      "reason": "missing_required_fields"
+    }
+  },
+  {
+    "invoice_id": "INV-2024-099",
+    "vendor": "Atlas Services",
+    "amount": 2517.34,
+    "date": "2024-03-25",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 2,
+        "unit_price": 1671.21
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 2,
+        "unit_price": 362.86
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 5,
+        "unit_price": 483.27
+      }
+    ],
+    "status": "paid",
+    "has_ocr_error": false,
+    "has_missing_fields": false,
+    "is_duplicate": false,
+    "gold_label": {
+      "is_valid": true,
+      "reason": "valid"
+    }
+  }
+]

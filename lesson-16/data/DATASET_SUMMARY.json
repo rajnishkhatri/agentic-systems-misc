@@ -1,0 +1,49 @@
+{
+  "generation_date": "2025-11-23T10:17:00.253461",
+  "version": "1.0",
+  "schema_version": "1.0",
+  "datasets": {
+    "invoices": {
+      "count": 100,
+      "file_size_bytes": 57856,
+      "challenge_distribution": {
+        "ocr_errors": 13,
+        "missing_fields": 13,
+        "duplicates": 11
+      },
+      "amount_statistics": {
+        "min": 21.72,
+        "max": 12598.26,
+        "median": 704.87
+      }
+    },
+    "transactions": {
+      "count": 100,
+      "file_size_bytes": 40606,
+      "challenge_distribution": {
+        "fraud_count": 9,
+        "fraud_rate": 0.09,
+        "ambiguous_patterns": 20
+      }
+    },
+    "reconciliation": {
+      "count": 100,
+      "file_size_bytes": 269462,
+      "challenge_distribution": {
+        "date_mismatches": 0,
+        "amount_rounding": 0
+      },
+      "difficulty_distribution": {
+        "easy": 31,
+        "medium": 31,
+        "hard": 38
+      },
+      "challenge_statistics": {
+        "has_date_mismatch": 23,
+        "has_rounding_error": 14,
+        "has_duplicates": 14,
+        "has_missing_counterparty": 19
+      }
+    }
+  }
+}
