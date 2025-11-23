@@ -81,36 +81,36 @@
 
 - [ ] 2.0 Implement Session Management and Context Protection
   - [x] 2.1 **TDD RED Phase:** Create `tests/sessions/__init__.py` (empty)
-  - [ ] 2.2 **TDD RED Phase:** Create `tests/sessions/test_protected_context.py` with failing tests:
-    - [ ] 2.2.1 `test_should_identify_initial_objectives_as_protected()` - Turn 0 events marked protected
-    - [ ] 2.2.2 `test_should_identify_explicit_constraints_as_protected()` - Constraint events marked protected
-    - [ ] 2.2.3 `test_should_not_protect_casual_conversation()` - Acknowledgments not protected
-    - [ ] 2.2.4 `test_should_protect_auth_checkpoints()` - Authentication events protected
-  - [ ] 2.3 **TDD RED Phase:** Run `pytest tests/sessions/test_protected_context.py` - confirm all tests fail with ImportError
-  - [ ] 2.4 **TDD GREEN Phase:** Create `backend/sessions/__init__.py` with module exports
-  - [ ] 2.5 **TDD GREEN Phase:** Create `backend/sessions/protected_context.py` with `identify_protected_context(event: dict) -> dict` function (type hints, input validation, returns `{"is_protected": bool, "reason": str}`)
-  - [ ] 2.6 **TDD GREEN Phase:** Run `pytest tests/sessions/test_protected_context.py` - confirm all tests pass
-  - [ ] 2.7 **TDD REFACTOR Phase:** Add docstrings with Args/Returns/Raises to `protected_context.py`
-  - [ ] 2.8 **TDD RED Phase:** Create `tests/sessions/test_context_compressor.py` with failing tests:
-    - [ ] 2.8.1 `test_should_trigger_compression_at_95_percent_capacity()` - Compression triggers at 7600/8000 tokens
-    - [ ] 2.8.2 `test_should_not_trigger_compression_below_95_percent()` - No compression at 7400/8000 tokens
-    - [ ] 2.8.3 `test_should_preserve_protected_events_during_compression()` - Protected indices intact after compression
-    - [ ] 2.8.4 `test_should_compress_non_protected_events()` - Non-protected events summarized
-    - [ ] 2.8.5 `test_should_raise_error_for_invalid_trigger_threshold()` - ValueError for threshold > 1.0 or < 0.0
-  - [ ] 2.9 **TDD RED Phase:** Run `pytest tests/sessions/test_context_compressor.py` - confirm all tests fail
-  - [ ] 2.10 **TDD GREEN Phase:** Create `backend/sessions/context_compressor.py` with `ContextCompressor` class (PRD lines 182-265: `__init__`, `should_compress`, `compress`, `_count_tokens`, `_summarize_events` methods)
-  - [ ] 2.11 **TDD GREEN Phase:** Run `pytest tests/sessions/test_context_compressor.py` - confirm all tests pass
-  - [ ] 2.12 **TDD REFACTOR Phase:** Add defensive coding - type hints, ValueError for invalid thresholds, TypeError for non-list events
-  - [ ] 2.13 **TDD RED Phase:** Create `tests/sessions/test_long_conversation.py` with multi-turn tests:
-    - [ ] 2.13.1 `test_should_preserve_objectives_in_50_turn_conversation()` - Initial objective survives 50 turns
-    - [ ] 2.13.2 `test_should_handle_multiple_compressions_in_100_turns()` - 2-3 compression cycles
-    - [ ] 2.13.3 `test_should_reject_compression_with_all_protected()` - Error when no compressible events
-  - [ ] 2.14 **TDD RED Phase:** Run `pytest tests/sessions/test_long_conversation.py` - confirm tests fail
-  - [ ] 2.15 **TDD GREEN Phase:** Create `backend/sessions/gita_session.py` with `GitaSession` class (events log, state scratchpad, `append_event()`, `get_context_window()` methods)
-  - [ ] 2.16 **TDD GREEN Phase:** Run `pytest tests/sessions/test_long_conversation.py` - confirm all tests pass
-  - [ ] 2.17 **TDD REFACTOR Phase:** Performance optimization - ensure compression completes in <2 seconds for 100 turns
-  - [ ] 2.18 Run full session module test suite: `pytest tests/sessions/ -v --cov=backend/sessions --cov-report=term-missing`
-  - [ ] 2.19 Verify ≥90% test coverage for all session modules
+  - [x] 2.2 **TDD RED Phase:** Create `tests/sessions/test_protected_context.py` with failing tests:
+    - [x] 2.2.1 `test_should_identify_initial_objectives_as_protected()` - Turn 0 events marked protected
+    - [x] 2.2.2 `test_should_identify_explicit_constraints_as_protected()` - Constraint events marked protected
+    - [x] 2.2.3 `test_should_not_protect_casual_conversation()` - Acknowledgments not protected
+    - [x] 2.2.4 `test_should_protect_auth_checkpoints()` - Authentication events protected
+  - [x] 2.3 **TDD RED Phase:** Run `pytest tests/sessions/test_protected_context.py` - confirm all tests fail with ImportError
+  - [x] 2.4 **TDD GREEN Phase:** Create `backend/sessions/__init__.py` with module exports
+  - [x] 2.5 **TDD GREEN Phase:** Create `backend/sessions/protected_context.py` with `identify_protected_context(event: dict) -> dict` function (type hints, input validation, returns `{"is_protected": bool, "reason": str}`)
+  - [x] 2.6 **TDD GREEN Phase:** Run `pytest tests/sessions/test_protected_context.py` - confirm all tests pass
+  - [x] 2.7 **TDD REFACTOR Phase:** Add docstrings with Args/Returns/Raises to `protected_context.py`
+  - [x] 2.8 **TDD RED Phase:** Create `tests/sessions/test_context_compressor.py` with failing tests:
+    - [x] 2.8.1 `test_should_trigger_compression_at_95_percent_capacity()` - Compression triggers at 7600/8000 tokens
+    - [x] 2.8.2 `test_should_not_trigger_compression_below_95_percent()` - No compression at 7400/8000 tokens
+    - [x] 2.8.3 `test_should_preserve_protected_events_during_compression()` - Protected indices intact after compression
+    - [x] 2.8.4 `test_should_compress_non_protected_events()` - Non-protected events summarized
+    - [x] 2.8.5 `test_should_raise_error_for_invalid_trigger_threshold()` - ValueError for threshold > 1.0 or < 0.0
+  - [x] 2.9 **TDD RED Phase:** Run `pytest tests/sessions/test_context_compressor.py` - confirm all tests fail
+  - [x] 2.10 **TDD GREEN Phase:** Create `backend/sessions/context_compressor.py` with `ContextCompressor` class (PRD lines 182-265: `__init__`, `should_compress`, `compress`, `_count_tokens`, `_summarize_events` methods)
+  - [x] 2.11 **TDD GREEN Phase:** Run `pytest tests/sessions/test_context_compressor.py` - confirm all tests pass
+  - [x] 2.12 **TDD REFACTOR Phase:** Add defensive coding - type hints, ValueError for invalid thresholds, TypeError for non-list events
+  - [x] 2.13 **TDD RED Phase:** Create `tests/sessions/test_long_conversation.py` with multi-turn tests:
+    - [x] 2.13.1 `test_should_preserve_objectives_in_50_turn_conversation()` - Initial objective survives 50 turns
+    - [x] 2.13.2 `test_should_handle_multiple_compressions_in_100_turns()` - 2-3 compression cycles
+    - [x] 2.13.3 `test_should_reject_compression_with_all_protected()` - Error when no compressible events
+  - [x] 2.14 **TDD RED Phase:** Run `pytest tests/sessions/test_long_conversation.py` - confirm tests fail
+  - [x] 2.15 **TDD GREEN Phase:** Create `backend/sessions/gita_session.py` with `GitaSession` class (events log, state scratchpad, `append_event()`, `get_context_window()` methods)
+  - [x] 2.16 **TDD GREEN Phase:** Run `pytest tests/sessions/test_long_conversation.py` - confirm all tests pass
+  - [x] 2.17 **TDD REFACTOR Phase:** Performance optimization - ensure compression completes in <2 seconds for 100 turns
+  - [x] 2.18 Run full session module test suite: `pytest tests/sessions/ -v --cov=backend/sessions --cov-report=term-missing`
+  - [x] 2.19 Verify ≥90% test coverage for all session modules
 
 **Estimated Time:** 15 hours
 **Deliverables:** 3 Python modules (protected_context.py, context_compressor.py, gita_session.py), 3 test files with 15+ tests, 100% pass rate
@@ -120,35 +120,35 @@
 ### Phase 3: Memory Provenance and PII Protection (Days 6-7)
 
 - [ ] 3.0 Implement Memory Provenance Tracking System
-  - [ ] 3.1 **TDD RED Phase:** Create `tests/memory/__init__.py` (empty)
-  - [ ] 3.2 **TDD RED Phase:** Create `tests/memory/test_provenance.py` with failing tests:
-    - [ ] 3.2.1 `test_should_create_provenance_with_required_fields()` - All fields present (memory_id, source_session_id, extraction_timestamp, confidence_score, validation_status)
-    - [ ] 3.2.2 `test_should_track_confidence_evolution()` - Confidence history appends correctly
-    - [ ] 3.2.3 `test_should_enforce_user_confirmed_higher_than_inferred()` - `effective_confidence` property boost for user_confirmed
-    - [ ] 3.2.4 `test_should_calculate_confidence_trend()` - Trend detection (increasing, decreasing, stable, insufficient_data)
-    - [ ] 3.2.5 `test_should_export_audit_log()` - `to_audit_log()` returns dict with lineage, trustworthiness, compliance fields
-    - [ ] 3.2.6 `test_should_raise_error_for_invalid_confidence_score()` - ValueError for score > 1.0 or < 0.0
-    - [ ] 3.2.7 `test_should_raise_error_for_invalid_validation_status()` - ValueError for status not in {agent_inferred, user_confirmed, disputed}
-  - [ ] 3.3 **TDD RED Phase:** Run `pytest tests/memory/test_provenance.py` - confirm all tests fail
-  - [ ] 3.4 **TDD GREEN Phase:** Create `backend/memory/__init__.py` with module exports
-  - [ ] 3.5 **TDD GREEN Phase:** Create `backend/memory/provenance.py` with `MemoryProvenance` dataclass (PRD lines 415-530: all fields, `__post_init__`, `add_confidence_update`, properties, `to_audit_log`)
-  - [ ] 3.6 **TDD GREEN Phase:** Run `pytest tests/memory/test_provenance.py` - confirm all tests pass
-  - [ ] 3.7 **TDD REFACTOR Phase:** Add defensive coding - validate confidence_score range in `__post_init__`, validate validation_status enum
-  - [ ] 3.8 **TDD RED Phase:** Create `tests/memory/test_pii_redaction.py` with failing tests:
-    - [ ] 3.8.1 `test_should_redact_email_addresses()` - Email pattern detected and replaced with [EMAIL_REDACTED]
-    - [ ] 3.8.2 `test_should_redact_phone_numbers()` - Phone pattern detected and replaced with [PHONE_REDACTED]
-    - [ ] 3.8.3 `test_should_redact_full_names()` - Name pattern detected and replaced with [NAME_REDACTED]
-    - [ ] 3.8.4 `test_should_redact_locations()` - Location pattern detected and replaced with [LOCATION_REDACTED]
-    - [ ] 3.8.5 `test_should_not_redact_false_positives()` - "Arjuna" (character name) not redacted, "karma" not flagged
-    - [ ] 3.8.6 `test_should_preserve_sentence_structure()` - Redacted text remains grammatically correct
-    - [ ] 3.8.7 `test_should_return_pii_found_flag()` - Returns tuple (redacted_text, pii_found: bool)
-  - [ ] 3.9 **TDD RED Phase:** Run `pytest tests/memory/test_pii_redaction.py` - confirm all tests fail
-  - [ ] 3.10 **TDD GREEN Phase:** Create `backend/memory/pii_redaction.py` with `PIIRedactor` class (PRD lines 546-615: regex patterns, `redact()` method)
-  - [ ] 3.11 **TDD GREEN Phase:** Add `extract_memory_with_pii_redaction()` function integrating PIIRedactor with MemoryProvenance
-  - [ ] 3.12 **TDD GREEN Phase:** Run `pytest tests/memory/test_pii_redaction.py` - confirm all tests pass
-  - [ ] 3.13 **TDD REFACTOR Phase:** Add helper function `generate_uuid()` for memory_id generation (import from `uuid` module)
-  - [ ] 3.14 Run full memory module test suite: `pytest tests/memory/ -v --cov=backend/memory --cov-report=term-missing`
-  - [ ] 3.15 Verify ≥90% test coverage for all memory modules
+  - [x] 3.1 **TDD RED Phase:** Create `tests/memory/__init__.py` (empty)
+  - [x] 3.2 **TDD RED Phase:** Create `tests/memory/test_provenance.py` with failing tests:
+    - [x] 3.2.1 `test_should_create_provenance_with_required_fields()` - All fields present (memory_id, source_session_id, extraction_timestamp, confidence_score, validation_status)
+    - [x] 3.2.2 `test_should_track_confidence_evolution()` - Confidence history appends correctly
+    - [x] 3.2.3 `test_should_enforce_user_confirmed_higher_than_inferred()` - `effective_confidence` property boost for user_confirmed
+    - [x] 3.2.4 `test_should_calculate_confidence_trend()` - Trend detection (increasing, decreasing, stable, insufficient_data)
+    - [x] 3.2.5 `test_should_export_audit_log()` - `to_audit_log()` returns dict with lineage, trustworthiness, compliance fields
+    - [x] 3.2.6 `test_should_raise_error_for_invalid_confidence_score()` - ValueError for score > 1.0 or < 0.0
+    - [x] 3.2.7 `test_should_raise_error_for_invalid_validation_status()` - ValueError for status not in {agent_inferred, user_confirmed, disputed}
+  - [x] 3.3 **TDD RED Phase:** Run `pytest tests/memory/test_provenance.py` - confirm all tests fail
+  - [x] 3.4 **TDD GREEN Phase:** Create `backend/memory/__init__.py` with module exports
+  - [x] 3.5 **TDD GREEN Phase:** Create `backend/memory/provenance.py` with `MemoryProvenance` dataclass (PRD lines 415-530: all fields, `__post_init__`, `add_confidence_update`, properties, `to_audit_log`)
+  - [x] 3.6 **TDD GREEN Phase:** Run `pytest tests/memory/test_provenance.py` - confirm all tests pass
+  - [x] 3.7 **TDD REFACTOR Phase:** Add defensive coding - validate confidence_score range in `__post_init__`, validate validation_status enum
+  - [x] 3.8 **TDD RED Phase:** Create `tests/memory/test_pii_redaction.py` with failing tests:
+    - [x] 3.8.1 `test_should_redact_email_addresses()` - Email pattern detected and replaced with [EMAIL_REDACTED]
+    - [x] 3.8.2 `test_should_redact_phone_numbers()` - Phone pattern detected and replaced with [PHONE_REDACTED]
+    - [x] 3.8.3 `test_should_redact_full_names()` - Name pattern detected and replaced with [NAME_REDACTED]
+    - [x] 3.8.4 `test_should_redact_locations()` - Location pattern detected and replaced with [LOCATION_REDACTED]
+    - [x] 3.8.5 `test_should_not_redact_false_positives()` - "Arjuna" (character name) not redacted, "karma" not flagged
+    - [x] 3.8.6 `test_should_preserve_sentence_structure()` - Redacted text remains grammatically correct
+    - [x] 3.8.7 `test_should_return_pii_found_flag()` - Returns tuple (redacted_text, pii_found: bool)
+  - [x] 3.9 **TDD RED Phase:** Run `pytest tests/memory/test_pii_redaction.py` - confirm all tests fail
+  - [x] 3.10 **TDD GREEN Phase:** Create `backend/memory/pii_redaction.py` with `PIIRedactor` class (PRD lines 546-615: regex patterns, `redact()` method)
+  - [x] 3.11 **TDD GREEN Phase:** Add `extract_memory_with_pii_redaction()` function integrating PIIRedactor with MemoryProvenance
+  - [x] 3.12 **TDD GREEN Phase:** Run `pytest tests/memory/test_pii_redaction.py` - confirm all tests pass
+  - [x] 3.13 **TDD REFACTOR Phase:** Add helper function `generate_uuid()` for memory_id generation (import from `uuid` module)
+  - [x] 3.14 Run full memory module test suite: `pytest tests/memory/ -v --cov=backend/memory --cov-report=term-missing`
+  - [x] 3.15 Verify ≥90% test coverage for all memory modules
 
 **Estimated Time:** 12 hours
 **Deliverables:** 2 Python modules (provenance.py, pii_redaction.py), 2 test files with 14+ tests, 100% pass rate, audit log integration
