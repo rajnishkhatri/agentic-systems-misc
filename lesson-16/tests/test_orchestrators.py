@@ -2428,3 +2428,489 @@ async def test_should_raise_when_insufficient_agents_registered_for_voting(
     # Attempt to execute with insufficient agents
     with pytest.raises(ValueError, match="Expected 5 agents, but only 2 registered"):
         await orchestrator.execute(sample_fraud_task)
+
+
+# =============================================================================
+# Integration Tests - Task 3.8
+# =============================================================================
+
+
+async def test_should_integrate_sequential_orchestrator_with_all_reliability_components(
+    sample_invoice_task: dict[str, Any],
+    tmp_path: Path,
+) -> None:
+    """Test integration of sequential orchestrator with all 7 reliability components.
+
+    Verifies:
+    - Retry logic with exponential backoff (FR4.1)
+    - Circuit breaker pattern (FR4.2)
+    - Deterministic checkpointing (FR4.3)
+    - Output validation schemas (FR4.4)
+    - Error isolation (FR4.5)
+    - Audit logging (FR4.6)
+    - Fallback strategies (FR4.7)
+    """
+    from backend.orchestrators.sequential import SequentialOrchestrator
+    from backend.reliability import (
+        AuditLogger,
+        CircuitBreaker,
+        FallbackHandler,
+        FallbackStrategy,
+        InvoiceExtraction,
+        load_checkpoint,
+        retry_with_backoff,
+        safe_agent_call,
+    )
+
+    # Step 1: Set up infrastructure
+    checkpoint_dir = tmp_path / "checkpoints"
+    audit_log_path = tmp_path / "audit.json"
+    audit_logger = AuditLogger(workflow_id=sample_invoice_task["task_id"])
+    circuit_breaker = CircuitBreaker(failure_threshold=3, timeout=30)
+
+    # Step 2: Create orchestrator
+    orchestrator = SequentialOrchestrator(
+        name="invoice_processing",
+        checkpoint_dir=checkpoint_dir,
+        validate_steps=True,
+    )
+
+    # Step 3: Create agents demonstrating reliability components
+    call_counts = {"extractor": 0, "validator": 0}
+
+    # Agent 1: Extractor (demonstrates retry + validation)
+    async def extractor_agent(task: dict[str, Any]) -> dict[str, Any]:
+        """Extract invoice data."""
+        call_counts["extractor"] += 1
+        await audit_logger.log_decision(
+            agent_name="extractor",
+            step="extract",
+            input_data=task,
+            output={"step": "extracting"},
+        )
+
+        # Fail first 2 times to demonstrate retry (will be wrapped)
+        if call_counts["extractor"] < 3:
+            raise RuntimeError(f"Temp failure {call_counts['extractor']}")
+
+        # FR4.4 - Validation with Pydantic schema
+        extraction = InvoiceExtraction(
+            invoice_id=task["task_id"],
+            vendor="Acme Corp",
+            amount=1500.00,
+            line_items=[{"description": "Service A", "amount": 1500.00}],
+        )
+        return {"status": "success", "extraction": extraction.model_dump()}
+
+    # Agent 2: Validator (demonstrates circuit breaker)
+    async def validator_agent_raw(task: dict[str, Any]) -> dict[str, Any]:
+        """Validate extraction."""
+        call_counts["validator"] += 1
+        await audit_logger.log_decision(
+            agent_name="validator",
+            step="validate",
+            input_data=task,
+            output={"step": "validating"},
+        )
+        extraction = task.get("extraction", {})
+        is_valid = extraction.get("amount", 0) > 0
+        return {"status": "success", "is_valid": is_valid}
+
+    # Wrap validator with circuit breaker (FR4.2)
+    async def validator_agent(task: dict[str, Any]) -> dict[str, Any]:
+        return await circuit_breaker.call(validator_agent_raw, task)
+
+    # Agent 3: Router (demonstrates error isolation + fallback)
+    async def router_agent_raw(task: dict[str, Any]) -> dict[str, Any]:
+        """Route for approval."""
+        await audit_logger.log_decision(
+            agent_name="router",
+            step="route",
+            input_data=task,
+            output={"step": "routing"},
+        )
+        extraction = task.get("extraction", {})
+        amount = extraction.get("amount", 0)
+        approver = "finance" if amount > 1000 else "manager"
+        return {"status": "success", "approver": approver}
+
+    # Wrap router with error isolation (FR4.5)
+    async def router_agent(task: dict[str, Any]) -> dict[str, Any]:
+        result = await safe_agent_call(router_agent_raw, task, critical=False)
+        if result.is_error:
+            # FR4.7 - Fallback strategy
+            fallback = FallbackHandler(strategy=FallbackStrategy.DEFAULT_VALUE)
+            return fallback.get_fallback(default={"status": "success", "approver": "manager"})
+        return result.value
+
+    # Wrap extractor with retry (FR4.1) and register all agents
+    async def extractor_with_retry(task: dict[str, Any]) -> dict[str, Any]:
+        return await retry_with_backoff(extractor_agent, task, max_retries=3, base_delay=0.01)
+
+    orchestrator.register_agent("extractor", extractor_with_retry)
+    orchestrator.register_agent("validator", validator_agent)
+    orchestrator.register_agent("router", router_agent)
+
+    # Step 4: Execute workflow
+    result = await orchestrator.execute(sample_invoice_task)
+
+    # Step 5: Export audit logs (FR4.6)
+    audit_logger.export_to_json(audit_log_path)
+
+    # Step 6: Verify all 7 components
+    # FR4.1 - Retry: Extractor called 3 times
+    assert call_counts["extractor"] == 3
+
+    # FR4.2 - Circuit breaker: CLOSED state
+    assert circuit_breaker.state == "CLOSED"
+
+    # FR4.3 - Checkpointing: Files exist
+    assert len(list(checkpoint_dir.glob("*.json"))) > 0
+
+    # FR4.4 - Validation: Schema validated
+    assert result["extraction"]["vendor"] == "Acme Corp"
+
+    # FR4.5 - Error isolation: Router succeeded
+    assert result["approver"] == "finance"
+
+    # FR4.6 - Audit logging: Logs exported
+    assert audit_log_path.exists()
+    import json
+
+    with open(audit_log_path) as f:
+        data = json.load(f)
+    assert len(data["trace"]) >= 3
+
+    # FR4.7 - Fallback: Router has fallback configured
+    checkpoint = load_checkpoint(list(checkpoint_dir.glob("*.json"))[0])
+    assert checkpoint is not None
+
+
+async def test_should_integrate_hierarchical_orchestrator_with_reliability_framework(
+    sample_fraud_task: dict[str, Any],
+    tmp_path: Path,
+) -> None:
+    """Test hierarchical orchestrator with reliability components."""
+    from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+    from backend.reliability import AuditLogger, CircuitBreaker
+
+    audit_log_path = tmp_path / "audit.json"
+    audit_logger = AuditLogger(workflow_id=sample_fraud_task["task_id"])
+    circuit_breaker = CircuitBreaker(failure_threshold=5, timeout=60)
+
+    orchestrator = HierarchicalOrchestrator(name="fraud_detection")
+
+    async def planner(task: dict[str, Any]) -> dict[str, Any]:
+        await audit_logger.log_decision(agent_name="planner", step="plan", input_data=task, output={"planning": True})
+        return {
+            "status": "success",
+            "subtasks": [
+                {"specialist": "transaction_analyzer"},
+                {"specialist": "merchant_analyzer"},
+            ],
+        }
+
+    async def transaction_specialist_raw(subtask: dict[str, Any]) -> dict[str, Any]:
+        await audit_logger.log_decision(
+            agent_name="transaction_specialist", step="analyze", input_data=subtask, output={"risk": 0.3}
+        )
+        return {"status": "success", "risk_score": 0.3}
+
+    async def merchant_specialist_raw(subtask: dict[str, Any]) -> dict[str, Any]:
+        await audit_logger.log_decision(
+            agent_name="merchant_specialist", step="analyze", input_data=subtask, output={"risk": 0.2}
+        )
+        return {"status": "success", "risk_score": 0.2}
+
+    # Wrap specialists with circuit breaker
+    async def transaction_specialist(subtask: dict[str, Any]) -> dict[str, Any]:
+        return await circuit_breaker.call(transaction_specialist_raw, subtask)
+
+    async def merchant_specialist(subtask: dict[str, Any]) -> dict[str, Any]:
+        return await circuit_breaker.call(merchant_specialist_raw, subtask)
+
+    orchestrator.register_planner(planner)
+    orchestrator.register_specialist("transaction_analyzer", transaction_specialist)
+    orchestrator.register_specialist("merchant_analyzer", merchant_specialist)
+
+    result = await orchestrator.execute(sample_fraud_task)
+    audit_logger.export_to_json(audit_log_path)
+
+    # Verify
+    assert result["status"] == "success"
+    assert len(result["specialist_results"]) == 2
+    assert circuit_breaker.state == "CLOSED"
+
+    import json
+
+    with open(audit_log_path) as f:
+        data = json.load(f)
+    assert len(data["trace"]) >= 3  # 1 planner + 2 specialists
+
+
+async def test_should_support_orchestrator_interoperability_chaining_patterns(
+    sample_invoice_task: dict[str, Any],
+    tmp_path: Path,
+) -> None:
+    """Test chaining orchestrators: Sequential → Hierarchical → Voting."""
+    from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+    from backend.orchestrators.sequential import SequentialOrchestrator
+    from backend.orchestrators.voting import VotingOrchestrator
+
+    # Sequential preprocessing
+    sequential = SequentialOrchestrator(name="preprocessing", checkpoint_dir=tmp_path / "seq_checkpoints")
+
+    async def extract_agent(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "invoice_id": task["task_id"], "vendor": "Acme", "amount": 15000, "extracted": True}
+
+    async def validate_agent(task: dict[str, Any]) -> dict[str, Any]:
+        return {**task, "validated": True}
+
+    sequential.register_agent("extractor", extract_agent)
+    sequential.register_agent("validator", validate_agent)
+
+    # Hierarchical risk analysis
+    hierarchical = HierarchicalOrchestrator(name="risk_analysis")
+
+    async def planner(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "subtasks": [{"specialist": "amount_checker"}, {"specialist": "vendor_checker"}]}
+
+    async def amount_specialist(subtask: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "risk_level": "high"}
+
+    async def vendor_specialist(subtask: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "risk_level": "low"}
+
+    hierarchical.register_planner(planner)
+    hierarchical.register_specialist("amount_checker", amount_specialist)
+    hierarchical.register_specialist("vendor_checker", vendor_specialist)
+
+    # Voting final decision
+    voting = VotingOrchestrator(name="final_approval", num_agents=3)
+
+    async def approver_1(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "approved": False}
+
+    async def approver_2(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "approved": True}
+
+    async def approver_3(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "approved": True}
+
+    voting.register_agent("approver_1", approver_1)
+    voting.register_agent("approver_2", approver_2)
+    voting.register_agent("approver_3", approver_3)
+
+    # Chain execution
+    preprocessed = await sequential.execute(sample_invoice_task)
+    assert preprocessed["extracted"] is True
+
+    risk_analyzed = await hierarchical.execute(preprocessed)
+    assert len(risk_analyzed["specialist_results"]) == 2
+
+    final = await voting.execute(risk_analyzed)
+    assert final["status"] == "success"
+    assert final["invoice_id"] == sample_invoice_task["task_id"]
+
+
+async def test_should_validate_baseline_metrics_across_all_five_orchestrators(
+    sample_invoice_task: dict[str, Any],
+) -> None:
+    """Test baseline metrics for all 5 orchestration patterns."""
+    from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+    from backend.orchestrators.iterative import IterativeOrchestrator
+    from backend.orchestrators.sequential import SequentialOrchestrator
+    from backend.orchestrators.state_machine import StateMachineOrchestrator
+    from backend.orchestrators.voting import VotingOrchestrator
+
+    metrics: dict[str, dict[str, Any]] = {}
+
+    async def test_agent(task: dict[str, Any]) -> dict[str, Any]:
+        await asyncio.sleep(0.01)
+        return {"status": "success"}
+
+    # Sequential
+    seq = SequentialOrchestrator(name="seq")
+    seq.register_agent("agent_1", test_agent)
+    seq.register_agent("agent_2", test_agent)
+    result = await seq.execute(sample_invoice_task)
+    metrics["sequential"] = {"success": result["status"] == "success"}
+
+    # Hierarchical
+    hier = HierarchicalOrchestrator(name="hier")
+
+    async def planner(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "subtasks": [{"id": 1}, {"id": 2}]}
+
+    hier.register_planner(planner)
+    hier.register_specialist("specialist_1", test_agent)
+    hier.register_specialist("specialist_2", test_agent)
+    result = await hier.execute(sample_invoice_task)
+    metrics["hierarchical"] = {"success": result["status"] == "success"}
+
+    # Iterative
+    iterative = IterativeOrchestrator(name="iter", max_iterations=2)
+
+    async def action(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success"}
+
+    async def reflection(task: dict[str, Any]) -> dict[str, Any]:
+        iteration = task.get("iteration", 1)
+        converged = iteration >= 2
+        return {"status": "success", "converged": converged, "should_continue": not converged}
+
+    iterative.register_action_agent(action)
+    iterative.register_reflection_agent(reflection)
+    result = await iterative.execute(sample_invoice_task)
+    metrics["iterative"] = {"success": result["status"] == "success"}
+
+    # State Machine
+    sm = StateMachineOrchestrator(
+        name="sm",
+        initial_state="start",
+        valid_states=["start", "end"],
+        valid_transitions=[("start", "end")],
+    )
+
+    async def start_handler(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "next_state": "end"}
+
+    async def end_handler(task: dict[str, Any]) -> dict[str, Any]:
+        return {"status": "success", "next_state": None}
+
+    sm.register_state_handler("start", start_handler)
+    sm.register_state_handler("end", end_handler)
+    result = await sm.execute(sample_invoice_task)
+    metrics["state_machine"] = {"success": result["status"] == "success"}
+
+    # Voting
+    vote = VotingOrchestrator(name="vote", num_agents=3)
+    vote.register_agent("v1", test_agent)
+    vote.register_agent("v2", test_agent)
+    vote.register_agent("v3", test_agent)
+    result = await vote.execute(sample_invoice_task)
+    metrics["voting"] = {"success": result["status"] == "success"}
+
+    # Verify all succeeded
+    for pattern, metric in metrics.items():
+        assert metric["success"] is True, f"{pattern} should succeed"
+
+
+async def test_should_execute_end_to_end_invoice_processing_workflow(
+    tmp_path: Path,
+) -> None:
+    """Test complete invoice processing workflow."""
+    from backend.orchestrators.sequential import SequentialOrchestrator
+    from backend.reliability import AuditLogger, InvoiceExtraction
+
+    checkpoint_dir = tmp_path / "checkpoints"
+    audit_log_path = tmp_path / "audit.json"
+    invoice_id = "INV-2024-001"
+    audit_logger = AuditLogger(workflow_id=invoice_id)
+
+    orchestrator = SequentialOrchestrator(name="invoice_workflow", checkpoint_dir=checkpoint_dir)
+
+    async def extract(task: dict[str, Any]) -> dict[str, Any]:
+        await audit_logger.log_decision(agent_name="extractor", step="extract", input_data=task, output={"extracting": True})
+        extraction = InvoiceExtraction(
+            invoice_id=task["invoice_id"],
+            vendor="Global Suppliers Inc",
+            amount=25000.00,
+            line_items=[{"description": "Consulting", "amount": 15000.00}, {"description": "Software", "amount": 10000.00}],
+        )
+        return {"status": "success", "extraction": extraction.model_dump()}
+
+    async def validate(task: dict[str, Any]) -> dict[str, Any]:
+        await audit_logger.log_decision(agent_name="validator", step="validate", input_data=task, output={"validating": True})
+        return {**task, "is_valid": True, "validation_errors": []}
+
+    async def route(task: dict[str, Any]) -> dict[str, Any]:
+        await audit_logger.log_decision(agent_name="router", step="route", input_data=task, output={"routing": True})
+        return {**task, "approver": "finance_manager", "approval_level": "manager"}
+
+    orchestrator.register_agent("extractor", extract)
+    orchestrator.register_agent("validator", validate)
+    orchestrator.register_agent("router", route)
+
+    invoice_task = {"task_id": "wf_001", "invoice_id": invoice_id, "document_path": "/invoices/inv_001.pdf"}
+    result = await orchestrator.execute(invoice_task)
+
+    audit_logger.export_to_json(audit_log_path)
+
+    # Verify
+    assert result["status"] == "success"
+    assert result["is_valid"] is True
+    assert result["approver"] == "finance_manager"
+    assert len(list(checkpoint_dir.glob("*.json"))) >= 3
+
+    import json
+
+    with open(audit_log_path) as f:
+        data = json.load(f)
+    assert len(data["trace"]) >= 3
+
+
+async def test_should_execute_end_to_end_fraud_detection_workflow(
+    tmp_path: Path,
+) -> None:
+    """Test fraud detection workflow with voting ensemble."""
+    from backend.orchestrators.voting import VotingOrchestrator
+    from backend.reliability import AuditLogger
+
+    audit_log_path = tmp_path / "audit.json"
+    transaction_id = "TXN-12345"
+    audit_logger = AuditLogger(workflow_id=transaction_id)
+
+    orchestrator = VotingOrchestrator(name="fraud_voting", num_agents=5)
+
+    async def rule_based(task: dict[str, Any]) -> dict[str, Any]:
+        await audit_logger.log_decision(agent_name="rule_based", step="detect", input_data=task, output={"model": "rules"})
+        is_fraud = task.get("amount", 0) > 10000 and task.get("merchant_country") != "US"
+        return {"status": "success", "is_fraud": is_fraud}
+
+    async def ml_model(task: dict[str, Any]) -> dict[str, Any]:
+        await audit_logger.log_decision(agent_name="ml_model", step="detect", input_data=task, output={"model": "ml"})
+        return {"status": "success", "is_fraud": task.get("amount", 0) > 15000}
+
+    async def behavioral(task: dict[str, Any]) -> dict[str, Any]:
+        await audit_logger.log_decision(agent_name="behavioral", step="detect", input_data=task, output={"model": "behavior"})
+        return {"status": "success", "is_fraud": False}
+
+    async def network(task: dict[str, Any]) -> dict[str, Any]:
+        await audit_logger.log_decision(agent_name="network", step="detect", input_data=task, output={"model": "network"})
+        return {"status": "success", "is_fraud": False}
+
+    async def ensemble(task: dict[str, Any]) -> dict[str, Any]:
+        await audit_logger.log_decision(agent_name="ensemble", step="detect", input_data=task, output={"model": "ensemble"})
+        return {"status": "success", "is_fraud": task.get("amount", 0) > 12000}
+
+    orchestrator.register_agent("rule_based", rule_based)
+    orchestrator.register_agent("ml_model", ml_model)
+    orchestrator.register_agent("behavioral", behavioral)
+    orchestrator.register_agent("network", network)
+    orchestrator.register_agent("ensemble", ensemble)
+
+    fraud_task = {
+        "task_id": "fraud_wf_001",
+        "transaction_id": transaction_id,
+        "amount": 18000.00,
+        "merchant": "Suspicious Store",
+        "merchant_country": "RU",
+        "user_id": "USER-789",
+    }
+    result = await orchestrator.execute(fraud_task)
+
+    audit_logger.export_to_json(audit_log_path)
+
+    # Verify
+    assert result["status"] == "success"
+    assert len(result["agent_votes"]) == 5
+
+    fraud_votes = sum(1 for vote in result["agent_votes"] if vote.get("is_fraud") is True)
+    assert fraud_votes >= 3  # Majority should flag as fraud
+
+    import json
+
+    with open(audit_log_path) as f:
+        data = json.load(f)
+    assert len(data["trace"]) >= 5

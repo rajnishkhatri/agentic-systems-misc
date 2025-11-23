@@ -190,4 +190,15 @@ lesson-11/results/
 lesson-9-11/__pycache__/
 lesson-9-11/results/
 
+# Lesson 16: Agent Reliability
+lesson-16/checkpoints/
+lesson-16/data/cache/
+lesson-16/__pycache__/
+lesson-16/backend/__pycache__/
+lesson-16/backend/reliability/__pycache__/
+lesson-16/backend/orchestrators/__pycache__/
+lesson-16/backend/benchmarks/__pycache__/
+lesson-16/results/
+lesson-16/notebooks/.ipynb_checkpoints/
+
 

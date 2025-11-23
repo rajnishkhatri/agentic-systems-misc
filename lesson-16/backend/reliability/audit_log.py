@@ -128,6 +128,43 @@ class AuditLogger:
         # Step 6: Return entry
         return entry
 
+    async def log_decision(
+        self,
+        agent_name: str,
+        step: str,
+        input_data: dict[str, Any],
+        output: dict[str, Any] | None,
+        workflow_id: str | None = None,
+        timestamp: str | None = None,
+        error: Exception | None = None,
+    ) -> dict[str, Any]:
+        """Async convenience method for logging agent decisions (for test compatibility).
+
+        This method provides an async interface compatible with test code that uses log_decision.
+        It delegates to the synchronous log_step method with a default duration of 0ms.
+
+        Args:
+            agent_name: Name of the agent making the decision
+            step: Step/phase in the workflow
+            input_data: Input data for this step (will be PII-redacted)
+            output: Output from this step (optional)
+            workflow_id: Workflow ID (optional, ignored - uses self.workflow_id)
+            timestamp: Timestamp (optional, ignored - auto-generated)
+            error: Exception if step failed (optional)
+
+        Returns:
+            Dict containing logged entry with all fields
+        """
+        # Use synchronous log_step with default duration
+        return self.log_step(
+            agent_name=agent_name,
+            step=step,
+            input_data=input_data,
+            output=output,
+            duration_ms=0,  # Default to 0ms for test compatibility
+            error=error,
+        )
+
     def get_workflow_trace(self) -> list[dict[str, Any]]:
         """Get complete workflow trace with all logged steps.
 

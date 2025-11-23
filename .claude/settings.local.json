@@ -102,7 +102,11 @@
       "Bash(\"lesson-9/evaluation_fundamentals.md\" )",
       "Bash(\"homeworks/hw4/TUTORIAL_INDEX.md\")",
       "SlashCommand(/validate-tutorial lesson-9/)",
-      "Bash(/dev/null)"
+      "Bash(/dev/null)",
+      "Bash(uv run ruff:*)",
+      "Bash(uv run:*)",
+      "Bash(git -C /Users/rajnishkhatri/Documents/recipe-chatbot status --short)",
+      "Bash(mmdc:*)"
     ],
     "deny": [],
     "ask": []

@@ -80,7 +80,7 @@
 ### Phase 2: Session Management and Context Protection (Days 3-5)
 
 - [ ] 2.0 Implement Session Management and Context Protection
-  - [ ] 2.1 **TDD RED Phase:** Create `tests/sessions/__init__.py` (empty)
+  - [x] 2.1 **TDD RED Phase:** Create `tests/sessions/__init__.py` (empty)
   - [ ] 2.2 **TDD RED Phase:** Create `tests/sessions/test_protected_context.py` with failing tests:
     - [ ] 2.2.1 `test_should_identify_initial_objectives_as_protected()` - Turn 0 events marked protected
     - [ ] 2.2.2 `test_should_identify_explicit_constraints_as_protected()` - Constraint events marked protected
