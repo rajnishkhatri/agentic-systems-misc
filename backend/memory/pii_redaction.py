@@ -23,33 +23,54 @@ class PIIRedactor:
     def __init__(self) -> None:
         """Initialize PII redactor with regex patterns and whitelist."""
         # Step 1: Define PII regex patterns
-        self.email_pattern = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
+        self.email_pattern = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b")
         # Phone pattern: matches 7-digit (555-1234) and 10-digit formats
         self.phone_pattern = re.compile(
-            r'\b(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3,4}[-.\s]?\d{4}\b|'
-            r'\b\d{3}[-.\s]?\d{4}\b'
+            r"\b(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3,4}[-.\s]?\d{4}\b|"
+            r"\b\d{3}[-.\s]?\d{4}\b"
         )
 
         # Name pattern: Capitalized word followed by capitalized word (with optional middle initial)
-        self.name_pattern = re.compile(r'\b[A-Z][a-z]+ (?:[A-Z]\. )?[A-Z][a-z]+\b')
+        self.name_pattern = re.compile(r"\b[A-Z][a-z]+ (?:[A-Z]\. )?[A-Z][a-z]+\b")
 
         # Location pattern: Common city/state patterns (simplified)
         self.location_pattern = re.compile(
-            r'\b\d+\s+[A-Z][a-z]+\s+(?:Street|St|Avenue|Ave|Road|Rd|Boulevard|Blvd|Drive|Dr|Lane|Ln)\b|'
-            r'\b(?:San Francisco|Los Angeles|New York|California|Texas|Florida)\b',
-            re.IGNORECASE
+            r"\b\d+\s+[A-Z][a-z]+\s+(?:Street|St|Avenue|Ave|Road|Rd|Boulevard|Blvd|Drive|Dr|Lane|Ln)\b|"
+            r"\b(?:San Francisco|Los Angeles|New York|California|Texas|Florida)\b",
+            re.IGNORECASE,
         )
 
         # Step 2: Create whitelist for Gita characters and terms
         self.whitelist = {
             # Characters
-            "Arjuna", "Krishna", "Sanjaya", "Dhritarashtra",
-            "Yudhishthira", "Bhima", "Nakula", "Sahadeva", "Draupadi",
-            "Karna", "Duryodhana", "Drona", "Bhishma",
-
+            "Arjuna",
+            "Krishna",
+            "Sanjaya",
+            "Dhritarashtra",
+            "Yudhishthira",
+            "Bhima",
+            "Nakula",
+            "Sahadeva",
+            "Draupadi",
+            "Karna",
+            "Duryodhana",
+            "Drona",
+            "Bhishma",
+            # Commentators and scholars
+            "Swami Sivananda",
+            "Swami Chinmayananda",
+            "Swami Prabhupada",
+            "Adi Shankaracharya",
             # Philosophical terms
-            "Brahman", "Atman", "Karma", "Dharma", "Yoga",
-            "Bhakti", "Jnana", "Raja", "Hatha"
+            "Brahman",
+            "Atman",
+            "Karma",
+            "Dharma",
+            "Yoga",
+            "Bhakti",
+            "Jnana",
+            "Raja",
+            "Hatha",
         }
 
     def redact(self, text: str) -> tuple[str, bool]:
@@ -93,10 +114,7 @@ class PIIRedactor:
 
 
 def extract_memory_with_pii_redaction(
-    text: str,
-    source_session_id: str,
-    confidence_score: float = 0.7,
-    validation_status: str = "agent_inferred"
+    text: str, source_session_id: str, confidence_score: float = 0.7, validation_status: str = "agent_inferred"
 ) -> tuple[str, MemoryProvenance]:
     """Extract memory with PII redaction and provenance tracking.
 
@@ -120,14 +138,13 @@ def extract_memory_with_pii_redaction(
         source_session_id=source_session_id,
         extraction_timestamp=datetime.now(),
         confidence_score=confidence_score,
-        validation_status=validation_status
+        validation_status=validation_status,
     )
 
     # Step 3: If PII was found, lower confidence slightly
     if pii_found:
         provenance.add_confidence_update(
-            confidence_score * 0.95,
-            "PII detected and redacted - slight confidence penalty"
+            confidence_score * 0.95, "PII detected and redacted - slight confidence penalty"
         )
 
     return redacted_text, provenance
