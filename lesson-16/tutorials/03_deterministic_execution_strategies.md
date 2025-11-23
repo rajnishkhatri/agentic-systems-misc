@@ -1215,3 +1215,19 @@ async def test_temperature_determinism(prompt: str, temperature: float, runs: in
 
 **Interactive Notebooks:**
 - [Notebook 13: Reliability Framework Implementation](../notebooks/13_reliability_framework_implementation.ipynb) - Complete integration of all strategies
+
+---
+
+**Navigation:**
+- **← Previous:** [Tutorial 02: Orchestration Patterns Overview](02_orchestration_patterns_overview.md)
+- **↑ Index:** [Tutorial Index](../TUTORIAL_INDEX.md)
+- **→ Next:** [Tutorial 04: Error Propagation Analysis](04_error_propagation_analysis.md)
+
+---
+
+**Feedback:**
+Found an issue or have suggestions? [Open an issue](https://github.com/anthropics/claude-code/issues) or contribute improvements!
+
+**Last Updated:** 2025-11-23
+**Version:** 1.0
+**Lesson:** Lesson 16 - Agent Reliability

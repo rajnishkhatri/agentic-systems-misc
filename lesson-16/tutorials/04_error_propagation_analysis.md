@@ -1282,4 +1282,20 @@ expected_epi = 0.0  # TODO: Estimate based on your design
 
 **Interactive Notebooks:**
 - [Notebook 13: Reliability Framework Implementation](../notebooks/13_reliability_framework_implementation.ipynb) - Complete isolation demo
+
+---
+
+**Navigation:**
+- **← Previous:** [Tutorial 03: Deterministic Execution Strategies](03_deterministic_execution_strategies.md)
+- **↑ Index:** [Tutorial Index](../TUTORIAL_INDEX.md)
+- **→ Next:** [Tutorial 05: AgentArch Benchmark Methodology](05_agentarch_benchmark_methodology.md)
+
+---
+
+**Feedback:**
+Found an issue or have suggestions? [Open an issue](https://github.com/anthropics/claude-code/issues) or contribute improvements!
+
+**Last Updated:** 2025-11-23
+**Version:** 1.0
+**Lesson:** Lesson 16 - Agent Reliability
 - [Notebook 14: AgentArch Benchmark Reproduction](../notebooks/14_agentarch_benchmark_reproduction.ipynb) - EPI across 5 orchestration patterns

@@ -32,7 +32,7 @@ By completing these tutorials, you will be able to:
 
 #### 1. Agent Reliability Fundamentals
 **File:** `tutorials/01_agent_reliability_fundamentals.md`
-**Reading Time:** 25-30 minutes
+**Reading Time:** 27 minutes
 **Topics:**
 - Why agents fail: Non-determinism, API errors, hallucinations, context limits, tool execution errors
 - 6 failure types with real-world examples (invoice extraction failure → data corruption)
@@ -46,7 +46,7 @@ By completing these tutorials, you will be able to:
 
 #### 2. Orchestration Patterns Overview
 **File:** `tutorials/02_orchestration_patterns_overview.md`
-**Reading Time:** 20-25 minutes
+**Reading Time:** 36 minutes
 **Topics:**
 - Survey of 5 orchestration patterns with strengths/weaknesses
 - Decision tree: Task constraints → Optimal pattern
@@ -60,7 +60,7 @@ By completing these tutorials, you will be able to:
 
 #### 3. Deterministic Execution Strategies
 **File:** `tutorials/03_deterministic_execution_strategies.md`
-**Reading Time:** 20-25 minutes
+**Reading Time:** 24 minutes
 **Topics:**
 - Why non-determinism breaks financial/healthcare workflows
 - Schema validation with Pydantic for guaranteed output structure
@@ -75,7 +75,7 @@ By completing these tutorials, you will be able to:
 
 #### 4. Error Propagation Analysis
 **File:** `tutorials/04_error_propagation_analysis.md`
-**Reading Time:** 15-20 minutes
+**Reading Time:** 30 minutes
 **Topics:**
 - Cascade failures: One agent error compounds downstream
 - Error amplification in multi-agent workflows (1% → 10% → 30% error rates)
@@ -91,7 +91,7 @@ By completing these tutorials, you will be able to:
 
 #### 5. AgentArch Benchmark Methodology
 **File:** `tutorials/05_agentarch_benchmark_methodology.md`
-**Reading Time:** 30-35 minutes
+**Reading Time:** 26 minutes
 **Topics:**
 - Research paper summary: AgentArch benchmark design
 - 300 financial task suite: Invoice processing, fraud detection, account reconciliation
@@ -108,7 +108,7 @@ By completing these tutorials, you will be able to:
 
 #### 6. Financial Workflow Reliability (FinRobot Case Study)
 **File:** `tutorials/06_financial_workflow_reliability.md`
-**Reading Time:** 25-30 minutes
+**Reading Time:** 29 minutes
 **Topics:**
 - FinRobot architecture: Invoice processing, fraud detection, account reconciliation
 - ERP system integration guardrails: Idempotency, audit logs, rollback
@@ -125,7 +125,7 @@ By completing these tutorials, you will be able to:
 
 #### 7. Production Deployment Considerations
 **File:** `tutorials/07_production_deployment_considerations.md`
-**Reading Time:** 25-30 minutes
+**Reading Time:** 23 minutes
 **Topics:**
 - Cost optimization: Model selection (GPT-4o vs GPT-4o-mini), caching, batch processing
 - Latency SLAs: P50/P95/P99 latency targets, async execution, timeout policies
