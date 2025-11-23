@@ -26,7 +26,7 @@ Example:
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from backend.orchestrators.base import Orchestrator
 from backend.reliability.checkpoint import save_checkpoint
@@ -269,7 +269,7 @@ class SequentialOrchestrator(Orchestrator):
             output=output,
         )
 
-        return output
+        return cast(dict[str, Any], output)
 
     async def _save_step_checkpoint(
         self,

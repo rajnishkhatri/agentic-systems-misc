@@ -33,7 +33,7 @@ from __future__ import annotations
 import asyncio
 import statistics
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Any
+from typing import Any, cast
 
 from backend.orchestrators.base import Orchestrator
 
@@ -182,7 +182,7 @@ class VotingOrchestrator(Orchestrator):
         )
 
         # Step 3: Detect and reject outliers if enabled
-        outliers_rejected = []
+        outliers_rejected: list[str] = []
         if self.outlier_rejection and len(agent_votes) >= 3:
             agent_votes, outliers_rejected = self._reject_outliers(agent_votes)
 
@@ -227,7 +227,7 @@ class VotingOrchestrator(Orchestrator):
         # Log successful execution
         self.log_step(step=agent_name, status="success", output=result)
 
-        return result
+        return cast(dict[str, Any], result)
 
     def _reject_outliers(self, votes: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[str]]:
         """Reject statistical outliers from voting.
@@ -246,7 +246,7 @@ class VotingOrchestrator(Orchestrator):
         vote_to_score = {}
 
         for vote in votes:
-            if "fraud_score" in vote and isinstance(vote["fraud_score"], (int, float)):
+            if "fraud_score" in vote and isinstance(vote["fraud_score"], int | float):
                 fraud_scores.append(vote["fraud_score"])
                 vote_to_score[vote["agent_name"]] = vote["fraud_score"]
 
@@ -272,7 +272,7 @@ class VotingOrchestrator(Orchestrator):
         for vote in votes:
             fraud_score = vote.get("fraud_score")
 
-            if fraud_score is None or not isinstance(fraud_score, (int, float)):
+            if fraud_score is None or not isinstance(fraud_score, int | float):
                 # Keep votes without fraud_score
                 filtered_votes.append(vote)
             else:
@@ -359,7 +359,7 @@ class VotingOrchestrator(Orchestrator):
             fraud_score = vote.get("fraud_score", 0.0)
             confidence = vote.get("confidence", 1.0)
 
-            if isinstance(fraud_score, (int, float)) and isinstance(confidence, (int, float)):
+            if isinstance(fraud_score, int | float) and isinstance(confidence, int | float):
                 weighted_sum += fraud_score * confidence
                 total_weight += confidence
 

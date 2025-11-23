@@ -26,14 +26,14 @@ Usage:
 # Task 3.2: Base Orchestrator ABC implemented
 from .base import Orchestrator
 
-# Task 3.3: Sequential Orchestrator implemented
-from .sequential import SequentialOrchestrator
-
 # Task 3.4: Hierarchical Orchestrator implemented
 from .hierarchical import HierarchicalOrchestrator
 
 # Task 3.5: Iterative Refinement Orchestrator implemented
 from .iterative import IterativeOrchestrator
+
+# Task 3.3: Sequential Orchestrator implemented
+from .sequential import SequentialOrchestrator
 
 # Task 3.6: State Machine Orchestrator implemented
 from .state_machine import StateMachineOrchestrator

@@ -39,7 +39,7 @@ from __future__ import annotations
 import time
 from collections.abc import Callable
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from backend.orchestrators.base import Orchestrator
 from backend.reliability.checkpoint import save_checkpoint
@@ -130,7 +130,7 @@ class StateMachineOrchestrator(Orchestrator):
             self.transitions = transitions
 
         # Step 5: Initialize state handlers
-        self.state_handlers: dict[str, Callable] = {}
+        self.state_handlers: dict[str, Callable[..., Any]] = {}
 
         # Step 6: Create checkpoint directory if provided
         if self.checkpoint_dir is not None:
@@ -173,7 +173,7 @@ class StateMachineOrchestrator(Orchestrator):
                 if to_state not in states:
                     raise ValueError(f"Invalid transition target '{to_state}' from '{from_state}'")
 
-    def register_state_handler(self, state: str, handler: Callable) -> None:
+    def register_state_handler(self, state: str, handler: Callable[..., Any]) -> None:
         """Register handler for a specific state.
 
         Args:
@@ -364,7 +364,7 @@ class StateMachineOrchestrator(Orchestrator):
 
     async def _execute_state_handler(
         self,
-        handler: Callable,
+        handler: Callable[..., Any],
         state_task: dict[str, Any],
         state_name: str,
     ) -> dict[str, Any]:
@@ -391,7 +391,7 @@ class StateMachineOrchestrator(Orchestrator):
             output=output,
         )
 
-        return output
+        return cast(dict[str, Any], output)
 
     async def _save_state_checkpoint(
         self,

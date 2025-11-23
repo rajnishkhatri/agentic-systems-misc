@@ -84,7 +84,7 @@ class IterativeOrchestrator(Orchestrator):
         # Type checking (defensive)
         if not isinstance(max_iterations, int):
             raise TypeError("max_iterations must be an integer")
-        if not isinstance(convergence_threshold, (int, float)):
+        if not isinstance(convergence_threshold, int | float):
             raise TypeError("convergence_threshold must be a number")
 
         # Input validation (defensive)
@@ -253,7 +253,7 @@ class IterativeOrchestrator(Orchestrator):
         discrepancy = output["discrepancy_amount"]
 
         # Type check
-        if not isinstance(discrepancy, (int, float)):
+        if not isinstance(discrepancy, int | float):
             return False
 
         # Check convergence threshold

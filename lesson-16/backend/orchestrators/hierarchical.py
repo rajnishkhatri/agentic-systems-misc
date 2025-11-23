@@ -31,7 +31,7 @@ Pattern Reference: /patterns/threadpool-parallel.md
 from __future__ import annotations
 
 import asyncio
-from typing import Any
+from typing import Any, cast
 
 from backend.orchestrators.base import Orchestrator
 
@@ -305,7 +305,7 @@ class HierarchicalOrchestrator(Orchestrator):
             if "status" not in output:
                 output["status"] = "success"
 
-        return output
+        return cast(dict[str, Any], output)
 
     def _aggregate_specialist_results(self, specialist_results: list[dict[str, Any]]) -> dict[str, Any]:
         """Aggregate specialist outputs into final decision.

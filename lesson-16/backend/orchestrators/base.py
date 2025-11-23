@@ -26,7 +26,7 @@ from __future__ import annotations
 import time
 from abc import ABC, abstractmethod
 from collections.abc import Callable
-from typing import Any
+from typing import Any, cast
 
 from backend.reliability.circuit_breaker import CircuitBreaker
 from backend.reliability.retry import retry_with_backoff
@@ -78,7 +78,7 @@ class Orchestrator(ABC):
         # Step 3: Initialize shared attributes
         self.name = name
         self.max_retries = max_retries
-        self.agents: dict[str, Callable] = {}
+        self.agents: dict[str, Callable[..., Any]] = {}
         self.execution_log: list[dict[str, Any]] = []
 
         # Initialize reliability components
@@ -87,7 +87,7 @@ class Orchestrator(ABC):
             timeout=2.0,  # 2 seconds before half-open state (test-friendly)
         )
 
-    def register_agent(self, agent_name: str, agent: Callable) -> None:
+    def register_agent(self, agent_name: str, agent: Callable[..., Any]) -> None:
         """Register a named agent for orchestration.
 
         Args:
@@ -188,7 +188,7 @@ class Orchestrator(ABC):
         # Add to execution log
         self.execution_log.append(log_entry)
 
-    async def with_retry(self, agent: Callable, task: dict[str, Any]) -> dict[str, Any]:
+    async def with_retry(self, agent: Callable[..., Any], task: dict[str, Any]) -> dict[str, Any]:
         """Execute agent with retry logic.
 
         Integration hook for reliability framework retry component.
@@ -204,7 +204,7 @@ class Orchestrator(ABC):
             Exception: If all retry attempts fail
         """
         # Use retry wrapper from reliability framework
-        return await retry_with_backoff(
+        result = await retry_with_backoff(
             agent,
             task,
             max_retries=self.max_retries,
@@ -212,8 +212,9 @@ class Orchestrator(ABC):
             max_delay=10.0,
             jitter=True,
         )
+        return cast(dict[str, Any], result)
 
-    async def with_circuit_breaker(self, agent: Callable, task: dict[str, Any]) -> dict[str, Any]:
+    async def with_circuit_breaker(self, agent: Callable[..., Any], task: dict[str, Any]) -> dict[str, Any]:
         """Execute agent with circuit breaker protection.
 
         Integration hook for reliability framework circuit breaker component.
@@ -231,9 +232,11 @@ class Orchestrator(ABC):
         """
         # Use circuit breaker from reliability framework
         async def _agent_call() -> dict[str, Any]:
-            return await agent(task)
+            result = await agent(task)
+            return cast(dict[str, Any], result)
 
-        return await self.circuit_breaker.call(_agent_call)
+        result = await self.circuit_breaker.call(_agent_call)
+        return cast(dict[str, Any], result)
 
     def _validate_task(self, task: Any) -> None:
         """Validate task input before execution.
