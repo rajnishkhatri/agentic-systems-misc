@@ -1,0 +1,42 @@
+sequenceDiagram
+  autonumber
+  box rgba(253,245,213,0.5) Short-Term Workspace
+    participant U as User
+    participant S as Session Service<br/>events + state
+  end
+  box rgba(224,240,255,0.5) Orchestration
+    participant C as Context Orchestrator
+    participant L as LLM + Tools
+  end
+  box rgba(240,245,255,0.5) Long-Term Memory
+    participant M as Memory Manager<br/>extraction + consolidation
+    participant D as Memory Store<br/>vector DB / KG
+    participant R as Retrieval Engine<br/>relevance scoring
+  end
+
+  U->>S: 1. Send turn (message / files / tool results)
+  S->>S: Append event log & update session state
+  S->>C: Provide latest events + state snapshot
+  par Fetch Context
+    C->>S: Pull session subset (recent events, protected goals)
+    C->>R: Request relevant memories (query derived from turn)
+    R->>D: Semantic / graph search
+    D-->>R: Ranked memories with metadata
+    R-->>C: Selected memories (relevance, recency, importance)
+    C->>C: Merge RAG/tool outputs if needed
+  end
+  C->>L: Invoke LLM with curated prompt + tool calls
+  L-->>C: Draft reasoning + tool outputs
+  C-->>U: Respond to user
+
+  C->>S: Persist final response + working data
+  C->>M: Trigger memory pipeline (session end, cadence, real-time, explicit)
+  M->>S: Fetch raw conversation slice / state deltas
+  M->>M: Extraction (detect preferences, facts, procedures)
+  M->>M: Consolidation (update / create / delete memories)
+  M->>D: Upsert memories with provenance + confidence
+
+  Note over D,R: Stored knowledge ready for next retrieval cycle
+  R-->>C: (Next turn) Provide injected memories
+
+

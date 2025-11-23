@@ -31,12 +31,20 @@
 - **Polymorphic behavior**: Code needs to work with different implementations through a common interface
 - **Shared behavior**: Base class provides common functionality (like logging, validation, retry logic)
 - **Contract enforcement**: You want compile-time/runtime guarantees that implementations are complete
+- **Memory vs. RAG Systems**: Implementing different memory storage backends or RAG retrievers (see [Context Engineering Terminology](../google-context/TERMINOLOGY.md#2-memory-vs-rag-retrieval-augmented-generation))
 
 ❌ **DON'T use Abstract Base Classes when:**
 - **Single implementation**: Only one concrete class will ever exist (YAGNI—You Ain't Gonna Need It)
 - **Simple inheritance**: Standard inheritance is sufficient (no need to enforce interface)
 - **Functional code**: Using functions instead of classes (consider protocols/interfaces instead)
 - **Over-abstraction**: Creating ABCs "just in case" without clear need (premature abstraction)
+
+**Context Engineering Example:**
+When building context-aware AI systems, ABCs are useful for:
+- **Memory Stores**: `BaseMemoryStore` → `LocalMemoryStore`, `VectorMemoryStore`, `SQLMemoryStore`
+- **RAG Retrievers**: `BaseRetriever` → `SemanticRetriever`, `ExactMatchRetriever`, `HybridRetriever`
+- **Session Managers**: `BaseSessionManager` → `GitaSessionManager`, `MultiTenantSessionManager`
+- See [TERMINOLOGY.md](../google-context/TERMINOLOGY.md) for Memory vs. RAG distinction
 
 ---
 

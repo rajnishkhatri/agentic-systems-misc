@@ -1,0 +1,160 @@
+graph TB
+    Start["👤 User Input Received"]
+
+    Decision{"Does EVERY query<br/>need external knowledge?"}
+
+    subgraph ProactiveStrategy["🚀 PROACTIVE RETRIEVAL"]
+        P_When["WHEN TO USE:<br/>High-stakes domains where<br/>missing context is costly"]
+
+        P_Examples["USE CASES:"]
+        PE1["✓ Medical diagnosis<br/>(must check drug interactions)"]
+        PE2["✓ Legal advice<br/>(must cite relevant statutes)"]
+        PE3["✓ Bhagavad Gita verse lookup<br/>(must retrieve exact verse)"]
+
+        P_Flow["FLOW:"]
+        PF1["1. User input received"]
+        PF2["2. Auto-retrieve top-k results<br/>BEFORE LLM inference"]
+        PF3["3. Add retrievals to context window"]
+        PF4["4. LLM generates response"]
+
+        P_Pros["PROS:"]
+        PP1["✓ No missed retrievals"]
+        PP2["✓ Consistent context"]
+        PP3["✓ Predictable behavior"]
+
+        P_Cons["CONS:"]
+        PC1["✗ Higher token usage<br/>(always include retrievals)"]
+        PC2["✗ Slower response time<br/>(retrieval on every turn)"]
+
+        P_When --> P_Examples
+        P_Examples --> PE1 & PE2 & PE3
+        PE1 & PE2 & PE3 --> P_Flow
+        P_Flow --> PF1 --> PF2 --> PF3 --> PF4
+        PF4 --> P_Pros
+        P_Pros --> PP1 & PP2 & PP3
+        PP1 & PP2 & PP3 --> P_Cons
+        P_Cons --> PC1 & PC2
+    end
+
+    subgraph ReactiveStrategy["🎯 REACTIVE RETRIEVAL"]
+        R_When["WHEN TO USE:<br/>Open-ended chat where<br/>retrieval isn't always relevant"]
+
+        R_Examples["USE CASES:"]
+        RE1["✓ General assistant<br/>(retrieval optional)"]
+        RE2["✓ Weather chatbot<br/>(only retrieve when asked)"]
+        RE3["✓ Philosophical discussion<br/>(agent decides if sources needed)"]
+
+        R_Flow["FLOW:"]
+        RF1["1. User input received"]
+        RF2["2. LLM agent analyzes query"]
+        RF3["3. Agent decides:<br/>Call retrieval tool?"]
+        RF4a["YES: Agent calls tool"]
+        RF4b["NO: Agent responds directly"]
+        RF5["4. LLM generates response"]
+
+        R_Pros["PROS:"]
+        RP1["✓ Lower token usage<br/>(only retrieve when needed)"]
+        RP2["✓ Faster for simple queries<br/>(no unnecessary retrieval)"]
+        RP3["✓ Flexible behavior"]
+
+        R_Cons["CONS:"]
+        RC1["✗ Risk of missed retrievals<br/>(agent might forget)"]
+        RC2["✗ Requires smart agent<br/>(needs good tool-calling)"]
+        RC3["✗ Inconsistent context<br/>(depends on agent decision)"]
+
+        R_When --> R_Examples
+        R_Examples --> RE1 & RE2 & RE3
+        RE1 & RE2 & RE3 --> R_Flow
+        R_Flow --> RF1 --> RF2 --> RF3
+        RF3 --> RF4a & RF4b
+        RF4a --> RF5
+        RF4b --> RF5
+        RF5 --> R_Pros
+        R_Pros --> RP1 & RP2 & RP3
+        RP1 & RP2 & RP3 --> R_Cons
+        R_Cons --> RC1 & RC2 & RC3
+    end
+
+    subgraph HybridStrategy["⚡ HYBRID (Rule-Based Proactive)"]
+        H_Description["BEST OF BOTH WORLDS:<br/>Use rules to decide when to be proactive"]
+
+        H_Example["BHAGAVAD GITA CHATBOT EXAMPLE:"]
+
+        H_Rule1["RULE 1: Verse Reference Detected?<br/>(e.g., '3.5', 'Chapter 3, Verse 5')"]
+        H_Action1["→ PROACTIVE: Auto-retrieve verse"]
+
+        H_Rule2["RULE 2: Philosophical Question?<br/>(e.g., 'How to apply Gita wisdom?')"]
+        H_Action2["→ REACTIVE: Let agent decide"]
+
+        H_Rule3["RULE 3: Memory Loading?<br/>(user preferences, language)"]
+        H_Action3["→ PROACTIVE: Always load"]
+
+        H_Code["IMPLEMENTATION:"]
+        HC1["if verse_reference_detected(query):<br/>    context = retrieve_verse(chapter, verse)<br/>elif philosophical_question(query):<br/>    context = None  # Let agent call tool<br/>else:<br/>    context = load_user_memory()"]
+
+        H_Description --> H_Example
+        H_Example --> H_Rule1 --> H_Action1
+        H_Example --> H_Rule2 --> H_Action2
+        H_Example --> H_Rule3 --> H_Action3
+        H_Action1 & H_Action2 & H_Action3 --> H_Code
+    end
+
+    subgraph ComparisonTable["⚖️ COMPARISON TABLE"]
+        T_Header["Feature | Proactive | Reactive | Hybrid"]
+        T_R1["Token Usage | High | Low | Medium"]
+        T_R2["Response Time | Slower | Faster | Medium"]
+        T_R3["Missed Retrievals | Never | Possible | Rare"]
+        T_R4["Agent Complexity | Simple | Smart Required | Medium"]
+        T_R5["Use Case | High-stakes | Open-ended | Domain-specific"]
+
+        T_Header --> T_R1 --> T_R2 --> T_R3 --> T_R4 --> T_R5
+    end
+
+    subgraph DecisionTree["🌳 DECISION TREE"]
+        DT_Q1{"Is missing context<br/>catastrophic?"}
+        DT_Yes1["YES"]
+        DT_No1["NO"]
+
+        DT_Q2{"Can you define<br/>retrieval rules?"}
+        DT_Yes2["YES"]
+        DT_No2["NO"]
+
+        DT_Result_Proactive["✅ Use PROACTIVE"]
+        DT_Result_Hybrid["✅ Use HYBRID"]
+        DT_Result_Reactive["✅ Use REACTIVE"]
+
+        DT_Q1 --> DT_Yes1 --> DT_Result_Proactive
+        DT_Q1 --> DT_No1 --> DT_Q2
+        DT_Q2 --> DT_Yes2 --> DT_Result_Hybrid
+        DT_Q2 --> DT_No2 --> DT_Result_Reactive
+    end
+
+    Start --> Decision
+    Decision -->|"YES"| ProactiveStrategy
+    Decision -->|"NO"| ReactiveStrategy
+    Decision -->|"SOMETIMES"| HybridStrategy
+
+    style ProactiveStrategy fill:#e1f5ff,stroke:#0288d1,stroke-width:3px
+    style ReactiveStrategy fill:#fff3e0,stroke:#f57c00,stroke-width:3px
+    style HybridStrategy fill:#e8f5e9,stroke:#388e3c,stroke-width:3px
+    style ComparisonTable fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style DecisionTree fill:#ffebee,stroke:#d32f2f,stroke-width:3px
+
+    style PP1 fill:#b3e5fc,stroke:#0277bd,stroke-width:1px
+    style PP2 fill:#b3e5fc,stroke:#0277bd,stroke-width:1px
+    style PP3 fill:#b3e5fc,stroke:#0277bd,stroke-width:1px
+
+    style PC1 fill:#ffccbc,stroke:#d84315,stroke-width:1px
+    style PC2 fill:#ffccbc,stroke:#d84315,stroke-width:1px
+
+    style RP1 fill:#ffe0b2,stroke:#e65100,stroke-width:1px
+    style RP2 fill:#ffe0b2,stroke:#e65100,stroke-width:1px
+    style RP3 fill:#ffe0b2,stroke:#e65100,stroke-width:1px
+
+    style RC1 fill:#ffccbc,stroke:#d84315,stroke-width:1px
+    style RC2 fill:#ffccbc,stroke:#d84315,stroke-width:1px
+    style RC3 fill:#ffccbc,stroke:#d84315,stroke-width:1px
+
+    style DT_Result_Proactive fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
+    style DT_Result_Hybrid fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
+    style DT_Result_Reactive fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px

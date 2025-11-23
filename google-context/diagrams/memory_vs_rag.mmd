@@ -1,0 +1,108 @@
+graph TB
+    UserQuery["👤 User Query:<br/>'Tell me more about karma yoga'"]
+
+    subgraph MemorySystem["🧠 MEMORY (Personal Assistant)"]
+        M_Purpose["PURPOSE:<br/>Remember user-specific preferences<br/>and learning patterns"]
+
+        M_Source["SOURCE:<br/>This user's past sessions"]
+
+        M_Examples["EXAMPLES:"]
+        M1["✓ User prefers Sivananda commentary"]
+        M2["✓ User is beginner level"]
+        M3["✓ User studies in the morning"]
+        M4["✓ User's native language is Hindi"]
+        M5["✓ User is currently studying Chapter 3"]
+
+        M_Mutability["MUTABILITY:<br/>Evolves as user preferences change"]
+
+        M_Storage["STORAGE:<br/>User-specific memory store<br/>(isolated per user)"]
+
+        M_Retrieval["RETRIEVAL:<br/>Filter by user_id<br/>Sorted by confidence score"]
+
+        M_Purpose --> M_Source --> M_Examples
+        M_Examples --> M1 & M2 & M3 & M4 & M5
+        M1 & M2 & M3 & M4 & M5 --> M_Mutability --> M_Storage --> M_Retrieval
+    end
+
+    subgraph RAGSystem["📚 RAG (Research Librarian)"]
+        R_Purpose["PURPOSE:<br/>Retrieve factual knowledge<br/>from general corpus"]
+
+        R_Source["SOURCE:<br/>General knowledge base<br/>(same for all users)"]
+
+        R_Examples["EXAMPLES:"]
+        R1["✓ Chapter 3, Verse 5 text"]
+        R2["✓ Sivananda's commentary on 3.5"]
+        R3["✓ Related verses from Ch 2, Ch 5"]
+        R4["✓ Definition of 'nishkama karma'"]
+        R5["✓ Sanskrit verse text"]
+
+        R_Mutability["MUTABILITY:<br/>Static corpus<br/>(unless re-indexed)"]
+
+        R_Storage["STORAGE:<br/>Vector database<br/>(shared across all users)"]
+
+        R_Retrieval["RETRIEVAL:<br/>Semantic similarity search<br/>Top-k most relevant"]
+
+        R_Purpose --> R_Source --> R_Examples
+        R_Examples --> R1 & R2 & R3 & R4 & R5
+        R1 & R2 & R3 & R4 & R5 --> R_Mutability --> R_Storage --> R_Retrieval
+    end
+
+    subgraph Comparison["⚖️ KEY DIFFERENCES"]
+        C1["MEMORY:<br/>Who is this user?<br/>What do they prefer?"]
+        C2["RAG:<br/>What does the Gita say?<br/>What is the knowledge?"]
+
+        C3["MEMORY:<br/>User-specific (isolated)"]
+        C4["RAG:<br/>Universal (shared)"]
+
+        C5["MEMORY:<br/>Small (KB per user)"]
+        C6["RAG:<br/>Large (GB corpus)"]
+    end
+
+    subgraph LLMInput["🤖 LLM Context Window"]
+        Input_Recent["Recent conversation (1.5K tokens)"]
+        Input_Memory["Retrieved memories (100 tokens):<br/>- Prefers Sivananda<br/>- Beginner level<br/>- Hindi speaker"]
+        Input_RAG["Retrieved RAG results (5.9K tokens):<br/>- Chapter 3 verses on karma yoga<br/>- Sivananda commentary<br/>- Related concepts"]
+
+        Input_Recent --> LLM_Response
+        Input_Memory --> LLM_Response
+        Input_RAG --> LLM_Response
+    end
+
+    LLM_Response["📝 LLM Response:<br/>'Karma yoga, as explained in Chapter 3,<br/>teaches selfless action...<br/>[Uses Sivananda commentary as preferred]<br/>[Simplified for beginner level]'"]
+
+    UserQuery --> MemorySystem
+    UserQuery --> RAGSystem
+
+    M_Retrieval --> Input_Memory
+    R_Retrieval --> Input_RAG
+
+    subgraph TestRule["🧪 THE TEST"]
+        Test["Is this information true for ALL users?<br/>YES → RAG<br/>NO → Memory"]
+    end
+
+    subgraph Examples["📋 CLASSIFICATION EXAMPLES"]
+        Ex1["'User prefers Sivananda translations'<br/>→ MEMORY (user-specific preference)"]
+        Ex2["'Chapter 3 discusses karma yoga'<br/>→ RAG (factual content, true for all)"]
+        Ex3["'User is studying karma yoga this week'<br/>→ MEMORY (user-specific current focus)"]
+        Ex4["'Nishkama karma means selfless action'<br/>→ RAG (factual definition, true for all)"]
+    end
+
+    style MemorySystem fill:#e1f5ff,stroke:#0288d1,stroke-width:3px
+    style RAGSystem fill:#fff3e0,stroke:#f57c00,stroke-width:3px
+    style LLMInput fill:#e8f5e9,stroke:#388e3c,stroke-width:3px
+    style Comparison fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style TestRule fill:#ffebee,stroke:#d32f2f,stroke-width:3px
+    style Examples fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    style LLM_Response fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+
+    style M1 fill:#b3e5fc,stroke:#0277bd,stroke-width:1px
+    style M2 fill:#b3e5fc,stroke:#0277bd,stroke-width:1px
+    style M3 fill:#b3e5fc,stroke:#0277bd,stroke-width:1px
+    style M4 fill:#b3e5fc,stroke:#0277bd,stroke-width:1px
+    style M5 fill:#b3e5fc,stroke:#0277bd,stroke-width:1px
+
+    style R1 fill:#ffe0b2,stroke:#e65100,stroke-width:1px
+    style R2 fill:#ffe0b2,stroke:#e65100,stroke-width:1px
+    style R3 fill:#ffe0b2,stroke:#e65100,stroke-width:1px
+    style R4 fill:#ffe0b2,stroke:#e65100,stroke-width:1px
+    style R5 fill:#ffe0b2,stroke:#e65100,stroke-width:1px

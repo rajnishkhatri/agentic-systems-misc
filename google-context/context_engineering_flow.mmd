@@ -1,0 +1,64 @@
+flowchart LR
+  User((User Turn)):::actor
+
+  subgraph SESS["Sessions Workspace (short-term)"]
+    Events[(Events Log<br/>user / agent / tool turns)]:::store
+    State[[Session State<br/>scratchpad variables, carts, plans]]:::store
+    Multi{{Multi-Agent Histories<br/>shared vs separate logs}}:::decision
+    Guardrails[[Production Guardrails<br/>security • lifecycle • scale]]:::process
+    Events --> Multi --> Guardrails
+    State --> Multi
+  end
+
+  User --> Events
+  Response --> Events
+  Upload --> State
+
+  subgraph CONTEXT["1) Context Management Loop"]
+    Events --> Fetch
+    State --> Fetch
+    Memories --> Fetch
+    RAG[(RAG / External Knowledge<br/>research librarian)]:::store --> Fetch
+    Fetch[Fetch & Prioritize Context]:::process
+    Prepare[Prepare Prompt Payload]:::process
+    LLM[LLM + Tool Invocations]:::process
+    Response[Agent Response]:::process
+    Upload[Upload Session Updates]:::process
+    Fetch --> Prepare --> LLM --> Response --> Upload
+  end
+
+  Upload --> MemoryTrigger
+
+  subgraph MEMORY["2) Memory Generation Pipeline (long-term)"]
+    MemoryTrigger{Trigger Memory Generation?}:::decision
+    MemoryTrigger -->|Session completion| Extract
+    MemoryTrigger -->|Turn cadence| Extract
+    MemoryTrigger -->|Real-time| Extract
+    MemoryTrigger -->|Explicit command| Extract
+    MemoryTrigger -->|Memory-as-tool| Extract
+    Extract[Extraction<br/>signal vs noise]:::process
+    Consolidate[Consolidation<br/>update • create • delete]:::process
+    Storage[(Persistent Memory Store<br/>vector DB / KG / hybrid)]:::store
+    Provenance[[Provenance & Confidence Tracking]]:::process
+    Extract --> Consolidate --> Storage --> Provenance
+  end
+
+  subgraph RETRIEVE["3) Memory Retrieval & Inference"]
+    Storage --> Retrieve[Score & Retrieve<br/>relevance • recency • importance]:::process
+    Retrieve --> Timing{Retrieval Timing}:::decision
+    Timing -->|Proactive| InjectSystem
+    Timing -->|Reactive tool call| MemoryTool[search_memories tool]:::process --> Retrieve
+    Retrieve --> Mode{Injection Mode}:::decision
+    Mode -->|System instructions| InjectSystem[Inject as system profile]:::process
+    Mode -->|Dialogue snippets| InjectDialogue[Inject into dialogue with tags]:::process
+    InjectSystem --> Fetch
+    InjectDialogue --> Fetch
+  end
+
+  Storage --> Memories((Selected Memories<br/>personal assistant)):::actor --> Fetch
+
+  classDef actor fill:#fdf5d5,stroke:#c79a00,color:#6b4d00;
+  classDef process fill:#e0f0ff,stroke:#4a90e2,color:#1f3a60;
+  classDef store fill:#f0f5ff,stroke:#7b8ba1,color:#1f3a60;
+  classDef decision fill:#ffeacc,stroke:#e59a3a,color:#633a00;
+

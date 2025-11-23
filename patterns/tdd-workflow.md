@@ -29,12 +29,20 @@
 - Working with critical business logic that must be correct
 - Developing public APIs where contract clarity is essential
 - Fixing bugs (write a failing test that reproduces the bug, then fix it)
+- Implementing **Session Management** or **Memory Systems** (see [Context Engineering Terminology](../google-context/TERMINOLOGY.md))
 
 ❌ **DON'T use TDD when:**
 - Doing exploratory prototyping or proof-of-concepts (write tests after you validate the approach)
 - Working with UI/UX design where requirements are highly fluid
 - Spiking on unfamiliar libraries (learn first, then apply TDD)
 - Facing tight deadlines where you need quick-and-dirty solutions (though this usually backfires)
+
+**Context Engineering Note:**
+When implementing context-aware AI systems, TDD is critical for testing:
+- **Protected Context Identification** - Test that objectives and constraints are never compressed
+- **Compression Logic** - Test 95% threshold trigger and protected event preservation
+- **Memory vs. RAG Distinction** - Test that user-specific data goes to Memory, general knowledge to RAG
+- See [TERMINOLOGY.md](../google-context/TERMINOLOGY.md) for critical distinctions to test
 
 ---
 
