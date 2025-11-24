@@ -1,0 +1,82 @@
+%% Reliability Failure Modes Taxonomy Decision Tree
+%% Shows 5 failure modes (FR2.1-FR2.5) with symptom → root cause → mitigation paths
+%% Cross-references to tutorials for detailed mitigation strategies
+
+graph TD
+    Start([Agent Error Detected]) --> Classify{Classify Error Type}
+    
+    %% ============================================================================
+    %% FR2.1: Hallucinations
+    %% ============================================================================
+    Classify -->|Wrong/Invalid Data| Hallucination[Hallucination Detected]
+    Hallucination --> H1{Data Verifiable?}
+    H1 -->|Yes - Database Lookup| H2[Apply Schema Validation]
+    H1 -->|No - External Facts| H3[Apply Pydantic Schema]
+    H2 --> H4[Mitigation: Database Lookup + Validation]
+    H3 --> H4
+    H4 --> H5[See: 03_deterministic_execution_strategies.md]
+    
+    %% ============================================================================
+    %% FR2.2: Error Propagation
+    %% ============================================================================
+    Classify -->|Cascade Failure| ErrorProp[Error Propagation Detected]
+    ErrorProp --> EP1{Downstream Errors?}
+    EP1 -->|Yes - Multiple Agents| EP2[Measure Error Propagation Index]
+    EP2 --> EP3{EPI > 1.0?}
+    EP3 -->|Yes - High Cascade Risk| EP4[Apply Error Isolation]
+    EP3 -->|No - Contained| EP5[Apply Early Termination]
+    EP4 --> EP6[Mitigation: Result[T,E] Types + Critical/Optional]
+    EP5 --> EP6
+    EP6 --> EP7[See: 04_error_propagation_analysis.md]
+    
+    %% ============================================================================
+    %% FR2.3: Timeout
+    %% ============================================================================
+    Classify -->|Timeout/Slowdown| Timeout[Timeout Detected]
+    Timeout --> T1{Cause Analysis}
+    T1 -->|LLM API Delay| T2[Apply Circuit Breaker]
+    T1 -->|Complex Query| T3[Apply Retry with Backoff]
+    T1 -->|External API Failure| T4[Apply Fallback Strategy]
+    T2 --> T5[Mitigation: Circuit Breaker + Fallback]
+    T3 --> T5
+    T4 --> T5
+    T5 --> T6[See: backend/reliability/circuit_breaker.py:45]
+    
+    %% ============================================================================
+    %% FR2.4: Context Overflow
+    %% ============================================================================
+    Classify -->|Context Length Error| ContextOverflow[Context Overflow Detected]
+    ContextOverflow --> CO1{Input Size?}
+    CO1 -->|Large History| CO2[Apply Compression/Summarization]
+    CO1 -->|Large Documents| CO3[Apply Chunking Strategy]
+    CO1 -->|Large Tool Outputs| CO4[Apply Result Filtering]
+    CO2 --> CO5[Mitigation: Adaptive Context Management]
+    CO3 --> CO5
+    CO4 --> CO5
+    CO5 --> CO6[See: Lesson 17 - Context Engineering]
+    
+    %% ============================================================================
+    %% FR2.5: Non-Determinism
+    %% ============================================================================
+    Classify -->|Inconsistent Results| NonDeterminism[Non-Determinism Detected]
+    NonDeterminism --> ND1{Same Input?}
+    ND1 -->|Yes - Different Outputs| ND2[Check Temperature Setting]
+    ND2 --> ND3{Temperature > 0?}
+    ND3 -->|Yes| ND4[Set temperature=0]
+    ND3 -->|No| ND5[Apply Deterministic Checkpointing]
+    ND4 --> ND6[Mitigation: temperature=0 + Checkpointing]
+    ND5 --> ND6
+    ND6 --> ND7[See: 03_deterministic_execution_strategies.md]
+    
+    %% ============================================================================
+    %% Styling
+    %% ============================================================================
+    classDef symptom fill:#ffcccc,stroke:#cc0000,stroke-width:2px
+    classDef cause fill:#fff4cc,stroke:#ccaa00,stroke-width:2px
+    classDef mitigation fill:#ccffcc,stroke:#00cc00,stroke-width:2px
+    classDef reference fill:#cce5ff,stroke:#0066cc,stroke-width:2px
+    
+    class Hallucination,ErrorProp,Timeout,ContextOverflow,NonDeterminism symptom
+    class H1,H2,H3,EP1,EP2,EP3,T1,T2,T3,T4,CO1,CO2,CO3,CO4,ND1,ND2,ND3,ND4,ND5 cause
+    class H4,EP4,EP5,EP6,T5,CO5,ND6 mitigation
+    class H5,EP7,T6,CO6,ND7 reference

@@ -1,0 +1,58 @@
+{
+  "accumulated_data": {
+    "amount": 7435.91,
+    "date": "2024-06-20",
+    "invoice_id": "INV-2024-089",
+    "is_valid": true,
+    "line_items": [
+      {
+        "description": "Training Session",
+        "quantity": 3,
+        "unit_price": 3809.72
+      },
+      {
+        "description": "Training Session",
+        "quantity": 8,
+        "unit_price": 3626.19
+      }
+    ],
+    "next_state": "MANAGER_REVIEW",
+    "submitted_at": "2025-11-24 03:23:13",
+    "validated_at": "2025-11-24 03:23:13",
+    "validation_errors": [],
+    "vendor": "Quantum Industries"
+  },
+  "audit_trail": [
+    {
+      "from_state": null,
+      "handler_output": {
+        "amount": 7435.91,
+        "date": "2024-06-20",
+        "invoice_id": "INV-2024-089",
+        "line_items": [
+          {
+            "description": "Training Session",
+            "quantity": 3,
+            "unit_price": 3809.72
+          },
+          {
+            "description": "Training Session",
+            "quantity": 8,
+            "unit_price": 3626.19
+          }
+        ],
+        "submitted_at": "2025-11-24 03:23:13",
+        "vendor": "Quantum Industries"
+      },
+      "timestamp": 1763976193.853986,
+      "to_state": "SUBMIT"
+    }
+  ],
+  "current_state": "SUBMIT",
+  "invariant_violations": [],
+  "state_history": [
+    "SUBMIT",
+    "VALIDATE"
+  ],
+  "task_id": "INV-2024-089"
+}

@@ -1,0 +1,117 @@
+%% Orchestration Pattern Selection Flowchart (DC3 Decision Tree)
+%% Maps business requirements to recommended orchestration patterns
+%% Includes 7 requirement paths with tradeoff analysis
+
+graph TD
+    Start([Business Requirements]) --> Requirements{Analyze Requirements}
+    
+    %% ============================================================================
+    %% Path 1: Minimize Latency
+    %% ============================================================================
+    Requirements -->|Minimize Latency<br/>SLA < 5s| Latency[Latency Critical]
+    Latency --> L1{Can Parallelize?}
+    L1 -->|Yes - Independent Agents| L2[Hierarchical Pattern]
+    L1 -->|No - Sequential Dependency| L3[Sequential Pattern]
+    L2 --> L4["✅ Hierarchical Parallel<br/>Latency: 8s P50<br/>Cost: 1.3× baseline<br/>Success: 80%"]
+    L3 --> L5["⚠️ Sequential<br/>Latency: 12s P50<br/>Cost: 1× baseline<br/>Success: 70%"]
+    L4 --> L6[See: notebooks/09_hierarchical_delegation_pattern.ipynb]
+    L5 --> L6
+    
+    %% ============================================================================
+    %% Path 2: Minimize Cost
+    %% ============================================================================
+    Requirements -->|Minimize Cost<br/>Budget Constrained| Cost[Cost Critical]
+    Cost --> C1{Accuracy Trade-off?}
+    C1 -->|Accept Lower Accuracy| C2[Sequential Pattern]
+    C1 -->|Need Accuracy| C3[State Machine Pattern]
+    C2 --> C4["✅ Sequential<br/>Cost: 1× baseline<br/>Latency: 12s P50<br/>Success: 70%"]
+    C3 --> C5["✅ State Machine<br/>Cost: 1.1× baseline<br/>Latency: 10s P50<br/>Success: 85%"]
+    C4 --> C6[See: notebooks/08_sequential_orchestration_baseline.ipynb]
+    C5 --> C7[See: notebooks/11_state_machine_orchestration.ipynb]
+    
+    %% ============================================================================
+    %% Path 3: Maximize Reliability
+    %% ============================================================================
+    Requirements -->|Maximize Reliability<br/>Success > 95%| Reliability[Reliability Critical]
+    Reliability --> R1{Budget Available?}
+    R1 -->|High Budget - 5× Cost| R2[Voting Ensemble Pattern]
+    R1 -->|Medium Budget - 1.1× Cost| R3[State Machine Pattern]
+    R2 --> R4["✅ Voting Ensemble<br/>Success: 90%<br/>Cost: 5× baseline<br/>Latency: 15s P50"]
+    R3 --> R5["✅ State Machine<br/>Success: 85%<br/>Cost: 1.1× baseline<br/>Latency: 10s P50"]
+    R4 --> R6[See: notebooks/12_voting_ensemble_pattern.ipynb]
+    R5 --> R6
+    
+    %% ============================================================================
+    %% Path 4: Handle Ambiguous Inputs
+    %% ============================================================================
+    Requirements -->|Ambiguous Inputs<br/>Iterative Refinement| Ambiguous[Input Ambiguity]
+    Ambiguous --> A1{Convergence Needed?}
+    A1 -->|Yes - ReAct Loop| A2[Iterative Refinement Pattern]
+    A1 -->|No - Single Pass| A3[Hierarchical Pattern]
+    A2 --> A4["✅ Iterative Refinement<br/>Success: 75%<br/>Cost: 2.1× baseline<br/>Latency: 18s P50<br/>Converges in 3-5 iterations"]
+    A3 --> A5["✅ Hierarchical<br/>Success: 80%<br/>Cost: 1.3× baseline<br/>Latency: 8s P50"]
+    A4 --> A6[See: notebooks/10_iterative_refinement_react.ipynb]
+    A5 --> A6
+    
+    %% ============================================================================
+    %% Path 5: Audit Trail Required
+    %% ============================================================================
+    Requirements -->|Audit Trail Required<br/>Compliance| Audit[Compliance Critical]
+    Audit --> AU1{Deterministic Needed?}
+    AU1 -->|Yes - Explicit Transitions| AU2[State Machine Pattern]
+    AU1 -->|No - Trace Sufficient| AU3[Any Pattern + Audit Logging]
+    AU2 --> AU4["✅ State Machine<br/>100% audit completeness<br/>Explicit state transitions<br/>Idempotent operations"]
+    AU3 --> AU5["✅ Any Pattern<br/>+ backend/reliability/audit_log.py<br/>Structured JSON logging<br/>PII redaction"]
+    AU4 --> AU6[See: notebooks/11_state_machine_orchestration.ipynb]
+    AU5 --> AU6
+    
+    %% ============================================================================
+    %% Path 6: High-Stakes Decisions
+    %% ============================================================================
+    Requirements -->|High-Stakes<br/>Fraud > $10K| HighStakes[High-Stakes Decision]
+    HighStakes --> HS1{Consensus Needed?}
+    HS1 -->|Yes - Multiple Agents| HS2[Voting Ensemble Pattern]
+    HS1 -->|No - Single Agent| HS3[State Machine Pattern]
+    HS2 --> HS4["✅ Voting Ensemble<br/>40% error reduction vs single<br/>5× cost multiplier<br/>Majority vote + confidence"]
+    HS3 --> HS5["✅ State Machine<br/>Explicit approval gates<br/>Error isolation<br/>Rollback support"]
+    HS4 --> HS6[See: notebooks/12_voting_ensemble_pattern.ipynb]
+    HS5 --> HS6
+    
+    %% ============================================================================
+    %% Path 7: Deterministic Outputs
+    %% ============================================================================
+    Requirements -->|Deterministic Outputs<br/>Regression Tests| Deterministic[Determinism Required]
+    Deterministic --> D1{Same Input → Same Output?}
+    D1 -->|Yes - Required| D2[State Machine Pattern]
+    D1 -->|No - Variation OK| D3[Sequential Pattern]
+    D2 --> D4["✅ State Machine<br/>FSM guarantees determinism<br/>Temperature = 0<br/>Checkpointing enabled"]
+    D3 --> D5["✅ Sequential<br/>Temperature = 0<br/>Schema validation<br/>Deterministic checkpointing"]
+    D4 --> D6[See: 03_deterministic_execution_strategies.md]
+    D5 --> D6
+    
+    %% ============================================================================
+    %% Pattern Comparison Table (Comment Block)
+    %% ============================================================================
+    %% Pattern Comparison Table:
+    %% +---------------------+-------------+-------------+----------+------------------------+
+    %% | Pattern             | Success (%) | Latency P50 | Cost (×) | Best Use Case          |
+    %% +---------------------+-------------+-------------+----------+------------------------+
+    %% | Sequential          | 70          | 12s         | 1.0      | Budget-constrained     |
+    %% | Hierarchical        | 80          | 8s          | 1.3      | Latency-critical       |
+    %% | Iterative           | 75          | 18s         | 2.1      | Ambiguous inputs       |
+    %% | State Machine       | 85          | 10s         | 1.1      | Audit/determinism      |
+    %% | Voting Ensemble     | 90          | 15s         | 5.0      | High-stakes decisions  |
+    %% +---------------------+-------------+-------------+----------+------------------------+
+    
+    %% ============================================================================
+    %% Styling
+    %% ============================================================================
+    classDef requirement fill:#e6f3ff,stroke:#0066cc,stroke-width:2px
+    classDef decision fill:#fff9e6,stroke:#cc9900,stroke-width:2px
+    classDef pattern fill:#e6ffe6,stroke:#00cc00,stroke-width:3px
+    classDef reference fill:#f0f0f0,stroke:#666666,stroke-width:1px
+    
+    class Latency,Cost,Reliability,Ambiguous,Audit,HighStakes,Deterministic requirement
+    class L1,C1,R1,A1,AU1,HS1,D1 decision
+    class L2,L4,C2,C4,C3,C5,R2,R4,R3,R5,A2,A4,A3,A5,AU2,AU4,AU3,AU5,HS2,HS4,HS3,HS5,D2,D4,D3,D5 pattern
+    class L6,C6,C7,R6,A6,AU6,HS6,D6 reference

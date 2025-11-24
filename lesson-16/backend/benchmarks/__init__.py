@@ -28,20 +28,41 @@ Usage:
     results = await runner.run(tasks)
 """
 
-# Benchmark suite will be implemented in Task 6.0
-# Exports will be added once modules are created:
-# from .financial_tasks import generate_financial_tasks, InvoiceTask, FraudTask, ReconciliationTask
-# from .metrics import SuccessRateMetric, CostEfficiencyMetric, LatencyMetric, ErrorRecoveryMetric
-# from .runner import BenchmarkRunner
+# Benchmark suite implemented in Task 6.0
+from .financial_tasks import FinancialTaskGenerator
+from .metrics import (
+    OPENAI_PRICING,
+    APICall,
+    CostSummary,
+    LatencyDistribution,
+    MetricsCalculator,
+    WorkflowStep,
+    WorkflowTrace,
+)
+from .runner import (
+    BenchmarkResults,
+    BenchmarkRunner,
+    FailingOrchestrator,
+    MockAgent,
+    PatternMetrics,
+    PatternResult,
+    StatisticalAnalysis,
+)
 
 __all__ = [
-    # "generate_financial_tasks",
-    # "InvoiceTask",
-    # "FraudTask",
-    # "ReconciliationTask",
-    # "SuccessRateMetric",
-    # "CostEfficiencyMetric",
-    # "LatencyMetric",
-    # "ErrorRecoveryMetric",
-    # "BenchmarkRunner",
+    "FinancialTaskGenerator",
+    "MetricsCalculator",
+    "OPENAI_PRICING",
+    "APICall",
+    "CostSummary",
+    "LatencyDistribution",
+    "WorkflowStep",
+    "WorkflowTrace",
+    "BenchmarkRunner",
+    "BenchmarkResults",
+    "PatternResult",
+    "PatternMetrics",
+    "StatisticalAnalysis",
+    "MockAgent",
+    "FailingOrchestrator",
 ]

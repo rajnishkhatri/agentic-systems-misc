@@ -1,0 +1,48 @@
+{
+  "accumulated_data": {
+    "amount": 6187.32,
+    "date": "2024-05-09",
+    "invoice_id": "INV-2024-065",
+    "is_valid": true,
+    "line_items": [
+      {
+        "description": "Support Contract",
+        "quantity": 5,
+        "unit_price": 6187.32
+      }
+    ],
+    "next_state": "MANAGER_REVIEW",
+    "submitted_at": "2025-11-24 03:23:13",
+    "validated_at": "2025-11-24 03:23:13",
+    "validation_errors": [],
+    "vendor": "Synergy Solutions"
+  },
+  "audit_trail": [
+    {
+      "from_state": null,
+      "handler_output": {
+        "amount": 6187.32,
+        "date": "2024-05-09",
+        "invoice_id": "INV-2024-065",
+        "line_items": [
+          {
+            "description": "Support Contract",
+            "quantity": 5,
+            "unit_price": 6187.32
+          }
+        ],
+        "submitted_at": "2025-11-24 03:23:13",
+        "vendor": "Synergy Solutions"
+      },
+      "timestamp": 1763976193.76269,
+      "to_state": "SUBMIT"
+    }
+  ],
+  "current_state": "SUBMIT",
+  "invariant_violations": [],
+  "state_history": [
+    "SUBMIT",
+    "VALIDATE"
+  ],
+  "task_id": "INV-2024-065"
+}

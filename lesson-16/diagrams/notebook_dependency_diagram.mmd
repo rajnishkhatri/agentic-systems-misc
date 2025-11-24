@@ -1,0 +1,105 @@
+graph TB
+    %% Lesson 16 Notebook Dependency Diagram
+    %% Shows learning progression and dependencies between 8 interactive notebooks
+
+    %% Tutorial Index (entry point)
+    INDEX["📚 TUTORIAL_INDEX.md<br/>Entry Point"]
+
+    %% Foundation Tutorials (prerequisites)
+    T01["📖 Tutorial 01<br/>Agent Reliability<br/>Fundamentals"]
+    T02["📖 Tutorial 02<br/>Orchestration Patterns<br/>Overview"]
+    T03["📖 Tutorial 03<br/>Deterministic Execution<br/>Strategies"]
+    T04["📖 Tutorial 04<br/>Error Propagation<br/>Analysis"]
+    T06["📖 Tutorial 06<br/>Financial Workflow<br/>Reliability"]
+    T07["📖 Tutorial 07<br/>Production Deployment<br/>Considerations"]
+
+    %% Pattern Notebooks (08-12)
+    N08["💻 Notebook 08<br/>Sequential Orchestration<br/>⏱️ <5 min | 💰 $0"]
+    N09["💻 Notebook 09<br/>Hierarchical Delegation<br/>⏱️ <5 min | 💰 $0"]
+    N10["💻 Notebook 10<br/>Iterative Refinement<br/>⏱️ <5 min | 💰 $0"]
+    N11["💻 Notebook 11<br/>State Machine<br/>⏱️ <5 min | 💰 $0"]
+    N12["💻 Notebook 12<br/>Voting/Ensemble<br/>⏱️ <5 min | 💰 $0"]
+
+    %% Framework Notebooks (13-15)
+    N13["💻 Notebook 13<br/>Reliability Framework<br/>⏱️ <10 min | 💰 $0"]
+    N14["💻 Notebook 14<br/>AgentArch Benchmark<br/>⏱️ <10 min | 💰 $0"]
+    N15["💻 Notebook 15<br/>Production Deployment<br/>⏱️ <5 min | 💰 $0"]
+
+    %% Datasets (generated in Task 6.0)
+    DATA["📊 Datasets<br/>invoices_100.json<br/>transactions_100.json<br/>reconciliation_100.json"]
+
+    %% Backend Components
+    BACKEND["⚙️ Backend<br/>reliability/*<br/>orchestrators/*<br/>benchmarks/*"]
+
+    %% Entry point connections
+    INDEX --> T01
+    INDEX --> T02
+    INDEX --> N08
+
+    %% Tutorial prerequisites for notebooks
+    T02 --> N08
+    T02 --> N09
+    T02 --> N10
+    T02 --> N11
+    T02 --> N12
+
+    T01 --> N13
+    T03 --> N13
+    T04 --> N13
+
+    T06 --> N15
+    T07 --> N15
+
+    %% Sequential notebook progression (main learning path)
+    N08 --> N09
+    N09 --> N10
+    N10 --> N11
+    N11 --> N12
+    N12 --> N13
+    N13 --> N14
+    N14 --> N15
+
+    %% Pattern notebooks dependency on backend
+    BACKEND --> N08
+    BACKEND --> N09
+    BACKEND --> N10
+    BACKEND --> N11
+    BACKEND --> N12
+
+    %% Framework notebooks dependency on backend
+    BACKEND --> N13
+    BACKEND --> N14
+    BACKEND --> N15
+
+    %% Dataset dependencies
+    DATA --> N08
+    DATA --> N09
+    DATA --> N10
+    DATA --> N11
+    DATA --> N12
+    DATA --> N13
+    DATA --> N14
+    DATA --> N15
+
+    %% Comparison dependencies
+    N08 -.baseline.-> N14
+    N09 -.comparison.-> N14
+    N10 -.comparison.-> N14
+    N11 -.comparison.-> N14
+    N12 -.comparison.-> N14
+
+    %% Production path
+    N13 --> N15
+
+    %% Styling
+    classDef tutorial fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef notebook fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px
+    classDef framework fill:#fff9c4,stroke:#f57f17,stroke-width:2px
+    classDef data fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef backend fill:#ffccbc,stroke:#bf360c,stroke-width:2px
+
+    class T01,T02,T03,T04,T06,T07 tutorial
+    class N08,N09,N10,N11,N12 notebook
+    class N13,N14,N15 framework
+    class DATA data
+    class BACKEND backend

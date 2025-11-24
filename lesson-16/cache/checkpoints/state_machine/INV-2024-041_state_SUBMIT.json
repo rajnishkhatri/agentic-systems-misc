@@ -1,0 +1,33 @@
+{
+  "accumulated_data": {
+    "amount": 12598.26,
+    "date": "2024-02-28",
+    "invoice_id": "INV-2024-041",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 8,
+        "unit_price": 5035.26
+      },
+      {
+        "description": "Maintenance Fee",
+        "quantity": 9,
+        "unit_price": 2672.28
+      },
+      {
+        "description": "Subscription Fee",
+        "quantity": 10,
+        "unit_price": 4890.72
+      }
+    ],
+    "submitted_at": "2025-11-24 03:23:13",
+    "vendor": "Sterling Group"
+  },
+  "audit_trail": [],
+  "current_state": "SUBMIT",
+  "invariant_violations": [],
+  "state_history": [
+    "SUBMIT"
+  ],
+  "task_id": "INV-2024-041"
+}

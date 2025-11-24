@@ -1,0 +1,91 @@
+{
+  "accumulated_data": {
+    "amount": 11060.69,
+    "approval_status": "approved",
+    "date": "2024-11-08",
+    "invoice_id": "INV-2024-001",
+    "is_valid": true,
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 4,
+        "unit_price": 11060.69
+      }
+    ],
+    "manager_approved": true,
+    "next_state": "APPROVED",
+    "reviewed_at": "2025-11-24 03:23:14",
+    "reviewed_by": "manager",
+    "submitted_at": "2025-11-24 03:23:14",
+    "validated_at": "2025-11-24 03:23:14",
+    "validation_errors": [],
+    "vendor": "Titan Corporation"
+  },
+  "audit_trail": [
+    {
+      "from_state": null,
+      "handler_output": {
+        "amount": 11060.69,
+        "date": "2024-11-08",
+        "invoice_id": "INV-2024-001",
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 4,
+            "unit_price": 11060.69
+          }
+        ],
+        "submitted_at": "2025-11-24 03:23:14",
+        "vendor": "Titan Corporation"
+      },
+      "timestamp": 1763976194.114063,
+      "to_state": "SUBMIT"
+    },
+    {
+      "from_state": "VALIDATE",
+      "handler_output": {
+        "is_valid": true,
+        "next_state": "FINANCE_REVIEW",
+        "validated_at": "2025-11-24 03:23:14",
+        "validation_errors": []
+      },
+      "timestamp": 1763976194.1253629,
+      "to_state": "VALIDATE"
+    }
+  ],
+  "current_state": "SUBMIT",
+  "invariant_violations": [
+    {
+      "data": {
+        "amount": 11060.69,
+        "approval_status": "approved",
+        "date": "2024-11-08",
+        "invoice_id": "INV-2024-001",
+        "is_valid": true,
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 4,
+            "unit_price": 11060.69
+          }
+        ],
+        "manager_approved": true,
+        "next_state": "APPROVED",
+        "reviewed_at": "2025-11-24 03:23:14",
+        "reviewed_by": "manager",
+        "submitted_at": "2025-11-24 03:23:14",
+        "validated_at": "2025-11-24 03:23:14",
+        "validation_errors": [],
+        "vendor": "Titan Corporation"
+      },
+      "reason": "Invariant validation failed",
+      "state": "MANAGER_REVIEW"
+    }
+  ],
+  "state_history": [
+    "SUBMIT",
+    "VALIDATE",
+    "MANAGER_REVIEW"
+  ],
+  "task_id": "INV-2024-001"
+}

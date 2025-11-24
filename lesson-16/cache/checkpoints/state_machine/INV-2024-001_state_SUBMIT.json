@@ -1,0 +1,23 @@
+{
+  "accumulated_data": {
+    "amount": 11060.69,
+    "date": "2024-11-08",
+    "invoice_id": "INV-2024-001",
+    "line_items": [
+      {
+        "description": "Subscription Fee",
+        "quantity": 4,
+        "unit_price": 11060.69
+      }
+    ],
+    "submitted_at": "2025-11-24 03:23:14",
+    "vendor": "Titan Corporation"
+  },
+  "audit_trail": [],
+  "current_state": "SUBMIT",
+  "invariant_violations": [],
+  "state_history": [
+    "SUBMIT"
+  ],
+  "task_id": "INV-2024-001"
+}

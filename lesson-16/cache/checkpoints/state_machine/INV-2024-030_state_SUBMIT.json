@@ -1,0 +1,33 @@
+{
+  "accumulated_data": {
+    "amount": 6944.73,
+    "date": "2024-08-21",
+    "invoice_id": "INV-2024-030",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 6,
+        "unit_price": 2776.59
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 10,
+        "unit_price": 2551.1
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 4,
+        "unit_price": 1617.04
+      }
+    ],
+    "submitted_at": "2025-11-24 03:23:13",
+    "vendor": "Paradigm Solutions"
+  },
+  "audit_trail": [],
+  "current_state": "SUBMIT",
+  "invariant_violations": [],
+  "state_history": [
+    "SUBMIT"
+  ],
+  "task_id": "INV-2024-030"
+}

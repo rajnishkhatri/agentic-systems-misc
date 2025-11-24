@@ -1,0 +1,74 @@
+{
+  "accumulated_data": {
+    "amount": 5370.86,
+    "approval_status": "approved",
+    "date": "2024-02-01",
+    "invoice_id": "INV-2024-018",
+    "is_valid": true,
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 4,
+        "unit_price": 3175.71
+      },
+      {
+        "description": "Support Contract",
+        "quantity": 4,
+        "unit_price": 2195.15
+      }
+    ],
+    "manager_approved": true,
+    "next_state": "APPROVED",
+    "reviewed_at": "2025-11-24 03:23:13",
+    "reviewed_by": "manager",
+    "submitted_at": "2025-11-24 03:23:13",
+    "validated_at": "2025-11-24 03:23:13",
+    "validation_errors": [],
+    "vendor": "Horizon Technologies"
+  },
+  "audit_trail": [
+    {
+      "from_state": null,
+      "handler_output": {
+        "amount": 5370.86,
+        "date": "2024-02-01",
+        "invoice_id": "INV-2024-018",
+        "line_items": [
+          {
+            "description": "Consulting Services",
+            "quantity": 4,
+            "unit_price": 3175.71
+          },
+          {
+            "description": "Support Contract",
+            "quantity": 4,
+            "unit_price": 2195.15
+          }
+        ],
+        "submitted_at": "2025-11-24 03:23:13",
+        "vendor": "Horizon Technologies"
+      },
+      "timestamp": 1763976193.627254,
+      "to_state": "SUBMIT"
+    },
+    {
+      "from_state": "VALIDATE",
+      "handler_output": {
+        "is_valid": true,
+        "next_state": "MANAGER_REVIEW",
+        "validated_at": "2025-11-24 03:23:13",
+        "validation_errors": []
+      },
+      "timestamp": 1763976193.63871,
+      "to_state": "VALIDATE"
+    }
+  ],
+  "current_state": "SUBMIT",
+  "invariant_violations": [],
+  "state_history": [
+    "SUBMIT",
+    "VALIDATE",
+    "MANAGER_REVIEW"
+  ],
+  "task_id": "INV-2024-018"
+}

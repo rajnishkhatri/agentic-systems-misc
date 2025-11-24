@@ -1,0 +1,68 @@
+{
+  "accumulated_data": {
+    "amount": 5327.92,
+    "date": "2024-09-11",
+    "invoice_id": "INV-2024-085",
+    "is_valid": true,
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 8,
+        "unit_price": 2763.27
+      },
+      {
+        "description": "Development Services",
+        "quantity": 5,
+        "unit_price": 1739.07
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 5,
+        "unit_price": 825.58
+      }
+    ],
+    "next_state": "MANAGER_REVIEW",
+    "submitted_at": "2025-11-24 03:23:13",
+    "validated_at": "2025-11-24 03:23:13",
+    "validation_errors": [],
+    "vendor": "Horizon Technologies"
+  },
+  "audit_trail": [
+    {
+      "from_state": null,
+      "handler_output": {
+        "amount": 5327.92,
+        "date": "2024-09-11",
+        "invoice_id": "INV-2024-085",
+        "line_items": [
+          {
+            "description": "Consulting Services",
+            "quantity": 8,
+            "unit_price": 2763.27
+          },
+          {
+            "description": "Development Services",
+            "quantity": 5,
+            "unit_price": 1739.07
+          },
+          {
+            "description": "Professional Services",
+            "quantity": 5,
+            "unit_price": 825.58
+          }
+        ],
+        "submitted_at": "2025-11-24 03:23:13",
+        "vendor": "Horizon Technologies"
+      },
+      "timestamp": 1763976193.808304,
+      "to_state": "SUBMIT"
+    }
+  ],
+  "current_state": "SUBMIT",
+  "invariant_violations": [],
+  "state_history": [
+    "SUBMIT",
+    "VALIDATE"
+  ],
+  "task_id": "INV-2024-085"
+}

@@ -1,0 +1,107 @@
+%% AgentArch Benchmark Results Template
+%% Expected results from FR5.3 comparison table
+%% 5 patterns × 4 metrics with ±15% tolerance bands (SM4.1)
+%% NOTE: This is a TEMPLATE with expected values
+%% Notebook 14 will generate actual results from benchmark runs
+
+graph TB
+    Title["AgentArch Benchmark Results<br/>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br/>5 Orchestration Patterns × 4 Metrics<br/>Expected Results with ±15% Tolerance (SM4.1)"]
+    
+    %% ============================================================================
+    %% Metric 1: Task Success Rate (%)
+    %% ============================================================================
+    
+    subgraph Metric1["Metric 1: Task Success Rate (%)"]
+        M1_Title["Higher is Better<br/>Target: >85%"]
+        
+        M1_Sequential["Sequential<br/>70%<br/>(Baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 59.5-80.5%"]
+        M1_Hierarchical["Hierarchical<br/>80%<br/>(+14% vs baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 68-92%<br/>✅ 15-25% improvement"]
+        M1_Iterative["Iterative<br/>75%<br/>(+7% vs baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 63.8-86.3%"]
+        M1_StateMachine["State Machine<br/>85%<br/>(+21% vs baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 72.3-97.8%<br/>🏆 Best reliability"]
+        M1_Voting["Voting<br/>90%<br/>(+29% vs baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 76.5-100%<br/>✅ 25-35% improvement<br/>🏆 Best accuracy"]
+    end
+    
+    %% ============================================================================
+    %% Metric 2: Error Propagation Index
+    %% ============================================================================
+    
+    subgraph Metric2["Metric 2: Error Propagation Index"]
+        M2_Title["Lower is Better<br/>Target: <1.0"]
+        
+        M2_Sequential["Sequential<br/>3.2<br/>(Baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 2.72-3.68<br/>High cascade risk"]
+        M2_Hierarchical["Hierarchical<br/>1.8<br/>(-44% vs baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 1.53-2.07<br/>Moderate isolation"]
+        M2_Iterative["Iterative<br/>1.2<br/>(-63% vs baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 1.02-1.38<br/>Good isolation"]
+        M2_StateMachine["State Machine<br/>0.4<br/>(-88% vs baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 0.34-0.46<br/>✅ <0.5 target<br/>🏆 Best isolation"]
+        M2_Voting["Voting<br/>0.3<br/>(-91% vs baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 0.26-0.35<br/>🏆 Best error containment"]
+    end
+    
+    %% ============================================================================
+    %% Metric 3: Latency P50 (seconds)
+    %% ============================================================================
+    
+    subgraph Metric3["Metric 3: Latency P50 (seconds)"]
+        M3_Title["Lower is Better<br/>Target: <10s"]
+        
+        M3_Sequential["Sequential<br/>12s<br/>(Baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 10.2-13.8s<br/>No parallelization"]
+        M3_Hierarchical["Hierarchical<br/>8s<br/>(-33% vs baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 6.8-9.2s<br/>🏆 Best latency<br/>Parallel specialists"]
+        M3_Iterative["Iterative<br/>18s<br/>(+50% vs baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 15.3-20.7s<br/>Multi-iteration overhead"]
+        M3_StateMachine["State Machine<br/>10s<br/>(-17% vs baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 8.5-11.5s<br/>✅ Meets <10s target"]
+        M3_Voting["Voting<br/>15s<br/>(+25% vs baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 12.8-17.3s<br/>5 agent overhead"]
+    end
+    
+    %% ============================================================================
+    %% Metric 4: Cost Multiplier
+    %% ============================================================================
+    
+    subgraph Metric4["Metric 4: Cost Multiplier (relative to baseline)"]
+        M4_Title["Lower is Better<br/>Target: <2×"]
+        
+        M4_Sequential["Sequential<br/>1.0×<br/>(Baseline)<br/>━━━━━━━━━━━━━━━━<br/>Range: 0.85-1.15×<br/>🏆 Lowest cost"]
+        M4_Hierarchical["Hierarchical<br/>1.3×<br/>━━━━━━━━━━━━━━━━<br/>Range: 1.11-1.50×<br/>Good cost/performance"]
+        M4_Iterative["Iterative<br/>2.1×<br/>━━━━━━━━━━━━━━━━<br/>Range: 1.79-2.42×<br/>Multi-iteration calls"]
+        M4_StateMachine["State Machine<br/>1.1×<br/>━━━━━━━━━━━━━━━━<br/>Range: 0.94-1.27×<br/>Efficient state mgmt"]
+        M4_Voting["Voting<br/>5.0×<br/>━━━━━━━━━━━━━━━━<br/>Range: 4.25-5.75×<br/>✅ 5× cost confirmed<br/>5 parallel agents"]
+    end
+    
+    %% ============================================================================
+    %% Pattern Selection Guide
+    %% ============================================================================
+    
+    Guide["Pattern Selection Guide<br/>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br/><br/>🏆 Best for Reliability: State Machine (85%) or Voting (90%)<br/>🏆 Best for Latency: Hierarchical (8s P50)<br/>🏆 Best for Cost: Sequential (1.0×) or State Machine (1.1×)<br/>🏆 Best for Error Isolation: State Machine (0.4 EPI) or Voting (0.3 EPI)<br/><br/>⚖️ Balanced Trade-off: State Machine<br/>   • 85% success, 10s latency, 1.1× cost, 0.4 EPI<br/><br/>💰 Budget-Constrained: Sequential<br/>   • 70% success, 12s latency, 1.0× cost, but 3.2 EPI<br/><br/>🎯 High-Stakes: Voting<br/>   • 90% success, 0.3 EPI, but 15s latency and 5× cost<br/><br/>⚡ Latency-Critical: Hierarchical<br/>   • 80% success, 8s latency, 1.3× cost, 1.8 EPI"]
+    
+    %% ============================================================================
+    %% Statistical Analysis Notes
+    %% ============================================================================
+    
+    Notes["Statistical Analysis (Notebook 14)<br/>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br/><br/>• Confidence Intervals: 95% CI using bootstrapping (1000 samples)<br/>• Significance Testing: Paired t-test (null hypothesis: same performance)<br/>• Threshold: p < 0.05 for statistical significance<br/>• Tolerance: ±15% bands per SM4.1 success criteria<br/><br/>Validation Targets:<br/>✅ Hierarchical: 15-25% improvement (SM4.1)<br/>✅ State Machine: <0.5 error propagation index (SM4.1)<br/>✅ Voting: 25-35% improvement with 5× cost (SM4.1)<br/><br/>See: Tutorial 05_agentarch_benchmark_methodology.md<br/>See: Notebook 14_agentarch_benchmark_reproduction.ipynb<br/>Paper: arXiv:2509.10769"]
+    
+    %% ============================================================================
+    %% Cross-References
+    %% ============================================================================
+    
+    Title --> Metric1
+    Title --> Metric2
+    Title --> Metric3
+    Title --> Metric4
+    
+    Metric1 --> Guide
+    Metric2 --> Guide
+    Metric3 --> Guide
+    Metric4 --> Guide
+    
+    Guide --> Notes
+    
+    %% ============================================================================
+    %% Styling
+    %% ============================================================================
+    classDef baseline fill:#e6e6e6,stroke:#666666,stroke-width:2px
+    classDef good fill:#e6f9e6,stroke:#00cc00,stroke-width:2px
+    classDef best fill:#ccffcc,stroke:#009900,stroke-width:3px
+    classDef expensive fill:#ffe6e6,stroke:#cc0000,stroke-width:2px
+    classDef guide fill:#e6f3ff,stroke:#0066cc,stroke-width:2px
+    
+    class M1_Sequential,M2_Sequential,M3_Sequential,M4_Sequential baseline
+    class M1_Hierarchical,M1_Iterative,M2_Hierarchical,M2_Iterative,M3_StateMachine,M4_Hierarchical,M4_StateMachine good
+    class M1_StateMachine,M1_Voting,M2_StateMachine,M2_Voting,M3_Hierarchical best
+    class M3_Iterative,M3_Voting,M4_Iterative,M4_Voting expensive
+    class Title,Guide,Notes guide

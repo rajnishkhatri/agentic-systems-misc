@@ -1,0 +1,68 @@
+{
+  "accumulated_data": {
+    "amount": 6944.73,
+    "date": "2024-08-21",
+    "invoice_id": "INV-2024-030",
+    "is_valid": true,
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 6,
+        "unit_price": 2776.59
+      },
+      {
+        "description": "Professional Services",
+        "quantity": 10,
+        "unit_price": 2551.1
+      },
+      {
+        "description": "Hardware Purchase",
+        "quantity": 4,
+        "unit_price": 1617.04
+      }
+    ],
+    "next_state": "MANAGER_REVIEW",
+    "submitted_at": "2025-11-24 03:23:13",
+    "validated_at": "2025-11-24 03:23:13",
+    "validation_errors": [],
+    "vendor": "Paradigm Solutions"
+  },
+  "audit_trail": [
+    {
+      "from_state": null,
+      "handler_output": {
+        "amount": 6944.73,
+        "date": "2024-08-21",
+        "invoice_id": "INV-2024-030",
+        "line_items": [
+          {
+            "description": "Consulting Services",
+            "quantity": 6,
+            "unit_price": 2776.59
+          },
+          {
+            "description": "Professional Services",
+            "quantity": 10,
+            "unit_price": 2551.1
+          },
+          {
+            "description": "Hardware Purchase",
+            "quantity": 4,
+            "unit_price": 1617.04
+          }
+        ],
+        "submitted_at": "2025-11-24 03:23:13",
+        "vendor": "Paradigm Solutions"
+      },
+      "timestamp": 1763976193.673027,
+      "to_state": "SUBMIT"
+    }
+  ],
+  "current_state": "SUBMIT",
+  "invariant_violations": [],
+  "state_history": [
+    "SUBMIT",
+    "VALIDATE"
+  ],
+  "task_id": "INV-2024-030"
+}

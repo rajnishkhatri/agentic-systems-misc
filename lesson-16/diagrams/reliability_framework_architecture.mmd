@@ -1,0 +1,127 @@
+%% Reliability Framework Architecture Component Diagram
+%% 7-layer framework showing module dependencies and data flow
+%% Maps to backend/ directory structure from Tasks 2.0 and 3.0
+
+graph TB
+    subgraph Layer1["Layer 1: Core Orchestrators"]
+        Sequential["Sequential<br/>backend/orchestrators/sequential.py<br/>Linear chain execution"]
+        Hierarchical["Hierarchical<br/>backend/orchestrators/hierarchical.py<br/>Planner-specialist delegation"]
+        Iterative["Iterative<br/>backend/orchestrators/iterative.py<br/>ReAct/Reflexion loop"]
+        StateMachine["State Machine<br/>backend/orchestrators/state_machine.py<br/>FSM with explicit transitions"]
+        Voting["Voting<br/>backend/orchestrators/voting.py<br/>Multi-agent consensus"]
+    end
+    
+    subgraph Layer2["Layer 2: Execution Wrappers"]
+        Retry["Retry Logic<br/>backend/reliability/retry.py<br/>Exponential backoff + jitter"]
+        CircuitBreaker["Circuit Breaker<br/>backend/reliability/circuit_breaker.py<br/>CLOSED → OPEN → HALF_OPEN"]
+    end
+    
+    subgraph Layer3["Layer 3: State Management"]
+        Checkpoint["Checkpointing<br/>backend/reliability/checkpoint.py<br/>Deterministic save/restore"]
+        Validation["Schema Validation<br/>backend/reliability/validation.py<br/>Pydantic output schemas"]
+    end
+    
+    subgraph Layer4["Layer 4: Error Handling"]
+        Isolation["Error Isolation<br/>backend/reliability/isolation.py<br/>Result[T,E] types"]
+        Fallback["Fallback Strategies<br/>backend/reliability/fallback.py<br/>Cache/default/human-in-loop"]
+    end
+    
+    subgraph Layer5["Layer 5: Observability"]
+        AuditLog["Audit Logging<br/>backend/reliability/audit_log.py<br/>Structured JSON + PII redaction"]
+    end
+    
+    subgraph Layer6["Layer 6: Agent Interface"]
+        MockAgents["Mock Agents<br/>For testing<br/>Deterministic responses"]
+        RealAgents["Real LLM Agents<br/>OpenAI GPT-4<br/>Production calls"]
+    end
+    
+    subgraph Layer7["Layer 7: External Systems"]
+        Redis["Redis<br/>Cache storage<br/>TTL=24h"]
+        Elasticsearch["Elasticsearch<br/>Log aggregation<br/>(Lesson 17)"]
+        Prometheus["Prometheus<br/>Metrics export<br/>(Lesson 17)"]
+    end
+    
+    %% ============================================================================
+    %% Data Flow: Request Path
+    %% ============================================================================
+    
+    Request([Request]) --> Sequential
+    Request --> Hierarchical
+    Request --> Iterative
+    Request --> StateMachine
+    Request --> Voting
+    
+    Sequential --> Retry
+    Hierarchical --> Retry
+    Iterative --> Retry
+    StateMachine --> Retry
+    Voting --> Retry
+    
+    Retry --> CircuitBreaker
+    CircuitBreaker --> MockAgents
+    CircuitBreaker --> RealAgents
+    
+    MockAgents --> Validation
+    RealAgents --> Validation
+    
+    Validation --> Checkpoint
+    Checkpoint --> Isolation
+    
+    Isolation --> Fallback
+    Fallback --> AuditLog
+    
+    AuditLog --> Response([Response])
+    
+    %% ============================================================================
+    %% External System Integration
+    %% ============================================================================
+    
+    Fallback -.->|Cache lookup| Redis
+    Redis -.->|Cache hit| Fallback
+    
+    AuditLog -.->|Log ingestion| Elasticsearch
+    AuditLog -.->|Metrics export| Prometheus
+    
+    CircuitBreaker -.->|State metrics| Prometheus
+    Checkpoint -.->|Persistence| Redis
+    
+    %% ============================================================================
+    %% Call Flow Annotations
+    %% ============================================================================
+    
+    Note1["Call Flow:<br/>1. Request → Orchestrator<br/>2. Orchestrator → Retry wrapper<br/>3. Retry → Circuit Breaker<br/>4. Circuit Breaker → Agent<br/>5. Agent → Validation<br/>6. Validation → Checkpoint<br/>7. Checkpoint → Isolation<br/>8. Isolation → Fallback<br/>9. Fallback → Audit Log<br/>10. Audit Log → Response"]
+    
+    Note2["Integration Points:<br/>• Redis: Cache + Checkpoints<br/>• Elasticsearch: Audit logs<br/>• Prometheus: Metrics<br/>(Lesson 17 observability)"]
+    
+    %% ============================================================================
+    %% Component Responsibilities
+    %% ============================================================================
+    
+    Note3["Layer 1: Orchestrators<br/>━━━━━━━━━━━━━━━━━━<br/>• Agent coordination<br/>• Task delegation<br/>• Result aggregation"]
+    
+    Note4["Layer 2: Execution Wrappers<br/>━━━━━━━━━━━━━━━━━━<br/>• Retry transient failures<br/>• Circuit breaker protection<br/>• Timeout handling"]
+    
+    Note5["Layer 3: State Management<br/>━━━━━━━━━━━━━━━━━━<br/>• Deterministic checkpointing<br/>• Schema validation<br/>• Output enforcement"]
+    
+    Note6["Layer 4: Error Handling<br/>━━━━━━━━━━━━━━━━━━<br/>• Error isolation (Result types)<br/>• Fallback strategies<br/>• Graceful degradation"]
+    
+    Note7["Layer 5: Observability<br/>━━━━━━━━━━━━━━━━━━<br/>• Structured logging<br/>• PII redaction<br/>• Workflow tracing"]
+    
+    %% ============================================================================
+    %% Styling
+    %% ============================================================================
+    classDef orchestrator fill:#e6f3ff,stroke:#0066cc,stroke-width:2px
+    classDef wrapper fill:#fff9e6,stroke:#cc9900,stroke-width:2px
+    classDef state fill:#e6ffe6,stroke:#00cc00,stroke-width:2px
+    classDef error fill:#ffe6e6,stroke:#cc0000,stroke-width:2px
+    classDef observability fill:#f3e6ff,stroke:#9900cc,stroke-width:2px
+    classDef agent fill:#e6e6e6,stroke:#666666,stroke-width:2px
+    classDef external fill:#fff0e6,stroke:#cc6600,stroke-width:2px
+    
+    class Sequential,Hierarchical,Iterative,StateMachine,Voting orchestrator
+    class Retry,CircuitBreaker wrapper
+    class Checkpoint,Validation state
+    class Isolation,Fallback error
+    class AuditLog observability
+    class MockAgents,RealAgents agent
+    class Redis,Elasticsearch,Prometheus external

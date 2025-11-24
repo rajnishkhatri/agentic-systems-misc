@@ -1,0 +1,28 @@
+{
+  "accumulated_data": {
+    "amount": 5370.86,
+    "date": "2024-02-01",
+    "invoice_id": "INV-2024-018",
+    "line_items": [
+      {
+        "description": "Consulting Services",
+        "quantity": 4,
+        "unit_price": 3175.71
+      },
+      {
+        "description": "Support Contract",
+        "quantity": 4,
+        "unit_price": 2195.15
+      }
+    ],
+    "submitted_at": "2025-11-24 03:23:13",
+    "vendor": "Horizon Technologies"
+  },
+  "audit_trail": [],
+  "current_state": "SUBMIT",
+  "invariant_violations": [],
+  "state_history": [
+    "SUBMIT"
+  ],
+  "task_id": "INV-2024-018"
+}

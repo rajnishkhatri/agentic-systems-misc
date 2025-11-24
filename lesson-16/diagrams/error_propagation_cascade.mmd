@@ -1,0 +1,88 @@
+%% Error Propagation Cascade Sequence Diagram
+%% Shows how a single error at Agent2 cascades through 5-agent sequential orchestration
+%% Demonstrates Error Propagation Index calculation and early termination strategy
+
+sequenceDiagram
+    participant O as Orchestrator
+    participant A1 as Agent1<br/>(Vendor Extraction)
+    participant A2 as Agent2<br/>(Amount Validation)
+    participant A3 as Agent3<br/>(Database Lookup)
+    participant A4 as Agent4<br/>(Payment Calculation)
+    participant A5 as Agent5<br/>(Approval Routing)
+    participant V as Validation Gates
+
+    Note over O,A5: Scenario: Sequential Invoice Processing (No Validation)
+    
+    %% Step 1: Success
+    O->>A1: Extract vendor from invoice
+    activate A1
+    A1-->>O: ✅ Vendor: "Acme Corp"
+    deactivate A1
+    Note right of A1: Step 1: SUCCESS
+    
+    %% Step 2: Hallucination Error
+    O->>A2: Validate amount
+    activate A2
+    A2-->>O: ❌ Amount: $5000<br/>(Actual: $5500 - HALLUCINATION)
+    deactivate A2
+    Note right of A2: Step 2: ERROR<br/>Hallucinated wrong amount
+    
+    %% Step 3: Error Propagates - Wrong Database Lookup
+    O->>A3: Lookup vendor account<br/>Input: "Acme Corp", $5000
+    activate A3
+    A3-->>O: ❌ Account: Wrong account<br/>Used wrong amount
+    deactivate A3
+    Note right of A3: Step 3: ERROR (Propagated)<br/>Wrong account due to wrong amount
+    
+    %% Step 4: Error Propagates - Wrong Payment Calculation
+    O->>A4: Calculate payment<br/>Input: Wrong account, $5000
+    activate A4
+    A4-->>O: ❌ Payment: $5000 to wrong account<br/>Compounded errors
+    deactivate A4
+    Note right of A4: Step 4: ERROR (Propagated)<br/>Wrong payment to wrong account
+    
+    %% Step 5: Error Propagates - Wrong Approver
+    O->>A5: Route for approval<br/>Input: Wrong payment details
+    activate A5
+    A5-->>O: ❌ Approver: Wrong person<br/>Based on wrong account
+    deactivate A5
+    Note right of A5: Step 5: ERROR (Propagated)<br/>Wrong approver notification
+    
+    %% Final Result
+    Note over O,A5: Final Result: 1 upstream error → 4 downstream errors<br/>Error Propagation Index (EPI) = 4.0
+    
+    %% ============================================================================
+    %% Alternative: With Validation Gates
+    %% ============================================================================
+    
+    Note over O,A5: Alternative: With Validation Gates (FR4.5 Error Isolation)
+    
+    %% Step 1: Success (same)
+    O->>A1: Extract vendor from invoice
+    activate A1
+    A1-->>O: ✅ Vendor: "Acme Corp"
+    deactivate A1
+    
+    %% Step 2: Hallucination Error (same)
+    O->>A2: Validate amount
+    activate A2
+    A2-->>O: ❌ Amount: $5000<br/>(Actual: $5500)
+    deactivate A2
+    
+    %% Validation Gate Intervenes
+    O->>V: Validate output schema<br/>Check against invoice
+    activate V
+    V-->>O: 🛑 VALIDATION FAILED<br/>Amount mismatch: $5000 ≠ $5500
+    deactivate V
+    Note right of V: Early Termination<br/>Error caught at Step 3
+    
+    %% Early Termination
+    rect rgb(255, 240, 240)
+        Note over O,A5: ✅ Orchestrator terminates workflow<br/>Prevents error propagation to Steps 4-5<br/>Error Propagation Index (EPI) = 0.0<br/><br/>Isolation Boundary: Validation schema enforcement<br/>See: backend/reliability/validation.py
+    end
+    
+    %% ============================================================================
+    %% Error Count Annotations
+    %% ============================================================================
+    
+    Note over O: Error Count Summary<br/>━━━━━━━━━━━━━━━━━━━<br/>Without Validation:<br/>• Upstream errors: 1 (Agent2)<br/>• Downstream errors: 4 (Agents 3,4,5 + final output)<br/>• EPI = 4.0 (high cascade risk)<br/><br/>With Validation:<br/>• Upstream errors: 1 (Agent2)<br/>• Downstream errors: 0 (caught at validation gate)<br/>• EPI = 0.0 (error isolated)
