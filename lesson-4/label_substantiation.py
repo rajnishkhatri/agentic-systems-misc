@@ -19,24 +19,24 @@ Run from repo root:
     python lesson-4/label_substantiation.py
 """
 
-from pathlib import Path
 import hashlib
 import json
 import os
-import sys
 from collections import Counter
-from typing import List, Dict, Any
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+from typing import Any, Dict, List
 
 import litellm  # type: ignore
-from concurrent.futures import ThreadPoolExecutor, as_completed
+
 # tqdm is optional – fall back to identity iterator if missing
 try:
     from tqdm import tqdm
 except ModuleNotFoundError:  # pragma: no cover
     def tqdm(iterable, **kwargs):  # type: ignore
         return iterable
-from pydantic import BaseModel
 from dotenv import load_dotenv
+from pydantic import BaseModel
 
 load_dotenv()
 

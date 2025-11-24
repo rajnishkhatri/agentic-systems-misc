@@ -12,19 +12,18 @@ Tests cover:
 - Error handling and defensive programming
 """
 
-import pytest
-from typing import List, Dict, Any
 from unittest.mock import Mock, patch
-import numpy as np
+
+import pytest
 
 # Module under test will be implemented after these tests pass
 from backend.comparative_evaluation import (
-    EloRanking,
     BradleyTerryRanking,
-    generate_pairwise_comparisons,
-    visualize_leaderboard,
+    EloRanking,
     calculate_expected_score,
     calculate_win_rate,
+    generate_pairwise_comparisons,
+    visualize_leaderboard,
 )
 
 

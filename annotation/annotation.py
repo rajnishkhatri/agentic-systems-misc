@@ -1,8 +1,9 @@
+import glob
+import json
+import os
+
 import fasthtml.common as ft
 import monsterui.all as mui
-import os
-import json
-import glob
 
 DATASET_DIR = os.path.join(os.path.dirname(__file__), "traces")
 

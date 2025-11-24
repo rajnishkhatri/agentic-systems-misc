@@ -6,30 +6,27 @@ Test naming convention: test_should_[result]_when_[condition]
 """
 
 import json
-import math
-import pytest
-from pathlib import Path
-from typing import Any
-import numpy as np
 
 # Module under test will be implemented after these tests pass
 # These will be defined in the notebook and imported for testing
 import sys
 from pathlib import Path
 
+import pytest
+
 # Add lesson-14 to path for import
 sys.path.insert(0, str(Path(__file__).parent.parent / "lesson-14"))
 
 from memory_systems_helpers import (
-    validate_execution_mode,
-    calculate_mmr_score,
-    select_documents_mmr,
-    count_tokens,
-    trim_conversation_history,
-    simulate_summarization,
-    calculate_search_o1_overhead,
     calculate_compression_roi,
+    calculate_mmr_score,
+    calculate_search_o1_overhead,
+    count_tokens,
     export_results_json,
+    select_documents_mmr,
+    simulate_summarization,
+    trim_conversation_history,
+    validate_execution_mode,
 )
 
 

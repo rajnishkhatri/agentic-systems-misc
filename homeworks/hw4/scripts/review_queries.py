@@ -9,7 +9,7 @@ synthetic queries for the retrieval evaluation dataset.
 import json
 import random
 from pathlib import Path
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
 
 
 class QueryReviewer:
@@ -199,7 +199,7 @@ class QueryReviewer:
         
         if reviewed_queries:
             # Show some examples
-            print(f"\n--- Sample Approved Queries ---")
+            print("\n--- Sample Approved Queries ---")
             for i, query in enumerate(reviewed_queries[:3]):
                 refined_marker = " (REFINED)" if query.get('refined', False) else ""
                 print(f"{i+1}. '{query['query']}'{refined_marker}")
@@ -227,7 +227,7 @@ def main():
         print("No queries to review")
         return
     
-    print(f"\nReview mode options:")
+    print("\nReview mode options:")
     print("1. Interactive review (manually review and refine queries)")
     print("2. Automatic filtering (apply criteria-based filtering)")
     print("3. Both (filter first, then interactive review)")

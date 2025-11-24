@@ -13,7 +13,7 @@ import json
 import os
 import tempfile
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -24,7 +24,6 @@ from backend.tutorial_validation import (
     validate_notebook_execution,
     validate_tutorial_index_structure,
 )
-
 
 # ============================================================================
 # Missing Directory Error Handling Tests

@@ -8,12 +8,13 @@ and specific ingredient techniques that are best answered by retrieving existing
 
 import json
 import random
-from pathlib import Path
-from typing import List, Dict, Any, Optional, Tuple
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from tqdm import tqdm
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
 import litellm
 from dotenv import load_dotenv
+from tqdm import tqdm
 
 # Load environment variables
 load_dotenv()
@@ -300,7 +301,7 @@ def main():
     generator.save_queries(queries, queries_path)
     
     # Print summary
-    print(f"\n--- Generation Summary ---")
+    print("\n--- Generation Summary ---")
     print(f"Processed {len(complex_recipes)} complex recipes")
     print(f"Generated {len(queries)} queries")
     print(f"Success rate: {len(queries)/len(complex_recipes)*100:.1f}%")

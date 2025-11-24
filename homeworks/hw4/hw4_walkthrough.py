@@ -6,18 +6,19 @@ app = marimo.App(width="columns")
 
 @app.cell(column=0, hide_code=True)
 def _():
-    import marimo as mo
-    import pandas as pd
-    import numpy as np
     import json
-    from pathlib import Path
     import os
     import sys
-    from typing import List, Dict, Tuple
+    from pathlib import Path
+    from typing import Dict, List, Tuple
+
+    import marimo as mo
     import matplotlib.pyplot as plt
-    import seaborn as sns
-    import plotly.graph_objects as go
+    import numpy as np
+    import pandas as pd
     import plotly.express as px
+    import plotly.graph_objects as go
+    import seaborn as sns
     from IPython.display import Markdown, display
     return (
         Dict,

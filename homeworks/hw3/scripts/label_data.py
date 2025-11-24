@@ -11,16 +11,16 @@ also looking extensively at the data. This script is intended as a fast way to g
 you "ground truth" for this homework assignment.
 """
 
-import pandas as pd
 import json
 import random
-from pathlib import Path
-from typing import List, Dict, Any, Optional
-from rich.console import Console
-from rich.progress import track
-import litellm
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+import litellm
+import pandas as pd
 from dotenv import load_dotenv
+from rich.console import Console
 
 load_dotenv()
 

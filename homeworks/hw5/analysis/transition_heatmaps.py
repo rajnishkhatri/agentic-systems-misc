@@ -19,8 +19,8 @@ import json
 from pathlib import Path
 from typing import Dict, List
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
 
 # -----------------------------------------------------------------------------

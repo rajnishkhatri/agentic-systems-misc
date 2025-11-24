@@ -8,12 +8,11 @@ Following TDD methodology with test_should_[result]_when_[condition] naming.
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
 import pytest
-
-import sys
 
 # Add lesson-16 to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -22,7 +21,6 @@ from backend.data_generation import validate_json_schema
 from backend.data_generation.invoices import generate_invoice_dataset
 from backend.data_generation.reconciliation import generate_reconciliation_dataset
 from backend.data_generation.transactions import generate_transaction_dataset
-
 
 # ============================================================================
 # Fixtures

@@ -6,19 +6,15 @@ the responses to create a dataset for LLM-as-Judge evaluation.
 """
 
 import sys
-import os
-import pandas as pd
-import random
-from pathlib import Path
-from typing import List, Dict, Any
-from rich.console import Console
-from rich.progress import track
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import threading
-from rich.text import Text
-from rich.panel import Panel
+from pathlib import Path
+from typing import Any, Dict, List
+
+import pandas as pd
+from rich.console import Console, Group
 from rich.markdown import Markdown
-from rich.console import Group
+from rich.panel import Panel
+from rich.text import Text
 
 # Add the backend to the path so we can import the Recipe Bot
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent

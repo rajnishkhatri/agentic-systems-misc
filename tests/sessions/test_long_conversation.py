@@ -16,10 +16,7 @@ def test_should_preserve_objectives_in_50_turn_conversation() -> None:
 
     # Turn 0: Initial objective (should be protected)
     session.append_event(
-        turn=0,
-        role="user",
-        content="Help me understand karma yoga from Chapter 3",
-        event_type="initial_objective"
+        turn=0, role="user", content="Help me understand karma yoga from Chapter 3", event_type="initial_objective"
     )
 
     # Add 49 more turns (mix of protected and non-protected)
@@ -30,33 +27,26 @@ def test_should_preserve_objectives_in_50_turn_conversation() -> None:
                 turn=turn,
                 role="user",
                 content=f"Constraint at turn {turn}: Only use Swami Sivananda translations",
-                event_type="constraint"
+                event_type="constraint",
             )
         else:
             # Regular conversation (non-protected)
-            session.append_event(
-                turn=turn,
-                role="user",
-                content=f"Casual question at turn {turn}",
-                event_type="casual"
-            )
+            session.append_event(turn=turn, role="user", content=f"Casual question at turn {turn}", event_type="casual")
 
     # Get context window (may have been compressed)
     context_window = session.get_context_window()
 
     # Initial objective should still be present
-    assert any(
-        event["turn"] == 0 and "karma yoga" in event["content"]
-        for event in context_window
-    ), "Initial objective should be preserved after 50 turns"
+    assert any(event["turn"] == 0 and "karma yoga" in event["content"] for event in context_window), (
+        "Initial objective should be preserved after 50 turns"
+    )
 
     # All constraints should be preserved
     constraint_turns = [0, 10, 20, 30, 40]
     for constraint_turn in constraint_turns:
-        assert any(
-            event["turn"] == constraint_turn
-            for event in context_window
-        ), f"Constraint at turn {constraint_turn} should be preserved"
+        assert any(event["turn"] == constraint_turn for event in context_window), (
+            f"Constraint at turn {constraint_turn} should be preserved"
+        )
 
 
 def test_should_handle_multiple_compressions_in_100_turns() -> None:
@@ -78,10 +68,7 @@ def test_should_handle_multiple_compressions_in_100_turns() -> None:
             content = f"Casual turn {turn}"
 
         session.append_event(
-            turn=turn,
-            role="user" if turn % 2 == 0 else "assistant",
-            content=content,
-            event_type=event_type
+            turn=turn, role="user" if turn % 2 == 0 else "assistant", content=content, event_type=event_type
         )
 
     # Get final context window
@@ -114,7 +101,7 @@ def test_should_reject_compression_with_all_protected() -> None:
             turn=turn,
             role="user",
             content=f"Critical constraint {turn}",
-            event_type="constraint"  # All protected
+            event_type="constraint",  # All protected
         )
 
     # Should raise an error or handle gracefully
@@ -183,3 +170,110 @@ def test_should_raise_error_for_empty_event_type() -> None:
 
     with pytest.raises(ValueError, match="event_type cannot be empty"):
         session.append_event(turn=0, role="user", content="test", event_type="  ")
+
+
+def test_should_handle_concurrent_compression_safely() -> None:
+    """Test that concurrent append_event calls don't corrupt session state."""
+    import threading
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    from backend.sessions.gita_session import GitaSession
+
+    session = GitaSession(max_tokens=8000, compression_threshold=0.95)
+    session_lock = threading.Lock()
+
+    def append_event_with_lock(turn: int) -> None:
+        with session_lock:
+            session.append_event(
+                turn=turn,
+                role="user" if turn % 2 == 0 else "assistant",
+                content=f"Concurrent turn {turn}" * 50,  # Long content to trigger compression
+                event_type="casual"
+            )
+
+    # Add initial objective first
+    session.append_event(turn=0, role="user", content="Initial objective", event_type="initial_objective")
+
+    # Concurrently append 50 events
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        futures = {executor.submit(append_event_with_lock, turn): turn for turn in range(1, 51)}
+        for future in as_completed(futures):
+            future.result()  # Raise any exceptions
+
+    # Verify session integrity
+    context = session.get_context_window()
+    assert len(context) > 0, "Context should not be empty after concurrent appends"
+    assert any(event["turn"] == 0 for event in context), "Initial objective should survive concurrency"
+
+
+def test_should_preserve_unicode_content_in_compression() -> None:
+    """Test that Unicode/non-ASCII content (Sanskrit, emojis) is preserved during compression."""
+    from backend.sessions.gita_session import GitaSession
+
+    session = GitaSession(max_tokens=8000, compression_threshold=0.95)
+
+    # Add Sanskrit verse as initial objective (protected)
+    sanskrit_verse = "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥"
+    session.append_event(
+        turn=0,
+        role="user",
+        content=f"Help me understand this verse: {sanskrit_verse}",
+        event_type="initial_objective"
+    )
+
+    # Add many turns with mixed Unicode content
+    for turn in range(1, 50):
+        if turn % 2 == 0:
+            content = f"Turn {turn}: Discussion about धर्म (dharma) and योग (yoga) 🙏"
+        else:
+            content = f"Turn {turn}: Regular English conversation about Bhagavad Gita"
+        session.append_event(turn=turn, role="user", content=content, event_type="casual")
+
+    # Verify Sanskrit verse survives compression
+    context = session.get_context_window()
+    initial_event = next((e for e in context if e["turn"] == 0), None)
+    assert initial_event is not None, "Initial objective should survive"
+    assert sanskrit_verse in initial_event["content"], "Sanskrit verse should be preserved exactly"
+
+
+def test_should_handle_compression_with_empty_recent_context() -> None:
+    """Test compression when only protected events exist (edge case)."""
+    from backend.sessions.gita_session import GitaSession
+
+    session = GitaSession(max_tokens=8000, compression_threshold=0.95)
+
+    # Add only protected events - no compressible content
+    for turn in range(10):
+        session.append_event(
+            turn=turn,
+            role="user",
+            content=f"Critical constraint {turn}",
+            event_type="constraint" if turn > 0 else "initial_objective"
+        )
+
+    # Get context - should have all 10 protected events
+    context = session.get_context_window()
+    assert len(context) == 10, "All protected events should remain"
+    assert all(event["is_protected"] for event in context), "All events should be marked protected"
+
+
+def test_should_reject_compression_when_protected_exceeds_max_tokens() -> None:
+    """Test handling when protected events alone exceed max_tokens capacity."""
+    from backend.sessions.gita_session import GitaSession
+
+    # Very small max_tokens to force capacity issue
+    session = GitaSession(max_tokens=100, compression_threshold=0.95)
+
+    # Add protected events with long content that exceed capacity
+    for turn in range(20):
+        session.append_event(
+            turn=turn,
+            role="user",
+            content="Critical protected constraint " * 50,  # Long content
+            event_type="constraint" if turn > 0 else "initial_objective"
+        )
+
+    # Session should handle gracefully (keep all protected, even if > max_tokens)
+    context = session.get_context_window()
+    assert len(context) == 20, "All protected events preserved even when exceeding capacity"
+    assert all(event["is_protected"] for event in context), "All should be protected"

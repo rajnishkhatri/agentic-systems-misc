@@ -9,10 +9,11 @@ app = marimo.App(
 
 @app.cell
 def _():
-    import marimo as mo
-    import json, os
-    from pathlib import Path
+    import json
     from collections import Counter
+    from pathlib import Path
+
+    import marimo as mo
     import pandas as pd
     return Counter, Path, json, mo, pd
 

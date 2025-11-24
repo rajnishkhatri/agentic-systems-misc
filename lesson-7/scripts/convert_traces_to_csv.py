@@ -6,11 +6,10 @@ This script reads the synthetic_traces.json file from hw5 and converts it to a C
 with columns for trace_id, customer_persona, failure_mode, user_query, and formatted messages.
 """
 
-import json
 import csv
-import os
+import json
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 
 def format_messages(messages: List[Dict[str, Any]]) -> str:

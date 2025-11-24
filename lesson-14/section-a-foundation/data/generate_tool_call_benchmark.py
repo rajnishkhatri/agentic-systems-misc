@@ -15,7 +15,6 @@ Usage:
 import json
 from typing import Any
 
-
 TOOLS = [
     {
         "name": "search_recipes",

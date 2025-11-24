@@ -19,11 +19,7 @@ class GitaSession:
     - Compression tracking: Number of compression cycles performed
     """
 
-    def __init__(
-        self,
-        max_tokens: int = 8000,
-        compression_threshold: float = 0.95
-    ) -> None:
+    def __init__(self, max_tokens: int = 8000, compression_threshold: float = 0.95) -> None:
         """Initialize Gita session.
 
         Args:
@@ -39,18 +35,9 @@ class GitaSession:
         self.compression_count = 0
 
         # Step 2: Initialize compressor
-        self.compressor = ContextCompressor(
-            max_tokens=max_tokens,
-            trigger_threshold=compression_threshold
-        )
+        self.compressor = ContextCompressor(max_tokens=max_tokens, trigger_threshold=compression_threshold)
 
-    def append_event(
-        self,
-        turn: int,
-        role: str,
-        content: str,
-        event_type: str
-    ) -> None:
+    def append_event(self, turn: int, role: str, content: str, event_type: str) -> None:
         """Append a conversation event to the session.
 
         Args:

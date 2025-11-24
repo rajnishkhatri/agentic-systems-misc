@@ -13,6 +13,7 @@ This script creates test cases covering:
 import json
 from typing import Any
 
+
 def generate_benchmark() -> dict[str, Any]:
     """Generate complete planning benchmark with 100 tasks."""
 
@@ -414,7 +415,7 @@ if __name__ == "__main__":
 
     print(f"✅ Generated {len(benchmark['test_cases'])} planning validation test cases")
     print(f"   Saved to: {output_path}")
-    print(f"\n📊 Statistics:")
+    print("\n📊 Statistics:")
     print(f"   - Correct plans: {sum(1 for tc in benchmark['test_cases'] if tc['labels'].get('plan_correctness') == 'CORRECT')}")
     print(f"   - Wrong tool: {sum(1 for tc in benchmark['test_cases'] if tc['labels'].get('tool_selection') == 'WRONG_TOOL')}")
     print(f"   - Invalid args: {sum(1 for tc in benchmark['test_cases'] if 'TYPE_ERROR' in str(tc['labels']) or 'VALUE_ERROR' in str(tc['labels']))}")

@@ -106,7 +106,17 @@
       "Bash(uv run ruff:*)",
       "Bash(uv run:*)",
       "Bash(git -C /Users/rajnishkhatri/Documents/recipe-chatbot status --short)",
-      "Bash(mmdc:*)"
+      "Bash(mmdc:*)",
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(git -C /Users/rajnishkhatri/Documents/recipe-chatbot log --oneline -10)",
+      "WebFetch(domain:stevekinney.com)",
+      "Bash(mv:*)",
+      "Bash(wc:*)",
+      "Bash(do echo \"=== Tutorial $i ===\")",
+      "Bash(tail:*)",
+      "Bash(head -100 echo \"\" echo \"=== Diff 2: 84cd472 (Pattern Library Docs) ===\" git show 84cd472 -- CLAUDE.md)",
+      "Bash(do echo \"\")",
+      "Bash(jupyter notebook --version)"
     ],
     "deny": [],
     "ask": []

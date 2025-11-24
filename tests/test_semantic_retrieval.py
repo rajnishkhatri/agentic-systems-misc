@@ -7,9 +7,10 @@ Following TDD workflow from CLAUDE.md:
 - Test naming: test_should_[result]_when_[condition]
 """
 
+from unittest.mock import Mock, patch
+
 import numpy as np
 import pytest
-from unittest.mock import Mock, patch, MagicMock
 
 
 # Test: generate_embeddings function
@@ -121,7 +122,7 @@ def test_should_normalize_embeddings_when_building_index() -> None:
 # Test: semantic_search function
 def test_should_return_top_k_results_when_searching_index() -> None:
     """Test that semantic_search returns k nearest neighbors."""
-    from backend.semantic_retrieval import semantic_search, build_vector_index
+    from backend.semantic_retrieval import build_vector_index, semantic_search
 
     embeddings = np.random.rand(20, 128).astype("float32")
     index = build_vector_index(embeddings)
@@ -136,7 +137,7 @@ def test_should_return_top_k_results_when_searching_index() -> None:
 
 def test_should_raise_typeerror_when_query_embedding_not_numpy_array() -> None:
     """Test that semantic_search raises TypeError for invalid query embedding."""
-    from backend.semantic_retrieval import semantic_search, build_vector_index
+    from backend.semantic_retrieval import build_vector_index, semantic_search
 
     embeddings = np.random.rand(10, 128).astype("float32")
     index = build_vector_index(embeddings)
@@ -147,7 +148,7 @@ def test_should_raise_typeerror_when_query_embedding_not_numpy_array() -> None:
 
 def test_should_raise_valueerror_when_k_exceeds_index_size() -> None:
     """Test that semantic_search raises ValueError when k > index size."""
-    from backend.semantic_retrieval import semantic_search, build_vector_index
+    from backend.semantic_retrieval import build_vector_index, semantic_search
 
     embeddings = np.random.rand(5, 128).astype("float32")
     index = build_vector_index(embeddings)
@@ -159,7 +160,7 @@ def test_should_raise_valueerror_when_k_exceeds_index_size() -> None:
 
 def test_should_return_sorted_results_by_similarity_descending() -> None:
     """Test that semantic_search returns results sorted by similarity (highest first)."""
-    from backend.semantic_retrieval import semantic_search, build_vector_index
+    from backend.semantic_retrieval import build_vector_index, semantic_search
 
     embeddings = np.random.rand(10, 128).astype("float32")
     index = build_vector_index(embeddings)

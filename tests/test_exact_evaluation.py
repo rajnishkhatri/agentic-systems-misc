@@ -5,19 +5,19 @@ Following TDD: Write tests FIRST, then implement to make them pass.
 Test naming convention: test_should_[result]_when_[condition]
 """
 
-import math
-import pytest
 from unittest.mock import Mock, patch
+
 import numpy as np
+import pytest
 
 # Module under test will be implemented after these tests pass
 from backend.exact_evaluation import (
-    calculate_perplexity,
-    calculate_cross_entropy,
-    exact_match,
-    normalize_text,
-    fuzzy_match,
     bleu_score,
+    calculate_cross_entropy,
+    calculate_perplexity,
+    exact_match,
+    fuzzy_match,
+    normalize_text,
     semantic_similarity,
 )
 

@@ -16,15 +16,15 @@ endpoint concurrently, and stores the results for later manual evaluation.
 import argparse
 import csv
 import datetime as dt
-from typing import List, Tuple, Dict
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Dict, List, Tuple
 
 from rich.console import Console, Group
+from rich.markdown import Markdown
 from rich.panel import Panel
 from rich.text import Text
-from rich.markdown import Markdown
 
-from backend.utils import get_agent_response, SYSTEM_PROMPT
+from backend.utils import get_agent_response
 
 # -----------------------------------------------------------------------------
 # Configuration helpers

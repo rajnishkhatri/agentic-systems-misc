@@ -6,10 +6,10 @@ Following defensive coding principles: type hints, input validation, error handl
 """
 
 import json
-import math
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+
 import numpy as np
 import tiktoken
 

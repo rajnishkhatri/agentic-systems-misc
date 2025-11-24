@@ -1,13 +1,10 @@
 """End-to-end integration tests for Context Engineering workflows."""
 
 import time
-from datetime import datetime, timezone
 
 import pytest
 
 from backend.memory.pii_redaction import PIIRedactor, extract_memory_with_pii_redaction
-from backend.memory.provenance import MemoryProvenance
-from backend.sessions.context_compressor import ContextCompressor
 from backend.sessions.gita_session import GitaSession
 
 

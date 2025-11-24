@@ -69,11 +69,7 @@ def test_should_raise_error_for_non_dict_event() -> None:
 def test_should_raise_error_for_missing_required_fields() -> None:
     """Test that ValueError is raised when event is missing required fields."""
     # Missing 'event_type' field
-    event = {
-        "turn": 0,
-        "role": "user",
-        "content": "test"
-    }
+    event = {"turn": 0, "role": "user", "content": "test"}
 
     with pytest.raises(ValueError, match="event missing required fields"):
         identify_protected_context(event)
@@ -81,12 +77,7 @@ def test_should_raise_error_for_missing_required_fields() -> None:
 
 def test_should_not_protect_unknown_event_types() -> None:
     """Test that unknown event types are not protected."""
-    event = {
-        "turn": 5,
-        "role": "user",
-        "content": "Some content",
-        "event_type": "unknown_type"
-    }
+    event = {"turn": 5, "role": "user", "content": "Some content", "event_type": "unknown_type"}
 
     result = identify_protected_context(event)
 

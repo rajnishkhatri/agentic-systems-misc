@@ -74,20 +74,28 @@ This tutorial system teaches **Context Engineering** - the discipline of managin
 
 1. **Foundation:** Complete Path 1 (30 min)
 
-2. **Sessions Pattern:** (60 min)
-   - **Read:** [Context Engineering: Sessions Pattern](../patterns/context-engineering-sessions.md)
+2. **Interactive Sessions Notebook:** (45 min) ⭐ NEW
+   - **Run:** [sessions_compression_interactive.ipynb](./sessions_compression_interactive.ipynb)
+   - **Experiment:** Change compression threshold (70%, 95%, 99%), observe behavior
+   - **Visualize:** See 50K→8K token compression in real-time charts
+   - **Validate:** Assertions confirm protected context survives compression
+
+3. **Sessions Pattern:** (60 min)
+   - **Quick Start:** [Sessions Quick Reference](../patterns/sessions-quickref.md) (2 min - code templates only)
+   - **Deep Dive:** [Sessions Tutorial](../patterns/sessions-tutorial.md) (15 min - full explanation)
    - **Implement:** `GitaSession` class with protected context and compression
    - **Test:** Multi-turn conversation tests (50-100 turns)
    - **Code:** `backend/sessions/gita_session.py:13-120`
 
-3. **Memory Pattern:** (60 min)
-   - **Read:** [Context Engineering: Memory Pattern](../patterns/context-engineering-memory.md)
+4. **Memory Pattern:** (60 min)
+   - **Quick Start:** [Memory Quick Reference](../patterns/memory-quickref.md) (2 min - code templates only)
+   - **Deep Dive:** [Memory Tutorial](../patterns/memory-tutorial.md) (18 min - full explanation)
    - **Implement:** `MemoryProvenance` dataclass with confidence tracking
    - **Implement:** `PIIRedactor` with Gita character whitelist
    - **Test:** Provenance validation and PII redaction tests
    - **Code:** `backend/memory/provenance.py:14-144`, `backend/memory/pii_redaction.py:15-125`
 
-4. **Integration:** (30 min)
+5. **Integration:** (30 min)
    - Run full test suite: `pytest tests/sessions/ tests/memory/ -v --cov`
    - Verify ≥90% test coverage
    - Review real examples from codebase
@@ -126,11 +134,16 @@ This tutorial system teaches **Context Engineering** - the discipline of managin
 | File | Type | Lines | Purpose | Est. Reading Time |
 |------|------|-------|---------|------------------|
 | [TERMINOLOGY.md](./TERMINOLOGY.md) | Concept | 250 | Critical distinctions reference (Session vs. Context, Memory vs. RAG, etc.) | 10 min |
+| [sessions_compression_interactive.ipynb](./sessions_compression_interactive.ipynb) | Notebook | 28 cells | Interactive demo: see 50K→8K compression, experiment with thresholds | 15-20 min ⭐ NEW |
 | [diagrams/session_vs_context.svg](./diagrams/session_vs_context.svg) | Visual | N/A | Session History → Context Window compression flow | 3 min |
 | [diagrams/memory_vs_rag.svg](./diagrams/memory_vs_rag.svg) | Visual | N/A | Memory (personal assistant) vs. RAG (research librarian) | 3 min |
 | [diagrams/proactive_vs_reactive.svg](./diagrams/proactive_vs_reactive.svg) | Visual | N/A | Proactive (auto-load) vs. Reactive (tool call) retrieval | 3 min |
-| [patterns/context-engineering-sessions.md](../patterns/context-engineering-sessions.md) | Pattern | 650 | Sessions pattern with code templates and examples | 25 min |
-| [patterns/context-engineering-memory.md](../patterns/context-engineering-memory.md) | Pattern | 750 | Memory pattern with provenance and PII redaction | 30 min |
+| [patterns/sessions-quickref.md](../patterns/sessions-quickref.md) | Pattern (Quick Ref) | 80 | Sessions pattern code templates only | 2 min |
+| [patterns/sessions-tutorial.md](../patterns/sessions-tutorial.md) | Pattern (Tutorial) | 370 | Sessions pattern full explanation with examples | 15 min |
+| [patterns/sessions-advanced.md](../patterns/sessions-advanced.md) | Pattern (Advanced) | 430 | Sessions pitfalls, performance, production | 12 min |
+| [patterns/memory-quickref.md](../patterns/memory-quickref.md) | Pattern (Quick Ref) | 90 | Memory pattern code templates only | 2 min |
+| [patterns/memory-tutorial.md](../patterns/memory-tutorial.md) | Pattern (Tutorial) | 490 | Memory pattern full explanation with provenance | 18 min |
+| [patterns/memory-advanced.md](../patterns/memory-advanced.md) | Pattern (Advanced) | 540 | Memory conflict resolution, lifecycle, production | 15 min |
 
 **Code Examples:**
 - `backend/sessions/gita_session.py` (120 lines) - GitaSession implementation
@@ -271,7 +284,7 @@ This tutorial system integrates with the **LLM Evals** course:
 
 **Root Cause:** Conflating Session History (storage) with Context Window (model input).
 
-**Fix:** Read [TERMINOLOGY.md](./TERMINOLOGY.md) → Implement [Sessions Pattern](../patterns/context-engineering-sessions.md)
+**Fix:** Read [TERMINOLOGY.md](./TERMINOLOGY.md) → Implement [Sessions Pattern](../patterns/sessions-tutorial.md)
 
 **Before:**
 ```python
@@ -296,7 +309,7 @@ llm.generate(messages=context)
 
 **Root Cause:** Storing raw conversation instead of extracting consolidated insights.
 
-**Fix:** Read [Memory vs. RAG](./TERMINOLOGY.md#memory-vs-rag) → Implement [Memory Pattern](../patterns/context-engineering-memory.md)
+**Fix:** Read [Memory vs. RAG](./TERMINOLOGY.md#memory-vs-rag) → Implement [Memory Pattern](../patterns/memory-tutorial.md)
 
 **Wrong:**
 ```python
@@ -320,7 +333,7 @@ memory = "User is learning about karma yoga (yoga of selfless action)"
 
 **Root Cause:** Storing memories without source, confidence, or timestamp.
 
-**Fix:** Read [Provenance Tracking](../patterns/context-engineering-memory.md#provenance-tracking-critical-success-factor-3)
+**Fix:** Read [Provenance Tracking](../patterns/memory-tutorial.md#provenance-tracking-critical)
 
 **Wrong:**
 ```python
@@ -572,8 +585,8 @@ def test_should_preserve_objectives_in_50_turn_conversation() -> None:
    - [ ] Choose a learning path (Quick Start, Implementation-Focused, or Full Mastery)
 
 2. **Implementation:**
-   - [ ] Implement [Sessions Pattern](../patterns/context-engineering-sessions.md)
-   - [ ] Implement [Memory Pattern](../patterns/context-engineering-memory.md)
+   - [ ] Implement [Sessions Pattern](../patterns/sessions-tutorial.md) ([Quick Ref](../patterns/sessions-quickref.md))
+   - [ ] Implement [Memory Pattern](../patterns/memory-tutorial.md) ([Quick Ref](../patterns/memory-quickref.md))
    - [ ] Follow [TDD Workflow](../patterns/tdd-workflow.md) for all code
 
 3. **Testing:**

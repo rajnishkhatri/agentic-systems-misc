@@ -340,7 +340,7 @@ def main() -> None:
         json.dump(test_suite, f, indent=2, ensure_ascii=False)
 
     print(f"✅ Test suite saved to {output_json}")
-    print(f"\n📊 Statistics:")
+    print("\n📊 Statistics:")
     print(f"   Total cases: {test_suite['statistics']['total_cases']}")
     print(f"   Attribution PASS: {test_suite['statistics']['attribution_pass']}")
     print(f"   Attribution FAIL: {test_suite['statistics']['attribution_fail']}")

@@ -5,17 +5,17 @@ This script evaluates the finalized LLM judge on the test set to get
 unbiased estimates of TPR and TNR for use with judgy.
 """
 
-import os
-import pandas as pd
 import json
-from pathlib import Path
-from typing import List, Dict, Any, Tuple, Final
-from rich.console import Console
-from rich.progress import track
-import litellm
+import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+from typing import Any, Dict, Final, List, Tuple
 
+import litellm
+import pandas as pd
 from dotenv import load_dotenv
+from rich.console import Console
+
 load_dotenv()
 
 MAX_WORKERS = 32
@@ -154,18 +154,18 @@ def analyze_errors(predictions: List[Dict[str, Any]]) -> None:
     # False negatives (predicted FAIL but actually PASS)
     false_negatives = [p for p in predictions if p["true_label"] == "PASS" and p["predicted_label"] == "FAIL"]
     
-    console.print(f"\n[bold]Error Analysis:")
+    console.print("\n[bold]Error Analysis:")
     console.print(f"False Positives: {len(false_positives)}")
     console.print(f"False Negatives: {len(false_negatives)}")
     
     if false_positives:
-        console.print(f"\n[red]Sample False Positives (Judge said PASS, should be FAIL):")
+        console.print("\n[red]Sample False Positives (Judge said PASS, should be FAIL):")
         for i, fp in enumerate(false_positives[:3], 1):
             console.print(f"{i}. {fp['dietary_restriction']}: {fp['query']}")
             console.print(f"   Reasoning: {fp['reasoning'][:100]}...")
     
     if false_negatives:
-        console.print(f"\n[yellow]Sample False Negatives (Judge said FAIL, should be PASS):")
+        console.print("\n[yellow]Sample False Negatives (Judge said FAIL, should be PASS):")
         for i, fn in enumerate(false_negatives[:3], 1):
             console.print(f"{i}. {fn['dietary_restriction']}: {fn['query']}")
             console.print(f"   Reasoning: {fn['reasoning'][:100]}...")
@@ -248,7 +248,7 @@ def main():
     tpr, tnr, predictions = evaluate_judge_on_test(judge_prompt, test_traces)
     
     # Print results
-    console.print(f"\n[bold]Judge Performance on Test Set:")
+    console.print("\n[bold]Judge Performance on Test Set:")
     console.print(f"True Positive Rate (TPR): {tpr:.3f}")
     console.print(f"True Negative Rate (TNR): {tnr:.3f}")
     console.print(f"Balanced Accuracy: {(tpr + tnr) / 2:.3f}")

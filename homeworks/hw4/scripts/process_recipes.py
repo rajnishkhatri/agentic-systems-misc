@@ -6,12 +6,13 @@ Processes the RAW_recipes.csv file and creates clean, structured recipe data
 for use in the BM25 retrieval system.
 """
 
+import ast
 import csv
 import json
-import ast
 import re
 from pathlib import Path
-from typing import Dict, List, Any, Optional
+from typing import Any, Dict, List, Optional
+
 from tqdm import tqdm
 
 
@@ -197,7 +198,7 @@ def select_longest_recipes(recipes: List[Dict[str, Any]], top_n: int = 200) -> L
         avg_ingredients = sum(r.get('n_ingredients', 0) for r in longest_recipes) / len(longest_recipes)
         avg_minutes = sum(r.get('minutes', 0) for r in longest_recipes if r.get('minutes', 0) > 0) / len([r for r in longest_recipes if r.get('minutes', 0) > 0])
         
-        print(f"Selected recipes stats:")
+        print("Selected recipes stats:")
         print(f"  Text length range: {min(text_lengths)} - {max(text_lengths)} characters")
         print(f"  Average text length: {sum(text_lengths) / len(text_lengths):.0f} characters")
         print(f"  Average steps: {avg_steps:.1f}")
@@ -228,7 +229,7 @@ def main():
     save_processed_recipes(longest_recipes, output_path)
     
     # Print summary statistics for the selected recipes
-    print(f"\n--- Processing Summary (Top 200 Longest Recipes) ---")
+    print("\n--- Processing Summary (Top 200 Longest Recipes) ---")
     print(f"Total recipes processed: {len(all_recipes)}")
     print(f"Longest recipes selected: {len(longest_recipes)}")
     print(f"Average ingredients per recipe: {sum(r['n_ingredients'] for r in longest_recipes) / len(longest_recipes):.1f}")

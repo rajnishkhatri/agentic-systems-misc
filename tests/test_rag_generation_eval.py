@@ -5,7 +5,7 @@ TDD-RED Phase: Tests for AttributionDetector, HallucinationDetector, and Context
 Test Naming Convention: test_should_[expected_result]_when_[condition]
 """
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -14,7 +14,6 @@ from backend.rag_generation_eval import (
     ContextUtilizationScorer,
     HallucinationDetector,
 )
-
 
 # =============================================================================
 # AttributionDetector Tests

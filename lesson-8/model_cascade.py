@@ -1,12 +1,13 @@
 import random
-import litellm
-from litellm import completion, model_cost, Cache
-import pandas as pd
-import numpy as np
 from concurrent.futures import ThreadPoolExecutor
-from tqdm import tqdm
 from typing import Tuple
+
+import litellm
+import numpy as np
+import pandas as pd
 from dotenv import load_dotenv
+from litellm import Cache, completion, model_cost
+from tqdm import tqdm
 
 # Set up caching and environment
 litellm.cache = Cache(type="disk")
@@ -185,14 +186,14 @@ def simulate_cascade(test_df: pd.DataFrame, thresholds: dict) -> None:
     cascade_accuracy = sum(cp == op for cp, op in zip(cascade_predictions, test_df['oracle_prediction'])) / len(cascade_predictions)
     
     # Print results
-    print(f"\n=== CASCADE SIMULATION RESULTS ===")
+    print("\n=== CASCADE SIMULATION RESULTS ===")
     print(f"Total samples: {len(test_df)}")
     print(f"Proxy termination rate: {proxy_termination_rate:.2%}")
     print(f"Oracle usage rate: {oracle_usage_rate:.2%}")
     print(f"Cascade accuracy: {cascade_accuracy:.4f}")
     print(f"Target accuracy: {TARGET_ACCURACY}")
-    print(f"")
-    print(f"=== COST ANALYSIS ===")
+    print("")
+    print("=== COST ANALYSIS ===")
     print(f"Cascade total cost: ${total_cascade_cost:.4f}")
     print(f"Proxy-only cost: ${total_proxy_only_cost:.4f}")
     print(f"Oracle-only cost: ${total_oracle_only_cost:.4f}")
@@ -298,7 +299,7 @@ def main():
     train_df.to_csv("lesson-8/sms_spam_predictions_train.csv", index=False)
     test_df.to_csv("lesson-8/sms_spam_predictions_test.csv", index=False)
     
-    print(f"\nResults saved to sms_spam_predictions_train.csv and sms_spam_predictions_test.csv")
+    print("\nResults saved to sms_spam_predictions_train.csv and sms_spam_predictions_test.csv")
     print(f"Total train proxy cost: ${train_df['proxy_cost'].sum():.4f}")
     print(f"Total train oracle cost: ${train_df['oracle_cost'].sum():.4f}")
     print(f"Total test proxy cost: ${test_df['proxy_cost'].sum():.4f}")

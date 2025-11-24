@@ -6,19 +6,16 @@ Following TDD methodology with test_should_[result]_when_[condition] naming.
 
 from __future__ import annotations
 
+import sys
 from datetime import datetime
-from typing import Any
+from pathlib import Path
 
 import pytest
-
-import sys
-from pathlib import Path
 
 # Add lesson-16 to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from backend.data_generation import random_amount, random_date, random_vendor_name, validate_json_schema
-
 
 # ============================================================================
 # Tests for random_vendor_name

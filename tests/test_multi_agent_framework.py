@@ -33,7 +33,6 @@ from backend.multi_agent_framework import (
     ValidatorAgent,
 )
 
-
 # =============================================================================
 # BaseAgent Tests (Abstract Base Class)
 # =============================================================================

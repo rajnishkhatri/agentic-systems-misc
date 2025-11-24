@@ -10,13 +10,12 @@ from __future__ import annotations
 
 import csv
 import json
+import os
+import sys
 import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Final
-
-import sys
-import os
 
 # Add parent directory to path to import backend.utils
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -597,7 +596,7 @@ def verify_all_queries(tuples: list[dict[str, str]]) -> dict[str, Any]:
 
         if result["success"]:
             successful += 1
-            print(f"  ✅ Success")
+            print("  ✅ Success")
         else:
             print(f"  ❌ Failed: {result['error'] or 'Invalid response format'}")
 
@@ -730,7 +729,7 @@ def main():
             print()
         
         # Save to CSV file (Task 4.0)
-        print(f"Writing queries to CSV...")
+        print("Writing queries to CSV...")
         csv_file = write_queries_to_csv(tuples)
         print(f"✅ Saved {len(tuples)} queries to {csv_file}")
 
@@ -744,7 +743,7 @@ def main():
         print("\n" + "="*60)
         verification_results = verify_all_queries(tuples)
         
-        print(f"\nVerification Summary:")
+        print("\nVerification Summary:")
         print(f"  Total queries: {verification_results['total']}")
         print(f"  Successful: {verification_results['successful']}")
         print(f"  Failed: {verification_results['failed']}")
@@ -764,7 +763,7 @@ def main():
         print(f"✅ Verification results saved to {verification_file}")
 
         print(f"\n{'='*60}")
-        print(f"Summary:")
+        print("Summary:")
         print(f"  CSV output: {csv_file}")
         print(f"  JSON output: {json_file}")
         print(f"  Verification: {verification_file}")

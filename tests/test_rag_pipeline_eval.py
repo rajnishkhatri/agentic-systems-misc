@@ -11,7 +11,6 @@ import pytest
 
 from backend.rag_pipeline_eval import RAGPipelineEvaluator
 
-
 # =============================================================================
 # RAGPipelineEvaluator Tests
 # =============================================================================

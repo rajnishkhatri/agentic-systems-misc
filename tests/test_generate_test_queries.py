@@ -5,7 +5,8 @@ Tests for dimension configuration, validation functions, and query generation lo
 
 from __future__ import annotations
 
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
+
 import pytest
 
 from generate_test_queries import (
@@ -16,14 +17,13 @@ from generate_test_queries import (
     MEAL_PORTIONS,
     MEAL_TYPES,
     NONE_VALUE,
+    _generate_dimension_tuples_impl,
+    generate_dimension_tuples,
     validate_dimension_value,
     validate_tuple,
     verify_dimension_coverage,
-    _generate_dimension_tuples_impl,
-    generate_dimension_tuples,
     write_queries_to_csv,
 )
-
 
 # --- Task 1.4: Unit Tests for Dimension Configuration Validation ---
 
@@ -537,8 +537,6 @@ class TestWriteQueriesToCSV:
 
     def test_should_generate_timestamped_filename_when_path_none(self, tmp_path, monkeypatch) -> None:
         """Test that timestamped filename is generated when output_path is None."""
-        import csv
-        from datetime import datetime
 
         # Change to tmp_path for testing
         monkeypatch.chdir(tmp_path)

@@ -5,7 +5,6 @@ Validates that the notebook correctly handles both USE_LLM=True and USE_LLM=Fals
 
 import json
 import subprocess
-import sys
 from pathlib import Path
 
 import pytest

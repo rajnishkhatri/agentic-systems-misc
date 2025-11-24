@@ -1,1502 +1,1535 @@
-[
-  {
-    "transaction_id": "TXN-00000",
-    "merchant": "Walmart",
-    "amount": 106.3,
-    "timestamp": "2024-10-13T04:47:06Z",
-    "user_behavior": {
-      "transaction_count_24h": 9,
-      "avg_transaction_amount": 35.64898987329491,
-      "account_age_days": 1908
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.5465321786781479,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00001",
-    "merchant": "Starbucks",
-    "amount": 110.51,
-    "timestamp": "2024-07-29T07:28:37Z",
-    "user_behavior": {
-      "transaction_count_24h": 27,
-      "avg_transaction_amount": 4142.43705505022,
-      "account_age_days": 1
-    },
-    "fraud_label": true,
-    "fraud_type": "synthetic_fraud",
-    "gold_label_confidence": 0.747897794913067,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00002",
-    "merchant": "McDonald's",
-    "amount": 7235.93,
-    "timestamp": "2024-06-26T02:24:06Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 172.54898594254277,
-      "account_age_days": 2652
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.5918849759343685,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00003",
-    "merchant": "HBO Max",
-    "amount": 155.09,
-    "timestamp": "2024-01-10T18:12:45Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 28.2483890580192,
-      "account_age_days": 1113
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9546136681577384,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00004",
-    "merchant": "Apple Store",
-    "amount": 18.41,
-    "timestamp": "2024-07-28T05:23:22Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 140.6315313879848,
-      "account_age_days": 3054
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9873309175424988,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00005",
-    "merchant": "Safeway",
-    "amount": 33.69,
-    "timestamp": "2024-05-06T14:24:17Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 59.53073131464841,
-      "account_age_days": 1508
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9685703840379619,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00006",
-    "merchant": "Target",
-    "amount": 53.9,
-    "timestamp": "2024-08-13T02:13:58Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 177.7461727650804,
-      "account_age_days": 1468
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8425253088108282,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00007",
-    "merchant": "Microsoft",
-    "amount": 20.84,
-    "timestamp": "2024-12-04T07:47:35Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 67.29348953412835,
-      "account_age_days": 2574
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.885686765458916,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00008",
-    "merchant": "Walgreens",
-    "amount": 27.09,
-    "timestamp": "2024-07-11T03:09:40Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 162.57428558533354,
-      "account_age_days": 1909
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9192818061463948,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00009",
-    "merchant": "Hilton Hotels",
-    "amount": 28.04,
-    "timestamp": "2024-12-27T21:46:07Z",
-    "user_behavior": {
-      "transaction_count_24h": 8,
-      "avg_transaction_amount": 155.15800392648976,
-      "account_age_days": 3328
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.5869530501338209,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00010",
-    "merchant": "Salesforce",
-    "amount": 19727.94,
-    "timestamp": "2024-04-16T05:32:58Z",
-    "user_behavior": {
-      "transaction_count_24h": 16,
-      "avg_transaction_amount": 4417.333564265451,
-      "account_age_days": 172
-    },
-    "fraud_label": true,
-    "fraud_type": "synthetic_fraud",
-    "gold_label_confidence": 0.5747827705182296,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00011",
-    "merchant": "HP",
-    "amount": 9252.2,
-    "timestamp": "2024-05-30T10:31:01Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 187.23775092763108,
-      "account_age_days": 3586
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9613549609594257,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00012",
-    "merchant": "PayPal",
-    "amount": 7571.02,
-    "timestamp": "2024-03-05T02:48:34Z",
-    "user_behavior": {
-      "transaction_count_24h": 9,
-      "avg_transaction_amount": 43.11046360995731,
-      "account_age_days": 2126
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.6055347574836508,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00013",
-    "merchant": "McDonald's",
-    "amount": 9953.3,
-    "timestamp": "2024-07-20T12:42:41Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 98.85801510461073,
-      "account_age_days": 2299
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.890297228278226,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00014",
-    "merchant": "Walmart",
-    "amount": 3.96,
-    "timestamp": "2024-08-08T07:00:04Z",
-    "user_behavior": {
-      "transaction_count_24h": 50,
-      "avg_transaction_amount": 764.9319509434553,
-      "account_age_days": 338
-    },
-    "fraud_label": true,
-    "fraud_type": "synthetic_fraud",
-    "gold_label_confidence": 0.547600926873799,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00015",
-    "merchant": "Walgreens",
-    "amount": 48.94,
-    "timestamp": "2024-12-24T15:15:50Z",
-    "user_behavior": {
-      "transaction_count_24h": 4,
-      "avg_transaction_amount": 165.3494595979958,
-      "account_age_days": 959
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8188651592983764,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00016",
-    "merchant": "United Airlines",
-    "amount": 30.93,
-    "timestamp": "2024-03-18T01:25:46Z",
-    "user_behavior": {
-      "transaction_count_24h": 8,
-      "avg_transaction_amount": 164.10665195510578,
-      "account_age_days": 627
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.5897227095666263,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00017",
-    "merchant": "Hilton Hotels",
-    "amount": 128.57,
-    "timestamp": "2024-08-18T17:06:03Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 170.48496531439133,
-      "account_age_days": 562
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9852733966016255,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00018",
-    "merchant": "Expedia",
-    "amount": 81.25,
-    "timestamp": "2024-07-17T05:24:00Z",
-    "user_behavior": {
-      "transaction_count_24h": 4,
-      "avg_transaction_amount": 67.73655047098735,
-      "account_age_days": 3391
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9570258713588243,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00019",
-    "merchant": "Salesforce",
-    "amount": 19681.66,
-    "timestamp": "2024-09-13T04:12:18Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 194.3676856944486,
-      "account_age_days": 2552
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.5627209619539458,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00020",
-    "merchant": "Booking.com",
-    "amount": 4247.1,
-    "timestamp": "2024-12-22T01:32:05Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 32.333839886682625,
-      "account_age_days": 458
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.935042510720818,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00021",
-    "merchant": "PayPal",
-    "amount": 39.0,
-    "timestamp": "2024-01-23T19:05:26Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 121.74084629193611,
-      "account_age_days": 1475
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9869412515472855,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00022",
-    "merchant": "Shell Gas",
-    "amount": 112.2,
-    "timestamp": "2024-05-15T14:20:59Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 21.676782239164353,
-      "account_age_days": 2724
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9996908881708885,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00023",
-    "merchant": "McDonald's",
-    "amount": 19.68,
-    "timestamp": "2024-10-05T02:56:15Z",
-    "user_behavior": {
-      "transaction_count_24h": 33,
-      "avg_transaction_amount": 1782.4432604749552,
-      "account_age_days": 15
-    },
-    "fraud_label": true,
-    "fraud_type": "synthetic_fraud",
-    "gold_label_confidence": 0.9110619775262112,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00024",
-    "merchant": "Microsoft",
-    "amount": 40.93,
-    "timestamp": "2024-01-30T21:06:56Z",
-    "user_behavior": {
-      "transaction_count_24h": 6,
-      "avg_transaction_amount": 67.60386586768297,
-      "account_age_days": 618
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.5563512542915788,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00025",
-    "merchant": "McDonald's",
-    "amount": 3.46,
-    "timestamp": "2024-12-06T15:16:57Z",
-    "user_behavior": {
-      "transaction_count_24h": 6,
-      "avg_transaction_amount": 36.61372418829202,
-      "account_age_days": 1914
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.5667113077210176,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00026",
-    "merchant": "Chevron",
-    "amount": 14.88,
-    "timestamp": "2024-01-13T22:27:35Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 40.1372985060803,
-      "account_age_days": 3010
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9807857143119787,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00027",
-    "merchant": "Venmo",
-    "amount": 55.73,
-    "timestamp": "2024-10-15T01:19:23Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 181.80643457476543,
-      "account_age_days": 1040
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9364133376621153,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00028",
-    "merchant": "Shopify",
-    "amount": 7001.04,
-    "timestamp": "2024-05-03T07:55:10Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 178.6549168393984,
-      "account_age_days": 281
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8358721326836415,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00029",
-    "merchant": "United Airlines",
-    "amount": 33.27,
-    "timestamp": "2024-12-22T05:50:44Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 88.85751006744817,
-      "account_age_days": 338
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9717186502675563,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00030",
-    "merchant": "Hilton Hotels",
-    "amount": 173.71,
-    "timestamp": "2024-08-22T00:42:12Z",
-    "user_behavior": {
-      "transaction_count_24h": 4,
-      "avg_transaction_amount": 79.08715121558717,
-      "account_age_days": 464
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9933778208096722,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00031",
-    "merchant": "Delta Airlines",
-    "amount": 27.98,
-    "timestamp": "2024-01-06T00:07:56Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 52.14220691104346,
-      "account_age_days": 1267
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8076514394706525,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00032",
-    "merchant": "Netflix",
-    "amount": 12.98,
-    "timestamp": "2024-09-21T12:57:36Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 65.85005110494475,
-      "account_age_days": 3083
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8872115030909945,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00033",
-    "merchant": "AWS",
-    "amount": 8.07,
-    "timestamp": "2024-05-19T13:04:42Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 132.16797379035364,
-      "account_age_days": 2897
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9696030559012672,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00034",
-    "merchant": "Lyft",
-    "amount": 9.92,
-    "timestamp": "2024-09-29T22:18:35Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 54.53121673822655,
-      "account_age_days": 2903
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9880727341460366,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00035",
-    "merchant": "Stripe",
-    "amount": 31.22,
-    "timestamp": "2024-07-31T00:19:18Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 97.37986699817023,
-      "account_age_days": 2555
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9213323140959525,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00036",
-    "merchant": "AWS",
-    "amount": 21.6,
-    "timestamp": "2024-10-22T21:05:18Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 139.49369053489977,
-      "account_age_days": 2716
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8670376510819602,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00037",
-    "merchant": "AWS",
-    "amount": 12.25,
-    "timestamp": "2024-03-23T00:02:15Z",
-    "user_behavior": {
-      "transaction_count_24h": 4,
-      "avg_transaction_amount": 130.0293151509224,
-      "account_age_days": 3327
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8145656458369138,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00038",
-    "merchant": "Starbucks",
-    "amount": 19.68,
-    "timestamp": "2024-08-14T12:15:09Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 180.67876871804597,
-      "account_age_days": 3334
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9770930411019731,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00039",
-    "merchant": "Zoom",
-    "amount": 24.89,
-    "timestamp": "2024-12-06T07:58:54Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 102.16312858463105,
-      "account_age_days": 3462
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8929286474996474,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00040",
-    "merchant": "Netflix",
-    "amount": 9562.13,
-    "timestamp": "2024-12-02T13:53:58Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 100.26445017380608,
-      "account_age_days": 831
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.948731088431917,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00041",
-    "merchant": "Shell Gas",
-    "amount": 11.56,
-    "timestamp": "2024-12-23T15:40:15Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 99.17706678768248,
-      "account_age_days": 3102
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8571456301726306,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00042",
-    "merchant": "Etsy",
-    "amount": 26.24,
-    "timestamp": "2024-12-26T12:44:09Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 31.561193128498054,
-      "account_age_days": 1849
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8661762782076168,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00043",
-    "merchant": "United Airlines",
-    "amount": 28.57,
-    "timestamp": "2024-08-16T18:24:30Z",
-    "user_behavior": {
-      "transaction_count_24h": 10,
-      "avg_transaction_amount": 4742.337458453436,
-      "account_age_days": 10
-    },
-    "fraud_label": true,
-    "fraud_type": "synthetic_fraud",
-    "gold_label_confidence": 0.9560343851707314,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00044",
-    "merchant": "Oracle",
-    "amount": 23.7,
-    "timestamp": "2024-03-20T15:14:17Z",
-    "user_behavior": {
-      "transaction_count_24h": 4,
-      "avg_transaction_amount": 107.41555888373007,
-      "account_age_days": 1772
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8672259087396765,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00045",
-    "merchant": "Safeway",
-    "amount": 20.26,
-    "timestamp": "2024-11-12T00:58:25Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 121.59055694445934,
-      "account_age_days": 291
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8167894924324001,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00046",
-    "merchant": "Whole Foods",
-    "amount": 11.92,
-    "timestamp": "2024-10-29T06:29:20Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 157.02134742092488,
-      "account_age_days": 1732
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8556513231277613,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00047",
-    "merchant": "Costco",
-    "amount": 12.1,
-    "timestamp": "2024-07-26T11:14:41Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 160.6219489299611,
-      "account_age_days": 2849
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.5494566607465754,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00048",
-    "merchant": "Shell Gas",
-    "amount": 176.84,
-    "timestamp": "2024-01-18T06:29:44Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 158.04165770412334,
-      "account_age_days": 867
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9211785385120623,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00049",
-    "merchant": "HP",
-    "amount": 31.98,
-    "timestamp": "2024-03-28T18:01:59Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 123.64341111423454,
-      "account_age_days": 1717
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8793308883033255,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00050",
-    "merchant": "Zoom",
-    "amount": 4.53,
-    "timestamp": "2024-04-26T22:49:19Z",
-    "user_behavior": {
-      "transaction_count_24h": 48,
-      "avg_transaction_amount": 4124.875836407749,
-      "account_age_days": 26
-    },
-    "fraud_label": true,
-    "fraud_type": "synthetic_fraud",
-    "gold_label_confidence": 0.9347906039083058,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00051",
-    "merchant": "Disney+",
-    "amount": 238.59,
-    "timestamp": "2024-09-16T13:52:31Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 98.03421223865271,
-      "account_age_days": 1663
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9271170212202892,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00052",
-    "merchant": "American Airlines",
-    "amount": 91.72,
-    "timestamp": "2024-05-06T19:51:58Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 159.43546106688342,
-      "account_age_days": 2084
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8871148986007789,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00053",
-    "merchant": "Shell Gas",
-    "amount": 84.6,
-    "timestamp": "2024-02-01T14:15:48Z",
-    "user_behavior": {
-      "transaction_count_24h": 6,
-      "avg_transaction_amount": 122.572936042098,
-      "account_age_days": 2916
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.6701905672624918,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00054",
-    "merchant": "Hulu",
-    "amount": 36.47,
-    "timestamp": "2024-06-09T19:44:56Z",
-    "user_behavior": {
-      "transaction_count_24h": 8,
-      "avg_transaction_amount": 120.04238502552508,
-      "account_age_days": 2296
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.6440149328208389,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00055",
-    "merchant": "Shell Gas",
-    "amount": 15.3,
-    "timestamp": "2024-11-18T00:05:18Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 92.79220316202706,
-      "account_age_days": 1176
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8612412060260177,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00056",
-    "merchant": "eBay",
-    "amount": 185.28,
-    "timestamp": "2024-01-16T11:44:29Z",
-    "user_behavior": {
-      "transaction_count_24h": 9,
-      "avg_transaction_amount": 75.19213844278948,
-      "account_age_days": 1124
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.5239109482510106,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00057",
-    "merchant": "Zoom",
-    "amount": 17.53,
-    "timestamp": "2024-04-19T08:46:37Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 127.42233329221432,
-      "account_age_days": 591
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9665256726654136,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00058",
-    "merchant": "Lyft",
-    "amount": 748.1,
-    "timestamp": "2024-04-13T08:02:03Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 72.58459601949995,
-      "account_age_days": 697
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9275739310211855,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00059",
-    "merchant": "Amazon",
-    "amount": 17.43,
-    "timestamp": "2024-02-22T14:21:11Z",
-    "user_behavior": {
-      "transaction_count_24h": 9,
-      "avg_transaction_amount": 65.44611028873507,
-      "account_age_days": 2136
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.5983493120582136,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00060",
-    "merchant": "Best Buy",
-    "amount": 11.91,
-    "timestamp": "2024-03-12T02:15:07Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 157.59982015871498,
-      "account_age_days": 2663
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.919225369082005,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00061",
-    "merchant": "HBO Max",
-    "amount": 62.25,
-    "timestamp": "2024-07-18T18:27:19Z",
-    "user_behavior": {
-      "transaction_count_24h": 10,
-      "avg_transaction_amount": 131.78491779298673,
-      "account_age_days": 2677
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.6525474208709416,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00062",
-    "merchant": "Google Cloud",
-    "amount": 216.11,
-    "timestamp": "2024-12-24T17:04:10Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 93.53316307880479,
-      "account_age_days": 3003
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9187622390239126,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00063",
-    "merchant": "Slack",
-    "amount": 8.18,
-    "timestamp": "2024-11-30T21:14:59Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 161.80904479641165,
-      "account_age_days": 2740
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9179579178410516,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00064",
-    "merchant": "CVS Pharmacy",
-    "amount": 11.78,
-    "timestamp": "2024-10-26T04:04:03Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 162.6731419218341,
-      "account_age_days": 2617
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9497915444139247,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00065",
-    "merchant": "CVS Pharmacy",
-    "amount": 314.69,
-    "timestamp": "2024-05-07T08:32:34Z",
-    "user_behavior": {
-      "transaction_count_24h": 4,
-      "avg_transaction_amount": 98.79659544288764,
-      "account_age_days": 2629
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8079721568367226,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00066",
-    "merchant": "Chevron",
-    "amount": 35.43,
-    "timestamp": "2024-06-11T18:01:48Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 123.72445722849443,
-      "account_age_days": 3305
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9512537660825114,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00067",
-    "merchant": "BP Gas",
-    "amount": 28.05,
-    "timestamp": "2024-05-17T20:52:31Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 104.6018710928633,
-      "account_age_days": 1852
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8666616787330185,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00068",
-    "merchant": "Spotify",
-    "amount": 25.24,
-    "timestamp": "2024-02-19T21:25:52Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 26.605483456467564,
-      "account_age_days": 540
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8629034314340336,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00069",
-    "merchant": "Delta Airlines",
-    "amount": 2895.06,
-    "timestamp": "2024-01-30T14:26:03Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 113.31909064293119,
-      "account_age_days": 2730
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9512886308111148,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00070",
-    "merchant": "McDonald's",
-    "amount": 78.83,
-    "timestamp": "2024-05-21T14:56:44Z",
-    "user_behavior": {
-      "transaction_count_24h": 4,
-      "avg_transaction_amount": 41.856695005271575,
-      "account_age_days": 2760
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.921774333416393,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00071",
-    "merchant": "Shopify",
-    "amount": 8.85,
-    "timestamp": "2024-11-14T07:53:58Z",
-    "user_behavior": {
-      "transaction_count_24h": 7,
-      "avg_transaction_amount": 103.06062095218101,
-      "account_age_days": 661
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.6865306119868209,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00072",
-    "merchant": "BP Gas",
-    "amount": 49.17,
-    "timestamp": "2024-07-29T07:29:35Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 89.04548238448699,
-      "account_age_days": 2635
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9016481783185788,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00073",
-    "merchant": "BP Gas",
-    "amount": 39.17,
-    "timestamp": "2024-01-10T16:17:52Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 70.91101699090879,
-      "account_age_days": 1402
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9674951845212842,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00074",
-    "merchant": "Kroger",
-    "amount": 18.14,
-    "timestamp": "2024-06-08T10:35:48Z",
-    "user_behavior": {
-      "transaction_count_24h": 5,
-      "avg_transaction_amount": 87.89780975849948,
-      "account_age_days": 1498
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9739203366468137,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00075",
-    "merchant": "HBO Max",
-    "amount": 67.24,
-    "timestamp": "2024-09-19T10:47:30Z",
-    "user_behavior": {
-      "transaction_count_24h": 4,
-      "avg_transaction_amount": 89.49417544837682,
-      "account_age_days": 2898
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9584787321399861,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00076",
-    "merchant": "Target",
-    "amount": 40.2,
-    "timestamp": "2024-12-20T03:55:54Z",
-    "user_behavior": {
-      "transaction_count_24h": 6,
-      "avg_transaction_amount": 37.948105593556114,
-      "account_age_days": 2051
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.6741865942698438,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00077",
-    "merchant": "Chevron",
-    "amount": 25.93,
-    "timestamp": "2024-07-18T10:54:43Z",
-    "user_behavior": {
-      "transaction_count_24h": 44,
-      "avg_transaction_amount": 2210.042288851948,
-      "account_age_days": 11
-    },
-    "fraud_label": true,
-    "fraud_type": "account_takeover",
-    "gold_label_confidence": 0.966231604872797,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00078",
-    "merchant": "Stripe",
-    "amount": 32.26,
-    "timestamp": "2024-05-12T23:05:27Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 156.86654473896778,
-      "account_age_days": 3063
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9745158465214181,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00079",
-    "merchant": "Walmart",
-    "amount": 119.66,
-    "timestamp": "2024-08-01T11:23:27Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 63.95553779311431,
-      "account_age_days": 1867
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9131856123831874,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00080",
-    "merchant": "Costco",
-    "amount": 17.45,
-    "timestamp": "2024-12-18T15:58:37Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 61.79391997312741,
-      "account_age_days": 2792
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8507954678827085,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00081",
-    "merchant": "Hilton Hotels",
-    "amount": 18679.14,
-    "timestamp": "2024-10-16T02:28:22Z",
-    "user_behavior": {
-      "transaction_count_24h": 47,
-      "avg_transaction_amount": 1846.1941210569748,
-      "account_age_days": 14
-    },
-    "fraud_label": true,
-    "fraud_type": "account_takeover",
-    "gold_label_confidence": 0.837050743800336,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00082",
-    "merchant": "Airbnb",
-    "amount": 37.9,
-    "timestamp": "2024-05-14T11:36:18Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 23.9491276147217,
-      "account_age_days": 3579
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9316459631857361,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00083",
-    "merchant": "AWS",
-    "amount": 7.0,
-    "timestamp": "2024-02-25T23:31:53Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 159.63337632860856,
-      "account_age_days": 1122
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9214129996328532,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00084",
-    "merchant": "Stripe",
-    "amount": 69.93,
-    "timestamp": "2024-10-12T20:41:02Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 161.9498871218277,
-      "account_age_days": 316
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9159147610736805,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00085",
-    "merchant": "Uber",
-    "amount": 8.29,
-    "timestamp": "2024-07-14T06:08:50Z",
-    "user_behavior": {
-      "transaction_count_24h": 44,
-      "avg_transaction_amount": 4444.072685179883,
-      "account_age_days": 12
-    },
-    "fraud_label": true,
-    "fraud_type": "account_takeover",
-    "gold_label_confidence": 0.9740460923445091,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00086",
-    "merchant": "Airbnb",
-    "amount": 32848.94,
-    "timestamp": "2024-12-05T03:29:04Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 155.74726875104037,
-      "account_age_days": 1104
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9720281193797644,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00087",
-    "merchant": "Shopify",
-    "amount": 51.24,
-    "timestamp": "2024-12-22T08:34:07Z",
-    "user_behavior": {
-      "transaction_count_24h": 4,
-      "avg_transaction_amount": 86.34541855088702,
-      "account_age_days": 3247
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9344681594702027,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00088",
-    "merchant": "Disney+",
-    "amount": 37.09,
-    "timestamp": "2024-04-15T00:39:56Z",
-    "user_behavior": {
-      "transaction_count_24h": 10,
-      "avg_transaction_amount": 79.04113072712767,
-      "account_age_days": 2678
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.6647710702780895,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00089",
-    "merchant": "United Airlines",
-    "amount": 24.79,
-    "timestamp": "2024-11-18T09:31:07Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 62.26400583763923,
-      "account_age_days": 2381
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8271328097412673,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00090",
-    "merchant": "Oracle",
-    "amount": 58.16,
-    "timestamp": "2024-08-18T18:47:46Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 179.3744811019243,
-      "account_age_days": 2862
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8198043269421057,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00091",
-    "merchant": "BP Gas",
-    "amount": 164.11,
-    "timestamp": "2024-04-09T14:28:15Z",
-    "user_behavior": {
-      "transaction_count_24h": 3,
-      "avg_transaction_amount": 37.88383242910346,
-      "account_age_days": 2988
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8734669916994361,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00092",
-    "merchant": "Best Buy",
-    "amount": 22.95,
-    "timestamp": "2024-10-27T14:05:42Z",
-    "user_behavior": {
-      "transaction_count_24h": 6,
-      "avg_transaction_amount": 135.50680410197918,
-      "account_age_days": 2625
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.5667018312865032,
-    "is_ambiguous": true
-  },
-  {
-    "transaction_id": "TXN-00093",
-    "merchant": "McDonald's",
-    "amount": 29.14,
-    "timestamp": "2024-06-14T18:13:52Z",
-    "user_behavior": {
-      "transaction_count_24h": 2,
-      "avg_transaction_amount": 79.14071961780147,
-      "account_age_days": 784
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9577287508555219,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00094",
-    "merchant": "Kroger",
-    "amount": 15010.95,
-    "timestamp": "2024-06-29T05:07:42Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 43.72458132114155,
-      "account_age_days": 1647
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9579969328469508,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00095",
-    "merchant": "Whole Foods",
-    "amount": 16.39,
-    "timestamp": "2024-04-03T16:07:47Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 105.72427377618504,
-      "account_age_days": 3366
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8724077947635025,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00096",
-    "merchant": "Subway",
-    "amount": 7017.33,
-    "timestamp": "2024-06-04T09:29:41Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 30.94857334901105,
-      "account_age_days": 2141
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9694597086334485,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00097",
-    "merchant": "Slack",
-    "amount": 7724.99,
-    "timestamp": "2024-09-02T10:38:09Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 42.71448589491009,
-      "account_age_days": 2737
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9266153448602031,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00098",
-    "merchant": "Square",
-    "amount": 9.76,
-    "timestamp": "2024-01-17T19:27:06Z",
-    "user_behavior": {
-      "transaction_count_24h": 1,
-      "avg_transaction_amount": 173.50269271320352,
-      "account_age_days": 2846
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.9755412426128428,
-    "is_ambiguous": false
-  },
-  {
-    "transaction_id": "TXN-00099",
-    "merchant": "American Airlines",
-    "amount": 33.27,
-    "timestamp": "2024-01-08T10:52:29Z",
-    "user_behavior": {
-      "transaction_count_24h": 4,
-      "avg_transaction_amount": 94.87813704706915,
-      "account_age_days": 569
-    },
-    "fraud_label": false,
-    "fraud_type": null,
-    "gold_label_confidence": 0.8625096699994266,
-    "is_ambiguous": false
-  }
-]
+{
+  "metadata": {
+    "total_count": 100,
+    "fraud_count": 10,
+    "fraud_rate": 0.1,
+    "fraud_type_distribution": {
+      "stolen_card": 2,
+      "account_takeover": 5,
+      "synthetic_fraud": 3
+    },
+    "ambiguous_count": 17,
+    "high_value_count": 11,
+    "unique_merchants": 44,
+    "seed": 42
+  },
+  "transactions": [
+    {
+      "transaction_id": "TXN-00000",
+      "merchant": "McDonald's",
+      "amount": 31869.79,
+      "timestamp": "2024-07-25T06:41:31Z",
+      "user_id": "user_7482",
+      "user_behavior": {
+        "transaction_count_24h": 15,
+        "avg_transaction_amount": 80.01,
+        "account_age_days": 601
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8493255015387967
+    },
+    {
+      "transaction_id": "TXN-00001",
+      "merchant": "Chevron",
+      "amount": 79.23,
+      "timestamp": "2024-07-21T12:23:14Z",
+      "user_id": "user_3266",
+      "user_behavior": {
+        "transaction_count_24h": 17,
+        "avg_transaction_amount": 251.82,
+        "account_age_days": 3125
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.562744604170309,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00002",
+      "merchant": "AWS",
+      "amount": 13.0,
+      "timestamp": "2024-12-10T12:38:29Z",
+      "user_id": "user_9669",
+      "user_behavior": {
+        "transaction_count_24h": 9,
+        "avg_transaction_amount": 485.83,
+        "account_age_days": 3555
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9884861722759619
+    },
+    {
+      "transaction_id": "TXN-00003",
+      "merchant": "CVS Pharmacy",
+      "amount": 80.66,
+      "timestamp": "2024-12-22T20:21:07Z",
+      "user_id": "user_5808",
+      "user_behavior": {
+        "transaction_count_24h": 14,
+        "avg_transaction_amount": 87.5,
+        "account_age_days": 43
+      },
+      "fraud_label": true,
+      "fraud_type": "synthetic_fraud",
+      "gold_label_confidence": 0.9627558821134582
+    },
+    {
+      "transaction_id": "TXN-00004",
+      "merchant": "Booking.com",
+      "amount": 17.1,
+      "timestamp": "2024-12-04T20:19:53Z",
+      "user_id": "user_9317",
+      "user_behavior": {
+        "transaction_count_24h": 20,
+        "avg_transaction_amount": 107.47,
+        "account_age_days": 1561
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9525021600150303
+    },
+    {
+      "transaction_id": "TXN-00005",
+      "merchant": "HP",
+      "amount": 9252.2,
+      "timestamp": "2024-05-30T10:31:01Z",
+      "user_id": "user_2832",
+      "user_behavior": {
+        "transaction_count_24h": 12,
+        "avg_transaction_amount": 440.57,
+        "account_age_days": 3436
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9613549609594257
+    },
+    {
+      "transaction_id": "TXN-00006",
+      "merchant": "Shell Gas",
+      "amount": 6369.21,
+      "timestamp": "2024-06-11T23:31:52Z",
+      "user_id": "user_2133",
+      "user_behavior": {
+        "transaction_count_24h": 18,
+        "avg_transaction_amount": 385.26,
+        "account_age_days": 555
+      },
+      "fraud_label": true,
+      "fraud_type": "account_takeover",
+      "gold_label_confidence": 0.5055347574836508,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00007",
+      "merchant": "Square",
+      "amount": 37.58,
+      "timestamp": "2024-04-23T23:44:12Z",
+      "user_id": "user_6107",
+      "user_behavior": {
+        "transaction_count_24h": 13,
+        "avg_transaction_amount": 497.62,
+        "account_age_days": 2691
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8746841005058588
+    },
+    {
+      "transaction_id": "TXN-00008",
+      "merchant": "Marriott Hotels",
+      "amount": 22.07,
+      "timestamp": "2024-12-14T10:01:37Z",
+      "user_id": "user_4770",
+      "user_behavior": {
+        "transaction_count_24h": 19,
+        "avg_transaction_amount": 117.91,
+        "account_age_days": 320
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5067400328110307,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00009",
+      "merchant": "Target",
+      "amount": 9092.16,
+      "timestamp": "2024-06-21T07:17:42Z",
+      "user_id": "user_8953",
+      "user_behavior": {
+        "transaction_count_24h": 7,
+        "avg_transaction_amount": 274.22,
+        "account_age_days": 2992
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9871028481161342
+    },
+    {
+      "transaction_id": "TXN-00010",
+      "merchant": "Airbnb",
+      "amount": 42.65,
+      "timestamp": "2024-01-03T06:06:06Z",
+      "user_id": "user_8062",
+      "user_behavior": {
+        "transaction_count_24h": 12,
+        "avg_transaction_amount": 217.55,
+        "account_age_days": 1942
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5653455488265792,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00011",
+      "merchant": "Microsoft",
+      "amount": 9.14,
+      "timestamp": "2024-01-20T03:15:12Z",
+      "user_id": "user_4116",
+      "user_behavior": {
+        "transaction_count_24h": 18,
+        "avg_transaction_amount": 229.82,
+        "account_age_days": 1758
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8366976071574467
+    },
+    {
+      "transaction_id": "TXN-00012",
+      "merchant": "Home Depot",
+      "amount": 2.47,
+      "timestamp": "2024-01-13T01:41:34Z",
+      "user_id": "user_1241",
+      "user_behavior": {
+        "transaction_count_24h": 3,
+        "avg_transaction_amount": 463.92,
+        "account_age_days": 3506
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8472758981083499
+    },
+    {
+      "transaction_id": "TXN-00013",
+      "merchant": "Airbnb",
+      "amount": 81.25,
+      "timestamp": "2024-07-17T05:24:00Z",
+      "user_id": "user_7396",
+      "user_behavior": {
+        "transaction_count_24h": 9,
+        "avg_transaction_amount": 463.99,
+        "account_age_days": 3245
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8910016734678287
+    },
+    {
+      "transaction_id": "TXN-00014",
+      "merchant": "Salesforce",
+      "amount": 19681.66,
+      "timestamp": "2024-09-13T04:12:18Z",
+      "user_id": "user_4566",
+      "user_behavior": {
+        "transaction_count_24h": 2,
+        "avg_transaction_amount": 293.8,
+        "account_age_days": 2250
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8121915142953032
+    },
+    {
+      "transaction_id": "TXN-00015",
+      "merchant": "Best Buy",
+      "amount": 20.02,
+      "timestamp": "2024-03-28T05:03:32Z",
+      "user_id": "user_2312",
+      "user_behavior": {
+        "transaction_count_24h": 6,
+        "avg_transaction_amount": 43.58,
+        "account_age_days": 308
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.935042510720818
+    },
+    {
+      "transaction_id": "TXN-00016",
+      "merchant": "CVS Pharmacy",
+      "amount": 4050.34,
+      "timestamp": "2024-11-12T18:38:02Z",
+      "user_id": "user_2343",
+      "user_behavior": {
+        "transaction_count_24h": 14,
+        "avg_transaction_amount": 332.11,
+        "account_age_days": 2345
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9045565431063918
+    },
+    {
+      "transaction_id": "TXN-00017",
+      "merchant": "McDonald's",
+      "amount": 111.31,
+      "timestamp": "2024-01-02T08:25:08Z",
+      "user_id": "user_5915",
+      "user_behavior": {
+        "transaction_count_24h": 15,
+        "avg_transaction_amount": 164.93,
+        "account_age_days": 3109
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5621159255493092,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00018",
+      "merchant": "PayPal",
+      "amount": 12740.4,
+      "timestamp": "2024-11-18T06:32:16Z",
+      "user_id": "user_3170",
+      "user_behavior": {
+        "transaction_count_24h": 12,
+        "avg_transaction_amount": 441.62,
+        "account_age_days": 3631
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8488568833016263
+    },
+    {
+      "transaction_id": "TXN-00019",
+      "merchant": "Marriott Hotels",
+      "amount": 24.98,
+      "timestamp": "2024-12-13T00:42:52Z",
+      "user_id": "user_5905",
+      "user_behavior": {
+        "transaction_count_24h": 4,
+        "avg_transaction_amount": 470.08,
+        "account_age_days": 580
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8528931842974256
+    },
+    {
+      "transaction_id": "TXN-00020",
+      "merchant": "Oracle",
+      "amount": 5.71,
+      "timestamp": "2024-08-29T19:13:45Z",
+      "user_id": "user_6617",
+      "user_behavior": {
+        "transaction_count_24h": 7,
+        "avg_transaction_amount": 346.87,
+        "account_age_days": 3523
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8527967803260819
+    },
+    {
+      "transaction_id": "TXN-00021",
+      "merchant": "Best Buy",
+      "amount": 5.07,
+      "timestamp": "2024-11-23T01:00:21Z",
+      "user_id": "user_3143",
+      "user_behavior": {
+        "transaction_count_24h": 9,
+        "avg_transaction_amount": 89.18,
+        "account_age_days": 1839
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9103360842252782
+    },
+    {
+      "transaction_id": "TXN-00022",
+      "merchant": "Amazon",
+      "amount": 22.15,
+      "timestamp": "2024-08-13T01:53:23Z",
+      "user_id": "user_3426",
+      "user_behavior": {
+        "transaction_count_24h": 14,
+        "avg_transaction_amount": 72.45,
+        "account_age_days": 1292
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8729303030654513
+    },
+    {
+      "transaction_id": "TXN-00023",
+      "merchant": "Target",
+      "amount": 9360.48,
+      "timestamp": "2024-01-09T21:06:22Z",
+      "user_id": "user_7658",
+      "user_behavior": {
+        "transaction_count_24h": 20,
+        "avg_transaction_amount": 377.24,
+        "account_age_days": 999
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9729211392439928
+    },
+    {
+      "transaction_id": "TXN-00024",
+      "merchant": "Whole Foods",
+      "amount": 8366.35,
+      "timestamp": "2024-02-10T23:59:21Z",
+      "user_id": "user_7745",
+      "user_behavior": {
+        "transaction_count_24h": 8,
+        "avg_transaction_amount": 140.73,
+        "account_age_days": 3255
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9402556376279825
+    },
+    {
+      "transaction_id": "TXN-00025",
+      "merchant": "Target",
+      "amount": 12466.47,
+      "timestamp": "2024-05-12T14:22:19Z",
+      "user_id": "user_4728",
+      "user_behavior": {
+        "transaction_count_24h": 8,
+        "avg_transaction_amount": 21.6,
+        "account_age_days": 821
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8796931957129568
+    },
+    {
+      "transaction_id": "TXN-00026",
+      "merchant": "Home Depot",
+      "amount": 8227.48,
+      "timestamp": "2024-08-23T20:32:25Z",
+      "user_id": "user_9785",
+      "user_behavior": {
+        "transaction_count_24h": 11,
+        "avg_transaction_amount": 470.23,
+        "account_age_days": 502
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9754076823151121
+    },
+    {
+      "transaction_id": "TXN-00027",
+      "merchant": "Venmo",
+      "amount": 10651.25,
+      "timestamp": "2024-07-06T03:38:27Z",
+      "user_id": "user_6663",
+      "user_behavior": {
+        "transaction_count_24h": 11,
+        "avg_transaction_amount": 223.83,
+        "account_age_days": 2124
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8231291568058662
+    },
+    {
+      "transaction_id": "TXN-00028",
+      "merchant": "Starbucks",
+      "amount": 11.96,
+      "timestamp": "2024-11-28T16:59:51Z",
+      "user_id": "user_9821",
+      "user_behavior": {
+        "transaction_count_24h": 7,
+        "avg_transaction_amount": 188.47,
+        "account_age_days": 316
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9897748971942628
+    },
+    {
+      "transaction_id": "TXN-00029",
+      "merchant": "Stripe",
+      "amount": 76.72,
+      "timestamp": "2024-03-21T16:19:42Z",
+      "user_id": "user_7691",
+      "user_behavior": {
+        "transaction_count_24h": 11,
+        "avg_transaction_amount": 207.18,
+        "account_age_days": 1241
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5664929434212771,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00030",
+      "merchant": "HBO Max",
+      "amount": 9.87,
+      "timestamp": "2024-02-16T09:25:35Z",
+      "user_id": "user_1006",
+      "user_behavior": {
+        "transaction_count_24h": 10,
+        "avg_transaction_amount": 150.59,
+        "account_age_days": 1790
+      },
+      "fraud_label": true,
+      "fraud_type": "synthetic_fraud",
+      "gold_label_confidence": 0.8819984711439288
+    },
+    {
+      "transaction_id": "TXN-00031",
+      "merchant": "Marriott Hotels",
+      "amount": 15.16,
+      "timestamp": "2024-06-15T15:50:57Z",
+      "user_id": "user_3780",
+      "user_behavior": {
+        "transaction_count_24h": 3,
+        "avg_transaction_amount": 149.06,
+        "account_age_days": 2749
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9265881711531592
+    },
+    {
+      "transaction_id": "TXN-00032",
+      "merchant": "IBM",
+      "amount": 66.0,
+      "timestamp": "2024-04-30T06:09:01Z",
+      "user_id": "user_1757",
+      "user_behavior": {
+        "transaction_count_24h": 8,
+        "avg_transaction_amount": 492.13,
+        "account_age_days": 2533
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5414441010997719,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00033",
+      "merchant": "Adobe",
+      "amount": 19.68,
+      "timestamp": "2024-08-14T12:15:09Z",
+      "user_id": "user_1090",
+      "user_behavior": {
+        "transaction_count_24h": 4,
+        "avg_transaction_amount": 391.43,
+        "account_age_days": 926
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8351773363413064
+    },
+    {
+      "transaction_id": "TXN-00034",
+      "merchant": "eBay",
+      "amount": 58.32,
+      "timestamp": "2024-03-24T03:29:08Z",
+      "user_id": "user_8612",
+      "user_behavior": {
+        "transaction_count_24h": 17,
+        "avg_transaction_amount": 494.07,
+        "account_age_days": 2468
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8634595914930696
+    },
+    {
+      "transaction_id": "TXN-00035",
+      "merchant": "Marriott Hotels",
+      "amount": 67.38,
+      "timestamp": "2024-04-08T17:28:57Z",
+      "user_id": "user_3607",
+      "user_behavior": {
+        "transaction_count_24h": 16,
+        "avg_transaction_amount": 230.53,
+        "account_age_days": 3109
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.849447947501932
+    },
+    {
+      "transaction_id": "TXN-00036",
+      "merchant": "HP",
+      "amount": 66.94,
+      "timestamp": "2024-09-16T08:28:04Z",
+      "user_id": "user_5681",
+      "user_behavior": {
+        "transaction_count_24h": 8,
+        "avg_transaction_amount": 143.14,
+        "account_age_days": 1339
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5150830658013087,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00037",
+      "merchant": "HBO Max",
+      "amount": 1000.0,
+      "timestamp": "2024-03-18T13:26:21Z",
+      "user_id": "user_9890",
+      "user_behavior": {
+        "transaction_count_24h": 15,
+        "avg_transaction_amount": 213.73,
+        "account_age_days": 877
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9665782338680975
+    },
+    {
+      "transaction_id": "TXN-00038",
+      "merchant": "HP",
+      "amount": 23.66,
+      "timestamp": "2024-02-08T12:30:00Z",
+      "user_id": "user_6763",
+      "user_behavior": {
+        "transaction_count_24h": 10,
+        "avg_transaction_amount": 379.2,
+        "account_age_days": 3525
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9783283083937024
+    },
+    {
+      "transaction_id": "TXN-00039",
+      "merchant": "Etsy",
+      "amount": 8.75,
+      "timestamp": "2024-07-22T07:31:14Z",
+      "user_id": "user_5471",
+      "user_behavior": {
+        "transaction_count_24h": 14,
+        "avg_transaction_amount": 247.96,
+        "account_age_days": 1622
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8672259087396765
+    },
+    {
+      "transaction_id": "TXN-00040",
+      "merchant": "Delta Airlines",
+      "amount": 9.92,
+      "timestamp": "2024-05-30T19:34:01Z",
+      "user_id": "user_7455",
+      "user_behavior": {
+        "transaction_count_24h": 19,
+        "avg_transaction_amount": 286.55,
+        "account_age_days": 141
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8167894924324001
+    },
+    {
+      "transaction_id": "TXN-00041",
+      "merchant": "Hilton Hotels",
+      "amount": 9.7,
+      "timestamp": "2024-04-20T10:13:29Z",
+      "user_id": "user_6355",
+      "user_behavior": {
+        "transaction_count_24h": 11,
+        "avg_transaction_amount": 383.0,
+        "account_age_days": 1582
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8556513231277613
+    },
+    {
+      "transaction_id": "TXN-00042",
+      "merchant": "United Airlines",
+      "amount": 25.48,
+      "timestamp": "2024-04-14T00:47:34Z",
+      "user_id": "user_1853",
+      "user_behavior": {
+        "transaction_count_24h": 12,
+        "avg_transaction_amount": 119.87,
+        "account_age_days": 311
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.956246609922179
+    },
+    {
+      "transaction_id": "TXN-00043",
+      "merchant": "IBM",
+      "amount": 34.11,
+      "timestamp": "2024-07-12T00:39:09Z",
+      "user_id": "user_4908",
+      "user_behavior": {
+        "transaction_count_24h": 5,
+        "avg_transaction_amount": 242.04,
+        "account_age_days": 498
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9127939163860038
+    },
+    {
+      "transaction_id": "TXN-00044",
+      "merchant": "Zoom",
+      "amount": 11.37,
+      "timestamp": "2024-03-06T19:38:47Z",
+      "user_id": "user_2876",
+      "user_behavior": {
+        "transaction_count_24h": 6,
+        "avg_transaction_amount": 482.71,
+        "account_age_days": 472
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9157369465018488
+    },
+    {
+      "transaction_id": "TXN-00045",
+      "merchant": "PayPal",
+      "amount": 142.0,
+      "timestamp": "2024-09-10T22:12:04Z",
+      "user_id": "user_4978",
+      "user_behavior": {
+        "transaction_count_24h": 4,
+        "avg_transaction_amount": 351.62,
+        "account_age_days": 1265
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9700586478177593
+    },
+    {
+      "transaction_id": "TXN-00046",
+      "merchant": "CVS Pharmacy",
+      "amount": 47.3,
+      "timestamp": "2024-01-10T11:34:27Z",
+      "user_id": "user_7071",
+      "user_behavior": {
+        "transaction_count_24h": 3,
+        "avg_transaction_amount": 257.92,
+        "account_age_days": 1427
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8025304300331707
+    },
+    {
+      "transaction_id": "TXN-00047",
+      "merchant": "Expedia",
+      "amount": 81.62,
+      "timestamp": "2024-01-07T22:09:27Z",
+      "user_id": "user_3885",
+      "user_behavior": {
+        "transaction_count_24h": 17,
+        "avg_transaction_amount": 483.08,
+        "account_age_days": 1136
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9231824708107103
+    },
+    {
+      "transaction_id": "TXN-00048",
+      "merchant": "HP",
+      "amount": 151.08,
+      "timestamp": "2024-09-16T08:20:54Z",
+      "user_id": "user_5022",
+      "user_behavior": {
+        "transaction_count_24h": 3,
+        "avg_transaction_amount": 146.67,
+        "account_age_days": 1876
+      },
+      "fraud_label": true,
+      "fraud_type": "stolen_card",
+      "gold_label_confidence": 0.8394125399809695
+    },
+    {
+      "transaction_id": "TXN-00049",
+      "merchant": "HBO Max",
+      "amount": 18.28,
+      "timestamp": "2024-09-21T05:31:13Z",
+      "user_id": "user_6813",
+      "user_behavior": {
+        "transaction_count_24h": 9,
+        "avg_transaction_amount": 176.77,
+        "account_age_days": 3635
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9192310015874858
+    },
+    {
+      "transaction_id": "TXN-00050",
+      "merchant": "Shopify",
+      "amount": 7.15,
+      "timestamp": "2024-11-12T07:46:26Z",
+      "user_id": "user_9004",
+      "user_behavior": {
+        "transaction_count_24h": 18,
+        "avg_transaction_amount": 381.5,
+        "account_age_days": 2858
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.895218622156833
+    },
+    {
+      "transaction_id": "TXN-00051",
+      "merchant": "Marriott Hotels",
+      "amount": 20.27,
+      "timestamp": "2024-02-27T07:25:44Z",
+      "user_id": "user_4986",
+      "user_behavior": {
+        "transaction_count_24h": 10,
+        "avg_transaction_amount": 335.34,
+        "account_age_days": 1541
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.894652097751905
+    },
+    {
+      "transaction_id": "TXN-00052",
+      "merchant": "American Airlines",
+      "amount": 32500.61,
+      "timestamp": "2024-01-16T11:44:29Z",
+      "user_id": "user_5438",
+      "user_behavior": {
+        "transaction_count_24h": 10,
+        "avg_transaction_amount": 133.19,
+        "account_age_days": 524
+      },
+      "fraud_label": true,
+      "fraud_type": "account_takeover",
+      "gold_label_confidence": 0.7946643832017959
+    },
+    {
+      "transaction_id": "TXN-00053",
+      "merchant": "IBM",
+      "amount": 98.61,
+      "timestamp": "2024-02-05T23:30:17Z",
+      "user_id": "user_9595",
+      "user_behavior": {
+        "transaction_count_24h": 20,
+        "avg_transaction_amount": 148.67,
+        "account_age_days": 441
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9665256726654136
+    },
+    {
+      "transaction_id": "TXN-00054",
+      "merchant": "Disney+",
+      "amount": 93.3,
+      "timestamp": "2024-11-12T04:17:02Z",
+      "user_id": "user_1893",
+      "user_behavior": {
+        "transaction_count_24h": 18,
+        "avg_transaction_amount": 153.15,
+        "account_age_days": 547
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9275739310211855
+    },
+    {
+      "transaction_id": "TXN-00055",
+      "merchant": "Apple Store",
+      "amount": 16351.64,
+      "timestamp": "2024-10-25T15:30:28Z",
+      "user_id": "user_6582",
+      "user_behavior": {
+        "transaction_count_24h": 6,
+        "avg_transaction_amount": 483.09,
+        "account_age_days": 1064
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9882127193536206
+    },
+    {
+      "transaction_id": "TXN-00056",
+      "merchant": "Home Depot",
+      "amount": 33.44,
+      "timestamp": "2024-09-26T20:43:03Z",
+      "user_id": "user_3485",
+      "user_behavior": {
+        "transaction_count_24h": 5,
+        "avg_transaction_amount": 407.46,
+        "account_age_days": 1274
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8170361816792461
+    },
+    {
+      "transaction_id": "TXN-00057",
+      "merchant": "Shopify",
+      "amount": 42.28,
+      "timestamp": "2024-05-17T19:14:49Z",
+      "user_id": "user_9561",
+      "user_behavior": {
+        "transaction_count_24h": 13,
+        "avg_transaction_amount": 230.75,
+        "account_age_days": 1843
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8594706265034775
+    },
+    {
+      "transaction_id": "TXN-00058",
+      "merchant": "American Airlines",
+      "amount": 23.56,
+      "timestamp": "2024-07-28T23:06:48Z",
+      "user_id": "user_4404",
+      "user_behavior": {
+        "transaction_count_24h": 7,
+        "avg_transaction_amount": 139.68,
+        "account_age_days": 362
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5075064868901168,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00059",
+      "merchant": "Amazon",
+      "amount": 187.41,
+      "timestamp": "2024-08-03T09:02:14Z",
+      "user_id": "user_5720",
+      "user_behavior": {
+        "transaction_count_24h": 10,
+        "avg_transaction_amount": 354.46,
+        "account_age_days": 1889
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8142359520306959
+    },
+    {
+      "transaction_id": "TXN-00060",
+      "merchant": "Chevron",
+      "amount": 44.08,
+      "timestamp": "2024-06-09T13:07:34Z",
+      "user_id": "user_4683",
+      "user_behavior": {
+        "transaction_count_24h": 5,
+        "avg_transaction_amount": 455.12,
+        "account_age_days": 3415
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5792628566232412,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00061",
+      "merchant": "Square",
+      "amount": 9.8,
+      "timestamp": "2024-09-13T14:07:29Z",
+      "user_id": "user_5982",
+      "user_behavior": {
+        "transaction_count_24h": 13,
+        "avg_transaction_amount": 471.91,
+        "account_age_days": 2079
+      },
+      "fraud_label": true,
+      "fraud_type": "account_takeover",
+      "gold_label_confidence": 0.8313276590714793
+    },
+    {
+      "transaction_id": "TXN-00062",
+      "merchant": "American Airlines",
+      "amount": 10.97,
+      "timestamp": "2024-12-03T00:05:14Z",
+      "user_id": "user_1339",
+      "user_behavior": {
+        "transaction_count_24h": 9,
+        "avg_transaction_amount": 292.36,
+        "account_age_days": 3155
+      },
+      "fraud_label": true,
+      "fraud_type": "synthetic_fraud",
+      "gold_label_confidence": 0.84115024697549
+    },
+    {
+      "transaction_id": "TXN-00063",
+      "merchant": "BP Gas",
+      "amount": 28.05,
+      "timestamp": "2024-05-17T20:52:31Z",
+      "user_id": "user_2494",
+      "user_behavior": {
+        "transaction_count_24h": 16,
+        "avg_transaction_amount": 180.5,
+        "account_age_days": 1395
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5160824852658835,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00064",
+      "merchant": "United Airlines",
+      "amount": 3.92,
+      "timestamp": "2024-10-03T17:02:29Z",
+      "user_id": "user_2442",
+      "user_behavior": {
+        "transaction_count_24h": 11,
+        "avg_transaction_amount": 133.68,
+        "account_age_days": 504
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9940369453617155
+    },
+    {
+      "transaction_id": "TXN-00065",
+      "merchant": "Booking.com",
+      "amount": 4.93,
+      "timestamp": "2024-01-30T14:26:03Z",
+      "user_id": "user_4073",
+      "user_behavior": {
+        "transaction_count_24h": 17,
+        "avg_transaction_amount": 187.27,
+        "account_age_days": 3128
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8996986204764378
+    },
+    {
+      "transaction_id": "TXN-00066",
+      "merchant": "Best Buy",
+      "amount": 63.42,
+      "timestamp": "2024-04-04T09:28:56Z",
+      "user_id": "user_8941",
+      "user_behavior": {
+        "transaction_count_24h": 4,
+        "avg_transaction_amount": 24.15,
+        "account_age_days": 2610
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.921774333416393
+    },
+    {
+      "transaction_id": "TXN-00067",
+      "merchant": "Safeway",
+      "amount": 5.24,
+      "timestamp": "2024-05-20T13:05:14Z",
+      "user_id": "user_2858",
+      "user_behavior": {
+        "transaction_count_24h": 15,
+        "avg_transaction_amount": 474.06,
+        "account_age_days": 2683
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9664286347537803
+    },
+    {
+      "transaction_id": "TXN-00068",
+      "merchant": "Slack",
+      "amount": 47.15,
+      "timestamp": "2024-05-17T15:30:15Z",
+      "user_id": "user_8483",
+      "user_behavior": {
+        "transaction_count_24h": 18,
+        "avg_transaction_amount": 80.87,
+        "account_age_days": 810
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9843736299863124
+    },
+    {
+      "transaction_id": "TXN-00069",
+      "merchant": "Walgreens",
+      "amount": 4648.44,
+      "timestamp": "2024-11-04T10:59:50Z",
+      "user_id": "user_9318",
+      "user_behavior": {
+        "transaction_count_24h": 9,
+        "avg_transaction_amount": 412.07,
+        "account_age_days": 1188
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9452101965227065
+    },
+    {
+      "transaction_id": "TXN-00070",
+      "merchant": "Venmo",
+      "amount": 13534.5,
+      "timestamp": "2024-07-17T14:34:30Z",
+      "user_id": "user_6654",
+      "user_behavior": {
+        "transaction_count_24h": 11,
+        "avg_transaction_amount": 280.44,
+        "account_age_days": 2255
+      },
+      "fraud_label": true,
+      "fraud_type": "stolen_card",
+      "gold_label_confidence": 0.9798556767145783
+    },
+    {
+      "transaction_id": "TXN-00071",
+      "merchant": "Zoom",
+      "amount": 10.53,
+      "timestamp": "2024-01-24T13:02:20Z",
+      "user_id": "user_8749",
+      "user_behavior": {
+        "transaction_count_24h": 13,
+        "avg_transaction_amount": 199.18,
+        "account_age_days": 2748
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9584787321399861
+    },
+    {
+      "transaction_id": "TXN-00072",
+      "merchant": "Kroger",
+      "amount": 51.73,
+      "timestamp": "2024-12-06T16:37:21Z",
+      "user_id": "user_2644",
+      "user_behavior": {
+        "transaction_count_24h": 15,
+        "avg_transaction_amount": 58.86,
+        "account_age_days": 1901
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5870932971349219,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00073",
+      "merchant": "Kroger",
+      "amount": 5.97,
+      "timestamp": "2024-09-11T19:44:25Z",
+      "user_id": "user_2315",
+      "user_behavior": {
+        "transaction_count_24h": 11,
+        "avg_transaction_amount": 427.65,
+        "account_age_days": 3549
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.906724462479367
+    },
+    {
+      "transaction_id": "TXN-00074",
+      "merchant": "Adobe",
+      "amount": 136.9,
+      "timestamp": "2024-07-22T01:39:04Z",
+      "user_id": "user_4846",
+      "user_behavior": {
+        "transaction_count_24h": 10,
+        "avg_transaction_amount": 498.74,
+        "account_age_days": 3088
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8180758661537938
+    },
+    {
+      "transaction_id": "TXN-00075",
+      "merchant": "IBM",
+      "amount": 24.67,
+      "timestamp": "2024-05-21T05:44:19Z",
+      "user_id": "user_1474",
+      "user_behavior": {
+        "transaction_count_24h": 2,
+        "avg_transaction_amount": 168.94,
+        "account_age_days": 259
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8586735551930418
+    },
+    {
+      "transaction_id": "TXN-00076",
+      "merchant": "Kroger",
+      "amount": 126.97,
+      "timestamp": "2024-12-20T21:50:11Z",
+      "user_id": "user_3785",
+      "user_behavior": {
+        "transaction_count_24h": 6,
+        "avg_transaction_amount": 48.69,
+        "account_age_days": 3596
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8765088597233748
+    },
+    {
+      "transaction_id": "TXN-00077",
+      "merchant": "Expedia",
+      "amount": 7935.73,
+      "timestamp": "2024-09-15T14:40:16Z",
+      "user_id": "user_8529",
+      "user_behavior": {
+        "transaction_count_24h": 9,
+        "avg_transaction_amount": 336.75,
+        "account_age_days": 3325
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8930506511050603
+    },
+    {
+      "transaction_id": "TXN-00078",
+      "merchant": "Etsy",
+      "amount": 8.66,
+      "timestamp": "2024-06-09T18:19:40Z",
+      "user_id": "user_7951",
+      "user_behavior": {
+        "transaction_count_24h": 9,
+        "avg_transaction_amount": 233.85,
+        "account_age_days": 1267
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8398433998217785
+    },
+    {
+      "transaction_id": "TXN-00079",
+      "merchant": "Airbnb",
+      "amount": 37.9,
+      "timestamp": "2024-05-14T11:36:18Z",
+      "user_id": "user_5837",
+      "user_behavior": {
+        "transaction_count_24h": 1,
+        "avg_transaction_amount": 489.19,
+        "account_age_days": 2726
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5865067397697266,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00080",
+      "merchant": "HP",
+      "amount": 7.0,
+      "timestamp": "2024-02-25T23:31:53Z",
+      "user_id": "user_5689",
+      "user_behavior": {
+        "transaction_count_24h": 8,
+        "avg_transaction_amount": 307.46,
+        "account_age_days": 1473
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5250626800043616,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00081",
+      "merchant": "IBM",
+      "amount": 69.93,
+      "timestamp": "2024-10-12T20:41:02Z",
+      "user_id": "user_6061",
+      "user_behavior": {
+        "transaction_count_24h": 15,
+        "avg_transaction_amount": 26.35,
+        "account_age_days": 1524
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5295110451629155,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00082",
+      "merchant": "Oracle",
+      "amount": 14.37,
+      "timestamp": "2024-09-12T17:56:23Z",
+      "user_id": "user_9697",
+      "user_behavior": {
+        "transaction_count_24h": 17,
+        "avg_transaction_amount": 457.61,
+        "account_age_days": 3431
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8329088840737493
+    },
+    {
+      "transaction_id": "TXN-00083",
+      "merchant": "Airbnb",
+      "amount": 32848.94,
+      "timestamp": "2024-12-05T03:29:04Z",
+      "user_id": "user_3306",
+      "user_behavior": {
+        "transaction_count_24h": 8,
+        "avg_transaction_amount": 431.47,
+        "account_age_days": 2996
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9348812460600469
+    },
+    {
+      "transaction_id": "TXN-00084",
+      "merchant": "Shopify",
+      "amount": 51.24,
+      "timestamp": "2024-12-22T08:34:07Z",
+      "user_id": "user_8451",
+      "user_behavior": {
+        "transaction_count_24h": 12,
+        "avg_transaction_amount": 339.69,
+        "account_age_days": 2783
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8524322816499473
+    },
+    {
+      "transaction_id": "TXN-00085",
+      "merchant": "Adobe",
+      "amount": 8337.41,
+      "timestamp": "2024-09-16T15:01:39Z",
+      "user_id": "user_6374",
+      "user_behavior": {
+        "transaction_count_24h": 20,
+        "avg_transaction_amount": 118.47,
+        "account_age_days": 288
+      },
+      "fraud_label": true,
+      "fraud_type": "account_takeover",
+      "gold_label_confidence": 0.8392802608968041
+    },
+    {
+      "transaction_id": "TXN-00086",
+      "merchant": "Microsoft",
+      "amount": 811.49,
+      "timestamp": "2024-07-31T01:19:31Z",
+      "user_id": "user_2902",
+      "user_behavior": {
+        "transaction_count_24h": 4,
+        "avg_transaction_amount": 125.05,
+        "account_age_days": 2231
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8271328097412673
+    },
+    {
+      "transaction_id": "TXN-00087",
+      "merchant": "Google Cloud",
+      "amount": 15010.95,
+      "timestamp": "2024-08-18T18:47:46Z",
+      "user_id": "user_3531",
+      "user_behavior": {
+        "transaction_count_24h": 14,
+        "avg_transaction_amount": 330.91,
+        "account_age_days": 3444
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8978694075579229
+    },
+    {
+      "transaction_id": "TXN-00088",
+      "merchant": "BP Gas",
+      "amount": 164.11,
+      "timestamp": "2024-04-09T14:28:15Z",
+      "user_id": "user_6942",
+      "user_behavior": {
+        "transaction_count_24h": 4,
+        "avg_transaction_amount": 490.65,
+        "account_age_days": 1534
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.908893172296429
+    },
+    {
+      "transaction_id": "TXN-00089",
+      "merchant": "Hulu",
+      "amount": 138.54,
+      "timestamp": "2024-03-19T03:54:52Z",
+      "user_id": "user_8450",
+      "user_behavior": {
+        "transaction_count_24h": 3,
+        "avg_transaction_amount": 334.76,
+        "account_age_days": 2658
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9278985837059408
+    },
+    {
+      "transaction_id": "TXN-00090",
+      "merchant": "Best Buy",
+      "amount": 15.69,
+      "timestamp": "2024-03-18T18:13:04Z",
+      "user_id": "user_4394",
+      "user_behavior": {
+        "transaction_count_24h": 19,
+        "avg_transaction_amount": 115.82,
+        "account_age_days": 3592
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8465997358092063
+    },
+    {
+      "transaction_id": "TXN-00091",
+      "merchant": "Square",
+      "amount": 25.24,
+      "timestamp": "2024-03-20T17:16:51Z",
+      "user_id": "user_3858",
+      "user_behavior": {
+        "transaction_count_24h": 4,
+        "avg_transaction_amount": 333.92,
+        "account_age_days": 135
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8263606459123796
+    },
+    {
+      "transaction_id": "TXN-00092",
+      "merchant": "Shell Gas",
+      "amount": 43.87,
+      "timestamp": "2024-02-15T08:03:08Z",
+      "user_id": "user_7897",
+      "user_behavior": {
+        "transaction_count_24h": 17,
+        "avg_transaction_amount": 65.69,
+        "account_age_days": 290
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8952491930846501
+    },
+    {
+      "transaction_id": "TXN-00093",
+      "merchant": "Booking.com",
+      "amount": 10.79,
+      "timestamp": "2024-10-08T07:39:02Z",
+      "user_id": "user_9543",
+      "user_behavior": {
+        "transaction_count_24h": 10,
+        "avg_transaction_amount": 234.44,
+        "account_age_days": 157
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8121650814989012
+    },
+    {
+      "transaction_id": "TXN-00094",
+      "merchant": "Delta Airlines",
+      "amount": 88.56,
+      "timestamp": "2024-03-25T22:58:28Z",
+      "user_id": "user_2204",
+      "user_behavior": {
+        "transaction_count_24h": 3,
+        "avg_transaction_amount": 167.83,
+        "account_age_days": 637
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8131364466640228
+    },
+    {
+      "transaction_id": "TXN-00095",
+      "merchant": "Adobe",
+      "amount": 54.71,
+      "timestamp": "2024-06-28T19:33:18Z",
+      "user_id": "user_8433",
+      "user_behavior": {
+        "transaction_count_24h": 17,
+        "avg_transaction_amount": 306.66,
+        "account_age_days": 436
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5654712957523143,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00096",
+      "merchant": "HP",
+      "amount": 30.14,
+      "timestamp": "2024-05-28T14:56:14Z",
+      "user_id": "user_7779",
+      "user_behavior": {
+        "transaction_count_24h": 11,
+        "avg_transaction_amount": 415.44,
+        "account_age_days": 1663
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.5426764006260958,
+      "is_ambiguous": true
+    },
+    {
+      "transaction_id": "TXN-00097",
+      "merchant": "Google Cloud",
+      "amount": 75.33,
+      "timestamp": "2024-11-13T02:05:53Z",
+      "user_id": "user_2398",
+      "user_behavior": {
+        "transaction_count_24h": 3,
+        "avg_transaction_amount": 221.62,
+        "account_age_days": 3079
+      },
+      "fraud_label": true,
+      "fraud_type": "account_takeover",
+      "gold_label_confidence": 0.9435307855832177
+    },
+    {
+      "transaction_id": "TXN-00098",
+      "merchant": "Venmo",
+      "amount": 24629.48,
+      "timestamp": "2024-11-05T21:07:26Z",
+      "user_id": "user_6793",
+      "user_behavior": {
+        "transaction_count_24h": 14,
+        "avg_transaction_amount": 435.37,
+        "account_age_days": 2983
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.8102892159944752
+    },
+    {
+      "transaction_id": "TXN-00099",
+      "merchant": "Lyft",
+      "amount": 12.86,
+      "timestamp": "2024-02-29T06:09:42Z",
+      "user_id": "user_8900",
+      "user_behavior": {
+        "transaction_count_24h": 8,
+        "avg_transaction_amount": 425.16,
+        "account_age_days": 1464
+      },
+      "fraud_label": false,
+      "fraud_type": null,
+      "gold_label_confidence": 0.9690746837202691
+    }
+  ]
+}

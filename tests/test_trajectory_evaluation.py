@@ -14,6 +14,7 @@ Following TDD: RED → GREEN → REFACTOR
 """
 
 import pytest
+
 from backend.trajectory_evaluation import TrajectoryEvaluator, TrajectoryVisualizer
 
 

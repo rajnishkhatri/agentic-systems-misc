@@ -16,7 +16,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from backend.data_generation.reconciliation import generate_reconciliation_dataset
 
-
 # ============================================================================
 # RED PHASE: Write failing tests
 # ============================================================================

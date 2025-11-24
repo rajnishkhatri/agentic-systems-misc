@@ -39,9 +39,7 @@ class MemoryProvenance:
         # Step 2: Validate validation_status enum (defensive)
         valid_statuses = {"agent_inferred", "user_confirmed", "disputed"}
         if self.validation_status not in valid_statuses:
-            raise ValueError(
-                f"validation_status must be one of {valid_statuses}, got '{self.validation_status}'"
-            )
+            raise ValueError(f"validation_status must be one of {valid_statuses}, got '{self.validation_status}'")
 
         # Step 3: Initialize confidence history with initial entry
         if not self.confidence_history:
@@ -49,7 +47,7 @@ class MemoryProvenance:
                 {
                     "score": self.confidence_score,
                     "timestamp": self.extraction_timestamp.isoformat(),
-                    "reason": "Initial extraction"
+                    "reason": "Initial extraction",
                 }
             ]
 
@@ -71,13 +69,7 @@ class MemoryProvenance:
         self.confidence_score = new_score
 
         # Step 3: Append to history
-        self.confidence_history.append(
-            {
-                "score": new_score,
-                "timestamp": datetime.now().isoformat(),
-                "reason": reason
-            }
-        )
+        self.confidence_history.append({"score": new_score, "timestamp": datetime.now().isoformat(), "reason": reason})
 
     @property
     def effective_confidence(self) -> float:
@@ -131,13 +123,11 @@ class MemoryProvenance:
             "memory_id": self.memory_id,
             "source_session_id": self.source_session_id,
             "extraction_timestamp": self.extraction_timestamp.isoformat(),
-
             # Trustworthiness fields
             "confidence_score": self.confidence_score,
             "effective_confidence": self.effective_confidence,
             "confidence_trend": self.confidence_trend,
             "validation_status": self.validation_status,
-
             # Compliance fields
             "confidence_history": self.confidence_history,
         }

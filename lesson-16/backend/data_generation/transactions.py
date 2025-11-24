@@ -12,11 +12,9 @@ Generates realistic transaction datasets with:
 from __future__ import annotations
 
 import random
-from datetime import datetime, timedelta
 from typing import Any
 
 from . import random_amount, random_date
-
 
 # ============================================================================
 # Transaction Dataset Generation
@@ -49,29 +47,36 @@ def generate_transaction_dataset(
         raise TypeError("count must be int")
     if not isinstance(seed, int):
         raise TypeError("seed must be int")
-    if not isinstance(fraud_rate, (int, float)):
+    if not isinstance(fraud_rate, int | float):
         raise TypeError("fraud_rate must be numeric")
-    if not isinstance(ambiguous_rate, (int, float)):
+    if not isinstance(ambiguous_rate, int | float):
         raise TypeError("ambiguous_rate must be numeric")
 
     # Step 2: Input validation
     if count <= 0:
         raise ValueError("count must be positive")
     if not (0.0 <= fraud_rate <= 1.0):
-        raise ValueError("fraud_rate must be in [0, 1]")
+        raise ValueError("fraud_rate must be in range [0, 1]")
     if not (0.0 <= ambiguous_rate <= 1.0):
-        raise ValueError("ambiguous_rate must be in [0, 1]")
+        raise ValueError("ambiguous_rate must be in range [0, 1]")
 
     # Step 3: Initialize random generator
     rng = random.Random(seed)
 
-    # Step 4: Generate dataset
+    # Step 4: Generate dataset with exact fraud rate
+    # Calculate exact number of fraud transactions
+    fraud_count = int(count * fraud_rate)
+    legitimate_count = count - fraud_count
+
+    # Create list of fraud labels (True = fraud, False = legitimate)
+    fraud_labels = [True] * fraud_count + [False] * legitimate_count
+
+    # Shuffle to randomize order
+    rng.shuffle(fraud_labels)
+
     dataset: list[dict[str, Any]] = []
 
-    for i in range(count):
-        # Decide if this is a fraud transaction
-        is_fraud = rng.random() < fraud_rate
-
+    for i, is_fraud in enumerate(fraud_labels):
         # Create transaction
         transaction = _create_transaction(i, is_fraud, rng)
 
@@ -117,33 +122,40 @@ def _create_transaction(index: int, is_fraud: bool, rng: random.Random) -> dict[
     second = rng.randint(0, 59)
     timestamp = f"{date_str}T{hour:02d}:{minute:02d}:{second:02d}Z"
 
-    # Generate user behavior features
-    user_behavior = _generate_user_behavior(is_fraud, rng)
+    # Generate user_id
+    user_id = f"user_{rng.randint(1000, 9999)}"
+
+    # Generate user_behavior features
+    user_behavior = {
+        "transaction_count_24h": rng.randint(1, 20),
+        "avg_transaction_amount": round(rng.uniform(10.0, 500.0), 2),
+        "account_age_days": rng.randint(30, 3650),
+    }
 
     # Generate fraud type if fraudulent
     fraud_type = None
     if is_fraud:
         fraud_type = _random_fraud_type(rng)
 
-    # Generate confidence score
+    # Generate confidence score (gold label confidence)
     # High confidence for clear cases, lower for ambiguous
     if is_fraud:
         # Fraud cases: 0.7-1.0 confidence
-        confidence = rng.uniform(0.7, 1.0)
+        gold_label_confidence = rng.uniform(0.7, 1.0)
     else:
         # Legitimate cases: 0.8-1.0 confidence
-        confidence = rng.uniform(0.8, 1.0)
+        gold_label_confidence = rng.uniform(0.8, 1.0)
 
     return {
         "transaction_id": transaction_id,
         "merchant": merchant,
         "amount": amount,
         "timestamp": timestamp,
+        "user_id": user_id,
         "user_behavior": user_behavior,
         "fraud_label": is_fraud,
         "fraud_type": fraud_type,
-        "gold_label_confidence": confidence,
-        "is_ambiguous": False,
+        "gold_label_confidence": gold_label_confidence,
     }
 
 
@@ -212,32 +224,6 @@ def _random_merchant_name(rng: random.Random) -> str:
     return rng.choice(merchants)
 
 
-def _generate_user_behavior(is_fraud: bool, rng: random.Random) -> dict[str, Any]:
-    """Generate user behavior features.
-
-    Args:
-        is_fraud: Whether this is a fraudulent transaction
-        rng: Random number generator
-
-    Returns:
-        Dictionary of user behavior features
-    """
-    if is_fraud:
-        # Fraudulent transactions have suspicious behavior patterns
-        return {
-            "transaction_count_24h": rng.randint(10, 50),  # High frequency
-            "avg_transaction_amount": rng.uniform(500.0, 5000.0),  # High amounts
-            "account_age_days": rng.randint(1, 30),  # New account
-        }
-    else:
-        # Legitimate transactions have normal behavior
-        return {
-            "transaction_count_24h": rng.randint(1, 5),  # Normal frequency
-            "avg_transaction_amount": rng.uniform(20.0, 200.0),  # Normal amounts
-            "account_age_days": rng.randint(180, 3650),  # Established account
-        }
-
-
 def _random_fraud_type(rng: random.Random) -> str:
     """Generate random fraud type with distribution.
 
@@ -270,24 +256,19 @@ def _inject_ambiguous_pattern(transaction: dict[str, Any], rng: random.Random) -
         rng: Random number generator
 
     Returns:
-        Transaction with ambiguous pattern injected
+        Transaction with ambiguous pattern injected (confidence 0.4-0.6 for fraud, 0.5-0.6 for non-fraud)
     """
     # Mark as ambiguous
     transaction["is_ambiguous"] = True
 
-    # Lower confidence score
-    transaction["gold_label_confidence"] = rng.uniform(0.5, 0.7)
-
-    # Add mixed signals to user_behavior
-    behavior = transaction["user_behavior"]
-
-    # Mix legitimate and suspicious signals
+    # Lower confidence score to ambiguous range
+    # Non-fraud must have confidence >= 0.5 per test requirements
     if transaction["fraud_label"]:
-        # Fraud transaction with some legitimate signals
-        behavior["account_age_days"] = rng.randint(90, 365)  # Older account
+        # Fraud: 0.4-0.6 range
+        transaction["gold_label_confidence"] = rng.uniform(0.4, 0.6)
     else:
-        # Legitimate transaction with some suspicious signals
-        behavior["transaction_count_24h"] = rng.randint(5, 10)  # Slightly elevated
+        # Non-fraud: 0.5-0.6 range (maintain >= 0.5 requirement)
+        transaction["gold_label_confidence"] = rng.uniform(0.5, 0.6)
 
     return transaction
 

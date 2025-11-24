@@ -15,20 +15,19 @@ Tests cover:
 - Error handling and defensive programming
 """
 
+from unittest.mock import Mock, patch
+
 import pytest
-from typing import List, Dict, Any
-from unittest.mock import Mock, patch, AsyncMock
-import json
 
 # Module under test will be implemented after these tests pass
 from backend.ai_judge_framework import (
-    JudgeResult,
     BaseJudge,
     DietaryAdherenceJudge,
-    SubstantiationJudge,
     GenericCriteriaJudge,
-    calculate_tpr_tnr,
+    JudgeResult,
+    SubstantiationJudge,
     calculate_balanced_accuracy,
+    calculate_tpr_tnr,
 )
 
 

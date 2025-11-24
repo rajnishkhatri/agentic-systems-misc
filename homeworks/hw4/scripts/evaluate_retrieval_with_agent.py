@@ -8,20 +8,15 @@ to measure the impact of query optimization on retrieval performance.
 
 import json
 import sys
-from pathlib import Path
-from typing import List, Dict, Any
 import time
+from pathlib import Path
+from typing import Any, Dict, List
 
 # Add backend to path for imports
 sys.path.append(str(Path(__file__).parent.parent.parent.parent / "backend"))
-from retrieval import create_retriever
+from evaluation_utils import BaseRetrievalEvaluator, compare_retrieval_systems, load_queries, print_comparison_results
 from query_rewrite_agent import QueryRewriteAgent
-from evaluation_utils import (
-    BaseRetrievalEvaluator, 
-    load_queries, 
-    compare_retrieval_systems,
-    print_comparison_results
-)
+from retrieval import create_retriever
 
 
 class AgentRetrievalEvaluator(BaseRetrievalEvaluator):
@@ -157,7 +152,7 @@ def main():
     baseline_evaluator.save_results(baseline_results, results_baseline_path, experiment_name="baseline_bm25")
     
     baseline_metrics = baseline_evaluator.calculate_aggregate_metrics(baseline_results)
-    print(f"\n📊 Baseline Summary:")
+    print("\n📊 Baseline Summary:")
     print(f"   Recall@5: {baseline_metrics['recall_at_5']:.3f}")
     print(f"   MRR:      {baseline_metrics['mean_reciprocal_rank']:.3f}")
     
@@ -241,14 +236,14 @@ def main():
     total_processing_time = processing_time
     total_evaluation_time = sum(s['evaluation_time'] for s in strategy_results.values())
     
-    print(f"⏱️  Performance Timing:")
+    print("⏱️  Performance Timing:")
     print(f"   Query processing (all strategies): {total_processing_time:.2f}s")
     print(f"   Evaluation (all strategies): {total_evaluation_time:.2f}s")
     print(f"   Total time: {total_processing_time + total_evaluation_time:.2f}s")
     print(f"   Parallel efficiency: {len(queries) * 3 / total_processing_time:.1f} queries/second")
     
     # Show strategy comparison
-    print(f"\n📊 Strategy Performance Comparison:")
+    print("\n📊 Strategy Performance Comparison:")
     for strategy, data in strategy_results.items():
         metrics = data['metrics']
         print(f"   {strategy.upper()}:")
@@ -287,7 +282,7 @@ def main():
     print(f"{'='*60}")
     
     # Show examples where enhancement helped
-    print(f"\n--- Examples Where Query Rewriting Helped ---")
+    print("\n--- Examples Where Query Rewriting Helped ---")
     helped_count = 0
     for baseline_result, enhanced_result in zip(baseline_results, enhanced_results):
         if (baseline_result['recall_5'] == 0.0 and enhanced_result['recall_5'] == 1.0):
@@ -304,7 +299,7 @@ def main():
         print(f"   Total queries rescued: {helped_count}")
     
     # Show examples where enhancement hurt
-    print(f"\n--- Examples Where Query Rewriting Hurt ---")
+    print("\n--- Examples Where Query Rewriting Hurt ---")
     hurt_count = 0
     for baseline_result, enhanced_result in zip(baseline_results, enhanced_results):
         if (baseline_result['recall_5'] == 1.0 and enhanced_result['recall_5'] == 0.0):
@@ -313,7 +308,7 @@ def main():
                 print(f"\n{hurt_count}. Original: '{baseline_result['original_query']}'")
                 print(f"   Enhanced: '{enhanced_result['search_query']}' ({enhanced_result['processing_strategy']})")
                 print(f"   Target: {enhanced_result['target_recipe_name']}")
-                print(f"   Result: ✅ → ❌ (Lost from top 5)")
+                print("   Result: ✅ → ❌ (Lost from top 5)")
     
     if hurt_count == 0:
         print("   No examples where rewriting hurt performance.")
@@ -335,18 +330,18 @@ def main():
     elif improvement > 5:
         print("⚠️  MODERATE RECOMMENDATION: Consider query rewrite agent")
         print(f"   • {improvement:.1f}% improvement in Recall@5")
-        print(f"   • Monitor performance in production")
+        print("   • Monitor performance in production")
         print(f"   • Processing time: {total_processing_time:.1f}s")
     elif improvement > 0:
         print("💡 WEAK RECOMMENDATION: Query rewriting shows promise")
         print(f"   • {improvement:.1f}% improvement in Recall@5")
-        print(f"   • Consider further tuning strategies")
+        print("   • Consider further tuning strategies")
     else:
         print("❌ NOT RECOMMENDED: No clear benefit from query rewriting")
         print(f"   • {improvement:.1f}% change in Recall@5")
-        print(f"   • Stick with baseline BM25")
+        print("   • Stick with baseline BM25")
     
-    print(f"\n✨ Evaluation complete! Check results in:")
+    print("\n✨ Evaluation complete! Check results in:")
     print(f"   • Baseline: {results_baseline_path}")
     print(f"   • Enhanced: {results_enhanced_path}")
     print(f"   • Comparison: {comparison_path}")

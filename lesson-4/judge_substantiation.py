@@ -16,18 +16,18 @@ By default uses SubstantiationJudge from the framework. Set USE_FRAMEWORK = Fals
 to use the legacy custom prompt approach with few-shot examples.
 """
 
-from pathlib import Path
 import hashlib
 import json
 import os
 import sys
-from typing import List, Dict, Any
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+from typing import Any, Dict, List
 
 import litellm  # type: ignore
-from sklearn.metrics import confusion_matrix
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from dotenv import load_dotenv
 from pydantic import BaseModel
+from sklearn.metrics import confusion_matrix
 
 # Add backend to path for framework imports
 sys.path.insert(0, str(Path(__file__).parent.parent))

@@ -19,7 +19,6 @@ from typing import Any, Literal
 
 from . import random_amount, random_date
 
-
 # ============================================================================
 # Reconciliation Dataset Generation
 # ============================================================================
@@ -97,23 +96,39 @@ def generate_reconciliation_dataset(
 
         # Create reconciliation task
         task = _create_reconciliation_task(i, task_difficulty, rng)
-
-        # Inject challenges
-        if rng.random() < date_mismatch_rate:
-            task = _inject_date_mismatch(task, rng)
-
-        if rng.random() < rounding_error_rate:
-            task = _inject_rounding_error(task, rng)
-
-        if rng.random() < duplicate_rate:
-            task = _inject_duplicates(task, rng)
-
-        if rng.random() < missing_counterparty_rate:
-            task = _inject_missing_counterparty(task, rng)
-
         dataset.append(task)
 
-    # Step 5: Return dataset
+    # Step 5: Inject challenges deterministically to hit target rates
+    # Calculate exact counts for each challenge type
+    date_mismatch_count = int(count * date_mismatch_rate)
+    rounding_error_count = int(count * rounding_error_rate)
+    duplicate_count = int(count * duplicate_rate)
+    missing_counterparty_count = int(count * missing_counterparty_rate)
+
+    # Create indices for challenge injection
+    indices = list(range(count))
+    rng.shuffle(indices)
+
+    # Inject date mismatches
+    for i in indices[:date_mismatch_count]:
+        dataset[i] = _inject_date_mismatch(dataset[i], rng)
+
+    # Inject rounding errors
+    rng.shuffle(indices)
+    for i in indices[:rounding_error_count]:
+        dataset[i] = _inject_rounding_error(dataset[i], rng)
+
+    # Inject duplicates
+    rng.shuffle(indices)
+    for i in indices[:duplicate_count]:
+        dataset[i] = _inject_duplicates(dataset[i], rng)
+
+    # Inject missing counterparty
+    rng.shuffle(indices)
+    for i in indices[:missing_counterparty_count]:
+        dataset[i] = _inject_missing_counterparty(dataset[i], rng)
+
+    # Step 6: Return dataset
     return dataset
 
 
@@ -158,15 +173,15 @@ def _create_reconciliation_task(index: int, difficulty: str, rng: random.Random)
     for i, bank_txn in enumerate(bank_transactions):
         ledger_entries.append({
             "entry_id": f"LED-{index:05d}-{i:03d}",
-            "date": bank_txn["date"],
+            "date": bank_txn["date"],  # Keep "date" for consistency with tests
+            "posting_date": bank_txn["date"],  # Also include posting_date for challenge injection
             "amount": bank_txn["amount"],
-            "counterparty": bank_txn["counterparty"],
-            "account_code": _random_account_code(rng),
+            "account": _random_account_code(rng),  # Changed from "account_code" to "account"
         })
 
-    # Generate expected matches (gold labels)
+    # Generate expected matches (gold labels) with bank_index and ledger_index
     expected_matches = [
-        {"bank_index": i, "ledger_index": i, "confidence": 1.0}
+        {"bank_index": i, "ledger_index": i, "bank_id": f"BANK-{index:05d}-{i:03d}", "ledger_id": f"LED-{index:05d}-{i:03d}"}
         for i in range(num_transactions)
     ]
 
@@ -183,16 +198,13 @@ def _create_reconciliation_task(index: int, difficulty: str, rng: random.Random)
 
     return {
         "reconciliation_id": reconciliation_id,
+        "difficulty": difficulty,
         "bank_transactions": bank_transactions,
         "ledger_entries": ledger_entries,
         "expected_matches": expected_matches,
         "reconciliation_status": status,
         "discrepancy_amount": discrepancy,
-        "difficulty": difficulty,
-        "has_date_mismatch": False,
-        "has_rounding_error": False,
-        "has_duplicates": False,
-        "has_missing_counterparty": False,
+        "challenge_types": [],  # Will be populated by injection functions
     }
 
 
@@ -305,24 +317,27 @@ def _inject_date_mismatch(task: dict[str, Any], rng: random.Random) -> dict[str,
     Returns:
         Task with date mismatch injected
     """
+    task["challenge_types"].append("date_mismatch")
     task["has_date_mismatch"] = True
 
     # Pick random ledger entry to modify
     if task["ledger_entries"]:
         entry_idx = rng.randint(0, len(task["ledger_entries"]) - 1)
-        original_date = task["ledger_entries"][entry_idx]["date"]
+        original_date = task["ledger_entries"][entry_idx]["posting_date"]
 
         # Shift date by 1-3 business days
         date_obj = datetime.strptime(original_date, "%Y-%m-%d")
         days_shift = rng.randint(1, 3)
         new_date = date_obj + timedelta(days=days_shift)
 
-        task["ledger_entries"][entry_idx]["date"] = new_date.strftime("%Y-%m-%d")
+        task["ledger_entries"][entry_idx]["posting_date"] = new_date.strftime("%Y-%m-%d")
 
-        # If was perfect match, change to resolvable
-        if task["reconciliation_status"] == "perfect_match":
-            task["reconciliation_status"] = "resolvable_with_logic"
-            if task["discrepancy_amount"] == 0:
+        # Date mismatch alone usually doesn't change status (still auto-matchable)
+        # Only change if there are multiple challenges
+        if task["reconciliation_status"] == "perfect_match" and len(task["challenge_types"]) > 1:
+            # 30% chance to change to resolvable when combined with other challenges
+            if rng.random() < 0.3:
+                task["reconciliation_status"] = "resolvable_with_logic"
                 task["discrepancy_amount"] = round(rng.uniform(0.01, 10.0), 2)
 
     return task
@@ -338,6 +353,7 @@ def _inject_rounding_error(task: dict[str, Any], rng: random.Random) -> dict[str
     Returns:
         Task with rounding error injected
     """
+    task["challenge_types"].append("amount_rounding")
     task["has_rounding_error"] = True
 
     # Pick random ledger entry to modify
@@ -345,21 +361,18 @@ def _inject_rounding_error(task: dict[str, Any], rng: random.Random) -> dict[str
         entry_idx = rng.randint(0, len(task["ledger_entries"]) - 1)
         original_amount = task["ledger_entries"][entry_idx]["amount"]
 
-        # Round to nearest 0.10 or 1.00
-        if rng.random() < 0.5:
-            new_amount = round(original_amount, 1)  # Round to nearest $0.10
-        else:
-            new_amount = round(original_amount)  # Round to nearest $1.00
+        # Only apply rounding if NOT perfect_match (perfect_match must have exact amounts)
+        if task["reconciliation_status"] != "perfect_match":
+            # Apply small rounding difference ($0.01-$1.00) to show actual rounding
+            # Add or subtract a small rounding error
+            rounding_error = round(rng.uniform(0.01, 1.00), 2)
+            if rng.random() < 0.5:
+                new_amount = round(original_amount + rounding_error, 2)
+            else:
+                new_amount = round(max(0.01, original_amount - rounding_error), 2)
 
-        task["ledger_entries"][entry_idx]["amount"] = new_amount
-
-        # Update discrepancy and status
-        diff = abs(original_amount - new_amount)
-        if diff > 0:
-            task["discrepancy_amount"] += diff
-            # If was perfect match, change to resolvable
-            if task["reconciliation_status"] == "perfect_match":
-                task["reconciliation_status"] = "resolvable_with_logic"
+            task["ledger_entries"][entry_idx]["amount"] = new_amount
+            # Don't update discrepancy - it's already set from initial status
 
     return task
 
@@ -374,6 +387,7 @@ def _inject_duplicates(task: dict[str, Any], rng: random.Random) -> dict[str, An
     Returns:
         Task with duplicate injected
     """
+    task["challenge_types"].append("duplicate_entries")
     task["has_duplicates"] = True
 
     # Duplicate a random ledger entry
@@ -386,11 +400,22 @@ def _inject_duplicates(task: dict[str, Any], rng: random.Random) -> dict[str, An
 
         task["ledger_entries"].append(duplicate_entry)
 
-        # If was perfect match, change to manual review (duplicates are complex)
+        # Duplicates are complex but can often be auto-handled
+        # Only escalate if combined with other challenges
         if task["reconciliation_status"] == "perfect_match":
-            task["reconciliation_status"] = "manual_review_required"
-            if task["discrepancy_amount"] == 0:
-                task["discrepancy_amount"] = round(rng.uniform(50.0, 200.0), 2)
+            if len(task["challenge_types"]) > 2:
+                # Multiple challenges: 50% chance manual review
+                if rng.random() < 0.5:
+                    task["reconciliation_status"] = "manual_review_required"
+                    task["discrepancy_amount"] = round(rng.uniform(50.0, 200.0), 2)
+                else:
+                    task["reconciliation_status"] = "resolvable_with_logic"
+                    task["discrepancy_amount"] = round(rng.uniform(0.01, 50.0), 2)
+            elif len(task["challenge_types"]) == 2:
+                # Two challenges: resolvable
+                if rng.random() < 0.3:
+                    task["reconciliation_status"] = "resolvable_with_logic"
+                    task["discrepancy_amount"] = round(rng.uniform(0.01, 50.0), 2)
 
     return task
 
@@ -405,18 +430,25 @@ def _inject_missing_counterparty(task: dict[str, Any], rng: random.Random) -> di
     Returns:
         Task with missing counterparty injected
     """
+    task["challenge_types"].append("missing_counterparty")
     task["has_missing_counterparty"] = True
 
-    # Remove counterparty from random ledger entry
-    if task["ledger_entries"]:
-        entry_idx = rng.randint(0, len(task["ledger_entries"]) - 1)
-        task["ledger_entries"][entry_idx]["counterparty"] = ""
+    # Add an unmatched bank transaction (missing ledger entry)
+    if task["bank_transactions"]:
+        # Add a new bank transaction without matching ledger entry
+        new_index = len(task["bank_transactions"])
+        task["bank_transactions"].append({
+            "transaction_id": f"BANK-UNMATCH-{new_index:03d}",
+            "date": random_date(start_date="2024-01-01", end_date="2024-12-31", seed=rng.randint(0, 10000)),
+            "amount": random_amount(min_amount=10.0, max_amount=1000.0, seed=rng.randint(0, 10000)),
+            "counterparty": _random_counterparty_name(rng),
+            "description": _random_transaction_description(rng),
+        })
 
-        # If was perfect match, change to resolvable
-        if task["reconciliation_status"] == "perfect_match":
+        # Missing counterparty usually resolvable but only change if multiple challenges
+        if task["reconciliation_status"] == "perfect_match" and len(task["challenge_types"]) > 1 and rng.random() < 0.4:
             task["reconciliation_status"] = "resolvable_with_logic"
-            if task["discrepancy_amount"] == 0:
-                task["discrepancy_amount"] = round(rng.uniform(0.01, 10.0), 2)
+            task["discrepancy_amount"] = round(rng.uniform(0.01, 10.0), 2)
 
     return task
 

@@ -24,18 +24,24 @@ This pattern library documents proven code patterns discovered in Lessons 9-13 o
 
 ## Quick Reference Table
 
-| Pattern | Complexity | Primary Use Case | Source File |
-|---------|-----------|------------------|-------------|
-| [TDD Workflow](#tdd-workflow) | ⭐⭐ (Medium) | Testing & development methodology | `tests/test_rag_generation_eval.py:1-50` |
-| [ThreadPoolExecutor Parallel](#threadpoolexecutor-parallel) | ⭐⭐⭐ (High) | Concurrent batch processing (I/O-bound) | `backend/query_rewrite_agent.py:187-208` |
-| [Abstract Base Class](#abstract-base-class) | ⭐⭐⭐ (High) | OOP interface enforcement & polymorphism | `backend/ai_judge_framework.py:64-277` |
-| [Context Engineering: Sessions](#context-engineering-sessions) | ⭐⭐⭐ (Advanced) | Managing stateful multi-turn conversations | `backend/sessions/gita_session.py:13-120` |
-| [Context Engineering: Memory](#context-engineering-memory) | ⭐⭐⭐⭐ (Expert) | Long-term persistence with provenance tracking | `backend/memory/provenance.py:14-144` |
+| Pattern | Complexity | Primary Use Case | Quick Ref | Tutorial | Advanced |
+|---------|-----------|------------------|-----------|----------|----------|
+| [TDD Workflow](#tdd-workflow) | ⭐⭐ (Medium) | Testing & development methodology | [tdd-workflow.md](tdd-workflow.md) | - | - |
+| [ThreadPoolExecutor Parallel](#threadpoolexecutor-parallel) | ⭐⭐⭐ (High) | Concurrent batch processing (I/O-bound) | [threadpool-parallel.md](threadpool-parallel.md) | - | - |
+| [Abstract Base Class](#abstract-base-class) | ⭐⭐⭐ (High) | OOP interface enforcement & polymorphism | [abstract-base-class.md](abstract-base-class.md) | - | - |
+| [Sessions](#context-engineering-sessions) | ⭐⭐⭐ (Advanced) | Multi-turn conversations with compression | [sessions-quickref.md](sessions-quickref.md) | [sessions-tutorial.md](sessions-tutorial.md) | [sessions-advanced.md](sessions-advanced.md) |
+| [Memory](#context-engineering-memory) | ⭐⭐⭐⭐ (Expert) | Long-term persistence with provenance | [memory-quickref.md](memory-quickref.md) | [memory-tutorial.md](memory-tutorial.md) | [memory-advanced.md](memory-advanced.md) |
 
 **Complexity Legend:**
 - ⭐ (Low): Can be understood and applied in <15 minutes
 - ⭐⭐ (Medium): Requires 15-30 minutes to understand, practice needed
 - ⭐⭐⭐ (High): Requires 30-60 minutes to understand, significant practice needed
+- ⭐⭐⭐⭐ (Expert): Requires 60+ minutes, production experience recommended
+
+**Progressive Disclosure Navigation:**
+- **Quick Ref** - Code templates only (2 min lookup)
+- **Tutorial** - Full explanation with examples (12-15 min read)
+- **Advanced** - Pitfalls, performance, production tips (10-12 min read)
 
 ---
 
@@ -289,7 +295,10 @@ context = session.get_context_window()  # 8K tokens, protected events intact
 - Token reduction: 84% (50K → 8K)
 - Cost savings: $1.50 → $0.24 per query (GPT-4)
 
-**[→ Full documentation](context-engineering-sessions.md)**
+**Documentation:**
+- [Quick Reference](sessions-quickref.md) - Code templates (2 min)
+- [Tutorial](sessions-tutorial.md) - Full guide (12-15 min)
+- [Advanced](sessions-advanced.md) - Production tips (10-12 min)
 
 ---
 
@@ -356,7 +365,10 @@ audit = provenance.to_audit_log()
 2. **Confidence Evolution**: Track validation status changes over time
 3. **PII Redaction**: Privacy-safe personalization with domain whitelist
 
-**[→ Full documentation](context-engineering-memory.md)**
+**Documentation:**
+- [Quick Reference](memory-quickref.md) - Code templates (2 min)
+- [Tutorial](memory-tutorial.md) - Full guide (15-18 min)
+- [Advanced](memory-advanced.md) - Conflict resolution, production (12-15 min)
 
 ---
 
@@ -368,8 +380,8 @@ audit = provenance.to_audit_log()
    - Need to write tests? → [TDD Workflow](tdd-workflow.md)
    - Need to parallelize I/O tasks? → [ThreadPoolExecutor Parallel](threadpool-parallel.md)
    - Need multiple implementations of same interface? → [Abstract Base Class](abstract-base-class.md)
-   - Need to manage multi-turn conversations? → [Context Engineering: Sessions](context-engineering-sessions.md)
-   - Need to persist user-specific facts across sessions? → [Context Engineering: Memory](context-engineering-memory.md)
+   - Need to manage multi-turn conversations? → [Sessions Quick Ref](sessions-quickref.md) or [Tutorial](sessions-tutorial.md)
+   - Need to persist user-specific facts across sessions? → [Memory Quick Ref](memory-quickref.md) or [Tutorial](memory-tutorial.md)
 
 2. **Read the pattern documentation:**
    - Understand "When to use" and "When NOT to use"

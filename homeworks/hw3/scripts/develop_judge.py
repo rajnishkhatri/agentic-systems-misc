@@ -22,17 +22,18 @@ Legacy mode requires these placeholders in the prompt:
   - `__RESPONSE__`
 """
 
-import os
-import sys
 import json
-import pandas as pd
+import os
 import random
-from pathlib import Path
-from typing import List, Dict, Any, Optional, Tuple, Final
-from rich.console import Console
-import litellm
-from dotenv import load_dotenv
+import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+from typing import Any, Dict, Final, List, Optional, Tuple
+
+import litellm
+import pandas as pd
+from dotenv import load_dotenv
+from rich.console import Console
 
 # Add backend to path for framework imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -209,11 +210,11 @@ def evaluate_single_trace_legacy(args: tuple) -> Dict[str, Any]:
     true_label = trace["label"]
 
     # Format the prompt using string replacement
-    if not "__QUERY__" in judge_prompt:
+    if "__QUERY__" not in judge_prompt:
         raise ValueError("Judge prompt does not contain __QUERY__ placeholder.")
-    if not "__DIETARY_RESTRICTION__" in judge_prompt:
+    if "__DIETARY_RESTRICTION__" not in judge_prompt:
         raise ValueError("Judge prompt does not contain __DIETARY_RESTRICTION__ placeholder.")
-    if not "__RESPONSE__" in judge_prompt:
+    if "__RESPONSE__" not in judge_prompt:
         raise ValueError("Judge prompt does not contain __RESPONSE__ placeholder.")
 
     formatted_prompt = judge_prompt.replace("__QUERY__", query)
@@ -420,7 +421,7 @@ def main():
             save_judge_prompt(judge_prompt, str(prompt_path))
 
     # Print results
-    console.print(f"\n[bold]Judge Performance on Dev Set:")
+    console.print("\n[bold]Judge Performance on Dev Set:")
     console.print(f"True Positive Rate (TPR): {tpr:.3f}")
     console.print(f"True Negative Rate (TNR): {tnr:.3f}")
     console.print(f"Balanced Accuracy: {(tpr + tnr) / 2:.3f}")

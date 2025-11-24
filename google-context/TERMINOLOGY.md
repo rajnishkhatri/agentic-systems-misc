@@ -502,7 +502,7 @@ else:
 ## Next Steps
 
 1. **Study the diagrams:** See [diagrams/session_vs_context.mmd](diagrams/session_vs_context.mmd), [diagrams/memory_vs_rag.mmd](diagrams/memory_vs_rag.mmd), [diagrams/proactive_vs_reactive.mmd](diagrams/proactive_vs_reactive.mmd)
-2. **Read pattern guides:** See [../patterns/context-engineering-sessions.md](../patterns/context-engineering-sessions.md), [../patterns/context-engineering-memory.md](../patterns/context-engineering-memory.md)
+2. **Read pattern guides:** See [Sessions Pattern](../patterns/sessions-tutorial.md) ([Quick Ref](../patterns/sessions-quickref.md)), [Memory Pattern](../patterns/memory-tutorial.md) ([Quick Ref](../patterns/memory-quickref.md))
 3. **Implement protected context:** Follow TDD workflow in Phase 2 tasks
 4. **Test your understanding:** Build a 50-turn conversation and verify protected context survives compression
 

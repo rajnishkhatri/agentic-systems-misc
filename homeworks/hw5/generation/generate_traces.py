@@ -26,13 +26,13 @@ import json
 import os
 import random
 import uuid
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Dict, List, Tuple
 
 import litellm
 from dotenv import load_dotenv
 from tqdm import tqdm
-from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # -------------------------------------------------------------
 # Configuration
@@ -285,7 +285,7 @@ def generate_traces(
             try:
                 messages = generate_conversation_llm(last_success, first_failure)
                 break
-            except Exception as exc:
+            except Exception:
                 if attempt >= retries:
                     raise
                 continue

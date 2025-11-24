@@ -24,11 +24,11 @@ The script is idempotent – running it multiple times will simply overwrite the
 output file with the latest conversion.
 """
 
-from pathlib import Path
 import csv
 import json
 import uuid
-from typing import List, Dict, Any
+from pathlib import Path
+from typing import Any, Dict, List
 
 # Constants – adjust only if the file locations change
 CSV_PATH = Path(__file__).with_name("nurtureboss_logs.csv")

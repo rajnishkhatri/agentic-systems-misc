@@ -11,9 +11,10 @@ Output:
     lesson-14/diagrams/trajectory_metrics_comparison.png
 """
 
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import numpy as np
-from pathlib import Path
 
 
 def create_trajectory_radar_chart() -> None:

@@ -1,5 +1,5 @@
 {
-  "generation_date": "2025-11-23T10:17:00.253461",
+  "generation_date": "2025-11-24T03:26:52.833219",
   "version": "1.0",
   "schema_version": "1.0",
   "datasets": {
@@ -21,28 +21,28 @@
       "count": 100,
       "file_size_bytes": 40606,
       "challenge_distribution": {
-        "fraud_count": 9,
-        "fraud_rate": 0.09,
-        "ambiguous_patterns": 20
+        "fraud_count": 10,
+        "fraud_rate": 0.1,
+        "ambiguous_patterns": 17
       }
     },
     "reconciliation": {
       "count": 100,
       "file_size_bytes": 269462,
       "challenge_distribution": {
-        "date_mismatches": 0,
-        "amount_rounding": 0
+        "date_mismatches": 25,
+        "amount_rounding": 20
       },
       "difficulty_distribution": {
-        "easy": 31,
-        "medium": 31,
-        "hard": 38
+        "easy": 29,
+        "medium": 35,
+        "hard": 36
       },
       "challenge_statistics": {
-        "has_date_mismatch": 23,
-        "has_rounding_error": 14,
-        "has_duplicates": 14,
-        "has_missing_counterparty": 19
+        "has_date_mismatch": 25,
+        "has_rounding_error": 20,
+        "has_duplicates": 15,
+        "has_missing_counterparty": 18
       }
     }
   }

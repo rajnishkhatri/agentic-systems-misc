@@ -6,16 +6,15 @@ Evaluates BM25 retrieval performance using synthetic queries and calculates
 standard information retrieval metrics: Recall@1, Recall@3, Recall@5, Recall@10, and MRR.
 """
 
-import json
+import statistics
 import sys
 from pathlib import Path
-from typing import List, Dict, Any
-import statistics
+from typing import Any, Dict, List
 
 # Add backend to path for imports
 sys.path.append(str(Path(__file__).parent.parent.parent.parent / "backend"))
-from retrieval import create_retriever
 from evaluation_utils import BaseRetrievalEvaluator, load_queries
+from retrieval import create_retriever
 
 
 class RetrievalEvaluator(BaseRetrievalEvaluator):
@@ -23,7 +22,7 @@ class RetrievalEvaluator(BaseRetrievalEvaluator):
     
     def analyze_by_query_characteristics(self, results: List[Dict[str, Any]]):
         """Analyze performance by query characteristics."""
-        print(f"\n--- Additional Analysis ---")
+        print("\n--- Additional Analysis ---")
         
         # Analyze by query length
         short_queries = [r for r in results if len(r['original_query'].split()) <= 8]
@@ -51,43 +50,43 @@ class RetrievalEvaluator(BaseRetrievalEvaluator):
         print(f"\n{'='*80}")
         print("FINAL EVALUATION SUMMARY")
         print(f"{'='*80}")
-        print(f"📊 Overall Performance:")
+        print("📊 Overall Performance:")
         print(f"   • Recall@1:  {final_metrics['recall_at_1']:.3f} ({final_metrics['recall_at_1']*100:.1f}%)")
         print(f"   • Recall@3:  {final_metrics['recall_at_3']:.3f} ({final_metrics['recall_at_3']*100:.1f}%)")
         print(f"   • Recall@5:  {final_metrics['recall_at_5']:.3f} ({final_metrics['recall_at_5']*100:.1f}%)")
         print(f"   • Recall@10: {final_metrics['recall_at_10']:.3f} ({final_metrics['recall_at_10']*100:.1f}%)")
         print(f"   • MRR:       {final_metrics['mean_reciprocal_rank']:.3f}")
         
-        print(f"\n📈 Query Success:")
+        print("\n📈 Query Success:")
         print(f"   • Total queries evaluated: {final_metrics['total_queries']}")
         print(f"   • Target found (any rank): {final_metrics['queries_found']} ({final_metrics['queries_found']/final_metrics['total_queries']*100:.1f}%)")
         print(f"   • Target not found:        {final_metrics['queries_not_found']} ({final_metrics['queries_not_found']/final_metrics['total_queries']*100:.1f}%)")
         
         if final_metrics['average_rank_when_found']:
-            print(f"\n🎯 Ranking Analysis:")
+            print("\n🎯 Ranking Analysis:")
             print(f"   • Average rank when found: {final_metrics['average_rank_when_found']:.2f}")
             print(f"   • Median rank when found:  {final_metrics['median_rank_when_found']:.0f}")
         
-        print(f"\n💡 Performance Insights:")
+        print("\n💡 Performance Insights:")
         success_rate = final_metrics['recall_at_5']
         if success_rate >= 0.7:
-            print(f"   • Excellent retrieval performance (Recall@5 ≥ 70%)")
+            print("   • Excellent retrieval performance (Recall@5 ≥ 70%)")
         elif success_rate >= 0.5:
-            print(f"   • Good retrieval performance (Recall@5 ≥ 50%)")
+            print("   • Good retrieval performance (Recall@5 ≥ 50%)")
         elif success_rate >= 0.3:
-            print(f"   • Moderate retrieval performance (Recall@5 ≥ 30%)")
+            print("   • Moderate retrieval performance (Recall@5 ≥ 30%)")
         else:
-            print(f"   • Poor retrieval performance (Recall@5 < 30%)")
+            print("   • Poor retrieval performance (Recall@5 < 30%)")
         
         mrr = final_metrics['mean_reciprocal_rank']
         if mrr >= 0.6:
-            print(f"   • Excellent ranking quality (MRR ≥ 0.6)")
+            print("   • Excellent ranking quality (MRR ≥ 0.6)")
         elif mrr >= 0.4:
-            print(f"   • Good ranking quality (MRR ≥ 0.4)")
+            print("   • Good ranking quality (MRR ≥ 0.4)")
         elif mrr >= 0.2:
-            print(f"   • Moderate ranking quality (MRR ≥ 0.2)")
+            print("   • Moderate ranking quality (MRR ≥ 0.2)")
         else:
-            print(f"   • Poor ranking quality (MRR < 0.2)")
+            print("   • Poor ranking quality (MRR < 0.2)")
         
         print(f"{'='*80}")
 

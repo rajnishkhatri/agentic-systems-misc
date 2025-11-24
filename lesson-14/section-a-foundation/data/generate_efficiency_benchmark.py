@@ -24,7 +24,6 @@ Task: 3.8 from tasks-0005-prd-rag-agent-evaluation-tutorial-system.md
 import json
 from typing import Any
 
-
 # Tool definitions (aligned with agent_planning_benchmark.json)
 TOOLS = [
     {

@@ -4,9 +4,10 @@ TDD-RED Phase: Tests for context_judges.py
 AI judges to evaluate context precision and recall for retrieval systems.
 """
 
-import pytest
-from unittest.mock import Mock, patch
 import json
+from unittest.mock import Mock, patch
+
+import pytest
 
 
 # Test: ContextPrecisionJudge class

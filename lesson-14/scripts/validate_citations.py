@@ -318,7 +318,7 @@ def generate_report(
     report_lines.extend([
         "\n---\n\n",
         "## Requirements Verification\n\n",
-        f"**Requirement:** ≥5 unique citations per tutorial file\n\n",
+        "**Requirement:** ≥5 unique citations per tutorial file\n\n",
     ])
 
     for file_name, results in sorted(by_file.items()):

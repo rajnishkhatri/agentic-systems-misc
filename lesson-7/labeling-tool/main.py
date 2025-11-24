@@ -1,11 +1,12 @@
 import csv
 import json
 import os
-from fastapi import FastAPI, Request
+from typing import List
+
+from fastapi import FastAPI
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from typing import List, Optional
 
 app = FastAPI()
 

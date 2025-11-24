@@ -14,7 +14,6 @@ from typing import Any
 
 from . import random_amount, random_date, random_vendor_name
 
-
 # ============================================================================
 # Invoice Dataset Generation
 # ============================================================================
@@ -97,7 +96,7 @@ def generate_invoice_dataset(
         dataset.append(invoice)
 
     # Step 5: Add metadata
-    metadata = {
+    {
         "generation_date": datetime.now().isoformat(),
         "version": "1.0",
         "schema_version": "1.0",

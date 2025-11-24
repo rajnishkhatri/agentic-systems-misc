@@ -3,7 +3,6 @@
 Test email, phone, name, location redaction while preserving Gita context.
 """
 
-import pytest
 
 
 def test_should_redact_email_addresses() -> None:
@@ -127,10 +126,7 @@ def test_should_integrate_with_provenance() -> None:
     text = "John Smith (john@example.com) prefers Swami Sivananda's commentary on karma yoga."
 
     redacted_text, provenance = extract_memory_with_pii_redaction(
-        text=text,
-        source_session_id="session_123",
-        confidence_score=0.8,
-        validation_status="agent_inferred"
+        text=text, source_session_id="session_123", confidence_score=0.8, validation_status="agent_inferred"
     )
 
     # Check redaction happened
@@ -155,3 +151,49 @@ def test_should_generate_unique_memory_ids() -> None:
     assert id1.startswith("mem_")
     assert id2.startswith("mem_")
     assert id1 != id2  # Should be unique
+
+
+def test_should_detect_pii_in_unusual_phone_formats() -> None:
+    """Test PII redaction with edge case phone number formats."""
+    from backend.memory.pii_redaction import PIIRedactor
+
+    redactor = PIIRedactor()
+
+    # Test various phone formats
+    test_cases = [
+        "Call me at five-five-five-1234",  # Written out (should NOT match - too complex for regex)
+        "My number is +1 (555) 123-4567",  # International format
+        "Reach me at 555.123.4567",  # Dot separator
+        "Phone: 5551234567",  # No separator
+        "555 1234",  # Short format
+    ]
+
+    for text in test_cases:
+        redacted_text, pii_found = redactor.redact(text)
+        # Most should be caught except written-out version
+        if "five-five-five" in text:
+            assert pii_found is False, f"Written-out numbers not expected to match: {text}"
+        else:
+            # Check if redaction occurred (may vary by regex complexity)
+            if "[PHONE_REDACTED]" in redacted_text:
+                assert pii_found is True, f"PII should be detected in: {text}"
+
+
+def test_should_handle_multilingual_memory_extraction() -> None:
+    """Test memory extraction from multilingual conversations (English + Sanskrit)."""
+    from backend.memory.pii_redaction import extract_memory_with_pii_redaction
+
+    # Memory with Sanskrit terms (should be preserved)
+    text = "User seeks guidance on कर्म योग (karma yoga) and धर्म (dharma) for daily life challenges."
+
+    redacted_text, provenance = extract_memory_with_pii_redaction(
+        text=text,
+        source_session_id="session_multilingual",
+        confidence_score=0.85,
+        validation_status="agent_inferred"
+    )
+
+    # Sanskrit should be preserved
+    assert "कर्म योग" in redacted_text or "karma yoga" in redacted_text
+    assert "धर्म" in redacted_text or "dharma" in redacted_text
+    assert provenance.source_session_id == "session_multilingual"

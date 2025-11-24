@@ -33,7 +33,6 @@ from backend.multi_agent_patterns import (
     P2PAgent,
 )
 
-
 # =============================================================================
 # MultiAgentPattern Abstract Base Class Tests
 # =============================================================================

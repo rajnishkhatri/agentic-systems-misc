@@ -14,16 +14,16 @@ import argparse
 import json
 import os
 import sys
-from pathlib import Path
-from typing import List, Dict, Any
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+from typing import Any, Dict, List
+
 from tqdm import tqdm
 
 # Add parent directory to path to import backend modules
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from backend.ai_judge_framework import GenericCriteriaJudge
-
 
 # ============================================================================
 # Sample Queries and Responses (Recipe Bot Domain)
@@ -340,7 +340,7 @@ Examples:
     if comparisons:
         winner_a = sum(1 for c in comparisons if c['winner'] == 'A')
         winner_b = sum(1 for c in comparisons if c['winner'] == 'B')
-        print(f"\n📊 Statistics:")
+        print("\n📊 Statistics:")
         print(f"   Winner A: {winner_a} ({winner_a/len(comparisons)*100:.1f}%)")
         print(f"   Winner B: {winner_b} ({winner_b/len(comparisons)*100:.1f}%)")
         print(f"   Dimension: {args.dimension}")

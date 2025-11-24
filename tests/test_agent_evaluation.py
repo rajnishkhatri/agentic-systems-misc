@@ -24,7 +24,6 @@ Created: 2025-11-12
 Task: 3.9 from tasks-0005-prd-rag-agent-evaluation-tutorial-system.md
 """
 
-from typing import Any
 
 import pytest
 
@@ -37,7 +36,6 @@ from backend.agent_evaluation import (
     validate_plan_correctness,
     validate_tool_call,
 )
-
 
 # =============================================================================
 # Tool Call Validation Tests (10+ tests)

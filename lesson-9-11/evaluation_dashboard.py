@@ -20,25 +20,25 @@ from pathlib import Path
 from typing import Any
 
 from fasthtml.common import (
-    Div,
     H1,
     H2,
     H3,
     H4,
-    P,
-    Span,
-    Button,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    Nav,
     A,
-    Script,
-    Style,
+    Button,
+    Div,
     Footer,
+    Nav,
+    P,
+    Script,
+    Span,
+    Style,
+    Table,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tr,
     fast_app,
     serve,
 )
@@ -1084,14 +1084,14 @@ if __name__ == "__main__":
     print(f"\n{'=' * 60}")
     print(f"  {DASHBOARD_TITLE} v{DASHBOARD_VERSION}")
     print(f"{'=' * 60}")
-    print(f"\n  🚀 Starting server at http://localhost:8000")
-    print(f"  📊 Dashboard: http://localhost:8000/evaluation")
+    print("\n  🚀 Starting server at http://localhost:8000")
+    print("  📊 Dashboard: http://localhost:8000/evaluation")
     print(f"  🔄 Auto-refresh: {AUTO_REFRESH_SECONDS}s")
-    print(f"\n  Keyboard shortcuts:")
-    print(f"    r - Refresh")
-    print(f"    e - Export HTML")
-    print(f"    f - Filter")
-    print(f"    ? - Help")
+    print("\n  Keyboard shortcuts:")
+    print("    r - Refresh")
+    print("    e - Export HTML")
+    print("    f - Filter")
+    print("    ? - Help")
     print(f"\n{'=' * 60}\n")
 
     serve(port=8000)

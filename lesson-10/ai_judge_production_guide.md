@@ -1190,6 +1190,273 @@ print(estimate_evaluation_cost(10_000, "gpt-4o-mini"))
 
 ---
 
+## Memory Provenance for Judge Calibration
+
+AI judges benefit from **provenance tracking** to assess their own reliability over time. By treating judge verdicts as memories with confidence scores, we can detect poorly calibrated judges, track improvement, and provide audit trails for compliance.
+
+### The Problem: Judge Drift and Miscalibration
+
+**Scenario:** You deploy an AI judge for customer support quality evaluation.
+
+**Risks:**
+1. **Model updates:** GPT-4 → GPT-4o changes judge behavior unexpectedly
+2. **Prompt drift:** Small prompt changes cause verdict inconsistency
+3. **Domain shift:** Judge trained on tech support fails on healthcare
+4. **Calibration decay:** Initial 90% accuracy drops to 75% after 6 months
+
+**Without provenance:** You discover degradation only after user complaints.
+
+**With provenance:** Track judge confidence evolution, detect degradation early.
+
+### Pattern: MemoryProvenance for Judge Verdicts
+
+**Concept:** Treat each judge verdict as a memory with:
+- `memory_id`: Unique judge verdict ID
+- `source_session_id`: Evaluation batch/run ID
+- `confidence_score`: Judge's self-reported confidence (0.0-1.0)
+- `validation_status`: Ground truth confirmation status
+- `confidence_history`: Trend over time (improving/degrading/stable)
+
+**Implementation** (see [google-context/](../google-context/)):
+
+```python
+from backend.memory.provenance import MemoryProvenance
+
+# Judge evaluates a customer support response
+judge_verdict = {
+    "query_id": "eval_12345",
+    "rating": 4,  # 1-5 scale
+    "explanation": "Response is helpful but lacks empathy",
+    "confidence": 0.8  # Judge's self-reported confidence
+}
+
+# Create provenance tracking
+judge_provenance = MemoryProvenance(
+    memory_id=f"judge_{judge_verdict['query_id']}",
+    source_session_id="eval_batch_001",
+    confidence_score=0.8,
+    validation_status="agent_inferred",  # Initial state
+    metadata={
+        "judge_model": "gpt-4o",
+        "prompt_version": "v2.3",
+        "rating": judge_verdict["rating"]
+    }
+)
+```
+
+### Calibration Workflow: Ground Truth Validation
+
+**Step 1:** Deploy judge on evaluation batch (1,000 queries)
+
+```python
+# Batch evaluation
+judge_verdicts = []
+for query in evaluation_batch:
+    verdict = ai_judge.evaluate(query, response)
+    provenance = MemoryProvenance(
+        memory_id=f"judge_{query.id}",
+        source_session_id="batch_001",
+        confidence_score=verdict.confidence,
+        validation_status="agent_inferred"
+    )
+    judge_verdicts.append((verdict, provenance))
+```
+
+**Step 2:** Sample for human verification (100 queries = 10%)
+
+```python
+import random
+
+sample = random.sample(judge_verdicts, k=100)
+
+for verdict, provenance in sample:
+    # Human reviewer validates
+    human_rating = human_review(verdict.query_id)
+
+    if human_rating == verdict.rating:
+        # Judge was correct
+        provenance.add_confidence_update(
+            new_score=0.95,
+            reason="Ground truth confirmed by human reviewer"
+        )
+        provenance.validation_status = "user_confirmed"
+    else:
+        # Judge was wrong
+        provenance.add_confidence_update(
+            new_score=0.3,
+            reason=f"Ground truth contradicted: human={human_rating}, judge={verdict.rating}"
+        )
+        provenance.validation_status = "disputed"
+```
+
+**Step 3:** Track calibration over time
+
+```python
+def analyze_judge_calibration(judge_verdicts: list) -> dict:
+    """Analyze judge accuracy and confidence calibration."""
+
+    confirmed = [p for v, p in judge_verdicts if p.validation_status == "user_confirmed"]
+    disputed = [p for v, p in judge_verdicts if p.validation_status == "disputed"]
+
+    accuracy = len(confirmed) / (len(confirmed) + len(disputed))
+
+    # Confidence trend analysis
+    trends = [p.get_confidence_trend() for v, p in judge_verdicts]
+    improving = sum(1 for t in trends if t == "improving")
+    degrading = sum(1 for t in trends if t == "degrading")
+
+    return {
+        "accuracy": f"{accuracy:.1%}",
+        "confirmed": len(confirmed),
+        "disputed": len(disputed),
+        "trend": "degrading" if degrading > improving else "improving"
+    }
+
+# Example output
+# {
+#   "accuracy": "92%",
+#   "confirmed": 92,
+#   "disputed": 8,
+#   "trend": "improving"
+# }
+```
+
+### Use Case: Weighted Judge Scores by Provenance
+
+**Problem:** Not all judge verdicts are equally reliable.
+
+**Solution:** Weight judge scores by confidence + validation history.
+
+```python
+def calculate_weighted_score(judge_verdicts: list) -> float:
+    """Calculate weighted average of judge ratings using provenance confidence."""
+
+    weighted_sum = 0.0
+    total_weight = 0.0
+
+    for verdict, provenance in judge_verdicts:
+        # Weight by current confidence score
+        weight = provenance.confidence_score
+
+        # Bonus weight for confirmed verdicts
+        if provenance.validation_status == "user_confirmed":
+            weight *= 1.2
+
+        # Penalty for disputed verdicts
+        elif provenance.validation_status == "disputed":
+            weight *= 0.5
+
+        weighted_sum += verdict.rating * weight
+        total_weight += weight
+
+    return weighted_sum / total_weight if total_weight > 0 else 0.0
+
+# Example:
+# Verdict A: rating=5, confidence=0.9, status=confirmed → weight=1.08
+# Verdict B: rating=3, confidence=0.6, status=disputed → weight=0.30
+# Verdict C: rating=4, confidence=0.8, status=agent_inferred → weight=0.80
+# Weighted avg: (5*1.08 + 3*0.30 + 4*0.80) / (1.08 + 0.30 + 0.80) = 4.32
+```
+
+### Audit Trail for Compliance
+
+**Regulatory Requirement:** Healthcare/finance judges must provide audit trail for decisions.
+
+**MemoryProvenance Audit Log:**
+
+```python
+# Export provenance as audit log
+audit_log = judge_provenance.to_audit_log()
+
+# Output (JSON format):
+{
+  "memory_id": "judge_eval_12345",
+  "source_session_id": "eval_batch_001",
+  "created_at": "2025-11-23T10:00:00Z",
+  "current_confidence": 0.95,
+  "validation_status": "user_confirmed",
+  "confidence_history": [
+    {"timestamp": "2025-11-23T10:00:00Z", "score": 0.8, "reason": "Initial judge verdict"},
+    {"timestamp": "2025-11-23T14:30:00Z", "score": 0.95, "reason": "Ground truth confirmed"}
+  ],
+  "confidence_trend": "improving",
+  "metadata": {
+    "judge_model": "gpt-4o",
+    "prompt_version": "v2.3",
+    "rating": 4
+  }
+}
+```
+
+**Compliance Benefits:**
+- **Traceability:** Every judge decision links back to source evaluation batch
+- **Transparency:** Confidence evolution visible (judge learned from mistakes)
+- **Accountability:** Disputed verdicts flagged for human review
+- **Reproducibility:** Prompt version + model tracked for replication
+
+### Interactive Exploration
+
+**Try it yourself:**
+- **Pattern Documentation:** [Context Engineering: Memory](../patterns/context-engineering-memory.md)
+  - MemoryProvenance dataclass with confidence tracking
+  - Code templates for provenance integration
+  - Common pitfalls and troubleshooting
+
+- **Notebook (Coming Soon):** `memory_provenance_lifecycle.ipynb`
+  - Simulate judge calibration over 100 evaluations
+  - Visualize confidence evolution (improving/degrading trends)
+  - Export audit logs for compliance review
+
+- **Full Tutorial System:** [google-context/](../google-context/)
+  - TERMINOLOGY.md for Memory vs RAG distinction
+  - Memory provenance implementation with confidence tracking
+  - PII redaction patterns for privacy-safe judge evaluation
+
+### Summary: Judge Reliability Through Provenance
+
+**Traditional Judge Evaluation:**
+- Deploy judge → Measure accuracy once → Hope it stays calibrated
+
+**+ Memory Provenance:**
+- **Confidence tracking:** Monitor judge reliability over time
+- **Validation status:** Ground truth confirmation (confirmed/disputed/inferred)
+- **Trend detection:** Identify degrading judges before production impact
+- **Weighted scoring:** Trust high-confidence + confirmed verdicts more
+- **Audit trails:** Full lineage for compliance (GDPR, HIPAA, FDIC)
+
+**Recommendation:**
+- Start tracking provenance on **ALL production judges** (10% sample for human validation)
+- Set alert: **Accuracy < 85% or trend = "degrading"** → Re-calibrate judge
+- Use weighted scores for aggregate metrics (don't treat all verdicts equally)
+
+**Code Example:**
+```python
+from backend.memory.provenance import MemoryProvenance
+
+# Track every judge verdict with provenance
+judge_provenance = MemoryProvenance(
+    memory_id=f"judge_{query_id}",
+    source_session_id="eval_batch_001",
+    confidence_score=verdict.confidence,
+    validation_status="agent_inferred"
+)
+
+# Sample 10% for human validation
+if random.random() < 0.10:
+    human_rating = human_review(query_id)
+    if human_rating == verdict.rating:
+        judge_provenance.add_confidence_update(0.95, "Ground truth confirmed")
+        judge_provenance.validation_status = "user_confirmed"
+    else:
+        judge_provenance.add_confidence_update(0.3, "Ground truth contradicted")
+        judge_provenance.validation_status = "disputed"
+
+# Export audit log
+audit_log = judge_provenance.to_audit_log()
+```
+
+---
+
 ## Next Steps
 
 After reading this guide:

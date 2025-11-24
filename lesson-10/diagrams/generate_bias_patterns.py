@@ -7,9 +7,10 @@ Creates a 3-subplot figure showing:
 3. Verbosity bias (judges favor longer responses)
 """
 
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import numpy as np
-from pathlib import Path
 
 # Set style
 plt.style.use('seaborn-v0_8-darkgrid')
@@ -93,7 +94,7 @@ scatter = ax3.scatter(response_lengths, scores, alpha=0.6, s=100, c=scores, cmap
 # Trend line
 z = np.polyfit(response_lengths, scores, 1)
 p = np.poly1d(z)
-ax3.plot(response_lengths, p(response_lengths), "r--", linewidth=2, label=f'Trend: r=0.47 (moderate bias)')
+ax3.plot(response_lengths, p(response_lengths), "r--", linewidth=2, label='Trend: r=0.47 (moderate bias)')
 
 ax3.set_xlabel('Response Length (words)', fontsize=12, fontweight='bold')
 ax3.set_ylabel('Judge Score (1-5)', fontsize=12, fontweight='bold')

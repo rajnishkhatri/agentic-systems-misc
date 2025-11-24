@@ -4,7 +4,6 @@ Tests the validate_json_schema.py script and its validation logic.
 """
 
 import json
-import math
 import sys
 from pathlib import Path
 

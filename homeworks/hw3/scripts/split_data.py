@@ -5,10 +5,10 @@ This script splits the labeled traces into stratified train/dev/test sets
 for developing and evaluating the LLM judge.
 """
 
-import pandas as pd
-import random
 from pathlib import Path
-from typing import List, Dict, Any, Tuple
+from typing import Any, Dict, List, Tuple
+
+import pandas as pd
 from rich.console import Console
 from sklearn.model_selection import train_test_split
 

@@ -319,7 +319,7 @@ def validate_notebook(notebook_path: Path, execute: bool = False, timeout: int =
         print(f"  {'✅' if link_pass_rate == 1.0 else '⚠️'} Cross-links: {link_checks['valid_links']}/{link_checks['total_links']} valid")
 
         if link_checks["broken_links"]:
-            print(f"  ❌ Broken links found:")
+            print("  ❌ Broken links found:")
             for broken in link_checks["broken_links"][:5]:  # Show first 5
                 print(f"    - [{broken['text']}]({broken['path']}) -> {broken['resolved']}")
     else:

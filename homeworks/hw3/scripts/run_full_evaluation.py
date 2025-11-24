@@ -5,18 +5,19 @@ This script runs the finalized judge on all traces and uses judgy to compute
 the corrected success rate with confidence intervals.
 """
 
-import os
-import pandas as pd
 import json
-import numpy as np
-from pathlib import Path
-from typing import List, Dict, Any, Tuple, Final
-from rich.console import Console
-from rich.progress import track
-import litellm
-from judgy import estimate_success_rate
+import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+from typing import Any, Dict, Final, List, Tuple
+
+import litellm
+import numpy as np
+import pandas as pd
 from dotenv import load_dotenv
+from judgy import estimate_success_rate
+from rich.console import Console
+
 load_dotenv()
 
 console = Console()
@@ -93,7 +94,7 @@ def evaluate_single_trace_for_binary(args: tuple) -> int:
             # Default to FAIL for parsing errors
             return 0
             
-    except Exception as e:
+    except Exception:
         # Default to FAIL for API errors
         return 0
 

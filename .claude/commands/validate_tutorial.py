@@ -10,13 +10,13 @@ Validates tutorial directories against quality standards:
 5. Reading time calculation
 """
 
+import json
 import re
+import subprocess
 import sys
 import time
 from pathlib import Path
 from typing import Any
-import subprocess
-import json
 
 
 class TutorialValidator:
