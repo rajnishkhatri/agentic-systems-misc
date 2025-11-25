@@ -14,7 +14,6 @@ from pathlib import Path
 
 import pytest
 
-
 # Notebook paths
 NOTEBOOKS_DIR = Path(__file__).parent.parent / "notebooks"
 NOTEBOOKS = [

@@ -1,0 +1,63 @@
+{
+  "current_step": 2,
+  "steps": [
+    {
+      "agent": "extractor",
+      "output": {
+        "has_ocr_error": false,
+        "invoice_date": "2024-03-25",
+        "invoice_id": "INV-2024-008",
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 9,
+            "unit_price": 61.67
+          },
+          {
+            "description": "Training Session",
+            "quantity": 10,
+            "unit_price": 111.62
+          }
+        ],
+        "total_amount": 173.29,
+        "vendor_name": "Nexus Solutions"
+      },
+      "status": "success",
+      "step": 0
+    },
+    {
+      "agent": "validator",
+      "output": {
+        "extracted_data": {
+          "has_ocr_error": false,
+          "invoice_date": "2024-03-25",
+          "invoice_id": "INV-2024-008",
+          "line_items": [
+            {
+              "description": "Subscription Fee",
+              "quantity": 9,
+              "unit_price": 61.67
+            },
+            {
+              "description": "Training Session",
+              "quantity": 10,
+              "unit_price": 111.62
+            }
+          ],
+          "total_amount": 173.29,
+          "vendor_name": "Nexus Solutions"
+        },
+        "invoice_id": "INV-2024-008",
+        "is_valid": true,
+        "validation_errors": []
+      },
+      "status": "success",
+      "step": 1
+    }
+  ],
+  "steps_completed": [
+    "extractor",
+    "validator"
+  ],
+  "task_id": "INV-2024-008"
+}

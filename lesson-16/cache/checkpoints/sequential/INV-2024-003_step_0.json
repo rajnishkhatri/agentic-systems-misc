@@ -1,0 +1,33 @@
+{
+  "current_step": 1,
+  "steps": [
+    {
+      "agent": "extractor",
+      "output": {
+        "has_ocr_error": true,
+        "invoice_date": "2024-06-20",
+        "invoice_id": "INV-2024-003",
+        "line_items": [
+          {
+            "description": "Development Services",
+            "quantity": 5,
+            "unit_price": 568.88
+          },
+          {
+            "description": "Software License",
+            "quantity": 8,
+            "unit_price": 321.39
+          }
+        ],
+        "total_amount": 890.27,
+        "vendor_name": "Fusion Enterprises"
+      },
+      "status": "success",
+      "step": 0
+    }
+  ],
+  "steps_completed": [
+    "extractor"
+  ],
+  "task_id": "INV-2024-003"
+}

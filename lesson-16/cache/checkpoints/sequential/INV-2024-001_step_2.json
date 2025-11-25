@@ -1,0 +1,65 @@
+{
+  "current_step": 3,
+  "steps": [
+    {
+      "agent": "extractor",
+      "output": {
+        "has_ocr_error": false,
+        "invoice_date": "2024-11-08",
+        "invoice_id": "INV-2024-001",
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 4,
+            "unit_price": 11060.69
+          }
+        ],
+        "total_amount": 11060.69,
+        "vendor_name": "Titan Corporation"
+      },
+      "status": "success",
+      "step": 0
+    },
+    {
+      "agent": "validator",
+      "output": {
+        "extracted_data": {
+          "has_ocr_error": false,
+          "invoice_date": "2024-11-08",
+          "invoice_id": "INV-2024-001",
+          "line_items": [
+            {
+              "description": "Subscription Fee",
+              "quantity": 4,
+              "unit_price": 11060.69
+            }
+          ],
+          "total_amount": 11060.69,
+          "vendor_name": "Titan Corporation"
+        },
+        "invoice_id": "INV-2024-001",
+        "is_valid": true,
+        "validation_errors": []
+      },
+      "status": "success",
+      "step": 1
+    },
+    {
+      "agent": "router",
+      "output": {
+        "approver": "finance_team",
+        "invoice_id": "INV-2024-001",
+        "priority": "high",
+        "routed_at": "2025-11-25 04:49:18"
+      },
+      "status": "success",
+      "step": 2
+    }
+  ],
+  "steps_completed": [
+    "extractor",
+    "validator",
+    "router"
+  ],
+  "task_id": "INV-2024-001"
+}

@@ -1,0 +1,28 @@
+{
+  "current_step": 1,
+  "steps": [
+    {
+      "agent": "extractor",
+      "output": {
+        "has_ocr_error": false,
+        "invoice_date": "2024-05-26",
+        "invoice_id": "INV-2024-009",
+        "line_items": [
+          {
+            "description": "Software License",
+            "quantity": 2,
+            "unit_price": 79.39
+          }
+        ],
+        "total_amount": 79.39,
+        "vendor_name": "Dynamic Partners"
+      },
+      "status": "success",
+      "step": 0
+    }
+  ],
+  "steps_completed": [
+    "extractor"
+  ],
+  "task_id": "INV-2024-009"
+}

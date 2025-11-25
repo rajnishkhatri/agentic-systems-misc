@@ -7,7 +7,6 @@ This module validates that all integration test infrastructure is correctly set 
 - Integration markers are configured
 """
 
-import asyncio
 from typing import Any
 
 import pytest
@@ -16,7 +15,6 @@ from .conftest import (
     EdgeCaseDataGenerator,
     MockLLMAgent,
 )
-
 
 # ============================================================================
 # Test 1: Mock Agent Basic Functionality

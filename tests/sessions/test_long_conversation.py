@@ -206,6 +206,43 @@ def test_should_handle_concurrent_compression_safely() -> None:
     assert any(event["turn"] == 0 for event in context), "Initial objective should survive concurrency"
 
 
+def test_get_context_window_backfills_turn_from_metadata() -> None:
+    """Legacy summary events missing turn should be normalized on read."""
+    from backend.sessions.gita_session import GitaSession
+
+    session = GitaSession()
+    session.events = [
+        {
+            "role": "system",
+            "event_type": "compression_summary",
+            "content": "Turns 10-20",
+            "is_protected": False,
+            "metadata": {"turn_range": [10, 20]},
+        }
+    ]
+
+    context = session.get_context_window()
+    assert context[0]["turn"] == 10, "Turn should be inferred from metadata turn_range"
+
+
+def test_get_context_window_defaults_turn_when_no_metadata() -> None:
+    """Fallback to -1 when legacy events have no turn hints."""
+    from backend.sessions.gita_session import GitaSession
+
+    session = GitaSession()
+    session.events = [
+        {
+            "role": "system",
+            "event_type": "compression_summary",
+            "content": "Legacy summary without metadata",
+            "is_protected": False,
+        }
+    ]
+
+    context = session.get_context_window()
+    assert context[0]["turn"] == -1, "Turn should default to -1 if no hints are available"
+
+
 def test_should_preserve_unicode_content_in_compression() -> None:
     """Test that Unicode/non-ASCII content (Sanskrit, emojis) is preserved during compression."""
     from backend.sessions.gita_session import GitaSession

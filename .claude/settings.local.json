@@ -116,7 +116,9 @@
       "Bash(tail:*)",
       "Bash(head -100 echo \"\" echo \"=== Diff 2: 84cd472 (Pattern Library Docs) ===\" git show 84cd472 -- CLAUDE.md)",
       "Bash(do echo \"\")",
-      "Bash(jupyter notebook --version)"
+      "Bash(jupyter notebook --version)",
+      "Bash(do [ -f \"$file\" ])",
+      "Bash(do [ -f \"$ref\" ])"
     ],
     "deny": [],
     "ask": []

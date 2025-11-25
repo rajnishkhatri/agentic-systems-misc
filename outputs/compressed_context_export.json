@@ -1,0 +1,211 @@
+[
+  {
+    "turn": 0,
+    "role": "user",
+    "content": "Help me understand karma yoga from the Bhagavad Gita. I want to learn how to apply it in modern life.",
+    "event_type": "initial_objective",
+    "is_protected": true
+  },
+  {
+    "turn": 15,
+    "role": "user",
+    "content": "Please always cite specific chapter and verse numbers when explaining concepts.",
+    "event_type": "constraint",
+    "is_protected": true
+  },
+  {
+    "turn": 1,
+    "turn_range": [
+      1,
+      75
+    ],
+    "role": "system",
+    "event_type": "compression_summary",
+    "content": "Turns 1-75 (74 events). Participants: assistant, user. Event mix: casual\u00d742, clarification\u00d732. User focus: Can you explain the difference between karma yoga and other yogas?; Can you explain how Krishna explains detachment from results?. Assistant focus: Karma yoga is the path of selfless action described in the Bhagavad Gita. It teaches pe...; In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse referenc...",
+    "is_compressed": true,
+    "is_protected": false,
+    "metadata": {
+      "turn_range": [
+        1,
+        75
+      ],
+      "event_count": 74,
+      "roles": [
+        "assistant",
+        "user"
+      ],
+      "event_type_counts": {
+        "casual": 42,
+        "clarification": 32
+      }
+    }
+  },
+  {
+    "turn": 76,
+    "role": "user",
+    "content": "Can you explain the concept of nishkama karma (desireless action)?",
+    "event_type": "clarification",
+    "is_protected": false
+  },
+  {
+    "turn": 77,
+    "role": "assistant",
+    "content": "In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse references from Chapter 2, 3, or 5)",
+    "event_type": "casual",
+    "is_protected": false
+  },
+  {
+    "turn": 78,
+    "role": "user",
+    "content": "Can you explain how Arjuna learned to practice karma yoga in battle?",
+    "event_type": "clarification",
+    "is_protected": false
+  },
+  {
+    "turn": 79,
+    "role": "assistant",
+    "content": "In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse references from Chapter 2, 3, or 5)",
+    "event_type": "casual",
+    "is_protected": false
+  },
+  {
+    "turn": 80,
+    "role": "user",
+    "content": "Can you explain applying karma yoga principles to modern career challenges?",
+    "event_type": "clarification",
+    "is_protected": false
+  },
+  {
+    "turn": 81,
+    "role": "assistant",
+    "content": "In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse references from Chapter 2, 3, or 5)",
+    "event_type": "casual",
+    "is_protected": false
+  },
+  {
+    "turn": 82,
+    "role": "user",
+    "content": "Can you explain the difference between karma yoga and other yogas?",
+    "event_type": "clarification",
+    "is_protected": false
+  },
+  {
+    "turn": 83,
+    "role": "assistant",
+    "content": "In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse references from Chapter 2, 3, or 5)",
+    "event_type": "casual",
+    "is_protected": false
+  },
+  {
+    "turn": 84,
+    "role": "user",
+    "content": "Can you explain how Krishna explains detachment from results?",
+    "event_type": "clarification",
+    "is_protected": false
+  },
+  {
+    "turn": 85,
+    "role": "assistant",
+    "content": "In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse references from Chapter 2, 3, or 5)",
+    "event_type": "casual",
+    "is_protected": false
+  },
+  {
+    "turn": 86,
+    "role": "user",
+    "content": "Can you explain practical examples of karma yoga in daily work?",
+    "event_type": "clarification",
+    "is_protected": false
+  },
+  {
+    "turn": 87,
+    "role": "assistant",
+    "content": "In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse references from Chapter 2, 3, or 5)",
+    "event_type": "casual",
+    "is_protected": false
+  },
+  {
+    "turn": 88,
+    "role": "user",
+    "content": "Can you explain the relationship between dharma and karma yoga?",
+    "event_type": "clarification",
+    "is_protected": false
+  },
+  {
+    "turn": 89,
+    "role": "assistant",
+    "content": "In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse references from Chapter 2, 3, or 5)",
+    "event_type": "casual",
+    "is_protected": false
+  },
+  {
+    "turn": 90,
+    "role": "user",
+    "content": "Can you explain how to remain equanimous in success and failure?",
+    "event_type": "clarification",
+    "is_protected": false
+  },
+  {
+    "turn": 91,
+    "role": "assistant",
+    "content": "In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse references from Chapter 2, 3, or 5)",
+    "event_type": "casual",
+    "is_protected": false
+  },
+  {
+    "turn": 92,
+    "role": "user",
+    "content": "Can you explain the concept of nishkama karma (desireless action)?",
+    "event_type": "clarification",
+    "is_protected": false
+  },
+  {
+    "turn": 93,
+    "role": "assistant",
+    "content": "In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse references from Chapter 2, 3, or 5)",
+    "event_type": "casual",
+    "is_protected": false
+  },
+  {
+    "turn": 94,
+    "role": "user",
+    "content": "Can you explain how Arjuna learned to practice karma yoga in battle?",
+    "event_type": "clarification",
+    "is_protected": false
+  },
+  {
+    "turn": 95,
+    "role": "assistant",
+    "content": "In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse references from Chapter 2, 3, or 5)",
+    "event_type": "casual",
+    "is_protected": false
+  },
+  {
+    "turn": 96,
+    "role": "user",
+    "content": "Can you explain applying karma yoga principles to modern career challenges?",
+    "event_type": "clarification",
+    "is_protected": false
+  },
+  {
+    "turn": 97,
+    "role": "assistant",
+    "content": "In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse references from Chapter 2, 3, or 5)",
+    "event_type": "casual",
+    "is_protected": false
+  },
+  {
+    "turn": 98,
+    "role": "user",
+    "content": "Can you explain the difference between karma yoga and other yogas?",
+    "event_type": "clarification",
+    "is_protected": false
+  },
+  {
+    "turn": 99,
+    "role": "assistant",
+    "content": "In the Bhagavad Gita, Krishna teaches that... (detailed explanation with verse references from Chapter 2, 3, or 5)",
+    "event_type": "casual",
+    "is_protected": false
+  }
+]

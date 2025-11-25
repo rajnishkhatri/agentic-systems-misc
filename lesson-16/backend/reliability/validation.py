@@ -30,35 +30,37 @@ class InvoiceExtraction(BaseModel):
 
     Attributes:
         invoice_id: Unique invoice identifier (e.g., "INV-2024-001")
-        vendor: Vendor name
-        amount: Invoice total amount (must be positive)
-        date: Invoice date in ISO format (e.g., "2024-01-15")
+        vendor_name: Vendor name (alias: vendor)
+        total_amount: Invoice total amount (must be positive, alias: amount)
+        invoice_date: Invoice date in ISO format (alias: date)
         line_items: List of line item dictionaries
+        has_ocr_error: Optional flag indicating OCR issues
 
     Example:
         >>> invoice = InvoiceExtraction(
         ...     invoice_id="INV-2024-001",
-        ...     vendor="Acme Corp",
-        ...     amount=1234.56,
-        ...     date="2024-01-15",
+        ...     vendor_name="Acme Corp",
+        ...     total_amount=1234.56,
+        ...     invoice_date="2024-01-15",
         ...     line_items=[{"description": "Widget", "quantity": 10, "unit_price": 123.456}]
         ... )
-        >>> invoice.amount
+        >>> invoice.total_amount
         1234.56
     """
 
     invoice_id: str
-    vendor: str
-    amount: float
-    date: str
+    vendor_name: str
+    total_amount: float
+    invoice_date: str
     line_items: list[dict[str, Any]]
+    has_ocr_error: bool = False
 
     class Config:
         """Pydantic configuration."""
 
         extra = "forbid"  # Reject unknown fields (prevents hallucinations)
 
-    @field_validator("amount")
+    @field_validator("total_amount")
     @classmethod
     def validate_amount_positive(cls, v: float) -> float:
         """Validate that amount is positive.

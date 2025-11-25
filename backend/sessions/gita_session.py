@@ -91,7 +91,8 @@ class GitaSession:
         Returns:
             List of events currently in context window
         """
-        # Return current events (already compressed if needed)
+        # Normalize events to guarantee required structural fields (e.g., turn)
+        self.events = [self._ensure_turn_field(event) for event in self.events]
         return self.events
 
     def _compress_events(self) -> None:
@@ -100,7 +101,33 @@ class GitaSession:
         compressed_events = self.compressor.compress(self.events)
 
         # Step 2: Update events log
-        self.events = compressed_events
+        self.events = [self._ensure_turn_field(event) for event in compressed_events]
 
         # Step 3: Track compression count
         self.compression_count += 1
+
+    def _ensure_turn_field(self, event: dict[str, Any]) -> dict[str, Any]:
+        """Ensure every event exposes a turn identifier (compatibility shim)."""
+        if not isinstance(event, dict):
+            return event
+        if "turn" in event:
+            return event
+
+        turn_candidate = None
+        turn_range = event.get("turn_range")
+        if isinstance(turn_range, list) and turn_range:
+            turn_candidate = turn_range[0]
+
+        if turn_candidate is None:
+            metadata = event.get("metadata")
+            if isinstance(metadata, dict):
+                meta_range = metadata.get("turn_range")
+                if isinstance(meta_range, list) and meta_range:
+                    turn_candidate = meta_range[0]
+
+        if turn_candidate is None:
+            # Fallback for legacy summaries without metadata.
+            turn_candidate = -1
+
+        event["turn"] = turn_candidate
+        return event

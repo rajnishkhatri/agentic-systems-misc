@@ -1,0 +1,73 @@
+{
+  "current_step": 2,
+  "steps": [
+    {
+      "agent": "extractor",
+      "output": {
+        "has_ocr_error": false,
+        "invoice_date": "2024-01-09",
+        "invoice_id": "INV-2024-005",
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 4,
+            "unit_price": 127.35
+          },
+          {
+            "description": "Professional Services",
+            "quantity": 5,
+            "unit_price": 37.46
+          },
+          {
+            "description": "Subscription Fee",
+            "quantity": 4,
+            "unit_price": 65.07
+          }
+        ],
+        "total_amount": 229.88,
+        "vendor_name": "Acme Corp"
+      },
+      "status": "success",
+      "step": 0
+    },
+    {
+      "agent": "validator",
+      "output": {
+        "extracted_data": {
+          "has_ocr_error": false,
+          "invoice_date": "2024-01-09",
+          "invoice_id": "INV-2024-005",
+          "line_items": [
+            {
+              "description": "Subscription Fee",
+              "quantity": 4,
+              "unit_price": 127.35
+            },
+            {
+              "description": "Professional Services",
+              "quantity": 5,
+              "unit_price": 37.46
+            },
+            {
+              "description": "Subscription Fee",
+              "quantity": 4,
+              "unit_price": 65.07
+            }
+          ],
+          "total_amount": 229.88,
+          "vendor_name": "Acme Corp"
+        },
+        "invoice_id": "INV-2024-005",
+        "is_valid": true,
+        "validation_errors": []
+      },
+      "status": "success",
+      "step": 1
+    }
+  ],
+  "steps_completed": [
+    "extractor",
+    "validator"
+  ],
+  "task_id": "INV-2024-005"
+}

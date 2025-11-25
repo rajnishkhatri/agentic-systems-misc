@@ -1,0 +1,719 @@
+# Claude Code Instructions for LLM Evals tutorial
+
+This project combines the **AI Dev Tasks** workflow with **Compound Engineering** principles for building an intelligent LLM evaluation tutorial.
+
+## Project Philosophy
+
+"Stop thinking in terms of files and functions. Start thinking about outcomes and delegation."
+
+We use a structured approach:
+1. **AI Dev Tasks**: PRD → Task List → Implementation with checkpoints
+2. **Compound Engineering**: Orchestrate AI agents for parallel execution
+3. **TDD First**: Write tests before implementation
+4. **Quality Gates**: Ruff, pytest, and clear documentation
+
+## Available Workflows
+
+### AI Dev Tasks Workflow
+- Use `@create-prd.md` to generate Product Requirement Documents
+- Use `@generate-tasks.md` to break PRDs into actionable tasks
+- Use `@process-task-list.md` to execute tasks with approval checkpoints
+
+### Compound Engineering Commands
+- `/explore` - Analyze and understand codebases
+- `/issue` - Create GitHub issues with proper templates
+- `/work` - Execute tasks from GitHub project board
+- `/review` - Code review and quality checks
+- `/test` - Run comprehensive test suites
+- `/docs` - Generate and update documentation
+- `/reflect` - Post-implementation analysis
+
+### Project Maintenance Commands
+- `/compress-claude` - Optimize CLAUDE.md by extracting verbose sections to modular files with `@` imports
+  - `analyze` - Scan for compression opportunities (sections >100 lines)
+  - `extract [section]` - Move content to `.claude/instructions/` with summary + import
+  - `validate` - Test all imports resolve correctly
+  - `revert [section]` - Undo extraction and restore original content
+
+## Development Principles
+
+**IMPORT TEST:** @.claude/instructions/test-import.md
+
+1. **TDD Always**: 
+# TDD Mode: RED → GREEN → REFACTOR
+
+## You MUST follow Test-Driven Development strictly:
+
+### TDD Rules:
+**RED**: Write ONE failing test
+- Create test for single behavior
+- Naming: `test_should_[result]_when_[condition]`  
+- Run test and confirm it fails
+- NEVER write implementation code
+
+**GREEN**: Minimal code to pass
+- Write ONLY enough code to make test pass
+- No extra features or anticipation
+- Run test and confirm it passes
+- NEVER modify the test
+
+**REFACTOR**: Improve with tests green
+- Clean up code (DRY, readability, performance)
+- always write defensive coding
+- Keep all tests passing
+- Run tests after each change
+
+### Strict Constraints:
+- ❌ NEVER write code before test exists
+- ❌ NEVER write multiple tests at once  
+- ❌ NEVER add code not required by current test
+- ❌ NEVER modify test and code together
+- ✅ ASK for clarification if unclear
+- ✅ SHOW test output at each step
+
+## Defensive Python (MANDATORY):
+
+### Type Safety:
+- Type hints on ALL functions: `def func(x: int) -> str:`
+- Use `list[T]`, `dict[K, V]`, `Optional[T]` or `T | None`
+- Dataclasses or Pydantic for data structures
+
+### Input Validation:
+- Guard clauses at function start
+- Check for `None`, empty collections, invalid ranges
+- Raise descriptive exceptions: `ValueError`, `TypeError`
+
+### Error Handling:
+- ❌ NEVER use bare `except:`
+- ✅ Catch specific exceptions: `except ValueError as e:`
+- Log errors, don't silently fail
+- Use context managers (`with`) for resources
+
+### Example:
+```python
+# RED: Test first
+def test_should_sum_items_when_valid_list():
+    assert calculate_total([1, 2, 3]) == 6
+
+def test_should_raise_when_empty_list():
+    with pytest.raises(ValueError, match="items required"):
+        calculate_total([])
+
+# GREEN: Defensive implementation
+def calculate_total(items: list[int] | None) -> int:
+    if not items:
+        raise ValueError("items required")
+    if not all(isinstance(x, int) for x in items):
+        raise TypeError("all items must be integers")
+    return sum(items)
+
+# REFACTOR: Keep it clean
+
+### Workflow:
+1. Human provides failing test (RED)
+2. You implement minimal passing code (GREEN)  
+3. Together we refactor (REFACTOR)
+4. Repeat for next feature
+
+### Commands:
+- Start: "TDD mode: RED phase. Ready for test."
+- Verify: "Run test. Show output. No implementation."
+- Implement: "GREEN phase. Make test pass minimally."
+- Clean: "REFACTOR phase. Improve code, keep tests green."
+
+Always state current phase before any action.
+
+### Defensive Function Design Template:
+All functions should follow this 5-step pattern for robustness:
+
+```python
+def function_name(arg: Type, optional: Type = default) -> ReturnType:
+    """Brief description of what the function does.
+
+    Args:
+        arg: Description of argument
+        optional: Description of optional argument
+
+    Returns:
+        Description of return value
+
+    Raises:
+        TypeError: When type validation fails
+        ValueError: When value validation fails
+    """
+    # Step 1: Type checking (defensive)
+    if not isinstance(arg, ExpectedType):
+        raise TypeError("arg must be ExpectedType")
+
+    # Step 2: Input validation (defensive)
+    if arg < 0:
+        raise ValueError("arg must be non-negative")
+
+    # Step 3: Edge case handling
+    if len(arg) == 0:
+        return default_value
+
+    # Step 4: Main logic (the actual work)
+    result = process(arg)
+
+    # Step 5: Return
+    return result
+```
+
+**Example from Task 2.3** (`check_performance_alert` in `workflow.py:301-344`):
+```python
+def check_performance_alert(state: dict[str, Any], threshold: float = 10.0) -> dict[str, Any]:
+    """Check if query exceeds performance threshold and identify bottleneck.
+
+    Args:
+        state: Workflow state with timing metrics
+        threshold: Time threshold in seconds (default: 10.0)
+
+    Returns:
+        Alert dictionary with is_slow flag and details
+
+    Raises:
+        TypeError: If state is not a dict
+        ValueError: If threshold is negative
+    """
+    # Step 1: Type checking
+    if not isinstance(state, dict):
+        raise TypeError("state must be a dict")
+    if threshold < 0:
+        raise ValueError("threshold must be non-negative")
+
+    # Step 2: Get total time (with safe default)
+    total_time = state.get("total_time", 0.0)
+
+    # Step 3: Main logic
+    is_slow = total_time > threshold
+    alert = {
+        "is_slow": is_slow,
+        "threshold": threshold,
+        "total_time": total_time,
+    }
+
+    if is_slow:
+        alert["message"] = f"Query exceeded threshold ({total_time:.1f}s > {threshold}s)"
+        timing = state.get("_metrics", {}).get("timing", {})
+        if timing:
+            slowest_agent = max(timing.items(), key=lambda x: x[1])
+            alert["slowest_agent"] = slowest_agent[0]
+            alert["slowest_time"] = slowest_agent[1]
+    else:
+        alert["message"] = f"Query completed within threshold ({total_time:.1f}s ≤ {threshold}s)"
+
+    # Step 4: Return
+    return alert
+```
+
+### Test Naming Convention:
+Use the pattern `test_should_[result]_when_[condition]()` for clarity:
+
+**Pattern**: `test_should_[expected_result]_when_[condition_or_input]()`
+
+**Benefits**:
+- Reads like a specification: "Test should [do what] when [under what circumstances]"
+- Makes test intent immediately clear
+- Groups related tests alphabetically
+- Easy to identify missing test cases
+
+**Examples from Task 2.3** (`test_chainlit_ui.py`):
+
+```python
+# Testing expected behavior
+def test_should_detect_slow_query_when_exceeds_10s() -> None:
+    """Test that queries over 10s trigger performance alert."""
+    state = {"total_time": 12.5}
+    alert = check_performance_alert(state)
+    assert alert["is_slow"] is True
+
+def test_should_not_alert_when_query_under_10s() -> None:
+    """Test that fast queries don't trigger alert."""
+    state = {"total_time": 7.3}
+    alert = check_performance_alert(state)
+    assert alert["is_slow"] is False
+
+# Testing error conditions
+def test_should_raise_error_for_invalid_state_type() -> None:
+    """Test that invalid state type raises TypeError."""
+    with pytest.raises(TypeError, match="state must be a dict"):
+        check_performance_alert("not a dict")
+
+def test_should_raise_error_for_negative_threshold() -> None:
+    """Test that negative threshold raises ValueError."""
+    state = {"total_time": 5.0}
+    with pytest.raises(ValueError, match="threshold must be non-negative"):
+        check_performance_alert(state, threshold=-1.0)
+
+# Testing edge cases
+def test_should_handle_empty_verses_list() -> None:
+    """Test handling of empty retrieval results."""
+    counts = calculate_source_counts([])
+    assert counts["unique_verses"] == 0
+    assert counts["total_chunks"] == 0
+
+def test_should_handle_missing_total_time() -> None:
+    """Test handling of state without total_time."""
+    state = {}
+    alert = check_performance_alert(state)
+    assert alert["is_slow"] is False
+    assert alert["total_time"] == 0.0
+```
+
+**Anti-patterns to avoid**:
+- ❌ `test_performance()` - Too vague
+- ❌ `test_1()` - No context
+- ❌ `test_check_performance_alert_function()` - Describes implementation, not behavior
+- ✅ `test_should_detect_slow_query_when_exceeds_10s()` - Clear expectation and condition
+
+2. **Parallel Execution**: Use Claude's Task tool for independent operations
+3. **Clear Specifications**: Document requirements thoroughly before coding
+4. **Quality First**: Ruff formatting, type hints, comprehensive tests
+5. **User-Centric**: Focus on outcomes that matter to users
+6. **Pattern Library**: Use documented patterns from `/patterns/` directory for consistent, maintainable code
+
+## Project Structure
+
+```
+├── .claude/commands/     # Custom slash commands
+├── src/                 # Source code (Bhagavad Gita chatbot)
+├── tests/               # Test suite
+├── tasks/               # AI Dev Tasks (PRDs and task lists)
+├── patterns/            # Reusable code patterns documentation
+│   ├── README.md               # Pattern library catalog
+│   ├── tdd-workflow.md         # TDD pattern (RED→GREEN→REFACTOR)
+│   ├── threadpool-parallel.md  # ThreadPoolExecutor concurrency pattern
+│   └── abstract-base-class.md  # Abstract Base Class OOP pattern
+├── analysis/            # Design docs and decisions
+├── Gita/                # Bhagavad Gita datasets
+│   ├── Bhagwat-Gita-Infinity/  # 737 verse JSON files with commentaries
+│   └── Bhagavad-Gita-QA/       # 3,500 Q&A pairs for evaluation
+├── data/                # Vector database storage
+├── logs/                # Application logs
+├── outputs/             # Generated outputs
+├── create-prd.md        # AI Dev Tasks: PRD creation
+├── generate-tasks.md    # AI Dev Tasks: Task generation
+├── process-task-list.md # AI Dev Tasks: Task execution
+├── env.example          # Environment configuration template
+└── pyproject.toml       # Project configuration with all dependencies
+```
+
+## Pattern Library
+
+This project includes a comprehensive **Pattern Library** documenting reusable code patterns for building robust, maintainable AI evaluation systems.
+
+### Available Patterns
+
+**Location:** `/patterns/` directory
+
+**Quick Reference:**
+
+| Pattern | Complexity | Use Case |
+|---------|-----------|----------|
+| [TDD Workflow](patterns/tdd-workflow.md) | ⭐⭐ | Testing & development methodology (RED→GREEN→REFACTOR) |
+| [ThreadPoolExecutor Parallel](patterns/threadpool-parallel.md) | ⭐⭐⭐ | Concurrent batch processing for I/O-bound tasks |
+| [Abstract Base Class](patterns/abstract-base-class.md) | ⭐⭐⭐ | OOP interface enforcement & polymorphism |
+
+**When to use patterns:**
+
+1. **TDD Workflow** - When building new features, refactoring code, or fixing bugs
+   - Write tests BEFORE implementation
+   - Follow RED (failing test) → GREEN (minimal code) → REFACTOR (improve quality)
+   - Use test naming convention: `test_should_[result]_when_[condition]()`
+
+2. **ThreadPoolExecutor Parallel** - When batch processing I/O-bound tasks
+   - Processing multiple API calls, database queries, or file operations in parallel
+   - Use `future_to_index` mapping to preserve result order
+   - Include exception handling with fallbacks and `tqdm` progress tracking
+
+3. **Abstract Base Class** - When creating frameworks with multiple implementations
+   - Define common interface with `ABC` and `@abstractmethod`
+   - Share functionality (retry logic, validation) in base class
+   - Enforce contract: subclasses must call `super().__init__()` and implement abstract methods
+
+**For AI Assistants (Claude Code):**
+
+When generating code, check if a pattern applies and use the template from the pattern documentation. All patterns include:
+- Copy-paste code templates with defensive coding
+- Real examples from codebase with file:line references
+- Common pitfalls and how to avoid them
+- Integration with defensive coding principles
+
+**See:** [Pattern Library README](patterns/README.md) for full documentation and contribution guidelines.
+
+---
+
+## Quality Standards
+
+- **Line Length**: 120 characters (Ruff configuration)
+- **Type Hints**: Required for all functions
+- **Async/Await**: Preferred for I/O operations
+- **Test Coverage**: Aim for 90%+ coverage
+- **Documentation**: Keep CLAUDE.md updated with project patterns
+- **Code Patterns**: Follow documented patterns from `/patterns/` directory
+
+---
+
+## Context Engineering Principles
+
+**Core Thesis:**
+> "Bigger models aren't enough. Intelligence emerges from orchestration."
+
+This project implements **Context Engineering** - the discipline of managing what information gets included in an LLM's context window, how it's structured, and when it's retrieved.
+
+### Critical Distinctions
+
+**Before writing any context-aware code, read:** [google-context/TERMINOLOGY.md](google-context/TERMINOLOGY.md)
+
+#### 1. Session History vs. Context Window
+
+| Session History | Context Window |
+|----------------|---------------|
+| Full conversation log (50K tokens) | Curated subset sent to LLM (8K tokens) |
+| Stored in database | Sent at inference time |
+| Grows unbounded | Fixed size constraint |
+| Raw material | Refined input |
+
+**Example:**
+```python
+# ❌ WRONG: Sending entire session history
+response = llm.generate(messages=session_history)  # 50K tokens!
+
+# ✅ RIGHT: Compress and curate
+context_window = session.get_context_window()  # 8K tokens
+response = llm.generate(messages=context_window)
+```
+
+#### 2. Memory vs. RAG (Knowledge Retrieval)
+
+| Memory | RAG |
+|--------|-----|
+| User-specific facts | General knowledge |
+| "User prefers Sivananda translations" | "Chapter 3 discusses karma yoga" |
+| Personal assistant | Research librarian |
+| Cross-session persistence | Domain knowledge retrieval |
+
+**Example:**
+```python
+# Memory: User-specific
+memory = "User is beginner in Bhagavad Gita study"
+
+# RAG: General knowledge
+rag_result = "Chapter 2, Verse 47: You have right to work, not to fruits thereof"
+```
+
+#### 3. Proactive vs. Reactive Memory Retrieval
+
+| Proactive | Reactive |
+|-----------|----------|
+| Auto-load memories into context | Agent tool call retrieves on-demand |
+| Higher token usage | Lower token usage |
+| No misses (memories always available) | Requires smart agent to know when to retrieve |
+| Good for critical preferences | Good for optional enhancements |
+
+### Protected Context Pattern
+
+**Rule:** Events that must survive compression across long conversations.
+
+**Protected Event Types:**
+- **Turn 0**: Initial user objectives
+- **`event_type == "constraint"`**: Explicit user constraints
+- **`event_type == "auth_checkpoint"`**: Authentication state
+- **Goal statements**: User's learning goals
+
+**Code:**
+```python
+def identify_protected_context(event: dict[str, Any]) -> dict[str, Any]:
+    """Identify if an event contains protected context.
+
+    Args:
+        event: Conversation event with turn, role, content, event_type
+
+    Returns:
+        Dict with is_protected flag and reason
+    """
+    # Step 1: Type checking (defensive)
+    if not isinstance(event, dict):
+        raise TypeError("event must be a dict")
+
+    # Step 2: Check protection criteria
+    event_type = event["event_type"]
+    turn = event["turn"]
+
+    # Initial objectives (turn 0)
+    if turn == 0:
+        return {"is_protected": True, "reason": "initial_objective"}
+
+    # Explicit constraints
+    if event_type == "constraint":
+        return {"is_protected": True, "reason": "explicit_constraint"}
+
+    # Authentication checkpoints
+    if event_type == "auth_checkpoint":
+        return {"is_protected": True, "reason": "authentication"}
+
+    # Step 3: Default to not protected
+    return {"is_protected": False, "reason": "compressible"}
+```
+
+**See:** [patterns/context-engineering-sessions.md](patterns/context-engineering-sessions.md)
+
+### Memory Provenance (Mandatory)
+
+**Rule:** Every memory must have full lineage tracking for audit and trustworthiness.
+
+**Mandatory Metadata:**
+```python
+@dataclass
+class MemoryProvenance:
+    memory_id: str  # UUID
+    source_session_id: str  # Which session extracted this
+    extraction_timestamp: datetime  # When
+    confidence_score: float  # 0.0-1.0
+    validation_status: Literal["agent_inferred", "user_confirmed", "disputed"]
+    confidence_history: list[dict[str, float | str]]  # Evolution over time
+```
+
+**Confidence Evolution Rules:**
+- **user_confirmed**: +0.1 boost (capped at 1.0)
+- **disputed**: -0.2 penalty (floored at 0.0)
+- **agent_inferred**: No adjustment
+
+**Example:**
+```python
+# Day 1: Agent infers preference
+provenance = MemoryProvenance(
+    memory_id="mem_123",
+    source_session_id="sess_day1",
+    extraction_timestamp=datetime.now(),
+    confidence_score=0.7,
+    validation_status="agent_inferred"
+)
+
+# Day 5: User confirms
+provenance.add_confidence_update(0.9, "User confirmed")
+provenance.validation_status = "user_confirmed"
+
+# Effective confidence: 0.9 + 0.1 = 1.0 (boost for user_confirmed)
+print(provenance.effective_confidence)  # 1.0
+```
+
+**See:** [patterns/context-engineering-memory.md](patterns/context-engineering-memory.md)
+
+### PII Redaction for Spiritual Context
+
+**Rule:** Redact personally identifiable information while preserving spiritual/emotional context.
+
+**What to Redact:**
+- Emails: `john@example.com` → `[EMAIL_REDACTED]`
+- Phone numbers: `555-1234` → `[PHONE_REDACTED]`
+- Full names: `John Smith` → `[NAME_REDACTED]`
+- Addresses: `123 Main Street` → `[LOCATION_REDACTED]`
+
+**What NOT to Redact (Whitelist):**
+- Bhagavad Gita characters: Arjuna, Krishna, Sanjaya
+- Philosophical terms: Brahman, Atman, Karma, Dharma
+- Emotional context: anxiety, fear, confusion
+- Situational context: job interview, family conflict
+
+**Code:**
+```python
+class PIIRedactor:
+    def __init__(self) -> None:
+        self.email_pattern = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
+        self.phone_pattern = re.compile(r'\b(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3,4}[-.\s]?\d{4}\b')
+        self.name_pattern = re.compile(r'\b[A-Z][a-z]+ (?:[A-Z]\. )?[A-Z][a-z]+\b')
+
+        # Whitelist for Gita characters and terms
+        self.whitelist = {"Arjuna", "Krishna", "Brahman", "Karma", "Dharma"}
+
+    def redact(self, text: str) -> tuple[str, bool]:
+        pii_found = False
+        redacted_text = text
+
+        # Redact emails, phones, locations
+        if self.email_pattern.search(redacted_text):
+            redacted_text = self.email_pattern.sub("[EMAIL_REDACTED]", redacted_text)
+            pii_found = True
+
+        # Redact names (with whitelist check)
+        for name in self.name_pattern.findall(redacted_text):
+            if name not in self.whitelist:
+                redacted_text = redacted_text.replace(name, "[NAME_REDACTED]")
+                pii_found = True
+
+        return redacted_text, pii_found
+```
+
+**Example:**
+```python
+user_message = "I'm John Smith at john@email.com. I'm anxious about my job interview. Can Krishna's teachings help?"
+
+redactor = PIIRedactor()
+redacted, pii_found = redactor.redact(user_message)
+
+# Result:
+# "[NAME_REDACTED] at [EMAIL_REDACTED]. I'm anxious about my job interview. Can Krishna's teachings help?"
+# Krishna preserved (whitelist), John Smith redacted, emotional context preserved
+```
+
+### Implementation Checklist
+
+When implementing context-aware AI systems:
+
+- [ ] **Read terminology first**: [google-context/TERMINOLOGY.md](google-context/TERMINOLOGY.md)
+- [ ] **Sessions pattern**: Compress at 95% threshold, protect turn 0 and constraints
+- [ ] **Memory provenance**: Track source_session_id, confidence_score, validation_status
+- [ ] **PII redaction**: Redact identifiers, preserve domain-specific terms (whitelist)
+- [ ] **Confidence evolution**: Implement boost/penalty rules for validation status
+- [ ] **Token efficiency**: Target 6x reduction (50K → 8K) while preserving intelligence
+- [ ] **Test coverage**: ≥90% for sessions and memory modules
+
+### Learning Resources
+
+**Quick Start (30 minutes):**
+1. Read [TERMINOLOGY.md](google-context/TERMINOLOGY.md) - Critical distinctions
+2. Review visual diagrams (session_vs_context.svg, memory_vs_rag.svg)
+3. Study Bhagavad Gita chatbot case study
+
+**Implementation (2-3 hours):**
+1. [Sessions Pattern](patterns/context-engineering-sessions.md) - Multi-turn conversations
+2. [Memory Pattern](patterns/context-engineering-memory.md) - Long-term persistence
+3. Run tests: `pytest tests/sessions/ tests/memory/ -v --cov`
+
+**Full Mastery (4-6 hours):**
+1. Complete implementation path above
+2. Study advanced topics (performance optimization, conflict resolution)
+3. Analyze case studies (Bhagavad Gita, Banking Fraud, Healthcare Triage)
+
+**Navigation Hub:** [google-context/TUTORIAL_INDEX.md](google-context/TUTORIAL_INDEX.md)
+
+---
+
+## Tutorial Workflow
+
+### Using the Tutorial System
+
+This project includes comprehensive tutorials for systematic AI evaluation learning. Each homework and lesson has a `TUTORIAL_INDEX.md` file with:
+
+- **Learning objectives** and prerequisites
+- **Recommended learning paths** with step-by-step guidance
+- **Links to concept tutorials**, interactive notebooks, and visual diagrams
+- **Common pitfalls** and troubleshooting
+- **FAQs** and real-world applications
+
+### Tutorial Navigation
+
+**Homework Tutorials:**
+- [HW1: Prompt Engineering](homeworks/hw1/TUTORIAL_INDEX.md)
+- [HW2: Error Analysis](homeworks/hw2/TUTORIAL_INDEX.md)
+- [HW3: LLM-as-Judge](homeworks/hw3/TUTORIAL_INDEX.md)
+- [HW4: RAG Evaluation](homeworks/hw4/TUTORIAL_INDEX.md)
+- [HW5: Agent Failure Analysis](homeworks/hw5/TUTORIAL_INDEX.md)
+
+**Lesson Tutorials:**
+- [Lesson 4: Substantiation Evaluation](lesson-4/TUTORIAL_INDEX.md)
+- [Lesson 7: Trace Inspection](lesson-7/TUTORIAL_INDEX.md)
+- [Lesson 8: Model Cascades](lesson-8/TUTORIAL_INDEX.md)
+- [Lesson 9: Evaluation Fundamentals & Exact Methods](lesson-9/TUTORIAL_INDEX.md)
+- [Lesson 10: AI-as-Judge Mastery & Production Patterns](lesson-10/TUTORIAL_INDEX.md)
+- [Lesson 11: Comparative Evaluation & Leaderboards](lesson-11/TUTORIAL_INDEX.md)
+
+**Cross-Lesson Resources:**
+- [Evaluation Dashboard (Lessons 9-11)](lesson-9-11/README.md) - Unified metrics visualization
+- [Tutorial Changelog](TUTORIAL_CHANGELOG.md) - Track tutorial updates after code changes
+
+### Recommended Learning Paths
+
+**Path 1: Foundation → Advanced Evaluation (Lessons 9→10→11)**
+1. Complete Lesson 9 (Evaluation Fundamentals & Exact Methods) - ~3-4 hours
+2. Complete Lesson 10 (AI-as-Judge Mastery) - ~4-5 hours
+3. Complete Lesson 11 (Comparative Evaluation) - ~3-4 hours
+4. Launch Evaluation Dashboard: `python lesson-9-11/evaluation_dashboard.py`
+
+**Path 2: Homework-First Approach**
+1. Complete HW1-2 (Prompt Engineering, Error Analysis)
+2. Complete HW3 (LLM-as-Judge) → Then study Lesson 10 for deeper understanding
+3. Complete HW4 (RAG Evaluation) → Then study Lesson 9 for metric selection
+4. Complete HW5 (Agent Failure Analysis)
+5. Complete Lessons 9-11 for comprehensive evaluation methodology
+
+**Path 3: Quick Start (Dashboard-First)**
+1. Launch dashboard: `python lesson-9-11/evaluation_dashboard.py`
+2. Explore sample metrics from HW3, HW4, Lessons 9-11
+3. Read TUTORIAL_INDEX.md for each lesson to understand metrics
+4. Deep dive into specific tutorials as needed
+
+### Tutorial Development Workflow
+
+When creating or updating tutorials:
+
+1. **Start with TUTORIAL_INDEX.md** - Navigation hub for all tutorials in a directory
+2. **Write concept tutorials (.md)** - Theory and methodology explanations
+3. **Create interactive notebooks (.ipynb)** - Hands-on exercises with live code
+4. **Design visual diagrams (.mmd)** - Mermaid diagrams for workflow/architecture visualization
+5. **Cross-link tutorials** - Ensure students can navigate between related topics
+6. **Update TUTORIAL_CHANGELOG.md** - Track when tutorials need updates after code changes
+
+### Tutorial Quality Standards
+
+- **Reading time:** 15-30 minutes per tutorial
+- **Execution time:** <5 minutes for notebooks (or provide "Quick Run" option)
+- **Diagrams:** Understandable without reading code
+- **Examples:** Use real course datasets, not toy data
+- **Maintenance:** Use relative paths for stability
+
+### Tutorial Types
+
+1. **Concept Tutorials (.md)**
+   - Explain theory and methodology
+   - Target: 15-25 minute reading time
+   - Include practical exercises at the end
+
+2. **Interactive Notebooks (.ipynb)**
+   - Hands-on implementation with live code
+   - Include setup cells, cost warnings, validation assertions
+   - Target: Execute in <5 minutes
+
+3. **Visual Diagrams (.mmd / .png)**
+   - Mermaid syntax for GitHub rendering
+   - Export to PNG for complex diagrams (>10 nodes)
+   - Show workflow, architecture, or decision trees
+
+## Working with GitHub
+
+This project uses GitHub Issues and Project Boards for task management:
+- Create issues using `/issue` command with proper templates
+- Use `/work` command to execute tasks from the project board
+- Link issues to PRs for traceability
+
+## Bhagavad Gita Chatbot Specific Guidelines
+
+### Data Sources
+- **Bhagwat-Gita-Infinity**: 737 verse JSON files with multiple scholarly commentaries
+- **Bhagavad-Gita-QA**: 3,500 Q&A pairs for evaluation and validation
+- **Multilingual Support**: English and Hindi queries and responses
+
+### Agent Architecture
+- **Query Classifier**: Categorizes queries (verse lookup vs. thematic vs. philosophical)
+- **Retrieval Agent**: Semantic search and exact verse lookup
+- **Synthesis Agent**: Combines multiple sources into coherent responses
+- **Validator Agent**: Ensures faithfulness to original texts and detects hallucinations
+
+### Quality Requirements
+- **Accuracy**: ≥90% correct verse retrieval
+- **Faithfulness**: ≥95% responses contain only information from source texts
+- **Response Time**: <10 seconds for complex philosophical queries
+- **Test Coverage**: ≥90% code coverage
+- **Cultural Sensitivity**: Respectful handling of religious and philosophical content
+
+## AI Dev Tasks Integration
+
+When using AI Dev Tasks workflow:
+1. Start with `@create-prd.md` for feature planning
+2. Generate tasks with `@generate-tasks.md`
+3. Execute with `@process-task-list.md` for systematic implementation
+4. Use Compound Engineering commands for parallel execution within tasks
+
+Remember: The goal is not just faster coding, but better software that serves real user needs through clear specification and systematic execution. For this project, that means creating a trustworthy, accurate, and culturally sensitive Bhagavad Gita chatbot.

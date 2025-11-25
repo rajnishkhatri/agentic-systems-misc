@@ -1,0 +1,33 @@
+{
+  "current_step": 1,
+  "steps": [
+    {
+      "agent": "extractor",
+      "output": {
+        "has_ocr_error": false,
+        "invoice_date": "2024-04-11",
+        "invoice_id": "INV-2024-004",
+        "line_items": [
+          {
+            "description": "Support Contract",
+            "quantity": 2,
+            "unit_price": 300.68
+          },
+          {
+            "description": "Professional Services",
+            "quantity": 5,
+            "unit_price": 132.52
+          }
+        ],
+        "total_amount": 433.2,
+        "vendor_name": "Innovative Solutions"
+      },
+      "status": "success",
+      "step": 0
+    }
+  ],
+  "steps_completed": [
+    "extractor"
+  ],
+  "task_id": "INV-2024-004"
+}

@@ -1,0 +1,1272 @@
+{
+  "workflow_id": "reliability_framework_demo",
+  "steps": [
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:31.615990+00:00",
+      "duration_ms": 12,
+      "input_hash": "6f1c9d8cff061a29badfbc65412fff2abe8896e53c0894a55b3f6cc9f6875dc9",
+      "input_data": {
+        "invoice_id": "INV-2024-001"
+      },
+      "output": {
+        "invoice_id": "INV-2024-001",
+        "vendor_name": "Titan Corporation",
+        "total_amount": 11060.69,
+        "invoice_date": "2024-11-08",
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 4,
+            "unit_price": 11060.69
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:31.631715+00:00",
+      "duration_ms": 15,
+      "input_hash": "49754b54643377bba2fc208a68131eeda2e23c36bc914bd43315e80084d67774",
+      "input_data": {
+        "invoice_id": "INV-2024-001",
+        "amount": 11060.69
+      },
+      "output": {
+        "is_valid": true,
+        "errors": []
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "router",
+      "step": "route_approval",
+      "timestamp": "2025-11-25T11:37:31.690744+00:00",
+      "duration_ms": 58,
+      "input_hash": "49754b54643377bba2fc208a68131eeda2e23c36bc914bd43315e80084d67774",
+      "input_data": {
+        "invoice_id": "INV-2024-001",
+        "amount": 11060.69
+      },
+      "output": {
+        "invoice_id": "INV-2024-001",
+        "approver": "finance_team",
+        "priority": "high",
+        "routed_at": "2025-11-25 05:37:31"
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:31.702413+00:00",
+      "duration_ms": 11,
+      "input_hash": "eae7612c11ce39114bd299a04f55019696a08fd2697ca55354c4cf3e68e63b1b",
+      "input_data": {
+        "invoice_id": "INV-2024-002"
+      },
+      "output": {
+        "invoice_id": "INV-2024-002",
+        "vendor_name": "Infinity Services",
+        "total_amount": 419.68,
+        "invoice_date": "2024-12-29",
+        "line_items": [
+          {
+            "description": "Professional Services",
+            "quantity": 6,
+            "unit_price": 419.68
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:31.722297+00:00",
+      "duration_ms": 19,
+      "input_hash": "3b59a767419de65dd876eb0401086828336e8f16e3c34ac933ec36d9d1989f22",
+      "input_data": {
+        "invoice_id": "INV-2024-002",
+        "amount": 419.68
+      },
+      "output": {
+        "is_valid": true,
+        "errors": []
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "router",
+      "step": "route_approval",
+      "timestamp": "2025-11-25T11:37:31.733829+00:00",
+      "duration_ms": 11,
+      "input_hash": "3b59a767419de65dd876eb0401086828336e8f16e3c34ac933ec36d9d1989f22",
+      "input_data": {
+        "invoice_id": "INV-2024-002",
+        "amount": 419.68
+      },
+      "output": {
+        "invoice_id": "INV-2024-002",
+        "approver": "manager",
+        "priority": "normal",
+        "routed_at": "2025-11-25 05:37:31"
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:31.744095+00:00",
+      "duration_ms": 10,
+      "input_hash": "9c74e88d4db4d0afefa81530b2532d1616440535c431d83fa3e1b5ce0f32371c",
+      "input_data": {
+        "invoice_id": "INV-2024-004"
+      },
+      "output": {
+        "invoice_id": "INV-2024-004",
+        "vendor_name": "Innovative Solutions",
+        "total_amount": 433.2,
+        "invoice_date": "2024-04-11",
+        "line_items": [
+          {
+            "description": "Support Contract",
+            "quantity": 2,
+            "unit_price": 300.68
+          },
+          {
+            "description": "Professional Services",
+            "quantity": 5,
+            "unit_price": 132.52
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:31.754681+00:00",
+      "duration_ms": 10,
+      "input_hash": "f9325b022221cf9846fc3b6c98993b3b67711cfe3f1c12d676651a074c9eb897",
+      "input_data": {
+        "invoice_id": "INV-2024-004",
+        "amount": 433.2
+      },
+      "output": {
+        "is_valid": true,
+        "errors": []
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "router",
+      "step": "route_approval",
+      "timestamp": "2025-11-25T11:37:31.765594+00:00",
+      "duration_ms": 10,
+      "input_hash": "f9325b022221cf9846fc3b6c98993b3b67711cfe3f1c12d676651a074c9eb897",
+      "input_data": {
+        "invoice_id": "INV-2024-004",
+        "amount": 433.2
+      },
+      "output": {
+        "invoice_id": "INV-2024-004",
+        "approver": "manager",
+        "priority": "normal",
+        "routed_at": "2025-11-25 05:37:31"
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:31.775875+00:00",
+      "duration_ms": 10,
+      "input_hash": "dc3dc71ea87cb44ae3990a0f82312fb73b55303b3be2cb88abcba31f78b06b9d",
+      "input_data": {
+        "invoice_id": "INV-2024-005"
+      },
+      "output": {
+        "invoice_id": "INV-2024-005",
+        "vendor_name": "Acme Corp",
+        "total_amount": 229.88,
+        "invoice_date": "2024-01-09",
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 4,
+            "unit_price": 127.35
+          },
+          {
+            "description": "Professional Services",
+            "quantity": 5,
+            "unit_price": 37.46
+          },
+          {
+            "description": "Subscription Fee",
+            "quantity": 4,
+            "unit_price": 65.07
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:31.786957+00:00",
+      "duration_ms": 11,
+      "input_hash": "0b40c98bb0c96752d75ce4d76151cf7bde4095173d93c068869aeb6fe85fc983",
+      "input_data": {
+        "invoice_id": "INV-2024-005",
+        "amount": 229.88
+      },
+      "output": {
+        "is_valid": true,
+        "errors": []
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "router",
+      "step": "route_approval",
+      "timestamp": "2025-11-25T11:37:31.797724+00:00",
+      "duration_ms": 10,
+      "input_hash": "0b40c98bb0c96752d75ce4d76151cf7bde4095173d93c068869aeb6fe85fc983",
+      "input_data": {
+        "invoice_id": "INV-2024-005",
+        "amount": 229.88
+      },
+      "output": {
+        "invoice_id": "INV-2024-005",
+        "approver": "manager",
+        "priority": "normal",
+        "routed_at": "2025-11-25 05:37:31"
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:31.808659+00:00",
+      "duration_ms": 10,
+      "input_hash": "2d159cf6bfe0f6fbf6d982794b9a07cd994b3a36ffb4a9a24fb8fdfd46b195d2",
+      "input_data": {
+        "invoice_id": "INV-2024-008"
+      },
+      "output": {
+        "invoice_id": "INV-2024-008",
+        "vendor_name": "Nexus Solutions",
+        "total_amount": 173.29,
+        "invoice_date": "2024-03-25",
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 9,
+            "unit_price": 61.67
+          },
+          {
+            "description": "Training Session",
+            "quantity": 10,
+            "unit_price": 111.62
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:31.819765+00:00",
+      "duration_ms": 11,
+      "input_hash": "c9e1e5f3280e2710904362af019f054a37baaf87cccbb0296347fb53630fd172",
+      "input_data": {
+        "invoice_id": "INV-2024-008",
+        "amount": 173.29
+      },
+      "output": {
+        "is_valid": true,
+        "errors": []
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "router",
+      "step": "route_approval",
+      "timestamp": "2025-11-25T11:37:31.831608+00:00",
+      "duration_ms": 11,
+      "input_hash": "c9e1e5f3280e2710904362af019f054a37baaf87cccbb0296347fb53630fd172",
+      "input_data": {
+        "invoice_id": "INV-2024-008",
+        "amount": 173.29
+      },
+      "output": {
+        "invoice_id": "INV-2024-008",
+        "approver": "manager",
+        "priority": "normal",
+        "routed_at": "2025-11-25 05:37:31"
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:31.842881+00:00",
+      "duration_ms": 11,
+      "input_hash": "0fd71765ad71f2365f695578ba4c44594f8f992575aa137ad58114a45e11ddc9",
+      "input_data": {
+        "invoice_id": "INV-2024-009"
+      },
+      "output": {
+        "invoice_id": "INV-2024-009",
+        "vendor_name": "Dynamic Partners",
+        "total_amount": 79.39,
+        "invoice_date": "2024-05-26",
+        "line_items": [
+          {
+            "description": "Software License",
+            "quantity": 2,
+            "unit_price": 79.39
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:31.853663+00:00",
+      "duration_ms": 10,
+      "input_hash": "57f26ee81efcb354bee35186f84064577f1763e9556da42c47a68e841b657673",
+      "input_data": {
+        "invoice_id": "INV-2024-009",
+        "amount": 79.39
+      },
+      "output": {
+        "is_valid": true,
+        "errors": []
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "router",
+      "step": "route_approval",
+      "timestamp": "2025-11-25T11:37:31.869865+00:00",
+      "duration_ms": 16,
+      "input_hash": "57f26ee81efcb354bee35186f84064577f1763e9556da42c47a68e841b657673",
+      "input_data": {
+        "invoice_id": "INV-2024-009",
+        "amount": 79.39
+      },
+      "output": {
+        "invoice_id": "INV-2024-009",
+        "approver": "manager",
+        "priority": "normal",
+        "routed_at": "2025-11-25 05:37:31"
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:31.880827+00:00",
+      "duration_ms": 10,
+      "input_hash": "1d727129630ea073b237b1466c8bd3a5ae0dd594770a09e2ecb317b9b46d206e",
+      "input_data": {
+        "invoice_id": "INV-2024-010"
+      },
+      "output": {
+        "invoice_id": "INV-2024-010",
+        "vendor_name": "Nexus Solutions",
+        "total_amount": 1259.48,
+        "invoice_date": "2024-07-28",
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 5,
+            "unit_price": 879.68
+          },
+          {
+            "description": "Software License",
+            "quantity": 2,
+            "unit_price": 261.47
+          },
+          {
+            "description": "Subscription Fee",
+            "quantity": 5,
+            "unit_price": 118.33
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:31.891026+00:00",
+      "duration_ms": 10,
+      "input_hash": "5aa8a30356364e0a7c984c4eba98f7a7ca73a238218e34f62d30537a2b3149b0",
+      "input_data": {
+        "invoice_id": "INV-2024-010",
+        "amount": 1259.48
+      },
+      "output": {
+        "is_valid": true,
+        "errors": []
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "router",
+      "step": "route_approval",
+      "timestamp": "2025-11-25T11:37:31.902597+00:00",
+      "duration_ms": 11,
+      "input_hash": "5aa8a30356364e0a7c984c4eba98f7a7ca73a238218e34f62d30537a2b3149b0",
+      "input_data": {
+        "invoice_id": "INV-2024-010",
+        "amount": 1259.48
+      },
+      "output": {
+        "invoice_id": "INV-2024-010",
+        "approver": "manager",
+        "priority": "normal",
+        "routed_at": "2025-11-25 05:37:31"
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:31.913769+00:00",
+      "duration_ms": 11,
+      "input_hash": "aefe6c105a962a7eabb8de208b5b62b1fdb2462f5fe340cb316ba7537c894b0b",
+      "input_data": {
+        "invoice_id": "INV-2024-011"
+      },
+      "output": {
+        "invoice_id": "INV-2024-011",
+        "vendor_name": "Momentum Enterprises",
+        "total_amount": 2484.47,
+        "invoice_date": "2024-04-16",
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 2,
+            "unit_price": 2484.47
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:31.924890+00:00",
+      "duration_ms": 11,
+      "input_hash": "c42db1c5fb8fdedf8dd0c50342dbd08d9259e0ee4d6c991468663b9652f1f278",
+      "input_data": {
+        "invoice_id": "INV-2024-011",
+        "amount": 2484.47
+      },
+      "output": {
+        "is_valid": true,
+        "errors": []
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "router",
+      "step": "route_approval",
+      "timestamp": "2025-11-25T11:37:31.937725+00:00",
+      "duration_ms": 12,
+      "input_hash": "c42db1c5fb8fdedf8dd0c50342dbd08d9259e0ee4d6c991468663b9652f1f278",
+      "input_data": {
+        "invoice_id": "INV-2024-011",
+        "amount": 2484.47
+      },
+      "output": {
+        "invoice_id": "INV-2024-011",
+        "approver": "manager",
+        "priority": "normal",
+        "routed_at": "2025-11-25 05:37:31"
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:31.948037+00:00",
+      "duration_ms": 10,
+      "input_hash": "a1f8fbd322e66c744d866c122c230545133b99df2caf8f5ab2f5aad3f0f0b224",
+      "input_data": {
+        "invoice_id": "INV-2024-012"
+      },
+      "output": {
+        "invoice_id": "INV-2024-012",
+        "vendor_name": "Premier Services",
+        "total_amount": 704.87,
+        "invoice_date": "2024-01-10",
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 1,
+            "unit_price": 480.3
+          },
+          {
+            "description": "Maintenance Fee",
+            "quantity": 1,
+            "unit_price": 121.17
+          },
+          {
+            "description": "Consulting Services",
+            "quantity": 6,
+            "unit_price": 103.4
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:31.958756+00:00",
+      "duration_ms": 10,
+      "input_hash": "aaa164e17e8519e9282e76f2ba313fbb56d0015eaf38847879cab425e5d2f5c1",
+      "input_data": {
+        "invoice_id": "INV-2024-012",
+        "amount": 704.87
+      },
+      "output": {
+        "is_valid": true,
+        "errors": []
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "router",
+      "step": "route_approval",
+      "timestamp": "2025-11-25T11:37:31.969985+00:00",
+      "duration_ms": 11,
+      "input_hash": "aaa164e17e8519e9282e76f2ba313fbb56d0015eaf38847879cab425e5d2f5c1",
+      "input_data": {
+        "invoice_id": "INV-2024-012",
+        "amount": 704.87
+      },
+      "output": {
+        "invoice_id": "INV-2024-012",
+        "approver": "manager",
+        "priority": "normal",
+        "routed_at": "2025-11-25 05:37:31"
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:31.980345+00:00",
+      "duration_ms": 10,
+      "input_hash": "b7763a6effd07e421ccfce6ed149f003edb7ba2abcbca6ba6258a4788a3c4bc8",
+      "input_data": {
+        "invoice_id": "INV-2024-013"
+      },
+      "output": {
+        "invoice_id": "INV-2024-013",
+        "vendor_name": "Strategic Consulting",
+        "total_amount": 422.65,
+        "invoice_date": "2024-03-05",
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 3,
+            "unit_price": 422.65
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:31.991498+00:00",
+      "duration_ms": 11,
+      "input_hash": "c8b01b4199bacdd06240ffe233b3e1c51baeb50c2e438d311f1d441f3c88aef0",
+      "input_data": {
+        "invoice_id": "INV-2024-013",
+        "amount": 422.65
+      },
+      "output": {
+        "is_valid": true,
+        "errors": []
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "router",
+      "step": "route_approval",
+      "timestamp": "2025-11-25T11:37:32.002309+00:00",
+      "duration_ms": 10,
+      "input_hash": "c8b01b4199bacdd06240ffe233b3e1c51baeb50c2e438d311f1d441f3c88aef0",
+      "input_data": {
+        "invoice_id": "INV-2024-013",
+        "amount": 422.65
+      },
+      "output": {
+        "invoice_id": "INV-2024-013",
+        "approver": "manager",
+        "priority": "normal",
+        "routed_at": "2025-11-25 05:37:32"
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:32.013153+00:00",
+      "duration_ms": 10,
+      "input_hash": "932e8ab801d197d6b42bf8f69bb8a439ab7a15095525ae5600c418fd575c772e",
+      "input_data": {
+        "invoice_id": "INV-2024-F01"
+      },
+      "output": {
+        "invoice_id": "INV-2024-F01",
+        "vendor_name": "NonExistentVendor123",
+        "total_amount": 5000.0,
+        "invoice_date": "2024-11-01",
+        "line_items": [
+          {
+            "description": "Services",
+            "amount": 5000.0
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:32.024311+00:00",
+      "duration_ms": 11,
+      "input_hash": "d15cfdd7bd350116ce0393960014872bc7de7383f5ca1b0b4207f0b68955fe0b",
+      "input_data": {
+        "invoice_id": "INV-2024-F01",
+        "amount": 5000.0
+      },
+      "output": {
+        "is_valid": false,
+        "errors": [
+          "Vendor 'NonExistentVendor123' not in database (hallucination detected)"
+        ]
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:34.466218+00:00",
+      "duration_ms": 50,
+      "input_hash": "8f7e97362972e2f824667937c419d0098d3dfee398130efa0f1046970807acb3",
+      "input_data": {
+        "invoice_id": "INV-2024-F03"
+      },
+      "output": {
+        "invoice_id": "INV-2024-F03",
+        "vendor_name": "SlowVendor Inc",
+        "total_amount": 3000.0,
+        "invoice_date": "2024-11-03",
+        "line_items": [
+          {
+            "description": "Services",
+            "amount": 3000.0
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:34.477372+00:00",
+      "duration_ms": 11,
+      "input_hash": "0f3d29761ff1181ecceb116ba42a7fe3a61c32326efb132e14dc02caf903d27e",
+      "input_data": {
+        "invoice_id": "INV-2024-F03",
+        "amount": 3000.0
+      },
+      "output": {
+        "is_valid": true,
+        "errors": []
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "router",
+      "step": "route_approval",
+      "timestamp": "2025-11-25T11:37:34.488906+00:00",
+      "duration_ms": 11,
+      "input_hash": "0f3d29761ff1181ecceb116ba42a7fe3a61c32326efb132e14dc02caf903d27e",
+      "input_data": {
+        "invoice_id": "INV-2024-F03",
+        "amount": 3000.0
+      },
+      "output": {
+        "invoice_id": "INV-2024-F03",
+        "approver": "manager",
+        "priority": "normal",
+        "routed_at": "2025-11-25 05:37:34"
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:34.500075+00:00",
+      "duration_ms": 11,
+      "input_hash": "903cb0214f0eb7d68698b3f907c6107c472f07d8b9319dd2ca6478539c8fee7d",
+      "input_data": {
+        "invoice_id": "INV-2024-F04"
+      },
+      "output": {
+        "invoice_id": "INV-2024-F04",
+        "vendor_name": "BigVendor LLC",
+        "total_amount": 15000.0,
+        "invoice_date": "2024-11-04",
+        "line_items": [
+          {
+            "description": "Item 0",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 1",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 2",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 3",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 4",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 5",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 6",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 7",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 8",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 9",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 10",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 11",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 12",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 13",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 14",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 15",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 16",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 17",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 18",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 19",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 20",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 21",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 22",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 23",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 24",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 25",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 26",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 27",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 28",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 29",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 30",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 31",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 32",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 33",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 34",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 35",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 36",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 37",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 38",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 39",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 40",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 41",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 42",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 43",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 44",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 45",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 46",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 47",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 48",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 49",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 50",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 51",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 52",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 53",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 54",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 55",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 56",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 57",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 58",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 59",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 60",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 61",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 62",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 63",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 64",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 65",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 66",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 67",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 68",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 69",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 70",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 71",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 72",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 73",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 74",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 75",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 76",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 77",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 78",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 79",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 80",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 81",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 82",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 83",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 84",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 85",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 86",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 87",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 88",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 89",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 90",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 91",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 92",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 93",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 94",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 95",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 96",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 97",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 98",
+            "amount": 100.0
+          },
+          {
+            "description": "Item 99",
+            "amount": 100.0
+          }
+        ],
+        "has_ocr_error": false
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:34.511187+00:00",
+      "duration_ms": 11,
+      "input_hash": "bbbc171682f0f3416048fa7c6c319db684305f9cb396e8aa5f9dbf59491719c9",
+      "input_data": {
+        "invoice_id": "INV-2024-F04",
+        "amount": 15000.0
+      },
+      "output": {
+        "is_valid": true,
+        "errors": []
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "router",
+      "step": "route_approval",
+      "timestamp": "2025-11-25T11:37:34.522684+00:00",
+      "duration_ms": 11,
+      "input_hash": "bbbc171682f0f3416048fa7c6c319db684305f9cb396e8aa5f9dbf59491719c9",
+      "input_data": {
+        "invoice_id": "INV-2024-F04",
+        "amount": 15000.0
+      },
+      "output": {
+        "invoice_id": "INV-2024-F04",
+        "approver": "finance_team",
+        "priority": "high",
+        "routed_at": "2025-11-25 05:37:34"
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "extractor",
+      "step": "extract_vendor",
+      "timestamp": "2025-11-25T11:37:34.533817+00:00",
+      "duration_ms": 11,
+      "input_hash": "d54fe00dfd4ac33c6a603b12fb8ce6c7cbb13767871fd9ea03adab9bf7c74abf",
+      "input_data": {
+        "invoice_id": "INV-2024-F05"
+      },
+      "output": {
+        "invoice_id": "INV-2024-F05",
+        "vendor_name": "Acme Corp",
+        "total_amount": 2000.0,
+        "invoice_date": "2024-11-05",
+        "line_items": [
+          {
+            "description": "Services",
+            "amount": 2000.0
+          }
+        ],
+        "has_ocr_error": true
+      },
+      "error": null
+    },
+    {
+      "workflow_id": "reliability_framework_demo",
+      "agent_name": "validator",
+      "step": "validate_amount",
+      "timestamp": "2025-11-25T11:37:34.544914+00:00",
+      "duration_ms": 11,
+      "input_hash": "fc96bcbc9e3cdd115b303ab83b621bb33b7261003a50fff27592b887809b1656",
+      "input_data": {
+        "invoice_id": "INV-2024-F05",
+        "amount": 2000.0
+      },
+      "output": {
+        "is_valid": false,
+        "errors": [
+          "OCR errors detected"
+        ]
+      },
+      "error": null
+    }
+  ],
+  "exported_at": "2025-11-25T11:37:34.861168+00:00"
+}

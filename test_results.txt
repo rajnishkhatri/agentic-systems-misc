@@ -1,0 +1,50 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.11.13, pytest-8.4.2, pluggy-1.6.0 -- /Users/rajnishkhatri/Documents/recipe-chatbot/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/rajnishkhatri/Documents/recipe-chatbot
+configfile: pytest.ini
+plugins: asyncio-1.2.0, anyio-4.11.0, langsmith-0.4.38, cov-7.0.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 24 items
+
+tests/test_benchmarks.py::test_should_calculate_exact_match_success_rate_when_predictions_match_gold_labels PASSED [  4%]
+tests/test_benchmarks.py::test_should_calculate_case_insensitive_success_rate_when_case_differs PASSED [  8%]
+tests/test_benchmarks.py::test_should_calculate_fuzzy_match_success_rate_when_threshold_provided PASSED [ 12%]
+tests/test_benchmarks.py::test_should_return_zero_success_rate_when_empty_predictions PASSED [ 16%]
+tests/test_benchmarks.py::test_should_return_one_when_all_correct PASSED [ 20%]
+tests/test_benchmarks.py::test_should_return_zero_when_all_wrong PASSED  [ 25%]
+tests/test_benchmarks.py::test_should_count_downstream_errors_when_upstream_error_occurs PASSED [ 29%]
+tests/test_benchmarks.py::test_should_analyze_multi_step_trace_when_multiple_workflows PASSED [ 33%]
+tests/test_benchmarks.py::test_should_stop_propagation_when_isolation_boundary_detected PASSED [ 37%]
+tests/test_benchmarks.py::test_should_not_propagate_when_validation_gates_present PASSED [ 41%]
+tests/test_benchmarks.py::test_should_handle_first_step_failure_differently_than_last_step PASSED [ 45%]
+tests/test_benchmarks.py::test_should_average_epi_across_workflow PASSED [ 50%]
+tests/test_benchmarks.py::test_should_calculate_percentiles_using_numpy_when_latencies_provided FAILED [ 54%]
+tests/test_benchmarks.py::test_should_handle_timeouts_as_max_value_when_timeout_occurs PASSED [ 58%]
+tests/test_benchmarks.py::test_should_use_max_latency_for_parallel_execution PASSED [ 62%]
+tests/test_benchmarks.py::test_should_provide_latency_distribution_data_when_requested FAILED [ 66%]
+tests/test_benchmarks.py::test_should_count_total_api_calls_when_provided PASSED [ 70%]
+tests/test_benchmarks.py::test_should_use_model_specific_pricing_when_calculating_cost PASSED [ 75%]
+tests/test_benchmarks.py::test_should_estimate_token_based_cost_when_tokens_provided PASSED [ 79%]
+tests/test_benchmarks.py::test_should_calculate_cost_per_task_and_multiplier PASSED [ 83%]
+tests/test_benchmarks.py::test_should_save_results_when_benchmark_completes SKIPPED [ 87%]
+tests/test_benchmarks.py::test_should_load_cached_results_when_available SKIPPED [ 91%]
+tests/test_benchmarks.py::test_should_calculate_confidence_intervals_when_results_available SKIPPED [ 95%]
+tests/test_benchmarks.py::test_should_perform_paired_t_test_when_comparing_patterns SKIPPED [100%]
+
+=================================== FAILURES ===================================
+____ test_should_calculate_percentiles_using_numpy_when_latencies_provided _____
+tests/test_benchmarks.py:310: in test_should_calculate_percentiles_using_numpy_when_latencies_provided
+    assert percentiles[95] == 9.55  # 95th percentile
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   assert 9.549999999999999 == 9.55
+_________ test_should_provide_latency_distribution_data_when_requested _________
+tests/test_benchmarks.py:346: in test_should_provide_latency_distribution_data_when_requested
+    assert len(distribution["bins"]) == 3
+E   assert 4 == 3
+E    +  where 4 = len([1.0, 2.333333333333333, 3.6666666666666665, 5.0])
+=========================== short test summary info ============================
+FAILED tests/test_benchmarks.py::test_should_calculate_percentiles_using_numpy_when_latencies_provided - assert 9.549999999999999 == 9.55
+FAILED tests/test_benchmarks.py::test_should_provide_latency_distribution_data_when_requested - assert 4 == 3
+ +  where 4 = len([1.0, 2.333333333333333, 3.6666666666666665, 5.0])
+=================== 2 failed, 18 passed, 4 skipped in 0.13s ====================

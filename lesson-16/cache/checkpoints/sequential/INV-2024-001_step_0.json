@@ -1,0 +1,28 @@
+{
+  "current_step": 1,
+  "steps": [
+    {
+      "agent": "extractor",
+      "output": {
+        "has_ocr_error": false,
+        "invoice_date": "2024-11-08",
+        "invoice_id": "INV-2024-001",
+        "line_items": [
+          {
+            "description": "Subscription Fee",
+            "quantity": 4,
+            "unit_price": 11060.69
+          }
+        ],
+        "total_amount": 11060.69,
+        "vendor_name": "Titan Corporation"
+      },
+      "status": "success",
+      "step": 0
+    }
+  ],
+  "steps_completed": [
+    "extractor"
+  ],
+  "task_id": "INV-2024-001"
+}

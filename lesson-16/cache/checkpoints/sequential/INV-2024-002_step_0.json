@@ -1,0 +1,28 @@
+{
+  "current_step": 1,
+  "steps": [
+    {
+      "agent": "extractor",
+      "output": {
+        "has_ocr_error": false,
+        "invoice_date": "2024-12-29",
+        "invoice_id": "INV-2024-002",
+        "line_items": [
+          {
+            "description": "Professional Services",
+            "quantity": 6,
+            "unit_price": 419.68
+          }
+        ],
+        "total_amount": 419.68,
+        "vendor_name": "Infinity Services"
+      },
+      "status": "success",
+      "step": 0
+    }
+  ],
+  "steps_completed": [
+    "extractor"
+  ],
+  "task_id": "INV-2024-002"
+}

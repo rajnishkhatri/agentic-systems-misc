@@ -74,6 +74,7 @@ def loaded_task_generator() -> Any:
         FinancialTaskGenerator instance with datasets loaded
     """
     from pathlib import Path
+
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
 
     task_gen = FinancialTaskGenerator()
@@ -371,7 +372,7 @@ def test_should_provide_latency_distribution_data_when_requested() -> None:
 
 def test_should_count_total_api_calls_when_provided(sample_api_call: dict[str, Any]) -> None:
     """Test that cost calculation counts total API calls."""
-    from backend.benchmarks.metrics import MetricsCalculator, APICall
+    from backend.benchmarks.metrics import APICall, MetricsCalculator
 
     calc = MetricsCalculator()
     api_calls: list[APICall] = [
@@ -386,7 +387,7 @@ def test_should_count_total_api_calls_when_provided(sample_api_call: dict[str, A
 
 def test_should_use_model_specific_pricing_when_calculating_cost() -> None:
     """Test that GPT-4 vs GPT-3.5 use different pricing."""
-    from backend.benchmarks.metrics import OPENAI_PRICING, MetricsCalculator, APICall
+    from backend.benchmarks.metrics import OPENAI_PRICING, APICall, MetricsCalculator
 
     calc = MetricsCalculator()
     gpt4_call: list[APICall] = [
@@ -404,7 +405,7 @@ def test_should_use_model_specific_pricing_when_calculating_cost() -> None:
 
 def test_should_estimate_token_based_cost_when_tokens_provided() -> None:
     """Test that token-based cost estimation uses correct formula."""
-    from backend.benchmarks.metrics import OPENAI_PRICING, MetricsCalculator, APICall
+    from backend.benchmarks.metrics import OPENAI_PRICING, APICall, MetricsCalculator
 
     calc = MetricsCalculator()
     api_calls: list[APICall] = [
@@ -420,7 +421,7 @@ def test_should_estimate_token_based_cost_when_tokens_provided() -> None:
 
 def test_should_calculate_cost_per_task_and_multiplier() -> None:
     """Test that cost per task and multiplier relative to baseline calculate correctly."""
-    from backend.benchmarks.metrics import MetricsCalculator, APICall
+    from backend.benchmarks.metrics import APICall, MetricsCalculator
 
     calc = MetricsCalculator()
     api_calls: list[APICall] = [
@@ -622,7 +623,7 @@ def test_should_raise_type_error_when_api_call_not_dict() -> None:
 
 def test_should_raise_value_error_when_model_pricing_missing() -> None:
     """Test that ValueError raised when model pricing is not available."""
-    from backend.benchmarks.metrics import MetricsCalculator, APICall
+    from backend.benchmarks.metrics import APICall, MetricsCalculator
 
     calc = MetricsCalculator()
     api_calls: list[APICall] = [
@@ -640,10 +641,10 @@ def test_should_raise_value_error_when_model_pricing_missing() -> None:
 
 def test_should_load_all_orchestrators_when_initialized(loaded_task_generator: Any) -> None:
     """Test that BenchmarkRunner loads all 5 orchestrators from backend/orchestrators/."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.metrics import MetricsCalculator
-    from backend.orchestrators.sequential import SequentialOrchestrator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+    from backend.orchestrators.sequential import SequentialOrchestrator
 
     metrics = MetricsCalculator()
     orchestrators = {
@@ -660,9 +661,9 @@ def test_should_load_all_orchestrators_when_initialized(loaded_task_generator: A
 
 def test_should_validate_orchestrator_implements_abc() -> None:
     """Test that BenchmarkRunner validates orchestrators implement Orchestrator ABC."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
 
     task_gen = FinancialTaskGenerator()
     metrics = MetricsCalculator()
@@ -674,9 +675,9 @@ def test_should_validate_orchestrator_implements_abc() -> None:
 
 def test_should_inject_configuration_when_orchestrator_created() -> None:
     """Test that BenchmarkRunner injects configuration into orchestrators."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
@@ -689,9 +690,9 @@ def test_should_inject_configuration_when_orchestrator_created() -> None:
 
 def test_should_setup_mock_agents_for_testing() -> None:
     """Test that mock agent setup works for testing."""
-    from backend.benchmarks.runner import BenchmarkRunner, MockAgent
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner, MockAgent
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
@@ -707,9 +708,9 @@ def test_should_setup_mock_agents_for_testing() -> None:
 
 def test_should_handle_missing_orchestrator_error() -> None:
     """Test error handling when orchestrator is missing."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
@@ -729,8 +730,8 @@ def test_should_handle_missing_orchestrator_error() -> None:
 
 def test_should_run_single_pattern_on_task_suite(loaded_task_generator: Any) -> None:
     """Test that run_single_pattern executes one orchestrator on tasks."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     tasks = loaded_task_generator.generate_task_suite(count=5, strategy="random", seed=42)
@@ -747,11 +748,11 @@ def test_should_run_single_pattern_on_task_suite(loaded_task_generator: Any) -> 
 
 def test_should_execute_patterns_in_parallel_using_threadpool() -> None:
     """Test that multiple patterns execute in parallel using ThreadPoolExecutor."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
-    from backend.orchestrators.sequential import SequentialOrchestrator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+    from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
     metrics = MetricsCalculator()
@@ -769,9 +770,9 @@ def test_should_execute_patterns_in_parallel_using_threadpool() -> None:
 
 def test_should_handle_timeout_per_task_default_60s() -> None:
     """Test that timeout handling works with default 60s per task."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
@@ -784,9 +785,9 @@ def test_should_handle_timeout_per_task_default_60s() -> None:
 
 def test_should_isolate_exceptions_pattern_failure_continues() -> None:
     """Test that exception isolation prevents pattern failure from stopping benchmark."""
-    from backend.benchmarks.runner import BenchmarkRunner, FailingOrchestrator
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner, FailingOrchestrator
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
@@ -806,9 +807,9 @@ def test_should_isolate_exceptions_pattern_failure_continues() -> None:
 
 def test_should_track_progress_with_tqdm() -> None:
     """Test that progress tracking works with tqdm."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
@@ -821,9 +822,9 @@ def test_should_track_progress_with_tqdm() -> None:
 
 def test_should_collect_results_in_structured_format() -> None:
     """Test that results are collected in BenchmarkResult TypedDict format."""
-    from backend.benchmarks.runner import BenchmarkRunner, BenchmarkResults
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
@@ -841,9 +842,9 @@ def test_should_collect_results_in_structured_format() -> None:
 
 def test_should_execute_deterministically_with_seed() -> None:
     """Test that deterministic execution works with seed."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
@@ -867,9 +868,9 @@ def test_should_execute_deterministically_with_seed() -> None:
 
 def test_should_call_metrics_calculator_for_all_4_metrics() -> None:
     """Test that MetricsCalculator is called for all 4 metrics."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
@@ -890,9 +891,9 @@ def test_should_call_metrics_calculator_for_all_4_metrics() -> None:
 
 def test_should_aggregate_results_across_tasks() -> None:
     """Test that results are aggregated across multiple tasks."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
@@ -907,11 +908,11 @@ def test_should_aggregate_results_across_tasks() -> None:
 
 def test_should_calculate_statistical_significance() -> None:
     """Test that statistical analysis includes paired t-test and confidence intervals."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
-    from backend.orchestrators.sequential import SequentialOrchestrator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.hierarchical import HierarchicalOrchestrator
+    from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
     metrics = MetricsCalculator()
@@ -935,9 +936,9 @@ def test_should_calculate_statistical_significance() -> None:
 
 def test_should_save_results_to_json_cache(temp_cache_dir: Path) -> None:
     """Test that benchmark results save to JSON cache file."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
@@ -953,11 +954,12 @@ def test_should_save_results_to_json_cache(temp_cache_dir: Path) -> None:
 
 def test_should_load_cached_results_in_under_1_second(temp_cache_dir: Path) -> None:
     """Test that cached results load in <1 second."""
-    from backend.benchmarks.runner import BenchmarkRunner
+    import time
+
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.sequential import SequentialOrchestrator
-    import time
 
     task_gen = FinancialTaskGenerator()
     metrics = MetricsCalculator()
@@ -977,9 +979,9 @@ def test_should_load_cached_results_in_under_1_second(temp_cache_dir: Path) -> N
 
 def test_should_invalidate_cache_on_dataset_change(temp_cache_dir: Path) -> None:
     """Test that cache invalidates when dataset or code changes."""
-    from backend.benchmarks.runner import BenchmarkRunner
     from backend.benchmarks.financial_tasks import FinancialTaskGenerator
     from backend.benchmarks.metrics import MetricsCalculator
+    from backend.benchmarks.runner import BenchmarkRunner
     from backend.orchestrators.sequential import SequentialOrchestrator
 
     task_gen = FinancialTaskGenerator()
