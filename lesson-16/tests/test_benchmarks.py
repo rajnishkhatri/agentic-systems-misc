@@ -1000,3 +1000,15 @@ def test_should_invalidate_cache_on_dataset_change(temp_cache_dir: Path) -> None
     # Results should differ due to different seeds
     assert results1["task_count"] == results2["task_count"]  # Same count
     # But cache keys should be different
+
+
+# ============================================================================
+# Test Count Verification
+# ============================================================================
+# Total BenchmarkRunner Tests: 18
+# - Section 1 (Orchestrator Loading): 5 tests
+# - Section 2 (Execution Workflow): 7 tests
+# - Section 3 (Metrics Integration): 3 tests
+# - Section 4 (Caching): 3 tests
+# Total: 18 tests
+# ============================================================================

@@ -25,7 +25,7 @@ graph TD
     EP2 --> EP3{EPI > 1.0?}
     EP3 -->|Yes - High Cascade Risk| EP4[Apply Error Isolation]
     EP3 -->|No - Contained| EP5[Apply Early Termination]
-    EP4 --> EP6[Mitigation: Result[T,E] Types + Critical/Optional]
+    EP4 --> EP6["Mitigation: Result Types + Critical/Optional"]
     EP5 --> EP6
     EP6 --> EP7[See: 04_error_propagation_analysis.md]
     

@@ -26,7 +26,7 @@
   - `backend/orchestrators/` - All 5 orchestration pattern implementations
   - `backend/orchestrators/base.py:35-89` - Abstract base class with shared functionality
 - **Diagrams:**
-  - Orchestration Pattern Selection (to be created in Task 6.7) - Decision tree for pattern selection
+  - [Orchestration Pattern Selection](../diagrams/orchestration_pattern_selection.svg) - Decision tree for pattern selection
 
 ---
 

@@ -24,7 +24,7 @@
   - `backend/reliability/isolation.py:1-173` - Result[T,E] type and safe_agent_call implementation
   - `backend/orchestrators/hierarchical.py` - Error isolation in hierarchical delegation
 - **Diagrams:**
-  - Error Propagation Cascade (to be created in Task 6.8) - Sequence diagram showing cascade failure
+  - [Error Propagation Cascade](../diagrams/error_propagation_cascade.mmd) - Sequence diagram showing cascade failure
 
 ---
 

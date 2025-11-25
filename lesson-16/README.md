@@ -165,11 +165,159 @@ print("Backend modules accessible")
 - `data/invoices_100.json` - Invoice processing tasks (100 synthetic examples)
 - `data/transactions_100.json` - Fraud detection tasks (100 synthetic examples)
 - `data/reconciliation_100.json` - Account matching tasks (100 synthetic examples)
+- `data/README.md` - Dataset schemas, gold labels, usage examples
 - `diagrams/reliability_failure_modes_taxonomy.mmd` - Decision tree: failure → mitigation
 - `diagrams/orchestration_pattern_selection.mmd` - Flowchart: constraints → pattern
 - `diagrams/error_propagation_cascade.mmd` - Sequence diagram of error compounding
 - `diagrams/reliability_framework_architecture.mmd` - Component diagram of 7-layer framework
 - `diagrams/agentarch_benchmark_results.mmd` - Bar chart comparing 5 patterns on 4 metrics
+- `diagrams/README.md` - Rendering instructions, export commands, cross-references
+
+---
+
+## Task 6.0 Deliverables: Datasets, Diagrams & Benchmarks
+
+**Completed:** 2025-11-24
+**Test Coverage:** 94% (73 tests across benchmarks module)
+
+### Financial Datasets (3 files)
+
+**Location:** [`data/`](data/)
+
+| Dataset | Tasks | Challenges | Use Case | Size |
+|---------|-------|-----------|----------|------|
+| **invoices_100.json** | 100 | OCR 13%, Missing 13%, Duplicates 11% | Sequential pattern | 57 KB |
+| **transactions_100.json** | 100 | Fraud 10%, Ambiguous 15%, High-value 10 | Hierarchical, Voting | 27 KB |
+| **reconciliation_100.json** | 100 | Date 25%, Rounding 20%, Duplicates 15% | Iterative pattern | 263 KB |
+
+**Features:**
+- ✅ 100% schema-compliant (validated by 40+ tests)
+- ✅ Deterministic generation (seed=42 for reproducibility)
+- ✅ Realistic challenge distribution (±2% of targets)
+- ✅ Gold labels with 100% accuracy
+- ✅ Metadata wrappers with generation stats
+
+**Documentation:** [data/README.md](data/README.md) - Schemas, usage, regeneration commands
+
+---
+
+### Visual Diagrams (5 core + 1 bonus)
+
+**Location:** [`diagrams/`](diagrams/)
+
+| Diagram | Type | Complexity | Referenced In | Export |
+|---------|------|-----------|---------------|--------|
+| **reliability_failure_modes_taxonomy.mmd** | Decision Tree | 15+ nodes | Tutorial 01 | Mermaid |
+| **orchestration_pattern_selection.mmd** | Flowchart | 20+ nodes | Tutorial 02, 05 | PNG, SVG |
+| **error_propagation_cascade.mmd** | Sequence | 5 agents | Tutorial 04 | Mermaid |
+| **reliability_framework_architecture.mmd** | Component | 7 layers | Tutorial 01, Notebook 13 | SVG |
+| **agentarch_benchmark_results.mmd** | Bar Chart | 20 data points | Tutorial 05, Notebook 14 | Mermaid |
+| **notebook_dependency_diagram.mmd** | Directed Graph | 15+ nodes | Test suite | Mermaid |
+
+**Features:**
+- ✅ Standalone understandable (labels, annotations, legend)
+- ✅ GitHub-renderable (Mermaid syntax validated)
+- ✅ High-res exports (PNG 2400×1800, SVG scalable)
+- ✅ Cross-referenced in tutorials and notebooks
+
+**Documentation:** [diagrams/README.md](diagrams/README.md) - Rendering, export commands, troubleshooting
+
+---
+
+### AgentArch Benchmark Framework
+
+**Location:** [`backend/benchmarks/`](backend/benchmarks/)
+
+| Module | LOC | Tests | Coverage | Purpose |
+|--------|-----|-------|----------|---------|
+| **financial_tasks.py** | 174 | 16 | 93% | Task suite generation (3 strategies) |
+| **metrics.py** | 142 | 39 | 98% | 4 evaluation metrics + statistics |
+| **runner.py** | 457 | 18 | 93% | Parallel execution + caching |
+
+**Public API:**
+```python
+from backend.benchmarks import (
+    FinancialTaskGenerator,  # Load datasets, generate task suites
+    MetricsCalculator,       # Calculate 4 metrics (success, EPI, latency, cost)
+    BenchmarkRunner,         # Execute benchmarks with caching
+    OPENAI_PRICING          # GPT-4/GPT-3.5 pricing constants
+)
+```
+
+**Key Features:**
+- ✅ **300-task suite:** 100 invoice + 100 fraud + 100 reconciliation
+- ✅ **4 metrics:** Task success rate, Error Propagation Index, Latency P50/P95, Cost
+- ✅ **Statistical analysis:** 95% confidence intervals, paired t-tests
+- ✅ **Result caching:** <1s load time (vs 5-10 min execution)
+- ✅ **Parallel execution:** ThreadPoolExecutor for multi-pattern benchmarks
+
+**Documentation:** [backend/benchmarks/README.md](backend/benchmarks/README.md) - API reference, usage patterns, troubleshooting
+
+---
+
+### Quality Metrics
+
+**Test Coverage:**
+- `financial_tasks.py`: 93% (16 tests)
+- `metrics.py`: 98% (39 tests)
+- `runner.py`: 93% (18 tests)
+- **Average:** 94% ✅ (exceeds 90% target)
+
+**Dataset Quality:**
+- Schema compliance: 100% (all tasks validate)
+- Challenge distribution: ±2% (better than ±5% requirement)
+- Gold label accuracy: 100% (deterministic verification)
+- Reproducibility: 100% (same seed = identical output)
+
+**Integration Testing:**
+- 12 integration tests (datasets + diagrams + benchmarks)
+- All 5 diagrams render in GitHub markdown
+- PNG exports validated (2400×1800px)
+- Benchmark completes in <2 min with mock agents
+
+---
+
+### Usage Example
+
+```python
+from pathlib import Path
+from backend.benchmarks import FinancialTaskGenerator, MetricsCalculator, BenchmarkRunner
+from backend.orchestrators import SequentialOrchestrator, HierarchicalOrchestrator
+
+# Step 1: Load datasets
+generator = FinancialTaskGenerator()
+generator.load_datasets(Path("data"))
+
+# Step 2: Generate 30-task suite
+tasks = generator.generate_task_suite(count=30, strategy="random", seed=42)
+
+# Step 3: Create orchestrators
+orchestrators = {
+    "sequential": SequentialOrchestrator(name="sequential"),
+    "hierarchical": HierarchicalOrchestrator(name="hierarchical")
+}
+
+# Step 4: Run benchmark
+runner = BenchmarkRunner(
+    orchestrators=orchestrators,
+    task_generator=generator,
+    metrics_calculator=MetricsCalculator(),
+    default_timeout=60
+)
+
+results = runner.run_benchmark(tasks=tasks, use_cache=True)
+
+# Step 5: Analyze
+for pattern, result in results['pattern_results'].items():
+    metrics = result['metrics']
+    print(f"{pattern}: {metrics['task_success_rate']:.1%} success, "
+          f"EPI {metrics['error_propagation_index']:.2f}, "
+          f"P50 {metrics['latency_p50']:.1f}s")
+```
+
+**See Also:**
+- [Notebook 14: AgentArch Benchmark Reproduction](notebooks/14_agentarch_benchmark_reproduction.ipynb) - Full walkthrough
+- [Tutorial 05: AgentArch Benchmark Methodology](tutorials/05_agentarch_benchmark_methodology.md) - Research background
 
 ---
 

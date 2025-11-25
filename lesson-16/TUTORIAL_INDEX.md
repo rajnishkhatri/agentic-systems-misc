@@ -505,16 +505,25 @@ After completing the tutorials, try these exercises:
 - [`README.md`](README.md) - Lesson setup, cost estimates, quick start
 - [`backend/reliability/`](backend/reliability/) - 7 reliability component implementations
 - [`backend/orchestrators/`](backend/orchestrators/) - 5 orchestration pattern implementations
-- [`backend/benchmarks/`](backend/benchmarks/) - AgentArch benchmark suite
-- [`data/`](data/) - 300 synthetic financial tasks (invoices, fraud, reconciliation)
+- [`backend/benchmarks/`](backend/benchmarks/) - AgentArch benchmark suite (task generation, 4 metrics, caching)
+- [`data/`](data/) - 300 synthetic financial tasks (100 invoices, 100 fraud, 100 reconciliation)
 - [`diagrams/`](diagrams/) - 5 Mermaid diagrams (decision trees, architecture, results)
 
-### Diagrams
-- [`diagrams/reliability_failure_modes_taxonomy.mmd`](diagrams/reliability_failure_modes_taxonomy.mmd) - Failure type → Mitigation mapping
-- [`diagrams/orchestration_pattern_selection.mmd`](diagrams/orchestration_pattern_selection.mmd) - Constraints → Pattern decision tree
-- [`diagrams/error_propagation_cascade.mmd`](diagrams/error_propagation_cascade.mmd) - Sequence diagram of error compounding
-- [`diagrams/reliability_framework_architecture.mmd`](diagrams/reliability_framework_architecture.mmd) - 7-component framework
-- [`diagrams/agentarch_benchmark_results.mmd`](diagrams/agentarch_benchmark_results.mmd) - Pattern performance comparison
+### Datasets (Task 6.0)
+- [`data/invoices_100.json`](data/invoices_100.json) - 100 invoice processing tasks with OCR errors (13%), missing fields (13%), duplicates (11%)
+- [`data/transactions_100.json`](data/transactions_100.json) - 100 fraud detection tasks with 10% fraud rate, 15% ambiguous patterns, 43 unique merchants
+- [`data/reconciliation_100.json`](data/reconciliation_100.json) - 100 account matching tasks with date mismatches (25%), amount rounding (20%), duplicates (15%)
+- [`data/DATASET_SUMMARY.json`](data/DATASET_SUMMARY.json) - Dataset statistics, challenge distribution, reproducibility metadata
+- **Quality:** 100% schema-compliant, ±2% of target challenge distribution, deterministic generation with seed=42
+
+### Diagrams (Task 6.0)
+- [`diagrams/reliability_failure_modes_taxonomy.mmd`](diagrams/reliability_failure_modes_taxonomy.mmd) - Decision tree: 5 failure modes → symptoms → mitigations (referenced in Tutorial 01)
+- [`diagrams/orchestration_pattern_selection.mmd`](diagrams/orchestration_pattern_selection.mmd) - Flowchart: 7 business constraints → recommended pattern ([PNG export](diagrams/orchestration_pattern_selection.png), referenced in Tutorial 02, 05)
+- [`diagrams/error_propagation_cascade.mmd`](diagrams/error_propagation_cascade.mmd) - Sequence diagram: 5-agent cascade failure with isolation boundaries (referenced in Tutorial 04)
+- [`diagrams/reliability_framework_architecture.mmd`](diagrams/reliability_framework_architecture.mmd) - Component diagram: 7-layer reliability framework with module dependencies (referenced in Tutorial 01, Notebook 13)
+- [`diagrams/agentarch_benchmark_results.mmd`](diagrams/agentarch_benchmark_results.mmd) - Bar chart template: 5 patterns × 4 metrics comparison (referenced in Tutorial 05, Notebook 14)
+- [`diagrams/notebook_dependency_diagram.mmd`](diagrams/notebook_dependency_diagram.mmd) - Learning graph: 8 notebooks + 7 tutorials + backend modules (created in Task 5.10)
+- **Export Formats:** PNG/SVG available for complex diagrams (>20 nodes) - see [diagrams/README.md](diagrams/README.md) for rendering instructions
 
 ### Related Lessons
 - [Lesson 14: Agent Evaluation](../lesson-14/TUTORIAL_INDEX.md) - Agent planning evaluation, trajectory analysis

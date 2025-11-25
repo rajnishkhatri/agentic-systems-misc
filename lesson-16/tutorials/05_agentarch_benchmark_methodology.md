@@ -26,7 +26,7 @@
 - **Research Paper:**
   - AgentArch Benchmark (arXiv:2509.10769) - Original research on multi-agent evaluation
 - **Diagrams:**
-  - AgentArch Benchmark Results (to be created in Task 6.10) - Visual comparison of 5 patterns
+  - [AgentArch Benchmark Results](../diagrams/agentarch_benchmark_results.mmd) - Visual comparison of 5 patterns
 
 ---
 
@@ -699,7 +699,7 @@ Paired tests have higher statistical power because they control for task difficu
    - **YES** → **Iterative** (ReAct/Reflexion handles ambiguity, 75% success)
    - **NO** → **State Machine** (default for most enterprise workflows, 85% success)
 
-**Visual diagram:** See `diagrams/orchestration_pattern_selection.mmd` (to be created in Task 6.7).
+**Visual diagram:** See [orchestration_pattern_selection.mmd](../diagrams/orchestration_pattern_selection.mmd).
 
 ### Real-World Constraints Mapping
 
