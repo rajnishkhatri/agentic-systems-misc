@@ -158,6 +158,7 @@ See [LiteLLM docs](https://docs.litellm.ai/docs/providers) for supported provide
 - **[Lesson 9: Evaluation Fundamentals & Exact Methods](lesson-9/TUTORIAL_INDEX.md)** - Perplexity, BLEU, semantic similarity
 - **[Lesson 10: AI-as-Judge Mastery & Production Patterns](lesson-10/TUTORIAL_INDEX.md)** - Judge engineering and bias detection
 - **[Lesson 11: Comparative Evaluation & Leaderboards](lesson-11/TUTORIAL_INDEX.md)** - Elo and Bradley-Terry ranking systems
+- **[Lesson 16: Agent Reliability - Enterprise Patterns](lesson-16/TUTORIAL_INDEX.md)** - Multi-agent orchestration, reliability framework, production deployment
 
 ### Cross-Lesson Resources
 - **[Evaluation Dashboard (Lessons 9-11)](lesson-9-11/README.md)** - Unified metrics visualization across all evaluation methods
