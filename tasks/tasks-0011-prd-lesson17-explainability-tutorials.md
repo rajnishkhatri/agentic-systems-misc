@@ -15,7 +15,7 @@
 
 ### Files to Create
 
-- `lesson-17/tutorials/04_guardrails_validation_pii.md` - GuardRails tutorial with all 7 validators and PII detection
+- `lesson-17/tutorials/04_guardrails_validation_pii.md` - ✅ GuardRails tutorial with all 7 validators and PII detection
 - `lesson-17/notebooks/04_phase_logger_workflow.ipynb` - Interactive notebook demonstrating PhaseLogger component
 
 ### Existing Files to Reference
@@ -78,15 +78,15 @@
   - [x] 3.7 Write case study: Healthcare agent governance with HIPAA compliance requirements
   - [x] 3.8 Add cross-link to notebook `02_agent_facts_verification.ipynb`
 
-- [ ] 4.0 Create Tutorial 4: GuardRails for Validation and PII Detection
-  - [ ] 4.1 Explain declarative validation philosophy vs imperative validation with comparison examples
-  - [ ] 4.2 Document all 7 built-in validators with code examples: length_check, regex_match, no_pii, confidence_range, required_fields, json_parseable, value_in_list
-  - [ ] 4.3 Provide code example for custom validator creation with domain-specific use case
-  - [ ] 4.4 Document all 5 failure actions (REJECT, FIX, ESCALATE, LOG, RETRY) with decision matrix table
-  - [ ] 4.5 Explain validation traces structure and how to use them for debugging
-  - [ ] 4.6 Write case study: PII redaction in customer service chatbot (SSN, credit card, email, phone patterns)
-  - [ ] 4.7 Test all PII detection patterns with sample data from `pii_examples_50.json`
-  - [ ] 4.8 Add cross-link to notebook `03_guardrails_validation_traces.ipynb`
+- [x] 4.0 Create Tutorial 4: GuardRails for Validation and PII Detection
+  - [x] 4.1 Explain declarative validation philosophy vs imperative validation with comparison examples
+  - [x] 4.2 Document all 7 built-in validators with code examples: length_check, regex_match, no_pii, confidence_range, required_fields, json_parseable, value_in_list
+  - [x] 4.3 Provide code example for custom validator creation with domain-specific use case
+  - [x] 4.4 Document all 5 failure actions (REJECT, FIX, ESCALATE, LOG, RETRY) with decision matrix table
+  - [x] 4.5 Explain validation traces structure and how to use them for debugging
+  - [x] 4.6 Write case study: PII redaction in customer service chatbot (SSN, credit card, email, phone patterns)
+  - [x] 4.7 Test all PII detection patterns with sample data from `pii_examples_50.json`
+  - [x] 4.8 Add cross-link to notebook `03_guardrails_validation_traces.ipynb`
 
 - [ ] 5.0 Create Phase Logger Notebook (04_phase_logger_workflow.ipynb)
   - [ ] 5.1 Create setup cell with imports and PhaseLogger initialization
