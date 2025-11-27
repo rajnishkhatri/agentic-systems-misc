@@ -7,11 +7,14 @@
 
 ## Relevant Files
 
-### New Files to Create
+### New Files Created
 
-- `lesson-17/tutorials/01_explainability_fundamentals.md` - Foundation tutorial covering the four pillars and component selection
-- `lesson-17/tutorials/02_black_box_recording_debugging.md` - BlackBox Recorder tutorial with post-incident debugging workflow
-- `lesson-17/tutorials/03_agentfacts_governance.md` - AgentFacts tutorial covering identity, signatures, and compliance
+- `lesson-17/tutorials/01_explainability_fundamentals.md` - ✅ Foundation tutorial covering the four pillars and component selection
+- `lesson-17/tutorials/02_black_box_recording_debugging.md` - ✅ BlackBox Recorder tutorial with post-incident debugging workflow
+- `lesson-17/tutorials/03_agentfacts_governance.md` - ✅ AgentFacts tutorial covering identity, signatures, and compliance
+
+### Files to Create
+
 - `lesson-17/tutorials/04_guardrails_validation_pii.md` - GuardRails tutorial with all 7 validators and PII detection
 - `lesson-17/notebooks/04_phase_logger_workflow.ipynb` - Interactive notebook demonstrating PhaseLogger component
 
@@ -55,7 +58,7 @@
   - [x] 1.6 Add cross-links to Tutorials 2, 3, and 4 for deep-dives on each component
   - [x] 1.7 Verify reading time is <25 minutes (target ~4000 words)
 
-- [ ] 2.0 Create Tutorial 2: BlackBox Recording for Debugging
+- [x] 2.0 Create Tutorial 2: BlackBox Recording for Debugging
   - [x] 2.1 Explain aviation black box analogy and parallels to multi-agent systems (CVR/FDR mapping)
   - [x] 2.2 Document all recordable data types: TaskPlan, AgentInfo, ParameterSubstitution, ExecutionTrace with code examples
   - [x] 2.3 Document all 9 event types (STEP_START, STEP_END, DECISION, ERROR, CHECKPOINT, PARAMETER_CHANGE, COLLABORATOR_JOIN, COLLABORATOR_LEAVE, ROLLBACK) with use cases
@@ -65,15 +68,15 @@
   - [x] 2.7 Show integration pattern with GuardRails (validation + recording)
   - [x] 2.8 Add cross-link to notebook `01_black_box_recording_demo.ipynb`
 
-- [ ] 3.0 Create Tutorial 3: AgentFacts for Governance
-  - [ ] 3.1 Explain why agent identity matters: multi-tenancy isolation, compliance attribution, cost tracking, model lineage
-  - [ ] 3.2 Document Capability declarations: input/output schemas, cost estimation, latency SLAs, approval requirements
-  - [ ] 3.3 Document Policy management: rate limits, approval workflows, time-based policies, data access controls
-  - [ ] 3.4 Explain SHA256 signature verification for tamper detection with code walkthrough
-  - [ ] 3.5 Create signature verification flow diagram (Mermaid flowchart)
-  - [ ] 3.6 Document audit trail export formats for compliance (HIPAA/SOX structure)
-  - [ ] 3.7 Write case study: Healthcare agent governance with HIPAA compliance requirements
-  - [ ] 3.8 Add cross-link to notebook `02_agent_facts_verification.ipynb`
+- [x] 3.0 Create Tutorial 3: AgentFacts for Governance
+  - [x] 3.1 Explain why agent identity matters: multi-tenancy isolation, compliance attribution, cost tracking, model lineage
+  - [x] 3.2 Document Capability declarations: input/output schemas, cost estimation, latency SLAs, approval requirements
+  - [x] 3.3 Document Policy management: rate limits, approval workflows, time-based policies, data access controls
+  - [x] 3.4 Explain SHA256 signature verification for tamper detection with code walkthrough
+  - [x] 3.5 Create signature verification flow diagram (Mermaid flowchart)
+  - [x] 3.6 Document audit trail export formats for compliance (HIPAA/SOX structure)
+  - [x] 3.7 Write case study: Healthcare agent governance with HIPAA compliance requirements
+  - [x] 3.8 Add cross-link to notebook `02_agent_facts_verification.ipynb`
 
 - [ ] 4.0 Create Tutorial 4: GuardRails for Validation and PII Detection
   - [ ] 4.1 Explain declarative validation philosophy vs imperative validation with comparison examples
