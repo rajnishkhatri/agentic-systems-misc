@@ -56,14 +56,14 @@
   - [x] 1.7 Verify reading time is <25 minutes (target ~4000 words)
 
 - [ ] 2.0 Create Tutorial 2: BlackBox Recording for Debugging
-  - [ ] 2.1 Explain aviation black box analogy and parallels to multi-agent systems (CVR/FDR mapping)
-  - [ ] 2.2 Document all recordable data types: TaskPlan, AgentInfo, ParameterSubstitution, ExecutionTrace with code examples
-  - [ ] 2.3 Document all 9 event types (STEP_START, STEP_END, DECISION, ERROR, CHECKPOINT, PARAMETER_CHANGE, COLLABORATOR_JOIN, COLLABORATOR_LEAVE, ROLLBACK) with use cases
-  - [ ] 2.4 Create post-incident analysis workflow diagram (Mermaid sequence): export → replay → analyze
-  - [ ] 2.5 Write case study: Multi-agent invoice processing cascade failure using data from `invoice_processing_trace.json`
-  - [ ] 2.6 Document best practices: checkpoint frequency, rollback point placement, storage management
-  - [ ] 2.7 Show integration pattern with GuardRails (validation + recording)
-  - [ ] 2.8 Add cross-link to notebook `01_black_box_recording_demo.ipynb`
+  - [x] 2.1 Explain aviation black box analogy and parallels to multi-agent systems (CVR/FDR mapping)
+  - [x] 2.2 Document all recordable data types: TaskPlan, AgentInfo, ParameterSubstitution, ExecutionTrace with code examples
+  - [x] 2.3 Document all 9 event types (STEP_START, STEP_END, DECISION, ERROR, CHECKPOINT, PARAMETER_CHANGE, COLLABORATOR_JOIN, COLLABORATOR_LEAVE, ROLLBACK) with use cases
+  - [x] 2.4 Create post-incident analysis workflow diagram (Mermaid sequence): export → replay → analyze
+  - [x] 2.5 Write case study: Multi-agent invoice processing cascade failure using data from `invoice_processing_trace.json`
+  - [x] 2.6 Document best practices: checkpoint frequency, rollback point placement, storage management
+  - [x] 2.7 Show integration pattern with GuardRails (validation + recording)
+  - [x] 2.8 Add cross-link to notebook `01_black_box_recording_demo.ipynb`
 
 - [ ] 3.0 Create Tutorial 3: AgentFacts for Governance
   - [ ] 3.1 Explain why agent identity matters: multi-tenancy isolation, compliance attribution, cost tracking, model lineage
