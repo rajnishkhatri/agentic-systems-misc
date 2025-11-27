@@ -16,7 +16,7 @@
 ### Files to Create
 
 - `lesson-17/tutorials/04_guardrails_validation_pii.md` - ✅ GuardRails tutorial with all 7 validators and PII detection
-- `lesson-17/notebooks/04_phase_logger_workflow.ipynb` - Interactive notebook demonstrating PhaseLogger component
+- `lesson-17/notebooks/04_phase_logger_workflow.ipynb` - ✅ Interactive notebook demonstrating PhaseLogger component
 
 ### Existing Files to Reference
 
@@ -88,22 +88,22 @@
   - [x] 4.7 Test all PII detection patterns with sample data from `pii_examples_50.json`
   - [x] 4.8 Add cross-link to notebook `03_guardrails_validation_traces.ipynb`
 
-- [ ] 5.0 Create Phase Logger Notebook (04_phase_logger_workflow.ipynb)
-  - [ ] 5.1 Create setup cell with imports and PhaseLogger initialization
-  - [ ] 5.2 Demonstrate phase lifecycle: start_phase → log_decision → log_artifact → end_phase
-  - [ ] 5.3 Show at least 4 of 7 active workflow phases (PLANNING, LITERATURE_REVIEW, DATA_COLLECTION, EXECUTION, EXPERIMENT, VALIDATION, REPORTING - excludes terminal states COMPLETED/FAILED)
-  - [ ] 5.4 Demonstrate decision logging with alternatives_considered and selected_because reasoning
-  - [ ] 5.5 Demonstrate artifact tracking with metadata (type, path, phase association)
-  - [ ] 5.6 Show error handling: log recoverable errors vs fatal errors
-  - [ ] 5.7 Generate and display Mermaid workflow diagram using visualize_workflow()
-  - [ ] 5.8 Display summary statistics using get_phase_summary() (phases, decisions, artifacts, errors, duration)
-  - [ ] 5.9 Add markdown explanations between all code cells
-  - [ ] 5.10 Verify total execution time is <5 minutes
+- [x] 5.0 Create Phase Logger Notebook (04_phase_logger_workflow.ipynb)
+  - [x] 5.1 Create setup cell with imports and PhaseLogger initialization
+  - [x] 5.2 Demonstrate phase lifecycle: start_phase → log_decision → log_artifact → end_phase
+  - [x] 5.3 Show at least 4 of 7 active workflow phases (PLANNING, LITERATURE_REVIEW, DATA_COLLECTION, EXECUTION, EXPERIMENT, VALIDATION, REPORTING - excludes terminal states COMPLETED/FAILED)
+  - [x] 5.4 Demonstrate decision logging with alternatives_considered and selected_because reasoning
+  - [x] 5.5 Demonstrate artifact tracking with metadata (type, path, phase association)
+  - [x] 5.6 Show error handling: log recoverable errors vs fatal errors
+  - [x] 5.7 Generate and display Mermaid workflow diagram using visualize_workflow()
+  - [x] 5.8 Display summary statistics using get_phase_summary() (phases, decisions, artifacts, errors, duration)
+  - [x] 5.9 Add markdown explanations between all code cells
+  - [x] 5.10 Verify total execution time is <5 minutes
 
-- [ ] 6.0 Update TUTORIAL_INDEX.md and Documentation
-  - [ ] 6.1 Add all 4 tutorial entries to the Tutorials section with descriptions
-  - [ ] 6.2 Update Learning Path section with tutorial progression (Beginner → Intermediate → Advanced)
-  - [ ] 6.3 Add Phase Logger notebook to Interactive Notebooks table
-  - [ ] 6.4 Verify all internal cross-links between tutorials work correctly
-  - [ ] 6.5 Update README.md if needed to reference new tutorial content
+- [x] 6.0 Update TUTORIAL_INDEX.md and Documentation
+  - [x] 6.1 Add all 4 tutorial entries to the Tutorials section with descriptions
+  - [x] 6.2 Update Learning Path section with tutorial progression (Beginner → Intermediate → Advanced)
+  - [x] 6.3 Add Phase Logger notebook to Interactive Notebooks table
+  - [x] 6.4 Verify all internal cross-links between tutorials work correctly
+  - [x] 6.5 Update README.md if needed to reference new tutorial content
 
