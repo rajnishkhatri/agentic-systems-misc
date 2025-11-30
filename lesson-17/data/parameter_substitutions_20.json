@@ -1,0 +1,795 @@
+[
+  {
+    "substitution_id": "param-sub-018",
+    "workflow_id": "fraud-pipeline-007",
+    "workflow_type": "fraud_detection",
+    "timestamp": "2025-10-29T05:25:08.863863+00:00",
+    "parameter_name": "fraud_threshold",
+    "parameter_description": "Threshold for flagging transactions as fraudulent",
+    "old_value": 0.7,
+    "new_value": 0.85,
+    "value_type": "float",
+    "justification": "Compliance requirement",
+    "changed_by": "devops_bot",
+    "changed_by_type": "system",
+    "change_reason_category": "compliance_requirement",
+    "impact": {
+      "workflows_affected": 80,
+      "success_rate_before": 0.958,
+      "success_rate_after": 0.907,
+      "success_rate_delta": -0.051,
+      "latency_p50_before_ms": 442,
+      "latency_p50_after_ms": 446,
+      "latency_delta_ms": 4,
+      "cost_per_call_before": 0.0075,
+      "cost_per_call_after": 0.01,
+      "estimated_daily_cost_impact": 4.72,
+      "root_cause_correlation": "Higher threshold \u2192 missed fraud cases or more false negatives",
+      "recommendation": "Review threshold with compliance team; consider tiered approach"
+    },
+    "rollback_available": true,
+    "requires_approval": false,
+    "metadata": {
+      "source": "parameter_tuning",
+      "environment": "production",
+      "affected_steps": [
+        "scoring",
+        "decision",
+        "escalation"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-015",
+    "workflow_id": "fraud-pipeline-005",
+    "workflow_type": "fraud_detection",
+    "timestamp": "2025-10-31T22:46:47.863836+00:00",
+    "parameter_name": "confidence_threshold",
+    "parameter_description": "Minimum confidence score for accepting model outputs",
+    "old_value": 0.8,
+    "new_value": 0.95,
+    "value_type": "float",
+    "justification": "Reduce false positives",
+    "changed_by": "ml_engineer",
+    "changed_by_type": "human",
+    "change_reason_category": "general_tuning",
+    "impact": {
+      "workflows_affected": 342,
+      "success_rate_before": 0.921,
+      "success_rate_after": 0.854,
+      "success_rate_delta": -0.067,
+      "latency_p50_before_ms": 485,
+      "latency_p50_after_ms": 468,
+      "latency_delta_ms": -17,
+      "cost_per_call_before": 0.015,
+      "cost_per_call_after": 0.0169,
+      "estimated_daily_cost_impact": 15.54,
+      "root_cause_correlation": "Threshold too high \u2192 empty results \u2192 cascade failures",
+      "recommendation": "Add GuardRail for threshold bounds (0.5-0.9)"
+    },
+    "rollback_available": true,
+    "requires_approval": true,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "canary",
+      "affected_steps": [
+        "validation",
+        "output_filtering",
+        "decision"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-016",
+    "workflow_id": "legal-review-053",
+    "workflow_type": "contract_review",
+    "timestamp": "2025-11-02T02:07:21.863846+00:00",
+    "parameter_name": "fraud_threshold",
+    "parameter_description": "Threshold for flagging transactions as fraudulent",
+    "old_value": 0.75,
+    "new_value": 0.85,
+    "value_type": "float",
+    "justification": "Reduce false positives (SOX audit)",
+    "changed_by": "compliance_team",
+    "changed_by_type": "team",
+    "change_reason_category": "compliance_requirement",
+    "impact": {
+      "workflows_affected": 394,
+      "success_rate_before": 0.888,
+      "success_rate_after": 0.832,
+      "success_rate_delta": -0.055,
+      "latency_p50_before_ms": 641,
+      "latency_p50_after_ms": 812,
+      "latency_delta_ms": 171,
+      "cost_per_call_before": 0.0103,
+      "cost_per_call_after": 0.0122,
+      "estimated_daily_cost_impact": 18.12,
+      "root_cause_correlation": "Higher threshold \u2192 missed fraud cases or more false negatives",
+      "recommendation": "Review threshold with compliance team; consider tiered approach"
+    },
+    "rollback_available": true,
+    "requires_approval": false,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "canary",
+      "affected_steps": [
+        "scoring",
+        "decision",
+        "escalation"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-017",
+    "workflow_id": "legal-review-094",
+    "workflow_type": "contract_review",
+    "timestamp": "2025-11-02T19:31:57.863854+00:00",
+    "parameter_name": "model_version",
+    "parameter_description": "LLM model version used for inference",
+    "old_value": "gpt-3.5-turbo",
+    "new_value": "gpt-4",
+    "value_type": "string",
+    "justification": "Improve accuracy",
+    "changed_by": "ml_engineer",
+    "changed_by_type": "human",
+    "change_reason_category": "quality_improvement",
+    "impact": {
+      "workflows_affected": 177,
+      "success_rate_before": 0.9,
+      "success_rate_after": 0.915,
+      "success_rate_delta": 0.016,
+      "latency_p50_before_ms": 394,
+      "latency_p50_after_ms": 340,
+      "latency_delta_ms": -54,
+      "cost_per_call_before": 0.013,
+      "cost_per_call_after": 0.013,
+      "estimated_daily_cost_impact": -0.21,
+      "root_cause_correlation": null,
+      "recommendation": "Monitor for sustained improvement; consider applying to all environments"
+    },
+    "rollback_available": true,
+    "requires_approval": true,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "production",
+      "affected_steps": [
+        "inference",
+        "generation",
+        "scoring"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-001",
+    "workflow_id": "healthcare-diagnosis-032",
+    "workflow_type": "diagnosis_generation",
+    "timestamp": "2025-11-04T06:47:54.863647+00:00",
+    "parameter_name": "model_version",
+    "parameter_description": "LLM model version used for inference",
+    "old_value": "gpt-3.5-turbo",
+    "new_value": "gpt-4",
+    "value_type": "string",
+    "justification": "Improve accuracy",
+    "changed_by": "compliance_team",
+    "changed_by_type": "team",
+    "change_reason_category": "quality_improvement",
+    "impact": {
+      "workflows_affected": 169,
+      "success_rate_before": 0.939,
+      "success_rate_after": 0.966,
+      "success_rate_delta": 0.027,
+      "latency_p50_before_ms": 758,
+      "latency_p50_after_ms": 665,
+      "latency_delta_ms": -93,
+      "cost_per_call_before": 0.0063,
+      "cost_per_call_after": 0.005,
+      "estimated_daily_cost_impact": -5.45,
+      "root_cause_correlation": null,
+      "recommendation": "Monitor for sustained improvement; consider applying to all environments"
+    },
+    "rollback_available": true,
+    "requires_approval": false,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "canary",
+      "affected_steps": [
+        "inference",
+        "generation",
+        "scoring"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-011",
+    "workflow_id": "research-workflow-078",
+    "workflow_type": "research_synthesis",
+    "timestamp": "2025-11-04T22:17:44.863799+00:00",
+    "parameter_name": "model_version",
+    "parameter_description": "LLM model version used for inference",
+    "old_value": "claude-2",
+    "new_value": "claude-3-sonnet",
+    "value_type": "string",
+    "justification": "Model upgrade",
+    "changed_by": "compliance_team",
+    "changed_by_type": "team",
+    "change_reason_category": "general_tuning",
+    "impact": {
+      "workflows_affected": 356,
+      "success_rate_before": 0.91,
+      "success_rate_after": 0.951,
+      "success_rate_delta": 0.041,
+      "latency_p50_before_ms": 365,
+      "latency_p50_after_ms": 400,
+      "latency_delta_ms": 35,
+      "cost_per_call_before": 0.0131,
+      "cost_per_call_after": 0.0175,
+      "estimated_daily_cost_impact": 37.85,
+      "root_cause_correlation": null,
+      "recommendation": "Monitor for sustained improvement; consider applying to all environments"
+    },
+    "rollback_available": true,
+    "requires_approval": false,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "staging",
+      "affected_steps": [
+        "inference",
+        "generation",
+        "scoring"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-005",
+    "workflow_id": "legal-review-082",
+    "workflow_type": "contract_review",
+    "timestamp": "2025-11-05T09:43:50.863727+00:00",
+    "parameter_name": "batch_size",
+    "parameter_description": "Number of items processed per batch",
+    "old_value": 128,
+    "new_value": 32,
+    "value_type": "int",
+    "justification": "Memory constraints",
+    "changed_by": "ml_engineer",
+    "changed_by_type": "human",
+    "change_reason_category": "general_tuning",
+    "impact": {
+      "workflows_affected": 361,
+      "success_rate_before": 0.91,
+      "success_rate_after": 0.872,
+      "success_rate_delta": -0.038,
+      "latency_p50_before_ms": 414,
+      "latency_p50_after_ms": 538,
+      "latency_delta_ms": 124,
+      "cost_per_call_before": 0.0151,
+      "cost_per_call_after": 0.0166,
+      "estimated_daily_cost_impact": 13.79,
+      "root_cause_correlation": "Larger batches \u2192 memory pressure \u2192 OOM errors",
+      "recommendation": "Reduce batch size; implement memory monitoring"
+    },
+    "rollback_available": true,
+    "requires_approval": true,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "canary",
+      "affected_steps": [
+        "data_loading",
+        "inference",
+        "processing"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-004",
+    "workflow_id": "research-workflow-047",
+    "workflow_type": "research_synthesis",
+    "timestamp": "2025-11-06T20:15:26.863716+00:00",
+    "parameter_name": "retry_attempts",
+    "parameter_description": "Number of retry attempts on failure",
+    "old_value": 2,
+    "new_value": 4,
+    "value_type": "int",
+    "justification": "Handle transient failures",
+    "changed_by": "devops_bot",
+    "changed_by_type": "system",
+    "change_reason_category": "reliability_improvement",
+    "impact": {
+      "workflows_affected": 493,
+      "success_rate_before": 0.936,
+      "success_rate_after": 0.977,
+      "success_rate_delta": 0.041,
+      "latency_p50_before_ms": 246,
+      "latency_p50_after_ms": 166,
+      "latency_delta_ms": -80,
+      "cost_per_call_before": 0.0149,
+      "cost_per_call_after": 0.0189,
+      "estimated_daily_cost_impact": 47.18,
+      "root_cause_correlation": null,
+      "recommendation": "Monitor for sustained improvement; consider applying to all environments"
+    },
+    "rollback_available": true,
+    "requires_approval": false,
+    "metadata": {
+      "source": "parameter_tuning",
+      "environment": "production",
+      "affected_steps": [
+        "api_call",
+        "external_service"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-012",
+    "workflow_id": "fraud-pipeline-047",
+    "workflow_type": "fraud_detection",
+    "timestamp": "2025-11-09T03:12:25.863808+00:00",
+    "parameter_name": "fraud_threshold",
+    "parameter_description": "Threshold for flagging transactions as fraudulent",
+    "old_value": 0.75,
+    "new_value": 0.85,
+    "value_type": "float",
+    "justification": "Reduce false positives (SOX audit)",
+    "changed_by": "ml_engineer",
+    "changed_by_type": "human",
+    "change_reason_category": "compliance_requirement",
+    "impact": {
+      "workflows_affected": 439,
+      "success_rate_before": 0.885,
+      "success_rate_after": 0.81,
+      "success_rate_delta": -0.075,
+      "latency_p50_before_ms": 780,
+      "latency_p50_after_ms": 854,
+      "latency_delta_ms": 74,
+      "cost_per_call_before": 0.0192,
+      "cost_per_call_after": 0.0215,
+      "estimated_daily_cost_impact": 23.85,
+      "root_cause_correlation": "Higher threshold \u2192 missed fraud cases or more false negatives",
+      "recommendation": "Review threshold with compliance team; consider tiered approach"
+    },
+    "rollback_available": true,
+    "requires_approval": true,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "canary",
+      "affected_steps": [
+        "scoring",
+        "decision",
+        "escalation"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-014",
+    "workflow_id": "research-workflow-058",
+    "workflow_type": "research_synthesis",
+    "timestamp": "2025-11-09T13:03:21.863827+00:00",
+    "parameter_name": "timeout_seconds",
+    "parameter_description": "Request timeout in seconds",
+    "old_value": 60,
+    "new_value": 30,
+    "value_type": "int",
+    "justification": "Fail fast for responsiveness",
+    "changed_by": "user_admin",
+    "changed_by_type": "human",
+    "change_reason_category": "performance_optimization",
+    "impact": {
+      "workflows_affected": 86,
+      "success_rate_before": 0.898,
+      "success_rate_after": 0.9,
+      "success_rate_delta": 0.002,
+      "latency_p50_before_ms": 546,
+      "latency_p50_after_ms": 571,
+      "latency_delta_ms": 25,
+      "cost_per_call_before": 0.0053,
+      "cost_per_call_after": 0.0042,
+      "estimated_daily_cost_impact": -2.31,
+      "root_cause_correlation": null,
+      "recommendation": "Continue monitoring; no immediate action required"
+    },
+    "rollback_available": true,
+    "requires_approval": true,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "canary",
+      "affected_steps": [
+        "api_call",
+        "processing",
+        "external_service"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-013",
+    "workflow_id": "legal-review-071",
+    "workflow_type": "contract_review",
+    "timestamp": "2025-11-10T09:02:18.863818+00:00",
+    "parameter_name": "temperature",
+    "parameter_description": "Sampling temperature for model outputs",
+    "old_value": 0.7,
+    "new_value": 0.3,
+    "value_type": "float",
+    "justification": "More deterministic outputs",
+    "changed_by": "compliance_team",
+    "changed_by_type": "team",
+    "change_reason_category": "general_tuning",
+    "impact": {
+      "workflows_affected": 254,
+      "success_rate_before": 0.922,
+      "success_rate_after": 0.969,
+      "success_rate_delta": 0.047,
+      "latency_p50_before_ms": 633,
+      "latency_p50_after_ms": 584,
+      "latency_delta_ms": -49,
+      "cost_per_call_before": 0.0195,
+      "cost_per_call_after": 0.0225,
+      "estimated_daily_cost_impact": 18.23,
+      "root_cause_correlation": null,
+      "recommendation": "Monitor for sustained improvement; consider applying to all environments"
+    },
+    "rollback_available": true,
+    "requires_approval": false,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "canary",
+      "affected_steps": [
+        "generation",
+        "sampling"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-019",
+    "workflow_id": "legal-review-034",
+    "workflow_type": "contract_review",
+    "timestamp": "2025-11-11T08:33:51.863871+00:00",
+    "parameter_name": "batch_size",
+    "parameter_description": "Number of items processed per batch",
+    "old_value": 32,
+    "new_value": 64,
+    "value_type": "int",
+    "justification": "Improve throughput",
+    "changed_by": "auto_tuner",
+    "changed_by_type": "system",
+    "change_reason_category": "quality_improvement",
+    "impact": {
+      "workflows_affected": 79,
+      "success_rate_before": 0.914,
+      "success_rate_after": 0.943,
+      "success_rate_delta": 0.029,
+      "latency_p50_before_ms": 769,
+      "latency_p50_after_ms": 717,
+      "latency_delta_ms": -52,
+      "cost_per_call_before": 0.0149,
+      "cost_per_call_after": 0.015,
+      "estimated_daily_cost_impact": 0.15,
+      "root_cause_correlation": null,
+      "recommendation": "Monitor for sustained improvement; consider applying to all environments"
+    },
+    "rollback_available": true,
+    "requires_approval": false,
+    "metadata": {
+      "source": "parameter_tuning",
+      "environment": "canary",
+      "affected_steps": [
+        "data_loading",
+        "inference",
+        "processing"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-007",
+    "workflow_id": "fraud-pipeline-028",
+    "workflow_type": "fraud_detection",
+    "timestamp": "2025-11-12T18:51:04.863750+00:00",
+    "parameter_name": "batch_size",
+    "parameter_description": "Number of items processed per batch",
+    "old_value": 128,
+    "new_value": 32,
+    "value_type": "int",
+    "justification": "Memory constraints",
+    "changed_by": "devops_bot",
+    "changed_by_type": "system",
+    "change_reason_category": "general_tuning",
+    "impact": {
+      "workflows_affected": 121,
+      "success_rate_before": 0.897,
+      "success_rate_after": 0.872,
+      "success_rate_delta": -0.025,
+      "latency_p50_before_ms": 711,
+      "latency_p50_after_ms": 778,
+      "latency_delta_ms": 67,
+      "cost_per_call_before": 0.0109,
+      "cost_per_call_after": 0.0105,
+      "estimated_daily_cost_impact": -1.24,
+      "root_cause_correlation": "Larger batches \u2192 memory pressure \u2192 OOM errors",
+      "recommendation": "Reduce batch size; implement memory monitoring"
+    },
+    "rollback_available": true,
+    "requires_approval": false,
+    "metadata": {
+      "source": "parameter_tuning",
+      "environment": "production",
+      "affected_steps": [
+        "data_loading",
+        "inference",
+        "processing"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-006",
+    "workflow_id": "invoice-workflow-021",
+    "workflow_type": "invoice_processing",
+    "timestamp": "2025-11-15T22:19:21.863740+00:00",
+    "parameter_name": "temperature",
+    "parameter_description": "Sampling temperature for model outputs",
+    "old_value": 1.2,
+    "new_value": 0.7,
+    "value_type": "float",
+    "justification": "Reduce hallucinations",
+    "changed_by": "auto_tuner",
+    "changed_by_type": "system",
+    "change_reason_category": "general_tuning",
+    "impact": {
+      "workflows_affected": 66,
+      "success_rate_before": 0.902,
+      "success_rate_after": 0.925,
+      "success_rate_delta": 0.023,
+      "latency_p50_before_ms": 770,
+      "latency_p50_after_ms": 684,
+      "latency_delta_ms": -86,
+      "cost_per_call_before": 0.0083,
+      "cost_per_call_after": 0.0079,
+      "estimated_daily_cost_impact": -0.63,
+      "root_cause_correlation": null,
+      "recommendation": "Monitor for sustained improvement; consider applying to all environments"
+    },
+    "rollback_available": true,
+    "requires_approval": false,
+    "metadata": {
+      "source": "parameter_tuning",
+      "environment": "staging",
+      "affected_steps": [
+        "generation",
+        "sampling"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-003",
+    "workflow_id": "healthcare-diagnosis-014",
+    "workflow_type": "diagnosis_generation",
+    "timestamp": "2025-11-15T22:52:20.863704+00:00",
+    "parameter_name": "temperature",
+    "parameter_description": "Sampling temperature for model outputs",
+    "old_value": 0.7,
+    "new_value": 0.3,
+    "value_type": "float",
+    "justification": "More deterministic outputs",
+    "changed_by": "user_admin",
+    "changed_by_type": "human",
+    "change_reason_category": "general_tuning",
+    "impact": {
+      "workflows_affected": 243,
+      "success_rate_before": 0.888,
+      "success_rate_after": 0.93,
+      "success_rate_delta": 0.042,
+      "latency_p50_before_ms": 552,
+      "latency_p50_after_ms": 569,
+      "latency_delta_ms": 17,
+      "cost_per_call_before": 0.0141,
+      "cost_per_call_after": 0.0158,
+      "estimated_daily_cost_impact": 10.23,
+      "root_cause_correlation": null,
+      "recommendation": "Monitor for sustained improvement; consider applying to all environments"
+    },
+    "rollback_available": true,
+    "requires_approval": true,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "production",
+      "affected_steps": [
+        "generation",
+        "sampling"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-009",
+    "workflow_id": "legal-review-077",
+    "workflow_type": "contract_review",
+    "timestamp": "2025-11-16T04:30:41.863778+00:00",
+    "parameter_name": "temperature",
+    "parameter_description": "Sampling temperature for model outputs",
+    "old_value": 1.2,
+    "new_value": 0.7,
+    "value_type": "float",
+    "justification": "Reduce hallucinations",
+    "changed_by": "user_admin",
+    "changed_by_type": "human",
+    "change_reason_category": "general_tuning",
+    "impact": {
+      "workflows_affected": 108,
+      "success_rate_before": 0.911,
+      "success_rate_after": 0.959,
+      "success_rate_delta": 0.049,
+      "latency_p50_before_ms": 679,
+      "latency_p50_after_ms": 581,
+      "latency_delta_ms": -98,
+      "cost_per_call_before": 0.0129,
+      "cost_per_call_after": 0.0157,
+      "estimated_daily_cost_impact": 7.16,
+      "root_cause_correlation": null,
+      "recommendation": "Monitor for sustained improvement; consider applying to all environments"
+    },
+    "rollback_available": true,
+    "requires_approval": true,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "canary",
+      "affected_steps": [
+        "generation",
+        "sampling"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-008",
+    "workflow_id": "research-workflow-055",
+    "workflow_type": "research_synthesis",
+    "timestamp": "2025-11-16T21:33:37.863763+00:00",
+    "parameter_name": "retry_attempts",
+    "parameter_description": "Number of retry attempts on failure",
+    "old_value": 2,
+    "new_value": 4,
+    "value_type": "int",
+    "justification": "Handle transient failures",
+    "changed_by": "devops_bot",
+    "changed_by_type": "system",
+    "change_reason_category": "reliability_improvement",
+    "impact": {
+      "workflows_affected": 128,
+      "success_rate_before": 0.909,
+      "success_rate_after": 0.923,
+      "success_rate_delta": 0.014,
+      "latency_p50_before_ms": 341,
+      "latency_p50_after_ms": 253,
+      "latency_delta_ms": -88,
+      "cost_per_call_before": 0.0126,
+      "cost_per_call_after": 0.0167,
+      "estimated_daily_cost_impact": 12.37,
+      "root_cause_correlation": null,
+      "recommendation": "Monitor for sustained improvement; consider applying to all environments"
+    },
+    "rollback_available": true,
+    "requires_approval": false,
+    "metadata": {
+      "source": "parameter_tuning",
+      "environment": "canary",
+      "affected_steps": [
+        "api_call",
+        "external_service"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-002",
+    "workflow_id": "invoice-workflow-092",
+    "workflow_type": "invoice_processing",
+    "timestamp": "2025-11-17T21:00:03.863691+00:00",
+    "parameter_name": "confidence_threshold",
+    "parameter_description": "Minimum confidence score for accepting model outputs",
+    "old_value": 0.85,
+    "new_value": 0.9,
+    "value_type": "float",
+    "justification": "Compliance requirement",
+    "changed_by": "devops_bot",
+    "changed_by_type": "system",
+    "change_reason_category": "compliance_requirement",
+    "impact": {
+      "workflows_affected": 224,
+      "success_rate_before": 0.898,
+      "success_rate_after": 0.878,
+      "success_rate_delta": -0.02,
+      "latency_p50_before_ms": 484,
+      "latency_p50_after_ms": 454,
+      "latency_delta_ms": -30,
+      "cost_per_call_before": 0.0171,
+      "cost_per_call_after": 0.0179,
+      "estimated_daily_cost_impact": 4.26,
+      "root_cause_correlation": null,
+      "recommendation": "Continue monitoring; no immediate action required"
+    },
+    "rollback_available": true,
+    "requires_approval": false,
+    "metadata": {
+      "source": "parameter_tuning",
+      "environment": "staging",
+      "affected_steps": [
+        "validation",
+        "output_filtering",
+        "decision"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-010",
+    "workflow_id": "healthcare-diagnosis-015",
+    "workflow_type": "diagnosis_generation",
+    "timestamp": "2025-11-18T14:45:47.863789+00:00",
+    "parameter_name": "retry_attempts",
+    "parameter_description": "Number of retry attempts on failure",
+    "old_value": 2,
+    "new_value": 4,
+    "value_type": "int",
+    "justification": "Handle transient failures",
+    "changed_by": "ml_engineer",
+    "changed_by_type": "human",
+    "change_reason_category": "reliability_improvement",
+    "impact": {
+      "workflows_affected": 440,
+      "success_rate_before": 0.893,
+      "success_rate_after": 0.938,
+      "success_rate_delta": 0.045,
+      "latency_p50_before_ms": 203,
+      "latency_p50_after_ms": 170,
+      "latency_delta_ms": -33,
+      "cost_per_call_before": 0.0193,
+      "cost_per_call_after": 0.0241,
+      "estimated_daily_cost_impact": 50.72,
+      "root_cause_correlation": null,
+      "recommendation": "Monitor for sustained improvement; consider applying to all environments"
+    },
+    "rollback_available": true,
+    "requires_approval": true,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "production",
+      "affected_steps": [
+        "api_call",
+        "external_service"
+      ]
+    }
+  },
+  {
+    "substitution_id": "param-sub-020",
+    "workflow_id": "healthcare-diagnosis-008",
+    "workflow_type": "diagnosis_generation",
+    "timestamp": "2025-11-25T20:50:28.863880+00:00",
+    "parameter_name": "confidence_threshold",
+    "parameter_description": "Minimum confidence score for accepting model outputs",
+    "old_value": 0.85,
+    "new_value": 0.9,
+    "value_type": "float",
+    "justification": "Compliance requirement",
+    "changed_by": "user_admin",
+    "changed_by_type": "human",
+    "change_reason_category": "compliance_requirement",
+    "impact": {
+      "workflows_affected": 85,
+      "success_rate_before": 0.918,
+      "success_rate_after": 0.937,
+      "success_rate_delta": 0.018,
+      "latency_p50_before_ms": 743,
+      "latency_p50_after_ms": 703,
+      "latency_delta_ms": -40,
+      "cost_per_call_before": 0.0074,
+      "cost_per_call_after": 0.0088,
+      "estimated_daily_cost_impact": 2.87,
+      "root_cause_correlation": null,
+      "recommendation": "Continue monitoring; no immediate action required"
+    },
+    "rollback_available": true,
+    "requires_approval": true,
+    "metadata": {
+      "source": "manual_override",
+      "environment": "canary",
+      "affected_steps": [
+        "validation",
+        "output_filtering",
+        "decision"
+      ]
+    }
+  }
+]

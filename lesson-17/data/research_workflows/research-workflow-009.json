@@ -1,0 +1,218 @@
+{
+  "workflow_id": "research-workflow-009",
+  "workflow_type": "research_paper_generation",
+  "research_topic": "Hallucination detection and mitigation",
+  "start_time": "2025-11-03T05:04:58.855484+00:00",
+  "end_time": "2025-11-07T16:58:58.855484+00:00",
+  "total_duration_hours": 107.9,
+  "phases": [
+    {
+      "phase_id": "research-workflow-009-planning",
+      "phase_type": "PLANNING",
+      "start_time": "2025-11-03T05:04:58.855484+00:00",
+      "end_time": "2025-11-03T11:40:58.855484+00:00",
+      "duration_hours": 6.6,
+      "outcome": {
+        "status": "success",
+        "summary": "Research question and methodology defined for 'Hallucination detection and mitigation'"
+      }
+    },
+    {
+      "phase_id": "research-workflow-009-literature_review",
+      "phase_type": "LITERATURE_REVIEW",
+      "start_time": "2025-11-03T11:40:58.855484+00:00",
+      "end_time": "2025-11-05T13:22:58.855484+00:00",
+      "duration_hours": 49.7,
+      "outcome": {
+        "status": "success",
+        "summary": "47 papers reviewed, 10 key findings identified"
+      }
+    },
+    {
+      "phase_id": "research-workflow-009-data_collection",
+      "phase_type": "DATA_COLLECTION",
+      "start_time": "2025-11-05T13:22:58.855484+00:00",
+      "end_time": "2025-11-07T16:58:58.855484+00:00",
+      "duration_hours": 51.6,
+      "outcome": {
+        "status": "failed",
+        "summary": "Phase failed during data collection",
+        "error": {
+          "message": "API rate limit exceeded (429 Too Many Requests)",
+          "is_recoverable": true
+        }
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "decision_id": "research-workflow-009-planning-dec-01",
+      "timestamp": "2025-11-27T12:13:30.855525+00:00",
+      "phase": "PLANNING",
+      "description": "Choose research methodology",
+      "alternatives": [
+        "Experimental study with controlled trials",
+        "Observational study with existing datasets",
+        "Mixed methods combining both approaches"
+      ],
+      "selected": "Mixed methods combining both approaches",
+      "rationale": "Provides both quantitative rigor and qualitative insights",
+      "confidence": 0.77
+    },
+    {
+      "decision_id": "research-workflow-009-planning-dec-02",
+      "timestamp": "2025-11-27T12:13:30.855527+00:00",
+      "phase": "PLANNING",
+      "description": "Select research question focus",
+      "alternatives": [
+        "Focus on Hallucination detection and mitigation - theoretical foundations",
+        "Focus on Hallucination detection and mitigation - practical applications",
+        "Focus on Hallucination detection and mitigation - benchmark comparisons"
+      ],
+      "selected": "Focus on Hallucination detection and mitigation - practical applications",
+      "rationale": "High industry demand, clear evaluation metrics available",
+      "confidence": 0.77
+    },
+    {
+      "decision_id": "research-workflow-009-literature_review-dec-01",
+      "timestamp": "2025-11-27T12:13:30.855534+00:00",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Define inclusion criteria for papers",
+      "alternatives": [
+        "Last 2 years only, peer-reviewed",
+        "Last 5 years, including preprints",
+        "No time limit, highly cited only"
+      ],
+      "selected": "Last 5 years, including preprints",
+      "rationale": "Captures recent advances while maintaining relevance",
+      "confidence": 0.79
+    },
+    {
+      "decision_id": "research-workflow-009-literature_review-dec-02",
+      "timestamp": "2025-11-27T12:13:30.855536+00:00",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Select academic databases to search",
+      "alternatives": [
+        "PubMed",
+        "ArXiv",
+        "Semantic Scholar",
+        "Google Scholar"
+      ],
+      "selected": "ArXiv, Semantic Scholar, ACM Digital Library",
+      "rationale": "Best coverage for AI/ML research topics",
+      "confidence": 0.84
+    },
+    {
+      "decision_id": "research-workflow-009-data_collection-dec-01",
+      "timestamp": "2025-11-27T12:13:30.855542+00:00",
+      "phase": "DATA_COLLECTION",
+      "description": "Choose data preprocessing strategy",
+      "alternatives": [
+        "Minimal preprocessing (preserve original)",
+        "Standard normalization pipeline",
+        "Custom augmentation with synthetic examples"
+      ],
+      "selected": "Standard normalization pipeline",
+      "rationale": "Balance between data quality and processing overhead",
+      "confidence": 0.95
+    },
+    {
+      "decision_id": "research-workflow-009-data_collection-dec-02",
+      "timestamp": "2025-11-27T12:13:30.855543+00:00",
+      "phase": "DATA_COLLECTION",
+      "description": "Select data source for experiments",
+      "alternatives": [
+        "Public benchmark datasets",
+        "Synthetic data generation",
+        "Custom data collection"
+      ],
+      "selected": "Public benchmark datasets",
+      "rationale": "Enables reproducibility and comparison with prior work",
+      "confidence": 0.76
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "research-workflow-009-planning-art-01",
+      "artifact_type": "document",
+      "phase": "PLANNING",
+      "description": "Research proposal",
+      "metadata": {
+        "format": "md",
+        "size_kb": 17,
+        "word_count": 2550,
+        "pages": 5
+      },
+      "location": "artifacts/research-workflow-009/planning/research_proposal.md",
+      "created_at": "2025-11-27T12:13:30.855549+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-009-planning-art-02",
+      "artifact_type": "document",
+      "phase": "PLANNING",
+      "description": "Methodology outline",
+      "metadata": {
+        "format": "md",
+        "size_kb": 7,
+        "word_count": 1050,
+        "pages": 2
+      },
+      "location": "artifacts/research-workflow-009/planning/methodology_outline.md",
+      "created_at": "2025-11-27T12:13:30.855551+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-009-literature_review-art-01",
+      "artifact_type": "document",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Literature review summary",
+      "metadata": {
+        "format": "md",
+        "size_kb": 145,
+        "word_count": 21750,
+        "pages": 48
+      },
+      "location": "artifacts/research-workflow-009/literature_review/literature_review_summary.md",
+      "created_at": "2025-11-27T12:13:30.855553+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-009-literature_review-art-02",
+      "artifact_type": "data",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Citation database",
+      "metadata": {
+        "format": "json",
+        "size_kb": 34,
+        "rows": 5313,
+        "columns": 35
+      },
+      "location": "artifacts/research-workflow-009/literature_review/citation_database.json",
+      "created_at": "2025-11-27T12:13:30.855555+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-009-literature_review-art-03",
+      "artifact_type": "data",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Key findings matrix",
+      "metadata": {
+        "format": "csv",
+        "size_kb": 14,
+        "rows": 6346,
+        "columns": 29
+      },
+      "location": "artifacts/research-workflow-009/literature_review/key_findings_matrix.csv",
+      "created_at": "2025-11-27T12:13:30.855558+00:00"
+    }
+  ],
+  "final_status": "failed",
+  "failure_reason": "Data collection interrupted by API throttling",
+  "metadata": {
+    "topic_category": "general_ml",
+    "primary_model": "Llama 3",
+    "databases_used": [
+      "ArXiv",
+      "Google Scholar",
+      "PubMed",
+      "IEEE Xplore"
+    ]
+  }
+}

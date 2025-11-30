@@ -1,0 +1,108 @@
+graph TD
+    subgraph "Black Box Recorder"
+        BBR[BlackBoxRecorder]
+        TP[TaskPlan]
+        ET[ExecutionTrace]
+        PS[ParameterSubstitution]
+        BBR --> TP
+        BBR --> ET
+        BBR --> PS
+    end
+    
+    subgraph "AgentFacts Registry"
+        AF[AgentFacts]
+        AFR[AgentFactsRegistry]
+        CAP[Capability]
+        POL[Policy]
+        AF --> CAP
+        AF --> POL
+        AFR --> AF
+    end
+    
+    subgraph "GuardRails"
+        GR[GuardRail]
+        PGR[PromptGuardRail]
+        GRV[GuardRailValidator]
+        CON[Constraint]
+        BIV[BuiltInValidators]
+        GR --> CON
+        PGR --> GR
+        GRV --> GR
+        BIV --> CON
+    end
+    
+    subgraph "Phase Logger"
+        PL[PhaseLogger]
+        WP[WorkflowPhase]
+        DEC[Decision]
+        PO[PhaseOutcome]
+        PL --> WP
+        PL --> DEC
+        PL --> PO
+    end
+    
+    subgraph "Integration Points - Lesson 16"
+        AL[AuditLogger]
+        CP[Checkpoint]
+        VAL[Validation Schemas]
+        RES[Result T,E]
+    end
+    
+    subgraph "Outputs"
+        JSON[JSON Exports]
+        AUDIT[Audit Trails]
+        TRACE[Validation Traces]
+        MMD[Mermaid Diagrams]
+    end
+    
+    %% Vertical flow connections between subgraphs
+    BBR ==> AF
+    AF ==> GR
+    GR ==> PL
+    
+    %% Integration connections
+    BBR -.->|extends| AL
+    BBR -.->|uses| CP
+    AF -.->|uses| VAL
+    GRV -.->|uses| RES
+    PL -.->|extends| AL
+    
+    %% Output connections
+    BBR --> JSON
+    AFR --> AUDIT
+    GRV --> TRACE
+    PL --> MMD
+    
+    %% Bright color theme for main components
+    style BBR fill:#29b6f6,stroke:#0288d1,stroke-width:2px,color:#fff
+    style TP fill:#4fc3f7,stroke:#0288d1
+    style ET fill:#4fc3f7,stroke:#0288d1
+    style PS fill:#4fc3f7,stroke:#0288d1
+    
+    style AF fill:#66bb6a,stroke:#388e3c,stroke-width:2px,color:#fff
+    style AFR fill:#81c784,stroke:#388e3c
+    style CAP fill:#a5d6a7,stroke:#388e3c
+    style POL fill:#a5d6a7,stroke:#388e3c
+    
+    style GR fill:#ffa726,stroke:#f57c00,stroke-width:2px,color:#fff
+    style PGR fill:#ffb74d,stroke:#f57c00
+    style GRV fill:#ffb74d,stroke:#f57c00
+    style CON fill:#ffcc80,stroke:#f57c00
+    style BIV fill:#ffcc80,stroke:#f57c00
+    
+    style PL fill:#ab47bc,stroke:#7b1fa2,stroke-width:2px,color:#fff
+    style WP fill:#ba68c8,stroke:#7b1fa2
+    style DEC fill:#ce93d8,stroke:#7b1fa2
+    style PO fill:#ce93d8,stroke:#7b1fa2
+    
+    %% Integration Points - teal theme
+    style AL fill:#26a69a,stroke:#00796b,color:#fff
+    style CP fill:#4db6ac,stroke:#00796b
+    style VAL fill:#4db6ac,stroke:#00796b
+    style RES fill:#4db6ac,stroke:#00796b
+    
+    %% Outputs - coral/red theme
+    style JSON fill:#ef5350,stroke:#c62828,color:#fff
+    style AUDIT fill:#e57373,stroke:#c62828
+    style TRACE fill:#e57373,stroke:#c62828
+    style MMD fill:#e57373,stroke:#c62828

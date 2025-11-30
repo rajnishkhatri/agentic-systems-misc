@@ -1,0 +1,1446 @@
+{
+  "exported_at": "2025-11-29T19:39:25.049844+00:00",
+  "agent_count": 9,
+  "agents": {
+    "invoice-extractor-v2": {
+      "facts": {
+        "agent_id": "invoice-extractor-v2",
+        "agent_name": "Invoice Data Extractor",
+        "owner": "finance-team",
+        "version": "1.5.5",
+        "description": "Extracts structured data from invoice documents - improved accuracy v2",
+        "capabilities": [
+          {
+            "name": "extract_vendor",
+            "description": "Extracts vendor name and address from invoice header",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "invoice_text": {
+                  "type": "string"
+                },
+                "invoice_image": {
+                  "type": "string",
+                  "format": "base64"
+                }
+              },
+              "required": [
+                "invoice_text"
+              ]
+            },
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "vendor_name": {
+                  "type": "string"
+                },
+                "vendor_address": {
+                  "type": "string"
+                },
+                "confidence": {
+                  "type": "number"
+                }
+              }
+            },
+            "estimated_latency_ms": 500,
+            "cost_per_call": 0.005,
+            "requires_approval": false,
+            "tags": [
+              "extraction",
+              "ocr",
+              "vendor"
+            ]
+          },
+          {
+            "name": "extract_line_items",
+            "description": "Extracts line items with quantities and amounts",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "invoice_text": {
+                  "type": "string"
+                }
+              }
+            },
+            "output_schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "integer"
+                  },
+                  "unit_price": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "estimated_latency_ms": 800,
+            "cost_per_call": 0.008,
+            "requires_approval": false,
+            "tags": [
+              "extraction",
+              "line_items",
+              "financial"
+            ]
+          }
+        ],
+        "policies": [
+          {
+            "policy_id": "invoice-extractor-v2-policy-001",
+            "name": "API Rate Limit",
+            "description": "Limits API calls to prevent abuse",
+            "policy_type": "rate_limit",
+            "constraints": {
+              "max_calls_per_minute": 100,
+              "max_calls_per_hour": 2000,
+              "burst_limit": 25
+            },
+            "effective_from": "2025-08-02T20:06:53.848565Z",
+            "effective_until": null,
+            "is_active": true
+          },
+          {
+            "policy_id": "invoice-extractor-v2-policy-002",
+            "name": "Invoice Data Access",
+            "description": "Controls access to invoice data fields",
+            "policy_type": "data_access",
+            "constraints": {
+              "allowed_fields": [
+                "vendor_name",
+                "invoice_number",
+                "amount",
+                "date"
+              ],
+              "restricted_fields": [
+                "bank_account",
+                "routing_number"
+              ],
+              "requires_encryption": true
+            },
+            "effective_from": "2025-08-02T20:06:53.848565Z",
+            "effective_until": "2026-04-01T20:06:53.848565Z",
+            "is_active": true
+          }
+        ],
+        "created_at": "2025-11-29T19:39:24.952898Z",
+        "updated_at": "2025-11-29T19:39:25.011335Z",
+        "signature_hash": "a1839486fa28233c9e5e349cf4fb0eddbe28fc80892c9571607d87b7b1b24818",
+        "parent_agent_id": null,
+        "metadata": {
+          "deployment_environment": "production",
+          "model_version": "gpt-4",
+          "last_health_check": "2025-08-24T10:57:18.848565+00:00"
+        }
+      },
+      "is_valid": true,
+      "audit_trail": [
+        {
+          "timestamp": "2025-11-29T19:39:24.954181Z",
+          "action": "register",
+          "changed_by": "finance-team@company.com",
+          "changes": {
+            "action": "initial_registration"
+          },
+          "previous_signature": null,
+          "new_signature": "ebd119247489871f9e2f3aee509848c068830d6dd9a388f7b02dd894d96ac289"
+        },
+        {
+          "timestamp": "2025-11-29T19:39:24.964072Z",
+          "action": "verify",
+          "changed_by": "system",
+          "changes": {
+            "result": "valid"
+          },
+          "previous_signature": null,
+          "new_signature": null
+        },
+        {
+          "timestamp": "2025-11-29T19:39:25.012220Z",
+          "action": "update",
+          "changed_by": "developer@finance-team.com",
+          "changes": {
+            "version": "1.5.5",
+            "description": "Extracts structured data from invoice documents - improved accuracy v2"
+          },
+          "previous_signature": "ebd119247489871f9e2f3aee509848c068830d6dd9a388f7b02dd894d96ac289",
+          "new_signature": "a1839486fa28233c9e5e349cf4fb0eddbe28fc80892c9571607d87b7b1b24818"
+        }
+      ]
+    },
+    "fraud-detector-v2": {
+      "facts": {
+        "agent_id": "fraud-detector-v2",
+        "agent_name": "Transaction Fraud Detector",
+        "owner": "security-team",
+        "version": "1.4.6",
+        "description": "Analyzes transaction patterns for fraud indicators using ML models",
+        "capabilities": [
+          {
+            "name": "score_transaction",
+            "description": "Calculates fraud risk score for a transaction",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "transaction_id": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number"
+                },
+                "merchant": {
+                  "type": "string"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "user_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "transaction_id",
+                "amount"
+              ]
+            },
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "fraud_score": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "risk_level": {
+                  "type": "string",
+                  "enum": [
+                    "low",
+                    "medium",
+                    "high"
+                  ]
+                },
+                "flags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "estimated_latency_ms": 350,
+            "cost_per_call": 0.01,
+            "requires_approval": false,
+            "tags": [
+              "fraud",
+              "ml",
+              "real-time"
+            ]
+          },
+          {
+            "name": "explain_score",
+            "description": "Provides explanation for fraud score decision",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "transaction_id": {
+                  "type": "string"
+                }
+              }
+            },
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "reasoning": {
+                  "type": "string"
+                },
+                "top_factors": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "similar_cases": {
+                  "type": "integer"
+                }
+              }
+            },
+            "estimated_latency_ms": 500,
+            "cost_per_call": 0.015,
+            "requires_approval": false,
+            "tags": [
+              "explainability",
+              "fraud"
+            ]
+          }
+        ],
+        "policies": [
+          {
+            "policy_id": "fraud-detector-v2-policy-001",
+            "name": "High-Volume Rate Limit",
+            "description": "Supports high transaction volume",
+            "policy_type": "rate_limit",
+            "constraints": {
+              "max_calls_per_minute": 1000,
+              "max_calls_per_hour": 50000,
+              "burst_limit": 100
+            },
+            "effective_from": "2025-09-09T12:38:03.848674Z",
+            "effective_until": null,
+            "is_active": true
+          },
+          {
+            "policy_id": "fraud-detector-v2-policy-002",
+            "name": "High-Risk Approval",
+            "description": "Requires human approval for blocking high-value transactions",
+            "policy_type": "approval_required",
+            "constraints": {
+              "threshold_amount": 10000,
+              "auto_approve_below": 1000,
+              "escalation_timeout_minutes": 30
+            },
+            "effective_from": "2025-09-09T12:38:03.848674Z",
+            "effective_until": null,
+            "is_active": true
+          }
+        ],
+        "created_at": "2025-11-29T19:39:24.954371Z",
+        "updated_at": "2025-11-29T19:39:25.012682Z",
+        "signature_hash": "1caf3e175649e0299b1d595d52c21fd131a2ddf50e6b6b730f81ae3cc613af10",
+        "parent_agent_id": null,
+        "metadata": {
+          "deployment_environment": "production",
+          "model_version": "gpt-4-turbo",
+          "last_health_check": "2025-11-29T19:39:25.012658+00:00"
+        }
+      },
+      "is_valid": true,
+      "audit_trail": [
+        {
+          "timestamp": "2025-11-29T19:39:24.954641Z",
+          "action": "register",
+          "changed_by": "security-team@company.com",
+          "changes": {
+            "action": "initial_registration"
+          },
+          "previous_signature": null,
+          "new_signature": "322ba193639bce40cc01e49865ff74a5ebb4ae2de041481e19d53b2df35d6958"
+        },
+        {
+          "timestamp": "2025-11-29T19:39:24.964531Z",
+          "action": "verify",
+          "changed_by": "system",
+          "changes": {
+            "result": "valid"
+          },
+          "previous_signature": null,
+          "new_signature": null
+        },
+        {
+          "timestamp": "2025-11-29T19:39:25.013078Z",
+          "action": "update",
+          "changed_by": "ops@security-team.com",
+          "changes": {
+            "metadata": {
+              "deployment_environment": "production",
+              "model_version": "gpt-4-turbo",
+              "last_health_check": "2025-11-29T19:39:25.012658+00:00"
+            }
+          },
+          "previous_signature": "322ba193639bce40cc01e49865ff74a5ebb4ae2de041481e19d53b2df35d6958",
+          "new_signature": "1caf3e175649e0299b1d595d52c21fd131a2ddf50e6b6b730f81ae3cc613af10"
+        }
+      ]
+    },
+    "diagnosis-generator-v1": {
+      "facts": {
+        "agent_id": "diagnosis-generator-v1",
+        "agent_name": "Medical Diagnosis Assistant",
+        "owner": "healthcare-ai-team",
+        "version": "1.5.0",
+        "description": "Generates preliminary diagnosis suggestions from patient symptoms and lab results",
+        "capabilities": [
+          {
+            "name": "analyze_symptoms",
+            "description": "Analyzes patient symptoms for potential conditions",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "patient_id": {
+                  "type": "string"
+                },
+                "symptoms": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "duration_days": {
+                  "type": "integer"
+                },
+                "severity": {
+                  "type": "string",
+                  "enum": [
+                    "mild",
+                    "moderate",
+                    "severe"
+                  ]
+                }
+              },
+              "required": [
+                "symptoms"
+              ]
+            },
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "differential_diagnoses": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "condition": {
+                        "type": "string"
+                      },
+                      "probability": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "recommended_tests": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "estimated_latency_ms": 2000,
+            "cost_per_call": 0.05,
+            "requires_approval": true,
+            "tags": [
+              "healthcare",
+              "diagnosis",
+              "llm"
+            ]
+          },
+          {
+            "name": "interpret_labs",
+            "description": "Interprets laboratory results in clinical context",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "lab_results": {
+                  "type": "object"
+                },
+                "reference_ranges": {
+                  "type": "object"
+                }
+              }
+            },
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "abnormal_values": {
+                  "type": "array"
+                },
+                "clinical_significance": {
+                  "type": "string"
+                },
+                "follow_up_recommendations": {
+                  "type": "array"
+                }
+              }
+            },
+            "estimated_latency_ms": 1500,
+            "cost_per_call": 0.03,
+            "requires_approval": true,
+            "tags": [
+              "healthcare",
+              "labs",
+              "interpretation"
+            ]
+          },
+          {
+            "name": "suggest_treatment",
+            "description": "Suggests treatment options based on diagnosis",
+            "input_schema": {},
+            "output_schema": {},
+            "estimated_latency_ms": 2500,
+            "cost_per_call": 0.075,
+            "requires_approval": true,
+            "tags": [
+              "healthcare",
+              "treatment",
+              "llm"
+            ]
+          }
+        ],
+        "policies": [
+          {
+            "policy_id": "diagnosis-generator-v1-policy-001",
+            "name": "HIPAA Compliance",
+            "description": "Ensures HIPAA-compliant data handling",
+            "policy_type": "data_access",
+            "constraints": {
+              "allowed_data_sources": [
+                "patient_db"
+              ],
+              "pii_handling_mode": "redact",
+              "audit_all_access": true,
+              "data_retention_days": 365
+            },
+            "effective_from": "2025-01-02T21:31:40.848727Z",
+            "effective_until": "2025-07-07T21:31:40.848727Z",
+            "is_active": true
+          },
+          {
+            "policy_id": "diagnosis-generator-v1-policy-002",
+            "name": "Physician Approval",
+            "description": "All diagnoses require physician review",
+            "policy_type": "approval_required",
+            "constraints": {
+              "approval_role": "physician",
+              "max_pending_hours": 24,
+              "auto_escalate": true
+            },
+            "effective_from": "2025-01-02T21:31:40.848727Z",
+            "effective_until": null,
+            "is_active": true
+          }
+        ],
+        "created_at": "2025-11-29T19:39:24.954791Z",
+        "updated_at": "2025-11-29T19:39:25.013352Z",
+        "signature_hash": "7c6596b59fe38911bb83f8ff8ce596bf2d5737646a18a45e2109f47216e7a1a6",
+        "parent_agent_id": null,
+        "metadata": {
+          "deployment_environment": "production",
+          "model_version": "claude-3-sonnet",
+          "last_health_check": "2025-03-28T19:22:53.848727+00:00"
+        }
+      },
+      "is_valid": true,
+      "audit_trail": [
+        {
+          "timestamp": "2025-11-29T19:39:24.955054Z",
+          "action": "register",
+          "changed_by": "healthcare-ai-team@company.com",
+          "changes": {
+            "action": "initial_registration"
+          },
+          "previous_signature": null,
+          "new_signature": "a6ba2b753945d2ae4f17956b1c31c33d3e3c23cddfb437e9e58785460e911b02"
+        },
+        {
+          "timestamp": "2025-11-29T19:39:24.964897Z",
+          "action": "verify",
+          "changed_by": "system",
+          "changes": {
+            "result": "valid"
+          },
+          "previous_signature": null,
+          "new_signature": null
+        },
+        {
+          "timestamp": "2025-11-29T19:39:25.013707Z",
+          "action": "update",
+          "changed_by": "physician@healthcare-ai-team.com",
+          "changes": {
+            "version": "1.5.0",
+            "capabilities": [
+              {
+                "name": "analyze_symptoms",
+                "description": "Analyzes patient symptoms for potential conditions",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "patient_id": {
+                      "type": "string"
+                    },
+                    "symptoms": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "duration_days": {
+                      "type": "integer"
+                    },
+                    "severity": {
+                      "type": "string",
+                      "enum": [
+                        "mild",
+                        "moderate",
+                        "severe"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "symptoms"
+                  ]
+                },
+                "output_schema": {
+                  "type": "object",
+                  "properties": {
+                    "differential_diagnoses": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "condition": {
+                            "type": "string"
+                          },
+                          "probability": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    },
+                    "recommended_tests": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "estimated_latency_ms": 2000,
+                "cost_per_call": 0.05,
+                "requires_approval": true,
+                "tags": [
+                  "healthcare",
+                  "diagnosis",
+                  "llm"
+                ]
+              },
+              {
+                "name": "interpret_labs",
+                "description": "Interprets laboratory results in clinical context",
+                "input_schema": {
+                  "type": "object",
+                  "properties": {
+                    "lab_results": {
+                      "type": "object"
+                    },
+                    "reference_ranges": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "output_schema": {
+                  "type": "object",
+                  "properties": {
+                    "abnormal_values": {
+                      "type": "array"
+                    },
+                    "clinical_significance": {
+                      "type": "string"
+                    },
+                    "follow_up_recommendations": {
+                      "type": "array"
+                    }
+                  }
+                },
+                "estimated_latency_ms": 1500,
+                "cost_per_call": 0.03,
+                "requires_approval": true,
+                "tags": [
+                  "healthcare",
+                  "labs",
+                  "interpretation"
+                ]
+              },
+              {
+                "name": "suggest_treatment",
+                "description": "Suggests treatment options based on diagnosis",
+                "input_schema": {},
+                "output_schema": {},
+                "estimated_latency_ms": 2500,
+                "cost_per_call": 0.075,
+                "requires_approval": true,
+                "tags": [
+                  "healthcare",
+                  "treatment",
+                  "llm"
+                ]
+              }
+            ]
+          },
+          "previous_signature": "a6ba2b753945d2ae4f17956b1c31c33d3e3c23cddfb437e9e58785460e911b02",
+          "new_signature": "7c6596b59fe38911bb83f8ff8ce596bf2d5737646a18a45e2109f47216e7a1a6"
+        }
+      ]
+    },
+    "contract-reviewer-v1": {
+      "facts": {
+        "agent_id": "contract-reviewer-v1",
+        "agent_name": "Legal Contract Analyzer",
+        "owner": "legal-tech-team",
+        "version": "2.1.7",
+        "description": "Extracts clauses and assesses risk in legal contracts",
+        "capabilities": [
+          {
+            "name": "extract_clauses",
+            "description": "Identifies and categorizes contract clauses",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "contract_text": {
+                  "type": "string"
+                },
+                "contract_type": {
+                  "type": "string",
+                  "enum": [
+                    "employment",
+                    "nda",
+                    "service",
+                    "lease",
+                    "partnership"
+                  ]
+                }
+              },
+              "required": [
+                "contract_text"
+              ]
+            },
+            "output_schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "clause_id": {
+                    "type": "string"
+                  },
+                  "clause_type": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "page": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "estimated_latency_ms": 3000,
+            "cost_per_call": 0.02,
+            "requires_approval": false,
+            "tags": [
+              "legal",
+              "extraction",
+              "contracts"
+            ]
+          },
+          {
+            "name": "assess_risk",
+            "description": "Evaluates legal risk of contract terms",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "clauses": {
+                  "type": "array"
+                },
+                "jurisdiction": {
+                  "type": "string"
+                }
+              }
+            },
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "overall_risk": {
+                  "type": "string",
+                  "enum": [
+                    "low",
+                    "medium",
+                    "high"
+                  ]
+                },
+                "flagged_clauses": {
+                  "type": "array"
+                },
+                "recommendations": {
+                  "type": "array"
+                }
+              }
+            },
+            "estimated_latency_ms": 2500,
+            "cost_per_call": 0.025,
+            "requires_approval": false,
+            "tags": [
+              "legal",
+              "risk",
+              "compliance"
+            ]
+          }
+        ],
+        "policies": [
+          {
+            "policy_id": "contract-reviewer-v1-policy-001",
+            "name": "Document Processing Limit",
+            "description": "Limits concurrent document processing",
+            "policy_type": "rate_limit",
+            "constraints": {
+              "max_calls_per_minute": 20,
+              "max_calls_per_hour": 200,
+              "max_document_size_mb": 50
+            },
+            "effective_from": "2025-08-06T21:35:13.848772Z",
+            "effective_until": null,
+            "is_active": true
+          }
+        ],
+        "created_at": "2025-11-29T19:39:24.955206Z",
+        "updated_at": "2025-11-29T19:39:24.955206Z",
+        "signature_hash": "ff4e5150ff97b20822e9296a3924d8a70c48c58f26dedf2b4c01fb26e840ae92",
+        "parent_agent_id": null,
+        "metadata": {
+          "deployment_environment": "staging",
+          "model_version": "gpt-4",
+          "last_health_check": "2025-11-20T17:11:53.848772+00:00"
+        }
+      },
+      "is_valid": true,
+      "audit_trail": [
+        {
+          "timestamp": "2025-11-29T19:39:24.955445Z",
+          "action": "register",
+          "changed_by": "legal-tech-team@company.com",
+          "changes": {
+            "action": "initial_registration"
+          },
+          "previous_signature": null,
+          "new_signature": "ff4e5150ff97b20822e9296a3924d8a70c48c58f26dedf2b4c01fb26e840ae92"
+        },
+        {
+          "timestamp": "2025-11-29T19:39:24.965201Z",
+          "action": "verify",
+          "changed_by": "system",
+          "changes": {
+            "result": "valid"
+          },
+          "previous_signature": null,
+          "new_signature": null
+        }
+      ]
+    },
+    "research-assistant-v2": {
+      "facts": {
+        "agent_id": "research-assistant-v2",
+        "agent_name": "Academic Research Assistant",
+        "owner": "research-team",
+        "version": "2.2.4",
+        "description": "Searches literature and synthesizes research findings",
+        "capabilities": [
+          {
+            "name": "search_literature",
+            "description": "Searches academic databases for relevant papers",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "query": {
+                  "type": "string"
+                },
+                "databases": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "default": [
+                    "pubmed",
+                    "arxiv",
+                    "semantic_scholar"
+                  ]
+                },
+                "date_range": {
+                  "type": "object"
+                },
+                "max_results": {
+                  "type": "integer",
+                  "default": 50
+                }
+              },
+              "required": [
+                "query"
+              ]
+            },
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "papers": {
+                  "type": "array"
+                },
+                "total_found": {
+                  "type": "integer"
+                },
+                "query_expansion": {
+                  "type": "array"
+                }
+              }
+            },
+            "estimated_latency_ms": 5000,
+            "cost_per_call": 0.01,
+            "requires_approval": false,
+            "tags": [
+              "research",
+              "search",
+              "literature"
+            ]
+          },
+          {
+            "name": "summarize_papers",
+            "description": "Generates summaries of research papers",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "paper_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "summary_type": {
+                  "type": "string",
+                  "enum": [
+                    "abstract",
+                    "detailed",
+                    "comparison"
+                  ]
+                }
+              }
+            },
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "summaries": {
+                  "type": "array"
+                },
+                "key_findings": {
+                  "type": "array"
+                },
+                "citations": {
+                  "type": "array"
+                }
+              }
+            },
+            "estimated_latency_ms": 8000,
+            "cost_per_call": 0.05,
+            "requires_approval": false,
+            "tags": [
+              "research",
+              "summarization",
+              "llm"
+            ]
+          }
+        ],
+        "policies": [
+          {
+            "policy_id": "research-assistant-v2-policy-001",
+            "name": "API Rate Limit",
+            "description": "Standard rate limiting",
+            "policy_type": "rate_limit",
+            "constraints": {
+              "max_calls_per_minute": 30,
+              "max_calls_per_hour": 500
+            },
+            "effective_from": "2025-09-18T04:49:20.848807Z",
+            "effective_until": null,
+            "is_active": true
+          }
+        ],
+        "created_at": "2025-11-29T19:39:24.955592Z",
+        "updated_at": "2025-11-29T19:39:24.955592Z",
+        "signature_hash": "2652c0383b020056dabb780d18d6b9938714aa83dbc1299b05f90234ece0c48d",
+        "parent_agent_id": null,
+        "metadata": {
+          "deployment_environment": "production",
+          "model_version": "gpt-4",
+          "last_health_check": "2025-10-03T16:51:19.848807+00:00"
+        }
+      },
+      "is_valid": true,
+      "audit_trail": [
+        {
+          "timestamp": "2025-11-29T19:39:24.955831Z",
+          "action": "register",
+          "changed_by": "research-team@company.com",
+          "changes": {
+            "action": "initial_registration"
+          },
+          "previous_signature": null,
+          "new_signature": "2652c0383b020056dabb780d18d6b9938714aa83dbc1299b05f90234ece0c48d"
+        },
+        {
+          "timestamp": "2025-11-29T19:39:24.965436Z",
+          "action": "verify",
+          "changed_by": "system",
+          "changes": {
+            "result": "valid"
+          },
+          "previous_signature": null,
+          "new_signature": null
+        }
+      ]
+    },
+    "report-generator-v1": {
+      "facts": {
+        "agent_id": "report-generator-v1",
+        "agent_name": "Business Report Generator",
+        "owner": "analytics-team",
+        "version": "2.0.7",
+        "description": "Generates formatted reports from data and templates",
+        "capabilities": [
+          {
+            "name": "generate_report",
+            "description": "Creates formatted report from data",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "data_source": {
+                  "type": "string"
+                },
+                "template_id": {
+                  "type": "string"
+                },
+                "parameters": {
+                  "type": "object"
+                },
+                "format": {
+                  "type": "string",
+                  "enum": [
+                    "pdf",
+                    "html",
+                    "markdown"
+                  ]
+                }
+              },
+              "required": [
+                "data_source",
+                "template_id"
+              ]
+            },
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "report_url": {
+                  "type": "string"
+                },
+                "page_count": {
+                  "type": "integer"
+                },
+                "generated_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "estimated_latency_ms": 15000,
+            "cost_per_call": 0.02,
+            "requires_approval": false,
+            "tags": [
+              "reporting",
+              "documents",
+              "analytics"
+            ]
+          }
+        ],
+        "policies": [
+          {
+            "policy_id": "report-generator-v1-policy-001",
+            "name": "Report Generation Limit",
+            "description": "Limits concurrent report generation",
+            "policy_type": "rate_limit",
+            "constraints": {
+              "max_calls_per_minute": 10,
+              "max_concurrent": 5
+            },
+            "effective_from": "2025-10-22T15:26:42.848866Z",
+            "effective_until": null,
+            "is_active": true
+          }
+        ],
+        "created_at": "2025-11-29T19:39:24.956249Z",
+        "updated_at": "2025-11-29T19:39:24.956249Z",
+        "signature_hash": "54f657f82b4c62817ff582ce548504a56abe76cd019abeeccc5d398274147776",
+        "parent_agent_id": null,
+        "metadata": {
+          "deployment_environment": "production",
+          "model_version": "gpt-3.5-turbo",
+          "last_health_check": "2025-11-08T08:10:56.848866+00:00"
+        }
+      },
+      "is_valid": true,
+      "audit_trail": [
+        {
+          "timestamp": "2025-11-29T19:39:24.956460Z",
+          "action": "register",
+          "changed_by": "analytics-team@company.com",
+          "changes": {
+            "action": "initial_registration"
+          },
+          "previous_signature": null,
+          "new_signature": "54f657f82b4c62817ff582ce548504a56abe76cd019abeeccc5d398274147776"
+        },
+        {
+          "timestamp": "2025-11-29T19:39:24.965724Z",
+          "action": "verify",
+          "changed_by": "system",
+          "changes": {
+            "result": "valid"
+          },
+          "previous_signature": null,
+          "new_signature": null
+        }
+      ]
+    },
+    "anomaly-detector-v1": {
+      "facts": {
+        "agent_id": "anomaly-detector-v1",
+        "agent_name": "Time-Series Anomaly Detector",
+        "owner": "monitoring-team",
+        "version": "2.5.9",
+        "description": "Detects anomalies in time-series data using statistical methods",
+        "capabilities": [
+          {
+            "name": "detect_anomalies",
+            "description": "Identifies anomalies in time-series data",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "series_id": {
+                  "type": "string"
+                },
+                "data_points": {
+                  "type": "array"
+                },
+                "sensitivity": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "data_points"
+              ]
+            },
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "anomalies": {
+                  "type": "array"
+                },
+                "baseline": {
+                  "type": "object"
+                },
+                "confidence": {
+                  "type": "number"
+                }
+              }
+            },
+            "estimated_latency_ms": 200,
+            "cost_per_call": 0.002,
+            "requires_approval": false,
+            "tags": [
+              "monitoring",
+              "anomaly",
+              "time-series"
+            ]
+          }
+        ],
+        "policies": [
+          {
+            "policy_id": "anomaly-detector-v1-policy-001",
+            "name": "Streaming Rate Limit",
+            "description": "Supports streaming data analysis",
+            "policy_type": "rate_limit",
+            "constraints": {
+              "max_calls_per_minute": 3000,
+              "max_points_per_call": 10000
+            },
+            "effective_from": "2024-12-28T02:41:45.848893Z",
+            "effective_until": null,
+            "is_active": true
+          }
+        ],
+        "created_at": "2025-11-29T19:39:24.956605Z",
+        "updated_at": "2025-11-29T19:39:24.956606Z",
+        "signature_hash": "bf20a3a906c8a4b2dbd6f93ef2beb79f4dd2cfe5021be4d163bff47e41274ad9",
+        "parent_agent_id": null,
+        "metadata": {
+          "deployment_environment": "staging",
+          "model_version": "claude-3-sonnet",
+          "last_health_check": "2025-07-30T12:05:14.848893+00:00"
+        }
+      },
+      "is_valid": true,
+      "audit_trail": [
+        {
+          "timestamp": "2025-11-29T19:39:24.956816Z",
+          "action": "register",
+          "changed_by": "monitoring-team@company.com",
+          "changes": {
+            "action": "initial_registration"
+          },
+          "previous_signature": null,
+          "new_signature": "bf20a3a906c8a4b2dbd6f93ef2beb79f4dd2cfe5021be4d163bff47e41274ad9"
+        },
+        {
+          "timestamp": "2025-11-29T19:39:24.965854Z",
+          "action": "verify",
+          "changed_by": "system",
+          "changes": {
+            "result": "valid"
+          },
+          "previous_signature": null,
+          "new_signature": null
+        }
+      ]
+    },
+    "sentiment-analyzer-v1": {
+      "facts": {
+        "agent_id": "sentiment-analyzer-v1",
+        "agent_name": "Customer Sentiment Analyzer",
+        "owner": "customer-success-team",
+        "version": "1.0.10",
+        "description": "Analyzes sentiment in customer feedback and communications",
+        "capabilities": [
+          {
+            "name": "analyze_sentiment",
+            "description": "Determines sentiment polarity of text",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "language": {
+                  "type": "string",
+                  "default": "en"
+                }
+              },
+              "required": [
+                "text"
+              ]
+            },
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "sentiment": {
+                  "type": "string",
+                  "enum": [
+                    "positive",
+                    "negative",
+                    "neutral"
+                  ]
+                },
+                "confidence": {
+                  "type": "number"
+                },
+                "aspects": {
+                  "type": "array"
+                }
+              }
+            },
+            "estimated_latency_ms": 150,
+            "cost_per_call": 0.003,
+            "requires_approval": false,
+            "tags": [
+              "nlp",
+              "sentiment",
+              "customer"
+            ]
+          }
+        ],
+        "policies": [
+          {
+            "policy_id": "sentiment-analyzer-v1-policy-001",
+            "name": "NLP Rate Limit",
+            "description": "Standard NLP processing limit",
+            "policy_type": "rate_limit",
+            "constraints": {
+              "max_calls_per_minute": 500,
+              "max_text_length": 10000
+            },
+            "effective_from": "2025-02-10T04:29:04.848920Z",
+            "effective_until": null,
+            "is_active": true
+          }
+        ],
+        "created_at": "2025-11-29T19:39:24.956958Z",
+        "updated_at": "2025-11-29T19:39:24.956958Z",
+        "signature_hash": "ca54d36f5aa0b87d9c8164e567fdb98141c4fdd56221dbea51d06b67cd4c48f7",
+        "parent_agent_id": null,
+        "metadata": {
+          "deployment_environment": "production",
+          "model_version": "gpt-3.5-turbo",
+          "last_health_check": "2025-11-10T19:34:11.848920+00:00"
+        }
+      },
+      "is_valid": true,
+      "audit_trail": [
+        {
+          "timestamp": "2025-11-29T19:39:24.957137Z",
+          "action": "register",
+          "changed_by": "customer-success-team@company.com",
+          "changes": {
+            "action": "initial_registration"
+          },
+          "previous_signature": null,
+          "new_signature": "ca54d36f5aa0b87d9c8164e567fdb98141c4fdd56221dbea51d06b67cd4c48f7"
+        },
+        {
+          "timestamp": "2025-11-29T19:39:24.966004Z",
+          "action": "verify",
+          "changed_by": "system",
+          "changes": {
+            "result": "valid"
+          },
+          "previous_signature": null,
+          "new_signature": null
+        }
+      ]
+    },
+    "recommendation-engine-v1": {
+      "facts": {
+        "agent_id": "recommendation-engine-v1",
+        "agent_name": "Product Recommendation Engine",
+        "owner": "personalization-team",
+        "version": "1.0.6",
+        "description": "Generates personalized product recommendations using collaborative filtering",
+        "capabilities": [
+          {
+            "name": "get_recommendations",
+            "description": "Returns personalized product recommendations",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string"
+                },
+                "context": {
+                  "type": "object"
+                },
+                "count": {
+                  "type": "integer",
+                  "default": 10
+                },
+                "exclude_purchased": {
+                  "type": "boolean",
+                  "default": true
+                }
+              },
+              "required": [
+                "user_id"
+              ]
+            },
+            "output_schema": {
+              "type": "object",
+              "properties": {
+                "recommendations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "product_id": {
+                        "type": "string"
+                      },
+                      "score": {
+                        "type": "number"
+                      },
+                      "reason": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "model_version": {
+                  "type": "string"
+                }
+              }
+            },
+            "estimated_latency_ms": 50,
+            "cost_per_call": 0.001,
+            "requires_approval": false,
+            "tags": [
+              "recommendations",
+              "personalization",
+              "ml"
+            ]
+          }
+        ],
+        "policies": [
+          {
+            "policy_id": "recommendation-engine-v1-policy-001",
+            "name": "Real-time Recommendation Limit",
+            "description": "Supports real-time recommendation requests",
+            "policy_type": "rate_limit",
+            "constraints": {
+              "max_calls_per_minute": 10000,
+              "p99_latency_ms": 100
+            },
+            "effective_from": "2024-12-28T11:56:24.848945Z",
+            "effective_until": null,
+            "is_active": true
+          },
+          {
+            "policy_id": "recommendation-engine-v1-policy-002",
+            "name": "User Data Access",
+            "description": "Controls access to user behavior data",
+            "policy_type": "data_access",
+            "constraints": {
+              "allowed_data_sources": [
+                "user_behavior_db",
+                "product_catalog"
+              ],
+              "pii_handling_mode": "anonymize"
+            },
+            "effective_from": "2024-12-28T11:56:24.848945Z",
+            "effective_until": "2025-09-05T11:56:24.848945Z",
+            "is_active": true
+          }
+        ],
+        "created_at": "2025-11-29T19:39:24.957306Z",
+        "updated_at": "2025-11-29T19:39:24.957306Z",
+        "signature_hash": "63f45d29fc2c1bb47756d0d2f992bfecbd57d912521d1a4800a45919659e26b0",
+        "parent_agent_id": null,
+        "metadata": {
+          "deployment_environment": "staging",
+          "model_version": "claude-3-sonnet",
+          "last_health_check": "2025-11-25T16:04:44.848945+00:00"
+        }
+      },
+      "is_valid": true,
+      "audit_trail": [
+        {
+          "timestamp": "2025-11-29T19:39:24.957593Z",
+          "action": "register",
+          "changed_by": "personalization-team@company.com",
+          "changes": {
+            "action": "initial_registration"
+          },
+          "previous_signature": null,
+          "new_signature": "63f45d29fc2c1bb47756d0d2f992bfecbd57d912521d1a4800a45919659e26b0"
+        },
+        {
+          "timestamp": "2025-11-29T19:39:24.966127Z",
+          "action": "verify",
+          "changed_by": "system",
+          "changes": {
+            "result": "valid"
+          },
+          "previous_signature": null,
+          "new_signature": null
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "agent_id": "invoice-extractor-v2",
+    "agent_name": "Invoice Extractor",
+    "role": "extraction",
+    "joined_at": "2025-11-27T14:00:00Z",
+    "capabilities": [
+      "extraction",
+      "ocr"
+    ]
+  },
+  {
+    "agent_id": "invoice-validator-v1",
+    "agent_name": "Amount Validator",
+    "role": "validation",
+    "joined_at": "2025-11-27T14:00:12Z",
+    "capabilities": [
+      "validation",
+      "database_lookup"
+    ]
+  }
+]

@@ -1,0 +1,188 @@
+{
+  "workflow_id": "test-workflow-001",
+  "exported_at": "2025-11-27T18:10:07.181480+00:00",
+  "summary": {
+    "workflow_id": "test-workflow-001",
+    "total_phases": 4,
+    "completed_phases": 3,
+    "total_decisions": 4,
+    "total_duration_ms": 0,
+    "phase_outcomes": [
+      {
+        "phase": "planning",
+        "status": "success",
+        "start_time": "2025-11-27T18:10:07.180188Z",
+        "end_time": "2025-11-27T18:10:07.180835Z",
+        "duration_ms": 0,
+        "decisions_made": 1,
+        "artifacts_produced": [
+          "plan"
+        ],
+        "errors": [],
+        "next_phase": null,
+        "metadata": {}
+      },
+      {
+        "phase": "data_collection",
+        "status": "success",
+        "start_time": "2025-11-27T18:10:07.180910Z",
+        "end_time": "2025-11-27T18:10:07.181065Z",
+        "duration_ms": 0,
+        "decisions_made": 1,
+        "artifacts_produced": [
+          "data"
+        ],
+        "errors": [],
+        "next_phase": null,
+        "metadata": {}
+      },
+      {
+        "phase": "execution",
+        "status": "success",
+        "start_time": "2025-11-27T18:10:07.181114Z",
+        "end_time": "2025-11-27T18:10:07.181249Z",
+        "duration_ms": 0,
+        "decisions_made": 1,
+        "artifacts_produced": [
+          "results"
+        ],
+        "errors": [],
+        "next_phase": null,
+        "metadata": {}
+      },
+      {
+        "phase": "validation",
+        "status": "partial",
+        "start_time": "2025-11-27T18:10:07.181294Z",
+        "end_time": "2025-11-27T18:10:07.181378Z",
+        "duration_ms": 0,
+        "decisions_made": 1,
+        "artifacts_produced": [],
+        "errors": [
+          "[recoverable] Minor issue"
+        ],
+        "next_phase": null,
+        "metadata": {}
+      }
+    ],
+    "overall_status": "partial",
+    "created_at": "2025-11-27T18:10:07.181479Z"
+  },
+  "decisions": {
+    "planning": [
+      {
+        "decision_id": "dec-test-workflow-001-1",
+        "timestamp": "2025-11-27T18:10:07.180573Z",
+        "decision": "Use GPT-4",
+        "reasoning": "High accuracy",
+        "alternatives_considered": [
+          "GPT-3.5",
+          "Claude"
+        ],
+        "selected_because": "Best benchmarks",
+        "confidence": 0.92,
+        "agent_id": "planner",
+        "reversible": true,
+        "phase": "planning"
+      }
+    ],
+    "data_collection": [
+      {
+        "decision_id": "dec-test-workflow-001-2",
+        "timestamp": "2025-11-27T18:10:07.180959Z",
+        "decision": "Use S3 + PostgreSQL",
+        "reasoning": "Coverage",
+        "alternatives_considered": [
+          "S3 only",
+          "PostgreSQL only"
+        ],
+        "selected_because": "Both needed",
+        "confidence": 0.88,
+        "agent_id": "collector",
+        "reversible": true,
+        "phase": "data_collection"
+      }
+    ],
+    "execution": [
+      {
+        "decision_id": "dec-test-workflow-001-3",
+        "timestamp": "2025-11-27T18:10:07.181156Z",
+        "decision": "4 workers",
+        "reasoning": "Throughput",
+        "alternatives_considered": [
+          "2 workers",
+          "8 workers"
+        ],
+        "selected_because": "Optimal",
+        "confidence": 0.9,
+        "agent_id": "executor",
+        "reversible": true,
+        "phase": "execution"
+      }
+    ],
+    "validation": [
+      {
+        "decision_id": "dec-test-workflow-001-4",
+        "timestamp": "2025-11-27T18:10:07.181333Z",
+        "decision": "Schema + rules",
+        "reasoning": "Coverage",
+        "alternatives_considered": [
+          "Schema only"
+        ],
+        "selected_because": "Both needed",
+        "confidence": 0.91,
+        "agent_id": "validator",
+        "reversible": true,
+        "phase": "validation"
+      }
+    ]
+  },
+  "artifacts": {
+    "planning": [
+      {
+        "artifact_id": "art-test-workflow-001-1",
+        "name": "plan",
+        "path": "outputs/plan.json",
+        "artifact_type": "plan",
+        "created_at": "2025-11-27T18:10:07.180765Z",
+        "phase": "planning",
+        "metadata": {
+          "version": 1
+        }
+      }
+    ],
+    "data_collection": [
+      {
+        "artifact_id": "art-test-workflow-001-2",
+        "name": "data",
+        "path": "data/test.csv",
+        "artifact_type": "dataset",
+        "created_at": "2025-11-27T18:10:07.181018Z",
+        "phase": "data_collection",
+        "metadata": {
+          "records": 1000
+        }
+      }
+    ],
+    "execution": [
+      {
+        "artifact_id": "art-test-workflow-001-3",
+        "name": "results",
+        "path": "outputs/results.json",
+        "artifact_type": "intermediate_result",
+        "created_at": "2025-11-27T18:10:07.181205Z",
+        "phase": "execution",
+        "metadata": {}
+      }
+    ],
+    "validation": []
+  },
+  "errors": {
+    "planning": [],
+    "data_collection": [],
+    "execution": [],
+    "validation": [
+      "[recoverable] Minor issue"
+    ]
+  }
+}

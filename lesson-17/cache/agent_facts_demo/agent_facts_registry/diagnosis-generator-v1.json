@@ -1,0 +1,167 @@
+{
+  "agent_id": "diagnosis-generator-v1",
+  "agent_name": "Medical Diagnosis Assistant",
+  "owner": "healthcare-ai-team",
+  "version": "1.5.0",
+  "description": "Generates preliminary diagnosis suggestions from patient symptoms and lab results",
+  "capabilities": [
+    {
+      "name": "analyze_symptoms",
+      "description": "Analyzes patient symptoms for potential conditions",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string"
+          },
+          "symptoms": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "duration_days": {
+            "type": "integer"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "mild",
+              "moderate",
+              "severe"
+            ]
+          }
+        },
+        "required": [
+          "symptoms"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "differential_diagnoses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "condition": {
+                  "type": "string"
+                },
+                "probability": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "recommended_tests": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "estimated_latency_ms": 2000,
+      "cost_per_call": 0.05,
+      "requires_approval": true,
+      "tags": [
+        "healthcare",
+        "diagnosis",
+        "llm"
+      ]
+    },
+    {
+      "name": "interpret_labs",
+      "description": "Interprets laboratory results in clinical context",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "lab_results": {
+            "type": "object"
+          },
+          "reference_ranges": {
+            "type": "object"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "abnormal_values": {
+            "type": "array"
+          },
+          "clinical_significance": {
+            "type": "string"
+          },
+          "follow_up_recommendations": {
+            "type": "array"
+          }
+        }
+      },
+      "estimated_latency_ms": 1500,
+      "cost_per_call": 0.03,
+      "requires_approval": true,
+      "tags": [
+        "healthcare",
+        "labs",
+        "interpretation"
+      ]
+    },
+    {
+      "name": "suggest_treatment",
+      "description": "Suggests treatment options based on diagnosis",
+      "input_schema": {},
+      "output_schema": {},
+      "estimated_latency_ms": 2500,
+      "cost_per_call": 0.075,
+      "requires_approval": true,
+      "tags": [
+        "healthcare",
+        "treatment",
+        "llm"
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "policy_id": "diagnosis-generator-v1-policy-001",
+      "name": "HIPAA Compliance",
+      "description": "Ensures HIPAA-compliant data handling",
+      "policy_type": "data_access",
+      "constraints": {
+        "allowed_data_sources": [
+          "patient_db"
+        ],
+        "pii_handling_mode": "redact",
+        "audit_all_access": true,
+        "data_retention_days": 365
+      },
+      "effective_from": "2025-01-02T21:31:40.848727Z",
+      "effective_until": "2025-07-07T21:31:40.848727Z",
+      "is_active": true
+    },
+    {
+      "policy_id": "diagnosis-generator-v1-policy-002",
+      "name": "Physician Approval",
+      "description": "All diagnoses require physician review",
+      "policy_type": "approval_required",
+      "constraints": {
+        "approval_role": "physician",
+        "max_pending_hours": 24,
+        "auto_escalate": true
+      },
+      "effective_from": "2025-01-02T21:31:40.848727Z",
+      "effective_until": null,
+      "is_active": true
+    }
+  ],
+  "created_at": "2025-11-29T19:39:24.954791Z",
+  "updated_at": "2025-11-29T19:39:25.013352Z",
+  "signature_hash": "7c6596b59fe38911bb83f8ff8ce596bf2d5737646a18a45e2109f47216e7a1a6",
+  "parent_agent_id": null,
+  "metadata": {
+    "deployment_environment": "production",
+    "model_version": "claude-3-sonnet",
+    "last_health_check": "2025-03-28T19:22:53.848727+00:00"
+  }
+}

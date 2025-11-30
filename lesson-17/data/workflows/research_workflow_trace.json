@@ -1,0 +1,315 @@
+{
+  "workflow_id": "research-workflow-001",
+  "workflow_name": "Research Literature Review",
+  "workflow_type": "research_workflow",
+  "task_plan": {
+    "plan_id": "plan-research-workflow-001",
+    "task_id": "research-workflow-001",
+    "created_at": "2025-11-27T10:00:00+00:00",
+    "steps": [
+      {
+        "step_id": "search_literature",
+        "description": "Search academic databases for relevant papers",
+        "agent_id": "research-assistant-v2",
+        "expected_inputs": [
+          "query",
+          "databases",
+          "date_range"
+        ],
+        "expected_outputs": [
+          "papers",
+          "total_found"
+        ],
+        "timeout_seconds": 60,
+        "is_critical": true,
+        "order": 1
+      },
+      {
+        "step_id": "summarize_papers",
+        "description": "Generate summaries of found papers",
+        "agent_id": "summarizer-v1",
+        "expected_inputs": [
+          "papers"
+        ],
+        "expected_outputs": [
+          "summaries",
+          "key_findings"
+        ],
+        "timeout_seconds": 120,
+        "is_critical": true,
+        "order": 2
+      },
+      {
+        "step_id": "synthesize_findings",
+        "description": "Synthesize findings into coherent narrative",
+        "agent_id": "synthesizer-v1",
+        "expected_inputs": [
+          "summaries",
+          "key_findings"
+        ],
+        "expected_outputs": [
+          "synthesis",
+          "recommendations"
+        ],
+        "timeout_seconds": 180,
+        "is_critical": true,
+        "order": 3
+      },
+      {
+        "step_id": "review_output",
+        "description": "Review and validate synthesis quality",
+        "agent_id": "reviewer-v1",
+        "expected_inputs": [
+          "synthesis"
+        ],
+        "expected_outputs": [
+          "review_score",
+          "suggestions"
+        ],
+        "timeout_seconds": 60,
+        "is_critical": false,
+        "order": 4
+      }
+    ],
+    "dependencies": {
+      "summarize_papers": [
+        "search_literature"
+      ],
+      "synthesize_findings": [
+        "summarize_papers"
+      ],
+      "review_output": [
+        "synthesize_findings"
+      ]
+    },
+    "rollback_points": [
+      "search_literature",
+      "summarize_papers"
+    ],
+    "metadata": {
+      "research_topic": "Agent reliability in multi-step workflows"
+    }
+  },
+  "collaborators": [
+    {
+      "agent_id": "research-assistant-v2",
+      "agent_name": "Academic Research Assistant",
+      "role": "search",
+      "joined_at": "2025-11-27T10:00:00+00:00",
+      "left_at": "2025-11-27T10:00:45+00:00"
+    },
+    {
+      "agent_id": "summarizer-v1",
+      "agent_name": "Paper Summarizer",
+      "role": "summarization",
+      "joined_at": "2025-11-27T10:00:45+00:00",
+      "left_at": "2025-11-27T10:02:30+00:00"
+    },
+    {
+      "agent_id": "synthesizer-v1",
+      "agent_name": "Research Synthesizer",
+      "role": "synthesis",
+      "joined_at": "2025-11-27T10:02:30+00:00",
+      "left_at": "2025-11-27T10:04:40+00:00"
+    },
+    {
+      "agent_id": "reviewer-v1",
+      "agent_name": "Quality Reviewer",
+      "role": "review",
+      "joined_at": "2025-11-27T10:04:40+00:00",
+      "left_at": "2025-11-27T10:05:20+00:00"
+    }
+  ],
+  "parameter_substitutions": [],
+  "execution_trace": {
+    "trace_id": "trace-research-workflow-001",
+    "task_id": "research-workflow-001",
+    "events": [
+      {
+        "event_id": "evt-001",
+        "event_type": "step_start",
+        "step_id": "search_literature",
+        "timestamp": "2025-11-27T10:00:00+00:00",
+        "agent_id": "research-assistant-v2",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-002",
+        "event_type": "collaborator_join",
+        "step_id": "search_literature",
+        "timestamp": "2025-11-27T10:00:00+00:00",
+        "agent_id": "research-assistant-v2",
+        "metadata": {
+          "role": "search"
+        }
+      },
+      {
+        "event_id": "evt-003",
+        "event_type": "decision",
+        "step_id": "search_literature",
+        "timestamp": "2025-11-27T10:00:05+00:00",
+        "agent_id": "research-assistant-v2",
+        "metadata": {
+          "decision": "Search PubMed, ArXiv, and Semantic Scholar",
+          "alternatives": [
+            "PubMed only",
+            "Google Scholar",
+            "All databases"
+          ],
+          "rationale": "Balance of medical and CS papers needed for topic"
+        }
+      },
+      {
+        "event_id": "evt-004",
+        "event_type": "checkpoint",
+        "step_id": "search_literature",
+        "timestamp": "2025-11-27T10:00:40+00:00",
+        "agent_id": "research-assistant-v2",
+        "metadata": {
+          "checkpoint_id": "chk-001",
+          "state": {
+            "papers_found": 47,
+            "databases_searched": 3
+          }
+        }
+      },
+      {
+        "event_id": "evt-005",
+        "event_type": "step_end",
+        "step_id": "search_literature",
+        "timestamp": "2025-11-27T10:00:45+00:00",
+        "agent_id": "research-assistant-v2",
+        "duration_ms": 45000,
+        "metadata": {
+          "success": true,
+          "papers_found": 47
+        }
+      },
+      {
+        "event_id": "evt-006",
+        "event_type": "step_start",
+        "step_id": "summarize_papers",
+        "timestamp": "2025-11-27T10:00:45+00:00",
+        "agent_id": "summarizer-v1",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-007",
+        "event_type": "collaborator_join",
+        "step_id": "summarize_papers",
+        "timestamp": "2025-11-27T10:00:45+00:00",
+        "agent_id": "summarizer-v1",
+        "metadata": {
+          "role": "summarization"
+        }
+      },
+      {
+        "event_id": "evt-008",
+        "event_type": "step_end",
+        "step_id": "summarize_papers",
+        "timestamp": "2025-11-27T10:02:30+00:00",
+        "agent_id": "summarizer-v1",
+        "duration_ms": 105000,
+        "metadata": {
+          "success": true,
+          "summaries_generated": 47,
+          "key_findings": 12
+        }
+      },
+      {
+        "event_id": "evt-009",
+        "event_type": "step_start",
+        "step_id": "synthesize_findings",
+        "timestamp": "2025-11-27T10:02:30+00:00",
+        "agent_id": "synthesizer-v1",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-010",
+        "event_type": "collaborator_join",
+        "step_id": "synthesize_findings",
+        "timestamp": "2025-11-27T10:02:30+00:00",
+        "agent_id": "synthesizer-v1",
+        "metadata": {
+          "role": "synthesis"
+        }
+      },
+      {
+        "event_id": "evt-011",
+        "event_type": "decision",
+        "step_id": "synthesize_findings",
+        "timestamp": "2025-11-27T10:02:40+00:00",
+        "agent_id": "synthesizer-v1",
+        "metadata": {
+          "decision": "Use thematic organization",
+          "alternatives": [
+            "Chronological",
+            "By source",
+            "Thematic"
+          ],
+          "rationale": "Themes better highlight cross-paper patterns"
+        }
+      },
+      {
+        "event_id": "evt-012",
+        "event_type": "step_end",
+        "step_id": "synthesize_findings",
+        "timestamp": "2025-11-27T10:04:40+00:00",
+        "agent_id": "synthesizer-v1",
+        "duration_ms": 130000,
+        "metadata": {
+          "success": true,
+          "word_count": 3500,
+          "themes_identified": 5
+        }
+      },
+      {
+        "event_id": "evt-013",
+        "event_type": "step_start",
+        "step_id": "review_output",
+        "timestamp": "2025-11-27T10:04:40+00:00",
+        "agent_id": "reviewer-v1",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-014",
+        "event_type": "collaborator_join",
+        "step_id": "review_output",
+        "timestamp": "2025-11-27T10:04:40+00:00",
+        "agent_id": "reviewer-v1",
+        "metadata": {
+          "role": "review"
+        }
+      },
+      {
+        "event_id": "evt-015",
+        "event_type": "step_end",
+        "step_id": "review_output",
+        "timestamp": "2025-11-27T10:05:20+00:00",
+        "agent_id": "reviewer-v1",
+        "duration_ms": 40000,
+        "metadata": {
+          "success": true,
+          "review_score": 0.89,
+          "suggestions_count": 3
+        }
+      }
+    ],
+    "start_time": "2025-11-27T10:00:00+00:00",
+    "end_time": "2025-11-27T10:05:20+00:00",
+    "total_duration_ms": 320000
+  },
+  "outcome": {
+    "status": "success",
+    "reason": "Literature review completed with high quality score",
+    "root_cause": null,
+    "steps_completed": 4,
+    "steps_failed": 0,
+    "steps_skipped": 0
+  },
+  "metadata": {
+    "research_topic": "Agent reliability in multi-step workflows",
+    "papers_reviewed": 47,
+    "synthesis_quality": 0.89
+  }
+}

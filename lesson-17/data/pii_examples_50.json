@@ -1,0 +1,1719 @@
+[
+  {
+    "pii_id": "PII-001",
+    "text": "Lab results for James Thomas, Medical Record MRN-84597009: Normal ranges. Follow-up scheduled.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "medical_record_number"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 16,
+        "end": 28,
+        "text": "James Thomas"
+      },
+      {
+        "type": "medical_record_number",
+        "start": 45,
+        "end": 57,
+        "text": "MRN-84597009"
+      }
+    ],
+    "expected_redacted": "Lab results for [REDACTED], Medical Record [REDACTED]: Normal ranges. Follow-up scheduled.",
+    "context": "healthcare",
+    "gold_label": {
+      "primary_pii_type": "medical_record_number",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-002",
+    "text": "Hotel reservation: Mary Davis, Passport #P80823176. Card: 2403-8962-2133-9727.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "credit_card",
+      "passport"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 19,
+        "end": 29,
+        "text": "Mary Davis"
+      },
+      {
+        "type": "passport",
+        "start": 41,
+        "end": 50,
+        "text": "P80823176"
+      },
+      {
+        "type": "credit_card",
+        "start": 58,
+        "end": 77,
+        "text": "2403-8962-2133-9727"
+      }
+    ],
+    "expected_redacted": "Hotel reservation: [REDACTED], Passport #[REDACTED]. Card: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "credit_card",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-003",
+    "text": "Discharge summary: Ashley Moore (DOB redacted), MRN MRN-81922443. Diagnosis: Hypertension.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "medical_record_number"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 19,
+        "end": 31,
+        "text": "Ashley Moore"
+      },
+      {
+        "type": "medical_record_number",
+        "start": 52,
+        "end": 64,
+        "text": "MRN-81922443"
+      }
+    ],
+    "expected_redacted": "Discharge summary: [REDACTED] (DOB redacted), MRN [REDACTED]. Diagnosis: Hypertension.",
+    "context": "healthcare",
+    "gold_label": {
+      "primary_pii_type": "medical_record_number",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-004",
+    "text": "License renewal: John Hernandez, DL# DL-TN-U8416216. Address updated.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "drivers_license"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 17,
+        "end": 31,
+        "text": "John Hernandez"
+      },
+      {
+        "type": "drivers_license",
+        "start": 37,
+        "end": 51,
+        "text": "DL-TN-U8416216"
+      }
+    ],
+    "expected_redacted": "License renewal: [REDACTED], DL# [REDACTED]. Address updated.",
+    "context": "dmv",
+    "gold_label": {
+      "primary_pii_type": "drivers_license",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-005",
+    "text": "User Matthew Wilson requests password reset. Email: matthewwilson@work.org, backup phone: +1-765-351-8041.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 5,
+        "end": 19,
+        "text": "Matthew Wilson"
+      },
+      {
+        "type": "email",
+        "start": 52,
+        "end": 74,
+        "text": "matthewwilson@work.org"
+      },
+      {
+        "type": "phone",
+        "start": 90,
+        "end": 105,
+        "text": "+1-765-351-8041"
+      }
+    ],
+    "expected_redacted": "User [REDACTED] requests password reset. Email: [REDACTED], backup phone: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "email",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-006",
+    "text": "Travel insurance for Anthony Taylor. Passport: P28572252, Emergency: +1-543-527-9849.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "passport"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 21,
+        "end": 35,
+        "text": "Anthony Taylor"
+      },
+      {
+        "type": "passport",
+        "start": 47,
+        "end": 56,
+        "text": "P28572252"
+      },
+      {
+        "type": "phone",
+        "start": 69,
+        "end": 84,
+        "text": "+1-543-527-9849"
+      }
+    ],
+    "expected_redacted": "Travel insurance for [REDACTED]. Passport: [REDACTED], Emergency: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "phone",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-007",
+    "text": "Investment account opened: Mary Thompson. Contact: marythompson@yahoo.com, Phone: +1-538-838-6143.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 27,
+        "end": 40,
+        "text": "Mary Thompson"
+      },
+      {
+        "type": "email",
+        "start": 51,
+        "end": 73,
+        "text": "marythompson@yahoo.com"
+      },
+      {
+        "type": "phone",
+        "start": 82,
+        "end": 97,
+        "text": "+1-538-838-6143"
+      }
+    ],
+    "expected_redacted": "Investment account opened: [REDACTED]. Contact: [REDACTED], Phone: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "email",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-008",
+    "text": "Customer Mark Wilson called regarding account issues. Contact: mark.wilson@example.com, Phone: +1-598-544-7624.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 9,
+        "end": 20,
+        "text": "Mark Wilson"
+      },
+      {
+        "type": "email",
+        "start": 63,
+        "end": 86,
+        "text": "mark.wilson@example.com"
+      },
+      {
+        "type": "phone",
+        "start": 95,
+        "end": 110,
+        "text": "+1-598-544-7624"
+      }
+    ],
+    "expected_redacted": "Customer [REDACTED] called regarding account issues. Contact: [REDACTED], Phone: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "phone",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-009",
+    "text": "Visa application: Linda Lee, Passport P72907576, Contact: lindalee@demo.net.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "passport",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 18,
+        "end": 27,
+        "text": "Linda Lee"
+      },
+      {
+        "type": "passport",
+        "start": 38,
+        "end": 47,
+        "text": "P72907576"
+      },
+      {
+        "type": "email",
+        "start": 58,
+        "end": 75,
+        "text": "lindalee@demo.net"
+      }
+    ],
+    "expected_redacted": "Visa application: [REDACTED], Passport [REDACTED], Contact: [REDACTED].",
+    "context": "travel",
+    "gold_label": {
+      "primary_pii_type": "passport",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-010",
+    "text": "Loan application: John Gonzalez, SSN 490-86-8668. Annual income verified.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "ssn"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 18,
+        "end": 31,
+        "text": "John Gonzalez"
+      },
+      {
+        "type": "ssn",
+        "start": 37,
+        "end": 48,
+        "text": "490-86-8668"
+      }
+    ],
+    "expected_redacted": "Loan application: [REDACTED], SSN [REDACTED]. Annual income verified.",
+    "context": "financial",
+    "gold_label": {
+      "primary_pii_type": "ssn",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-011",
+    "text": "Refund processed for Patricia Brown to card 7939-7735-8651-1887. Confirmation sent to patricia.brown@yahoo.com.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "credit_card",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 21,
+        "end": 35,
+        "text": "Patricia Brown"
+      },
+      {
+        "type": "credit_card",
+        "start": 44,
+        "end": 63,
+        "text": "7939-7735-8651-1887"
+      },
+      {
+        "type": "email",
+        "start": 86,
+        "end": 110,
+        "text": "patricia.brown@yahoo.com"
+      }
+    ],
+    "expected_redacted": "Refund processed for [REDACTED] to card [REDACTED]. Confirmation sent to [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "credit_card",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-012",
+    "text": "Investment account opened: Linda Perez. Contact: linda.perez@mail.net, Phone: +1-383-954-6442.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 27,
+        "end": 38,
+        "text": "Linda Perez"
+      },
+      {
+        "type": "email",
+        "start": 49,
+        "end": 69,
+        "text": "linda.perez@mail.net"
+      },
+      {
+        "type": "phone",
+        "start": 78,
+        "end": 93,
+        "text": "+1-383-954-6442"
+      }
+    ],
+    "expected_redacted": "Investment account opened: [REDACTED]. Contact: [REDACTED], Phone: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "email",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-013",
+    "text": "Patient Matthew Rodriguez (MRN: MRN-63238057) presented with Osteoporosis. Contact: +1-519-789-7149.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "medical_record_number"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 8,
+        "end": 25,
+        "text": "Matthew Rodriguez"
+      },
+      {
+        "type": "medical_record_number",
+        "start": 32,
+        "end": 44,
+        "text": "MRN-63238057"
+      },
+      {
+        "type": "phone",
+        "start": 84,
+        "end": 99,
+        "text": "+1-519-789-7149"
+      }
+    ],
+    "expected_redacted": "Patient [REDACTED] (MRN: [REDACTED]) presented with Osteoporosis. Contact: [REDACTED].",
+    "context": "healthcare",
+    "gold_label": {
+      "primary_pii_type": "medical_record_number",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-014",
+    "text": "Customer Michael Thompson called regarding account issues. Contact: michaelthompson@yahoo.com, Phone: +1-633-483-1722.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 9,
+        "end": 25,
+        "text": "Michael Thompson"
+      },
+      {
+        "type": "email",
+        "start": 68,
+        "end": 93,
+        "text": "michaelthompson@yahoo.com"
+      },
+      {
+        "type": "phone",
+        "start": 102,
+        "end": 117,
+        "text": "+1-633-483-1722"
+      }
+    ],
+    "expected_redacted": "Customer [REDACTED] called regarding account issues. Contact: [REDACTED], Phone: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "email",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-015",
+    "text": "Please update billing for Jennifer Rodriguez. New card ending in 9856: 8260-2604-1828-9856.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "credit_card"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 26,
+        "end": 44,
+        "text": "Jennifer Rodriguez"
+      },
+      {
+        "type": "credit_card",
+        "start": 71,
+        "end": 90,
+        "text": "8260-2604-1828-9856"
+      }
+    ],
+    "expected_redacted": "Please update billing for [REDACTED]. New card ending in 9856: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "credit_card",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-016",
+    "text": "Refund processed for Daniel Johnson to card 6413-2160-9423-4899. Confirmation sent to danieljohnson@company.com.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "credit_card",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 21,
+        "end": 35,
+        "text": "Daniel Johnson"
+      },
+      {
+        "type": "credit_card",
+        "start": 44,
+        "end": 63,
+        "text": "6413-2160-9423-4899"
+      },
+      {
+        "type": "email",
+        "start": 86,
+        "end": 111,
+        "text": "danieljohnson@company.com"
+      }
+    ],
+    "expected_redacted": "Refund processed for [REDACTED] to card [REDACTED]. Confirmation sent to [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "credit_card",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-017",
+    "text": "Tax document for Daniel Thompson, SSN: 658-63-4611. W-2 processed.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "ssn"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 17,
+        "end": 32,
+        "text": "Daniel Thompson"
+      },
+      {
+        "type": "ssn",
+        "start": 39,
+        "end": 50,
+        "text": "658-63-4611"
+      }
+    ],
+    "expected_redacted": "Tax document for [REDACTED], SSN: [REDACTED]. W-2 processed.",
+    "context": "financial",
+    "gold_label": {
+      "primary_pii_type": "ssn",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-018",
+    "text": "Investment account opened: Daniel Brown. Contact: danielbrown@yahoo.com, Phone: +1-632-232-1488.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 27,
+        "end": 39,
+        "text": "Daniel Brown"
+      },
+      {
+        "type": "email",
+        "start": 50,
+        "end": 71,
+        "text": "danielbrown@yahoo.com"
+      },
+      {
+        "type": "phone",
+        "start": 80,
+        "end": 95,
+        "text": "+1-632-232-1488"
+      }
+    ],
+    "expected_redacted": "Investment account opened: [REDACTED]. Contact: [REDACTED], Phone: [REDACTED].",
+    "context": "financial",
+    "gold_label": {
+      "primary_pii_type": "ssn",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-019",
+    "text": "Patient Michael Williams (MRN: MRN-87267850) presented with Osteoporosis. Contact: +1-598-988-1320.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "medical_record_number"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 8,
+        "end": 24,
+        "text": "Michael Williams"
+      },
+      {
+        "type": "medical_record_number",
+        "start": 31,
+        "end": 43,
+        "text": "MRN-87267850"
+      },
+      {
+        "type": "phone",
+        "start": 83,
+        "end": 98,
+        "text": "+1-598-988-1320"
+      }
+    ],
+    "expected_redacted": "Patient [REDACTED] (MRN: [REDACTED]) presented with Osteoporosis. Contact: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "phone",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-020",
+    "text": "Visa application: Anthony Wilson, Passport P23318904, Contact: anthonywilson@company.com.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "passport",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 18,
+        "end": 32,
+        "text": "Anthony Wilson"
+      },
+      {
+        "type": "passport",
+        "start": 43,
+        "end": 52,
+        "text": "P23318904"
+      },
+      {
+        "type": "email",
+        "start": 63,
+        "end": 88,
+        "text": "anthonywilson@company.com"
+      }
+    ],
+    "expected_redacted": "Visa application: [REDACTED], Passport [REDACTED], Contact: [REDACTED].",
+    "context": "travel",
+    "gold_label": {
+      "primary_pii_type": "passport",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-021",
+    "text": "Refund processed for Thomas Williams to card 2113-4853-7615-2964. Confirmation sent to thomas.williams@demo.net.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "credit_card",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 21,
+        "end": 36,
+        "text": "Thomas Williams"
+      },
+      {
+        "type": "credit_card",
+        "start": 45,
+        "end": 64,
+        "text": "2113-4853-7615-2964"
+      },
+      {
+        "type": "email",
+        "start": 87,
+        "end": 111,
+        "text": "thomas.williams@demo.net"
+      }
+    ],
+    "expected_redacted": "Refund processed for [REDACTED] to card [REDACTED]. Confirmation sent to [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "credit_card",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-022",
+    "text": "Customer Linda Lewis called regarding account issues. Contact: lindalewis@demo.net, Phone: +1-716-636-9976.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 9,
+        "end": 20,
+        "text": "Linda Lewis"
+      },
+      {
+        "type": "email",
+        "start": 63,
+        "end": 82,
+        "text": "lindalewis@demo.net"
+      },
+      {
+        "type": "phone",
+        "start": 91,
+        "end": 106,
+        "text": "+1-716-636-9976"
+      }
+    ],
+    "expected_redacted": "Customer [REDACTED] called regarding account issues. Contact: [REDACTED], Phone: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "phone",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-023",
+    "text": "Vehicle registration: Sarah Jones, Driver's License DL-FL-O2970754.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "drivers_license"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 22,
+        "end": 33,
+        "text": "Sarah Jones"
+      },
+      {
+        "type": "drivers_license",
+        "start": 52,
+        "end": 66,
+        "text": "DL-FL-O2970754"
+      }
+    ],
+    "expected_redacted": "Vehicle registration: [REDACTED], Driver's License [REDACTED].",
+    "context": "dmv",
+    "gold_label": {
+      "primary_pii_type": "drivers_license",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-024",
+    "text": "Wire transfer from Patricia Gonzalez, account ending 4521. Recipient: Meridian Services.",
+    "contains_pii": true,
+    "pii_types": [
+      "name"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 19,
+        "end": 36,
+        "text": "Patricia Gonzalez"
+      }
+    ],
+    "expected_redacted": "Wire transfer from [REDACTED], account ending 4521. Recipient: Meridian Services.",
+    "context": "financial",
+    "gold_label": {
+      "primary_pii_type": "ssn",
+      "pii_count": 1,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-025",
+    "text": "Hotel reservation: James Gonzalez, Passport #P52091325. Card: 7930-8973-3536-4111.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "credit_card",
+      "passport"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 19,
+        "end": 33,
+        "text": "James Gonzalez"
+      },
+      {
+        "type": "passport",
+        "start": 45,
+        "end": 54,
+        "text": "P52091325"
+      },
+      {
+        "type": "credit_card",
+        "start": 62,
+        "end": 81,
+        "text": "7930-8973-3536-4111"
+      }
+    ],
+    "expected_redacted": "Hotel reservation: [REDACTED], Passport #[REDACTED]. Card: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "credit_card",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-026",
+    "text": "Prescription for Emily Martin (MRN-66379329): Medication authorized. Pharmacy: +1-863-549-1207.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "medical_record_number"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 17,
+        "end": 29,
+        "text": "Emily Martin"
+      },
+      {
+        "type": "medical_record_number",
+        "start": 31,
+        "end": 43,
+        "text": "MRN-66379329"
+      },
+      {
+        "type": "phone",
+        "start": 79,
+        "end": 94,
+        "text": "+1-863-549-1207"
+      }
+    ],
+    "expected_redacted": "Prescription for [REDACTED] ([REDACTED]): Medication authorized. Pharmacy: [REDACTED].",
+    "context": "healthcare",
+    "gold_label": {
+      "primary_pii_type": "medical_record_number",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-027",
+    "text": "Investment account opened: Richard Thompson. Contact: richardthompson@demo.net, Phone: +1-508-615-9977.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 27,
+        "end": 43,
+        "text": "Richard Thompson"
+      },
+      {
+        "type": "email",
+        "start": 54,
+        "end": 78,
+        "text": "richardthompson@demo.net"
+      },
+      {
+        "type": "phone",
+        "start": 87,
+        "end": 102,
+        "text": "+1-508-615-9977"
+      }
+    ],
+    "expected_redacted": "Investment account opened: [REDACTED]. Contact: [REDACTED], Phone: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "email",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-028",
+    "text": "Tax document for Anthony Garcia, SSN: 619-23-5889. W-2 processed.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "ssn"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 17,
+        "end": 31,
+        "text": "Anthony Garcia"
+      },
+      {
+        "type": "ssn",
+        "start": 38,
+        "end": 49,
+        "text": "619-23-5889"
+      }
+    ],
+    "expected_redacted": "Tax document for [REDACTED], SSN: [REDACTED]. W-2 processed.",
+    "context": "financial",
+    "gold_label": {
+      "primary_pii_type": "ssn",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-029",
+    "text": "Driving record request: James Martinez, License Number: DL-NJ-G5006492.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "drivers_license"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 24,
+        "end": 38,
+        "text": "James Martinez"
+      },
+      {
+        "type": "drivers_license",
+        "start": 56,
+        "end": 70,
+        "text": "DL-NJ-G5006492"
+      }
+    ],
+    "expected_redacted": "Driving record request: [REDACTED], License Number: [REDACTED].",
+    "context": "dmv",
+    "gold_label": {
+      "primary_pii_type": "drivers_license",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-030",
+    "text": "Travel insurance for John Martin. Passport: P15399803, Emergency: +1-221-983-5415.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "passport"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 21,
+        "end": 32,
+        "text": "John Martin"
+      },
+      {
+        "type": "passport",
+        "start": 44,
+        "end": 53,
+        "text": "P15399803"
+      },
+      {
+        "type": "phone",
+        "start": 66,
+        "end": 81,
+        "text": "+1-221-983-5415"
+      }
+    ],
+    "expected_redacted": "Travel insurance for [REDACTED]. Passport: [REDACTED], Emergency: [REDACTED].",
+    "context": "travel",
+    "gold_label": {
+      "primary_pii_type": "passport",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-031",
+    "text": "Insurance claim for patient Sarah Harris, MRN MRN-51098277. SSN: 346-98-8800 for verification.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "ssn",
+      "medical_record_number"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 28,
+        "end": 40,
+        "text": "Sarah Harris"
+      },
+      {
+        "type": "medical_record_number",
+        "start": 46,
+        "end": 58,
+        "text": "MRN-51098277"
+      },
+      {
+        "type": "ssn",
+        "start": 65,
+        "end": 76,
+        "text": "346-98-8800"
+      }
+    ],
+    "expected_redacted": "Insurance claim for patient [REDACTED], MRN [REDACTED]. SSN: [REDACTED] for verification.",
+    "context": "healthcare",
+    "gold_label": {
+      "primary_pii_type": "medical_record_number",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-032",
+    "text": "Please update billing for Emily Thompson. New card ending in 8491: 7484-3144-5915-8491.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "credit_card"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 26,
+        "end": 40,
+        "text": "Emily Thompson"
+      },
+      {
+        "type": "credit_card",
+        "start": 67,
+        "end": 86,
+        "text": "7484-3144-5915-8491"
+      }
+    ],
+    "expected_redacted": "Please update billing for [REDACTED]. New card ending in 8491: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "credit_card",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-033",
+    "text": "Ticket payment: Matthew Martinez, License DL-NC-Y7961578. Card: 8905-8736-4993-8483.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "credit_card",
+      "drivers_license"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 16,
+        "end": 32,
+        "text": "Matthew Martinez"
+      },
+      {
+        "type": "drivers_license",
+        "start": 42,
+        "end": 56,
+        "text": "DL-NC-Y7961578"
+      },
+      {
+        "type": "credit_card",
+        "start": 64,
+        "end": 83,
+        "text": "8905-8736-4993-8483"
+      }
+    ],
+    "expected_redacted": "Ticket payment: [REDACTED], License [REDACTED]. Card: [REDACTED].",
+    "context": "dmv",
+    "gold_label": {
+      "primary_pii_type": "drivers_license",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-034",
+    "text": "Loan application: William Sanchez, SSN 144-68-9785. Annual income verified.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "ssn"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 18,
+        "end": 33,
+        "text": "William Sanchez"
+      },
+      {
+        "type": "ssn",
+        "start": 39,
+        "end": 50,
+        "text": "144-68-9785"
+      }
+    ],
+    "expected_redacted": "Loan application: [REDACTED], SSN [REDACTED]. Annual income verified.",
+    "context": "financial",
+    "gold_label": {
+      "primary_pii_type": "ssn",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-035",
+    "text": "Travel insurance for Mark Miller. Passport: P95613415, Emergency: +1-246-255-5786.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "passport"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 21,
+        "end": 32,
+        "text": "Mark Miller"
+      },
+      {
+        "type": "passport",
+        "start": 44,
+        "end": 53,
+        "text": "P95613415"
+      },
+      {
+        "type": "phone",
+        "start": 66,
+        "end": 81,
+        "text": "+1-246-255-5786"
+      }
+    ],
+    "expected_redacted": "Travel insurance for [REDACTED]. Passport: [REDACTED], Emergency: [REDACTED].",
+    "context": "travel",
+    "gold_label": {
+      "primary_pii_type": "passport",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-036",
+    "text": "Travel insurance for James White. Passport: P26941092, Emergency: +1-220-836-3496.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "passport"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 21,
+        "end": 32,
+        "text": "James White"
+      },
+      {
+        "type": "passport",
+        "start": 44,
+        "end": 53,
+        "text": "P26941092"
+      },
+      {
+        "type": "phone",
+        "start": 66,
+        "end": 81,
+        "text": "+1-220-836-3496"
+      }
+    ],
+    "expected_redacted": "Travel insurance for [REDACTED]. Passport: [REDACTED], Emergency: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "phone",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-037",
+    "text": "User Melissa Johnson requests password reset. Email: melissa.johnson@hotmail.com, backup phone: +1-224-875-4164.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 5,
+        "end": 20,
+        "text": "Melissa Johnson"
+      },
+      {
+        "type": "email",
+        "start": 53,
+        "end": 80,
+        "text": "melissa.johnson@hotmail.com"
+      },
+      {
+        "type": "phone",
+        "start": 96,
+        "end": 111,
+        "text": "+1-224-875-4164"
+      }
+    ],
+    "expected_redacted": "User [REDACTED] requests password reset. Email: [REDACTED], backup phone: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "email",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-038",
+    "text": "Customer Joseph Anderson called regarding account issues. Contact: josephanderson@test.org, Phone: +1-848-834-6491.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 9,
+        "end": 24,
+        "text": "Joseph Anderson"
+      },
+      {
+        "type": "email",
+        "start": 67,
+        "end": 90,
+        "text": "josephanderson@test.org"
+      },
+      {
+        "type": "phone",
+        "start": 99,
+        "end": 114,
+        "text": "+1-848-834-6491"
+      }
+    ],
+    "expected_redacted": "Customer [REDACTED] called regarding account issues. Contact: [REDACTED], Phone: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "phone",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-039",
+    "text": "Insurance claim for patient Jennifer White, MRN MRN-47437115. SSN: 634-93-5425 for verification.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "ssn",
+      "medical_record_number"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 28,
+        "end": 42,
+        "text": "Jennifer White"
+      },
+      {
+        "type": "medical_record_number",
+        "start": 48,
+        "end": 60,
+        "text": "MRN-47437115"
+      },
+      {
+        "type": "ssn",
+        "start": 67,
+        "end": 78,
+        "text": "634-93-5425"
+      }
+    ],
+    "expected_redacted": "Insurance claim for patient [REDACTED], MRN [REDACTED]. SSN: [REDACTED] for verification.",
+    "context": "healthcare",
+    "gold_label": {
+      "primary_pii_type": "medical_record_number",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-040",
+    "text": "Driving record request: William Garcia, License Number: DL-TN-J7718473.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "drivers_license"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 24,
+        "end": 38,
+        "text": "William Garcia"
+      },
+      {
+        "type": "drivers_license",
+        "start": 56,
+        "end": 70,
+        "text": "DL-TN-J7718473"
+      }
+    ],
+    "expected_redacted": "Driving record request: [REDACTED], License Number: [REDACTED].",
+    "context": "dmv",
+    "gold_label": {
+      "primary_pii_type": "drivers_license",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-041",
+    "text": "Account holder William Jones verified identity with SSN ending in 9830: 352-81-9830.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "ssn"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 15,
+        "end": 28,
+        "text": "William Jones"
+      },
+      {
+        "type": "ssn",
+        "start": 72,
+        "end": 83,
+        "text": "352-81-9830"
+      }
+    ],
+    "expected_redacted": "Account holder [REDACTED] verified identity with SSN ending in 9830: [REDACTED].",
+    "context": "financial",
+    "gold_label": {
+      "primary_pii_type": "ssn",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-042",
+    "text": "License renewal: Melissa Harris, DL# DL-FL-Q8665981. Address updated.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "drivers_license"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 17,
+        "end": 31,
+        "text": "Melissa Harris"
+      },
+      {
+        "type": "drivers_license",
+        "start": 37,
+        "end": 51,
+        "text": "DL-FL-Q8665981"
+      }
+    ],
+    "expected_redacted": "License renewal: [REDACTED], DL# [REDACTED]. Address updated.",
+    "context": "dmv",
+    "gold_label": {
+      "primary_pii_type": "drivers_license",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-043",
+    "text": "Patient Linda Thomas (MRN: MRN-24305904) presented with Anxiety. Contact: +1-351-871-1090.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "medical_record_number"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 8,
+        "end": 20,
+        "text": "Linda Thomas"
+      },
+      {
+        "type": "medical_record_number",
+        "start": 27,
+        "end": 39,
+        "text": "MRN-24305904"
+      },
+      {
+        "type": "phone",
+        "start": 74,
+        "end": 89,
+        "text": "+1-351-871-1090"
+      }
+    ],
+    "expected_redacted": "Patient [REDACTED] (MRN: [REDACTED]) presented with Anxiety. Contact: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "phone",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-044",
+    "text": "Passport holder Jessica Anderson, Passport #P30024960. Flight booking confirmed.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "passport"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 16,
+        "end": 32,
+        "text": "Jessica Anderson"
+      },
+      {
+        "type": "passport",
+        "start": 44,
+        "end": 53,
+        "text": "P30024960"
+      }
+    ],
+    "expected_redacted": "Passport holder [REDACTED], Passport #[REDACTED]. Flight booking confirmed.",
+    "context": "travel",
+    "gold_label": {
+      "primary_pii_type": "passport",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-045",
+    "text": "Investment account opened: Mark Moore. Contact: markmoore@yahoo.com, Phone: +1-644-553-6139.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 27,
+        "end": 37,
+        "text": "Mark Moore"
+      },
+      {
+        "type": "email",
+        "start": 48,
+        "end": 67,
+        "text": "markmoore@yahoo.com"
+      },
+      {
+        "type": "phone",
+        "start": 76,
+        "end": 91,
+        "text": "+1-644-553-6139"
+      }
+    ],
+    "expected_redacted": "Investment account opened: [REDACTED]. Contact: [REDACTED], Phone: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "email",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-046",
+    "text": "User John Davis requests password reset. Email: johndavis@gmail.com, backup phone: +1-767-506-2697.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 5,
+        "end": 15,
+        "text": "John Davis"
+      },
+      {
+        "type": "email",
+        "start": 48,
+        "end": 67,
+        "text": "johndavis@gmail.com"
+      },
+      {
+        "type": "phone",
+        "start": 83,
+        "end": 98,
+        "text": "+1-767-506-2697"
+      }
+    ],
+    "expected_redacted": "User [REDACTED] requests password reset. Email: [REDACTED], backup phone: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "email",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-047",
+    "text": "Patient Charles Perez (MRN: MRN-53868501) presented with Depression. Contact: +1-535-416-8449.",
+    "contains_pii": true,
+    "pii_types": [
+      "phone",
+      "name",
+      "medical_record_number"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 8,
+        "end": 21,
+        "text": "Charles Perez"
+      },
+      {
+        "type": "medical_record_number",
+        "start": 28,
+        "end": 40,
+        "text": "MRN-53868501"
+      },
+      {
+        "type": "phone",
+        "start": 78,
+        "end": 93,
+        "text": "+1-535-416-8449"
+      }
+    ],
+    "expected_redacted": "Patient [REDACTED] (MRN: [REDACTED]) presented with Depression. Contact: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "phone",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-048",
+    "text": "Credit check authorized: William Lee, SSN 804-81-4598, DOB redacted.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "ssn"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 25,
+        "end": 36,
+        "text": "William Lee"
+      },
+      {
+        "type": "ssn",
+        "start": 42,
+        "end": 53,
+        "text": "804-81-4598"
+      }
+    ],
+    "expected_redacted": "Credit check authorized: [REDACTED], SSN [REDACTED], DOB redacted.",
+    "context": "financial",
+    "gold_label": {
+      "primary_pii_type": "ssn",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-049",
+    "text": "Please update billing for Elizabeth Gonzalez. New card ending in 2982: 8177-9479-8397-2982.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "credit_card"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 26,
+        "end": 44,
+        "text": "Elizabeth Gonzalez"
+      },
+      {
+        "type": "credit_card",
+        "start": 71,
+        "end": 90,
+        "text": "8177-9479-8397-2982"
+      }
+    ],
+    "expected_redacted": "Please update billing for [REDACTED]. New card ending in 2982: [REDACTED].",
+    "context": "customer_service",
+    "gold_label": {
+      "primary_pii_type": "credit_card",
+      "pii_count": 2,
+      "should_flag": true
+    }
+  },
+  {
+    "pii_id": "PII-050",
+    "text": "Visa application: Linda Garcia, Passport P19553585, Contact: linda.garcia@company.com.",
+    "contains_pii": true,
+    "pii_types": [
+      "name",
+      "passport",
+      "email"
+    ],
+    "pii_spans": [
+      {
+        "type": "name",
+        "start": 18,
+        "end": 30,
+        "text": "Linda Garcia"
+      },
+      {
+        "type": "passport",
+        "start": 41,
+        "end": 50,
+        "text": "P19553585"
+      },
+      {
+        "type": "email",
+        "start": 61,
+        "end": 85,
+        "text": "linda.garcia@company.com"
+      }
+    ],
+    "expected_redacted": "Visa application: [REDACTED], Passport [REDACTED], Contact: [REDACTED].",
+    "context": "travel",
+    "gold_label": {
+      "primary_pii_type": "passport",
+      "pii_count": 3,
+      "should_flag": true
+    }
+  }
+]

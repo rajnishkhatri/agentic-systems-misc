@@ -1,0 +1,258 @@
+{
+  "workflow_id": "invoice-processing-001",
+  "workflow_name": "Invoice Processing Workflow",
+  "workflow_type": "invoice_processing",
+  "task_plan": {
+    "plan_id": "plan-invoice-processing-001",
+    "task_id": "invoice-processing-001",
+    "created_at": "2025-11-27T14:00:00+00:00",
+    "steps": [
+      {
+        "step_id": "extract_vendor",
+        "description": "Extract vendor and amount from invoice",
+        "agent_id": "invoice-extractor-v2",
+        "expected_inputs": [
+          "invoice_text",
+          "invoice_image"
+        ],
+        "expected_outputs": [
+          "vendor_name",
+          "amount",
+          "confidence"
+        ],
+        "timeout_seconds": 60,
+        "is_critical": true,
+        "order": 1
+      },
+      {
+        "step_id": "validate_amount",
+        "description": "Validate extracted amount against database",
+        "agent_id": "invoice-validator-v1",
+        "expected_inputs": [
+          "vendor_name",
+          "amount",
+          "confidence"
+        ],
+        "expected_outputs": [
+          "validation_result",
+          "vendor_id"
+        ],
+        "timeout_seconds": 30,
+        "is_critical": true,
+        "order": 2
+      },
+      {
+        "step_id": "approve_invoice",
+        "description": "Final approval for payment processing",
+        "agent_id": "invoice-approver-v1",
+        "expected_inputs": [
+          "validation_result",
+          "vendor_id"
+        ],
+        "expected_outputs": [
+          "approval_status",
+          "payment_reference"
+        ],
+        "timeout_seconds": 120,
+        "is_critical": true,
+        "order": 3
+      }
+    ],
+    "dependencies": {
+      "validate_amount": [
+        "extract_vendor"
+      ],
+      "approve_invoice": [
+        "validate_amount"
+      ]
+    },
+    "rollback_points": [
+      "extract_vendor"
+    ],
+    "metadata": {
+      "invoice_id": "INV-2024-1234",
+      "vendor": "Acme Corp"
+    }
+  },
+  "collaborators": [
+    {
+      "agent_id": "invoice-extractor-v2",
+      "agent_name": "Invoice Extractor",
+      "role": "extraction",
+      "joined_at": "2025-11-27T14:00:00+00:00",
+      "left_at": "2025-11-27T14:00:12+00:00"
+    },
+    {
+      "agent_id": "invoice-validator-v1",
+      "agent_name": "Amount Validator",
+      "role": "validation",
+      "joined_at": "2025-11-27T14:00:12+00:00",
+      "left_at": "2025-11-27T14:00:18+00:00"
+    }
+  ],
+  "parameter_substitutions": [
+    {
+      "substitution_id": "param-001",
+      "timestamp": "2025-11-27T14:00:10+00:00",
+      "parameter_name": "confidence_threshold",
+      "old_value": 0.8,
+      "new_value": 0.95,
+      "justification": "Reduce false positives per compliance team request",
+      "changed_by": "invoice-extractor-v2",
+      "workflow_id": "invoice-processing-001"
+    }
+  ],
+  "execution_trace": {
+    "trace_id": "trace-invoice-processing-001",
+    "task_id": "invoice-processing-001",
+    "events": [
+      {
+        "event_id": "evt-001",
+        "event_type": "step_start",
+        "step_id": "extract_vendor",
+        "timestamp": "2025-11-27T14:00:00+00:00",
+        "agent_id": "invoice-extractor-v2",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-002",
+        "event_type": "collaborator_join",
+        "step_id": "extract_vendor",
+        "timestamp": "2025-11-27T14:00:00+00:00",
+        "agent_id": "invoice-extractor-v2",
+        "metadata": {
+          "role": "extraction"
+        }
+      },
+      {
+        "event_id": "evt-003",
+        "event_type": "decision",
+        "step_id": "extract_vendor",
+        "timestamp": "2025-11-27T14:00:05+00:00",
+        "agent_id": "invoice-extractor-v2",
+        "metadata": {
+          "decision": "Use GPT-4 for OCR correction",
+          "alternatives": [
+            "GPT-3.5",
+            "Claude",
+            "Rule-based"
+          ],
+          "rationale": "Higher accuracy needed for noisy scans"
+        }
+      },
+      {
+        "event_id": "evt-004",
+        "event_type": "parameter_change",
+        "step_id": "extract_vendor",
+        "timestamp": "2025-11-27T14:00:10+00:00",
+        "agent_id": "invoice-extractor-v2",
+        "metadata": {
+          "parameter": "confidence_threshold",
+          "old_value": 0.8,
+          "new_value": 0.95
+        }
+      },
+      {
+        "event_id": "evt-005",
+        "event_type": "checkpoint",
+        "step_id": "extract_vendor",
+        "timestamp": "2025-11-27T14:00:11+00:00",
+        "agent_id": "invoice-extractor-v2",
+        "metadata": {
+          "checkpoint_id": "chk-001",
+          "state": {
+            "vendor_name": "Acme Corp",
+            "amount": 4523.5
+          }
+        }
+      },
+      {
+        "event_id": "evt-006",
+        "event_type": "step_end",
+        "step_id": "extract_vendor",
+        "timestamp": "2025-11-27T14:00:12+00:00",
+        "agent_id": "invoice-extractor-v2",
+        "duration_ms": 12000,
+        "metadata": {
+          "success": true,
+          "confidence": 0.92
+        }
+      },
+      {
+        "event_id": "evt-007",
+        "event_type": "collaborator_leave",
+        "step_id": "extract_vendor",
+        "timestamp": "2025-11-27T14:00:12+00:00",
+        "agent_id": "invoice-extractor-v2",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-008",
+        "event_type": "step_start",
+        "step_id": "validate_amount",
+        "timestamp": "2025-11-27T14:00:12+00:00",
+        "agent_id": "invoice-validator-v1",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-009",
+        "event_type": "collaborator_join",
+        "step_id": "validate_amount",
+        "timestamp": "2025-11-27T14:00:12+00:00",
+        "agent_id": "invoice-validator-v1",
+        "metadata": {
+          "role": "validation"
+        }
+      },
+      {
+        "event_id": "evt-010",
+        "event_type": "error",
+        "step_id": "validate_amount",
+        "timestamp": "2025-11-27T14:00:15+00:00",
+        "agent_id": "invoice-validator-v1",
+        "metadata": {
+          "error_message": "Confidence threshold too high (0.95) - no valid results",
+          "error_type": "ValidationError",
+          "is_recoverable": false,
+          "stack_trace": "ValidationError: All results below threshold 0.95..."
+        }
+      },
+      {
+        "event_id": "evt-011",
+        "event_type": "step_end",
+        "step_id": "validate_amount",
+        "timestamp": "2025-11-27T14:00:18+00:00",
+        "agent_id": "invoice-validator-v1",
+        "duration_ms": 6000,
+        "metadata": {
+          "success": false,
+          "failure_reason": "threshold_exceeded"
+        }
+      },
+      {
+        "event_id": "evt-012",
+        "event_type": "collaborator_leave",
+        "step_id": "validate_amount",
+        "timestamp": "2025-11-27T14:00:18+00:00",
+        "agent_id": "invoice-validator-v1",
+        "metadata": {}
+      }
+    ],
+    "start_time": "2025-11-27T14:00:00+00:00",
+    "end_time": "2025-11-27T14:00:18+00:00",
+    "total_duration_ms": 18000
+  },
+  "outcome": {
+    "status": "failed",
+    "reason": "Cascade failure: validator crashed after parameter change",
+    "root_cause": "Parameter substitution (confidence_threshold: 0.8 \u2192 0.95) caused empty validation results",
+    "steps_completed": 1,
+    "steps_failed": 1,
+    "steps_skipped": 1
+  },
+  "metadata": {
+    "invoice_id": "INV-2024-1234",
+    "vendor": "Acme Corp",
+    "amount": 4523.5
+  }
+}

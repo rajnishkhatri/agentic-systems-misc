@@ -1,0 +1,36 @@
+[
+  {
+    "timestamp": "2025-11-29T19:39:24.954641Z",
+    "action": "register",
+    "changed_by": "security-team@company.com",
+    "changes": {
+      "action": "initial_registration"
+    },
+    "previous_signature": null,
+    "new_signature": "322ba193639bce40cc01e49865ff74a5ebb4ae2de041481e19d53b2df35d6958"
+  },
+  {
+    "timestamp": "2025-11-29T19:39:24.964531Z",
+    "action": "verify",
+    "changed_by": "system",
+    "changes": {
+      "result": "valid"
+    },
+    "previous_signature": null,
+    "new_signature": null
+  },
+  {
+    "timestamp": "2025-11-29T19:39:25.013078Z",
+    "action": "update",
+    "changed_by": "ops@security-team.com",
+    "changes": {
+      "metadata": {
+        "deployment_environment": "production",
+        "model_version": "gpt-4-turbo",
+        "last_health_check": "2025-11-29T19:39:25.012658+00:00"
+      }
+    },
+    "previous_signature": "322ba193639bce40cc01e49865ff74a5ebb4ae2de041481e19d53b2df35d6958",
+    "new_signature": "1caf3e175649e0299b1d595d52c21fd131a2ddf50e6b6b730f81ae3cc613af10"
+  }
+]

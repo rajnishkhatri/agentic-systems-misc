@@ -1,0 +1,196 @@
+{
+  "trace_id": "trace-invoice-processing-001",
+  "task_id": "invoice-processing-001",
+  "start_time": "2025-11-27T14:00:00Z",
+  "end_time": "2025-11-27T14:00:18Z",
+  "events": [
+    {
+      "event_id": "evt-001",
+      "timestamp": "2025-11-27T14:00:00Z",
+      "event_type": "step_start",
+      "agent_id": "invoice-extractor-v2",
+      "step_id": "extract_vendor",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": null,
+      "metadata": {}
+    },
+    {
+      "event_id": "evt-002",
+      "timestamp": "2025-11-27T14:00:00Z",
+      "event_type": "collaborator_join",
+      "agent_id": "invoice-extractor-v2",
+      "step_id": "extract_vendor",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": null,
+      "metadata": {
+        "role": "extraction"
+      }
+    },
+    {
+      "event_id": "evt-003",
+      "timestamp": "2025-11-27T14:00:05Z",
+      "event_type": "decision",
+      "agent_id": "invoice-extractor-v2",
+      "step_id": "extract_vendor",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": null,
+      "metadata": {
+        "decision": "Use GPT-4 for OCR correction",
+        "alternatives": [
+          "GPT-3.5",
+          "Claude",
+          "Rule-based"
+        ],
+        "rationale": "Higher accuracy needed for noisy scans"
+      }
+    },
+    {
+      "event_id": "evt-004",
+      "timestamp": "2025-11-27T14:00:10Z",
+      "event_type": "parameter_change",
+      "agent_id": "invoice-extractor-v2",
+      "step_id": "extract_vendor",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": null,
+      "metadata": {
+        "parameter": "confidence_threshold",
+        "old_value": 0.8,
+        "new_value": 0.95
+      }
+    },
+    {
+      "event_id": "evt-005",
+      "timestamp": "2025-11-27T14:00:11Z",
+      "event_type": "checkpoint",
+      "agent_id": "invoice-extractor-v2",
+      "step_id": "extract_vendor",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": null,
+      "metadata": {
+        "checkpoint_id": "chk-001",
+        "state": {
+          "vendor_name": "Acme Corp",
+          "amount": 4523.5
+        }
+      }
+    },
+    {
+      "event_id": "evt-006",
+      "timestamp": "2025-11-27T14:00:12Z",
+      "event_type": "step_end",
+      "agent_id": "invoice-extractor-v2",
+      "step_id": "extract_vendor",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": 12000,
+      "metadata": {
+        "success": true,
+        "confidence": 0.92
+      }
+    },
+    {
+      "event_id": "evt-007",
+      "timestamp": "2025-11-27T14:00:12Z",
+      "event_type": "collaborator_leave",
+      "agent_id": "invoice-extractor-v2",
+      "step_id": "extract_vendor",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": null,
+      "metadata": {}
+    },
+    {
+      "event_id": "evt-008",
+      "timestamp": "2025-11-27T14:00:12Z",
+      "event_type": "step_start",
+      "agent_id": "invoice-validator-v1",
+      "step_id": "validate_amount",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": null,
+      "metadata": {}
+    },
+    {
+      "event_id": "evt-009",
+      "timestamp": "2025-11-27T14:00:12Z",
+      "event_type": "collaborator_join",
+      "agent_id": "invoice-validator-v1",
+      "step_id": "validate_amount",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": null,
+      "metadata": {
+        "role": "validation"
+      }
+    },
+    {
+      "event_id": "evt-010",
+      "timestamp": "2025-11-27T14:00:15Z",
+      "event_type": "error",
+      "agent_id": "invoice-validator-v1",
+      "step_id": "validate_amount",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": null,
+      "metadata": {
+        "error_message": "Confidence threshold too high (0.95) - no valid results",
+        "error_type": "ValidationError",
+        "is_recoverable": false,
+        "stack_trace": "ValidationError: All results below threshold 0.95..."
+      }
+    },
+    {
+      "event_id": "evt-011",
+      "timestamp": "2025-11-27T14:00:18Z",
+      "event_type": "step_end",
+      "agent_id": "invoice-validator-v1",
+      "step_id": "validate_amount",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": 6000,
+      "metadata": {
+        "success": false,
+        "failure_reason": "threshold_exceeded"
+      }
+    },
+    {
+      "event_id": "evt-012",
+      "timestamp": "2025-11-27T14:00:18Z",
+      "event_type": "collaborator_leave",
+      "agent_id": "invoice-validator-v1",
+      "step_id": "validate_amount",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": null,
+      "metadata": {}
+    },
+    {
+      "event_id": "evt-013",
+      "timestamp": "2025-11-29T13:22:40.870797Z",
+      "event_type": "rollback",
+      "agent_id": "workflow-orchestrator",
+      "step_id": "extract_vendor",
+      "input_hash": null,
+      "output_hash": null,
+      "duration_ms": null,
+      "metadata": {
+        "rollback_reason": "Cascade failure detected",
+        "rollback_to": "extract_vendor",
+        "steps_rolled_back": [
+          "validate_amount"
+        ],
+        "recovery_action": "Retry with original parameters"
+      }
+    }
+  ],
+  "final_outcome": "failed",
+  "error_chain": [
+    "Cascade failure: validator crashed after parameter change",
+    "Parameter substitution (confidence_threshold: 0.8 \u2192 0.95) caused empty validation results"
+  ]
+}

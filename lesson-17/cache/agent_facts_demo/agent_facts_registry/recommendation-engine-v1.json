@@ -1,0 +1,108 @@
+{
+  "agent_id": "recommendation-engine-v1",
+  "agent_name": "Product Recommendation Engine",
+  "owner": "personalization-team",
+  "version": "1.0.6",
+  "description": "Generates personalized product recommendations using collaborative filtering",
+  "capabilities": [
+    {
+      "name": "get_recommendations",
+      "description": "Returns personalized product recommendations",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string"
+          },
+          "context": {
+            "type": "object"
+          },
+          "count": {
+            "type": "integer",
+            "default": 10
+          },
+          "exclude_purchased": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [
+          "user_id"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "recommendations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_id": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "model_version": {
+            "type": "string"
+          }
+        }
+      },
+      "estimated_latency_ms": 50,
+      "cost_per_call": 0.001,
+      "requires_approval": false,
+      "tags": [
+        "recommendations",
+        "personalization",
+        "ml"
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "policy_id": "recommendation-engine-v1-policy-001",
+      "name": "Real-time Recommendation Limit",
+      "description": "Supports real-time recommendation requests",
+      "policy_type": "rate_limit",
+      "constraints": {
+        "max_calls_per_minute": 10000,
+        "p99_latency_ms": 100
+      },
+      "effective_from": "2024-12-28T11:56:24.848945Z",
+      "effective_until": null,
+      "is_active": true
+    },
+    {
+      "policy_id": "recommendation-engine-v1-policy-002",
+      "name": "User Data Access",
+      "description": "Controls access to user behavior data",
+      "policy_type": "data_access",
+      "constraints": {
+        "allowed_data_sources": [
+          "user_behavior_db",
+          "product_catalog"
+        ],
+        "pii_handling_mode": "anonymize"
+      },
+      "effective_from": "2024-12-28T11:56:24.848945Z",
+      "effective_until": "2025-09-05T11:56:24.848945Z",
+      "is_active": true
+    }
+  ],
+  "created_at": "2025-11-29T19:39:24.957306Z",
+  "updated_at": "2025-11-29T19:39:24.957306Z",
+  "signature_hash": "63f45d29fc2c1bb47756d0d2f992bfecbd57d912521d1a4800a45919659e26b0",
+  "parent_agent_id": null,
+  "metadata": {
+    "deployment_environment": "staging",
+    "model_version": "claude-3-sonnet",
+    "last_health_check": "2025-11-25T16:04:44.848945+00:00"
+  }
+}

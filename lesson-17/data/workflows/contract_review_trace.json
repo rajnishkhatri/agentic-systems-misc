@@ -1,0 +1,248 @@
+{
+  "workflow_id": "contract-review-001",
+  "workflow_name": "Legal Contract Review",
+  "workflow_type": "contract_review",
+  "task_plan": {
+    "plan_id": "plan-contract-review-001",
+    "task_id": "contract-review-001",
+    "created_at": "2025-11-27T11:00:00+00:00",
+    "steps": [
+      {
+        "step_id": "extract_clauses",
+        "description": "Extract and categorize contract clauses",
+        "agent_id": "contract-reviewer-v1",
+        "expected_inputs": [
+          "contract_text",
+          "contract_type"
+        ],
+        "expected_outputs": [
+          "clauses",
+          "clause_count"
+        ],
+        "timeout_seconds": 120,
+        "is_critical": true,
+        "order": 1
+      },
+      {
+        "step_id": "assess_risk",
+        "description": "Evaluate legal risk of contract terms",
+        "agent_id": "risk-assessor-v1",
+        "expected_inputs": [
+          "clauses",
+          "jurisdiction"
+        ],
+        "expected_outputs": [
+          "risk_assessment",
+          "flagged_clauses"
+        ],
+        "timeout_seconds": 90,
+        "is_critical": true,
+        "order": 2
+      },
+      {
+        "step_id": "compliance_check",
+        "description": "Check regulatory compliance",
+        "agent_id": "compliance-checker-v1",
+        "expected_inputs": [
+          "clauses",
+          "risk_assessment"
+        ],
+        "expected_outputs": [
+          "compliance_status",
+          "violations"
+        ],
+        "timeout_seconds": 60,
+        "is_critical": true,
+        "order": 3
+      }
+    ],
+    "dependencies": {
+      "assess_risk": [
+        "extract_clauses"
+      ],
+      "compliance_check": [
+        "assess_risk"
+      ]
+    },
+    "rollback_points": [
+      "extract_clauses"
+    ],
+    "metadata": {
+      "contract_id": "CONTRACT-001",
+      "contract_type": "employment"
+    }
+  },
+  "collaborators": [
+    {
+      "agent_id": "contract-reviewer-v1",
+      "agent_name": "Legal Contract Analyzer",
+      "role": "extraction",
+      "joined_at": "2025-11-27T11:00:00+00:00",
+      "left_at": "2025-11-27T11:01:35+00:00"
+    },
+    {
+      "agent_id": "risk-assessor-v1",
+      "agent_name": "Risk Assessment Agent",
+      "role": "risk_assessment",
+      "joined_at": "2025-11-27T11:01:35+00:00",
+      "left_at": "2025-11-27T11:02:45+00:00"
+    },
+    {
+      "agent_id": "compliance-checker-v1",
+      "agent_name": "Compliance Checker",
+      "role": "compliance",
+      "joined_at": "2025-11-27T11:02:45+00:00",
+      "left_at": "2025-11-27T11:03:30+00:00"
+    }
+  ],
+  "parameter_substitutions": [],
+  "execution_trace": {
+    "trace_id": "trace-contract-review-001",
+    "task_id": "contract-review-001",
+    "events": [
+      {
+        "event_id": "evt-001",
+        "event_type": "step_start",
+        "step_id": "extract_clauses",
+        "timestamp": "2025-11-27T11:00:00+00:00",
+        "agent_id": "contract-reviewer-v1",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-002",
+        "event_type": "collaborator_join",
+        "step_id": "extract_clauses",
+        "timestamp": "2025-11-27T11:00:00+00:00",
+        "agent_id": "contract-reviewer-v1",
+        "metadata": {
+          "role": "extraction"
+        }
+      },
+      {
+        "event_id": "evt-003",
+        "event_type": "decision",
+        "step_id": "extract_clauses",
+        "timestamp": "2025-11-27T11:00:30+00:00",
+        "agent_id": "contract-reviewer-v1",
+        "metadata": {
+          "decision": "Use employment contract template",
+          "alternatives": [
+            "Generic template",
+            "Employment template",
+            "NDA template"
+          ],
+          "rationale": "Contract type specified as employment agreement"
+        }
+      },
+      {
+        "event_id": "evt-004",
+        "event_type": "step_end",
+        "step_id": "extract_clauses",
+        "timestamp": "2025-11-27T11:01:35+00:00",
+        "agent_id": "contract-reviewer-v1",
+        "duration_ms": 95000,
+        "metadata": {
+          "success": true,
+          "clauses_extracted": 8
+        }
+      },
+      {
+        "event_id": "evt-005",
+        "event_type": "step_start",
+        "step_id": "assess_risk",
+        "timestamp": "2025-11-27T11:01:35+00:00",
+        "agent_id": "risk-assessor-v1",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-006",
+        "event_type": "collaborator_join",
+        "step_id": "assess_risk",
+        "timestamp": "2025-11-27T11:01:35+00:00",
+        "agent_id": "risk-assessor-v1",
+        "metadata": {
+          "role": "risk_assessment"
+        }
+      },
+      {
+        "event_id": "evt-007",
+        "event_type": "decision",
+        "step_id": "assess_risk",
+        "timestamp": "2025-11-27T11:02:10+00:00",
+        "agent_id": "risk-assessor-v1",
+        "metadata": {
+          "decision": "Flag non-compete clause for manual review",
+          "alternatives": [
+            "Auto-approve",
+            "Flag for review",
+            "Reject"
+          ],
+          "rationale": "Non-compete clause may be unenforceable in California",
+          "risk_level": "high"
+        }
+      },
+      {
+        "event_id": "evt-008",
+        "event_type": "step_end",
+        "step_id": "assess_risk",
+        "timestamp": "2025-11-27T11:02:45+00:00",
+        "agent_id": "risk-assessor-v1",
+        "duration_ms": 70000,
+        "metadata": {
+          "success": true,
+          "high_risk_clauses": 1,
+          "overall_risk": "high"
+        }
+      },
+      {
+        "event_id": "evt-009",
+        "event_type": "step_start",
+        "step_id": "compliance_check",
+        "timestamp": "2025-11-27T11:02:45+00:00",
+        "agent_id": "compliance-checker-v1",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-010",
+        "event_type": "collaborator_join",
+        "step_id": "compliance_check",
+        "timestamp": "2025-11-27T11:02:45+00:00",
+        "agent_id": "compliance-checker-v1",
+        "metadata": {
+          "role": "compliance"
+        }
+      },
+      {
+        "event_id": "evt-011",
+        "event_type": "step_end",
+        "step_id": "compliance_check",
+        "timestamp": "2025-11-27T11:03:30+00:00",
+        "agent_id": "compliance-checker-v1",
+        "duration_ms": 45000,
+        "metadata": {
+          "success": true,
+          "violations_found": 0,
+          "warnings": 1
+        }
+      }
+    ],
+    "start_time": "2025-11-27T11:00:00+00:00",
+    "end_time": "2025-11-27T11:03:30+00:00",
+    "total_duration_ms": 210000
+  },
+  "outcome": {
+    "status": "manual_review_required",
+    "reason": "High-risk non-compete clause detected - requires legal counsel review",
+    "root_cause": null,
+    "steps_completed": 3,
+    "steps_failed": 0,
+    "steps_skipped": 0
+  },
+  "metadata": {
+    "contract_id": "CONTRACT-001",
+    "contract_type": "employment",
+    "clauses_extracted": 8,
+    "high_risk_clauses": 1,
+    "flagged_clause_type": "non_compete"
+  }
+}

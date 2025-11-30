@@ -1,0 +1,150 @@
+[
+  {
+    "timestamp": "2025-11-29T19:39:24.955054Z",
+    "action": "register",
+    "changed_by": "healthcare-ai-team@company.com",
+    "changes": {
+      "action": "initial_registration"
+    },
+    "previous_signature": null,
+    "new_signature": "a6ba2b753945d2ae4f17956b1c31c33d3e3c23cddfb437e9e58785460e911b02"
+  },
+  {
+    "timestamp": "2025-11-29T19:39:24.964897Z",
+    "action": "verify",
+    "changed_by": "system",
+    "changes": {
+      "result": "valid"
+    },
+    "previous_signature": null,
+    "new_signature": null
+  },
+  {
+    "timestamp": "2025-11-29T19:39:25.013707Z",
+    "action": "update",
+    "changed_by": "physician@healthcare-ai-team.com",
+    "changes": {
+      "version": "1.5.0",
+      "capabilities": [
+        {
+          "name": "analyze_symptoms",
+          "description": "Analyzes patient symptoms for potential conditions",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "patient_id": {
+                "type": "string"
+              },
+              "symptoms": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "duration_days": {
+                "type": "integer"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "mild",
+                  "moderate",
+                  "severe"
+                ]
+              }
+            },
+            "required": [
+              "symptoms"
+            ]
+          },
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "differential_diagnoses": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "condition": {
+                      "type": "string"
+                    },
+                    "probability": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "recommended_tests": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "estimated_latency_ms": 2000,
+          "cost_per_call": 0.05,
+          "requires_approval": true,
+          "tags": [
+            "healthcare",
+            "diagnosis",
+            "llm"
+          ]
+        },
+        {
+          "name": "interpret_labs",
+          "description": "Interprets laboratory results in clinical context",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "lab_results": {
+                "type": "object"
+              },
+              "reference_ranges": {
+                "type": "object"
+              }
+            }
+          },
+          "output_schema": {
+            "type": "object",
+            "properties": {
+              "abnormal_values": {
+                "type": "array"
+              },
+              "clinical_significance": {
+                "type": "string"
+              },
+              "follow_up_recommendations": {
+                "type": "array"
+              }
+            }
+          },
+          "estimated_latency_ms": 1500,
+          "cost_per_call": 0.03,
+          "requires_approval": true,
+          "tags": [
+            "healthcare",
+            "labs",
+            "interpretation"
+          ]
+        },
+        {
+          "name": "suggest_treatment",
+          "description": "Suggests treatment options based on diagnosis",
+          "input_schema": {},
+          "output_schema": {},
+          "estimated_latency_ms": 2500,
+          "cost_per_call": 0.075,
+          "requires_approval": true,
+          "tags": [
+            "healthcare",
+            "treatment",
+            "llm"
+          ]
+        }
+      ]
+    },
+    "previous_signature": "a6ba2b753945d2ae4f17956b1c31c33d3e3c23cddfb437e9e58785460e911b02",
+    "new_signature": "7c6596b59fe38911bb83f8ff8ce596bf2d5737646a18a45e2109f47216e7a1a6"
+  }
+]

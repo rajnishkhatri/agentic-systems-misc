@@ -1,0 +1,78 @@
+{
+  "agent_id": "anomaly-detector-v1",
+  "agent_name": "Time-Series Anomaly Detector",
+  "owner": "monitoring-team",
+  "version": "2.5.9",
+  "description": "Detects anomalies in time-series data using statistical methods",
+  "capabilities": [
+    {
+      "name": "detect_anomalies",
+      "description": "Identifies anomalies in time-series data",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "series_id": {
+            "type": "string"
+          },
+          "data_points": {
+            "type": "array"
+          },
+          "sensitivity": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "data_points"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "anomalies": {
+            "type": "array"
+          },
+          "baseline": {
+            "type": "object"
+          },
+          "confidence": {
+            "type": "number"
+          }
+        }
+      },
+      "estimated_latency_ms": 200,
+      "cost_per_call": 0.002,
+      "requires_approval": false,
+      "tags": [
+        "monitoring",
+        "anomaly",
+        "time-series"
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "policy_id": "anomaly-detector-v1-policy-001",
+      "name": "Streaming Rate Limit",
+      "description": "Supports streaming data analysis",
+      "policy_type": "rate_limit",
+      "constraints": {
+        "max_calls_per_minute": 3000,
+        "max_points_per_call": 10000
+      },
+      "effective_from": "2024-12-28T02:41:45.848893Z",
+      "effective_until": null,
+      "is_active": true
+    }
+  ],
+  "created_at": "2025-11-29T19:39:24.956605Z",
+  "updated_at": "2025-11-29T19:39:24.956606Z",
+  "signature_hash": "bf20a3a906c8a4b2dbd6f93ef2beb79f4dd2cfe5021be4d163bff47e41274ad9",
+  "parent_agent_id": null,
+  "metadata": {
+    "deployment_environment": "staging",
+    "model_version": "claude-3-sonnet",
+    "last_health_check": "2025-07-30T12:05:14.848893+00:00"
+  }
+}

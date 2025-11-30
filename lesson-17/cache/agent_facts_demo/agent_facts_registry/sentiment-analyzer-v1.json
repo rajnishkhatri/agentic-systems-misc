@@ -1,0 +1,79 @@
+{
+  "agent_id": "sentiment-analyzer-v1",
+  "agent_name": "Customer Sentiment Analyzer",
+  "owner": "customer-success-team",
+  "version": "1.0.10",
+  "description": "Analyzes sentiment in customer feedback and communications",
+  "capabilities": [
+    {
+      "name": "analyze_sentiment",
+      "description": "Determines sentiment polarity of text",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string",
+            "default": "en"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "sentiment": {
+            "type": "string",
+            "enum": [
+              "positive",
+              "negative",
+              "neutral"
+            ]
+          },
+          "confidence": {
+            "type": "number"
+          },
+          "aspects": {
+            "type": "array"
+          }
+        }
+      },
+      "estimated_latency_ms": 150,
+      "cost_per_call": 0.003,
+      "requires_approval": false,
+      "tags": [
+        "nlp",
+        "sentiment",
+        "customer"
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "policy_id": "sentiment-analyzer-v1-policy-001",
+      "name": "NLP Rate Limit",
+      "description": "Standard NLP processing limit",
+      "policy_type": "rate_limit",
+      "constraints": {
+        "max_calls_per_minute": 500,
+        "max_text_length": 10000
+      },
+      "effective_from": "2025-02-10T04:29:04.848920Z",
+      "effective_until": null,
+      "is_active": true
+    }
+  ],
+  "created_at": "2025-11-29T19:39:24.956958Z",
+  "updated_at": "2025-11-29T19:39:24.956958Z",
+  "signature_hash": "ca54d36f5aa0b87d9c8164e567fdb98141c4fdd56221dbea51d06b67cd4c48f7",
+  "parent_agent_id": null,
+  "metadata": {
+    "deployment_environment": "production",
+    "model_version": "gpt-3.5-turbo",
+    "last_health_check": "2025-11-10T19:34:11.848920+00:00"
+  }
+}

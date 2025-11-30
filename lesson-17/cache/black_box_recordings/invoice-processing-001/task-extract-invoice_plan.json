@@ -1,0 +1,47 @@
+{
+  "plan_id": "plan-inv-001",
+  "task_id": "task-extract-invoice",
+  "created_at": "2025-11-29T13:22:40.826492Z",
+  "steps": [
+    {
+      "step_id": "step-1-extract",
+      "description": "Extract vendor and amount from invoice",
+      "agent_id": "invoice-extractor",
+      "expected_inputs": [
+        "invoice_text"
+      ],
+      "expected_outputs": [
+        "vendor_name",
+        "amount"
+      ],
+      "timeout_seconds": 60,
+      "is_critical": true,
+      "order": 1
+    },
+    {
+      "step_id": "step-2-validate",
+      "description": "Validate extracted data against database",
+      "agent_id": "data-validator",
+      "expected_inputs": [
+        "vendor_name",
+        "amount"
+      ],
+      "expected_outputs": [
+        "validation_result",
+        "vendor_id"
+      ],
+      "timeout_seconds": 30,
+      "is_critical": true,
+      "order": 2
+    }
+  ],
+  "dependencies": {
+    "step-2-validate": [
+      "step-1-extract"
+    ]
+  },
+  "rollback_points": [
+    "step-1-extract"
+  ],
+  "metadata": {}
+}

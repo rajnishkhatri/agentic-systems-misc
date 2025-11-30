@@ -1,0 +1,10 @@
+[
+  {
+    "param_name": "confidence_threshold",
+    "old_value": "0.8",
+    "new_value": "0.95",
+    "reason": "Reduce false positives per compliance team request",
+    "timestamp": "2025-11-29T13:22:40.840602Z",
+    "agent_id": "invoice-extractor-v2"
+  }
+]

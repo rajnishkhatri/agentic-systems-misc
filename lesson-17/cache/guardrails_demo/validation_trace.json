@@ -1,0 +1,456 @@
+{
+  "exported_at": "2025-11-27T18:23:56.958174+00:00",
+  "entry_count": 50,
+  "entries": [
+    {
+      "constraint_name": "no_pii",
+      "passed": true,
+      "message": "No PII patterns detected",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.906696Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_fields",
+      "passed": true,
+      "message": "All required fields present",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.906703Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "no_pii",
+      "passed": false,
+      "message": "Potential SSN detected",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.919680Z",
+      "input_excerpt": "{'output': 'Loan application: John Gonzalez, SSN 490-86-8668. Annual income verified.'}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "no_pii",
+      "passed": false,
+      "message": "Potential credit card number detected",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.919718Z",
+      "input_excerpt": "{'output': 'Hotel reservation: Mary Davis, Passport #P80823176. Card: 2403-8962-2133-9727.'}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "no_pii",
+      "passed": false,
+      "message": "Email address detected",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.919750Z",
+      "input_excerpt": "{'output': 'User Matthew Wilson requests password reset. Email: matthewwilson@work.org, backup phone: +1-765-351-8041.'}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "length_check",
+      "passed": false,
+      "message": "Length 2 is below minimum 5",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.926586Z",
+      "input_excerpt": "{'output': 'Hi'}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "length_check",
+      "passed": true,
+      "message": "Length 12 is within bounds [5, 100]",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.926612Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "length_check",
+      "passed": false,
+      "message": "Length 150 exceeds maximum 100",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.926630Z",
+      "input_excerpt": "{'output': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "regex_match",
+      "passed": true,
+      "message": "Value matches pattern 'INV-\\d{4}-\\d{4}'",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.926766Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "regex_match",
+      "passed": false,
+      "message": "Value does not match pattern 'INV-\\d{4}-\\d{4}'",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.926840Z",
+      "input_excerpt": "{'output': 'INVOICE-123'}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "regex_match",
+      "passed": false,
+      "message": "Value does not match pattern 'INV-\\d{4}-\\d{4}'",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.926866Z",
+      "input_excerpt": "{'output': 'inv-2024-0001'}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "confidence_range",
+      "passed": true,
+      "message": "Confidence 0.95 is within range [0.7, 1.0]",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.927114Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "confidence_range",
+      "passed": false,
+      "message": "Confidence 0.65 is below minimum 0.7",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.927200Z",
+      "input_excerpt": "{'confidence': 0.65}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "confidence_range",
+      "passed": false,
+      "message": "Confidence 1.2 exceeds maximum 1.0",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.927233Z",
+      "input_excerpt": "{'confidence': 1.2}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "value_in_list",
+      "passed": true,
+      "message": "Value 'invoice' is in allowed list",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.927357Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "value_in_list",
+      "passed": true,
+      "message": "Value 'receipt' is in allowed list",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.927374Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "value_in_list",
+      "passed": false,
+      "message": "Value 'memo' is not in allowed list: ['invoice', 'receipt', 'contract', 'statement']",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.927392Z",
+      "input_excerpt": "{'category': 'memo'}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "no_pii",
+      "passed": true,
+      "message": "No PII patterns detected",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.936875Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_fields",
+      "passed": true,
+      "message": "All required fields present",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.936884Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "confidence_range",
+      "passed": true,
+      "message": "Confidence 0.95 is within range [0.8, 1.0]",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.936890Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "length_check",
+      "passed": true,
+      "message": "Length 46 is within bounds [10, 5000]",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.936894Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "no_pii",
+      "passed": true,
+      "message": "No PII patterns detected",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.936943Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_fields",
+      "passed": false,
+      "message": "Missing required fields: invoice_number",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.936950Z",
+      "input_excerpt": "{'vendor_name': 'Tech Solutions', 'total_amount': 500.0, 'confidence': 0.88, 'output': 'Invoice from Tech Solutions'}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "confidence_range",
+      "passed": true,
+      "message": "Confidence 0.88 is within range [0.8, 1.0]",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.936954Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "length_check",
+      "passed": true,
+      "message": "Length 27 is within bounds [10, 5000]",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.936956Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "no_pii",
+      "passed": true,
+      "message": "No PII patterns detected",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.936987Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_fields",
+      "passed": true,
+      "message": "All required fields present",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.936989Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "confidence_range",
+      "passed": false,
+      "message": "Confidence 0.65 is below minimum 0.8",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.936994Z",
+      "input_excerpt": "{'vendor_name': 'Global Services', 'invoice_number': 'INV-2024-0099', 'total_amount': 750.0, 'confidence': 0.65, 'output': 'Invoice extraction uncertain'}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "length_check",
+      "passed": true,
+      "message": "Length 28 is within bounds [10, 5000]",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.936996Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "no_pii",
+      "passed": false,
+      "message": "Potential SSN detected",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.937025Z",
+      "input_excerpt": "{'vendor_name': 'Payroll Inc', 'invoice_number': 'INV-2024-0100', 'total_amount': 2000.0, 'confidence': 0.92, 'output': 'Employee SSN: 123-45-6789'}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_fields",
+      "passed": true,
+      "message": "All required fields present",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.937028Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "confidence_range",
+      "passed": true,
+      "message": "Confidence 0.92 is within range [0.8, 1.0]",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.937031Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "length_check",
+      "passed": true,
+      "message": "Length 25 is within bounds [10, 5000]",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.937033Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_field_vendor_name",
+      "passed": true,
+      "message": "Required field 'vendor_name' is present",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.945962Z",
+      "input_excerpt": "{\"vendor_name\": \"Tech Solutions\", \"invoice_number\": \"INV-2024-001\", \"total_amount\": 2500.00}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_field_invoice_number",
+      "passed": true,
+      "message": "Required field 'invoice_number' is present",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.945967Z",
+      "input_excerpt": "{\"vendor_name\": \"Tech Solutions\", \"invoice_number\": \"INV-2024-001\", \"total_amount\": 2500.00}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_field_total_amount",
+      "passed": true,
+      "message": "Required field 'total_amount' is present",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.945969Z",
+      "input_excerpt": "{\"vendor_name\": \"Tech Solutions\", \"invoice_number\": \"INV-2024-001\", \"total_amount\": 2500.00}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "json_parseable",
+      "passed": true,
+      "message": "Valid JSON",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.945981Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "no_pii",
+      "passed": true,
+      "message": "No PII patterns detected",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.945996Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_field_vendor_name",
+      "passed": true,
+      "message": "Required field 'vendor_name' is present",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.946047Z",
+      "input_excerpt": "{\"vendor_name\": \"Bad Corp\"}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_field_invoice_number",
+      "passed": false,
+      "message": "Required field 'invoice_number' is missing",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.946051Z",
+      "input_excerpt": "{\"vendor_name\": \"Bad Corp\"}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_field_total_amount",
+      "passed": false,
+      "message": "Required field 'total_amount' is missing",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.946054Z",
+      "input_excerpt": "{\"vendor_name\": \"Bad Corp\"}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "json_parseable",
+      "passed": true,
+      "message": "Valid JSON",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.946057Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "no_pii",
+      "passed": true,
+      "message": "No PII patterns detected",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.946062Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "json_parseable",
+      "passed": false,
+      "message": "Invalid JSON: Expecting value: line 1 column 1 (char 0)",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.946112Z",
+      "input_excerpt": "{'output': 'This is not JSON at all'}",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "no_pii",
+      "passed": true,
+      "message": "No PII patterns detected",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.946118Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_field_vendor_name",
+      "passed": true,
+      "message": "Required field 'vendor_name' is present",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.946149Z",
+      "input_excerpt": "{\"vendor_name\": \"Payroll\", \"invoice_number\": \"INV-002\", \"total_amount\": 1000, \"notes\": \"SSN: 123-45-",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_field_invoice_number",
+      "passed": true,
+      "message": "Required field 'invoice_number' is present",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.946151Z",
+      "input_excerpt": "{\"vendor_name\": \"Payroll\", \"invoice_number\": \"INV-002\", \"total_amount\": 1000, \"notes\": \"SSN: 123-45-",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "required_field_total_amount",
+      "passed": true,
+      "message": "Required field 'total_amount' is present",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.946152Z",
+      "input_excerpt": "{\"vendor_name\": \"Payroll\", \"invoice_number\": \"INV-002\", \"total_amount\": 1000, \"notes\": \"SSN: 123-45-",
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "json_parseable",
+      "passed": true,
+      "message": "Valid JSON",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.946156Z",
+      "input_excerpt": null,
+      "fix_applied": null
+    },
+    {
+      "constraint_name": "no_pii",
+      "passed": false,
+      "message": "Potential SSN detected",
+      "severity": "error",
+      "timestamp": "2025-11-27T18:23:56.946161Z",
+      "input_excerpt": "{'output': '{\"vendor_name\": \"Payroll\", \"invoice_number\": \"INV-002\", \"total_amount\": 1000, \"notes\": \"SSN: 123-45-6789\"}'}",
+      "fix_applied": null
+    }
+  ]
+}

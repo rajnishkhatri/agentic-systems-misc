@@ -1,0 +1,336 @@
+{
+  "workflow_id": "research-workflow-001",
+  "exported_at": "2025-11-27T18:36:10.795040+00:00",
+  "summary": {
+    "workflow_id": "research-workflow-001",
+    "total_phases": 4,
+    "completed_phases": 3,
+    "total_decisions": 9,
+    "total_duration_ms": 36,
+    "phase_outcomes": [
+      {
+        "phase": "planning",
+        "status": "success",
+        "start_time": "2025-11-27T18:36:10.691135Z",
+        "end_time": "2025-11-27T18:36:10.716932Z",
+        "duration_ms": 25,
+        "decisions_made": 2,
+        "artifacts_produced": [
+          "research_plan"
+        ],
+        "errors": [],
+        "next_phase": null,
+        "metadata": {}
+      },
+      {
+        "phase": "data_collection",
+        "status": "success",
+        "start_time": "2025-11-27T18:36:10.731136Z",
+        "end_time": "2025-11-27T18:36:10.732617Z",
+        "duration_ms": 1,
+        "decisions_made": 2,
+        "artifacts_produced": [
+          "invoice_archive_2024",
+          "vendor_master_data",
+          "transaction_log"
+        ],
+        "errors": [],
+        "next_phase": null,
+        "metadata": {}
+      },
+      {
+        "phase": "execution",
+        "status": "success",
+        "start_time": "2025-11-27T18:36:10.738332Z",
+        "end_time": "2025-11-27T18:36:10.739760Z",
+        "duration_ms": 1,
+        "decisions_made": 3,
+        "artifacts_produced": [
+          "extraction_results"
+        ],
+        "errors": [],
+        "next_phase": null,
+        "metadata": {}
+      },
+      {
+        "phase": "validation",
+        "status": "partial",
+        "start_time": "2025-11-27T18:36:10.756751Z",
+        "end_time": "2025-11-27T18:36:10.766684Z",
+        "duration_ms": 9,
+        "decisions_made": 2,
+        "artifacts_produced": [
+          "validation_report"
+        ],
+        "errors": [
+          "[recoverable] Found 3 potential duplicate invoices (INV-2024-4521, INV-2024-4522, INV-2024-4523)",
+          "[recoverable] 12 records have source/target currency mismatch - auto-converted using daily rates"
+        ],
+        "next_phase": null,
+        "metadata": {}
+      }
+    ],
+    "overall_status": "partial",
+    "created_at": "2025-11-27T18:36:10.795032Z"
+  },
+  "decisions": {
+    "planning": [
+      {
+        "decision_id": "dec-research-workflow-001-1",
+        "timestamp": "2025-11-27T18:36:10.694372Z",
+        "decision": "Use GPT-4 as primary extraction model",
+        "reasoning": "Need high accuracy for financial document analysis",
+        "alternatives_considered": [
+          "GPT-3.5-turbo",
+          "Claude-3-Sonnet",
+          "Llama-3-70B"
+        ],
+        "selected_because": "GPT-4 shows 15% higher accuracy on financial benchmarks and supports structured output",
+        "confidence": 0.92,
+        "agent_id": "planning-agent",
+        "reversible": true,
+        "phase": "planning"
+      },
+      {
+        "decision_id": "dec-research-workflow-001-2",
+        "timestamp": "2025-11-27T18:36:10.711639Z",
+        "decision": "Set batch processing limit to 100 documents",
+        "reasoning": "Balance throughput with memory constraints",
+        "alternatives_considered": [
+          "50 docs",
+          "200 docs",
+          "500 docs"
+        ],
+        "selected_because": "100 docs provides optimal memory usage while maintaining 2-hour processing deadline",
+        "confidence": 0.85,
+        "agent_id": "planning-agent",
+        "reversible": true,
+        "phase": "planning"
+      }
+    ],
+    "data_collection": [
+      {
+        "decision_id": "dec-research-workflow-001-3",
+        "timestamp": "2025-11-27T18:36:10.731811Z",
+        "decision": "Use S3 bucket + PostgreSQL as data sources",
+        "reasoning": "Comprehensive coverage of historical and real-time data",
+        "alternatives_considered": [
+          "S3 only",
+          "PostgreSQL only",
+          "API endpoints",
+          "Local filesystem"
+        ],
+        "selected_because": "Combination provides historical archives (S3) + latest transactions (PostgreSQL)",
+        "confidence": 0.88,
+        "agent_id": "data-collector",
+        "reversible": true,
+        "phase": "data_collection"
+      },
+      {
+        "decision_id": "dec-research-workflow-001-4",
+        "timestamp": "2025-11-27T18:36:10.732552Z",
+        "decision": "Accept data with 2.3% null rate",
+        "reasoning": "Null rate within acceptable threshold for analysis",
+        "alternatives_considered": [
+          "Reject and re-collect",
+          "Impute missing values",
+          "Filter incomplete records"
+        ],
+        "selected_because": "2.3% null rate is below 5% threshold; imputation would introduce bias",
+        "confidence": 0.95,
+        "agent_id": "quality-checker",
+        "reversible": true,
+        "phase": "data_collection"
+      }
+    ],
+    "execution": [
+      {
+        "decision_id": "dec-research-workflow-001-5",
+        "timestamp": "2025-11-27T18:36:10.739008Z",
+        "decision": "Use parallel processing with 4 workers",
+        "reasoning": "Optimize throughput for large dataset",
+        "alternatives_considered": [
+          "Sequential processing",
+          "2 workers",
+          "8 workers",
+          "Async/await pattern"
+        ],
+        "selected_because": "4 workers maximizes CPU utilization without memory pressure; 8 workers caused OOM in testing",
+        "confidence": 0.9,
+        "agent_id": "executor",
+        "reversible": true,
+        "phase": "execution"
+      },
+      {
+        "decision_id": "dec-research-workflow-001-6",
+        "timestamp": "2025-11-27T18:36:10.739204Z",
+        "decision": "Set temperature to 0.1 for deterministic extraction",
+        "reasoning": "Financial data requires consistent, reproducible outputs",
+        "alternatives_considered": [
+          "temperature=0.0",
+          "temperature=0.3",
+          "temperature=0.7"
+        ],
+        "selected_because": "0.1 provides slight variation for edge cases while maintaining determinism; 0.0 too rigid",
+        "confidence": 0.87,
+        "agent_id": "model-controller",
+        "reversible": false,
+        "phase": "execution"
+      },
+      {
+        "decision_id": "dec-research-workflow-001-7",
+        "timestamp": "2025-11-27T18:36:10.739287Z",
+        "decision": "Continue on soft errors, halt on schema violations",
+        "reasoning": "Maximize data recovery while ensuring output integrity",
+        "alternatives_considered": [
+          "Halt on any error",
+          "Continue on all errors",
+          "Queue for manual review"
+        ],
+        "selected_because": "Schema violations indicate fundamental extraction failures requiring re-processing",
+        "confidence": 0.93,
+        "agent_id": "executor",
+        "reversible": true,
+        "phase": "execution"
+      }
+    ],
+    "validation": [
+      {
+        "decision_id": "dec-research-workflow-001-8",
+        "timestamp": "2025-11-27T18:36:10.762132Z",
+        "decision": "Use schema validation + business rule checks",
+        "reasoning": "Ensure both structural and semantic correctness",
+        "alternatives_considered": [
+          "Schema only",
+          "Business rules only",
+          "ML-based anomaly detection"
+        ],
+        "selected_because": "Combined approach catches format errors AND logical inconsistencies",
+        "confidence": 0.91,
+        "agent_id": "validator",
+        "reversible": true,
+        "phase": "validation"
+      },
+      {
+        "decision_id": "dec-research-workflow-001-9",
+        "timestamp": "2025-11-27T18:36:10.763327Z",
+        "decision": "Proceed with flagged records marked for manual review",
+        "reasoning": "Overall data quality (99.9%) exceeds threshold",
+        "alternatives_considered": [
+          "Halt and investigate",
+          "Remove flagged records",
+          "Re-run extraction"
+        ],
+        "selected_because": "15 flagged records out of 15420 (0.1%) is within acceptable error margin",
+        "confidence": 0.88,
+        "agent_id": "validator",
+        "reversible": true,
+        "phase": "validation"
+      }
+    ]
+  },
+  "artifacts": {
+    "planning": [
+      {
+        "artifact_id": "art-research-workflow-001-1",
+        "name": "research_plan",
+        "path": "outputs/research_plan_v1.json",
+        "artifact_type": "plan",
+        "created_at": "2025-11-27T18:36:10.715812Z",
+        "phase": "planning",
+        "metadata": {
+          "version": 1,
+          "steps": 4,
+          "estimated_duration_hours": 3
+        }
+      }
+    ],
+    "data_collection": [
+      {
+        "artifact_id": "art-research-workflow-001-2",
+        "name": "invoice_archive_2024",
+        "path": "data/invoices_2024.parquet",
+        "artifact_type": "dataset",
+        "created_at": "2025-11-27T18:36:10.732280Z",
+        "phase": "data_collection",
+        "metadata": {
+          "records": 15420,
+          "size_mb": 128
+        }
+      },
+      {
+        "artifact_id": "art-research-workflow-001-3",
+        "name": "vendor_master_data",
+        "path": "data/vendors.csv",
+        "artifact_type": "dataset",
+        "created_at": "2025-11-27T18:36:10.732409Z",
+        "phase": "data_collection",
+        "metadata": {
+          "records": 892,
+          "columns": 15
+        }
+      },
+      {
+        "artifact_id": "art-research-workflow-001-4",
+        "name": "transaction_log",
+        "path": "data/transactions_q4.jsonl",
+        "artifact_type": "log",
+        "created_at": "2025-11-27T18:36:10.732475Z",
+        "phase": "data_collection",
+        "metadata": {
+          "records": 48230,
+          "date_range": "2024-10-01 to 2024-12-31"
+        }
+      }
+    ],
+    "execution": [
+      {
+        "artifact_id": "art-research-workflow-001-5",
+        "name": "extraction_results",
+        "path": "outputs/extraction_batch_001.json",
+        "artifact_type": "intermediate_result",
+        "created_at": "2025-11-27T18:36:10.739372Z",
+        "phase": "execution",
+        "metadata": {
+          "records_processed": 15420,
+          "success_rate": 0.982,
+          "soft_errors": 278,
+          "schema_violations": 0
+        }
+      }
+    ],
+    "validation": [
+      {
+        "artifact_id": "art-research-workflow-001-6",
+        "name": "validation_report",
+        "path": "outputs/validation_report.json",
+        "artifact_type": "report",
+        "created_at": "2025-11-27T18:36:10.763758Z",
+        "phase": "validation",
+        "metadata": {
+          "total_records": 15420,
+          "passed": 15405,
+          "flagged": 15,
+          "error_rate": "0.1%",
+          "checks_performed": [
+            "schema_valid",
+            "amount_in_range",
+            "vendor_exists",
+            "duplicate_check",
+            "date_sequence",
+            "currency_match"
+          ]
+        }
+      }
+    ]
+  },
+  "errors": {
+    "planning": [],
+    "data_collection": [],
+    "execution": [],
+    "validation": [
+      "[recoverable] Found 3 potential duplicate invoices (INV-2024-4521, INV-2024-4522, INV-2024-4523)",
+      "[recoverable] 12 records have source/target currency mismatch - auto-converted using daily rates"
+    ]
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "agent_id": "fraud-detector-v2",
+  "agent_name": "Transaction Fraud Detector",
+  "owner": "security-team",
+  "version": "1.4.6",
+  "description": "Analyzes transaction patterns for fraud indicators using ML models",
+  "capabilities": [
+    {
+      "name": "score_transaction",
+      "description": "Calculates fraud risk score for a transaction",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "transaction_id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "merchant": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "user_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "transaction_id",
+          "amount"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "fraud_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "risk_level": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "estimated_latency_ms": 350,
+      "cost_per_call": 0.01,
+      "requires_approval": false,
+      "tags": [
+        "fraud",
+        "ml",
+        "real-time"
+      ]
+    },
+    {
+      "name": "explain_score",
+      "description": "Provides explanation for fraud score decision",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "transaction_id": {
+            "type": "string"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "reasoning": {
+            "type": "string"
+          },
+          "top_factors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "similar_cases": {
+            "type": "integer"
+          }
+        }
+      },
+      "estimated_latency_ms": 500,
+      "cost_per_call": 0.015,
+      "requires_approval": false,
+      "tags": [
+        "explainability",
+        "fraud"
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "policy_id": "fraud-detector-v2-policy-001",
+      "name": "High-Volume Rate Limit",
+      "description": "Supports high transaction volume",
+      "policy_type": "rate_limit",
+      "constraints": {
+        "max_calls_per_minute": 1000,
+        "max_calls_per_hour": 50000,
+        "burst_limit": 100
+      },
+      "effective_from": "2025-09-09T12:38:03.848674Z",
+      "effective_until": null,
+      "is_active": true
+    },
+    {
+      "policy_id": "fraud-detector-v2-policy-002",
+      "name": "High-Risk Approval",
+      "description": "Requires human approval for blocking high-value transactions",
+      "policy_type": "approval_required",
+      "constraints": {
+        "threshold_amount": 10000,
+        "auto_approve_below": 1000,
+        "escalation_timeout_minutes": 30
+      },
+      "effective_from": "2025-09-09T12:38:03.848674Z",
+      "effective_until": null,
+      "is_active": true
+    }
+  ],
+  "created_at": "2025-11-29T19:39:24.954371Z",
+  "updated_at": "2025-11-29T19:39:25.012682Z",
+  "signature_hash": "1caf3e175649e0299b1d595d52c21fd131a2ddf50e6b6b730f81ae3cc613af10",
+  "parent_agent_id": null,
+  "metadata": {
+    "deployment_environment": "production",
+    "model_version": "gpt-4-turbo",
+    "last_health_check": "2025-11-29T19:39:25.012658+00:00"
+  }
+}

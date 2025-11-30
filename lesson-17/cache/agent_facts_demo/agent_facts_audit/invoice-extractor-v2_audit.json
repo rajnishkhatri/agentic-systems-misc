@@ -1,0 +1,33 @@
+[
+  {
+    "timestamp": "2025-11-29T19:39:24.954181Z",
+    "action": "register",
+    "changed_by": "finance-team@company.com",
+    "changes": {
+      "action": "initial_registration"
+    },
+    "previous_signature": null,
+    "new_signature": "ebd119247489871f9e2f3aee509848c068830d6dd9a388f7b02dd894d96ac289"
+  },
+  {
+    "timestamp": "2025-11-29T19:39:24.964072Z",
+    "action": "verify",
+    "changed_by": "system",
+    "changes": {
+      "result": "valid"
+    },
+    "previous_signature": null,
+    "new_signature": null
+  },
+  {
+    "timestamp": "2025-11-29T19:39:25.012220Z",
+    "action": "update",
+    "changed_by": "developer@finance-team.com",
+    "changes": {
+      "version": "1.5.5",
+      "description": "Extracts structured data from invoice documents - improved accuracy v2"
+    },
+    "previous_signature": "ebd119247489871f9e2f3aee509848c068830d6dd9a388f7b02dd894d96ac289",
+    "new_signature": "a1839486fa28233c9e5e349cf4fb0eddbe28fc80892c9571607d87b7b1b24818"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2025-11-29T19:39:24.955831Z",
+    "action": "register",
+    "changed_by": "research-team@company.com",
+    "changes": {
+      "action": "initial_registration"
+    },
+    "previous_signature": null,
+    "new_signature": "2652c0383b020056dabb780d18d6b9938714aa83dbc1299b05f90234ece0c48d"
+  },
+  {
+    "timestamp": "2025-11-29T19:39:24.965436Z",
+    "action": "verify",
+    "changed_by": "system",
+    "changes": {
+      "result": "valid"
+    },
+    "previous_signature": null,
+    "new_signature": null
+  }
+]

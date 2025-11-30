@@ -1,0 +1,217 @@
+{
+  "workflow_id": "research-workflow-003",
+  "workflow_type": "research_paper_generation",
+  "research_topic": "RAG optimization for domain-specific knowledge",
+  "start_time": "2025-10-31T08:32:24.854626+00:00",
+  "end_time": "2025-11-05T22:26:24.854626+00:00",
+  "total_duration_hours": 133.9,
+  "phases": [
+    {
+      "phase_id": "research-workflow-003-planning",
+      "phase_type": "PLANNING",
+      "start_time": "2025-10-31T08:32:24.854626+00:00",
+      "end_time": "2025-10-31T13:14:24.854626+00:00",
+      "duration_hours": 4.7,
+      "outcome": {
+        "status": "success",
+        "summary": "Research question and methodology defined for 'RAG optimization for domain-specific knowledge'"
+      }
+    },
+    {
+      "phase_id": "research-workflow-003-literature_review",
+      "phase_type": "LITERATURE_REVIEW",
+      "start_time": "2025-10-31T13:14:24.854626+00:00",
+      "end_time": "2025-11-03T21:02:24.854626+00:00",
+      "duration_hours": 79.8,
+      "outcome": {
+        "status": "success",
+        "summary": "47 papers reviewed, 15 key findings identified"
+      }
+    },
+    {
+      "phase_id": "research-workflow-003-data_collection",
+      "phase_type": "DATA_COLLECTION",
+      "start_time": "2025-11-03T21:02:24.854626+00:00",
+      "end_time": "2025-11-05T22:26:24.854626+00:00",
+      "duration_hours": 49.4,
+      "outcome": {
+        "status": "failed",
+        "summary": "Phase failed during data collection",
+        "error": {
+          "message": "API rate limit exceeded (429 Too Many Requests)",
+          "is_recoverable": true
+        }
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "decision_id": "research-workflow-003-planning-dec-01",
+      "timestamp": "2025-11-27T12:13:30.854653+00:00",
+      "phase": "PLANNING",
+      "description": "Choose research methodology",
+      "alternatives": [
+        "Experimental study with controlled trials",
+        "Observational study with existing datasets",
+        "Mixed methods combining both approaches"
+      ],
+      "selected": "Mixed methods combining both approaches",
+      "rationale": "Provides both quantitative rigor and qualitative insights",
+      "confidence": 0.71
+    },
+    {
+      "decision_id": "research-workflow-003-planning-dec-02",
+      "timestamp": "2025-11-27T12:13:30.854655+00:00",
+      "phase": "PLANNING",
+      "description": "Select research question focus",
+      "alternatives": [
+        "Focus on RAG optimization for domain-specific knowledge - theoretical foundations",
+        "Focus on RAG optimization for domain-specific knowledge - practical applications",
+        "Focus on RAG optimization for domain-specific knowledge - benchmark comparisons"
+      ],
+      "selected": "Focus on RAG optimization for domain-specific knowledge - practical applications",
+      "rationale": "High industry demand, clear evaluation metrics available",
+      "confidence": 0.82
+    },
+    {
+      "decision_id": "research-workflow-003-literature_review-dec-01",
+      "timestamp": "2025-11-27T12:13:30.854661+00:00",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Select academic databases to search",
+      "alternatives": [
+        "PubMed",
+        "ArXiv",
+        "Semantic Scholar",
+        "Google Scholar"
+      ],
+      "selected": "ArXiv, Semantic Scholar, ACM Digital Library",
+      "rationale": "Best coverage for AI/ML research topics",
+      "confidence": 0.72
+    },
+    {
+      "decision_id": "research-workflow-003-literature_review-dec-02",
+      "timestamp": "2025-11-27T12:13:30.854663+00:00",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Define inclusion criteria for papers",
+      "alternatives": [
+        "Last 2 years only, peer-reviewed",
+        "Last 5 years, including preprints",
+        "No time limit, highly cited only"
+      ],
+      "selected": "Last 5 years, including preprints",
+      "rationale": "Captures recent advances while maintaining relevance",
+      "confidence": 0.72
+    },
+    {
+      "decision_id": "research-workflow-003-data_collection-dec-01",
+      "timestamp": "2025-11-27T12:13:30.854668+00:00",
+      "phase": "DATA_COLLECTION",
+      "description": "Select data source for experiments",
+      "alternatives": [
+        "Public benchmark datasets",
+        "Synthetic data generation",
+        "Custom data collection"
+      ],
+      "selected": "Public benchmark datasets",
+      "rationale": "Enables reproducibility and comparison with prior work",
+      "confidence": 0.84
+    },
+    {
+      "decision_id": "research-workflow-003-data_collection-dec-02",
+      "timestamp": "2025-11-27T12:13:30.854670+00:00",
+      "phase": "DATA_COLLECTION",
+      "description": "Choose data preprocessing strategy",
+      "alternatives": [
+        "Minimal preprocessing (preserve original)",
+        "Standard normalization pipeline",
+        "Custom augmentation with synthetic examples"
+      ],
+      "selected": "Standard normalization pipeline",
+      "rationale": "Balance between data quality and processing overhead",
+      "confidence": 0.71
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "research-workflow-003-planning-art-01",
+      "artifact_type": "document",
+      "phase": "PLANNING",
+      "description": "Research proposal",
+      "metadata": {
+        "format": "md",
+        "size_kb": 12,
+        "word_count": 1800,
+        "pages": 4
+      },
+      "location": "artifacts/research-workflow-003/planning/research_proposal.md",
+      "created_at": "2025-11-27T12:13:30.854673+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-003-planning-art-02",
+      "artifact_type": "document",
+      "phase": "PLANNING",
+      "description": "Methodology outline",
+      "metadata": {
+        "format": "md",
+        "size_kb": 9,
+        "word_count": 1350,
+        "pages": 3
+      },
+      "location": "artifacts/research-workflow-003/planning/methodology_outline.md",
+      "created_at": "2025-11-27T12:13:30.854676+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-003-literature_review-art-01",
+      "artifact_type": "document",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Literature review summary",
+      "metadata": {
+        "format": "md",
+        "size_kb": 133,
+        "word_count": 19950,
+        "pages": 44
+      },
+      "location": "artifacts/research-workflow-003/literature_review/literature_review_summary.md",
+      "created_at": "2025-11-27T12:13:30.854678+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-003-literature_review-art-02",
+      "artifact_type": "data",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Citation database",
+      "metadata": {
+        "format": "json",
+        "size_kb": 41,
+        "rows": 3446,
+        "columns": 47
+      },
+      "location": "artifacts/research-workflow-003/literature_review/citation_database.json",
+      "created_at": "2025-11-27T12:13:30.854680+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-003-literature_review-art-03",
+      "artifact_type": "data",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Key findings matrix",
+      "metadata": {
+        "format": "csv",
+        "size_kb": 14,
+        "rows": 5247,
+        "columns": 20
+      },
+      "location": "artifacts/research-workflow-003/literature_review/key_findings_matrix.csv",
+      "created_at": "2025-11-27T12:13:30.854683+00:00"
+    }
+  ],
+  "final_status": "failed",
+  "failure_reason": "Data collection interrupted by API throttling",
+  "metadata": {
+    "topic_category": "retrieval_augmented",
+    "primary_model": "Claude Sonnet",
+    "databases_used": [
+      "ArXiv",
+      "Semantic Scholar",
+      "Google Scholar"
+    ]
+  }
+}

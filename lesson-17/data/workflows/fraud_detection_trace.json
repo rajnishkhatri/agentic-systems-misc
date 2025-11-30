@@ -1,0 +1,202 @@
+{
+  "workflow_id": "fraud-detection-001",
+  "workflow_name": "Fraud Detection Pipeline",
+  "workflow_type": "fraud_detection",
+  "task_plan": {
+    "plan_id": "plan-fraud-detection-001",
+    "task_id": "fraud-detection-001",
+    "created_at": "2025-11-27T15:30:00+00:00",
+    "steps": [
+      {
+        "step_id": "score_transaction",
+        "description": "Calculate fraud risk score",
+        "agent_id": "fraud-detector-v2",
+        "expected_inputs": [
+          "transaction_id",
+          "amount",
+          "merchant"
+        ],
+        "expected_outputs": [
+          "fraud_score",
+          "risk_level"
+        ],
+        "timeout_seconds": 10,
+        "is_critical": true,
+        "order": 1
+      },
+      {
+        "step_id": "escalate_if_needed",
+        "description": "Escalate high-risk transactions",
+        "agent_id": "fraud-escalator-v1",
+        "expected_inputs": [
+          "fraud_score",
+          "risk_level"
+        ],
+        "expected_outputs": [
+          "escalation_status",
+          "reviewer_assigned"
+        ],
+        "timeout_seconds": 5,
+        "is_critical": false,
+        "order": 2
+      }
+    ],
+    "dependencies": {
+      "escalate_if_needed": [
+        "score_transaction"
+      ]
+    },
+    "rollback_points": [],
+    "metadata": {
+      "transaction_id": "TXN-2024-56789"
+    }
+  },
+  "collaborators": [
+    {
+      "agent_id": "fraud-detector-v2",
+      "agent_name": "Transaction Fraud Detector",
+      "role": "scoring",
+      "joined_at": "2025-11-27T15:30:00+00:00",
+      "left_at": "2025-11-27T15:30:00.350000+00:00"
+    },
+    {
+      "agent_id": "fraud-escalator-v1",
+      "agent_name": "Fraud Escalation Agent",
+      "role": "escalation",
+      "joined_at": "2025-11-27T15:30:00.350000+00:00",
+      "left_at": "2025-11-27T15:30:00.500000+00:00"
+    }
+  ],
+  "parameter_substitutions": [],
+  "execution_trace": {
+    "trace_id": "trace-fraud-detection-001",
+    "task_id": "fraud-detection-001",
+    "events": [
+      {
+        "event_id": "evt-001",
+        "event_type": "step_start",
+        "step_id": "score_transaction",
+        "timestamp": "2025-11-27T15:30:00+00:00",
+        "agent_id": "fraud-detector-v2",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-002",
+        "event_type": "collaborator_join",
+        "step_id": "score_transaction",
+        "timestamp": "2025-11-27T15:30:00+00:00",
+        "agent_id": "fraud-detector-v2",
+        "metadata": {
+          "role": "scoring"
+        }
+      },
+      {
+        "event_id": "evt-003",
+        "event_type": "decision",
+        "step_id": "score_transaction",
+        "timestamp": "2025-11-27T15:30:00.200000+00:00",
+        "agent_id": "fraud-detector-v2",
+        "metadata": {
+          "decision": "Apply ML model v2.3",
+          "alternatives": [
+            "Rule-based only",
+            "ML model v2.2",
+            "ML model v2.3"
+          ],
+          "rationale": "Latest model has 2% higher accuracy"
+        }
+      },
+      {
+        "event_id": "evt-004",
+        "event_type": "step_end",
+        "step_id": "score_transaction",
+        "timestamp": "2025-11-27T15:30:00.350000+00:00",
+        "agent_id": "fraud-detector-v2",
+        "duration_ms": 350,
+        "metadata": {
+          "success": true,
+          "fraud_score": 0.23,
+          "risk_level": "low"
+        }
+      },
+      {
+        "event_id": "evt-005",
+        "event_type": "collaborator_leave",
+        "step_id": "score_transaction",
+        "timestamp": "2025-11-27T15:30:00.350000+00:00",
+        "agent_id": "fraud-detector-v2",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-006",
+        "event_type": "step_start",
+        "step_id": "escalate_if_needed",
+        "timestamp": "2025-11-27T15:30:00.350000+00:00",
+        "agent_id": "fraud-escalator-v1",
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-007",
+        "event_type": "collaborator_join",
+        "step_id": "escalate_if_needed",
+        "timestamp": "2025-11-27T15:30:00.350000+00:00",
+        "agent_id": "fraud-escalator-v1",
+        "metadata": {
+          "role": "escalation"
+        }
+      },
+      {
+        "event_id": "evt-008",
+        "event_type": "decision",
+        "step_id": "escalate_if_needed",
+        "timestamp": "2025-11-27T15:30:00.400000+00:00",
+        "agent_id": "fraud-escalator-v1",
+        "metadata": {
+          "decision": "No escalation needed",
+          "alternatives": [
+            "Escalate to L1",
+            "Escalate to L2",
+            "No escalation"
+          ],
+          "rationale": "Risk level 'low' (score 0.23) below threshold 0.7"
+        }
+      },
+      {
+        "event_id": "evt-009",
+        "event_type": "step_end",
+        "step_id": "escalate_if_needed",
+        "timestamp": "2025-11-27T15:30:00.500000+00:00",
+        "agent_id": "fraud-escalator-v1",
+        "duration_ms": 150,
+        "metadata": {
+          "success": true,
+          "escalation_status": "not_required"
+        }
+      },
+      {
+        "event_id": "evt-010",
+        "event_type": "collaborator_leave",
+        "step_id": "escalate_if_needed",
+        "timestamp": "2025-11-27T15:30:00.500000+00:00",
+        "agent_id": "fraud-escalator-v1",
+        "metadata": {}
+      }
+    ],
+    "start_time": "2025-11-27T15:30:00+00:00",
+    "end_time": "2025-11-27T15:30:00.500000+00:00",
+    "total_duration_ms": 500
+  },
+  "outcome": {
+    "status": "success",
+    "reason": "Transaction scored and processed without escalation",
+    "root_cause": null,
+    "steps_completed": 2,
+    "steps_failed": 0,
+    "steps_skipped": 0
+  },
+  "metadata": {
+    "transaction_id": "TXN-2024-56789",
+    "fraud_score": 0.23,
+    "risk_level": "low"
+  }
+}

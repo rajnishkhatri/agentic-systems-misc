@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2025-11-29T19:39:24.955445Z",
+    "action": "register",
+    "changed_by": "legal-tech-team@company.com",
+    "changes": {
+      "action": "initial_registration"
+    },
+    "previous_signature": null,
+    "new_signature": "ff4e5150ff97b20822e9296a3924d8a70c48c58f26dedf2b4c01fb26e840ae92"
+  },
+  {
+    "timestamp": "2025-11-29T19:39:24.965201Z",
+    "action": "verify",
+    "changed_by": "system",
+    "changes": {
+      "result": "valid"
+    },
+    "previous_signature": null,
+    "new_signature": null
+  }
+]

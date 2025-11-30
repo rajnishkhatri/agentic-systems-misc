@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2025-11-29T19:39:24.957137Z",
+    "action": "register",
+    "changed_by": "customer-success-team@company.com",
+    "changes": {
+      "action": "initial_registration"
+    },
+    "previous_signature": null,
+    "new_signature": "ca54d36f5aa0b87d9c8164e567fdb98141c4fdd56221dbea51d06b67cd4c48f7"
+  },
+  {
+    "timestamp": "2025-11-29T19:39:24.966004Z",
+    "action": "verify",
+    "changed_by": "system",
+    "changes": {
+      "result": "valid"
+    },
+    "previous_signature": null,
+    "new_signature": null
+  }
+]

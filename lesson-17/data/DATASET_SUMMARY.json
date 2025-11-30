@@ -1,0 +1,198 @@
+{
+  "generation_date": "2025-11-27T12:13:30.840428+00:00",
+  "version": "1.0",
+  "schema_version": "1.0",
+  "seed": 42,
+  "datasets": {
+    "pii_examples": {
+      "count": 50,
+      "file_size_bytes": 40836,
+      "pii_type_distribution": {
+        "name": 50,
+        "medical_record_number": 9,
+        "credit_card": 9,
+        "passport": 10,
+        "drivers_license": 6,
+        "phone": 21,
+        "email": 18,
+        "ssn": 8
+      },
+      "examples_with_pii": 50
+    },
+    "agent_metadata": {
+      "count": 10,
+      "file_size_bytes": 31301,
+      "total_capabilities": 15,
+      "total_policies": 14,
+      "agents": [
+        "invoice-extractor-v2",
+        "fraud-detector-v2",
+        "diagnosis-generator-v1",
+        "contract-reviewer-v1",
+        "research-assistant-v2",
+        "data-validator-v1",
+        "report-generator-v1",
+        "anomaly-detector-v1",
+        "sentiment-analyzer-v1",
+        "recommendation-engine-v1"
+      ]
+    },
+    "workflow_traces": {
+      "count": 5,
+      "total_file_size_bytes": 37360,
+      "outcome_distribution": {
+        "success": 2,
+        "failed": 1,
+        "pending": 1,
+        "manual_review": 1
+      },
+      "workflows": [
+        {
+          "workflow_id": "invoice-processing-001",
+          "workflow_type": "invoice_processing",
+          "outcome": "failed",
+          "agents_count": 2,
+          "events_count": 12
+        },
+        {
+          "workflow_id": "fraud-detection-001",
+          "workflow_type": "fraud_detection",
+          "outcome": "success",
+          "agents_count": 2,
+          "events_count": 10
+        },
+        {
+          "workflow_id": "research-workflow-001",
+          "workflow_type": "research_workflow",
+          "outcome": "success",
+          "agents_count": 4,
+          "events_count": 15
+        },
+        {
+          "workflow_id": "healthcare-diagnosis-001",
+          "workflow_type": "healthcare_diagnosis",
+          "outcome": "pending_approval",
+          "agents_count": 5,
+          "events_count": 12
+        },
+        {
+          "workflow_id": "contract-review-001",
+          "workflow_type": "contract_review",
+          "outcome": "manual_review_required",
+          "agents_count": 3,
+          "events_count": 11
+        }
+      ]
+    },
+    "research_workflows": {
+      "count": 10,
+      "total_file_size_bytes": 148030,
+      "status_distribution": {
+        "completed": 7,
+        "failed": 3
+      },
+      "total_decisions": 110,
+      "total_artifacts": 140,
+      "workflows": [
+        {
+          "workflow_id": "research-workflow-001",
+          "topic": "Agent reliability in multi-step workflows",
+          "status": "completed",
+          "phases_count": 6,
+          "decisions_count": 13,
+          "artifacts_count": 17
+        },
+        {
+          "workflow_id": "research-workflow-002",
+          "topic": "LLM scaling laws and emergent abilities",
+          "status": "completed",
+          "phases_count": 6,
+          "decisions_count": 12,
+          "artifacts_count": 17
+        },
+        {
+          "workflow_id": "research-workflow-003",
+          "topic": "RAG optimization for domain-specific knowledge",
+          "status": "failed",
+          "phases_count": 3,
+          "decisions_count": 6,
+          "artifacts_count": 5
+        },
+        {
+          "workflow_id": "research-workflow-004",
+          "topic": "Multi-agent coordination protocols",
+          "status": "completed",
+          "phases_count": 6,
+          "decisions_count": 13,
+          "artifacts_count": 17
+        },
+        {
+          "workflow_id": "research-workflow-005",
+          "topic": "Explainability in autonomous systems",
+          "status": "completed",
+          "phases_count": 6,
+          "decisions_count": 12,
+          "artifacts_count": 17
+        },
+        {
+          "workflow_id": "research-workflow-006",
+          "topic": "Prompt engineering best practices",
+          "status": "failed",
+          "phases_count": 5,
+          "decisions_count": 10,
+          "artifacts_count": 11
+        },
+        {
+          "workflow_id": "research-workflow-007",
+          "topic": "Fine-tuning strategies for specialized tasks",
+          "status": "completed",
+          "phases_count": 6,
+          "decisions_count": 12,
+          "artifacts_count": 17
+        },
+        {
+          "workflow_id": "research-workflow-008",
+          "topic": "Knowledge graph augmented LLMs",
+          "status": "completed",
+          "phases_count": 6,
+          "decisions_count": 13,
+          "artifacts_count": 17
+        },
+        {
+          "workflow_id": "research-workflow-009",
+          "topic": "Hallucination detection and mitigation",
+          "status": "failed",
+          "phases_count": 3,
+          "decisions_count": 6,
+          "artifacts_count": 5
+        },
+        {
+          "workflow_id": "research-workflow-010",
+          "topic": "Cost-effective inference optimization",
+          "status": "completed",
+          "phases_count": 6,
+          "decisions_count": 13,
+          "artifacts_count": 17
+        }
+      ]
+    },
+    "parameter_substitutions": {
+      "count": 20,
+      "file_size_bytes": 26230,
+      "parameter_distribution": {
+        "fraud_threshold": 3,
+        "confidence_threshold": 3,
+        "model_version": 3,
+        "batch_size": 3,
+        "retry_attempts": 3,
+        "timeout_seconds": 1,
+        "temperature": 4
+      },
+      "impact_distribution": {
+        "negative": 7,
+        "positive": 12,
+        "neutral": 1
+      }
+    }
+  }
+}

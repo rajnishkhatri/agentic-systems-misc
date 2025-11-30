@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2025-11-29T19:39:24.957593Z",
+    "action": "register",
+    "changed_by": "personalization-team@company.com",
+    "changes": {
+      "action": "initial_registration"
+    },
+    "previous_signature": null,
+    "new_signature": "63f45d29fc2c1bb47756d0d2f992bfecbd57d912521d1a4800a45919659e26b0"
+  },
+  {
+    "timestamp": "2025-11-29T19:39:24.966127Z",
+    "action": "verify",
+    "changed_by": "system",
+    "changes": {
+      "result": "valid"
+    },
+    "previous_signature": null,
+    "new_signature": null
+  }
+]

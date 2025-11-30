@@ -1,0 +1,608 @@
+{
+  "workflow_id": "invoice-processing-001",
+  "task_id": "task-extract-invoice",
+  "exported_at": "2025-11-29T13:22:40.876932+00:00",
+  "task_plan": {
+    "plan_id": "plan-inv-001",
+    "task_id": "task-extract-invoice",
+    "created_at": "2025-11-29T13:22:40.826492Z",
+    "steps": [
+      {
+        "step_id": "step-1-extract",
+        "description": "Extract vendor and amount from invoice",
+        "agent_id": "invoice-extractor",
+        "expected_inputs": [
+          "invoice_text"
+        ],
+        "expected_outputs": [
+          "vendor_name",
+          "amount"
+        ],
+        "timeout_seconds": 60,
+        "is_critical": true,
+        "order": 1
+      },
+      {
+        "step_id": "step-2-validate",
+        "description": "Validate extracted data against database",
+        "agent_id": "data-validator",
+        "expected_inputs": [
+          "vendor_name",
+          "amount"
+        ],
+        "expected_outputs": [
+          "validation_result",
+          "vendor_id"
+        ],
+        "timeout_seconds": 30,
+        "is_critical": true,
+        "order": 2
+      }
+    ],
+    "dependencies": {
+      "step-2-validate": [
+        "step-1-extract"
+      ]
+    },
+    "rollback_points": [
+      "step-1-extract"
+    ],
+    "metadata": {}
+  },
+  "collaborators": [
+    {
+      "agent_id": "invoice-extractor-v2",
+      "agent_name": "Invoice Extractor",
+      "role": "extraction",
+      "joined_at": "2025-11-27T14:00:00Z",
+      "capabilities": [
+        "extraction",
+        "ocr"
+      ]
+    },
+    {
+      "agent_id": "invoice-validator-v1",
+      "agent_name": "Amount Validator",
+      "role": "validation",
+      "joined_at": "2025-11-27T14:00:12Z",
+      "capabilities": [
+        "validation",
+        "database_lookup"
+      ]
+    }
+  ],
+  "parameter_substitutions": [
+    {
+      "param_name": "confidence_threshold",
+      "old_value": "0.8",
+      "new_value": "0.95",
+      "reason": "Reduce false positives per compliance team request",
+      "timestamp": "2025-11-29T13:22:40.840602Z",
+      "agent_id": "invoice-extractor-v2"
+    }
+  ],
+  "execution_trace": {
+    "trace_id": "trace-invoice-processing-001",
+    "task_id": "invoice-processing-001",
+    "start_time": "2025-11-27T14:00:00Z",
+    "end_time": "2025-11-27T14:00:18Z",
+    "events": [
+      {
+        "event_id": "evt-001",
+        "timestamp": "2025-11-27T14:00:00Z",
+        "event_type": "step_start",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-002",
+        "timestamp": "2025-11-27T14:00:00Z",
+        "event_type": "collaborator_join",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "role": "extraction"
+        }
+      },
+      {
+        "event_id": "evt-003",
+        "timestamp": "2025-11-27T14:00:05Z",
+        "event_type": "decision",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "decision": "Use GPT-4 for OCR correction",
+          "alternatives": [
+            "GPT-3.5",
+            "Claude",
+            "Rule-based"
+          ],
+          "rationale": "Higher accuracy needed for noisy scans"
+        }
+      },
+      {
+        "event_id": "evt-004",
+        "timestamp": "2025-11-27T14:00:10Z",
+        "event_type": "parameter_change",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "parameter": "confidence_threshold",
+          "old_value": 0.8,
+          "new_value": 0.95
+        }
+      },
+      {
+        "event_id": "evt-005",
+        "timestamp": "2025-11-27T14:00:11Z",
+        "event_type": "checkpoint",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "checkpoint_id": "chk-001",
+          "state": {
+            "vendor_name": "Acme Corp",
+            "amount": 4523.5
+          }
+        }
+      },
+      {
+        "event_id": "evt-006",
+        "timestamp": "2025-11-27T14:00:12Z",
+        "event_type": "step_end",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": 12000,
+        "metadata": {
+          "success": true,
+          "confidence": 0.92
+        }
+      },
+      {
+        "event_id": "evt-007",
+        "timestamp": "2025-11-27T14:00:12Z",
+        "event_type": "collaborator_leave",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-008",
+        "timestamp": "2025-11-27T14:00:12Z",
+        "event_type": "step_start",
+        "agent_id": "invoice-validator-v1",
+        "step_id": "validate_amount",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-009",
+        "timestamp": "2025-11-27T14:00:12Z",
+        "event_type": "collaborator_join",
+        "agent_id": "invoice-validator-v1",
+        "step_id": "validate_amount",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "role": "validation"
+        }
+      },
+      {
+        "event_id": "evt-010",
+        "timestamp": "2025-11-27T14:00:15Z",
+        "event_type": "error",
+        "agent_id": "invoice-validator-v1",
+        "step_id": "validate_amount",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "error_message": "Confidence threshold too high (0.95) - no valid results",
+          "error_type": "ValidationError",
+          "is_recoverable": false,
+          "stack_trace": "ValidationError: All results below threshold 0.95..."
+        }
+      },
+      {
+        "event_id": "evt-011",
+        "timestamp": "2025-11-27T14:00:18Z",
+        "event_type": "step_end",
+        "agent_id": "invoice-validator-v1",
+        "step_id": "validate_amount",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": 6000,
+        "metadata": {
+          "success": false,
+          "failure_reason": "threshold_exceeded"
+        }
+      },
+      {
+        "event_id": "evt-012",
+        "timestamp": "2025-11-27T14:00:18Z",
+        "event_type": "collaborator_leave",
+        "agent_id": "invoice-validator-v1",
+        "step_id": "validate_amount",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {}
+      },
+      {
+        "event_id": "evt-013",
+        "timestamp": "2025-11-29T13:22:40.870797Z",
+        "event_type": "rollback",
+        "agent_id": "workflow-orchestrator",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "rollback_reason": "Cascade failure detected",
+          "rollback_to": "extract_vendor",
+          "steps_rolled_back": [
+            "validate_amount"
+          ],
+          "recovery_action": "Retry with original parameters"
+        }
+      }
+    ],
+    "final_outcome": "failed",
+    "error_chain": [
+      "Cascade failure: validator crashed after parameter change",
+      "Parameter substitution (confidence_threshold: 0.8 \u2192 0.95) caused empty validation results"
+    ]
+  },
+  "all_events": [
+    {
+      "event_type": "task_plan",
+      "timestamp": "2025-11-29T13:22:40.826521Z",
+      "data": {
+        "plan_id": "plan-inv-001",
+        "task_id": "task-extract-invoice",
+        "created_at": "2025-11-29T13:22:40.826492Z",
+        "steps": [
+          {
+            "step_id": "step-1-extract",
+            "description": "Extract vendor and amount from invoice",
+            "agent_id": "invoice-extractor",
+            "expected_inputs": [
+              "invoice_text"
+            ],
+            "expected_outputs": [
+              "vendor_name",
+              "amount"
+            ],
+            "timeout_seconds": 60,
+            "is_critical": true,
+            "order": 1
+          },
+          {
+            "step_id": "step-2-validate",
+            "description": "Validate extracted data against database",
+            "agent_id": "data-validator",
+            "expected_inputs": [
+              "vendor_name",
+              "amount"
+            ],
+            "expected_outputs": [
+              "validation_result",
+              "vendor_id"
+            ],
+            "timeout_seconds": 30,
+            "is_critical": true,
+            "order": 2
+          }
+        ],
+        "dependencies": {
+          "step-2-validate": [
+            "step-1-extract"
+          ]
+        },
+        "rollback_points": [
+          "step-1-extract"
+        ],
+        "metadata": {}
+      }
+    },
+    {
+      "event_type": "collaborator_join",
+      "timestamp": "2025-11-27T14:00:00Z",
+      "data": {
+        "agent_id": "invoice-extractor-v2",
+        "agent_name": "Invoice Extractor",
+        "role": "extraction",
+        "joined_at": "2025-11-27T14:00:00Z",
+        "capabilities": [
+          "extraction",
+          "ocr"
+        ]
+      }
+    },
+    {
+      "event_type": "collaborator_join",
+      "timestamp": "2025-11-27T14:00:12Z",
+      "data": {
+        "agent_id": "invoice-validator-v1",
+        "agent_name": "Amount Validator",
+        "role": "validation",
+        "joined_at": "2025-11-27T14:00:12Z",
+        "capabilities": [
+          "validation",
+          "database_lookup"
+        ]
+      }
+    },
+    {
+      "event_type": "parameter_change",
+      "timestamp": "2025-11-29T13:22:40.840602Z",
+      "data": {
+        "param_name": "confidence_threshold",
+        "old_value": "0.8",
+        "new_value": "0.95",
+        "reason": "Reduce false positives per compliance team request",
+        "timestamp": "2025-11-29T13:22:40.840602Z",
+        "agent_id": "invoice-extractor-v2"
+      }
+    },
+    {
+      "event_type": "trace_step_start",
+      "timestamp": "2025-11-27T14:00:00Z",
+      "data": {
+        "event_id": "evt-001",
+        "timestamp": "2025-11-27T14:00:00Z",
+        "event_type": "step_start",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {}
+      }
+    },
+    {
+      "event_type": "trace_collaborator_join",
+      "timestamp": "2025-11-27T14:00:00Z",
+      "data": {
+        "event_id": "evt-002",
+        "timestamp": "2025-11-27T14:00:00Z",
+        "event_type": "collaborator_join",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "role": "extraction"
+        }
+      }
+    },
+    {
+      "event_type": "trace_decision",
+      "timestamp": "2025-11-27T14:00:05Z",
+      "data": {
+        "event_id": "evt-003",
+        "timestamp": "2025-11-27T14:00:05Z",
+        "event_type": "decision",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "decision": "Use GPT-4 for OCR correction",
+          "alternatives": [
+            "GPT-3.5",
+            "Claude",
+            "Rule-based"
+          ],
+          "rationale": "Higher accuracy needed for noisy scans"
+        }
+      }
+    },
+    {
+      "event_type": "trace_parameter_change",
+      "timestamp": "2025-11-27T14:00:10Z",
+      "data": {
+        "event_id": "evt-004",
+        "timestamp": "2025-11-27T14:00:10Z",
+        "event_type": "parameter_change",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "parameter": "confidence_threshold",
+          "old_value": 0.8,
+          "new_value": 0.95
+        }
+      }
+    },
+    {
+      "event_type": "trace_checkpoint",
+      "timestamp": "2025-11-27T14:00:11Z",
+      "data": {
+        "event_id": "evt-005",
+        "timestamp": "2025-11-27T14:00:11Z",
+        "event_type": "checkpoint",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "checkpoint_id": "chk-001",
+          "state": {
+            "vendor_name": "Acme Corp",
+            "amount": 4523.5
+          }
+        }
+      }
+    },
+    {
+      "event_type": "trace_step_end",
+      "timestamp": "2025-11-27T14:00:12Z",
+      "data": {
+        "event_id": "evt-006",
+        "timestamp": "2025-11-27T14:00:12Z",
+        "event_type": "step_end",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": 12000,
+        "metadata": {
+          "success": true,
+          "confidence": 0.92
+        }
+      }
+    },
+    {
+      "event_type": "trace_collaborator_leave",
+      "timestamp": "2025-11-27T14:00:12Z",
+      "data": {
+        "event_id": "evt-007",
+        "timestamp": "2025-11-27T14:00:12Z",
+        "event_type": "collaborator_leave",
+        "agent_id": "invoice-extractor-v2",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {}
+      }
+    },
+    {
+      "event_type": "trace_step_start",
+      "timestamp": "2025-11-27T14:00:12Z",
+      "data": {
+        "event_id": "evt-008",
+        "timestamp": "2025-11-27T14:00:12Z",
+        "event_type": "step_start",
+        "agent_id": "invoice-validator-v1",
+        "step_id": "validate_amount",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {}
+      }
+    },
+    {
+      "event_type": "trace_collaborator_join",
+      "timestamp": "2025-11-27T14:00:12Z",
+      "data": {
+        "event_id": "evt-009",
+        "timestamp": "2025-11-27T14:00:12Z",
+        "event_type": "collaborator_join",
+        "agent_id": "invoice-validator-v1",
+        "step_id": "validate_amount",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "role": "validation"
+        }
+      }
+    },
+    {
+      "event_type": "trace_error",
+      "timestamp": "2025-11-27T14:00:15Z",
+      "data": {
+        "event_id": "evt-010",
+        "timestamp": "2025-11-27T14:00:15Z",
+        "event_type": "error",
+        "agent_id": "invoice-validator-v1",
+        "step_id": "validate_amount",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "error_message": "Confidence threshold too high (0.95) - no valid results",
+          "error_type": "ValidationError",
+          "is_recoverable": false,
+          "stack_trace": "ValidationError: All results below threshold 0.95..."
+        }
+      }
+    },
+    {
+      "event_type": "trace_step_end",
+      "timestamp": "2025-11-27T14:00:18Z",
+      "data": {
+        "event_id": "evt-011",
+        "timestamp": "2025-11-27T14:00:18Z",
+        "event_type": "step_end",
+        "agent_id": "invoice-validator-v1",
+        "step_id": "validate_amount",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": 6000,
+        "metadata": {
+          "success": false,
+          "failure_reason": "threshold_exceeded"
+        }
+      }
+    },
+    {
+      "event_type": "trace_collaborator_leave",
+      "timestamp": "2025-11-27T14:00:18Z",
+      "data": {
+        "event_id": "evt-012",
+        "timestamp": "2025-11-27T14:00:18Z",
+        "event_type": "collaborator_leave",
+        "agent_id": "invoice-validator-v1",
+        "step_id": "validate_amount",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {}
+      }
+    },
+    {
+      "event_type": "trace_rollback",
+      "timestamp": "2025-11-29T13:22:40.870797Z",
+      "data": {
+        "event_id": "evt-013",
+        "timestamp": "2025-11-29T13:22:40.870797Z",
+        "event_type": "rollback",
+        "agent_id": "workflow-orchestrator",
+        "step_id": "extract_vendor",
+        "input_hash": null,
+        "output_hash": null,
+        "duration_ms": null,
+        "metadata": {
+          "rollback_reason": "Cascade failure detected",
+          "rollback_to": "extract_vendor",
+          "steps_rolled_back": [
+            "validate_amount"
+          ],
+          "recovery_action": "Retry with original parameters"
+        }
+      }
+    }
+  ]
+}

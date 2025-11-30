@@ -1,0 +1,129 @@
+{
+  "agent_id": "contract-reviewer-v1",
+  "agent_name": "Legal Contract Analyzer",
+  "owner": "legal-tech-team",
+  "version": "2.1.7",
+  "description": "Extracts clauses and assesses risk in legal contracts",
+  "capabilities": [
+    {
+      "name": "extract_clauses",
+      "description": "Identifies and categorizes contract clauses",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "contract_text": {
+            "type": "string"
+          },
+          "contract_type": {
+            "type": "string",
+            "enum": [
+              "employment",
+              "nda",
+              "service",
+              "lease",
+              "partnership"
+            ]
+          }
+        },
+        "required": [
+          "contract_text"
+        ]
+      },
+      "output_schema": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "clause_id": {
+              "type": "string"
+            },
+            "clause_type": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "page": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "estimated_latency_ms": 3000,
+      "cost_per_call": 0.02,
+      "requires_approval": false,
+      "tags": [
+        "legal",
+        "extraction",
+        "contracts"
+      ]
+    },
+    {
+      "name": "assess_risk",
+      "description": "Evaluates legal risk of contract terms",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "clauses": {
+            "type": "array"
+          },
+          "jurisdiction": {
+            "type": "string"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "overall_risk": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "flagged_clauses": {
+            "type": "array"
+          },
+          "recommendations": {
+            "type": "array"
+          }
+        }
+      },
+      "estimated_latency_ms": 2500,
+      "cost_per_call": 0.025,
+      "requires_approval": false,
+      "tags": [
+        "legal",
+        "risk",
+        "compliance"
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "policy_id": "contract-reviewer-v1-policy-001",
+      "name": "Document Processing Limit",
+      "description": "Limits concurrent document processing",
+      "policy_type": "rate_limit",
+      "constraints": {
+        "max_calls_per_minute": 20,
+        "max_calls_per_hour": 200,
+        "max_document_size_mb": 50
+      },
+      "effective_from": "2025-08-06T21:35:13.848772Z",
+      "effective_until": null,
+      "is_active": true
+    }
+  ],
+  "created_at": "2025-11-29T19:39:24.955206Z",
+  "updated_at": "2025-11-29T19:39:24.955206Z",
+  "signature_hash": "ff4e5150ff97b20822e9296a3924d8a70c48c58f26dedf2b4c01fb26e840ae92",
+  "parent_agent_id": null,
+  "metadata": {
+    "deployment_environment": "staging",
+    "model_version": "gpt-4",
+    "last_health_check": "2025-11-20T17:11:53.848772+00:00"
+  }
+}

@@ -1,0 +1,381 @@
+{
+  "workflow_id": "research-workflow-006",
+  "workflow_type": "research_paper_generation",
+  "research_topic": "Prompt engineering best practices",
+  "start_time": "2025-11-15T23:24:03.855004+00:00",
+  "end_time": "2025-11-25T03:24:03.855004+00:00",
+  "total_duration_hours": 220.0,
+  "phases": [
+    {
+      "phase_id": "research-workflow-006-planning",
+      "phase_type": "PLANNING",
+      "start_time": "2025-11-15T23:24:03.855004+00:00",
+      "end_time": "2025-11-16T05:18:03.855004+00:00",
+      "duration_hours": 5.9,
+      "outcome": {
+        "status": "success",
+        "summary": "Research question and methodology defined for 'Prompt engineering best practices'"
+      }
+    },
+    {
+      "phase_id": "research-workflow-006-literature_review",
+      "phase_type": "LITERATURE_REVIEW",
+      "start_time": "2025-11-16T05:18:03.855004+00:00",
+      "end_time": "2025-11-19T05:18:03.855004+00:00",
+      "duration_hours": 72.0,
+      "outcome": {
+        "status": "success",
+        "summary": "58 papers reviewed, 11 key findings identified"
+      }
+    },
+    {
+      "phase_id": "research-workflow-006-data_collection",
+      "phase_type": "DATA_COLLECTION",
+      "start_time": "2025-11-19T05:18:03.855004+00:00",
+      "end_time": "2025-11-20T14:42:03.855004+00:00",
+      "duration_hours": 33.4,
+      "outcome": {
+        "status": "success",
+        "summary": "Collected 3704 samples from 5 sources"
+      }
+    },
+    {
+      "phase_id": "research-workflow-006-experiment",
+      "phase_type": "EXPERIMENT",
+      "start_time": "2025-11-20T14:42:03.855004+00:00",
+      "end_time": "2025-11-24T12:12:03.855004+00:00",
+      "duration_hours": 93.5,
+      "outcome": {
+        "status": "success",
+        "summary": "Model trained for 5 epochs, best accuracy: 0.92"
+      }
+    },
+    {
+      "phase_id": "research-workflow-006-validation",
+      "phase_type": "VALIDATION",
+      "start_time": "2025-11-24T12:12:03.855004+00:00",
+      "end_time": "2025-11-25T03:24:03.855004+00:00",
+      "duration_hours": 15.2,
+      "outcome": {
+        "status": "failed",
+        "summary": "Phase failed during validation",
+        "error": {
+          "message": "Validation accuracy below threshold (0.65 < 0.70)",
+          "is_recoverable": false
+        }
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "decision_id": "research-workflow-006-planning-dec-01",
+      "timestamp": "2025-11-27T12:13:30.855037+00:00",
+      "phase": "PLANNING",
+      "description": "Choose research methodology",
+      "alternatives": [
+        "Experimental study with controlled trials",
+        "Observational study with existing datasets",
+        "Mixed methods combining both approaches"
+      ],
+      "selected": "Mixed methods combining both approaches",
+      "rationale": "Provides both quantitative rigor and qualitative insights",
+      "confidence": 0.78
+    },
+    {
+      "decision_id": "research-workflow-006-planning-dec-02",
+      "timestamp": "2025-11-27T12:13:30.855039+00:00",
+      "phase": "PLANNING",
+      "description": "Select research question focus",
+      "alternatives": [
+        "Focus on Prompt engineering best practices - theoretical foundations",
+        "Focus on Prompt engineering best practices - practical applications",
+        "Focus on Prompt engineering best practices - benchmark comparisons"
+      ],
+      "selected": "Focus on Prompt engineering best practices - practical applications",
+      "rationale": "High industry demand, clear evaluation metrics available",
+      "confidence": 0.92
+    },
+    {
+      "decision_id": "research-workflow-006-literature_review-dec-01",
+      "timestamp": "2025-11-27T12:13:30.855044+00:00",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Define inclusion criteria for papers",
+      "alternatives": [
+        "Last 2 years only, peer-reviewed",
+        "Last 5 years, including preprints",
+        "No time limit, highly cited only"
+      ],
+      "selected": "Last 5 years, including preprints",
+      "rationale": "Captures recent advances while maintaining relevance",
+      "confidence": 0.82
+    },
+    {
+      "decision_id": "research-workflow-006-literature_review-dec-02",
+      "timestamp": "2025-11-27T12:13:30.855045+00:00",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Select academic databases to search",
+      "alternatives": [
+        "PubMed",
+        "ArXiv",
+        "Semantic Scholar",
+        "Google Scholar"
+      ],
+      "selected": "ArXiv, Semantic Scholar, ACM Digital Library",
+      "rationale": "Best coverage for AI/ML research topics",
+      "confidence": 0.89
+    },
+    {
+      "decision_id": "research-workflow-006-data_collection-dec-01",
+      "timestamp": "2025-11-27T12:13:30.855050+00:00",
+      "phase": "DATA_COLLECTION",
+      "description": "Select data source for experiments",
+      "alternatives": [
+        "Public benchmark datasets",
+        "Synthetic data generation",
+        "Custom data collection"
+      ],
+      "selected": "Public benchmark datasets",
+      "rationale": "Enables reproducibility and comparison with prior work",
+      "confidence": 0.9
+    },
+    {
+      "decision_id": "research-workflow-006-data_collection-dec-02",
+      "timestamp": "2025-11-27T12:13:30.855052+00:00",
+      "phase": "DATA_COLLECTION",
+      "description": "Choose data preprocessing strategy",
+      "alternatives": [
+        "Minimal preprocessing (preserve original)",
+        "Standard normalization pipeline",
+        "Custom augmentation with synthetic examples"
+      ],
+      "selected": "Standard normalization pipeline",
+      "rationale": "Balance between data quality and processing overhead",
+      "confidence": 0.86
+    },
+    {
+      "decision_id": "research-workflow-006-experiment-dec-01",
+      "timestamp": "2025-11-27T12:13:30.855056+00:00",
+      "phase": "EXPERIMENT",
+      "description": "Select primary language model",
+      "alternatives": [
+        "GPT-4",
+        "GPT-3.5-Turbo",
+        "Claude Sonnet",
+        "Claude Opus"
+      ],
+      "selected": "GPT-4",
+      "rationale": "Best cost/performance ratio for our context window requirements",
+      "confidence": 0.86
+    },
+    {
+      "decision_id": "research-workflow-006-experiment-dec-02",
+      "timestamp": "2025-11-27T12:13:30.855058+00:00",
+      "phase": "EXPERIMENT",
+      "description": "Select training batch size",
+      "alternatives": [
+        "32",
+        "64",
+        "128",
+        "256"
+      ],
+      "selected": "64",
+      "rationale": "Optimal for available GPU memory and convergence speed",
+      "confidence": 0.76
+    },
+    {
+      "decision_id": "research-workflow-006-validation-dec-01",
+      "timestamp": "2025-11-27T12:13:30.855063+00:00",
+      "phase": "VALIDATION",
+      "description": "Choose evaluation metrics",
+      "alternatives": [
+        "Accuracy only",
+        "F1 + Precision + Recall",
+        "Full suite (F1, AUC-ROC, confusion matrix)"
+      ],
+      "selected": "Full suite (F1, AUC-ROC, confusion matrix)",
+      "rationale": "Comprehensive evaluation for publication requirements",
+      "confidence": 0.82
+    },
+    {
+      "decision_id": "research-workflow-006-validation-dec-02",
+      "timestamp": "2025-11-27T12:13:30.855064+00:00",
+      "phase": "VALIDATION",
+      "description": "Select baseline comparison models",
+      "alternatives": [
+        "State-of-the-art only",
+        "Classical ML + recent deep learning",
+        "All available baselines"
+      ],
+      "selected": "Classical ML + recent deep learning",
+      "rationale": "Shows improvement over both traditional and modern approaches",
+      "confidence": 0.76
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "research-workflow-006-planning-art-01",
+      "artifact_type": "document",
+      "phase": "PLANNING",
+      "description": "Research proposal",
+      "metadata": {
+        "format": "md",
+        "size_kb": 16,
+        "word_count": 2400,
+        "pages": 5
+      },
+      "location": "artifacts/research-workflow-006/planning/research_proposal.md",
+      "created_at": "2025-11-27T12:13:30.855067+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-006-planning-art-02",
+      "artifact_type": "document",
+      "phase": "PLANNING",
+      "description": "Methodology outline",
+      "metadata": {
+        "format": "md",
+        "size_kb": 7,
+        "word_count": 1050,
+        "pages": 2
+      },
+      "location": "artifacts/research-workflow-006/planning/methodology_outline.md",
+      "created_at": "2025-11-27T12:13:30.855069+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-006-literature_review-art-01",
+      "artifact_type": "document",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Literature review summary",
+      "metadata": {
+        "format": "md",
+        "size_kb": 107,
+        "word_count": 16050,
+        "pages": 35
+      },
+      "location": "artifacts/research-workflow-006/literature_review/literature_review_summary.md",
+      "created_at": "2025-11-27T12:13:30.855072+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-006-literature_review-art-02",
+      "artifact_type": "data",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Citation database",
+      "metadata": {
+        "format": "json",
+        "size_kb": 38,
+        "rows": 5196,
+        "columns": 11
+      },
+      "location": "artifacts/research-workflow-006/literature_review/citation_database.json",
+      "created_at": "2025-11-27T12:13:30.855074+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-006-literature_review-art-03",
+      "artifact_type": "data",
+      "phase": "LITERATURE_REVIEW",
+      "description": "Key findings matrix",
+      "metadata": {
+        "format": "csv",
+        "size_kb": 13,
+        "rows": 520,
+        "columns": 24
+      },
+      "location": "artifacts/research-workflow-006/literature_review/key_findings_matrix.csv",
+      "created_at": "2025-11-27T12:13:30.855076+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-006-data_collection-art-01",
+      "artifact_type": "data",
+      "phase": "DATA_COLLECTION",
+      "description": "Raw dataset",
+      "metadata": {
+        "format": "parquet",
+        "size_kb": 1152,
+        "rows": 6598,
+        "columns": 50
+      },
+      "location": "artifacts/research-workflow-006/data_collection/raw_dataset.parquet",
+      "created_at": "2025-11-27T12:13:30.855079+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-006-data_collection-art-02",
+      "artifact_type": "document",
+      "phase": "DATA_COLLECTION",
+      "description": "Data dictionary",
+      "metadata": {
+        "format": "md",
+        "size_kb": 4,
+        "word_count": 600,
+        "pages": 1
+      },
+      "location": "artifacts/research-workflow-006/data_collection/data_dictionary.md",
+      "created_at": "2025-11-27T12:13:30.855081+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-006-data_collection-art-03",
+      "artifact_type": "data",
+      "phase": "DATA_COLLECTION",
+      "description": "Collection logs",
+      "metadata": {
+        "format": "json",
+        "size_kb": 28,
+        "rows": 9800,
+        "columns": 49
+      },
+      "location": "artifacts/research-workflow-006/data_collection/collection_logs.json",
+      "created_at": "2025-11-27T12:13:30.855083+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-006-experiment-art-01",
+      "artifact_type": "model",
+      "phase": "EXPERIMENT",
+      "description": "Trained model checkpoint",
+      "metadata": {
+        "format": "safetensors",
+        "size_kb": 2033,
+        "architecture": "GPT-3.5-turbo-ft",
+        "accuracy": 0.89,
+        "training_epochs": 7
+      },
+      "location": "artifacts/research-workflow-006/experiment/trained_model_checkpoint.safetensors",
+      "created_at": "2025-11-27T12:13:30.855085+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-006-experiment-art-02",
+      "artifact_type": "data",
+      "phase": "EXPERIMENT",
+      "description": "Training logs",
+      "metadata": {
+        "format": "json",
+        "size_kb": 295,
+        "rows": 9937,
+        "columns": 12
+      },
+      "location": "artifacts/research-workflow-006/experiment/training_logs.json",
+      "created_at": "2025-11-27T12:13:30.855088+00:00"
+    },
+    {
+      "artifact_id": "research-workflow-006-experiment-art-03",
+      "artifact_type": "config",
+      "phase": "EXPERIMENT",
+      "description": "Hyperparameter config",
+      "metadata": {
+        "format": "yaml",
+        "size_kb": 1
+      },
+      "location": "artifacts/research-workflow-006/experiment/hyperparameter_config.yaml",
+      "created_at": "2025-11-27T12:13:30.855090+00:00"
+    }
+  ],
+  "final_status": "failed",
+  "failure_reason": "Model failed to meet minimum performance requirements",
+  "metadata": {
+    "topic_category": "large_language_models",
+    "primary_model": "Claude Sonnet",
+    "databases_used": [
+      "Google Scholar",
+      "Semantic Scholar",
+      "PubMed",
+      "IEEE Xplore"
+    ]
+  }
+}

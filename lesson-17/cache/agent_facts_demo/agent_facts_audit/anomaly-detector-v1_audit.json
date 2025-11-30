@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2025-11-29T19:39:24.956816Z",
+    "action": "register",
+    "changed_by": "monitoring-team@company.com",
+    "changes": {
+      "action": "initial_registration"
+    },
+    "previous_signature": null,
+    "new_signature": "bf20a3a906c8a4b2dbd6f93ef2beb79f4dd2cfe5021be4d163bff47e41274ad9"
+  },
+  {
+    "timestamp": "2025-11-29T19:39:24.965854Z",
+    "action": "verify",
+    "changed_by": "system",
+    "changes": {
+      "result": "valid"
+    },
+    "previous_signature": null,
+    "new_signature": null
+  }
+]

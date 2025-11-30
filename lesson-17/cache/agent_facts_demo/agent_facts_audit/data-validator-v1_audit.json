@@ -1,0 +1,32 @@
+[
+  {
+    "timestamp": "2025-11-29T19:39:24.956128Z",
+    "action": "register",
+    "changed_by": "data-engineering-team@company.com",
+    "changes": {
+      "action": "initial_registration"
+    },
+    "previous_signature": null,
+    "new_signature": "ec97056e734329f5525275a792871a2c4e67119262d823e6898f107f72d42b6b"
+  },
+  {
+    "timestamp": "2025-11-29T19:39:24.965584Z",
+    "action": "verify",
+    "changed_by": "system",
+    "changes": {
+      "result": "valid"
+    },
+    "previous_signature": null,
+    "new_signature": null
+  },
+  {
+    "timestamp": "2025-11-29T19:39:25.039882Z",
+    "action": "unregister",
+    "changed_by": "admin@company.com",
+    "changes": {
+      "action": "removed_from_registry"
+    },
+    "previous_signature": "ec97056e734329f5525275a792871a2c4e67119262d823e6898f107f72d42b6b",
+    "new_signature": null
+  }
+]
