@@ -1,0 +1,71 @@
+graph TD
+    Start([User enters topic]) --> TaskAssigner
+
+    subgraph "Pattern 32: Guardrails"
+        TaskAssigner[TaskAssigner<br/>Query Classification] --> Guardrail{Input<br/>Guardrail}
+        Guardrail -->|Reject| Error[Error:<br/>Topic violates<br/>content policy]
+        Guardrail -->|Accept| Classify[Classify topic<br/>using LLM]
+    end
+
+    Classify --> SelectWriter{Writer<br/>Selection}
+    SelectWriter -->|Math| MathWriter[MathWriter]
+    SelectWriter -->|History| HistoryWriter[HistoryWriter]
+    SelectWriter -->|GenAI| GenAIWriter[GenAIWriter]
+    SelectWriter -->|General| GeneralistWriter[GeneralistWriter]
+
+    subgraph "Pattern 28: Long-term Memory"
+        MathWriter --> Memory1[Retrieve user<br/>preferences]
+        HistoryWriter --> Memory2[Retrieve user<br/>preferences]
+        GenAIWriter --> Memory3[Retrieve user<br/>preferences]
+        GeneralistWriter --> Memory4[Retrieve user<br/>preferences]
+    end
+
+    Memory1 --> WriteDraft1[Write initial draft]
+    Memory2 --> WriteDraft2[Write initial draft]
+    Memory3 --> RAG[Pattern 6: RAG<br/>Retrieve from book]
+    Memory4 --> WriteDraft4[Write initial draft]
+
+    RAG --> WriteDraft3[Write draft with<br/>retrieved context]
+
+    WriteDraft1 --> Draft[Draft Article]
+    WriteDraft2 --> Draft
+    WriteDraft3 --> Draft
+    WriteDraft4 --> Draft
+
+    subgraph "Pattern 23: Multi-agent Collaboration"
+        Draft --> ReviewerPanel[ReviewerPanel<br/>6 reviewers in parallel]
+        ReviewerPanel --> Grammar[Grammar<br/>Reviewer]
+        ReviewerPanel --> Math[Math<br/>Reviewer]
+        ReviewerPanel --> District[District<br/>Representative]
+        ReviewerPanel --> Conservative[Conservative<br/>Parent]
+        ReviewerPanel --> Liberal[Liberal<br/>Parent]
+        ReviewerPanel --> Admin[School<br/>Admin]
+
+        Grammar --> Secretary
+        Math --> Secretary
+        District --> Secretary
+        Conservative --> Secretary
+        Liberal --> Secretary
+        Admin --> Secretary
+
+        Secretary[Secretary<br/>Consolidate feedback]
+    end
+
+    subgraph "Pattern 18: Reflection"
+        Secretary --> Revise[Writer revises<br/>based on feedback]
+        Revise --> FinalArticle[Final Article]
+    end
+
+    FinalArticle --> Output([Display to user])
+
+    style TaskAssigner fill:#e1f5ff
+    style Guardrail fill:#ffe1e1
+    style ReviewerPanel fill:#fff4e1
+    style Secretary fill:#fff4e1
+    style RAG fill:#e1ffe1
+    style Memory1 fill:#f0e1ff
+    style Memory2 fill:#f0e1ff
+    style Memory3 fill:#f0e1ff
+    style Memory4 fill:#f0e1ff
+    style Revise fill:#ffe1f5
+    style Error fill:#ff6b6b

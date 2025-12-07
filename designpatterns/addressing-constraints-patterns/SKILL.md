@@ -1,0 +1,729 @@
+# GenAI Agentic Design Patterns
+
+> A comprehensive skill for implementing agentic AI systems with tool calling, code execution, and multiagent collaboration.
+
+## Overview
+
+This skill provides battle-tested design patterns for building production-grade agentic AI systems. Use these patterns when you need AI systems that go beyond content generation to take actions, execute code, and collaborate across specialized agents.
+
+---
+
+## Pattern Catalog
+
+| Pattern | Use When | Complexity |
+|---------|----------|------------|
+| Tool Calling | LLM needs to invoke external APIs/functions | Medium |
+| Code Execution | Task requires DSL generation (SQL, Matplotlib, Mermaid) | Medium |
+| ReAct | Interleaving reasoning steps with tool actions | Medium-High |
+| Router | Directing requests to specialized agents | Low-Medium |
+| Sequential Workflow | Tasks have linear dependencies | Low |
+| Multiagent Collaboration | Complex tasks requiring multiple perspectives | High |
+| Market-Based Allocation | Dynamic task assignment based on capability | High |
+
+---
+
+## Pattern 1: Tool Calling
+
+### When to Use
+- LLM needs real-time data (weather, stock prices, news)
+- Integration with enterprise APIs (CRM, ERP, databases)
+- Personalization from user workspaces (email, calendar)
+- Calculations requiring external solvers
+
+### Architecture
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   Prompt    │────▶│     LLM     │────▶│ Tool Call   │
+└─────────────┘     └─────────────┘     │ Detection   │
+                                        └──────┬──────┘
+                                               │
+                    ┌─────────────┐     ┌──────▼──────┐
+                    │   Final     │◀────│   Tool      │
+                    │  Response   │     │  Execution  │
+                    └─────────────┘     └─────────────┘
+```
+
+### Implementation Template (MCP Server)
+
+```python
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("service_name")
+
+@mcp.tool()
+async def your_tool_function(
+    param1: str,
+    param2: int,
+    param3: Optional[str] = None
+) -> YourResponseType:
+    """
+    Clear, descriptive docstring explaining what this tool does.
+    
+    Args:
+        param1: Description with examples (e.g., "US state code like CA, NY")
+        param2: Description with valid ranges or constraints
+        param3: Optional parameter with default behavior explained
+        
+    Returns:
+        Description of return value structure
+    """
+    # Implementation
+    result = await external_api_call(param1, param2)
+    return YourResponseType(**result)
+
+if __name__ == "__main__":
+    mcp.run(transport="streamable-http")  # or "stdio" for local
+```
+
+### Implementation Template (MCP Client with LangGraph)
+
+```python
+from langchain_mcp_adapters.client import MultiServerMCPClient
+from langgraph.prebuilt import create_react_agent
+
+async with MultiServerMCPClient({
+    "service_name": {
+        "url": "http://localhost:8000/mcp",
+        "transport": "streamable_http",
+    }
+}) as client:
+    agent = create_react_agent(
+        "anthropic:claude-sonnet-4-20250514",
+        client.get_tools()
+    )
+    response = await agent.ainvoke({
+        "messages": [{"role": "user", "content": user_query}]
+    })
+```
+
+### Best Practices
+
+1. **Self-Descriptive Functions**: Use clear naming and comprehensive docstrings
+2. **Type Safety**: Use enums, dataclasses, and Pydantic models for parameters
+3. **Limit Tool Count**: Keep to 3-10 tools per agent for accuracy
+4. **Error Messages**: Return descriptive errors for Reflection pattern integration
+5. **Deterministic Data**: Don't make the model fill in data you know programmatically
+
+### Common Pitfalls
+
+- ❌ Vague parameter descriptions
+- ❌ Too many tools overloading the model
+- ❌ Missing type hints and constraints
+- ❌ Not handling API failures gracefully
+
+---
+
+## Pattern 2: Code Execution
+
+### When to Use
+- Generating visualizations (Matplotlib, Plotly, Mermaid)
+- Database queries (SQL, GraphQL)
+- Image manipulation (ImageMagick, PIL)
+- Complex calculations requiring programmatic logic
+
+### Architecture
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   Prompt    │────▶│     LLM     │────▶│   Code/DSL  │
+│  + Examples │     │             │     │  Generation │
+└─────────────┘     └─────────────┘     └──────┬──────┘
+                                               │
+                    ┌─────────────┐     ┌──────▼──────┐
+                    │   Output    │◀────│   Sandbox   │
+                    │ (img/data)  │     │  Execution  │
+                    └─────────────┘     └─────────────┘
+```
+
+### Implementation Template
+
+```python
+import subprocess
+import tempfile
+from pathlib import Path
+
+def execute_dsl_code(
+    llm_generated_code: str,
+    dsl_type: str,
+    timeout_seconds: int = 30
+) -> tuple[bool, str | bytes]:
+    """
+    Execute LLM-generated DSL code in a sandboxed environment.
+    
+    Args:
+        llm_generated_code: The code/DSL generated by the LLM
+        dsl_type: Type of DSL (graphviz, mermaid, sql, matplotlib)
+        timeout_seconds: Maximum execution time
+        
+    Returns:
+        Tuple of (success: bool, result: str or bytes)
+    """
+    with tempfile.TemporaryDirectory() as tmpdir:
+        input_file = Path(tmpdir) / f"input.{dsl_type}"
+        output_file = Path(tmpdir) / "output"
+        
+        input_file.write_text(llm_generated_code)
+        
+        # DSL-specific execution
+        commands = {
+            "graphviz": ["dot", "-Tpng", str(input_file), "-o", f"{output_file}.png"],
+            "mermaid": ["mmdc", "-i", str(input_file), "-o", f"{output_file}.png"],
+            "python": ["python", str(input_file)],
+        }
+        
+        try:
+            result = subprocess.run(
+                commands[dsl_type],
+                capture_output=True,
+                timeout=timeout_seconds,
+                cwd=tmpdir
+            )
+            
+            if result.returncode != 0:
+                return False, result.stderr.decode()
+                
+            # Return output based on type
+            output_path = Path(f"{output_file}.png")
+            if output_path.exists():
+                return True, output_path.read_bytes()
+            return True, result.stdout.decode()
+            
+        except subprocess.TimeoutExpired:
+            return False, "Execution timed out"
+        except Exception as e:
+            return False, str(e)
+```
+
+### Prompt Template for Code Generation
+
+```python
+CODE_GENERATION_PROMPT = """
+Generate {dsl_type} code to accomplish the following task.
+
+## Task
+{task_description}
+
+## Example
+**Input**: {example_input}
+**Output**:
+```{dsl_type}
+{example_output}
+```
+
+## Requirements
+- Output ONLY the {dsl_type} code, no explanations
+- Follow the exact syntax shown in the example
+- Handle edge cases: {edge_cases}
+
+## Your Task
+**Input**: {user_input}
+**Output**:
+"""
+```
+
+### Best Practices
+
+1. **Always Sandbox**: Use containers, VMs, or restricted environments
+2. **Resource Limits**: Set CPU, memory, and time constraints
+3. **Validate Before Execute**: Syntax check generated code when possible
+4. **Narrow DSLs**: Prefer constrained DSLs over general-purpose languages
+5. **Reflection Loop**: Feed errors back to LLM for self-correction
+
+---
+
+## Pattern 3: ReAct (Reasoning + Acting)
+
+### When to Use
+- Multi-step tasks requiring reasoning between actions
+- Tasks where tool results influence next steps
+- Complex problem-solving with feedback loops
+
+### Architecture
+
+```
+┌─────────────────────────────────────────────────────┐
+│                    ReAct Loop                       │
+│  ┌──────────┐   ┌──────────┐   ┌──────────┐        │
+│  │  Think   │──▶│   Act    │──▶│ Observe  │───┐    │
+│  └──────────┘   └──────────┘   └──────────┘   │    │
+│       ▲                                        │    │
+│       └────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────┘
+                         │
+                         ▼
+                  ┌──────────┐
+                  │  Answer  │
+                  └──────────┘
+```
+
+### Implementation Template
+
+```python
+from langgraph.prebuilt import create_react_agent
+
+REACT_SYSTEM_PROMPT = """
+You are a reasoning agent that solves problems step by step.
+
+## Approach
+1. THINK: Analyze what you know and what you need to find out
+2. ACT: Use available tools to gather information or take action
+3. OBSERVE: Review the results and update your understanding
+4. REPEAT: Continue until you can provide a complete answer
+
+## Available Tools
+{tool_descriptions}
+
+## Example
+Question: What's the weather in the capital of France?
+THINK: I need to find the capital of France, then get weather for that city.
+ACT: I know Paris is the capital. Use weather tool for Paris.
+OBSERVE: Weather tool returns sunny, 22°C
+ANSWER: The weather in Paris (capital of France) is sunny at 22°C.
+
+## Your Task
+{user_question}
+"""
+
+agent = create_react_agent(
+    model="anthropic:claude-sonnet-4-20250514",
+    tools=tools,
+    prompt=REACT_SYSTEM_PROMPT
+)
+```
+
+---
+
+## Pattern 4: Router (Hierarchical Classifier)
+
+### When to Use
+- Multiple specialized agents for different domains
+- Request classification before processing
+- Load balancing across agent types
+
+### Architecture
+
+```
+                    ┌─────────────┐
+                    │   Router    │
+                    │  (Classify) │
+                    └──────┬──────┘
+           ┌───────────────┼───────────────┐
+           ▼               ▼               ▼
+    ┌──────────┐    ┌──────────┐    ┌──────────┐
+    │ Agent A  │    │ Agent B  │    │ Agent C  │
+    │ (Domain1)│    │ (Domain2)│    │ (Domain3)│
+    └──────────┘    └──────────┘    └──────────┘
+```
+
+### Implementation Template
+
+```python
+from pydantic import BaseModel
+from typing import Literal
+from enum import Enum
+
+class AgentType(str, Enum):
+    TECHNICAL = "technical"
+    CREATIVE = "creative"
+    ANALYTICAL = "analytical"
+
+class RouterResponse(BaseModel):
+    agent: AgentType
+    confidence: float
+    reasoning: str
+
+ROUTER_PROMPT = """
+You are a request router. Classify the incoming request to the most appropriate agent.
+
+## Available Agents
+- TECHNICAL: Code, debugging, system design, APIs
+- CREATIVE: Writing, brainstorming, design, marketing
+- ANALYTICAL: Data analysis, research, comparisons, reports
+
+## Classification Rules
+1. Look for domain-specific keywords
+2. Consider the expected output format
+3. Default to ANALYTICAL for ambiguous requests
+
+## Request
+{user_request}
+
+Respond with your classification.
+"""
+
+async def route_request(user_request: str, agents: dict) -> str:
+    """Route a request to the appropriate specialized agent."""
+    
+    # Use structured output for reliable routing
+    router_response = await llm.generate(
+        prompt=ROUTER_PROMPT.format(user_request=user_request),
+        response_format=RouterResponse,
+        temperature=0.0  # Deterministic routing
+    )
+    
+    selected_agent = agents[router_response.agent]
+    return await selected_agent.process(user_request)
+```
+
+---
+
+## Pattern 5: Sequential Workflow (Prompt Chaining)
+
+### When to Use
+- Linear task dependencies
+- Progressive refinement of outputs
+- Multi-stage content generation
+
+### Architecture
+
+```
+┌─────────┐   ┌─────────┐   ┌─────────┐   ┌─────────┐
+│ Stage 1 │──▶│ Stage 2 │──▶│ Stage 3 │──▶│  Final  │
+│(Generate)│  │(Refine) │   │(Format) │   │ Output  │
+└─────────┘   └─────────┘   └─────────┘   └─────────┘
+```
+
+### Implementation Template
+
+```python
+from dataclasses import dataclass
+from typing import Callable, Any
+
+@dataclass
+class WorkflowStage:
+    name: str
+    prompt_template: str
+    output_key: str
+    processor: Callable[[str], str] = None
+
+class SequentialWorkflow:
+    def __init__(self, stages: list[WorkflowStage], llm):
+        self.stages = stages
+        self.llm = llm
+    
+    async def execute(self, initial_input: dict) -> dict:
+        context = initial_input.copy()
+        
+        for stage in self.stages:
+            prompt = stage.prompt_template.format(**context)
+            response = await self.llm.generate(prompt)
+            
+            if stage.processor:
+                response = stage.processor(response)
+            
+            context[stage.output_key] = response
+            
+        return context
+
+# Example: Blog Post Pipeline
+workflow = SequentialWorkflow([
+    WorkflowStage(
+        name="outline",
+        prompt_template="Create an outline for a blog post about {topic}",
+        output_key="outline"
+    ),
+    WorkflowStage(
+        name="draft",
+        prompt_template="Write a draft based on this outline:\n{outline}",
+        output_key="draft"
+    ),
+    WorkflowStage(
+        name="edit",
+        prompt_template="Edit this draft for clarity and engagement:\n{draft}",
+        output_key="final_post"
+    ),
+], llm=llm)
+```
+
+---
+
+## Pattern 6: Multiagent Collaboration
+
+### When to Use
+- Complex reasoning requiring multiple perspectives
+- Tasks requiring specialized domain expertise
+- Adversarial verification (red team/blue team)
+- Collaborative content creation
+
+### Collaboration Architectures
+
+#### A. Hierarchical (Executive-Worker)
+
+```
+              ┌──────────────┐
+              │  Executive   │
+              │   (Plans)    │
+              └──────┬───────┘
+       ┌─────────────┼─────────────┐
+       ▼             ▼             ▼
+┌──────────┐  ┌──────────┐  ┌──────────┐
+│ Worker 1 │  │ Worker 2 │  │ Worker 3 │
+└──────────┘  └──────────┘  └──────────┘
+```
+
+#### B. Peer-to-Peer (Collaborative)
+
+```
+┌──────────┐◀────────▶┌──────────┐
+│  Agent A │          │  Agent B │
+└────┬─────┘          └────┬─────┘
+     │                     │
+     └─────────┬───────────┘
+               ▼
+        ┌──────────┐
+        │  Agent C │
+        └──────────┘
+```
+
+#### C. Market-Based (Auction)
+
+```
+┌─────────────────────────────────┐
+│         Task Auctioneer         │
+└───────────────┬─────────────────┘
+                │ Broadcast Task
+    ┌───────────┼───────────┐
+    ▼           ▼           ▼
+┌───────┐  ┌───────┐  ┌───────┐
+│Agent 1│  │Agent 2│  │Agent 3│
+│ Bid:$ │  │ Bid:$$│  │Bid:$$$│
+└───────┘  └───────┘  └───────┘
+                │
+                ▼ Winner
+         ┌──────────┐
+         │ Agent 2  │
+         │ Executes │
+         └──────────┘
+```
+
+### Implementation Template (Review Panel)
+
+```python
+from ag2 import ConversableAgent, RoundRobinPattern, initiate_group_chat
+
+# Create specialized reviewer agents
+reviewers = []
+reviewer_configs = [
+    ("technical_reviewer", "You review for technical accuracy and completeness."),
+    ("clarity_reviewer", "You review for clarity and readability."),
+    ("bias_reviewer", "You review for potential biases and balanced perspective."),
+    ("secretary", "You synthesize feedback into actionable directives."),
+]
+
+for name, system_message in reviewer_configs:
+    reviewers.append(ConversableAgent(
+        name=name,
+        system_message=system_message,
+        llm_config=llm_config
+    ))
+
+# Set up round-robin discussion
+pattern = RoundRobinPattern(
+    initial_agent=reviewers[0],
+    agents=reviewers,
+    group_manager_args={"llm_config": llm_config}
+)
+
+# Execute collaborative review
+reviews, context, last_agent = initiate_group_chat(
+    pattern=pattern,
+    max_rounds=len(reviewers) + 1,
+    messages=f"Review this content:\n{content_to_review}"
+)
+```
+
+### Implementation Template (Market-Based Auction)
+
+```python
+async def run_sealed_bid_auction(
+    agents: list,
+    task_description: str
+) -> tuple[str, float]:
+    """
+    Run a sealed-bid auction where agents bid on a task.
+    
+    Returns:
+        Tuple of (winning_agent_name, winning_bid)
+    """
+    bids = {}
+    
+    for agent in agents:
+        bid_prompt = f"""
+        Task: {task_description}
+        
+        Evaluate your capability and resources for this task.
+        Respond with ONLY a number representing your bid (higher = more confident).
+        """
+        bid_response = await agent.generate(bid_prompt)
+        bids[agent.name] = float(bid_response.strip())
+    
+    winner = max(bids, key=bids.get)
+    return winner, bids[winner]
+```
+
+---
+
+## Security Patterns for Agentic Systems
+
+### Prompt Injection Defenses
+
+When agents take actions, prompt injection risks increase significantly. Use these defensive patterns:
+
+#### 1. Action-Selector
+Predefined action set, no feedback loop to agent.
+
+```python
+ALLOWED_ACTIONS = {"search", "summarize", "calculate"}
+
+def validate_action(action: str) -> bool:
+    return action in ALLOWED_ACTIONS
+```
+
+#### 2. Plan-Then-Execute
+Fixed plan created upfront, executed without deviation.
+
+```python
+async def plan_then_execute(task: str, tools: list):
+    # Phase 1: Create immutable plan
+    plan = await llm.generate(
+        f"Create a step-by-step plan for: {task}\n"
+        "Output as numbered list. This plan cannot be modified."
+    )
+    steps = parse_plan(plan)
+    
+    # Phase 2: Execute without LLM re-evaluation
+    results = []
+    for step in steps:
+        tool = match_tool(step, tools)
+        result = await tool.execute(step.params)
+        results.append(result)
+    
+    return results
+```
+
+#### 3. Dual-LLM Architecture
+Privileged LLM plans, sandboxed LLM processes untrusted data.
+
+```python
+async def dual_llm_process(user_input: str, untrusted_data: str):
+    # Privileged LLM: Has tool access, processes trusted input
+    plan = await privileged_llm.plan(user_input)
+    
+    # Sandboxed LLM: No tool access, processes untrusted data
+    extracted_info = await sandboxed_llm.extract(
+        untrusted_data,
+        tools=[]  # No tools!
+    )
+    
+    # Privileged LLM: Executes plan with sanitized data
+    return await privileged_llm.execute(plan, extracted_info)
+```
+
+#### 4. Context Minimization
+Remove unnecessary context, especially original prompts, in subsequent steps.
+
+```python
+def minimize_context(step_number: int, full_context: dict) -> dict:
+    """Only include context necessary for current step."""
+    if step_number > 1:
+        # Remove original user prompt after initial processing
+        return {k: v for k, v in full_context.items() 
+                if k != "original_prompt"}
+    return full_context
+```
+
+---
+
+## Failure Mode Taxonomy
+
+Multiagent systems fail in predictable ways. Design for these failure modes:
+
+### Specification Failures
+| Failure | Symptom | Mitigation |
+|---------|---------|------------|
+| Role drift | Agent ignores assigned role | Reinforce role in system prompt |
+| Step repetition | Same action executed multiple times | Track action history |
+| Context loss | Agent forgets prior steps | Maintain explicit context window |
+| Completion blindness | Doesn't recognize task is done | Define explicit completion criteria |
+
+### Coordination Failures
+| Failure | Symptom | Mitigation |
+|---------|---------|------------|
+| Conversation reset | Context unexpectedly cleared | Persist state externally |
+| Information withholding | Agent doesn't share critical data | Require explicit handoffs |
+| Reasoning-action mismatch | Agent says X, does Y | Log both reasoning and actions |
+| Input ignoring | Agent ignores other agents | Require acknowledgment protocol |
+
+### Verification Failures
+| Failure | Symptom | Mitigation |
+|---------|---------|------------|
+| Premature termination | Stops before complete | Quality gates at each stage |
+| Error propagation | Mistakes compound | Checkpoint verification |
+| Output acceptance | No quality check on final output | Final review agent |
+
+---
+
+## Production Checklist
+
+### Before Deployment
+- [ ] Tool count < 10 per agent
+- [ ] All tools have comprehensive docstrings
+- [ ] Sandbox environment configured for code execution
+- [ ] Timeout limits set for all external calls
+- [ ] Rate limiting implemented
+- [ ] Prompt injection defenses in place
+- [ ] Failure modes documented and handled
+- [ ] Human escalation path defined
+
+### Monitoring
+- [ ] Log all tool calls and results
+- [ ] Track agent reasoning chains
+- [ ] Alert on repeated failures
+- [ ] Monitor for context window exhaustion
+- [ ] Track token usage per agent
+
+### Testing
+- [ ] Unit tests for each tool
+- [ ] Integration tests for agent workflows
+- [ ] Adversarial testing for prompt injection
+- [ ] Load testing for multiagent coordination
+- [ ] Chaos testing for agent failures
+
+---
+
+## Quick Reference: Pattern Selection
+
+```
+Need real-time data or API calls?
+    └─▶ Tool Calling
+
+Need to generate code/queries (SQL, graphs)?
+    └─▶ Code Execution
+
+Need reasoning between action steps?
+    └─▶ ReAct
+
+Need to route to specialized handlers?
+    └─▶ Router
+
+Need linear multi-step processing?
+    └─▶ Sequential Workflow
+
+Need multiple perspectives or expertise?
+    └─▶ Multiagent Collaboration
+
+Need dynamic capability-based assignment?
+    └─▶ Market-Based Auction
+```
+
+---
+
+## References
+
+- Yao et al. (2022) - ReAct: Synergizing Reasoning and Acting
+- Schick et al. (2023) - Toolformer
+- Beurer-Kellner et al. (2025) - Securing LLM Agents Against Prompt Injection
+- Cemri et al. (2025) - Why Multiagent Systems Fail
+- Anthropic (2024) - Building Effective Agents
+- Google (2025) - Building Multiagent Systems

@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "Custom injection patterns for PromptSecurityGuard - OWASP LLM Top 10 coverage",
+  "version": "1.0.0",
+  "updated": "2024-12",
+
+  "instruction_override": [
+    "ignore\\s+(all\\s+)?(previous\\s+)?instructions?",
+    "ignore\\s+(your|the)\\s+instructions?",
+    "disregard\\s+(all\\s+)?(prior\\s+)?(instructions?|context|safety\\s+guidelines?)",
+    "forget\\s+(everything|what)\\s+(you|I)\\s+(said|told)",
+    "override\\s+(your|the)\\s+(programming|instructions?)",
+    "new\\s+instructions\\s*:",
+    "reset\\s+(your|all)\\s+instructions?"
+  ],
+
+  "role_hijack": [
+    "you\\s+are\\s+now\\s+",
+    "act\\s+as\\s+(if\\s+you\\s+are\\s+)?",
+    "pretend\\s+(to\\s+be|you('re|\\s+are))",
+    "from\\s+now\\s+on\\s+you('re|\\s+are)",
+    "roleplay\\s+as\\s+",
+    "simulate\\s+being\\s+",
+    "behave\\s+like\\s+",
+    "assume\\s+the\\s+role\\s+of"
+  ],
+
+  "prompt_leak": [
+    "(show|reveal|print|output)\\s+(me\\s+)?(your|the)\\s+(system\\s+)?prompt",
+    "(show|reveal|print|output)\\s+(me\\s+)?(your|the)\\s+instructions?",
+    "what\\s+(are|is)\\s+your\\s+(instructions?|system\\s+prompt)",
+    "repeat\\s+(back\\s+)?(your|the)\\s+instructions?",
+    "display\\s+(your|the)\\s+(original|initial)\\s+(prompt|instructions?)",
+    "tell\\s+me\\s+(your|the)\\s+system\\s+prompt",
+    "output\\s+verbatim\\s+your\\s+instructions?"
+  ],
+
+  "delimiter_injection": [
+    "```\\s*system",
+    "\\[INST\\]",
+    "<\\|im_start\\|>",
+    "Human:\\s*.*\\s*Assistant:",
+    "###\\s*(System|Human|Assistant)",
+    "<(system|user|assistant)>",
+    "\\[\\[\\[SYSTEM\\]\\]\\]",
+    "\\{\\{system\\}\\}"
+  ],
+
+  "jailbreak": [
+    "DAN\\s+mode",
+    "developer\\s+mode\\s+(enabled|activated|for)",
+    "(no|without)\\s+(ethical|safety)\\s+(guidelines|restrictions)",
+    "DUDE\\s+mode",
+    "maximum\\s+mode",
+    "unrestricted\\s+mode",
+    "evil\\s+(mode|assistant)",
+    "opposite\\s+day\\s+mode"
+  ],
+
+  "data_exfiltration": [
+    "send\\s+(to|this|data)\\s+(http|email|webhook)",
+    "exfiltrate\\s+(data|information)",
+    "leak\\s+(the\\s+)?data\\s+to",
+    "forward\\s+(all|this)\\s+to"
+  ],
+
+  "privilege_escalation": [
+    "(grant|give)\\s+(me|yourself)\\s+(admin|root|elevated)\\s+(access|privileges)",
+    "bypass\\s+(authentication|authorization|security)",
+    "escalate\\s+(my\\s+)?privileges",
+    "sudo\\s+mode"
+  ],
+
+  "_metadata": {
+    "total_patterns": 42,
+    "categories": 7,
+    "coverage": [
+      "OWASP LLM01 - Prompt Injection",
+      "OWASP LLM02 - Insecure Output Handling",
+      "OWASP LLM06 - Sensitive Information Disclosure",
+      "OWASP LLM08 - Excessive Agency"
+    ],
+    "notes": [
+      "Patterns are case-insensitive by default",
+      "Use double backslashes for regex escaping in JSON",
+      "Add custom patterns to this file for hot-reload capability",
+      "Test new patterns in staging before production deployment"
+    ]
+  }
+}
+

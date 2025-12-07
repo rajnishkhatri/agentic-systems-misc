@@ -1,0 +1,13 @@
+pydantic-ai
+streamlit
+mem0ai
+chromadb
+sentence-transformers
+python-json-logger
+nest-asyncio
+llama-index-llms-openai
+llama-index-embeddings-openai
+llama-index
+openparse
+python-dotenv
+

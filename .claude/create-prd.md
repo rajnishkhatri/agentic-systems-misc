@@ -2,55 +2,218 @@
 
 ## Goal
 
-To guide an AI assistant in creating a detailed Product Requirements Document (PRD) in Markdown format, based on an initial user prompt. The PRD should be clear, actionable, and suitable for a junior developer to understand and implement the feature.
+To guide an AI assistant in creating a detailed Product Requirements Document (PRD) in Markdown format, using Pólya's structured problem-solving methodology. The PRD should be clear, actionable, and suitable for a junior developer to understand and implement the feature.
 
-## Process
+**Methodology Reference:** @.claude/skills/polya-planning/SKILL.md
 
-1.  **Receive Initial Prompt:** The user provides a brief description or request for a new feature or functionality.
-2.  **Ask Clarifying Questions:** Before writing the PRD, the AI *must* ask clarifying questions to gather sufficient detail. The goal is to understand the "what" and "why" of the feature, not necessarily the "how" (which the developer will figure out). Make sure to provide options in letter/number lists so I can respond easily with my selections.
-3.  **Generate PRD:** Based on the initial prompt and the user's answers to the clarifying questions, generate a PRD using the structure outlined below.
-4.  **Save PRD:** Save the generated document as `[n]-prd-[feature-name].md` inside the `/tasks` directory. (Where `n` is a zero-padded 4-digit sequence starting from 0001, e.g., `0001-prd-user-authentication.md`, `0002-prd-dashboard.md`, etc.)
+---
 
-## Clarifying Questions (Examples)
+## Process Overview
 
-The AI should adapt its questions based on the prompt, but here are some common areas to explore:
+```
+1. Receive → 2. Assess Complexity → 3. UNDERSTAND Phase → [GATE 1]
+    → 4. PLAN Phase → [GATE 2] → 5. Generate PRD → [GATE 3] → 6. Save
+```
 
-*   **Problem/Goal:** "What problem does this feature solve for the user?" or "What is the main goal we want to achieve with this feature?"
-*   **Target User:** "Who is the primary user of this feature?"
-*   **Core Functionality:** "Can you describe the key actions a user should be able to perform with this feature?"
-*   **User Stories:** "Could you provide a few user stories? (e.g., As a [type of user], I want to [perform an action] so that [benefit].)"
-*   **Acceptance Criteria:** "How will we know when this feature is successfully implemented? What are the key success criteria?"
-*   **Scope/Boundaries:** "Are there any specific things this feature *should not* do (non-goals)?"
-*   **Data Requirements:** "What kind of data does this feature need to display or manipulate?"
-*   **Design/UI:** "Are there any existing design mockups or UI guidelines to follow?" or "Can you describe the desired look and feel?"
-*   **Edge Cases:** "Are there any potential edge cases or error conditions we should consider?"
+### Step 1: Receive Initial Prompt
+The user provides a brief description or request for a new feature.
 
-## PRD Structure
+### Step 2: Assess Complexity
+Before asking questions, assess and confirm complexity:
 
-The generated PRD should include the following sections:
+| Complexity | Indicators | Question Depth |
+|------------|------------|----------------|
+| **Simple** | Single component, clear outcome, <2 days | 3-4 focused questions |
+| **Medium** | Multiple components, some ambiguity, 1-2 weeks | 5-7 grouped questions |
+| **Complex** | System-level, significant ambiguity, multi-week | 8-10+ with sub-questions |
 
-1.  **Introduction/Overview:** Briefly describe the feature and the problem it solves. State the goal.
-2.  **Goals:** List the specific, measurable objectives for this feature.
-3.  **User Stories:** Detail the user narratives describing feature usage and benefits.
-4.  **Functional Requirements:** List the specific functionalities the feature must have. Use clear, concise language (e.g., "The system must allow users to upload a profile picture."). Number these requirements.
-5.  **Non-Goals (Out of Scope):** Clearly state what this feature will *not* include to manage scope.
-6.  **Design Considerations (Optional):** Link to mockups, describe UI/UX requirements, or mention relevant components/styles if applicable.
-7.  **Technical Considerations (Optional):** Mention any known technical constraints, dependencies, or suggestions (e.g., "Should integrate with the existing Auth module").
-8.  **Success Metrics:** How will the success of this feature be measured? (e.g., "Increase user engagement by 10%", "Reduce support tickets related to X").
-9.  **Open Questions:** List any remaining questions or areas needing further clarification.
+**Say:** "This appears to be a [LEVEL] request because [reasons]. Do you agree? (Yes / Adjust)"
+
+### Step 3: UNDERSTAND Phase (Pólya Phase 1)
+Ask questions to understand the problem. Adapt depth to complexity.
+
+**Core Questions (Always Ask):**
+1. What problem does this feature solve for the user?
+2. What is the desired outcome/end state?
+3. What constraints should I know about?
+4. What does success look like?
+
+**Additional Questions (Medium/Complex):**
+5. Who are the primary users? Secondary?
+6. Have you seen this implemented elsewhere?
+7. What should this explicitly NOT do (non-goals)?
+8. Are there technical constraints (performance, integrations, security)?
+9. Are there business constraints (timeline, team, budget)?
+10. What's the simplest version that would be valuable?
+
+**Format:** Provide questions as numbered lists with letter sub-options for easy response.
+
+### GATE 1: Understanding Validation
+Before proceeding to planning, summarize understanding and get confirmation:
+
+```markdown
+---
+**GATE 1: Understanding Validation**
+
+Here's my understanding:
+• **Goal:** [Restated goal]
+• **Users:** [Who benefits]
+• **Key constraint:** [Most important constraint]
+• **Success looks like:** [Measurable outcome]
+
+**Confirmation needed:** Does this capture the problem correctly?
+- Yes, proceed to planning
+- Adjust [tell me what's different]
+- Ask more questions
+---
+```
+
+### Step 4: PLAN Phase (Pólya Phase 2)
+Explore strategic approach and identify applicable heuristics.
+
+**Strategic Questions:**
+1. Have we solved something similar before?
+2. What are 2-3 possible approaches?
+3. What could go wrong? How to mitigate?
+4. What must exist before this can work?
+
+**Heuristic Selection (for Technical Considerations):**
+Select applicable strategies to recommend in the PRD:
+
+| Heuristic | Use When |
+|-----------|----------|
+| **Decomposition** | Problem too large to solve directly |
+| **Analogy** | Problem seems unfamiliar; find similar solved problem |
+| **Working Backward** | Goal is clear but path is not |
+| **Simplification** | Too many constraints; solve simpler version first |
+| **Auxiliary Problem** | Stuck; solve a helper problem to unblock |
+
+### GATE 2: Approach Validation
+Before generating PRD, confirm approach:
+
+```markdown
+---
+**GATE 2: Approach Validation**
+
+Here's the proposed approach:
+• **Strategy:** [Primary approach]
+• **Major components:** [2-4 parts]
+• **Key risk:** [Biggest risk + mitigation]
+
+**Recommended heuristics:** [List 1-2 strategies that apply]
+
+**Confirmation needed:** Does this approach make sense?
+- Yes, proceed to PRD
+- Adjust approach
+- Rethink problem
+---
+```
+
+### Step 5: Generate PRD
+Based on UNDERSTAND and PLAN phases, generate PRD with enhanced structure.
+
+### GATE 3: PRD Review
+Before saving, present the draft PRD and confirm:
+
+```markdown
+---
+**GATE 3: PRD Review**
+
+Here's the draft PRD. Please review:
+[Full PRD content]
+
+**Confirmation needed:** Ready to save?
+- Yes, save to /tasks/
+- Revise [specific changes]
+- Major rework needed
+---
+```
+
+### Step 6: Save PRD
+Save as `[n]-prd-[feature-name].md` in `/tasks/` directory.
+(n = zero-padded 4-digit sequence: 0001, 0002, etc.)
+
+---
+
+## PRD Structure (Enhanced)
+
+The generated PRD should include:
+
+1. **Introduction/Overview:** Feature description and problem it solves.
+
+2. **Problem Understanding:** *(New section)*
+   - Restated problem in your words
+   - Key constraints identified
+   - Assumptions made (if any)
+   - Success criteria
+
+3. **Goals:** Specific, measurable objectives.
+
+4. **Strategic Approach:** *(New section)*
+   - Chosen strategy with rationale
+   - Major components/phases
+   - Recommended implementation heuristics
+
+5. **User Stories:** User narratives describing usage and benefits.
+
+6. **Functional Requirements:** Numbered list of specific functionalities.
+
+7. **Non-Goals (Out of Scope):** What this feature will NOT include.
+
+8. **Design Considerations:** UI/UX requirements, mockups, components.
+
+9. **Technical Considerations:**
+   - Dependencies and integrations
+   - **Recommended Implementation Strategies** *(Enhanced)*
+     - Strategy name
+     - Why it applies
+     - Suggested approach
+     - Watch for (common pitfall)
+
+10. **Success Metrics:** How success will be measured.
+
+11. **Validation Checkpoints:** *(New section)*
+    - Key verification points during implementation
+    - Derived from success criteria and constraints
+
+12. **Open Questions:** Remaining questions or clarifications needed.
+
+---
 
 ## Target Audience
 
-Assume the primary reader of the PRD is a **junior developer**. Therefore, requirements should be explicit, unambiguous, and avoid jargon where possible. Provide enough detail for them to understand the feature's purpose and core logic.
+Primary reader: **junior developer**. Requirements must be:
+- Explicit and unambiguous
+- Avoid jargon where possible
+- Include enough detail to understand purpose and core logic
+- Include implementation strategy guidance (heuristics)
+
+---
 
 ## Output
 
-*   **Format:** Markdown (`.md`)
-*   **Location:** `/tasks/`
-*   **Filename:** `[n]-prd-[feature-name].md`
+* **Format:** Markdown (`.md`)
+* **Location:** `/tasks/`
+* **Filename:** `[n]-prd-[feature-name].md`
 
-## Final instructions
+---
+
+## Final Instructions
 
 1. Do NOT start implementing the PRD
-2. Make sure to ask the user clarifying questions
-3. Take the user's answers to the clarifying questions and improve the PRD
+2. Always assess complexity first and get confirmation
+3. Use all 3 validation gates (Understanding, Approach, PRD Review)
+4. Include recommended heuristics in Technical Considerations
+5. Take user's answers and iterate before finalizing
+6. Reference @.claude/skills/polya-planning/SKILL.md for detailed question sets
+
+---
+
+## Quick Reference: Pólya Questions
+
+| Phase | Core Question |
+|-------|---------------|
+| Understand | "What is the unknown? What would success look like?" |
+| Plan | "Have I seen this before? What approach fits?" |
+| Execute (Generate) | "Is each section correct? Does it satisfy requirements?" |
+| Reflect (Review) | "Does it work? What's missing?" |

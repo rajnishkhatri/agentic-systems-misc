@@ -1,0 +1,35 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1a365d', 'primaryTextColor': '#fff', 'primaryBorderColor': '#2d3748', 'lineColor': '#4a5568', 'secondaryColor': '#2c5282', 'tertiaryColor': '#3182ce', 'background': '#f7fafc', 'mainBkg': '#f7fafc', 'secondBkg': '#edf2f7'}}}%%
+
+flowchart TB
+    subgraph Triangle["<b>THE GOVERNANCE TRIANGLE</b><br/>AI Agent Accountability Framework"]
+        direction TB
+
+        AF["<b>AgentFacts</b><br/>━━━━━━━━━<br/>WHO<br/><i>Identity & Authorization</i><br/>• Agent ID & Version<br/>• Owner & Capabilities<br/>• Cryptographic Signature<br/>• Policy Declarations"]
+
+        BB["<b>BlackBox</b><br/>━━━━━━━━━<br/>WHAT<br/><i>Execution Recording</i><br/>• Complete Trace<br/>• Step Timing<br/>• Error Capture<br/>• State Snapshots"]
+
+        GR["<b>GuardRails</b><br/>━━━━━━━━━<br/>VALID?<br/><i>Output Validation</i><br/>• PII Detection<br/>• Schema Compliance<br/>• Fail Actions<br/>• Audit Traces"]
+    end
+
+    AF --- BB
+    BB --- GR
+    GR --- AF
+
+    subgraph Questions["Questions Answered"]
+        Q1["Who executed this?<br/>→ <b>AgentFacts</b>"]
+        Q2["What did they do?<br/>→ <b>BlackBox</b>"]
+        Q3["Was output safe?<br/>→ <b>GuardRails</b>"]
+        Q4["Why did it fail?<br/>→ <b>All Three</b>"]
+    end
+
+    Triangle --> Questions
+
+    style Triangle fill:#f0f9ff,stroke:#2563eb,stroke-width:3px
+    style Questions fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style AF fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+    style BB fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style GR fill:#fce7f3,stroke:#ec4899,stroke-width:2px
+    style Q1 fill:#e0e7ff,stroke:#4f46e5
+    style Q2 fill:#fef3c7,stroke:#f59e0b
+    style Q3 fill:#fce7f3,stroke:#ec4899
+    style Q4 fill:#f3f4f6,stroke:#6b7280

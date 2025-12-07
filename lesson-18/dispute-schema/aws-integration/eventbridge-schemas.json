@@ -1,0 +1,823 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dispute Management EventBridge Schemas",
+  "description": "Event schemas for the dispute management system event bus",
+  "definitions": {
+    "DisputeCreatedEvent": {
+      "type": "object",
+      "description": "Published when a new dispute is created",
+      "required": ["version", "id", "detail-type", "source", "account", "time", "region", "detail"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "const": "0"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique event ID"
+        },
+        "detail-type": {
+          "type": "string",
+          "const": "dispute.created"
+        },
+        "source": {
+          "type": "string",
+          "const": "dispute.management"
+        },
+        "account": {
+          "type": "string",
+          "pattern": "^[0-9]{12}$"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "region": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "object",
+          "required": ["disputeId", "chargeId", "amount", "currency", "reason", "dueBy"],
+          "properties": {
+            "disputeId": {
+              "type": "string",
+              "pattern": "^dp_[a-zA-Z0-9]{24}$",
+              "description": "Unique dispute identifier"
+            },
+            "chargeId": {
+              "type": "string",
+              "pattern": "^ch_[a-zA-Z0-9]{24}$",
+              "description": "Associated charge identifier"
+            },
+            "paymentIntentId": {
+              "type": "string",
+              "pattern": "^pi_[a-zA-Z0-9]{24}$",
+              "description": "Associated payment intent identifier"
+            },
+            "amount": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Disputed amount in smallest currency unit"
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[a-z]{3}$",
+              "description": "ISO 4217 currency code"
+            },
+            "reason": {
+              "type": "string",
+              "enum": [
+                "credit_not_processed",
+                "duplicate",
+                "fraudulent",
+                "general",
+                "product_not_received",
+                "product_unacceptable",
+                "subscription_canceled",
+                "unrecognized"
+              ]
+            },
+            "networkReasonCode": {
+              "type": "string",
+              "description": "Card network specific reason code"
+            },
+            "network": {
+              "type": "string",
+              "enum": ["visa", "mastercard", "amex", "discover"]
+            },
+            "dueBy": {
+              "type": "integer",
+              "description": "Unix timestamp for evidence deadline"
+            },
+            "metadata": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "DisputeStatusChangedEvent": {
+      "type": "object",
+      "description": "Published when a dispute status changes",
+      "required": ["version", "id", "detail-type", "source", "account", "time", "region", "detail"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "const": "0"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "detail-type": {
+          "type": "string",
+          "const": "dispute.status_changed"
+        },
+        "source": {
+          "type": "string",
+          "const": "dispute.management"
+        },
+        "account": {
+          "type": "string",
+          "pattern": "^[0-9]{12}$"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "region": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "object",
+          "required": ["disputeId", "previousStatus", "newStatus"],
+          "properties": {
+            "disputeId": {
+              "type": "string",
+              "pattern": "^dp_[a-zA-Z0-9]{24}$"
+            },
+            "previousStatus": {
+              "type": "string",
+              "enum": [
+                "needs_response",
+                "under_review",
+                "won",
+                "lost",
+                "warning_needs_response",
+                "warning_under_review",
+                "warning_closed",
+                "charge_refunded"
+              ]
+            },
+            "newStatus": {
+              "type": "string",
+              "enum": [
+                "needs_response",
+                "under_review",
+                "won",
+                "lost",
+                "warning_needs_response",
+                "warning_under_review",
+                "warning_closed",
+                "charge_refunded"
+              ]
+            },
+            "reason": {
+              "type": "string",
+              "description": "Reason for status change"
+            },
+            "networkSubmissionId": {
+              "type": "string",
+              "description": "Network submission ID if status is under_review"
+            },
+            "changedBy": {
+              "type": "string",
+              "enum": ["system", "user", "network"],
+              "description": "Who triggered the status change"
+            }
+          }
+        }
+      }
+    },
+
+    "DisputeEvidenceSubmittedEvent": {
+      "type": "object",
+      "description": "Published when evidence is submitted for a dispute",
+      "required": ["version", "id", "detail-type", "source", "account", "time", "region", "detail"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "const": "0"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "detail-type": {
+          "type": "string",
+          "const": "dispute.evidence_submitted"
+        },
+        "source": {
+          "type": "string",
+          "const": "dispute.management"
+        },
+        "account": {
+          "type": "string",
+          "pattern": "^[0-9]{12}$"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "region": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "object",
+          "required": ["disputeId", "submissionCount", "textFieldsSubmitted", "fileFieldsSubmitted"],
+          "properties": {
+            "disputeId": {
+              "type": "string",
+              "pattern": "^dp_[a-zA-Z0-9]{24}$"
+            },
+            "submissionCount": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Number of times evidence has been submitted"
+            },
+            "textFieldsSubmitted": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of text evidence fields that were submitted"
+            },
+            "fileFieldsSubmitted": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of file evidence fields that were submitted"
+            },
+            "totalTextLength": {
+              "type": "integer",
+              "description": "Total character count of text evidence"
+            },
+            "totalFileSize": {
+              "type": "integer",
+              "description": "Total bytes of file evidence"
+            },
+            "enhancedEvidenceIncluded": {
+              "type": "boolean",
+              "description": "Whether Visa CE 3.0 evidence was included"
+            },
+            "submittedToNetwork": {
+              "type": "boolean",
+              "description": "Whether evidence was submitted to the card network"
+            }
+          }
+        }
+      }
+    },
+
+    "DisputeWonEvent": {
+      "type": "object",
+      "description": "Published when a dispute is resolved in merchant's favor",
+      "required": ["version", "id", "detail-type", "source", "account", "time", "region", "detail"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "const": "0"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "detail-type": {
+          "type": "string",
+          "const": "dispute.won"
+        },
+        "source": {
+          "type": "string",
+          "const": "dispute.management"
+        },
+        "account": {
+          "type": "string",
+          "pattern": "^[0-9]{12}$"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "region": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "object",
+          "required": ["disputeId", "chargeId", "amount", "currency"],
+          "properties": {
+            "disputeId": {
+              "type": "string",
+              "pattern": "^dp_[a-zA-Z0-9]{24}$"
+            },
+            "chargeId": {
+              "type": "string",
+              "pattern": "^ch_[a-zA-Z0-9]{24}$"
+            },
+            "amount": {
+              "type": "integer",
+              "description": "Amount returned to merchant"
+            },
+            "currency": {
+              "type": "string"
+            },
+            "balanceTransactionId": {
+              "type": "string",
+              "pattern": "^txn_[a-zA-Z0-9]{24}$",
+              "description": "Balance transaction for the reversal"
+            },
+            "networkOutcomeReason": {
+              "type": "string",
+              "description": "Reason provided by network for outcome"
+            },
+            "resolutionDuration": {
+              "type": "integer",
+              "description": "Days from dispute creation to resolution"
+            },
+            "usedEnhancedEvidence": {
+              "type": "boolean",
+              "description": "Whether enhanced evidence (CE 3.0) was used"
+            }
+          }
+        }
+      }
+    },
+
+    "DisputeLostEvent": {
+      "type": "object",
+      "description": "Published when a dispute is resolved in cardholder's favor",
+      "required": ["version", "id", "detail-type", "source", "account", "time", "region", "detail"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "const": "0"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "detail-type": {
+          "type": "string",
+          "const": "dispute.lost"
+        },
+        "source": {
+          "type": "string",
+          "const": "dispute.management"
+        },
+        "account": {
+          "type": "string",
+          "pattern": "^[0-9]{12}$"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "region": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "object",
+          "required": ["disputeId", "chargeId", "amount", "currency", "reason"],
+          "properties": {
+            "disputeId": {
+              "type": "string",
+              "pattern": "^dp_[a-zA-Z0-9]{24}$"
+            },
+            "chargeId": {
+              "type": "string",
+              "pattern": "^ch_[a-zA-Z0-9]{24}$"
+            },
+            "amount": {
+              "type": "integer",
+              "description": "Amount lost"
+            },
+            "currency": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string",
+              "enum": [
+                "credit_not_processed",
+                "duplicate",
+                "fraudulent",
+                "general",
+                "product_not_received",
+                "product_unacceptable",
+                "subscription_canceled",
+                "unrecognized"
+              ]
+            },
+            "lossReason": {
+              "type": "string",
+              "enum": [
+                "evidence_not_submitted",
+                "deadline_missed",
+                "insufficient_evidence",
+                "network_decision",
+                "merchant_accepted"
+              ]
+            },
+            "networkOutcomeReason": {
+              "type": "string"
+            },
+            "resolutionDuration": {
+              "type": "integer",
+              "description": "Days from dispute creation to resolution"
+            }
+          }
+        }
+      }
+    },
+
+    "DisputeDeadlineApproachingEvent": {
+      "type": "object",
+      "description": "Published when evidence deadline is approaching (72 hours, 24 hours)",
+      "required": ["version", "id", "detail-type", "source", "account", "time", "region", "detail"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "const": "0"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "detail-type": {
+          "type": "string",
+          "const": "dispute.deadline_approaching"
+        },
+        "source": {
+          "type": "string",
+          "const": "dispute.management"
+        },
+        "account": {
+          "type": "string",
+          "pattern": "^[0-9]{12}$"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "region": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "object",
+          "required": ["disputeId", "dueBy", "hoursRemaining", "alertLevel"],
+          "properties": {
+            "disputeId": {
+              "type": "string",
+              "pattern": "^dp_[a-zA-Z0-9]{24}$"
+            },
+            "chargeId": {
+              "type": "string",
+              "pattern": "^ch_[a-zA-Z0-9]{24}$"
+            },
+            "amount": {
+              "type": "integer"
+            },
+            "currency": {
+              "type": "string"
+            },
+            "dueBy": {
+              "type": "integer",
+              "description": "Unix timestamp of deadline"
+            },
+            "hoursRemaining": {
+              "type": "integer",
+              "description": "Hours until deadline"
+            },
+            "alertLevel": {
+              "type": "string",
+              "enum": ["warning", "urgent", "critical"],
+              "description": "warning=72h, urgent=24h, critical=<6h"
+            },
+            "hasEvidence": {
+              "type": "boolean",
+              "description": "Whether any evidence has been submitted"
+            }
+          }
+        }
+      }
+    },
+
+    "BalanceTransactionCreatedEvent": {
+      "type": "object",
+      "description": "Published when a balance transaction is created",
+      "required": ["version", "id", "detail-type", "source", "account", "time", "region", "detail"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "const": "0"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "detail-type": {
+          "type": "string",
+          "const": "balance_transaction.created"
+        },
+        "source": {
+          "type": "string",
+          "const": "dispute.management"
+        },
+        "account": {
+          "type": "string",
+          "pattern": "^[0-9]{12}$"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "region": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "object",
+          "required": ["transactionId", "disputeId", "type", "amount", "currency", "net"],
+          "properties": {
+            "transactionId": {
+              "type": "string",
+              "pattern": "^txn_[a-zA-Z0-9]{24}$"
+            },
+            "disputeId": {
+              "type": "string",
+              "pattern": "^dp_[a-zA-Z0-9]{24}$"
+            },
+            "type": {
+              "type": "string",
+              "enum": ["dispute", "dispute_reversal", "dispute_fee", "dispute_fee_refund"]
+            },
+            "amount": {
+              "type": "integer",
+              "description": "Transaction amount (can be negative)"
+            },
+            "currency": {
+              "type": "string"
+            },
+            "fee": {
+              "type": "integer",
+              "description": "Fee amount"
+            },
+            "net": {
+              "type": "integer",
+              "description": "Net amount after fees"
+            }
+          }
+        }
+      }
+    },
+
+    "CE3EligibilityChangedEvent": {
+      "type": "object",
+      "description": "Published when Visa CE 3.0 eligibility status changes",
+      "required": ["version", "id", "detail-type", "source", "account", "time", "region", "detail"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "const": "0"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "detail-type": {
+          "type": "string",
+          "const": "dispute.ce3_eligibility_changed"
+        },
+        "source": {
+          "type": "string",
+          "const": "dispute.management"
+        },
+        "account": {
+          "type": "string",
+          "pattern": "^[0-9]{12}$"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "region": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "object",
+          "required": ["disputeId", "previousStatus", "newStatus"],
+          "properties": {
+            "disputeId": {
+              "type": "string",
+              "pattern": "^dp_[a-zA-Z0-9]{24}$"
+            },
+            "previousStatus": {
+              "type": "string",
+              "enum": ["qualified", "requires_action", "not_qualified"],
+              "nullable": true
+            },
+            "newStatus": {
+              "type": "string",
+              "enum": ["qualified", "requires_action", "not_qualified"]
+            },
+            "requiredActions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "missing_customer_identifiers",
+                  "missing_prior_undisputed_transactions",
+                  "missing_merchandise_or_services",
+                  "missing_disputed_transaction_description",
+                  "missing_customer_email_address",
+                  "missing_customer_purchase_ip",
+                  "transactions_too_recent",
+                  "transactions_too_old"
+                ]
+              }
+            },
+            "priorTransactionsFound": {
+              "type": "integer"
+            },
+            "priorTransactionsEligible": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+
+    "NetworkSubmissionEvent": {
+      "type": "object",
+      "description": "Published when evidence is submitted to card network",
+      "required": ["version", "id", "detail-type", "source", "account", "time", "region", "detail"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "const": "0"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "detail-type": {
+          "type": "string",
+          "const": "dispute.network_submission"
+        },
+        "source": {
+          "type": "string",
+          "const": "dispute.management"
+        },
+        "account": {
+          "type": "string",
+          "pattern": "^[0-9]{12}$"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "region": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "object",
+          "required": ["disputeId", "network", "submissionId", "status"],
+          "properties": {
+            "disputeId": {
+              "type": "string",
+              "pattern": "^dp_[a-zA-Z0-9]{24}$"
+            },
+            "network": {
+              "type": "string",
+              "enum": ["visa", "mastercard", "amex", "discover"]
+            },
+            "submissionId": {
+              "type": "string"
+            },
+            "networkCaseId": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["submitted", "pending", "failed", "acknowledged"]
+            },
+            "acknowledgedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "errorCode": {
+              "type": "string",
+              "description": "Error code if submission failed"
+            },
+            "errorMessage": {
+              "type": "string",
+              "description": "Error message if submission failed"
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "eventBusConfiguration": {
+    "eventBusName": "dispute-events-${Environment}",
+    "rules": [
+      {
+        "name": "dispute-created-rule",
+        "description": "Route dispute.created events",
+        "eventPattern": {
+          "source": ["dispute.management"],
+          "detail-type": ["dispute.created"]
+        },
+        "targets": [
+          {
+            "id": "step-functions-trigger",
+            "arn": "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:DisputeWorkflow"
+          },
+          {
+            "id": "cloudwatch-logs",
+            "arn": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/events/disputes"
+          }
+        ]
+      },
+      {
+        "name": "dispute-deadline-approaching-rule",
+        "description": "Route deadline alerts to notification service",
+        "eventPattern": {
+          "source": ["dispute.management"],
+          "detail-type": ["dispute.deadline_approaching"]
+        },
+        "targets": [
+          {
+            "id": "sns-notifications",
+            "arn": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:dispute-notifications"
+          },
+          {
+            "id": "lambda-slack-notifier",
+            "arn": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:slack-notifier"
+          }
+        ]
+      },
+      {
+        "name": "dispute-resolved-rule",
+        "description": "Route dispute resolution events",
+        "eventPattern": {
+          "source": ["dispute.management"],
+          "detail-type": ["dispute.won", "dispute.lost"]
+        },
+        "targets": [
+          {
+            "id": "analytics-firehose",
+            "arn": "arn:aws:firehose:${AWS::Region}:${AWS::AccountId}:deliverystream/disputes-analytics"
+          },
+          {
+            "id": "crm-integration",
+            "arn": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:crm-sync"
+          }
+        ]
+      },
+      {
+        "name": "balance-transaction-rule",
+        "description": "Route balance transactions to accounting system",
+        "eventPattern": {
+          "source": ["dispute.management"],
+          "detail-type": ["balance_transaction.created"]
+        },
+        "targets": [
+          {
+            "id": "accounting-integration",
+            "arn": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:accounting-sync"
+          }
+        ]
+      },
+      {
+        "name": "all-events-archive-rule",
+        "description": "Archive all dispute events for compliance",
+        "eventPattern": {
+          "source": ["dispute.management"]
+        },
+        "targets": [
+          {
+            "id": "s3-archive",
+            "arn": "arn:aws:firehose:${AWS::Region}:${AWS::AccountId}:deliverystream/disputes-archive"
+          }
+        ]
+      }
+    ]
+  },
+
+  "scheduledEvents": [
+    {
+      "name": "deadline-monitor-schedule",
+      "description": "Check for approaching deadlines every hour",
+      "scheduleExpression": "rate(1 hour)",
+      "target": {
+        "arn": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:deadline-monitor",
+        "input": {
+          "alertThresholds": [72, 24, 6]
+        }
+      }
+    },
+    {
+      "name": "daily-analytics-schedule",
+      "description": "Generate daily dispute analytics",
+      "scheduleExpression": "cron(0 0 * * ? *)",
+      "target": {
+        "arn": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:dispute-analytics"
+      }
+    }
+  ]
+}

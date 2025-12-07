@@ -1,0 +1,556 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api.example.com/schemas/dispute.schema.json",
+  "title": "Dispute",
+  "description": "Represents a payment dispute (chargeback) with comprehensive evidence and resolution tracking",
+  "type": "object",
+  "required": ["id", "object", "amount", "currency", "status", "reason", "created"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^dp_[a-zA-Z0-9]{24}$",
+      "description": "Unique identifier for the dispute object",
+      "examples": ["dp_1NxQkL2eZvKYlo2CXr5EPQmR"]
+    },
+    "object": {
+      "type": "string",
+      "const": "dispute",
+      "description": "String representing the object's type"
+    },
+    "amount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Disputed amount in the smallest currency unit (e.g., cents for USD)"
+    },
+    "balance_transactions": {
+      "type": "array",
+      "description": "List of balance transactions associated with this dispute",
+      "items": {
+        "$ref": "#/$defs/balance_transaction"
+      }
+    },
+    "charge": {
+      "type": "string",
+      "pattern": "^ch_[a-zA-Z0-9]{24}$",
+      "description": "ID of the charge that is disputed"
+    },
+    "created": {
+      "type": "integer",
+      "description": "Unix timestamp when the dispute was created"
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[a-z]{3}$",
+      "description": "Three-letter ISO 4217 currency code in lowercase",
+      "examples": ["usd", "eur", "gbp"]
+    },
+    "evidence": {
+      "$ref": "#/$defs/evidence",
+      "description": "Evidence provided to respond to a dispute"
+    },
+    "evidence_details": {
+      "$ref": "#/$defs/evidence_details",
+      "description": "Information about the evidence submission requirements and status"
+    },
+    "enhanced_evidence": {
+      "$ref": "#/$defs/enhanced_evidence",
+      "description": "Enhanced evidence for specialized dispute programs (e.g., Visa CE 3.0)"
+    },
+    "is_charge_refundable": {
+      "type": "boolean",
+      "description": "Whether the charge associated with this dispute can still be refunded"
+    },
+    "livemode": {
+      "type": "boolean",
+      "description": "True if the object exists in live mode, false if in test mode"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "maxLength": 500
+      },
+      "maxProperties": 50,
+      "description": "Set of key-value pairs for storing additional information"
+    },
+    "network_reason_code": {
+      "type": "string",
+      "description": "The card network's reason code for the dispute",
+      "examples": ["10.4", "4837", "F29"]
+    },
+    "payment_intent": {
+      "type": ["string", "null"],
+      "pattern": "^pi_[a-zA-Z0-9]{24}$",
+      "description": "ID of the PaymentIntent that is disputed, if applicable"
+    },
+    "payment_method_details": {
+      "$ref": "#/$defs/payment_method_details",
+      "description": "Information about the payment method used in the disputed transaction"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "credit_not_processed",
+        "duplicate",
+        "fraudulent",
+        "general",
+        "product_not_received",
+        "product_unacceptable",
+        "subscription_canceled",
+        "unrecognized"
+      ],
+      "description": "Reason given by the cardholder for the dispute"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "needs_response",
+        "under_review",
+        "won",
+        "lost",
+        "warning_needs_response",
+        "warning_under_review",
+        "warning_closed",
+        "charge_refunded"
+      ],
+      "description": "Current status of the dispute"
+    },
+    "transaction_amount": {
+      "type": "integer",
+      "description": "Original transaction amount before partial dispute"
+    },
+    "transaction_date": {
+      "type": "integer",
+      "description": "Unix timestamp of the original transaction"
+    }
+  },
+  "$defs": {
+    "balance_transaction": {
+      "type": "object",
+      "description": "Balance transaction representing financial impact",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^txn_[a-zA-Z0-9]{24}$"
+        },
+        "amount": {
+          "type": "integer"
+        },
+        "currency": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["dispute", "dispute_reversal", "dispute_fee", "dispute_fee_refund"]
+        },
+        "created": {
+          "type": "integer"
+        },
+        "fee": {
+          "type": "integer"
+        },
+        "net": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "description": "Evidence to respond to a dispute. Combined text fields limited to 150,000 characters. Combined file size limited to 4.5 MB.",
+      "properties": {
+        "access_activity_log": {
+          "type": "string",
+          "maxLength": 20000,
+          "description": "Server or activity logs showing proof that the customer accessed or downloaded the purchased digital product"
+        },
+        "billing_address": {
+          "type": "string",
+          "maxLength": 5000,
+          "description": "The billing address provided by the customer"
+        },
+        "cancellation_policy": {
+          "type": "string",
+          "description": "File ID of your subscription cancellation policy document"
+        },
+        "cancellation_policy_disclosure": {
+          "type": "string",
+          "maxLength": 20000,
+          "description": "Explanation of how and when the customer was shown the cancellation policy"
+        },
+        "cancellation_rebuttal": {
+          "type": "string",
+          "maxLength": 20000,
+          "description": "Justification for why the customer's subscription was not canceled"
+        },
+        "customer_communication": {
+          "type": "string",
+          "description": "File ID of documentation showing communication with the customer"
+        },
+        "customer_email_address": {
+          "type": "string",
+          "format": "email",
+          "maxLength": 254,
+          "description": "Email address of the customer"
+        },
+        "customer_name": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Name of the customer"
+        },
+        "customer_purchase_ip": {
+          "type": "string",
+          "description": "IP address that the customer used when making the purchase"
+        },
+        "customer_signature": {
+          "type": "string",
+          "description": "File ID of a relevant document or contract showing the customer's signature"
+        },
+        "duplicate_charge_documentation": {
+          "type": "string",
+          "description": "File ID of documentation for prior charge that appears to be a duplicate"
+        },
+        "duplicate_charge_explanation": {
+          "type": "string",
+          "maxLength": 20000,
+          "description": "Explanation of the difference between the disputed charge and prior charges"
+        },
+        "duplicate_charge_id": {
+          "type": "string",
+          "description": "ID of the prior charge that appears to be a duplicate"
+        },
+        "product_description": {
+          "type": "string",
+          "maxLength": 20000,
+          "description": "Description of the product or service that was sold"
+        },
+        "receipt": {
+          "type": "string",
+          "description": "File ID of the receipt or message confirming the charge"
+        },
+        "refund_policy": {
+          "type": "string",
+          "description": "File ID of your refund policy"
+        },
+        "refund_policy_disclosure": {
+          "type": "string",
+          "maxLength": 20000,
+          "description": "Documentation showing the customer was shown the refund policy prior to purchase"
+        },
+        "refund_refusal_explanation": {
+          "type": "string",
+          "maxLength": 20000,
+          "description": "Justification for why the customer is not entitled to a refund"
+        },
+        "service_date": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Date when the customer received or began using the service"
+        },
+        "service_documentation": {
+          "type": "string",
+          "description": "File ID of documentation showing proof that a service was provided"
+        },
+        "shipping_address": {
+          "type": "string",
+          "maxLength": 5000,
+          "description": "Shipping address to which a physical product was shipped"
+        },
+        "shipping_carrier": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Delivery service used to ship a physical product (e.g., FedEx, UPS, USPS)"
+        },
+        "shipping_date": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Date when the product began its route to the shipping address"
+        },
+        "shipping_documentation": {
+          "type": "string",
+          "description": "File ID of documentation showing proof of shipment or delivery"
+        },
+        "shipping_tracking_number": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Tracking number for the shipment"
+        },
+        "uncategorized_file": {
+          "type": "string",
+          "description": "File ID for any additional evidence that doesn't fit other categories"
+        },
+        "uncategorized_text": {
+          "type": "string",
+          "maxLength": 20000,
+          "description": "Any additional evidence or statements that don't fit other categories"
+        }
+      }
+    },
+    "evidence_details": {
+      "type": "object",
+      "description": "Information about evidence submission requirements and deadlines",
+      "properties": {
+        "due_by": {
+          "type": ["integer", "null"],
+          "description": "Unix timestamp by which evidence must be submitted"
+        },
+        "has_evidence": {
+          "type": "boolean",
+          "description": "Whether any evidence has been provided"
+        },
+        "past_due": {
+          "type": "boolean",
+          "description": "Whether the evidence submission deadline has passed"
+        },
+        "submission_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of times evidence has been submitted"
+        },
+        "enhanced_eligibility": {
+          "$ref": "#/$defs/enhanced_eligibility",
+          "description": "Eligibility information for enhanced dispute programs"
+        }
+      }
+    },
+    "enhanced_eligibility": {
+      "type": "object",
+      "description": "Eligibility status for enhanced dispute resolution programs",
+      "properties": {
+        "visa_compelling_evidence_3": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["qualified", "requires_action", "not_qualified"],
+              "description": "Eligibility status for Visa Compelling Evidence 3.0"
+            },
+            "required_actions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "missing_customer_identifiers",
+                  "missing_prior_undisputed_transactions",
+                  "missing_merchandise_or_services",
+                  "missing_disputed_transaction_description",
+                  "missing_customer_email_address",
+                  "missing_customer_purchase_ip",
+                  "transactions_too_recent",
+                  "transactions_too_old"
+                ]
+              },
+              "description": "Actions required to qualify for the program"
+            },
+            "partner_rejected_details": {
+              "type": ["object", "null"],
+              "description": "Details about rejection by the partner network"
+            }
+          }
+        },
+        "visa_compliance": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["fee_acknowledged", "fee_pending"]
+            },
+            "fee_amount": {
+              "type": "integer"
+            }
+          }
+        },
+        "mastercard_arbitration": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["eligible", "not_eligible", "pending"]
+            }
+          }
+        }
+      }
+    },
+    "enhanced_evidence": {
+      "type": "object",
+      "description": "Enhanced evidence for specialized dispute resolution programs",
+      "properties": {
+        "visa_compelling_evidence_3": {
+          "type": "object",
+          "properties": {
+            "disputed_transaction": {
+              "type": "object",
+              "description": "Information about the disputed transaction",
+              "properties": {
+                "customer_account_id": {
+                  "type": "string",
+                  "description": "Customer's account ID in your system"
+                },
+                "customer_device_fingerprint": {
+                  "type": "string",
+                  "description": "Device fingerprint from the transaction"
+                },
+                "customer_device_id": {
+                  "type": "string",
+                  "description": "Unique device identifier"
+                },
+                "customer_email_address": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "customer_purchase_ip": {
+                  "type": "string"
+                },
+                "merchandise_or_services": {
+                  "type": "string",
+                  "enum": ["merchandise", "services"]
+                },
+                "product_description": {
+                  "type": "string",
+                  "maxLength": 500
+                },
+                "shipping_address": {
+                  "$ref": "#/$defs/address"
+                }
+              }
+            },
+            "prior_undisputed_transactions": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 5,
+              "description": "List of prior undisputed transactions (min 2 required, 120-365 days old)",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "charge": {
+                    "type": "string",
+                    "description": "ID of the prior charge"
+                  },
+                  "customer_account_id": {
+                    "type": "string"
+                  },
+                  "customer_device_fingerprint": {
+                    "type": "string"
+                  },
+                  "customer_device_id": {
+                    "type": "string"
+                  },
+                  "customer_email_address": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "customer_purchase_ip": {
+                    "type": "string"
+                  },
+                  "product_description": {
+                    "type": "string",
+                    "maxLength": 500
+                  },
+                  "shipping_address": {
+                    "$ref": "#/$defs/address"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "payment_method_details": {
+      "type": "object",
+      "description": "Information about the payment method used in the disputed transaction",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["card", "paypal", "klarna", "affirm", "afterpay", "bank_transfer", "ach_debit"],
+          "description": "Type of payment method"
+        },
+        "card": {
+          "type": "object",
+          "properties": {
+            "brand": {
+              "type": "string",
+              "enum": ["visa", "mastercard", "amex", "discover", "diners", "jcb", "unionpay"],
+              "description": "Card brand"
+            },
+            "case_type": {
+              "type": "string",
+              "enum": ["chargeback", "inquiry", "pre_arbitration", "arbitration", "compliance"],
+              "description": "Type of dispute case"
+            },
+            "network_reason_code": {
+              "type": "string",
+              "description": "Network-specific reason code for the dispute"
+            },
+            "last4": {
+              "type": "string",
+              "pattern": "^[0-9]{4}$",
+              "description": "Last 4 digits of the card"
+            },
+            "exp_month": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            },
+            "exp_year": {
+              "type": "integer"
+            },
+            "fingerprint": {
+              "type": "string",
+              "description": "Unique identifier for the card"
+            },
+            "funding": {
+              "type": "string",
+              "enum": ["credit", "debit", "prepaid", "unknown"]
+            },
+            "country": {
+              "type": "string",
+              "pattern": "^[A-Z]{2}$",
+              "description": "Two-letter ISO country code"
+            },
+            "issuer": {
+              "type": "string",
+              "description": "Card issuing bank"
+            }
+          }
+        },
+        "paypal": {
+          "type": "object",
+          "properties": {
+            "case_id": {
+              "type": "string"
+            },
+            "dispute_type": {
+              "type": "string",
+              "enum": ["inquiry", "chargeback", "unauthorized"]
+            },
+            "reason_code": {
+              "type": "string"
+            }
+          }
+        },
+        "klarna": {
+          "type": "object",
+          "properties": {
+            "reason_code": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "line1": { "type": "string" },
+        "line2": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "postal_code": { "type": "string" },
+        "country": { "type": "string", "pattern": "^[A-Z]{2}$" }
+      }
+    }
+  }
+}

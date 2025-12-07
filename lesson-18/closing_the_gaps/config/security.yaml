@@ -1,0 +1,142 @@
+# Security Configuration for Closing the Gaps - Phase 1 Governance
+# PRD Reference: tasks/0012-prd-closing-gaps-phase1-governance.md
+# Version: 1.0
+
+# =============================================================================
+# PROMPT SECURITY GUARD CONFIGURATION (Gap 9)
+# =============================================================================
+prompt_security:
+  # Path to custom injection patterns (JSON file)
+  patterns_file: "config/injection_patterns.json"
+
+  # Enable LLM-based guard for advanced detection
+  # Warning: Adds ~500ms latency per scan
+  enable_llm_guard: false
+
+  # Maximum input length in bytes (10KB default)
+  max_input_length: 10240
+
+  # Log all scans to PostgreSQL
+  log_to_db: true
+
+  # Performance targets (milliseconds)
+  performance:
+    layer_1_target_ms: 5     # Pattern matching
+    layer_2_target_ms: 20    # Structural analysis
+    layer_3_target_ms: 500   # LLM guard (if enabled)
+    total_p99_target_ms: 100  # Overall p99 latency
+
+  # Threat detection thresholds
+  detection:
+    min_confidence: 0.80     # Minimum confidence to flag as threat
+    case_sensitive: false    # Pattern matching case sensitivity
+
+# =============================================================================
+# HITL CONTROLLER CONFIGURATION (Gap 6)
+# =============================================================================
+hitl_controller:
+  # Default oversight tier for unclassified actions
+  # Options: tier_1, tier_2, tier_3
+  default_tier: "tier_2"
+
+  # Confidence threshold - below this, always interrupt
+  confidence_threshold: 0.85
+
+  # Amount threshold - above this, always interrupt (USD)
+  amount_threshold: 10000.0
+
+  # Log all decisions to PostgreSQL
+  log_to_db: true
+
+  # Tier 1 actions (always require human approval)
+  tier_1_actions:
+    - "sar_filing"           # Suspicious Activity Report
+    - "payment_block"        # Block payment/transaction
+    - "account_close"        # Close account recommendation
+    - "fraud_escalation"     # Escalate as confirmed fraud
+
+  # Tier 3 actions (logged only, no interrupt)
+  tier_3_actions:
+    - "info_lookup"          # Information lookup
+    - "status_lookup"        # Status check
+    - "knowledge_search"     # Knowledge base query
+    - "faq_response"         # FAQ response
+
+  # High-risk dispute types (trigger Tier 2 at minimum)
+  high_risk_dispute_types:
+    - "fraud"
+    - "identity_theft"
+    - "money_laundering"
+    - "account_takeover"
+
+  # Sample rate for Tier 2 review (10% default)
+  sample_rate_tier_2: 0.10
+
+  # Review SLA (hours)
+  review_sla:
+    tier_1_hours: 4          # Tier 1 must be reviewed within 4 hours
+    tier_2_hours: 24         # Tier 2 must be reviewed within 24 hours
+
+# =============================================================================
+# DATABASE CONFIGURATION
+# =============================================================================
+database:
+  # PostgreSQL connection (use environment variables in production)
+  # host: ${POSTGRES_HOST:-localhost}
+  # port: ${POSTGRES_PORT:-5432}
+  # database: ${POSTGRES_DB:-closing_the_gaps}
+  # user: ${POSTGRES_USER:-postgres}
+
+  # Connection pool settings
+  pool:
+    min_size: 2
+    max_size: 10
+    max_idle_time_seconds: 300
+
+  # Async write configuration
+  async_writes:
+    enabled: true
+    batch_size: 100
+    flush_interval_seconds: 5
+
+# =============================================================================
+# OBSERVABILITY CONFIGURATION
+# =============================================================================
+observability:
+  # Metrics collection
+  metrics:
+    enabled: true
+    prefix: "closing_gaps"
+    labels:
+      - "tier"
+      - "threat_type"
+      - "dispute_type"
+
+  # Logging configuration
+  logging:
+    level: "INFO"
+    format: "json"
+    include_context: true
+
+  # Alerting thresholds
+  alerts:
+    # Alert if threat detection rate exceeds threshold
+    threat_rate_threshold: 0.05  # 5% of requests
+
+    # Alert if HITL queue exceeds threshold
+    pending_reviews_threshold: 50
+
+    # Alert if average review time exceeds SLA
+    review_time_threshold_hours: 4
+
+# =============================================================================
+# ENVIRONMENT VARIABLE OVERRIDES
+# =============================================================================
+# The following settings can be overridden via environment variables:
+#
+# HITL_CONFIDENCE_THRESHOLD - Override confidence_threshold
+# HITL_AMOUNT_THRESHOLD - Override amount_threshold
+# PROMPT_SECURITY_ENABLE_LLM_GUARD - Override enable_llm_guard
+# PROMPT_SECURITY_MAX_INPUT_LENGTH - Override max_input_length
+# GOVERNANCE_LOG_TO_DB - Override log_to_db for both components
+

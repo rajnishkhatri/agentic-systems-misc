@@ -1,0 +1,767 @@
+{
+  "Comment": "Dispute Management Workflow - Orchestrates dispute lifecycle from intake to resolution",
+  "StartAt": "ValidateDispute",
+  "States": {
+    "ValidateDispute": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:dispute-validator",
+      "Parameters": {
+        "dispute.$": "$.dispute",
+        "validationRules": ["schema", "network_reason_code", "amount_positive"]
+      },
+      "ResultPath": "$.validation",
+      "Next": "IsValidDispute",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.TooManyRequestsException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["ValidationError"],
+          "ResultPath": "$.error",
+          "Next": "HandleValidationError"
+        }
+      ]
+    },
+
+    "IsValidDispute": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.validation.isValid",
+          "BooleanEquals": true,
+          "Next": "CreateCase"
+        }
+      ],
+      "Default": "HandleValidationError"
+    },
+
+    "HandleValidationError": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:dispute-error-handler",
+      "Parameters": {
+        "disputeId.$": "$.dispute.id",
+        "errorType": "VALIDATION_ERROR",
+        "errorDetails.$": "$.validation.errors"
+      },
+      "End": true
+    },
+
+    "CreateCase": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:putItem",
+      "Parameters": {
+        "TableName": "disputes-${Environment}",
+        "Item": {
+          "PK": {
+            "S.$": "States.Format('DISPUTE#{}', $.dispute.id)"
+          },
+          "SK": {
+            "S": "METADATA"
+          },
+          "id": {
+            "S.$": "$.dispute.id"
+          },
+          "object": {
+            "S": "dispute"
+          },
+          "amount": {
+            "N.$": "States.Format('{}', $.dispute.amount)"
+          },
+          "currency": {
+            "S.$": "$.dispute.currency"
+          },
+          "status": {
+            "S": "needs_response"
+          },
+          "reason": {
+            "S.$": "$.dispute.reason"
+          },
+          "created": {
+            "N.$": "States.Format('{}', $.dispute.created)"
+          },
+          "charge": {
+            "S.$": "$.dispute.charge"
+          },
+          "network_reason_code": {
+            "S.$": "$.dispute.network_reason_code"
+          },
+          "GSI1PK": {
+            "S.$": "States.Format('CHARGE#{}', $.dispute.charge)"
+          },
+          "GSI2PK": {
+            "S": "STATUS#needs_response"
+          },
+          "GSI2SK": {
+            "N.$": "States.Format('{}', $.dispute.created)"
+          },
+          "GSI3PK": {
+            "S": "DEADLINE"
+          },
+          "GSI3SK": {
+            "N.$": "States.Format('{}', $.dispute.evidence_details.due_by)"
+          },
+          "_entityType": {
+            "S": "DISPUTE"
+          },
+          "_version": {
+            "N": "1"
+          }
+        }
+      },
+      "ResultPath": "$.dynamoResult",
+      "Next": "PublishDisputeCreated"
+    },
+
+    "PublishDisputeCreated": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::events:putEvents",
+      "Parameters": {
+        "Entries": [
+          {
+            "Source": "dispute.management",
+            "DetailType": "dispute.created",
+            "Detail": {
+              "disputeId.$": "$.dispute.id",
+              "chargeId.$": "$.dispute.charge",
+              "amount.$": "$.dispute.amount",
+              "currency.$": "$.dispute.currency",
+              "reason.$": "$.dispute.reason",
+              "networkReasonCode.$": "$.dispute.network_reason_code",
+              "dueBy.$": "$.dispute.evidence_details.due_by"
+            },
+            "EventBusName": "dispute-events-${Environment}"
+          }
+        ]
+      },
+      "ResultPath": "$.eventResult",
+      "Next": "CheckNetworkType"
+    },
+
+    "CheckNetworkType": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "And": [
+            {
+              "Variable": "$.dispute.payment_method_details.card.brand",
+              "StringEquals": "visa"
+            },
+            {
+              "Variable": "$.dispute.network_reason_code",
+              "StringEquals": "10.4"
+            }
+          ],
+          "Next": "CheckCE3Eligibility"
+        }
+      ],
+      "Default": "CalculateDeadline"
+    },
+
+    "CheckCE3Eligibility": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:ce3-eligibility-checker",
+      "Parameters": {
+        "disputeId.$": "$.dispute.id",
+        "customerEmail.$": "$.dispute.evidence.customer_email_address",
+        "customerIp.$": "$.dispute.evidence.customer_purchase_ip",
+        "customerDeviceFingerprint.$": "$.dispute.payment_method_details.card.fingerprint"
+      },
+      "ResultPath": "$.ce3Eligibility",
+      "Next": "UpdateCE3Status",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.ce3Error",
+          "Next": "CalculateDeadline"
+        }
+      ]
+    },
+
+    "UpdateCE3Status": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:updateItem",
+      "Parameters": {
+        "TableName": "disputes-${Environment}",
+        "Key": {
+          "PK": {
+            "S.$": "States.Format('DISPUTE#{}', $.dispute.id)"
+          },
+          "SK": {
+            "S": "METADATA"
+          }
+        },
+        "UpdateExpression": "SET evidence_details.enhanced_eligibility.visa_compelling_evidence_3 = :ce3",
+        "ExpressionAttributeValues": {
+          ":ce3": {
+            "M": {
+              "status": {
+                "S.$": "$.ce3Eligibility.status"
+              },
+              "required_actions": {
+                "L.$": "$.ce3Eligibility.required_actions"
+              }
+            }
+          }
+        }
+      },
+      "ResultPath": "$.ce3UpdateResult",
+      "Next": "CalculateDeadline"
+    },
+
+    "CalculateDeadline": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:deadline-calculator",
+      "Parameters": {
+        "disputeId.$": "$.dispute.id",
+        "reason.$": "$.dispute.reason",
+        "networkReasonCode.$": "$.dispute.network_reason_code",
+        "created.$": "$.dispute.created"
+      },
+      "ResultPath": "$.deadline",
+      "Next": "WaitForEvidence"
+    },
+
+    "WaitForEvidence": {
+      "Type": "Wait",
+      "TimestampPath": "$.deadline.dueByISO",
+      "Next": "CheckEvidenceSubmitted"
+    },
+
+    "CheckEvidenceSubmitted": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:getItem",
+      "Parameters": {
+        "TableName": "disputes-${Environment}",
+        "Key": {
+          "PK": {
+            "S.$": "States.Format('DISPUTE#{}', $.dispute.id)"
+          },
+          "SK": {
+            "S": "METADATA"
+          }
+        },
+        "ProjectionExpression": "evidence_details, #s",
+        "ExpressionAttributeNames": {
+          "#s": "status"
+        }
+      },
+      "ResultPath": "$.currentState",
+      "Next": "EvaluateEvidenceStatus"
+    },
+
+    "EvaluateEvidenceStatus": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.currentState.Item.evidence_details.M.has_evidence.BOOL",
+          "BooleanEquals": true,
+          "Next": "ProcessEvidence"
+        },
+        {
+          "Variable": "$.currentState.Item.status.S",
+          "StringEquals": "under_review",
+          "Next": "WaitForNetworkResponse"
+        }
+      ],
+      "Default": "MarkPastDue"
+    },
+
+    "MarkPastDue": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:updateItem",
+      "Parameters": {
+        "TableName": "disputes-${Environment}",
+        "Key": {
+          "PK": {
+            "S.$": "States.Format('DISPUTE#{}', $.dispute.id)"
+          },
+          "SK": {
+            "S": "METADATA"
+          }
+        },
+        "UpdateExpression": "SET evidence_details.past_due = :true, #s = :status, GSI2PK = :gsi2pk",
+        "ExpressionAttributeNames": {
+          "#s": "status"
+        },
+        "ExpressionAttributeValues": {
+          ":true": {
+            "BOOL": true
+          },
+          ":status": {
+            "S": "lost"
+          },
+          ":gsi2pk": {
+            "S": "STATUS#lost"
+          }
+        }
+      },
+      "ResultPath": "$.pastDueResult",
+      "Next": "PublishDisputeLost"
+    },
+
+    "ProcessEvidence": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "ExtractDocuments",
+          "States": {
+            "ExtractDocuments": {
+              "Type": "Task",
+              "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:evidence-processor",
+              "Parameters": {
+                "disputeId.$": "$.dispute.id",
+                "processType": "textract"
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "AnalyzeText",
+          "States": {
+            "AnalyzeText": {
+              "Type": "Task",
+              "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:evidence-processor",
+              "Parameters": {
+                "disputeId.$": "$.dispute.id",
+                "processType": "comprehend"
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "ScoreFraud",
+          "States": {
+            "ScoreFraud": {
+              "Type": "Task",
+              "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:fraud-scorer",
+              "Parameters": {
+                "disputeId.$": "$.dispute.id"
+              },
+              "End": true
+            }
+          }
+        }
+      ],
+      "ResultPath": "$.processingResults",
+      "Next": "DetermineDecisionPath"
+    },
+
+    "DetermineDecisionPath": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "And": [
+            {
+              "Variable": "$.processingResults[2].fraudScore",
+              "NumericLessThan": 0.3
+            },
+            {
+              "Variable": "$.processingResults[0].extractionConfidence",
+              "NumericGreaterThan": 0.9
+            }
+          ],
+          "Next": "AutoApprove"
+        },
+        {
+          "Variable": "$.processingResults[2].fraudScore",
+          "NumericGreaterThan": 0.8,
+          "Next": "AutoDeny"
+        }
+      ],
+      "Default": "HumanReview"
+    },
+
+    "AutoApprove": {
+      "Type": "Pass",
+      "Result": {
+        "decision": "approve",
+        "decisionType": "auto",
+        "reason": "High confidence evidence with low fraud score"
+      },
+      "ResultPath": "$.decision",
+      "Next": "SubmitToNetwork"
+    },
+
+    "AutoDeny": {
+      "Type": "Pass",
+      "Result": {
+        "decision": "deny",
+        "decisionType": "auto",
+        "reason": "High fraud score detected"
+      },
+      "ResultPath": "$.decision",
+      "Next": "UpdateStatusLost"
+    },
+
+    "HumanReview": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sagemaker:createHumanLoop",
+      "Parameters": {
+        "HumanLoopName.$": "States.Format('dispute-review-{}', $.dispute.id)",
+        "FlowDefinitionArn": "arn:aws:sagemaker:${AWS::Region}:${AWS::AccountId}:flow-definition/dispute-review-flow",
+        "HumanLoopInput": {
+          "InputContent.$": "States.JsonToString($.dispute)"
+        }
+      },
+      "ResultPath": "$.humanReviewTask",
+      "Next": "WaitForHumanReview"
+    },
+
+    "WaitForHumanReview": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sagemaker:describeHumanLoop.sync",
+      "Parameters": {
+        "HumanLoopName.$": "$.humanReviewTask.HumanLoopName"
+      },
+      "ResultPath": "$.humanReviewResult",
+      "Next": "ProcessHumanDecision"
+    },
+
+    "ProcessHumanDecision": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.humanReviewResult.HumanLoopOutput.decision",
+          "StringEquals": "approve",
+          "Next": "SubmitToNetwork"
+        },
+        {
+          "Variable": "$.humanReviewResult.HumanLoopOutput.decision",
+          "StringEquals": "deny",
+          "Next": "UpdateStatusLost"
+        }
+      ],
+      "Default": "EscalateDispute"
+    },
+
+    "EscalateDispute": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:dispute-escalations",
+        "Message.$": "States.Format('Dispute {} requires escalation. Amount: {} {}', $.dispute.id, $.dispute.amount, $.dispute.currency)",
+        "Subject": "Dispute Escalation Required"
+      },
+      "ResultPath": "$.escalationResult",
+      "Next": "WaitForEscalationResolution"
+    },
+
+    "WaitForEscalationResolution": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage.waitForTaskToken",
+      "Parameters": {
+        "QueueUrl": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/dispute-escalation-responses",
+        "MessageBody": {
+          "disputeId.$": "$.dispute.id",
+          "taskToken.$": "$$.Task.Token"
+        }
+      },
+      "TimeoutSeconds": 604800,
+      "ResultPath": "$.escalationDecision",
+      "Next": "ProcessEscalationDecision"
+    },
+
+    "ProcessEscalationDecision": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.escalationDecision.decision",
+          "StringEquals": "approve",
+          "Next": "SubmitToNetwork"
+        }
+      ],
+      "Default": "UpdateStatusLost"
+    },
+
+    "SubmitToNetwork": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:network-submitter",
+      "Parameters": {
+        "disputeId.$": "$.dispute.id",
+        "network.$": "$.dispute.payment_method_details.card.brand",
+        "evidence.$": "$.dispute.evidence",
+        "enhancedEvidence.$": "$.dispute.enhanced_evidence"
+      },
+      "ResultPath": "$.networkSubmission",
+      "Next": "UpdateStatusUnderReview",
+      "Retry": [
+        {
+          "ErrorEquals": ["NetworkTimeoutError", "NetworkRateLimitError"],
+          "IntervalSeconds": 60,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["NetworkSubmissionError"],
+          "ResultPath": "$.networkError",
+          "Next": "HandleNetworkError"
+        }
+      ]
+    },
+
+    "HandleNetworkError": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:dispute-error-handler",
+      "Parameters": {
+        "disputeId.$": "$.dispute.id",
+        "errorType": "NETWORK_SUBMISSION_ERROR",
+        "errorDetails.$": "$.networkError"
+      },
+      "ResultPath": "$.errorHandling",
+      "Next": "ScheduleRetry"
+    },
+
+    "ScheduleRetry": {
+      "Type": "Wait",
+      "Seconds": 3600,
+      "Next": "SubmitToNetwork"
+    },
+
+    "UpdateStatusUnderReview": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:updateItem",
+      "Parameters": {
+        "TableName": "disputes-${Environment}",
+        "Key": {
+          "PK": {
+            "S.$": "States.Format('DISPUTE#{}', $.dispute.id)"
+          },
+          "SK": {
+            "S": "METADATA"
+          }
+        },
+        "UpdateExpression": "SET #s = :status, GSI2PK = :gsi2pk, networkSubmissionId = :submissionId",
+        "ExpressionAttributeNames": {
+          "#s": "status"
+        },
+        "ExpressionAttributeValues": {
+          ":status": {
+            "S": "under_review"
+          },
+          ":gsi2pk": {
+            "S": "STATUS#under_review"
+          },
+          ":submissionId": {
+            "S.$": "$.networkSubmission.submissionId"
+          }
+        }
+      },
+      "ResultPath": "$.statusUpdate",
+      "Next": "PublishStatusChanged"
+    },
+
+    "PublishStatusChanged": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::events:putEvents",
+      "Parameters": {
+        "Entries": [
+          {
+            "Source": "dispute.management",
+            "DetailType": "dispute.status_changed",
+            "Detail": {
+              "disputeId.$": "$.dispute.id",
+              "previousStatus": "needs_response",
+              "newStatus": "under_review",
+              "networkSubmissionId.$": "$.networkSubmission.submissionId"
+            },
+            "EventBusName": "dispute-events-${Environment}"
+          }
+        ]
+      },
+      "ResultPath": "$.eventResult",
+      "Next": "WaitForNetworkResponse"
+    },
+
+    "WaitForNetworkResponse": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage.waitForTaskToken",
+      "Parameters": {
+        "QueueUrl": "https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/network-responses",
+        "MessageBody": {
+          "disputeId.$": "$.dispute.id",
+          "networkSubmissionId.$": "$.networkSubmission.submissionId",
+          "taskToken.$": "$$.Task.Token"
+        }
+      },
+      "TimeoutSeconds": 7776000,
+      "ResultPath": "$.networkResponse",
+      "Next": "ProcessNetworkResponse",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.Timeout"],
+          "ResultPath": "$.timeoutError",
+          "Next": "HandleNetworkTimeout"
+        }
+      ]
+    },
+
+    "HandleNetworkTimeout": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:dispute-error-handler",
+      "Parameters": {
+        "disputeId.$": "$.dispute.id",
+        "errorType": "NETWORK_TIMEOUT",
+        "errorDetails": "No response from network within 90 days"
+      },
+      "ResultPath": "$.errorHandling",
+      "Next": "UpdateStatusLost"
+    },
+
+    "ProcessNetworkResponse": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.networkResponse.outcome",
+          "StringEquals": "won",
+          "Next": "UpdateStatusWon"
+        },
+        {
+          "Variable": "$.networkResponse.outcome",
+          "StringEquals": "lost",
+          "Next": "UpdateStatusLost"
+        }
+      ],
+      "Default": "UpdateStatusLost"
+    },
+
+    "UpdateStatusWon": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:updateItem",
+      "Parameters": {
+        "TableName": "disputes-${Environment}",
+        "Key": {
+          "PK": {
+            "S.$": "States.Format('DISPUTE#{}', $.dispute.id)"
+          },
+          "SK": {
+            "S": "METADATA"
+          }
+        },
+        "UpdateExpression": "SET #s = :status, GSI2PK = :gsi2pk, resolvedAt = :resolvedAt",
+        "ExpressionAttributeNames": {
+          "#s": "status"
+        },
+        "ExpressionAttributeValues": {
+          ":status": {
+            "S": "won"
+          },
+          ":gsi2pk": {
+            "S": "STATUS#won"
+          },
+          ":resolvedAt": {
+            "N.$": "States.Format('{}', $$.State.EnteredTime)"
+          }
+        }
+      },
+      "ResultPath": "$.statusUpdate",
+      "Next": "CreateBalanceReversal"
+    },
+
+    "CreateBalanceReversal": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:balance-transaction-creator",
+      "Parameters": {
+        "disputeId.$": "$.dispute.id",
+        "transactionType": "dispute_reversal",
+        "amount.$": "$.dispute.amount",
+        "currency.$": "$.dispute.currency"
+      },
+      "ResultPath": "$.balanceReversal",
+      "Next": "PublishDisputeWon"
+    },
+
+    "PublishDisputeWon": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::events:putEvents",
+      "Parameters": {
+        "Entries": [
+          {
+            "Source": "dispute.management",
+            "DetailType": "dispute.won",
+            "Detail": {
+              "disputeId.$": "$.dispute.id",
+              "chargeId.$": "$.dispute.charge",
+              "amount.$": "$.dispute.amount",
+              "currency.$": "$.dispute.currency",
+              "balanceTransactionId.$": "$.balanceReversal.transactionId"
+            },
+            "EventBusName": "dispute-events-${Environment}"
+          }
+        ]
+      },
+      "End": true
+    },
+
+    "UpdateStatusLost": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::dynamodb:updateItem",
+      "Parameters": {
+        "TableName": "disputes-${Environment}",
+        "Key": {
+          "PK": {
+            "S.$": "States.Format('DISPUTE#{}', $.dispute.id)"
+          },
+          "SK": {
+            "S": "METADATA"
+          }
+        },
+        "UpdateExpression": "SET #s = :status, GSI2PK = :gsi2pk, resolvedAt = :resolvedAt",
+        "ExpressionAttributeNames": {
+          "#s": "status"
+        },
+        "ExpressionAttributeValues": {
+          ":status": {
+            "S": "lost"
+          },
+          ":gsi2pk": {
+            "S": "STATUS#lost"
+          },
+          ":resolvedAt": {
+            "N.$": "States.Format('{}', $$.State.EnteredTime)"
+          }
+        }
+      },
+      "ResultPath": "$.statusUpdate",
+      "Next": "PublishDisputeLost"
+    },
+
+    "PublishDisputeLost": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::events:putEvents",
+      "Parameters": {
+        "Entries": [
+          {
+            "Source": "dispute.management",
+            "DetailType": "dispute.lost",
+            "Detail": {
+              "disputeId.$": "$.dispute.id",
+              "chargeId.$": "$.dispute.charge",
+              "amount.$": "$.dispute.amount",
+              "currency.$": "$.dispute.currency",
+              "reason.$": "$.dispute.reason"
+            },
+            "EventBusName": "dispute-events-${Environment}"
+          }
+        ]
+      },
+      "End": true
+    }
+  }
+}

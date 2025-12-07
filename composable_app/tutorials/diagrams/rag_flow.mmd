@@ -1,0 +1,33 @@
+graph TB
+    subgraph "Indexing Phase (One-time setup)"
+        PDF[Book PDF<br/>Generative AI<br/>Design Patterns] --> OpenParse[OpenParse<br/>PDF Parser]
+        OpenParse --> Chunks[Text Chunks<br/>~500 tokens each]
+        Chunks --> Embeddings[Generate Embeddings<br/>text-embedding-004]
+        Embeddings --> VectorStore[(Vector Store<br/>data/vector_store.json)]
+        Chunks --> DocStore[(Document Store<br/>data/docstore.json)]
+    end
+
+    subgraph "Query Phase (Runtime)"
+        Query([User Query:<br/>Explain RAG pattern]) --> QueryEmbed[Embed Query<br/>text-embedding-004]
+        QueryEmbed --> Similarity[Semantic Similarity<br/>Search]
+        VectorStore -.->|cosine similarity| Similarity
+        Similarity --> TopK[Top-3 Most<br/>Relevant Chunks]
+        DocStore -.->|retrieve text| TopK
+        TopK --> Context[Context:<br/>Chunk 1 page 142<br/>Chunk 2 page 145<br/>Chunk 3 page 148]
+        Context --> Augment[Augment Prompt<br/>with Context]
+        Augment --> LLM[LLM Generation<br/>gemini-2.0-flash]
+        LLM --> Response[Article with<br/>Citations:<br/>See pages: 142, 145, 148]
+    end
+
+    style PDF fill:#e1f5ff
+    style OpenParse fill:#fff4e1
+    style Chunks fill:#ffe1e1
+    style Embeddings fill:#e1ffe1
+    style VectorStore fill:#f0e1ff
+    style DocStore fill:#f0e1ff
+    style Query fill:#e1f5ff
+    style QueryEmbed fill:#e1ffe1
+    style Similarity fill:#fff4e1
+    style TopK fill:#ffe1f5
+    style LLM fill:#e1f5ff
+    style Response fill:#e1ffe1

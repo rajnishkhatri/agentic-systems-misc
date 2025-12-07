@@ -1,0 +1,52 @@
+graph TB
+    Article[Draft Article] --> Panel[ReviewerPanel<br/>asyncio.gather]
+
+    subgraph "Specialist Reviewers"
+        Panel --> Grammar[Grammar Reviewer<br/>~2s]
+        Panel --> Math[Math Reviewer<br/>~2s]
+        Panel --> District[District Representative<br/>~2s]
+    end
+
+    subgraph "Adversarial Reviewers"
+        Panel --> Conservative[Conservative Parent<br/>~2s]
+        Panel --> Liberal[Liberal Parent<br/>~2s]
+        Panel --> Admin[School Admin<br/>~2s]
+    end
+
+    Grammar --> Review1[Review:<br/>Grammar issues]
+    Math --> Review2[Review:<br/>Math accuracy]
+    District --> Review3[Review:<br/>Policy compliance]
+    Conservative --> Review4[Review:<br/>Conservative concerns]
+    Liberal --> Review5[Review:<br/>Liberal concerns]
+    Admin --> Review6[Review:<br/>Admin perspective]
+
+    Review1 --> Secretary
+    Review2 --> Secretary
+    Review3 --> Secretary
+    Review4 --> Secretary
+    Review5 --> Secretary
+    Review6 --> Secretary
+
+    Secretary[Secretary Agent<br/>Consolidate 6 reviews] --> Consolidated[Consolidated Feedback:<br/>- 3 grammar fixes<br/>- 1 math error<br/>- 2 concerns addressed]
+
+    Consolidated --> Writer[Writer.revise_article]
+    Writer --> Revised[Revised Article<br/>incorporating feedback]
+
+    subgraph "Performance: Parallel Execution"
+        Timing1[Sequential: 6 × 2s = 12s]
+        Timing2[Parallel: max 2s  = 2-3s]
+        Speedup[⚡ 4-6x Speedup]
+    end
+
+    style Panel fill:#fff4e1
+    style Grammar fill:#e1ffe1
+    style Math fill:#e1ffe1
+    style District fill:#e1ffe1
+    style Conservative fill:#ffe1e1
+    style Liberal fill:#ffe1e1
+    style Admin fill:#ffe1e1
+    style Secretary fill:#e1f5ff
+    style Consolidated fill:#f0e1ff
+    style Writer fill:#ffe1f5
+    style Revised fill:#e1ffe1
+    style Speedup fill:#ffeb99
