@@ -1,0 +1,4 @@
+openapi-schema-validator
+pyyaml
+faker
+

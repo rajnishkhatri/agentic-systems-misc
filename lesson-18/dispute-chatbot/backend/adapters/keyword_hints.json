@@ -1,0 +1,138 @@
+{
+  "_version": "1.0.0",
+  "_description": "Keyword disambiguation hints for confusable reason codes. Used to pre-filter or boost code selection.",
+
+  "disambiguation_rules": {
+    "authorization_vs_fraud": {
+      "prefer_authorization": {
+        "keywords": ["declined", "wouldn't go through", "refused", "rejected at checkout", "card didn't work", "transaction failed"],
+        "codes": {
+          "amex": "A08",
+          "visa": "11.2",
+          "mastercard": "4808",
+          "discover": "DA"
+        },
+        "explanation": "Card declined at point of sale - authorization issue, not fraud"
+      },
+      "prefer_fraud": {
+        "keywords": ["didn't make", "stolen", "lost card", "someone else", "don't recognize", "never been there", "fraud", "unauthorized purchase"],
+        "codes": {
+          "amex": "F24",
+          "visa": "10.4",
+          "mastercard": "4837",
+          "discover": "UA02"
+        },
+        "explanation": "Cardholder explicitly denies making the transaction"
+      },
+      "prefer_amount_dispute": {
+        "keywords": ["charged more", "higher than", "wrong amount", "different price", "exceeded", "overcharged"],
+        "codes": {
+          "amex": "A01",
+          "visa": "12.5",
+          "mastercard": "4831",
+          "discover": "AW"
+        },
+        "explanation": "Amount charged differs from what was authorized"
+      }
+    },
+
+    "refund_distinctions": {
+      "returned_goods": {
+        "keywords": ["returned", "sent back", "shipped back", "gave back", "brought back to store"],
+        "codes": {
+          "amex": "C04",
+          "visa": "13.6",
+          "mastercard": "4855",
+          "discover": "RN2"
+        },
+        "explanation": "Customer returned merchandise but credit not received"
+      },
+      "cancelled_order": {
+        "keywords": ["cancelled order", "cancelled before", "never shipped", "stopped order", "cancelled purchase"],
+        "codes": {
+          "amex": "C05",
+          "visa": "13.7",
+          "mastercard": "4855",
+          "discover": "CR"
+        },
+        "explanation": "Order was cancelled but charge still appeared"
+      },
+      "credit_promised": {
+        "keywords": ["promised refund", "said they'd credit", "waiting for credit", "refund never came", "where's my refund"],
+        "codes": {
+          "amex": "C02",
+          "visa": "13.6",
+          "mastercard": "4855",
+          "discover": "RN2"
+        },
+        "explanation": "Merchant promised credit that was never processed"
+      }
+    },
+
+    "duplicate_vs_paid_other_means": {
+      "duplicate_charge": {
+        "keywords": ["charged twice", "double charge", "two charges", "duplicate", "same charge twice", "billed twice"],
+        "codes": {
+          "amex": "P08",
+          "visa": "12.6.1",
+          "mastercard": "4834",
+          "discover": "DP"
+        },
+        "explanation": "Same transaction processed multiple times"
+      },
+      "paid_other_means": {
+        "keywords": ["paid cash", "paid with check", "used different card", "already paid", "paid another way"],
+        "codes": {
+          "amex": "C14",
+          "visa": "12.6.2",
+          "mastercard": "4834",
+          "discover": "PM"
+        },
+        "explanation": "Transaction was paid through alternate method"
+      }
+    },
+
+    "product_issues": {
+      "not_received": {
+        "keywords": ["never arrived", "didn't receive", "not delivered", "never got", "package lost", "never showed up"],
+        "codes": {
+          "amex": "C08",
+          "visa": "13.1",
+          "mastercard": "4855",
+          "discover": "RG"
+        },
+        "explanation": "Goods or services were never received"
+      },
+      "defective_wrong": {
+        "keywords": ["broken", "damaged", "defective", "wrong item", "not as described", "doesn't work", "counterfeit"],
+        "codes": {
+          "amex": "C32",
+          "visa": "13.3",
+          "mastercard": "4853",
+          "discover": "RM"
+        },
+        "explanation": "Product received was defective or not as described"
+      }
+    },
+
+    "subscription": {
+      "cancelled_recurring": {
+        "keywords": ["cancelled subscription", "unsubscribed", "stopped recurring", "cancelled membership", "ended subscription"],
+        "codes": {
+          "amex": "C28",
+          "visa": "13.2",
+          "mastercard": "4841",
+          "discover": "AP"
+        },
+        "explanation": "Recurring billing continued after cancellation"
+      }
+    }
+  },
+
+  "network_family_hints": {
+    "authorization": ["declined", "expired", "invalid", "not authorized", "approval", "rejected"],
+    "fraud": ["stolen", "lost", "didn't make", "unauthorized", "fraud", "someone else", "counterfeit"],
+    "cardholder_disputes": ["returned", "cancelled", "refund", "credit", "subscription", "damaged", "not received"],
+    "processing_errors": ["duplicate", "wrong amount", "incorrect", "twice", "double", "currency"]
+  }
+}

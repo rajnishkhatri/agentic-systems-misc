@@ -1,0 +1,866 @@
+# Conversation Protocol Schema
+# Document ID: design/04_api_specifications/conversation_protocol.yaml
+# Version: 1.0.0
+# Last Updated: 2025-12-08
+#
+# This document defines the conversation protocol for the Merchant Dispute
+# Resolution Agentic Chatbot, including:
+#   - Turn structure and message format
+#   - 5-turn conversation flow (PRD Section 7)
+#   - Error states and recovery patterns
+#   - UI component mapping (Chainlit integration)
+
+openapi: "3.0.0"
+info:
+  title: Conversation Protocol Schema
+  version: 1.0.0
+  description: |
+    Defines the chatbot conversation structure, message formats, and turn flow
+    for the Merchant Dispute Resolution Chatbot.
+
+    Key Design Principles:
+    - **5-turn completion**: Evidence gathering completes in ≤5 conversational turns
+    - **Progressive disclosure**: Don't ask for data already in system
+    - **Real-time feedback**: Show evidence as gathered, explain decisions
+    - **Graceful degradation**: Handle errors with user-friendly recovery paths
+
+    Target: Complete evidence gathering in <5 minutes
+
+paths: {}
+
+components:
+  schemas:
+    # ============================================================================
+    # CONVERSATION SESSION
+    # ============================================================================
+
+    ConversationSession:
+      type: object
+      required:
+        - session_id
+        - merchant_id
+        - created_at
+        - status
+      properties:
+        session_id:
+          type: string
+          format: uuid
+          description: Unique conversation session identifier
+          example: "sess_550e8400-e29b-41d4-a716-446655440000"
+        merchant_id:
+          type: string
+          description: Merchant account identifier
+          example: "merch_abc123"
+        dispute_id:
+          type: string
+          description: Associated dispute ID (set after classification)
+          example: "disp_xyz789"
+        created_at:
+          type: string
+          format: date-time
+          description: Session start timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Last activity timestamp
+        status:
+          $ref: '#/components/schemas/SessionStatus'
+        current_turn:
+          type: integer
+          minimum: 1
+          maximum: 10
+          default: 1
+          description: Current conversation turn (target ≤5)
+        current_phase:
+          $ref: '#/components/schemas/ConversationPhase'
+        turns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationTurn'
+          description: Ordered list of conversation turns
+        context:
+          $ref: '#/components/schemas/ConversationContext'
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Additional session metadata (UI state, feature flags)
+      description: |
+        A complete conversation session between merchant and chatbot.
+        Stored in Chainlit `cl.user_session` with Redis fallback for persistence.
+
+    SessionStatus:
+      type: string
+      enum:
+        - active              # Conversation in progress
+        - awaiting_input      # Waiting for merchant response
+        - processing          # Bot is processing/gathering evidence
+        - completed           # Successfully submitted dispute
+        - escalated           # Handed off to human agent
+        - abandoned           # No activity timeout (30 min default)
+        - error               # Unrecoverable error state
+      description: Current session lifecycle status
+
+    ConversationPhase:
+      type: string
+      enum:
+        - greeting            # Turn 1: Welcome + dispute ID input
+        - classification      # Turn 2: Classification confirmation
+        - evidence_gathering  # Turn 3: Evidence summary + gaps
+        - validation          # Turn 4: Validation result
+        - submission          # Turn 5: Submission confirmation
+        - monitoring          # Post-submission: Status updates
+      description: |
+        Conversation phase mapped to state machine phases.
+        See PRD Section 7 Conversation Flow table.
+
+    # ============================================================================
+    # CONVERSATION TURN
+    # ============================================================================
+
+    ConversationTurn:
+      oneOf:
+        - $ref: '#/components/schemas/GreetingTurn'
+        - $ref: '#/components/schemas/ClassificationTurn'
+        - $ref: '#/components/schemas/EvidenceGatheringTurn'
+        - $ref: '#/components/schemas/ValidationTurn'
+        - $ref: '#/components/schemas/SubmissionTurn'
+      discriminator:
+        propertyName: phase
+        mapping:
+          greeting: '#/components/schemas/GreetingTurn'
+          classification: '#/components/schemas/ClassificationTurn'
+          evidence_gathering: '#/components/schemas/EvidenceGatheringTurn'
+          validation: '#/components/schemas/ValidationTurn'
+          submission: '#/components/schemas/SubmissionTurn'
+      description: |
+        Polymorphic conversation turn based on current phase.
+        Enforces 5-turn flow structure.
+
+    # Base Turn Properties (Abstract)
+    BaseTurn:
+      type: object
+      required:
+        - turn_number
+        - phase
+        - messages
+        - timestamp
+      properties:
+        turn_number:
+          type: integer
+          minimum: 1
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          minItems: 1
+        timestamp:
+          type: string
+          format: date-time
+        duration_ms:
+          type: integer
+        ui_components:
+          type: array
+          items:
+            $ref: '#/components/schemas/UIComponent'
+        tool_calls:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToolCallRecord'
+        state_transition:
+          type: object
+          properties:
+            from_state: {type: string}
+            to_state: {type: string}
+            trigger: {type: string}
+
+    GreetingTurn:
+      allOf:
+        - $ref: '#/components/schemas/BaseTurn'
+        - type: object
+          properties:
+            phase:
+              type: string
+              enum: [greeting]
+            turn_number:
+              type: integer
+              enum: [1]
+          x-allowed-transitions:
+            - classification
+            - error
+
+    ClassificationTurn:
+      allOf:
+        - $ref: '#/components/schemas/BaseTurn'
+        - type: object
+          properties:
+            phase:
+              type: string
+              enum: [classification]
+            turn_number:
+              type: integer
+              enum: [2]
+            tool_calls:
+              type: array
+              items:
+                $ref: '#/components/schemas/ToolCallRecord'
+              minItems: 1 # Must call classify_dispute
+          x-allowed-transitions:
+            - evidence_gathering
+            - error
+
+    EvidenceGatheringTurn:
+      allOf:
+        - $ref: '#/components/schemas/BaseTurn'
+        - type: object
+          properties:
+            phase:
+              type: string
+              enum: [evidence_gathering]
+            turn_number:
+              type: integer
+              enum: [3]
+            tool_calls:
+              type: array
+              items:
+                $ref: '#/components/schemas/ToolCallRecord'
+              minItems: 1 # Must call gather_evidence
+          x-allowed-transitions:
+            - validation
+            - error
+
+    ValidationTurn:
+      allOf:
+        - $ref: '#/components/schemas/BaseTurn'
+        - type: object
+          properties:
+            phase:
+              type: string
+              enum: [validation]
+            turn_number:
+              type: integer
+              enum: [4]
+            tool_calls:
+              type: array
+              items:
+                $ref: '#/components/schemas/ToolCallRecord'
+              minItems: 1 # Must call validate_evidence
+          x-allowed-transitions:
+            - submission
+            - evidence_gathering # Loop back if evidence missing
+            - error
+
+    SubmissionTurn:
+      allOf:
+        - $ref: '#/components/schemas/BaseTurn'
+        - type: object
+          properties:
+            phase:
+              type: string
+              enum: [submission]
+            turn_number:
+              type: integer
+              enum: [5]
+            tool_calls:
+              type: array
+              items:
+                $ref: '#/components/schemas/ToolCallRecord'
+              minItems: 1 # Must call submit_dispute
+          x-allowed-transitions:
+            - monitoring
+            - error
+
+    # ============================================================================
+    # MESSAGE FORMAT
+    # ============================================================================
+
+    Message:
+      type: object
+      required:
+        - message_id
+        - role
+        - content
+        - timestamp
+      properties:
+        message_id:
+          type: string
+          format: uuid
+          description: Unique message identifier
+        role:
+          $ref: '#/components/schemas/MessageRole'
+        content:
+          type: string
+          description: Message text content (markdown supported)
+          maxLength: 10000
+        content_type:
+          $ref: '#/components/schemas/ContentType'
+        timestamp:
+          type: string
+          format: date-time
+          description: Message creation timestamp
+        metadata:
+          $ref: '#/components/schemas/MessageMetadata'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageAttachment'
+          description: File attachments or evidence references
+        intent:
+          $ref: '#/components/schemas/UserIntent'
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtractedEntity'
+          description: Named entities extracted from user message
+      description: |
+        Individual message in a conversation turn.
+        Supports rich content types for evidence display.
+
+    MessageRole:
+      type: string
+      enum:
+        - user                # Merchant input
+        - assistant           # Chatbot response
+        - system              # System notifications (deadlines, errors)
+        - tool                # Tool execution results
+      description: Message sender role
+
+    ContentType:
+      type: string
+      enum:
+        - text                # Plain text message
+        - markdown            # Markdown-formatted content
+        - structured          # JSON-structured data (evidence summary)
+        - streaming           # Streaming response (real-time updates)
+        - error               # Error message with recovery options
+      default: text
+      description: Content format type
+
+    MessageMetadata:
+      type: object
+      properties:
+        model_used:
+          type: string
+          description: LLM model that generated this response
+          example: "gpt-4o"
+        tokens_used:
+          type: integer
+          description: Token count for this message
+        latency_ms:
+          type: integer
+          description: Response generation time
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Model confidence in response (if applicable)
+        phase:
+          $ref: '#/components/schemas/ConversationPhase'
+        is_streaming:
+          type: boolean
+          default: false
+          description: Whether this message was streamed
+        requires_confirmation:
+          type: boolean
+          default: false
+          description: Whether user confirmation is needed to proceed
+      description: Message generation metadata for observability
+
+    MessageAttachment:
+      type: object
+      required:
+        - attachment_id
+        - type
+      properties:
+        attachment_id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - evidence_item       # Evidence document reference
+            - shipping_proof      # Shipping/POD document
+            - transaction_record  # Transaction details
+            - judge_score         # Judge evaluation result
+            - chart               # Visual chart/graph
+            - document            # Generic document
+        name:
+          type: string
+          description: Display name for attachment
+        url:
+          type: string
+          format: uri
+          description: URL to attachment content
+        mime_type:
+          type: string
+          description: MIME type of attachment
+          example: "application/pdf"
+        size_bytes:
+          type: integer
+          description: File size in bytes
+        preview:
+          type: string
+          description: Text preview or summary
+      description: File or evidence attachment to a message
+
+    # ============================================================================
+    # USER INTENT & ENTITY EXTRACTION
+    # ============================================================================
+
+    UserIntent:
+      type: object
+      properties:
+        primary_intent:
+          type: string
+          enum:
+            - provide_dispute_id        # User providing dispute/transaction ID
+            - confirm_classification    # Confirming dispute type is correct
+            - provide_evidence          # Providing additional evidence
+            - ask_question              # Asking clarifying question
+            - request_status            # Checking dispute status
+            - confirm_submission        # Confirming ready to submit
+            - request_escalation        # Requesting human agent
+            - cancel                    # Cancelling current operation
+            - unknown                   # Unable to classify intent
+          description: Primary user intent for this message
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Intent classification confidence
+        secondary_intents:
+          type: array
+          items:
+            type: string
+          description: Additional detected intents
+      description: |
+        Classified user intent for routing.
+        Uses LLMService with routing_model for cost efficiency.
+
+    ExtractedEntity:
+      type: object
+      required:
+        - entity_type
+        - value
+      properties:
+        entity_type:
+          type: string
+          enum:
+            - dispute_id            # Dispute identifier
+            - transaction_id        # Transaction reference
+            - tracking_number       # Shipping tracking number
+            - date                  # Date reference
+            - amount                # Currency amount
+            - merchant_reference    # Merchant-specific reference
+            - reason_code           # Dispute reason code
+          description: Entity type
+        value:
+          type: string
+          description: Extracted entity value
+        start_position:
+          type: integer
+          description: Character position in message where entity starts
+        end_position:
+          type: integer
+          description: Character position where entity ends
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Extraction confidence score
+      description: Named entity extracted from user message
+
+    # ============================================================================
+    # CONVERSATION CONTEXT
+    # ============================================================================
+
+    ConversationContext:
+      type: object
+      properties:
+        dispute:
+          type: object
+          properties:
+            dispute_id:
+              type: string
+            reason_code:
+              type: string
+            transaction_date:
+              type: string
+              format: date
+            amount:
+              type: number
+            deadline:
+              type: string
+              format: date-time
+            days_remaining:
+              type: integer
+          description: Active dispute context
+        merchant:
+          type: object
+          properties:
+            merchant_id:
+              type: string
+            name:
+              type: string
+            mcc:
+              type: string
+              description: Merchant Category Code
+            dispute_history_count:
+              type: integer
+          description: Merchant profile context
+        evidence:
+          type: object
+          properties:
+            package_id:
+              type: string
+              format: uuid
+            completeness_score:
+              type: number
+            gathered_types:
+              type: array
+              items:
+                type: string
+            missing_types:
+              type: array
+              items:
+                type: string
+          description: Evidence gathering progress
+        validation:
+          type: object
+          properties:
+            judges_passed:
+              type: boolean
+            scores:
+              type: object
+              additionalProperties:
+                type: number
+            blocking_failures:
+              type: array
+              items:
+                type: string
+          description: Validation/judge results
+        submission:
+          type: object
+          properties:
+            submitted:
+              type: boolean
+            network_case_id:
+              type: string
+            submitted_at:
+              type: string
+              format: date-time
+          description: Submission status
+      description: |
+        Accumulated context throughout conversation.
+        Persisted in Chainlit user_session with Redis backup.
+
+    # ============================================================================
+    # 5-TURN CONVERSATION FLOW (PRD Section 7)
+    # ============================================================================
+
+    TurnTemplate:
+      type: object
+      required:
+        - turn_number
+        - phase
+        - purpose
+        - bot_prompt_template
+      properties:
+        turn_number:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: Standard turn number (1-5)
+        phase:
+          $ref: '#/components/schemas/ConversationPhase'
+        purpose:
+          type: string
+          description: Purpose of this turn
+        bot_prompt_template:
+          type: string
+          description: Jinja2 template for bot's initial prompt
+        expected_user_input:
+          type: string
+          description: Expected type of user response
+        ui_component:
+          type: string
+          description: Primary Chainlit component for this turn
+        state_machine_phase:
+          type: string
+          description: Corresponding state machine phase
+        success_criteria:
+          type: array
+          items:
+            type: string
+          description: What must be true to proceed to next turn
+      description: |
+        Template for standard conversation turns.
+        See PRD Section 7 Conversation Flow table.
+
+    # Pre-defined turn templates (constants)
+    # These would be loaded from configuration, documented here for reference
+
+    # ============================================================================
+    # UI COMPONENT MAPPING (Chainlit)
+    # ============================================================================
+
+    UIComponent:
+      type: object
+      required:
+        - component_type
+      properties:
+        component_type:
+          type: string
+          enum:
+            - message             # cl.Message()
+            - step                # cl.Step()
+            - element_sidebar     # cl.Element(display="side")
+            - element_inline      # cl.Element(display="inline")
+            - action              # cl.Action()
+            - streaming           # cl.Message() with streaming=True
+          description: Chainlit component type
+        step_type:
+          type: string
+          enum:
+            - phase               # Phase step (CLASSIFY, GATHER, etc.)
+            - tool                # Tool call step
+            - specialist          # Specialist agent step
+            - judge               # Judge evaluation step
+          description: Step subtype (if component_type is 'step')
+        name:
+          type: string
+          description: Component display name
+        status:
+          type: string
+          enum:
+            - running
+            - completed
+            - failed
+          description: Step status
+        content:
+          type: object
+          additionalProperties: true
+          description: Component-specific content
+        parent_id:
+          type: string
+          description: Parent step ID for nested steps
+      description: |
+        Chainlit UI component rendered during conversation.
+        Maps conversation phases to visual elements.
+
+    ToolCallRecord:
+      type: object
+      required:
+        - tool_name
+        - status
+      properties:
+        tool_name:
+          type: string
+          enum:
+            - classify_dispute
+            - gather_evidence
+            - validate_evidence
+            - submit_dispute
+          description: MCP tool invoked
+        input:
+          type: object
+          additionalProperties: true
+          description: Tool input parameters
+        output:
+          type: object
+          additionalProperties: true
+          description: Tool execution result
+        status:
+          type: string
+          enum:
+            - pending
+            - running
+            - completed
+            - failed
+        duration_ms:
+          type: integer
+          description: Execution duration
+        error:
+          type: string
+          description: Error message if failed
+      description: Record of MCP tool call during conversation
+
+    # ============================================================================
+    # ERROR STATES & RECOVERY (PRD Section 7)
+    # ============================================================================
+
+    ErrorState:
+      type: object
+      required:
+        - error_type
+        - user_message
+        - system_action
+      properties:
+        error_type:
+          type: string
+          enum:
+            - network_timeout       # Visa system is slow
+            - judge_failure         # Blocking judge failed
+            - missing_evidence      # Evidence gaps identified
+            - invalid_dispute_id    # Dispute ID not found
+            - deadline_warning      # Deadline approaching
+            - pci_violation         # PCI compliance issue
+            - session_timeout       # No activity timeout
+            - rate_limit            # API rate limit exceeded
+          description: Error category
+        user_message:
+          type: string
+          description: User-facing error message
+          example: "Visa system is slow. Retrying..."
+        system_action:
+          type: string
+          enum:
+            - retry_with_backoff    # Exponential backoff (1s, 2s, 4s)
+            - escalate_to_human     # Create escalation ticket
+            - prompt_for_input      # Ask user for missing info
+            - offer_alternatives    # Suggest alternative actions
+            - show_warning          # Display warning, continue
+            - abort_session         # End session with summary
+          description: Automated system response
+        recovery_options:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecoveryOption'
+          description: Options presented to user for recovery
+        severity:
+          type: string
+          enum:
+            - warning               # Non-blocking, informational
+            - error                 # Blocking, but recoverable
+            - critical              # Requires escalation
+          default: error
+        max_retries:
+          type: integer
+          default: 3
+          description: Maximum retry attempts before escalation
+      description: |
+        Error state definition with recovery path.
+        See PRD Section 7 Error States table.
+
+    RecoveryOption:
+      type: object
+      required:
+        - action_id
+        - label
+      properties:
+        action_id:
+          type: string
+          description: Unique action identifier
+        label:
+          type: string
+          description: Button/option label shown to user
+          example: "Try Again"
+        action_type:
+          type: string
+          enum:
+            - retry                 # Retry failed operation
+            - provide_input         # Prompt user for input
+            - skip                  # Skip optional step
+            - escalate              # Request human help
+            - cancel                # Cancel and exit
+          description: Action category
+        next_phase:
+          $ref: '#/components/schemas/ConversationPhase'
+          description: Phase to transition to after this action
+      description: Recovery action option for user
+
+    # ============================================================================
+    # PROTOCOL CONSTANTS (Reference Documentation)
+    # ============================================================================
+
+    # These are documented for reference; actual values are in configuration
+
+    ProtocolConstants:
+      type: object
+      properties:
+        max_turns_target:
+          type: integer
+          default: 5
+          description: Target maximum turns for evidence gathering
+        max_turns_hard_limit:
+          type: integer
+          default: 10
+          description: Hard limit before forcing escalation
+        session_timeout_minutes:
+          type: integer
+          default: 30
+          description: Inactivity timeout
+        max_message_length:
+          type: integer
+          default: 10000
+          description: Maximum characters per message
+        streaming_enabled:
+          type: boolean
+          default: true
+          description: Enable streaming responses
+        retry_backoff_base_ms:
+          type: integer
+          default: 1000
+          description: Base retry delay (doubles each attempt)
+        retry_max_attempts:
+          type: integer
+          default: 3
+          description: Maximum retry attempts
+        deadline_warning_days:
+          type: array
+          items:
+            type: integer
+          default: [7, 3, 1]
+          description: Days before deadline to show warnings
+      description: Protocol configuration constants
+
+# ============================================================================
+# 5-TURN FLOW REFERENCE (PRD Section 7)
+# ============================================================================
+#
+# Turn | Phase            | Purpose                        | UI Component
+# -----|------------------|--------------------------------|------------------------
+# 1    | greeting         | Welcome + Dispute ID input     | cl.Message() + prompt
+# 2    | classification   | Classification confirmation    | cl.Step("CLASSIFY")
+# 3    | evidence_gathering| Evidence summary + gaps       | Nested cl.Step() per specialist
+# 4    | validation       | Validation result              | cl.Step("VALIDATE") + scores
+# 5    | submission       | Submission confirmation        | cl.Step("SUBMIT") + case ID
+#
+# Example Messages:
+#
+# Turn 1 (greeting):
+#   "Welcome! Please enter your dispute ID or transaction reference."
+#
+# Turn 2 (classification):
+#   "I see this is a fraud dispute (10.4). I'll gather evidence to prove
+#    cardholder authorization."
+#
+# Turn 3 (evidence_gathering):
+#   "I found 3 prior transactions, shipping proof, and device match.
+#    Missing: customer email confirmation. Can you provide?"
+#
+# Turn 4 (validation):
+#   "Evidence package ready. Quality score: 0.87. Fabrication check: passed.
+#    Ready to submit?"
+#
+# Turn 5 (submission):
+#   "Submitted to Visa. Case ID: VIS-2024-12345. Deadline: Dec 19, 2024.
+#    I'll monitor for updates."
+
+# ============================================================================
+# ERROR RECOVERY REFERENCE (PRD Section 7)
+# ============================================================================
+#
+# Error State         | User Message                                    | System Action
+# --------------------|------------------------------------------------|--------------------
+# network_timeout     | "Visa system is slow. Retrying..."             | retry_with_backoff
+# judge_failure       | "I need human review. Escalating..."           | escalate_to_human
+# missing_evidence    | "To strengthen your case, I need [item]..."    | prompt_for_input
+# invalid_dispute_id  | "Couldn't find dispute #XYZ. Check ID..."      | offer_alternatives
+# deadline_warning    | "⚠️ Deadline in 3 days. Priority: submit today"| show_warning
+
+# ============================================================================
+# VERSION HISTORY
+# ============================================================================
+# Version | Date       | Author | Changes
+# --------|------------|--------|------------------------------------------
+# 1.0.0   | 2025-12-08 | Claude | Initial conversation protocol schema

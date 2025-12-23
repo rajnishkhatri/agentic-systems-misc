@@ -1,0 +1,1081 @@
+openapi: 3.0.3
+info:
+  title: Merchant Dispute Resolution MCP Tools API
+  description: |
+    Model Context Protocol (MCP) tool definitions for the Merchant Dispute Resolution Agentic Chatbot.
+
+    These tools are invoked by the State Machine Orchestrator during dispute workflow phases:
+    - CLASSIFY: `classify_dispute` - Determine reason code and deadline
+    - GATHER_EVIDENCE: `gather_evidence` - Collect evidence via hierarchical agents
+    - VALIDATE: `validate_evidence` - Run LLM judge panel validation
+    - SUBMIT: `submit_dispute` - Translate and submit to Visa VROL
+
+    All tools integrate with the Explainability Layer (BlackBox, GuardRails, PhaseLogger).
+  version: 1.0.0
+  contact:
+    name: Dispute Resolution Team
+  license:
+    name: Internal Use Only
+
+servers:
+  - url: /mcp/v1
+    description: MCP Tool Endpoint
+
+tags:
+  - name: classification
+    description: Dispute classification and deadline calculation
+  - name: evidence
+    description: Evidence gathering and validation
+  - name: submission
+    description: Network submission operations
+
+paths:
+  /tools/classify_dispute:
+    post:
+      operationId: classifyDispute
+      summary: Classify dispute type and calculate deadline
+      description: |
+        Analyzes the dispute to determine:
+        - Reason code (FRAUD_10_4 or PNR_13_1)
+        - Evidence submission deadline (dispute_date + 14 days)
+        - CE 3.0 eligibility potential
+
+        Uses `LLMService.complete()` with `routing_model` for cost efficiency.
+
+        **State Machine Phase:** CLASSIFY
+      tags:
+        - classification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClassifyDisputeRequest'
+            examples:
+              fraud_case:
+                summary: Fraud 10.4 Case
+                value:
+                  dispute_id: "d-550e8400-e29b-41d4-a716-446655440000"
+                  transaction_id: "txn_1234567890"
+                  transaction_date: "2025-12-01T14:30:00Z"
+                  transaction_amount: 499.99
+                  currency: "USD"
+                  merchant_id: "m-123e4567-e89b-12d3-a456-426614174000"
+                  dispute_date: "2025-12-05T09:00:00Z"
+                  cardholder_claim: "I did not make this purchase. My card was stolen."
+              pnr_case:
+                summary: Product Not Received 13.1 Case
+                value:
+                  dispute_id: "d-660f9500-f39c-52e5-b827-557766551111"
+                  transaction_id: "txn_0987654321"
+                  transaction_date: "2025-11-15T10:00:00Z"
+                  transaction_amount: 129.99
+                  currency: "USD"
+                  merchant_id: "m-234f5678-f90c-23e4-b567-537725285111"
+                  dispute_date: "2025-12-03T11:30:00Z"
+                  cardholder_claim: "I never received my order. Tracking shows delivered but nothing arrived."
+      responses:
+        '200':
+          description: Classification successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClassifyDisputeResponse'
+              examples:
+                fraud_classification:
+                  summary: Classified as Fraud 10.4
+                  value:
+                    dispute_id: "d-550e8400-e29b-41d4-a716-446655440000"
+                    reason_code: "FRAUD_10_4"
+                    reason_code_description: "Fraud - Card Not Present"
+                    deadline: "2025-12-19T23:59:59Z"
+                    days_remaining: 14
+                    ce3_potential: true
+                    ce3_requirements:
+                      - "2+ prior undisputed transactions"
+                      - "Within 120 days"
+                      - "2+ matching signals (device, IP, email, address)"
+                    confidence: 0.95
+                    classification_rationale: "Cardholder claims unauthorized transaction with stolen card. Classic fraud pattern requiring CE 3.0 evidence."
+                    next_phase: "GATHER_EVIDENCE"
+                    required_evidence:
+                      - "PRIOR_TRANSACTION"
+                      - "DEVICE_FINGERPRINT"
+                      - "IP_ADDRESS"
+                      - "EMAIL_MATCH"
+                pnr_classification:
+                  summary: Classified as PNR 13.1
+                  value:
+                    dispute_id: "d-660f9500-f39c-52e5-b827-557766551111"
+                    reason_code: "PNR_13_1"
+                    reason_code_description: "Product Not Received"
+                    deadline: "2025-12-17T23:59:59Z"
+                    days_remaining: 14
+                    ce3_potential: false
+                    ce3_requirements: []
+                    confidence: 0.92
+                    classification_rationale: "Cardholder claims non-delivery despite tracking showing delivered. Requires shipping proof and delivery confirmation."
+                    next_phase: "GATHER_EVIDENCE"
+                    required_evidence:
+                      - "TRACKING_NUMBER"
+                      - "PROOF_OF_DELIVERY"
+                      - "DELIVERY_PHOTO"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error_code: "INVALID_DISPUTE_ID"
+                message: "Dispute ID format invalid. Expected UUID format."
+                details:
+                  field: "dispute_id"
+                  provided: "invalid-id"
+        '422':
+          description: Unprocessable - cannot classify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error_code: "CLASSIFICATION_FAILED"
+                message: "Unable to determine reason code from provided information."
+                details:
+                  confidence: 0.3
+                  possible_codes:
+                    - code: "FRAUD_10_4"
+                      confidence: 0.3
+                    - code: "PNR_13_1"
+                      confidence: 0.25
+
+  /tools/gather_evidence:
+    post:
+      operationId: gatherEvidence
+      summary: Collect evidence using hierarchical specialist agents
+      description: |
+        Delegates evidence collection to parallel specialist agents:
+        - **TransactionSpecialist**: CE 3.0 prior transaction retrieval
+        - **ShippingSpecialist**: Tracking numbers, POD, delivery photos
+        - **CustomerHistorySpecialist**: Device fingerprint, IP, email match
+
+        Uses `ThreadPoolExecutor` for parallel I/O-bound operations.
+        Each specialist uses `LLMService.complete()` with `default_model`.
+
+        **State Machine Phase:** GATHER_EVIDENCE
+      tags:
+        - evidence
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GatherEvidenceRequest'
+            examples:
+              fraud_evidence:
+                summary: Gather Fraud Evidence
+                value:
+                  dispute_id: "d-550e8400-e29b-41d4-a716-446655440000"
+                  reason_code: "FRAUD_10_4"
+                  merchant_id: "m-123e4567-e89b-12d3-a456-426614174000"
+                  transaction_id: "txn_1234567890"
+                  transaction_date: "2025-12-01T14:30:00Z"
+                  cardholder_email: "customer@example.com"
+                  required_evidence:
+                    - "PRIOR_TRANSACTION"
+                    - "DEVICE_FINGERPRINT"
+                    - "IP_ADDRESS"
+                    - "EMAIL_MATCH"
+              pnr_evidence:
+                summary: Gather PNR Evidence
+                value:
+                  dispute_id: "d-660f9500-f39c-52e5-b827-557766551111"
+                  reason_code: "PNR_13_1"
+                  merchant_id: "m-234f5678-f90c-23e4-b567-537725285111"
+                  transaction_id: "txn_0987654321"
+                  transaction_date: "2025-11-15T10:00:00Z"
+                  shipping_carrier: "FedEx"
+                  tracking_number: "794644790135"
+                  required_evidence:
+                    - "TRACKING_NUMBER"
+                    - "PROOF_OF_DELIVERY"
+                    - "DELIVERY_PHOTO"
+      responses:
+        '200':
+          description: Evidence gathering complete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GatherEvidenceResponse'
+              examples:
+                fraud_evidence_complete:
+                  summary: CE 3.0 Eligible Evidence
+                  value:
+                    dispute_id: "d-550e8400-e29b-41d4-a716-446655440000"
+                    status: "COMPLETE"
+                    completeness_score: 0.95
+                    evidence_package:
+                      prior_transactions:
+                        - transaction_id: "txn_0000000001"
+                          date: "2025-10-15T12:00:00Z"
+                          amount: 89.99
+                          device_fingerprint_match: true
+                          ip_match: true
+                        - transaction_id: "txn_0000000002"
+                          date: "2025-11-01T09:30:00Z"
+                          amount: 150.00
+                          device_fingerprint_match: true
+                          email_match: true
+                      device_fingerprint:
+                        fingerprint_id: "fp_abc123xyz"
+                        match_confidence: 0.98
+                        device_type: "iPhone 15 Pro"
+                      ip_geolocation:
+                        ip_address: "203.0.113.42"
+                        city: "San Francisco"
+                        country: "US"
+                        match_confidence: 0.92
+                      email_verification:
+                        email: "customer@example.com"
+                        account_age_days: 847
+                        transaction_count: 23
+                        match: true
+                    ce3_eligibility:
+                      eligible: true
+                      prior_transaction_count: 2
+                      matching_signals: 3
+                      qualifying_signals:
+                        - "device_fingerprint"
+                        - "ip_address"
+                        - "email"
+                    gaps: []
+                    next_phase: "VALIDATE"
+                    execution_time_ms: 2340
+                pnr_evidence_incomplete:
+                  summary: Incomplete PNR Evidence
+                  value:
+                    dispute_id: "d-660f9500-f39c-52e5-b827-557766551111"
+                    status: "INCOMPLETE"
+                    completeness_score: 0.65
+                    evidence_package:
+                      tracking:
+                        carrier: "FedEx"
+                        tracking_number: "794644790135"
+                        status: "Delivered"
+                        delivery_date: "2025-11-18T14:30:00Z"
+                        delivery_location: "Front door"
+                      proof_of_delivery:
+                        available: true
+                        signed_by: "RESIDENTIAL"
+                        signature_image_url: null
+                      delivery_photo:
+                        available: false
+                    ce3_eligibility:
+                      eligible: false
+                      reason: "Not applicable for PNR disputes"
+                    gaps:
+                      - field: "signature_image"
+                        severity: "WARNING"
+                        message: "Signature image not available from carrier"
+                      - field: "delivery_photo"
+                        severity: "REQUIRED"
+                        message: "Delivery photo required for non-signature deliveries"
+                    merchant_action_required:
+                      - "Upload delivery photo if available"
+                      - "Provide signed delivery confirmation"
+                    next_phase: "GATHER_EVIDENCE"
+                    execution_time_ms: 1890
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '408':
+          description: Evidence gathering timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error_code: "GATHERING_TIMEOUT"
+                message: "Evidence gathering exceeded 5 minute timeout."
+                details:
+                  completed_specialists:
+                    - "TransactionSpecialist"
+                  timed_out_specialists:
+                    - "ShippingSpecialist"
+                  partial_evidence_available: true
+
+  /tools/validate_evidence:
+    post:
+      operationId: validateEvidence
+      summary: Run LLM judge panel validation
+      description: |
+        Executes 3 synchronized LLM judges:
+
+        | Judge | Threshold | Blocking | Purpose |
+        |-------|-----------|----------|---------|
+        | Evidence Quality | 0.8 | Yes | Is evidence sufficient for network? |
+        | Fabrication Detection | 0.95 | Yes | Did agent hallucinate evidence? |
+        | Dispute Validity | 0.7 | No | Is this a legitimate defense? |
+
+        Uses `LLMService.complete_structured()` with Pydantic response models.
+        Blocking judges must pass (≥ threshold) to proceed to SUBMIT phase.
+
+        **State Machine Phase:** VALIDATE
+      tags:
+        - evidence
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateEvidenceRequest'
+            examples:
+              validate_fraud_evidence:
+                summary: Validate Fraud Evidence
+                value:
+                  dispute_id: "d-550e8400-e29b-41d4-a716-446655440000"
+                  reason_code: "FRAUD_10_4"
+                  evidence_package:
+                    prior_transactions:
+                      - transaction_id: "txn_0000000001"
+                        date: "2025-10-15T12:00:00Z"
+                        amount: 89.99
+                        device_fingerprint_match: true
+                    device_fingerprint:
+                      fingerprint_id: "fp_abc123xyz"
+                      match_confidence: 0.98
+                    ip_geolocation:
+                      ip_address: "203.0.113.42"
+                      match_confidence: 0.92
+      responses:
+        '200':
+          description: Validation complete
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateEvidenceResponse'
+              examples:
+                validation_passed:
+                  summary: All Judges Passed
+                  value:
+                    dispute_id: "d-550e8400-e29b-41d4-a716-446655440000"
+                    passed: true
+                    blocking_failures: []
+                    warnings: []
+                    judge_results:
+                      evidence_quality:
+                        score: 0.88
+                        threshold: 0.8
+                        passed: true
+                        reasoning: "Evidence package includes 2 prior undisputed transactions with 3 matching signals. Meets CE 3.0 requirements."
+                        completeness_score: 0.92
+                        relevance_score: 0.85
+                        missing_evidence: []
+                      fabrication_detection:
+                        score: 0.99
+                        threshold: 0.95
+                        passed: true
+                        reasoning: "All evidence verified against source systems. No hallucinated or fabricated data detected."
+                        fabricated_items: []
+                        verification_status:
+                          prior_transactions: true
+                          device_fingerprint: true
+                          ip_geolocation: true
+                      dispute_validity:
+                        score: 0.82
+                        threshold: 0.7
+                        passed: true
+                        reasoning: "Defense strategy is sound. CE 3.0 evidence strongly suggests legitimate cardholder transaction."
+                        confidence: 0.85
+                    next_phase: "SUBMIT"
+                    total_latency_ms: 1234
+                    cost_usd: 0.0089
+                validation_failed:
+                  summary: Blocking Judge Failed
+                  value:
+                    dispute_id: "d-550e8400-e29b-41d4-a716-446655440000"
+                    passed: false
+                    blocking_failures:
+                      - "evidence_quality"
+                    warnings: []
+                    judge_results:
+                      evidence_quality:
+                        score: 0.65
+                        threshold: 0.8
+                        passed: false
+                        reasoning: "Only 1 prior transaction found. CE 3.0 requires minimum 2 prior undisputed transactions."
+                        completeness_score: 0.60
+                        relevance_score: 0.70
+                        missing_evidence:
+                          - "Additional prior transaction required"
+                          - "Email match verification pending"
+                      fabrication_detection:
+                        score: 0.97
+                        threshold: 0.95
+                        passed: true
+                        reasoning: "Evidence verified. No fabrication detected."
+                        fabricated_items: []
+                      dispute_validity:
+                        score: 0.55
+                        threshold: 0.7
+                        passed: false
+                        reasoning: "With only 1 prior transaction, defense may not meet CE 3.0 threshold."
+                        confidence: 0.6
+                    next_phase: "GATHER_EVIDENCE"
+                    remediation_actions:
+                      - action: "gather_more_evidence"
+                        description: "Search for additional prior transactions"
+                      - action: "request_merchant_input"
+                        description: "Ask merchant for additional customer verification"
+                    total_latency_ms: 1456
+                    cost_usd: 0.0092
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Judge execution error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error_code: "JUDGE_ERROR"
+                message: "Evidence quality judge failed to execute."
+                details:
+                  judge: "evidence_quality"
+                  error: "LLM timeout after 3 retries"
+
+  /tools/submit_dispute:
+    post:
+      operationId: submitDispute
+      summary: Submit dispute to Visa VROL
+      description: |
+        Translates internal dispute schema to Visa VROL format and submits.
+
+        **Workflow:**
+        1. Validate deadline has not passed
+        2. Translate evidence to VROL payload (fraud 10.4 or PNR 13.1 format)
+        3. Submit with retry logic (3x exponential backoff: 1s, 2s, 4s)
+        4. Return network case ID on success
+
+        Uses mock Visa API for Phase 1.
+
+        **State Machine Phase:** SUBMIT
+      tags:
+        - submission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitDisputeRequest'
+            examples:
+              submit_fraud:
+                summary: Submit Fraud Dispute
+                value:
+                  dispute_id: "d-550e8400-e29b-41d4-a716-446655440000"
+                  reason_code: "FRAUD_10_4"
+                  deadline: "2025-12-19T23:59:59Z"
+                  evidence_package:
+                    prior_transactions:
+                      - transaction_id: "txn_0000000001"
+                        date: "2025-10-15T12:00:00Z"
+                        amount: 89.99
+                    device_fingerprint:
+                      fingerprint_id: "fp_abc123xyz"
+                  validation_result:
+                    passed: true
+                    judge_results:
+                      evidence_quality:
+                        score: 0.88
+                        passed: true
+      responses:
+        '200':
+          description: Submission successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmitDisputeResponse'
+              examples:
+                submission_success:
+                  summary: Successful Submission
+                  value:
+                    dispute_id: "d-550e8400-e29b-41d4-a716-446655440000"
+                    status: "SUBMITTED"
+                    network_case_id: "VROL-2025-1234567890"
+                    submitted_at: "2025-12-08T10:30:45Z"
+                    acknowledged_at: "2025-12-08T10:30:47Z"
+                    vrol_payload_hash: "sha256:abc123def456..."
+                    retry_count: 0
+                    next_phase: "MONITOR"
+                    expected_resolution_date: "2026-01-07T23:59:59Z"
+                    message: "Dispute successfully submitted to Visa VROL. Monitor for resolution."
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Deadline expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error_code: "DEADLINE_EXPIRED"
+                message: "Cannot submit dispute. Deadline has passed."
+                details:
+                  deadline: "2025-12-05T23:59:59Z"
+                  current_time: "2025-12-08T10:30:00Z"
+                  days_overdue: 3
+        '502':
+          description: Network submission failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error_code: "NETWORK_ERROR"
+                message: "Visa VROL submission failed after 3 retries."
+                details:
+                  retry_count: 3
+                  last_error: "Connection timeout"
+                  can_retry: false
+
+components:
+  schemas:
+    # Request Schemas
+    ClassifyDisputeRequest:
+      type: object
+      required:
+        - dispute_id
+        - transaction_id
+        - transaction_date
+        - transaction_amount
+        - currency
+        - merchant_id
+        - dispute_date
+        - cardholder_claim
+      properties:
+        dispute_id:
+          type: string
+          format: uuid
+          description: Unique dispute identifier
+          example: "d-550e8400-e29b-41d4-a716-446655440000"
+        transaction_id:
+          type: string
+          description: Original transaction reference
+          example: "txn_1234567890"
+        transaction_date:
+          type: string
+          format: date-time
+          description: Original transaction timestamp
+        transaction_amount:
+          type: number
+          format: float
+          minimum: 0.01
+          description: Disputed amount in currency units
+        currency:
+          type: string
+          pattern: "^[A-Z]{3}$"
+          description: ISO 4217 currency code
+          default: "USD"
+        merchant_id:
+          type: string
+          format: uuid
+          description: Merchant identifier
+        dispute_date:
+          type: string
+          format: date-time
+          description: Date dispute was filed
+        cardholder_claim:
+          type: string
+          minLength: 10
+          maxLength: 2000
+          description: Cardholder's description of the dispute
+
+    GatherEvidenceRequest:
+      type: object
+      required:
+        - dispute_id
+        - reason_code
+        - merchant_id
+        - transaction_id
+        - transaction_date
+        - required_evidence
+      properties:
+        dispute_id:
+          type: string
+          format: uuid
+        reason_code:
+          $ref: '#/components/schemas/ReasonCode'
+        merchant_id:
+          type: string
+          format: uuid
+        transaction_id:
+          type: string
+        transaction_date:
+          type: string
+          format: date-time
+        cardholder_email:
+          type: string
+          format: email
+          description: Required for email match evidence
+        shipping_carrier:
+          type: string
+          enum: [FedEx, UPS, USPS, DHL, Other]
+          description: Required for PNR disputes
+        tracking_number:
+          type: string
+          description: Required for PNR disputes
+        required_evidence:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceType'
+          minItems: 1
+
+    ValidateEvidenceRequest:
+      type: object
+      required:
+        - dispute_id
+        - reason_code
+        - evidence_package
+      properties:
+        dispute_id:
+          type: string
+          format: uuid
+        reason_code:
+          $ref: '#/components/schemas/ReasonCode'
+        evidence_package:
+          $ref: '#/components/schemas/EvidencePackage'
+
+    SubmitDisputeRequest:
+      type: object
+      required:
+        - dispute_id
+        - reason_code
+        - deadline
+        - evidence_package
+        - validation_result
+      properties:
+        dispute_id:
+          type: string
+          format: uuid
+        reason_code:
+          $ref: '#/components/schemas/ReasonCode'
+        deadline:
+          type: string
+          format: date-time
+          description: Evidence submission deadline
+        evidence_package:
+          $ref: '#/components/schemas/EvidencePackage'
+        validation_result:
+          $ref: '#/components/schemas/ValidationResult'
+
+    # Response Schemas
+    ClassifyDisputeResponse:
+      type: object
+      required:
+        - dispute_id
+        - reason_code
+        - reason_code_description
+        - deadline
+        - days_remaining
+        - confidence
+        - classification_rationale
+        - next_phase
+        - required_evidence
+      properties:
+        dispute_id:
+          type: string
+          format: uuid
+        reason_code:
+          $ref: '#/components/schemas/ReasonCode'
+        reason_code_description:
+          type: string
+          description: Human-readable reason code description
+        deadline:
+          type: string
+          format: date-time
+          description: Evidence submission deadline (dispute_date + 14 days)
+        days_remaining:
+          type: integer
+          minimum: 0
+          maximum: 14
+          description: Days until deadline
+        ce3_potential:
+          type: boolean
+          description: Whether CE 3.0 evidence may apply
+        ce3_requirements:
+          type: array
+          items:
+            type: string
+          description: CE 3.0 requirements if applicable
+        confidence:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          description: Classification confidence score
+        classification_rationale:
+          type: string
+          description: Reasoning for classification decision
+        next_phase:
+          $ref: '#/components/schemas/DisputePhase'
+        required_evidence:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceType'
+          description: Evidence types needed for this reason code
+
+    GatherEvidenceResponse:
+      type: object
+      required:
+        - dispute_id
+        - status
+        - completeness_score
+        - evidence_package
+        - ce3_eligibility
+        - gaps
+        - next_phase
+        - execution_time_ms
+      properties:
+        dispute_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [COMPLETE, INCOMPLETE, PARTIAL, ERROR]
+        completeness_score:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+        evidence_package:
+          $ref: '#/components/schemas/EvidencePackage'
+        ce3_eligibility:
+          $ref: '#/components/schemas/CE3Eligibility'
+        gaps:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvidenceGap'
+        merchant_action_required:
+          type: array
+          items:
+            type: string
+          description: Actions merchant must take to complete evidence
+        next_phase:
+          $ref: '#/components/schemas/DisputePhase'
+        execution_time_ms:
+          type: integer
+          description: Total evidence gathering time in milliseconds
+
+    ValidateEvidenceResponse:
+      type: object
+      required:
+        - dispute_id
+        - passed
+        - blocking_failures
+        - warnings
+        - judge_results
+        - next_phase
+        - total_latency_ms
+      properties:
+        dispute_id:
+          type: string
+          format: uuid
+        passed:
+          type: boolean
+          description: Whether all blocking judges passed
+        blocking_failures:
+          type: array
+          items:
+            type: string
+          description: Names of blocking judges that failed
+        warnings:
+          type: array
+          items:
+            type: string
+          description: Names of non-blocking judges with warnings
+        judge_results:
+          type: object
+          properties:
+            evidence_quality:
+              $ref: '#/components/schemas/JudgeResult'
+            fabrication_detection:
+              $ref: '#/components/schemas/JudgeResult'
+            dispute_validity:
+              $ref: '#/components/schemas/JudgeResult'
+        remediation_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/RemediationAction'
+          description: Actions to address judge failures
+        next_phase:
+          $ref: '#/components/schemas/DisputePhase'
+        total_latency_ms:
+          type: integer
+          description: Total judge panel execution time
+        cost_usd:
+          type: number
+          format: float
+          description: LLM cost for judge execution
+
+    SubmitDisputeResponse:
+      type: object
+      required:
+        - dispute_id
+        - status
+        - next_phase
+      properties:
+        dispute_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [SUBMITTED, FAILED, EXPIRED]
+        network_case_id:
+          type: string
+          description: Visa-assigned case ID
+          example: "VROL-2025-1234567890"
+        submitted_at:
+          type: string
+          format: date-time
+        acknowledged_at:
+          type: string
+          format: date-time
+        vrol_payload_hash:
+          type: string
+          description: SHA-256 hash of submitted payload
+        retry_count:
+          type: integer
+          minimum: 0
+          maximum: 3
+        next_phase:
+          $ref: '#/components/schemas/DisputePhase'
+        expected_resolution_date:
+          type: string
+          format: date-time
+          description: Expected date for network resolution
+        message:
+          type: string
+          description: Human-readable status message
+
+    # =========================================================================
+    # SHARED SCHEMAS (Local definitions + References to common_schemas.yaml)
+    # =========================================================================
+    # NOTE: Evidence-related schemas are centralized in common_schemas.yaml
+    # to prevent schema drift. Use $ref for consistency.
+    # =========================================================================
+
+    ReasonCode:
+      type: string
+      enum:
+        - FRAUD_10_4
+        - PNR_13_1
+      description: |
+        Dispute reason code:
+        - FRAUD_10_4: Fraud - Card Not Present
+        - PNR_13_1: Product Not Received
+
+    DisputePhase:
+      type: string
+      enum:
+        - CLASSIFY
+        - GATHER_EVIDENCE
+        - VALIDATE
+        - SUBMIT
+        - MONITOR
+        - RESOLVED_WON
+        - RESOLVED_LOST
+        - ESCALATED
+        - EXPIRED
+
+    EvidenceType:
+      type: string
+      enum:
+        - PRIOR_TRANSACTION
+        - TRANSACTION_RECEIPT
+        - AUTHORIZATION_LOG
+        - TRACKING_NUMBER
+        - PROOF_OF_DELIVERY
+        - DELIVERY_PHOTO
+        - DEVICE_FINGERPRINT
+        - IP_ADDRESS
+        - EMAIL_MATCH
+        - CUSTOMER_COMMUNICATION
+        - MERCHANT_POLICY
+
+    # ------------------------------------------
+    # Evidence Package (uses common_schemas refs)
+    # ------------------------------------------
+    EvidencePackage:
+      type: object
+      description: |
+        Collected evidence for dispute defense.
+        References centralized schemas from common_schemas.yaml.
+      properties:
+        package_id:
+          type: string
+          format: uuid
+          description: Unique identifier for this evidence package
+        dispute_id:
+          type: string
+          description: Associated dispute identifier
+        created_at:
+          type: string
+          format: date-time
+          description: Package creation timestamp
+        completeness_score:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: Evidence completeness score (0-1)
+        prior_transactions:
+          type: array
+          items:
+            $ref: 'common_schemas.yaml#/components/schemas/PriorTransaction'
+        device_fingerprint:
+          $ref: 'common_schemas.yaml#/components/schemas/DeviceFingerprint'
+        ip_geolocation:
+          $ref: 'common_schemas.yaml#/components/schemas/IPGeolocation'
+        email_verification:
+          $ref: 'common_schemas.yaml#/components/schemas/EmailVerification'
+        tracking:
+          $ref: 'common_schemas.yaml#/components/schemas/TrackingInfo'
+        proof_of_delivery:
+          $ref: 'common_schemas.yaml#/components/schemas/ProofOfDelivery'
+        delivery_photo:
+          $ref: 'common_schemas.yaml#/components/schemas/DeliveryPhoto'
+        shipping_evidence:
+          $ref: 'common_schemas.yaml#/components/schemas/ShippingEvidence'
+        customer_signals:
+          $ref: 'common_schemas.yaml#/components/schemas/CustomerSignals'
+        ce3_qualification:
+          $ref: 'common_schemas.yaml#/components/schemas/CE3Qualification'
+        evidence_gaps:
+          type: array
+          items:
+            $ref: 'common_schemas.yaml#/components/schemas/EvidenceGap'
+          description: List of missing or incomplete evidence
+
+    # ------------------------------------------
+    # CE 3.0 Eligibility (ref to common_schemas)
+    # ------------------------------------------
+    CE3Eligibility:
+      $ref: 'common_schemas.yaml#/components/schemas/CE3Qualification'
+
+    # ------------------------------------------
+    # Evidence Gap (ref to common_schemas)
+    # ------------------------------------------
+    EvidenceGap:
+      $ref: 'common_schemas.yaml#/components/schemas/EvidenceGap'
+
+    # ------------------------------------------
+    # Remediation Action (ref to common_schemas)
+    # ------------------------------------------
+    RemediationAction:
+      $ref: 'common_schemas.yaml#/components/schemas/RemediationAction'
+
+    # ------------------------------------------
+    # Judge Result (local - specific to MCP tools)
+    # ------------------------------------------
+    JudgeResult:
+      type: object
+      required:
+        - score
+        - threshold
+        - passed
+        - reasoning
+      properties:
+        score:
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 1.0
+          description: Judge score (0-1)
+        threshold:
+          type: number
+          format: double
+          description: Pass/fail threshold
+        passed:
+          type: boolean
+          description: Whether score meets threshold
+        reasoning:
+          type: string
+          description: Judge's reasoning for the score
+        confidence:
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 1.0
+          description: Confidence in the judgment
+        completeness_score:
+          type: number
+          format: double
+          description: Evidence completeness sub-score
+        relevance_score:
+          type: number
+          format: double
+          description: Evidence relevance sub-score
+        missing_evidence:
+          type: array
+          items:
+            type: string
+          description: List of missing evidence items
+        fabricated_items:
+          type: array
+          items:
+            type: string
+          description: List of potentially fabricated items
+        verification_status:
+          type: object
+          additionalProperties:
+            type: boolean
+          description: Verification status per evidence type
+
+    # ------------------------------------------
+    # Validation Result
+    # ------------------------------------------
+    ValidationResult:
+      type: object
+      required:
+        - passed
+        - judge_results
+      properties:
+        passed:
+          type: boolean
+          description: Whether all blocking judges passed
+        judge_results:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/JudgeResult'
+          description: Results from each judge
+
+    # ------------------------------------------
+    # Error Response
+    # ------------------------------------------
+    ErrorResponse:
+      type: object
+      required:
+        - error_code
+        - message
+      properties:
+        error_code:
+          type: string
+          description: Machine-readable error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: object
+          additionalProperties: true
+          description: Additional error context

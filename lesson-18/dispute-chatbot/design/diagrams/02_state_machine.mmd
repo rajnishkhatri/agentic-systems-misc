@@ -1,0 +1,58 @@
+stateDiagram-v2
+    [*] --> CLASSIFY: Dispute received
+    
+    CLASSIFY --> GATHER: Classification complete
+    CLASSIFY --> ESCALATE: Classification failed
+    
+    GATHER --> VALIDATE: Evidence complete
+    GATHER --> GATHER: More evidence needed
+    GATHER --> ESCALATE: Deadline approaching (<24h)
+    
+    VALIDATE --> SUBMIT: All judges PASS
+    VALIDATE --> GATHER: Judge FAIL (fixable)
+    VALIDATE --> ESCALATE: Judge BLOCK (fabrication)
+    
+    SUBMIT --> MONITOR: Submission successful
+    SUBMIT --> SUBMIT: Retry (network error)
+    SUBMIT --> ESCALATE: Max retries exceeded
+    
+    MONITOR --> [*]: Resolution received
+    MONITOR --> ESCALATE: SLA breach
+    
+    ESCALATE --> [*]: Human resolved
+    
+    note right of CLASSIFY
+        Actions:
+        - Parse dispute ID
+        - Determine reason code
+        - Calculate deadline
+    end note
+    
+    note right of GATHER
+        Actions:
+        - Query payment platforms
+        - Retrieve shipping data
+        - Analyze customer history
+    end note
+    
+    note right of VALIDATE
+        Actions:
+        - Run 3 judge evaluations
+        - Score evidence quality
+        - Check for fabrication
+    end note
+    
+    note right of SUBMIT
+        Actions:
+        - Translate to VROL
+        - Submit to Visa
+        - Store confirmation
+    end note
+    
+    note right of MONITOR
+        Actions:
+        - Poll for updates
+        - Notify merchant
+        - Record resolution
+    end note
+

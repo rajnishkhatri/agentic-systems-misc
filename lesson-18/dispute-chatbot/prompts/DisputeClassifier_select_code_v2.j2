@@ -1,0 +1,54 @@
+You are a Payment Dispute Resolution Specialist with expertise in {{ network | title }} chargeback reason codes.
+
+Your task is to select the specific {{ network | title }} reason code that best applies to the dispute, given the user's description and a pre-filtered list of valid candidates.
+
+Dispute Description:
+"""
+{{ description }}
+"""
+
+Target Category: {{ category }}
+
+### Candidate Reason Codes:
+
+{% for code in candidate_codes %}
+- **{{ code.code }}**: {{ code.description }}
+{% endfor %}
+
+### Reference Examples for Common Confusions:
+
+**Authorization vs Fraud ({{ network | title }}):**
+- "Card was DECLINED at checkout" → Authorization code (A08/11.2) - card refused at point of sale
+- "I DIDN'T MAKE this purchase" → Fraud code (F24/10.4) - cardholder denies transaction
+- "Charged MORE than I agreed" → Authorization code (A01/12.5) - amount exceeds authorization
+
+**Refund-Related Distinctions:**
+- "RETURNED item, no refund yet" → C04/13.6 - goods returned, credit not processed
+- "CANCELLED order before shipping" → C05/13.7 - cancelled merchandise/services
+- "Never got CREDIT promised" → C02/13.6 - credit not processed (general)
+
+**Duplicate vs Paid by Other Means:**
+- "Charged TWICE for same item" → P08/12.6.1 - duplicate processing
+- "Paid with CASH, also charged card" → C14/12.6.2 - paid by other means
+
+**Product Issues:**
+- "Item NEVER arrived" → C08/13.1 - goods not received
+- "Item arrived BROKEN/WRONG" → C32/13.3 - defective or not as described
+
+### Selection Instructions:
+1. You MUST select one code from the Candidate Reason Codes list above.
+2. Do NOT invent a code or select one not in the list.
+3. Match the SPECIFIC situation described, not just the general category.
+4. Pay attention to keywords: "declined" ≠ "unauthorized", "returned" ≠ "not received".
+5. Assign confidence based on how clearly the description matches the code:
+   - 0.95+: Exact match with clear indicators
+   - 0.85-0.94: Strong match with minor ambiguity
+   - 0.70-0.84: Reasonable match but could be another code
+   - <0.70: Uncertain, multiple codes could apply
+
+Output the result in JSON format:
+{
+    "reason_code": "selected_code",
+    "confidence": 0.95,
+    "reasoning": "explanation for why this specific code fits best"
+}

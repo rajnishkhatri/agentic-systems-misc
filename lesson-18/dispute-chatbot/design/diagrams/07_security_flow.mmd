@@ -1,0 +1,46 @@
+flowchart TB
+    subgraph Internet["Internet (Untrusted)"]
+        MB[Merchant Browser]
+        VN[Visa Network]
+    end
+    
+    subgraph Edge["Edge Layer"]
+        WAF[WAF<br/>PAN Detection]
+        CF[CloudFront<br/>DDoS Protection]
+    end
+    
+    subgraph Gateway["Gateway Layer"]
+        ALB[Application<br/>Load Balancer]
+        AUTH[Authentication<br/>Service]
+    end
+    
+    subgraph App["Application Layer (VPC)"]
+        GR[GuardRails<br/>PCI Scan]
+        PII[PII Redactor]
+        CB[Chatbot Service]
+        VG[VROL Gateway<br/>mTLS]
+    end
+    
+    subgraph Data["Data Layer (Encrypted)"]
+        R[(Redis<br/>TDE)]
+        PG[(PostgreSQL<br/>TDE)]
+        S3[(S3<br/>SSE-KMS)]
+    end
+    
+    MB -->|TLS 1.3| CF
+    CF --> WAF
+    WAF -->|Clean traffic| ALB
+    ALB --> AUTH
+    AUTH -->|JWT token| GR
+    GR -->|Validated| PII
+    PII -->|Redacted| CB
+    CB <--> R
+    CB <--> PG
+    CB <--> S3
+    CB --> VG
+    VG -->|mTLS| VN
+    
+    style WAF fill:#ffcdd2
+    style GR fill:#fff3e0
+    style PII fill:#e8f5e9
+

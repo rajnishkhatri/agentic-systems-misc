@@ -1,0 +1,54 @@
+sequenceDiagram
+    autonumber
+    participant SM as State Machine
+    participant VT as VROL Translator
+    participant S3 as S3 Storage
+    participant VISA as Visa VROL API
+    participant EL as Explainability<br/>Layer
+    participant ESC as Escalation<br/>Handler
+    
+    SM->>VT: Submit dispute response
+    
+    Note over VT: Map internal fields<br/>to VROL schema
+    
+    VT->>VT: Validate required fields
+    VT->>VT: Map reason code → VROL condition
+    VT->>VT: Encode evidence documents
+    
+    VT->>S3: Upload evidence files
+    S3-->>VT: Document URLs
+    
+    VT->>VT: Build VROL payload
+    
+    VT->>VISA: POST /disputes/{id}/response
+    
+    alt Success
+        VISA-->>VT: 200 OK, Case ID: VROL-789456
+        VT->>EL: Log submission success
+        VT-->>SM: SubmissionResult(success)
+    else Transient Error (5xx)
+        VISA-->>VT: 503 Service Unavailable
+        VT->>EL: Log retry attempt
+        
+        loop Retry up to 3 times
+            VT->>VT: Wait (1s, 2s, 4s)
+            VT->>VISA: Retry POST
+            alt Retry Success
+                VISA-->>VT: 200 OK
+                VT-->>SM: SubmissionResult(success, retried)
+            else Retry Failed
+                VISA-->>VT: 503 Service Unavailable
+            end
+        end
+        
+        Note over VT: Max retries exceeded
+        VT->>EL: Log max retries
+        VT->>ESC: Trigger escalation
+        ESC->>ESC: Create HIGH priority ticket
+        ESC-->>SM: Escalation created
+    else Validation Error (4xx)
+        VISA-->>VT: 400 Bad Request
+        VT->>EL: Log validation failure
+        VT-->>SM: SubmissionResult(failure, errors)
+    end
+

@@ -1,0 +1,78 @@
+sequenceDiagram
+    autonumber
+    participant M as Merchant
+    participant UI as Chainlit UI
+    participant SM as State Machine<br/>Orchestrator
+    participant HEG as Hierarchical<br/>Evidence Gatherer
+    participant JP as LLM Judge<br/>Panel
+    participant VT as VROL<br/>Translator
+    participant VISA as Visa VROL<br/>(Mock)
+    
+    Note over M,VISA: Phase 1: CLASSIFY
+    M->>UI: Enter dispute ID (e.g., "DIS-2025-001234")
+    UI->>SM: Initiate dispute workflow
+    SM->>SM: Classify dispute type
+    SM-->>UI: "Dispute classified as Fraud (10.4)"
+    UI-->>M: Display reason code & deadline
+    
+    Note over M,VISA: Phase 2: GATHER
+    SM->>HEG: Start evidence gathering
+    activate HEG
+    
+    par Parallel Specialist Agents
+        HEG->>HEG: Transaction Specialist
+        Note right of HEG: Query Stripe/Square
+        HEG->>HEG: Shipping Specialist
+        Note right of HEG: Query FedEx/UPS
+        HEG->>HEG: Customer Specialist
+        Note right of HEG: Analyze CE 3.0 history
+    end
+    
+    HEG-->>SM: Evidence package assembled
+    deactivate HEG
+    
+    SM-->>UI: Present gathered evidence
+    UI-->>M: "We found 5 evidence items. Review?"
+    M->>UI: Confirm or upload additional docs
+    
+    Note over M,VISA: Phase 3: VALIDATE
+    SM->>JP: Evaluate evidence package
+    activate JP
+    
+    par Synchronous Judge Evaluations
+        JP->>JP: Evidence Quality Judge
+        Note right of JP: Score: 0.85 (>0.8 threshold)
+        JP->>JP: Fabrication Detection Judge
+        Note right of JP: Score: 0.02 (<0.95 threshold)
+        JP->>JP: Dispute Validity Judge
+        Note right of JP: Score: 0.78 (>0.7 threshold)
+    end
+    
+    JP-->>SM: All judges PASS
+    deactivate JP
+    
+    SM-->>UI: Validation complete
+    UI-->>M: "Evidence validated. Ready to submit?"
+    M->>UI: Confirm submission
+    
+    Note over M,VISA: Phase 4: SUBMIT
+    SM->>VT: Convert to VROL format
+    VT->>VT: Map internal → VROL schema
+    VT-->>SM: VROL payload ready
+    
+    SM->>VISA: Submit dispute response
+    VISA-->>SM: Case ID: VROL-789456
+    
+    SM-->>UI: Submission confirmed
+    UI-->>M: "Submitted! Case ID: VROL-789456"
+    
+    Note over M,VISA: Phase 5: MONITOR
+    loop Every 4 hours
+        SM->>VISA: Poll status
+        VISA-->>SM: Status: PENDING_REVIEW
+    end
+    
+    VISA->>SM: Resolution: MERCHANT_WIN
+    SM-->>UI: Resolution received
+    UI-->>M: "🎉 Dispute won! $1,250 credited"
+

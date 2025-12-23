@@ -1,0 +1,20 @@
+{
+  "Evidence Quality": {
+    "p50_ms": 3030.4,
+    "p95_ms": 3606.79,
+    "avg_ms": 3078.38,
+    "samples": 10
+  },
+  "Fabrication Detection": {
+    "p50_ms": 5421.92,
+    "p95_ms": 5892.67,
+    "avg_ms": 5246.44,
+    "samples": 10
+  },
+  "Dispute Validity": {
+    "p50_ms": 2246.35,
+    "p95_ms": 8755.64,
+    "avg_ms": 2887.53,
+    "samples": 10
+  }
+}

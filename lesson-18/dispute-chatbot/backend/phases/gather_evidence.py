@@ -172,17 +172,17 @@ async def gather_evidence(task: dict[str, Any]) -> EvidencePackage:
     task_map = {} # Map future to specialist type
     
     if SpecialistType.TRANSACTION in plan.specialists:
-        t = asyncio.create_task(tx_specialist.get_history(account_id))
+        t = asyncio.create_task(tx_specialist.get_history(account_id, dispute_id=dispute_id))
         async_tasks.append(t)
         task_map[t] = SpecialistType.TRANSACTION
         
     if SpecialistType.CUSTOMER in plan.specialists:
-        t = asyncio.create_task(cust_specialist.get_signals(customer_id))
+        t = asyncio.create_task(cust_specialist.get_signals(customer_id, dispute_id=dispute_id))
         async_tasks.append(t)
         task_map[t] = SpecialistType.CUSTOMER
         
     if SpecialistType.SHIPPING in plan.specialists:
-        t = asyncio.create_task(ship_specialist.get_tracking(tracking_number))
+        t = asyncio.create_task(ship_specialist.get_tracking(tracking_number, dispute_id=dispute_id))
         async_tasks.append(t)
         task_map[t] = SpecialistType.SHIPPING
         

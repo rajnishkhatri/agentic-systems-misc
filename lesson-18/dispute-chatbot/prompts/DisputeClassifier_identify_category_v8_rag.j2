@@ -72,6 +72,11 @@ Evaluate how well your branches align:
 
 ### Priority Rules (with rationale)
 
+**Rule 0: Precedent Override (CRITICAL)**
+IF a "Similar Historical Case" has a similarity score > 0.90 AND the descriptions are factually aligned
+THEN adopt the verified category from the precedent.
+BECAUSE consistent handling of identical cases is the highest priority.
+
 **Rule 1: Specifics Override Denial**
 IF Branch_B = "amount" THEN classify as **general** even if Branch_A = "denied"
 BECAUSE users who mention specific amounts are disputing charge details, not transaction existence.

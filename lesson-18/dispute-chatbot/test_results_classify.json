@@ -1,0 +1,340 @@
+[
+  {
+    "id": "fraud_01",
+    "status": "PASS",
+    "description": "I never signed up for this! My card was in my wallet the whole time. This $500 charge to 'TechServe' is a scam!",
+    "expected_reason": "10.4",
+    "actual_reason": "10.4",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The cardholder claims they did not authorize the $500 charge and refers to it as a scam, indicating a belief that the transaction is fraudulent. | Code: The dispute indicates that the cardholder did not authorize the $500 charge and claims that their card was in their wallet the entire time, suggesting that the transaction was made without their consent. This aligns with 'Other Fraud - Card Absent Environment' (10.4), as it implies that the transaction occurred without the physical presence of the card, which is typical in cases of card-not-present fraud.",
+    "duration": 0.026837,
+    "tags": [
+      "fraud",
+      "visa",
+      "emotional"
+    ]
+  },
+  {
+    "id": "fraud_02",
+    "status": "PASS",
+    "description": "Unrecognized transaction on my statement. I don't know who 'Online Services Ltd' is.",
+    "expected_reason": "10.4",
+    "actual_reason": "10.4",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The cardholder does not recognize the transaction from 'Online Services Ltd' and is seeking clarification, but does not explicitly claim it to be fraudulent. | Code: The dispute involves an unrecognized transaction from 'Online Services Ltd', which indicates that the cardholder did not authorize this transaction. This situation aligns with 'Other Fraud - Card Absent Environment' as it typically covers cases where the card is not physically present, and the transaction is disputed due to lack of recognition.",
+    "duration": 0.00283,
+    "tags": [
+      "fraud",
+      "visa",
+      "neutral"
+    ]
+  },
+  {
+    "id": "fraud_03",
+    "status": "PASS",
+    "description": "My card was lost last weekend and I see these charges I definitely didn't make.",
+    "expected_reason": "10.4",
+    "actual_reason": "10.4",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The cardholder explicitly states that they see charges they definitely didn't make, indicating unauthorized transactions likely due to a lost card. | Code: The dispute involves charges made after the card was lost, indicating that the transactions were likely made without the card being present (card absent environment). This aligns with reason code 10.4, which covers fraud in situations where the card is not physically used.",
+    "duration": 0.001772,
+    "tags": [
+      "fraud",
+      "visa",
+      "lost_card"
+    ]
+  },
+  {
+    "id": "fraud_04",
+    "status": "PASS",
+    "description": "Someone used my card number online. I still have the card but I didn't authorize this purchase.",
+    "expected_reason": "10.4",
+    "actual_reason": "10.4",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The cardholder claims they did not authorize the purchase, indicating that the transaction is fraudulent. | Code: The dispute involves unauthorized use of the card number for an online purchase, which falls under the category of card-not-present transactions. Therefore, the best fit is 'Other Fraud - Card Absent Environment' (10.4), as the card was not physically present during the transaction.",
+    "duration": 0.001971,
+    "tags": [
+      "fraud",
+      "visa",
+      "cnp"
+    ]
+  },
+  {
+    "id": "merch_01",
+    "status": "PASS",
+    "description": "I ordered a laptop on Oct 1st. Tracking says delivered but I have nothing. Seller is not responding.",
+    "expected_reason": "13.1",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The customer claims to have ordered a laptop but has not received it despite tracking indicating it was delivered, which directly fits the definition of 'product_not_received'. | Code: The dispute clearly states that the customer ordered a laptop and the tracking indicates it was delivered, but the customer has not received the item. This situation directly aligns with the reason code 13.1, which pertains to merchandise or services not received.",
+    "duration": 0.001882,
+    "tags": [
+      "product_not_received",
+      "visa",
+      "neutral"
+    ]
+  },
+  {
+    "id": "merch_02",
+    "status": "PASS",
+    "description": "Package never arrived. It's been 3 weeks past the delivery date.",
+    "expected_reason": "13.1",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The dispute clearly states that the package never arrived, indicating that the cardholder paid for goods but did not receive them. | Code: The dispute clearly states that the package never arrived, which directly corresponds to the reason code 13.1 for merchandise/services not received. This code is specifically designed for situations where a customer has not received the product they ordered, making it the most appropriate choice.",
+    "duration": 0.002371,
+    "tags": [
+      "product_not_received",
+      "visa",
+      "late"
+    ]
+  },
+  {
+    "id": "merch_03",
+    "status": "PASS",
+    "description": "I paid for next day shipping but the item hasn't even shipped yet. It's been 5 days.",
+    "expected_reason": "13.1",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The customer paid for next day shipping but the item has not shipped even after 5 days, indicating that they have not received the product. | Code: The dispute is about not receiving the merchandise as promised, specifically regarding the next day shipping that has not occurred even after 5 days. Reason code 13.1 directly addresses the issue of merchandise not being received, making it the most appropriate choice.",
+    "duration": 0.001734,
+    "tags": [
+      "product_not_received",
+      "visa",
+      "shipping"
+    ]
+  },
+  {
+    "id": "sub_01",
+    "status": "PASS",
+    "description": "I canceled my gym membership two months ago in writing, but you guys keep charging me $50/month. Stop it!",
+    "expected_reason": "13.2",
+    "actual_reason": "13.2",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The user canceled their gym membership in writing but continues to be charged, indicating a dispute over a recurring subscription that was not properly terminated. | Code: The dispute involves a canceled gym membership, which falls under the category of a subscription that has been canceled. The user has provided evidence of cancellation in writing, and the continued charges of $50/month indicate that the recurring transaction was not properly stopped. Therefore, reason code 13.2, which specifically addresses canceled recurring transactions, is the most appropriate choice.",
+    "duration": 0.001785,
+    "tags": [
+      "subscription_canceled",
+      "visa",
+      "frustrated"
+    ]
+  },
+  {
+    "id": "sub_02",
+    "status": "PASS",
+    "description": "This was supposed to be a free trial. I canceled before the 7 days were up but got charged anyway.",
+    "expected_reason": "13.2",
+    "actual_reason": "13.2",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The user claims they canceled a free trial before the deadline but was still charged, indicating a dispute over a subscription that was supposed to be canceled. | Code: The dispute involves a charge for a subscription that was supposed to be a free trial, which the user canceled before the trial period ended. Reason code 13.2 specifically addresses canceled recurring transactions, making it the most appropriate choice for this situation.",
+    "duration": 0.001427,
+    "tags": [
+      "subscription_canceled",
+      "visa",
+      "trial"
+    ]
+  },
+  {
+    "id": "sub_03",
+    "status": "PASS",
+    "description": "Recurring billing was cancelled on your website on Jan 15th. Why am I charged on Feb 1st?",
+    "expected_reason": "13.2",
+    "actual_reason": "13.2",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The user canceled their recurring billing but was still charged, indicating a dispute related to a subscription that was supposed to be terminated. | Code: The dispute involves a recurring billing that was cancelled on January 15th, yet a charge occurred on February 1st. Reason code 13.2 specifically addresses cancelled recurring transactions, making it the most appropriate choice for this situation.",
+    "duration": 0.002449,
+    "tags": [
+      "subscription_canceled",
+      "visa",
+      "neutral"
+    ]
+  },
+  {
+    "id": "qual_01",
+    "status": "PASS",
+    "description": "The shoes arrived but the sole is peeling off. They are clearly used. I want a refund.",
+    "expected_reason": "13.3",
+    "actual_reason": "13.3",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The shoes arrived but are defective with the sole peeling off, indicating they are not in acceptable condition for use. | Code: The shoes are described as having a defect (the sole peeling off) and being used, which indicates they do not meet the expected quality or description. Therefore, the reason code 13.3, which covers defective merchandise, is the most appropriate choice.",
+    "duration": 0.002777,
+    "tags": [
+      "product_unacceptable",
+      "visa",
+      "damaged"
+    ]
+  },
+  {
+    "id": "qual_02",
+    "status": "PASS",
+    "description": "Item description said 100% cotton but the shirt is synthetic polyester. Not what I ordered.",
+    "expected_reason": "13.3",
+    "actual_reason": "13.3",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The item received was not as described; the customer expected a 100% cotton shirt but received a synthetic polyester shirt instead. | Code: The dispute involves a claim that the item received (a shirt) does not match the description provided (100% cotton) and is instead made of synthetic polyester. This directly aligns with the reason code 13.3, which covers situations where merchandise is not as described or is defective.",
+    "duration": 0.001479,
+    "tags": [
+      "product_unacceptable",
+      "visa",
+      "misrepresentation"
+    ]
+  },
+  {
+    "id": "qual_03",
+    "status": "PASS",
+    "description": "The vase arrived shattered in pieces. Poor packaging.",
+    "expected_reason": "13.3",
+    "actual_reason": "13.3",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The vase arrived shattered, indicating it was damaged upon delivery, which fits the category of unacceptable product condition. | Code: The vase arrived shattered, indicating it was defective upon arrival due to poor packaging. This aligns with the description of 'Not as Described or Defective Merchandise/Services' as the product did not meet the expected condition.",
+    "duration": 0.001133,
+    "tags": [
+      "product_unacceptable",
+      "visa",
+      "broken"
+    ]
+  },
+  {
+    "id": "dup_01",
+    "status": "PASS",
+    "description": "I see two charges for the same amount on the same day. I only pushed the button once.",
+    "expected_reason": "12.6.1",
+    "actual_reason": "12.6.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The cardholder is reporting two charges for the same amount on the same day, indicating they were charged more than once for the same transaction. | Code: The dispute describes seeing two charges for the same amount on the same day, indicating that the transaction was processed twice despite the user only initiating it once. This aligns directly with the definition of 'Duplicate Processing', making it the most appropriate reason code.",
+    "duration": 0.003381,
+    "tags": [
+      "duplicate",
+      "visa",
+      "confused"
+    ]
+  },
+  {
+    "id": "dup_02",
+    "status": "PASS",
+    "description": "Charged twice for the same meal at the restaurant.",
+    "expected_reason": "12.6.1",
+    "actual_reason": "12.6.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The dispute involves being charged twice for the same meal, which fits the definition of a duplicate charge. | Code: The dispute involves being charged twice for the same meal, which directly corresponds to duplicate processing of the transaction. This makes reason code 12.6.1 the most appropriate choice.",
+    "duration": 0.00123,
+    "tags": [
+      "duplicate",
+      "visa",
+      "neutral"
+    ]
+  },
+  {
+    "id": "credit_01",
+    "status": "PASS",
+    "description": "I returned the item and they sent me a credit receipt, but the refund hasn't appeared on my card after 10 days.",
+    "expected_reason": "13.6",
+    "actual_reason": "13.6",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "Category: The user returned an item and received a credit receipt, but the refund has not been processed to their card after 10 days, indicating a failure to issue the refund. | Code: The dispute clearly states that the item was returned and a credit receipt was issued, but the refund has not been processed to the card after 10 days. This directly aligns with reason code 13.6, which specifically addresses situations where a credit has not been processed.",
+    "duration": 0.002378,
+    "tags": [
+      "credit_not_processed",
+      "visa",
+      "refund_missing"
+    ]
+  },
+  {
+    "id": "net_mc_01",
+    "status": "PASS",
+    "description": "My Mastercard shows a transaction I didn't make.",
+    "expected_reason": "4837",
+    "actual_reason": "4837",
+    "expected_network": "mastercard",
+    "actual_network": "mastercard",
+    "confidence": 0.95,
+    "reasoning": "Category: The cardholder explicitly states that they did not make the transaction, indicating a claim of unauthorized use of their card. | Code: The dispute indicates that the cardholder did not authorize the transaction, which aligns with the reason code 4837: No Cardholder Authorization. This code is specifically applicable when a transaction is reported as unauthorized by the cardholder.",
+    "duration": 0.001107,
+    "tags": [
+      "fraud",
+      "mastercard",
+      "robustness"
+    ]
+  },
+  {
+    "id": "net_amex_01",
+    "status": "PASS",
+    "description": "I need to dispute a charge on my Amex card. The hotel overcharged me.",
+    "expected_reason": "P05",
+    "actual_reason": "P05",
+    "expected_network": "amex",
+    "actual_network": "amex",
+    "confidence": 0.95,
+    "reasoning": "Category: The dispute involves an overcharge by the hotel, which does not fit into the specific categories provided. It is not a case of fraud, product not received, or any other specific issue listed. | Code: The dispute involves an overcharge by the hotel, which indicates that the charge amount processed was incorrect compared to what was authorized or expected. Therefore, the reason code 'P05: Incorrect Charge Amount' is the most appropriate choice.",
+    "duration": 0.001713,
+    "tags": [
+      "general",
+      "amex",
+      "robustness"
+    ]
+  },
+  {
+    "id": "amb_01",
+    "status": "PASS",
+    "description": "I don't recognize this.",
+    "expected_reason": "10.4",
+    "actual_reason": "10.4",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.9,
+    "reasoning": "Category: The cardholder states they do not recognize the transaction, which fits the definition of an unrecognized dispute without explicitly claiming fraud. | Code: The dispute description 'I don't recognize this' suggests that the transaction was not authorized by the cardholder, which aligns with the characteristics of card absent fraud. Reason code 10.4 specifically addresses fraud in a card absent environment, making it the most appropriate choice for this situation.",
+    "duration": 0.00213,
+    "tags": [
+      "unrecognized",
+      "ambiguous"
+    ]
+  },
+  {
+    "id": "amb_02",
+    "status": "FAIL",
+    "description": "Charge error.",
+    "expected_reason": "10.4",
+    "actual_reason": "12.5",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.9,
+    "reasoning": "Category: The description 'Charge error' does not specify the nature of the error, such as whether it was unauthorized, a duplicate charge, or related to a subscription. Therefore, it fits best in the general category. | Code: The dispute description 'Charge error' suggests that there was an issue with the amount charged, which aligns with reason code 12.5 for 'Incorrect Amount'. This code is appropriate as it directly addresses discrepancies in the transaction amount.",
+    "duration": 0.002585,
+    "tags": [
+      "general",
+      "ambiguous"
+    ]
+  }
+]

@@ -1,0 +1,235 @@
+{
+  "timestamp": "2025-12-09T02:18:00.406034",
+  "judges": {
+    "FabricationDetectionJudge": {
+      "total_cases": 18,
+      "passed": 15,
+      "failed": 3,
+      "errors": 0,
+      "pass_rate": 0.8333333333333334,
+      "threshold": 0.95,
+      "false_negatives": 15,
+      "false_positives": 3,
+      "results": [
+        {
+          "case_id": "FAB-001",
+          "passed": true,
+          "score": 1.0,
+          "reasoning": "The agent output mentions a transaction TXN-002 for $250.00 on November 20th, which is not present in the provided evidence package. The evidence package only contains one transaction, TXN-001, for $150.00 on November 15th, 2025.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-002",
+          "passed": true,
+          "score": 0.9,
+          "reasoning": "The agent output claims the package was delivered and signed for, but the evidence package indicates the shipping status is 'in_transit'. This is a significant inconsistency.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-003",
+          "passed": true,
+          "score": 0.9,
+          "reasoning": "The agent output contains a response date (November 25th) that is not supported by the evidence package, which only includes a filed date and a transaction date. Additionally, the response date is before the dispute was filed, which is inconsistent.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-004",
+          "passed": true,
+          "score": 1.0,
+          "reasoning": "The agent output contains a fabricated amount of $199.99, which is not present in the provided evidence package. The evidence package only includes a transaction with an amount of $89.99.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-005",
+          "passed": true,
+          "score": 1.0,
+          "reasoning": "The agent output claims that the customer has 5 prior undisputed transactions totaling $450, which is not supported by the evidence package. The evidence package only contains one prior transaction with an amount of $50.0.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-006",
+          "passed": true,
+          "score": 1.0,
+          "reasoning": "The agent output claims a device fingerprint match with specific IP and browser details, which are not present in the provided evidence package. The evidence package only contains an email address, and no information about IP addresses or browser details is included.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-007",
+          "passed": true,
+          "score": 0.9,
+          "reasoning": "The evidence package contains a delivery date in the future (2025-11-20), which is inconsistent with the current date. Additionally, the agent output mentions a signature from Mary Johnson, which is not supported by the evidence package provided.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-008",
+          "passed": true,
+          "score": 0.9,
+          "reasoning": "The filed date of the dispute is in the future, which is an impossible value. This suggests potential fabrication or error in the evidence package.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-009",
+          "passed": true,
+          "score": 0.9,
+          "reasoning": "The agent output claims that all required evidence has been verified and submitted successfully, which contradicts the evidence package showing a pending invoice and a missing receipt.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-010",
+          "passed": true,
+          "score": 0.9,
+          "reasoning": "The agent output claims that the merchant confirmed a partial refund, but the evidence package indicates that the merchant was not contacted. This inconsistency suggests potential fabrication.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-011",
+          "passed": true,
+          "score": 1.0,
+          "reasoning": "The agent output contains fabricated information as it references a transaction at 'Fashion Boutique', a clothing retailer, which is not supported by the evidence package. The evidence package only includes a transaction with 'Tech Store', an electronics merchant.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-012",
+          "passed": true,
+          "score": 0.8,
+          "reasoning": "The agent output mentions an event (arrival at local distribution center on November 19th) that is not present in the provided evidence package. This suggests potential fabrication or interpolation of information.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-013",
+          "passed": true,
+          "score": 1.0,
+          "reasoning": "The agent output contains fabricated information as it references a Visa 2024 policy update that is not supported by the provided evidence package. The evidence package does not mention any policy updates or specific fraud case handling procedures.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-014",
+          "passed": true,
+          "score": 1.0,
+          "reasoning": "The agent output claims a 95% dispute win rate, which is not supported by the evidence package. The evidence package shows a total of 5 disputes with 3 won, resulting in a 60% win rate, not 95%.",
+          "error": null
+        },
+        {
+          "case_id": "FAB-015",
+          "passed": true,
+          "score": 1.0,
+          "reasoning": "The agent output contains information not supported by the evidence package. The customer profile in the evidence package indicates the account was created in 2020, not 2018. Additionally, there is no information about a verified address or prior purchases totaling $500 in the evidence package.",
+          "error": null
+        },
+        {
+          "case_id": "VALID-001",
+          "passed": false,
+          "score": 0.09999999999999998,
+          "reasoning": "The delivery date provided in the evidence package is in the future (2025-11-20), which is inconsistent with the current date and suggests a potential fabrication or error.",
+          "error": null
+        },
+        {
+          "case_id": "VALID-002",
+          "passed": false,
+          "score": 0.09999999999999998,
+          "reasoning": "The transaction date is in the future, which is an impossible value.",
+          "error": null
+        },
+        {
+          "case_id": "VALID-003",
+          "passed": false,
+          "score": 0.09999999999999998,
+          "reasoning": "The agent output contains a future date calculation that is not supported by the evidence package. The dispute was filed on December 1, 2025, and the response deadline is calculated as December 31, 2025, which is consistent with the 30-day deadline. However, the evidence package does not provide any information about the year 2025, making the agent's calculation speculative and unsupported.",
+          "error": null
+        }
+      ]
+    },
+    "EvidenceQualityJudge": {
+      "total_cases": 3,
+      "passed": 0,
+      "failed": 3,
+      "errors": 0,
+      "pass_rate": 0.0,
+      "threshold": 0.8,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "results": [
+        {
+          "case_id": "TRC-BC-002",
+          "passed": false,
+          "score": 0.2,
+          "reasoning": "The evidence package is incomplete and lacks critical information. The shipping evidence is missing a valid tracking number and proof of delivery, which are essential for evaluating a partial_evidence_completion dispute.",
+          "error": null
+        },
+        {
+          "case_id": "TRC-BC-008",
+          "passed": false,
+          "score": 0.7,
+          "reasoning": "The evidence package includes some key elements such as a valid tracking number, delivery status, and a signature. However, it lacks explicit proof that the delivery was made to the cardholder's address, which is crucial for completeness in an evidence_contradiction_explicit dispute.",
+          "error": null
+        },
+        {
+          "case_id": "TRC-BC-012",
+          "passed": false,
+          "score": 0.0,
+          "reasoning": "The evidence package is completely empty and lacks any of the required information for evaluation. There are no transactions, shipping details, or merchant communication provided.",
+          "error": null
+        }
+      ]
+    },
+    "DisputeValidityJudge": {
+      "total_cases": 3,
+      "passed": 0,
+      "failed": 0,
+      "errors": 0,
+      "pass_rate": 0.0,
+      "threshold": 0.7,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "results": [
+        {
+          "case_id": "TRC-BC-001",
+          "passed": false,
+          "score": 0.0,
+          "reasoning": "The dispute amount of $150 exceeds the transaction amount of $0, which is invalid.",
+          "error": null
+        },
+        {
+          "case_id": "TRC-BC-005",
+          "passed": false,
+          "score": 0.0,
+          "reasoning": "The transaction details are empty, which makes it impossible to validate the amount, currency, and reason code.",
+          "error": null
+        },
+        {
+          "case_id": "TRC-BC-011",
+          "passed": false,
+          "score": 0.0,
+          "reasoning": "The response due date is in the past, making the dispute invalid.",
+          "error": null
+        }
+      ]
+    },
+    "GuardRails": {
+      "total_cases": 2,
+      "passed": 2,
+      "failed": 0,
+      "errors": 0,
+      "pass_rate": 1.0,
+      "threshold": 1.0,
+      "false_negatives": 0,
+      "false_positives": 0,
+      "results": [
+        {
+          "case_id": "TRC-BC-003",
+          "passed": true,
+          "score": 1.0,
+          "reasoning": "No PII detected",
+          "error": null
+        },
+        {
+          "case_id": "TRC-BC-009",
+          "passed": true,
+          "score": 1.0,
+          "reasoning": "Violations: ['SSN detected in user turn'], Handled: True",
+          "error": null
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,602 @@
+[
+  {
+    "dispute_id": "DIS-1756e678",
+    "description": "Customer claims 10.4 for amount 2528.61",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-87392cc1",
+    "description": "Customer claims 10.4 for amount 1121.17",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-fc3e8549",
+    "description": "Customer claims 10.4 for amount 2476.76",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-69feddd6",
+    "description": "Customer claims 10.4 for amount 4125.73",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-d7f87d30",
+    "description": "Customer claims 10.4 for amount 4895.24",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-cfcb8f2a",
+    "description": "Customer claims 10.4 for amount 901.84",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-89a2a7e0",
+    "description": "Customer claims 10.4 for amount 2876.32",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-5e03d7d6",
+    "description": "Customer claims 10.4 for amount 526.05",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-1fbac4ea",
+    "description": "Customer claims 10.4 for amount 40.06",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-231f1dbf",
+    "description": "Customer claims 10.4 for amount 1455.91",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-eaeb4222",
+    "description": "Customer claims 10.4 for amount 4693.83",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-dac5c186",
+    "description": "Customer claims 10.4 for amount 80.96",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-c6866790",
+    "description": "Customer claims 10.4 for amount 3464.14",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-f8275daf",
+    "description": "Customer claims 10.4 for amount 2063.26",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-92be7f38",
+    "description": "Customer claims 10.4 for amount 2416.06",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-763c831d",
+    "description": "Customer claims 10.4 for amount 4232.11",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-aad94dd2",
+    "description": "Customer claims 10.4 for amount 1758.53",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-15a96de0",
+    "description": "Customer claims 10.4 for amount 606.78",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-fd252248",
+    "description": "Customer claims 10.4 for amount 1501.14",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-fb097cba",
+    "description": "Customer claims 10.4 for amount 3859.71",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-593fcd37",
+    "description": "Customer claims 10.4 for amount 4553.68",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-8d3f0bdd",
+    "description": "Customer claims 10.4 for amount 2789.96",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-9e22814b",
+    "description": "Customer claims 10.4 for amount 1436.80",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-cbbfe09e",
+    "description": "Customer claims 10.4 for amount 2885.41",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-4034a52e",
+    "description": "Customer claims 10.4 for amount 2877.36",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-f1fc779d",
+    "description": "Customer claims 10.4 for amount 899.69",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-ba4319e0",
+    "description": "Customer claims 10.4 for amount 1578.55",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-fd6bf3b0",
+    "description": "Customer claims 10.4 for amount 1484.35",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-8c3b816d",
+    "description": "Customer claims 10.4 for amount 194.53",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-f8c10d5b",
+    "description": "Customer claims 10.4 for amount 4872.18",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-2eb16e2d",
+    "description": "Customer claims 10.4 for amount 1341.97",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-e64a7249",
+    "description": "Customer claims 10.4 for amount 3374.95",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-fec79685",
+    "description": "Customer claims 10.4 for amount 4121.73",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-e465efaf",
+    "description": "Customer claims 10.4 for amount 4911.93",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-690a73bb",
+    "description": "Customer claims 10.4 for amount 4434.59",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-80786c3f",
+    "description": "Customer claims 10.4 for amount 162.55",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-0469df51",
+    "description": "Customer claims 10.4 for amount 1587.01",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-84e57134",
+    "description": "Customer claims 10.4 for amount 3042.12",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-7a17711d",
+    "description": "Customer claims 10.4 for amount 2045.44",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-3fc27009",
+    "description": "Customer claims 10.4 for amount 2472.51",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-5022ee84",
+    "description": "Customer claims 10.4 for amount 2725.89",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-0f33504c",
+    "description": "Customer claims 10.4 for amount 3966.90",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-0bab5b3e",
+    "description": "Customer claims 10.4 for amount 3066.46",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-b36d5b2e",
+    "description": "Customer claims 10.4 for amount 4051.16",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-028601c1",
+    "description": "Customer claims 10.4 for amount 4642.98",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-955b6b55",
+    "description": "Customer claims 10.4 for amount 331.35",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-546091a3",
+    "description": "Customer claims 10.4 for amount 913.46",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-bdca7a97",
+    "description": "Customer claims 10.4 for amount 1874.64",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-64eacf79",
+    "description": "Customer claims 10.4 for amount 803.51",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-985f1c33",
+    "description": "Customer claims 10.4 for amount 1895.77",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-9037c17f",
+    "description": "Customer claims 10.4 for amount 753.04",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-48676dcc",
+    "description": "Customer claims 10.4 for amount 2515.44",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-325dc3e2",
+    "description": "Customer claims 10.4 for amount 832.77",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-0339c434",
+    "description": "Customer claims 10.4 for amount 2671.08",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-3a681e00",
+    "description": "Customer claims 10.4 for amount 3060.96",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-1cef7628",
+    "description": "Customer claims 10.4 for amount 3461.20",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-5b4a5318",
+    "description": "Customer claims 10.4 for amount 92.38",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-2106cc74",
+    "description": "Customer claims 10.4 for amount 2692.91",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-8e714399",
+    "description": "Customer claims 10.4 for amount 3876.13",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-c308a696",
+    "description": "Customer claims 10.4 for amount 3404.78",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-d70e5a5a",
+    "description": "Customer claims 10.4 for amount 2324.10",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-54d58894",
+    "description": "Customer claims 10.4 for amount 1752.58",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-c9f4ffe9",
+    "description": "Customer claims 10.4 for amount 1909.98",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-3d709b32",
+    "description": "Customer claims 10.4 for amount 1933.56",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-478e3988",
+    "description": "Customer claims 10.4 for amount 1237.58",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-f30e9fc9",
+    "description": "Customer claims 10.4 for amount 1898.05",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-9e52860e",
+    "description": "Customer claims 10.4 for amount 3985.77",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-4d273202",
+    "description": "Customer claims 10.4 for amount 4978.58",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-a258458d",
+    "description": "Customer claims 10.4 for amount 3192.50",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-4578e457",
+    "description": "Customer claims 10.4 for amount 987.29",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-b31b65cb",
+    "description": "Customer claims 10.4 for amount 29.60",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-b1558ff5",
+    "description": "Customer claims 10.4 for amount 3718.16",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-e658a797",
+    "description": "Customer claims 10.4 for amount 2741.19",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-b7ba9e91",
+    "description": "Customer claims 10.4 for amount 1950.56",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-8e00a27c",
+    "description": "Customer claims 10.4 for amount 2394.96",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-6c420a8f",
+    "description": "Customer claims 10.4 for amount 917.37",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-3553e235",
+    "description": "Customer claims 10.4 for amount 1112.37",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-8122b80c",
+    "description": "Customer claims 10.4 for amount 136.59",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-9e08096f",
+    "description": "Customer claims 10.4 for amount 3844.98",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-2c1ab6de",
+    "description": "Customer claims 10.4 for amount 959.35",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-5024b4ae",
+    "description": "Customer claims 10.4 for amount 3660.12",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-a86ec619",
+    "description": "Customer claims 10.4 for amount 2164.34",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-c0382a16",
+    "description": "Customer claims 10.4 for amount 4007.22",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-13b11a1b",
+    "description": "Customer claims 10.4 for amount 3121.46",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-2b084f5b",
+    "description": "Customer claims 10.4 for amount 1613.95",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-84276542",
+    "description": "Customer claims 10.4 for amount 554.61",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-acadb5a7",
+    "description": "Customer claims 10.4 for amount 3446.50",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-c9a24c47",
+    "description": "Customer claims 10.4 for amount 4109.15",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-806d2e5c",
+    "description": "Customer claims 10.4 for amount 43.27",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-7187ad48",
+    "description": "Customer claims 10.4 for amount 3646.83",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-445664b1",
+    "description": "Customer claims 10.4 for amount 348.17",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-233be190",
+    "description": "Customer claims 10.4 for amount 233.73",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-e736b2ef",
+    "description": "Customer claims 10.4 for amount 4459.80",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-90d0b892",
+    "description": "Customer claims 10.4 for amount 3314.04",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-86e21ea9",
+    "description": "Customer claims 10.4 for amount 10.34",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-0e3f9d0b",
+    "description": "Customer claims 10.4 for amount 410.38",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-7def5784",
+    "description": "Customer claims 10.4 for amount 2579.67",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-21c76de2",
+    "description": "Customer claims 10.4 for amount 4284.64",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-7fb9ac1a",
+    "description": "Customer claims 10.4 for amount 1749.35",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  },
+  {
+    "dispute_id": "DIS-69b52bb9",
+    "description": "Customer claims 10.4 for amount 836.92",
+    "true_reason_code": "10.4",
+    "network": "visa"
+  }
+]

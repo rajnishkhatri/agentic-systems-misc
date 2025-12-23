@@ -1,0 +1,21 @@
+trace_id,expected_failure_mode,rater1_label,rater2_label,notes
+TRC-BC-001,classification_conflict,classification_conflict,classification_conflict,Multi-turn story change; ambiguous reason code
+TRC-BC-002,evidence_quality,evidence_quality,evidence_quality,Partial shipping evidence; tracking_id null
+TRC-BC-003,compliance_violation,compliance_violation,compliance_violation,Deadline edge (~60 days); user wants to delay
+TRC-BC-004,user_escalation,user_escalation,user_escalation,Repeated question -> escalation offer
+TRC-BC-005,classification_error,classification_error,classification_error,Ambiguous classification (13.1 vs 10.4 vs 13.3)
+TRC-BC-006,ce3_boundary,ce3_boundary,ce3_boundary,Exactly 2 qualifying txns; CE3 boundary
+TRC-BC-007,network_timeout,network_timeout,network_timeout,Tool failure cascade; retry budget exhausted
+TRC-BC-008,evidence_contradiction,evidence_contradiction,evidence_contradiction,Delivered with signature vs user claims not received
+TRC-BC-009,compliance_violation,compliance_violation,compliance_violation,PII near-miss (PAN + SSN shared)
+TRC-BC-010,multi_dispute_confusion,multi_dispute_confusion,multi_dispute_confusion,Multiple active disputes; disambiguation required
+TRC-BC-011,classification_error,classification_error,successful_classification,Agent uncertainty expressed; confidence updates
+TRC-BC-012,evidence_quality,evidence_quality,evidence_quality,Empty evidence package; low success warning
+TRC-a58e226f,evidence_contradiction,evidence_contradiction,user_escalation,Contradictory evidence noted; escalated
+TRC-ca7d751f,evidence_contradiction,evidence_contradiction,user_escalation,Contradictory evidence noted; escalated
+TRC-6371b389,user_escalation,user_escalation,user_escalation,User explicitly asks for human
+TRC-0c01ed97,network_timeout,network_timeout,network_timeout,Timeout/retry pattern
+TRC-12cc01a0,network_timeout,network_timeout,network_timeout,Timeout/retry pattern
+TRC-5448aa9f,network_timeout,network_timeout,network_timeout,Timeout/retry pattern
+TRC-04dd4579,successful_classification,successful_classification,successful_classification,Happy path reference
+TRC-f37beed1,successful_classification,successful_classification,successful_classification,Happy path reference

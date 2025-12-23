@@ -1,0 +1,62 @@
+flowchart TB
+    subgraph Users["Users"]
+        M[👤 Merchant]
+        A[🔍 Auditor]
+        O[👔 Ops Lead]
+    end
+    
+    subgraph Chatbot["Dispute Resolution Chatbot"]
+        UI[Chainlit UI]
+        SM[State Machine]
+        HEG[Evidence Gatherer]
+        JP[Judge Panel]
+        VT[VROL Translator]
+        EL[Explainability Layer]
+    end
+    
+    subgraph External["External Systems"]
+        PP[Payment Platforms]
+        SC[Shipping Carriers]
+        LLM[LLM Provider]
+        VISA[Visa VROL]
+    end
+    
+    subgraph Storage["Storage"]
+        R[(Redis)]
+        S3[(S3)]
+        TS[(TimescaleDB)]
+        PG[(PostgreSQL)]
+    end
+    
+    %% User flows
+    M <-->|Chat messages| UI
+    A -->|Audit queries| EL
+    O -->|Escalation mgmt| SM
+    
+    %% Internal flows
+    UI <--> SM
+    SM <--> HEG
+    SM <--> JP
+    SM <--> VT
+    SM --> EL
+    HEG --> EL
+    JP --> EL
+    VT --> EL
+    
+    %% External flows
+    HEG -->|Transaction queries| PP
+    PP -->|Transaction data| HEG
+    HEG -->|Tracking queries| SC
+    SC -->|Tracking/POD| HEG
+    JP -->|Judge prompts| LLM
+    LLM -->|Evaluations| JP
+    VT -->|VROL payload| VISA
+    VISA -->|Case ID/Status| VT
+    
+    %% Storage flows
+    UI <-->|Session state| R
+    EL -->|BlackBox recordings| S3
+    EL -->|Audit logs| TS
+    SM <-->|Domain entities| PG
+    VT -->|Evidence files| S3
+

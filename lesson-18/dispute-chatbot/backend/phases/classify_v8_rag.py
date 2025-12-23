@@ -24,7 +24,7 @@ from backend.adapters.reason_code_catalog import get_reason_code_catalog
 logger = logging.getLogger(__name__)
 
 # Default model for V8-RAG
-V8_RAG_MODEL = "anthropic/claude-sonnet-4-20250514"
+V8_RAG_MODEL = "openai/gpt-4o"
 
 # Global retriever instance
 _RAG_RETRIEVER = None
@@ -33,15 +33,9 @@ def get_rag_retriever():
     """Get or initialize the global RagRetriever instance."""
     global _RAG_RETRIEVER
     if _RAG_RETRIEVER is None:
-        try:
-            from backend.adapters.rag_retriever import RagRetriever
-            _RAG_RETRIEVER = RagRetriever()
-        except Exception as e:
-            logger.error(f"Failed to initialize RagRetriever: {e}")
-            # Fallback to None? Or raise?
-            # For V8, RAG is core, so we should probably log and maybe return None, 
-            # and handle None in the caller by passing empty examples.
-            return None
+        # Hard stop if initialization fails
+        from backend.adapters.rag_retriever import RagRetriever
+        _RAG_RETRIEVER = RagRetriever()
     return _RAG_RETRIEVER
 
 
@@ -289,14 +283,10 @@ async def _identify_category_v8_rag(
     examples = []
     retriever = get_rag_retriever()
     if retriever:
-        try:
-            # Retrieve top 3 matches
-            matches = retriever.retrieve_similar(description, k=3, threshold=0.4)
-            examples = matches
-            logger.info(f"Retrieved {len(examples)} examples for RAG.")
-        except Exception as e:
-            logger.error(f"Error during RAG retrieval: {e}")
-            # Continue without examples
+        # Hard stop if retrieval fails
+        matches = retriever.retrieve_similar(description, k=3, threshold=0.4)
+        examples = matches
+        logger.info(f"Retrieved {len(examples)} examples for RAG.")
     
     prompt = render_prompt(
         "DisputeClassifier_identify_category_v8_rag.j2",

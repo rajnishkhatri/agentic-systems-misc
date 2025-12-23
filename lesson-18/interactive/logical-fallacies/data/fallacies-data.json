@@ -1,0 +1,9 @@
+[
+  {
+    "id": "cherry_picked_benchmarks",
+    "name": "Cherry-Picked Benchmarks",
+    "category": "Evaluating AI Claims",
+    "description": "Reporting model performance on a favorable subset of data while ignoring failures, edge cases, or more representative datasets.",
+    "ai_context": "Common in vendor demos ('Works on my machine') and research papers ('State of the Art on selected subset'). It creates a false impression of generalization."
+  }
+]

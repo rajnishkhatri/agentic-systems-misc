@@ -1,0 +1,16 @@
+flowchart LR
+    A[Raw Data] --> B{Stratified Split?}
+    B -->|No| C[Random/Biased Test Set]
+    B -->|Yes| D[Representative Test Set]
+    
+    C --> E[Cherry-Picked Risk]
+    D --> F[Robust Benchmark]
+    
+    F -->     G["Metric: Macro-F1"]
+    E --> H["Metric: Accuracy (Misleading)"]
+    
+    style F fill:#dbfabb,stroke:#82c91e
+    style G fill:#dbfabb,stroke:#82c91e
+    style E fill:#ffc9c9,stroke:#e03131
+    style H fill:#ffc9c9,stroke:#e03131
+

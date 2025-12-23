@@ -1,0 +1,762 @@
+[
+  {
+    "case": {
+      "dispute_id": "gen_amex_A01_ambiguous",
+      "variation_type": "ambiguous",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "unrecognized",
+      "category_match": "False",
+      "expected_code": "A01",
+      "actual_code": "P05",
+      "code_match": "False",
+      "confidence": "0.9",
+      "reasoning": "Category: The cardholder is questioning a discrepancy in their statement without claiming fraud or unauthorized charges, indicating they do not recognize the transaction details. | Code: The dispute description indicates that the user noticed discrepancies in the statement amounts compared to their expectations from a recent visit. This suggests that the charge amount may not match what the user anticipated, which aligns with the reason code P05 for 'Incorrect Charge Amount'.",
+      "description": "I noticed something odd on my statement. The numbers don't seem to match what I expected from my last visit. Could you look into this for me? (Network: Amex)"
+    },
+    "result": {
+      "category": "general",
+      "reasoning": "The cardholder mentions that the numbers on their statement don't match their expectations from a visit, indicating a potential processing error or discrepancy in the transaction details, which fits the general category."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nI noticed something odd on my statement. The numbers don't seem to match what I expected from my last visit. Could you look into this for me? (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"general\",\n    \"reasoning\": \"The cardholder mentions that the numbers on their statement don't match their expectations from a visit, indicating a potential processing error or discrepancy in the transaction details, which fits the general category.\"\n}\n```",
+          "parsed_output": {
+            "category": "general",
+            "reasoning": "The cardholder mentions that the numbers on their statement don't match their expectations from a visit, indicating a potential processing error or discrepancy in the transaction details, which fits the general category."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_A01_emotional",
+      "variation_type": "emotional",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "fraudulent",
+      "category_match": "False",
+      "expected_code": "A01",
+      "actual_code": "F24",
+      "code_match": "False",
+      "confidence": "0.95",
+      "reasoning": "Category: The cardholder explicitly states they did not authorize the charge, indicating a claim of fraud. | Code: The dispute indicates that the user did not authorize the charges on their bill, which directly aligns with the reason code F24: No Cardholder Authorization. This code is specifically for cases where the cardholder claims they did not authorize a transaction, making it the most appropriate choice for this situation.",
+      "description": "WHY IS MY BILL SO HIGH?! FIX THIS NOW! I DIDN'T AUTHORIZE THIS! (Network: Amex)"
+    },
+    "result": {
+      "category": "fraudulent",
+      "reasoning": "The cardholder explicitly states 'I didn't authorize this', indicating they did not participate in or approve the transaction."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nWHY IS MY BILL SO HIGH?! FIX THIS NOW! I DIDN'T AUTHORIZE THIS! (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"fraudulent\",\n    \"reasoning\": \"The cardholder explicitly states 'I didn't authorize this', indicating they did not participate in or approve the transaction.\"\n}\n```",
+          "parsed_output": {
+            "category": "fraudulent",
+            "reasoning": "The cardholder explicitly states 'I didn't authorize this', indicating they did not participate in or approve the transaction."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_A02_emotional",
+      "variation_type": "emotional",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "fraudulent",
+      "category_match": "False",
+      "expected_code": "A02",
+      "actual_code": "F24",
+      "code_match": "False",
+      "confidence": "0.95",
+      "reasoning": "Category: The cardholder is expressing frustration over being charged without their permission, which indicates they did not authorize the transaction, aligning with the definition of fraudulent charges. | Code: The dispute indicates that the charge was made without the cardholder's permission, which directly relates to the lack of authorization for the transaction. The reason code F24, 'No Cardholder Authorization', is the most appropriate choice as it specifically addresses situations where a charge is disputed due to unauthorized use.",
+      "description": "WHY was I charged without my permission?! FIX THIS NOW! (Network: Amex)"
+    },
+    "result": {
+      "category": "fraudulent",
+      "reasoning": "The cardholder explicitly states they were charged without their permission, indicating they did not authorize the transaction."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nWHY was I charged without my permission?! FIX THIS NOW! (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"fraudulent\",\n    \"reasoning\": \"The cardholder explicitly states they were charged without their permission, indicating they did not authorize the transaction.\"\n}\n```",
+          "parsed_output": {
+            "category": "fraudulent",
+            "reasoning": "The cardholder explicitly states they were charged without their permission, indicating they did not authorize the transaction."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_A02_narrative",
+      "variation_type": "narrative",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "fraudulent",
+      "category_match": "False",
+      "expected_code": "A02",
+      "actual_code": "F24",
+      "code_match": "False",
+      "confidence": "0.95",
+      "reasoning": "Category: The cardholder noticed a charge on their credit card statement that they do not recall authorizing, indicating a potential unauthorized transaction, which aligns with the definition of fraudulent. | Code: The dispute description indicates that the cardholder does not recall authorizing the charge, which suggests a lack of authorization for the transaction. This aligns closely with the reason code F24: No Cardholder Authorization, as it directly addresses the issue of an unrecognized charge on the statement.",
+      "description": "Hello, I hope this message finds you well. I had quite a busy day yesterday, running errands and catching up with an old friend over coffee. However, when I checked my credit card statement this morning, I noticed a charge that I don't recall authorizing. It's quite puzzling because I always make sure to double-check my transactions. Could you please help me understand what happened here? Thank you so much for your assistance. (Network: Amex)"
+    },
+    "result": {
+      "category": "unrecognized",
+      "reasoning": "The cardholder does not recall authorizing the charge and is seeking clarification about it, but has not explicitly claimed fraud."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nHello, I hope this message finds you well. I had quite a busy day yesterday, running errands and catching up with an old friend over coffee. However, when I checked my credit card statement this morning, I noticed a charge that I don't recall authorizing. It's quite puzzling because I always make sure to double-check my transactions. Could you please help me understand what happened here? Thank you so much for your assistance. (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"unrecognized\",\n    \"reasoning\": \"The cardholder does not recall authorizing the charge and is seeking clarification about it, but has not explicitly claimed fraud.\"\n}\n```",
+          "parsed_output": {
+            "category": "unrecognized",
+            "reasoning": "The cardholder does not recall authorizing the charge and is seeking clarification about it, but has not explicitly claimed fraud."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_A02_ambiguous",
+      "variation_type": "ambiguous",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "unrecognized",
+      "category_match": "False",
+      "expected_code": "A02",
+      "actual_code": "F24",
+      "code_match": "False",
+      "confidence": "0.9",
+      "reasoning": "Category: The cardholder noticed something odd on their statement and mentioned a mix-up with one of the entries, indicating they do not recognize the transaction details, but they do not explicitly claim fraud. | Code: The dispute description indicates that there was a mix-up with one of the entries on the statement, suggesting that the charge may not have been authorized by the cardholder. The reason code F24 (No Cardholder Authorization) fits this situation as it directly addresses issues related to unauthorized charges.",
+      "description": "I noticed something odd on my statement. It seems like there was a mix-up with one of the entries. Could you look into it for me? (Network: Amex)"
+    },
+    "result": {
+      "category": "unrecognized",
+      "reasoning": "The cardholder noticed something odd on their statement and is asking for clarification about a specific entry, indicating they don't recognize the transaction but haven't explicitly claimed fraud."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nI noticed something odd on my statement. It seems like there was a mix-up with one of the entries. Could you look into it for me? (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"unrecognized\",\n    \"reasoning\": \"The cardholder noticed something odd on their statement and is asking for clarification about a specific entry, indicating they don't recognize the transaction but haven't explicitly claimed fraud.\"\n}\n```",
+          "parsed_output": {
+            "category": "unrecognized",
+            "reasoning": "The cardholder noticed something odd on their statement and is asking for clarification about a specific entry, indicating they don't recognize the transaction but haven't explicitly claimed fraud."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_A08_narrative",
+      "variation_type": "narrative",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "unrecognized",
+      "category_match": "False",
+      "expected_code": "A08",
+      "actual_code": "A02",
+      "code_match": "False",
+      "confidence": "0.9",
+      "reasoning": "Category: The cardholder is confused about why their Amex card was declined despite having checked their balance, indicating a lack of understanding about the transaction status rather than a claim of fraud or unauthorized use. | Code: The dispute involves a situation where the user's Amex card was declined during a transaction, which suggests that there was no valid authorization for the charge at that moment. This aligns closely with reason code A02, indicating that the card was not authorized for the transaction despite the user believing their balance was sufficient.",
+      "description": "Hello, I hope this message finds you well. I had quite an eventful day yesterday. I started with a lovely breakfast at my favorite caf\u00e9, and then I went shopping for some essentials. However, when I tried to use my Amex card at the store, it was unexpectedly declined. I was quite surprised because I had checked my balance earlier, and everything seemed fine. Could you please help me understand why this happened? Thank you so much for your assistance. (Network: Amex)"
+    },
+    "result": {
+      "category": "general",
+      "reasoning": "The cardholder experienced a declined transaction despite having a sufficient balance, indicating an authorization issue rather than fraud or any other specific dispute category."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nHello, I hope this message finds you well. I had quite an eventful day yesterday. I started with a lovely breakfast at my favorite caf\u00e9, and then I went shopping for some essentials. However, when I tried to use my Amex card at the store, it was unexpectedly declined. I was quite surprised because I had checked my balance earlier, and everything seemed fine. Could you please help me understand why this happened? Thank you so much for your assistance. (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"general\",\n    \"reasoning\": \"The cardholder experienced a declined transaction despite having a sufficient balance, indicating an authorization issue rather than fraud or any other specific dispute category.\"\n}\n```",
+          "parsed_output": {
+            "category": "general",
+            "reasoning": "The cardholder experienced a declined transaction despite having a sufficient balance, indicating an authorization issue rather than fraud or any other specific dispute category."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_M01_emotional",
+      "variation_type": "emotional",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "fraudulent",
+      "category_match": "False",
+      "expected_code": "M01",
+      "actual_code": "F24",
+      "code_match": "False",
+      "confidence": "0.98",
+      "reasoning": "Category: The cardholder explicitly states they did not authorize the charge, indicating a claim of fraud. | Code: The dispute clearly states that the user did not authorize the charge, which directly aligns with the reason code F24: No Cardholder Authorization. This indicates that the transaction was made without the cardholder's consent, making it the most appropriate choice for this fraudulent dispute.",
+      "description": "WHY was I charged?! FIX THIS NOW! I DIDN'T AUTHORIZE! (Network: Amex)"
+    },
+    "result": {
+      "category": "fraudulent",
+      "reasoning": "The cardholder explicitly states they did not authorize the charge, indicating a claim of fraud."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nWHY was I charged?! FIX THIS NOW! I DIDN'T AUTHORIZE! (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"fraudulent\",\n    \"reasoning\": \"The cardholder explicitly states they did not authorize the charge, indicating a claim of fraud.\"\n}\n```",
+          "parsed_output": {
+            "category": "fraudulent",
+            "reasoning": "The cardholder explicitly states they did not authorize the charge, indicating a claim of fraud."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_M01_narrative",
+      "variation_type": "narrative",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "fraudulent",
+      "category_match": "False",
+      "expected_code": "M01",
+      "actual_code": "F24",
+      "code_match": "False",
+      "confidence": "0.9",
+      "reasoning": "Category: The cardholder claims they do not recall authorizing the charge, indicating a potential unauthorized transaction, which fits the definition of fraudulent. | Code: The dispute description indicates that the cardholder does not recall authorizing the charge, which suggests a lack of authorization for the transaction. This aligns closely with the reason code F24: No Cardholder Authorization, as the cardholder is questioning the legitimacy of the charge.",
+      "description": "Hello, I hope this message finds you well. I recently noticed a charge on my Amex card that I don't recall authorizing. It was a busy day, and I was juggling a lot, from picking up groceries to attending a friend's birthday party. I might have missed something, but I don't remember agreeing to this charge. Could you please help me understand what happened? Thank you so much for your assistance. (Network: Amex)"
+    },
+    "result": {
+      "category": "unrecognized",
+      "reasoning": "The cardholder does not recall authorizing the charge and is seeking clarification, but has not explicitly claimed fraud."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nHello, I hope this message finds you well. I recently noticed a charge on my Amex card that I don't recall authorizing. It was a busy day, and I was juggling a lot, from picking up groceries to attending a friend's birthday party. I might have missed something, but I don't remember agreeing to this charge. Could you please help me understand what happened? Thank you so much for your assistance. (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"unrecognized\",\n    \"reasoning\": \"The cardholder does not recall authorizing the charge and is seeking clarification, but has not explicitly claimed fraud.\"\n}\n```",
+          "parsed_output": {
+            "category": "unrecognized",
+            "reasoning": "The cardholder does not recall authorizing the charge and is seeking clarification, but has not explicitly claimed fraud."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_P04_narrative",
+      "variation_type": "narrative",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "unrecognized",
+      "category_match": "False",
+      "expected_code": "P04",
+      "actual_code": "P05",
+      "code_match": "False",
+      "confidence": "0.9",
+      "reasoning": "Category: The cardholder noticed an unexpected processing of the payment but does not explicitly claim fraud or unauthorized charges. They are seeking clarification on the transaction, which indicates they do not recognize the details. | Code: The dispute indicates that the amount paid was processed differently than expected, suggesting that there may have been an incorrect charge amount. This aligns closely with reason code P05, which specifically addresses situations where the charge amount is incorrect.",
+      "description": "Hello, I hope this message finds you well. I recently had a lovely day out with my family, and we decided to treat ourselves to a nice dinner. Imagine my surprise when I checked my statement and noticed something odd. It seems like the amount I paid was processed differently than expected. I was under the impression it would be handled one way, but it appears to have been done another. Could you please help me understand what happened? Thank you so much for your assistance. (Network: Amex)"
+    },
+    "result": {
+      "category": "general",
+      "reasoning": "The cardholder is questioning the processing of the amount charged, indicating it was handled differently than expected, which suggests a potential processing error or authorization issue."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nHello, I hope this message finds you well. I recently had a lovely day out with my family, and we decided to treat ourselves to a nice dinner. Imagine my surprise when I checked my statement and noticed something odd. It seems like the amount I paid was processed differently than expected. I was under the impression it would be handled one way, but it appears to have been done another. Could you please help me understand what happened? Thank you so much for your assistance. (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"general\",\n    \"reasoning\": \"The cardholder is questioning the processing of the amount charged, indicating it was handled differently than expected, which suggests a potential processing error or authorization issue.\"\n}\n```",
+          "parsed_output": {
+            "category": "general",
+            "reasoning": "The cardholder is questioning the processing of the amount charged, indicating it was handled differently than expected, which suggests a potential processing error or authorization issue."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_M01_ambiguous",
+      "variation_type": "ambiguous",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "unrecognized",
+      "category_match": "False",
+      "expected_code": "M01",
+      "actual_code": "P01",
+      "code_match": "False",
+      "confidence": "0.9",
+      "reasoning": "Category: The cardholder noticed something unexpected in their transactions and is seeking clarification, indicating they do not recognize the transaction details, but they do not explicitly claim fraud or unauthorized charges. | Code: The dispute description indicates a mix-up or misunderstanding regarding a transaction, which aligns with the reason code P01 for 'Unassigned Card Number'. This suggests that the cardholder may not recognize the charge due to it being processed under an incorrect or unassigned card number, leading to confusion.",
+      "description": "I was reviewing my recent transactions and noticed something unexpected. It seems like there was a mix-up or misunderstanding. Could you look into this for me? I appreciate your help in clarifying this situation. (Network: Amex)"
+    },
+    "result": {
+      "category": "unrecognized",
+      "reasoning": "The cardholder is unsure about a transaction and is seeking clarification, but they have not explicitly claimed fraud or denied making the purchase."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nI was reviewing my recent transactions and noticed something unexpected. It seems like there was a mix-up or misunderstanding. Could you look into this for me? I appreciate your help in clarifying this situation. (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"unrecognized\",\n    \"reasoning\": \"The cardholder is unsure about a transaction and is seeking clarification, but they have not explicitly claimed fraud or denied making the purchase.\"\n}\n```",
+          "parsed_output": {
+            "category": "unrecognized",
+            "reasoning": "The cardholder is unsure about a transaction and is seeking clarification, but they have not explicitly claimed fraud or denied making the purchase."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_P04_ambiguous",
+      "variation_type": "ambiguous",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "unrecognized",
+      "category_match": "False",
+      "expected_code": "P04",
+      "actual_code": "F24",
+      "code_match": "False",
+      "confidence": "0.9",
+      "reasoning": "Category: The cardholder noticed something unusual on their statement and mentioned that the transaction didn't align with their expectations, indicating they do not recognize the transaction details, but they do not explicitly claim fraud. | Code: The dispute description indicates that the transaction did not align with the user's expectations, suggesting a lack of proper authorization for the charge. The code F24 (No Cardholder Authorization) fits this situation as it implies that the cardholder did not authorize the transaction as expected.",
+      "description": "I noticed something unusual on my statement after my recent purchase. It seems like the transaction didn't align with what I anticipated. Could you look into this for me? (Network: Amex)"
+    },
+    "result": {
+      "category": "unrecognized",
+      "reasoning": "The cardholder noticed something unusual on their statement and is seeking clarification about a transaction they do not fully recognize, but they have not explicitly claimed fraud."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nI noticed something unusual on my statement after my recent purchase. It seems like the transaction didn't align with what I anticipated. Could you look into this for me? (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"unrecognized\",\n    \"reasoning\": \"The cardholder noticed something unusual on their statement and is seeking clarification about a transaction they do not fully recognize, but they have not explicitly claimed fraud.\"\n}\n```",
+          "parsed_output": {
+            "category": "unrecognized",
+            "reasoning": "The cardholder noticed something unusual on their statement and is seeking clarification about a transaction they do not fully recognize, but they have not explicitly claimed fraud."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_P07_ambiguous",
+      "variation_type": "ambiguous",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "unrecognized",
+      "category_match": "False",
+      "expected_code": "P07",
+      "actual_code": "P01",
+      "code_match": "False",
+      "confidence": "0.85",
+      "reasoning": "Category: The cardholder is unsure about the discrepancies in their statement but does not explicitly claim fraud or unauthorized transactions. They are seeking clarification on the charges, which suggests they do not recognize the details. | Code: The dispute description indicates that the user is unsure about the charges on their statement, suggesting that they may not recognize the card number associated with the charges. This aligns with the reason code P01, which pertains to an unassigned card number, indicating a potential issue with the recognition of the charge.",
+      "description": "I noticed something off with my recent statement. It seems like things didn't align as they usually do, and I'm not sure why. Could you help clarify this for me? (Network: Amex)"
+    },
+    "result": {
+      "category": "unrecognized",
+      "reasoning": "The cardholder is unsure about a charge on their statement and is seeking clarification, but they have not explicitly claimed fraud or denied making the purchase."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nI noticed something off with my recent statement. It seems like things didn't align as they usually do, and I'm not sure why. Could you help clarify this for me? (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"unrecognized\",\n    \"reasoning\": \"The cardholder is unsure about a charge on their statement and is seeking clarification, but they have not explicitly claimed fraud or denied making the purchase.\"\n}\n```",
+          "parsed_output": {
+            "category": "unrecognized",
+            "reasoning": "The cardholder is unsure about a charge on their statement and is seeking clarification, but they have not explicitly claimed fraud or denied making the purchase."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_P03_ambiguous",
+      "variation_type": "ambiguous",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "unrecognized",
+      "category_match": "False",
+      "expected_code": "P03",
+      "actual_code": "P05",
+      "code_match": "False",
+      "confidence": "0.9",
+      "reasoning": "Category: The cardholder is confused about the discrepancy between their statement and their expectations, indicating they do not recognize the transaction details, but they do not explicitly claim fraud. | Code: The dispute indicates that the user expected a different outcome and that the numbers on their statement do not match their expectations. This suggests that there may have been an incorrect charge amount, which aligns with reason code P05: Incorrect Charge Amount.",
+      "description": "I was expecting a different outcome after my last visit to the store. The numbers on my statement don't match what I anticipated. Can we look into this? Thanks. (Network: Amex)"
+    },
+    "result": {
+      "category": "general",
+      "reasoning": "The cardholder is expressing confusion about the charges on their statement and indicates that the numbers do not match their expectations, which suggests an authorization or processing issue rather than fraud or any other specific category."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nI was expecting a different outcome after my last visit to the store. The numbers on my statement don't match what I anticipated. Can we look into this? Thanks. (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"general\",\n    \"reasoning\": \"The cardholder is expressing confusion about the charges on their statement and indicates that the numbers do not match their expectations, which suggests an authorization or processing issue rather than fraud or any other specific category.\"\n}\n```",
+          "parsed_output": {
+            "category": "general",
+            "reasoning": "The cardholder is expressing confusion about the charges on their statement and indicates that the numbers do not match their expectations, which suggests an authorization or processing issue rather than fraud or any other specific category."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_P05_ambiguous",
+      "variation_type": "ambiguous",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "unrecognized",
+      "category_match": "False",
+      "expected_code": "P05",
+      "actual_code": "A01",
+      "code_match": "False",
+      "confidence": "0.9",
+      "reasoning": "Category: The cardholder is questioning a discrepancy in the transaction amount on their statement but does not explicitly claim fraud or that the transaction was unauthorized. They are seeking clarification on the charge, which indicates they do not recognize the transaction details. | Code: The dispute indicates that the customer believes the charge amount does not match their recollection of the purchase amount, suggesting that the charge amount exceeds what they authorized. This aligns closely with reason code A01, which specifically addresses situations where the charge amount exceeds the authorization amount.",
+      "description": "I was going through my statement and something doesn't quite add up. I remember a different figure when I made the purchase. Could you help clarify this for me? (Network: Amex)"
+    },
+    "result": {
+      "category": "general",
+      "reasoning": "The cardholder is questioning a discrepancy in the transaction amount compared to their memory of the purchase, which indicates a potential authorization issue or processing error rather than fraud or any other specific dispute category."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nI was going through my statement and something doesn't quite add up. I remember a different figure when I made the purchase. Could you help clarify this for me? (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"general\",\n    \"reasoning\": \"The cardholder is questioning a discrepancy in the transaction amount compared to their memory of the purchase, which indicates a potential authorization issue or processing error rather than fraud or any other specific dispute category.\"\n}\n```",
+          "parsed_output": {
+            "category": "general",
+            "reasoning": "The cardholder is questioning a discrepancy in the transaction amount compared to their memory of the purchase, which indicates a potential authorization issue or processing error rather than fraud or any other specific dispute category."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_P22_ambiguous",
+      "variation_type": "ambiguous",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "unrecognized",
+      "category_match": "False",
+      "expected_code": "P22",
+      "actual_code": "F24",
+      "code_match": "False",
+      "confidence": "0.9",
+      "reasoning": "Category: The dispute description indicates confusion at the checkout and a mismatch, but does not explicitly claim fraud or that the transaction was unauthorized. The cardholder is seeking clarification about the transaction, which aligns with the unrecognized category. | Code: The dispute description indicates a situation where the cashier was puzzled, suggesting there may have been an issue with the authorization of the transaction. The phrase 'mismatch somewhere' implies that the cardholder may not have authorized the charge properly, which aligns with the reason code F24: No Cardholder Authorization.",
+      "description": "I was at the checkout, and something unexpected happened. The cashier looked puzzled, and I felt a bit embarrassed. It seemed like there was a mismatch somewhere. Could you look into this for me? (Network: Amex)"
+    },
+    "result": {
+      "category": "general",
+      "reasoning": "The description indicates a mismatch at checkout, which suggests a potential processing error or authorization issue, but does not explicitly claim fraud or any specific chargeback reason."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nI was at the checkout, and something unexpected happened. The cashier looked puzzled, and I felt a bit embarrassed. It seemed like there was a mismatch somewhere. Could you look into this for me? (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"general\",\n    \"reasoning\": \"The description indicates a mismatch at checkout, which suggests a potential processing error or authorization issue, but does not explicitly claim fraud or any specific chargeback reason.\"\n}\n```",
+          "parsed_output": {
+            "category": "general",
+            "reasoning": "The description indicates a mismatch at checkout, which suggests a potential processing error or authorization issue, but does not explicitly claim fraud or any specific chargeback reason."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_P23_ambiguous",
+      "variation_type": "ambiguous",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "unrecognized",
+      "category_match": "False",
+      "expected_code": "P23",
+      "actual_code": "P05",
+      "code_match": "False",
+      "confidence": "0.9",
+      "reasoning": "Category: The cardholder is confused about the transaction amounts and is requesting clarification, indicating they do not recognize the changes, but they do not explicitly claim fraud or unauthorized charges. | Code: The dispute description indicates that the user noticed discrepancies in the transaction amounts, suggesting that the charge amounts may not match what they expected. This aligns closely with the reason code P05, which pertains to an 'Incorrect Charge Amount'.",
+      "description": "I was reviewing my recent transactions and noticed something odd. The numbers don't quite match up with what I expected. It's like the amounts have changed since I last checked. Could you look into this for me? (Network: Amex)"
+    },
+    "result": {
+      "category": "general",
+      "reasoning": "The cardholder mentions that the amounts have changed and that the numbers don't match up with their expectations, indicating a potential processing error or authorization issue, but does not explicitly claim fraud."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nI was reviewing my recent transactions and noticed something odd. The numbers don't quite match up with what I expected. It's like the amounts have changed since I last checked. Could you look into this for me? (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"general\",\n    \"reasoning\": \"The cardholder mentions that the amounts have changed and that the numbers don't match up with their expectations, indicating a potential processing error or authorization issue, but does not explicitly claim fraud.\"\n}\n```",
+          "parsed_output": {
+            "category": "general",
+            "reasoning": "The cardholder mentions that the amounts have changed and that the numbers don't match up with their expectations, indicating a potential processing error or authorization issue, but does not explicitly claim fraud."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "PASS"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_amex_R13_narrative",
+      "variation_type": "narrative",
+      "status": "FAIL",
+      "expected_network": "amex",
+      "actual_network": "amex",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "fraudulent",
+      "category_match": "False",
+      "expected_code": "R13",
+      "actual_code": "F24",
+      "code_match": "False",
+      "confidence": "0.95",
+      "reasoning": "Category: The cardholder claims they noticed a charge on their Amex card that they do not recall authorizing, indicating a potential unauthorized transaction, which fits the definition of fraudulent. | Code: The dispute description indicates that the cardholder does not recall authorizing the charge, which suggests a lack of authorization for the transaction. This aligns closely with reason code F24: No Cardholder Authorization, making it the most appropriate choice.",
+      "description": "Hello there, I hope this message finds you well. I recently had a rather busy day, juggling work and family commitments, and amidst all that, I noticed a charge on my Amex card that I don't recall authorizing. I tried reaching out to the merchant, but it seems like my emails are going into a void. It's quite puzzling, and I would appreciate any guidance you can provide on how to resolve this matter. Thank you for your assistance. (Network: Amex)"
+    },
+    "result": {
+      "category": "unrecognized",
+      "reasoning": "The cardholder does not recall authorizing the charge and is seeking assistance to identify it, but has not explicitly claimed fraud."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nHello there, I hope this message finds you well. I recently had a rather busy day, juggling work and family commitments, and amidst all that, I noticed a charge on my Amex card that I don't recall authorizing. I tried reaching out to the merchant, but it seems like my emails are going into a void. It's quite puzzling, and I would appreciate any guidance you can provide on how to resolve this matter. Thank you for your assistance. (Network: Amex)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"unrecognized\",\n    \"reasoning\": \"The cardholder does not recall authorizing the charge and is seeking assistance to identify it, but has not explicitly claimed fraud.\"\n}\n```",
+          "parsed_output": {
+            "category": "unrecognized",
+            "reasoning": "The cardholder does not recall authorizing the charge and is seeking assistance to identify it, but has not explicitly claimed fraud."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_discover_AT_emotional",
+      "variation_type": "emotional",
+      "status": "FAIL",
+      "expected_network": "discover",
+      "actual_network": "discover",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "fraudulent",
+      "category_match": "False",
+      "expected_code": "AT",
+      "actual_code": "UA02",
+      "code_match": "False",
+      "confidence": "0.95",
+      "reasoning": "Category: The cardholder is expressing concern about a charge made to their card without their authorization, indicating a potential fraudulent transaction. | Code: The dispute indicates that the card was charged without the user's consent, suggesting a fraudulent transaction. Since the description does not specify that the card was physically present during the transaction, the most appropriate code is UA02, which covers fraud for card not present transactions.",
+      "description": "WHY was my card charged without my OK? FIX THIS NOW! (Network: Discover)"
+    },
+    "result": {
+      "category": "fraudulent",
+      "reasoning": "The cardholder explicitly states that their card was charged without their permission, indicating they did not authorize the transaction."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nWHY was my card charged without my OK? FIX THIS NOW! (Network: Discover)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"fraudulent\",\n    \"reasoning\": \"The cardholder explicitly states that their card was charged without their permission, indicating they did not authorize the transaction.\"\n}\n```",
+          "parsed_output": {
+            "category": "fraudulent",
+            "reasoning": "The cardholder explicitly states that their card was charged without their permission, indicating they did not authorize the transaction."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_discover_AT_narrative",
+      "variation_type": "narrative",
+      "status": "FAIL",
+      "expected_network": "discover",
+      "actual_network": "discover",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "fraudulent",
+      "category_match": "False",
+      "expected_code": "AT",
+      "actual_code": "UA02",
+      "code_match": "False",
+      "confidence": "0.9",
+      "reasoning": "Category: The cardholder noticed a charge they do not recall authorizing, which indicates a potential unauthorized transaction, fitting the definition of fraudulent. | Code: The dispute description indicates that the user noticed a charge they do not recall authorizing, which suggests a potential fraudulent transaction. Since the user did not mention the transaction being made in person (card present), the most appropriate code is UA02, which covers fraud for card not present transactions.",
+      "description": "Hello there, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There was a charge that I don't recall authorizing. It's quite puzzling because I usually keep track of my expenses meticulously. Could you please help me understand what happened here? Thank you so much for your assistance. (Network: Discover)"
+    },
+    "result": {
+      "category": "unrecognized",
+      "reasoning": "The cardholder does not recall authorizing the charge and is seeking clarification, but has not explicitly claimed fraud."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nHello there, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There was a charge that I don't recall authorizing. It's quite puzzling because I usually keep track of my expenses meticulously. Could you please help me understand what happened here? Thank you so much for your assistance. (Network: Discover)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"unrecognized\",\n    \"reasoning\": \"The cardholder does not recall authorizing the charge and is seeking clarification, but has not explicitly claimed fraud.\"\n}\n```",
+          "parsed_output": {
+            "category": "unrecognized",
+            "reasoning": "The cardholder does not recall authorizing the charge and is seeking clarification, but has not explicitly claimed fraud."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  },
+  {
+    "case": {
+      "dispute_id": "gen_discover_AT_ambiguous",
+      "variation_type": "ambiguous",
+      "status": "FAIL",
+      "expected_network": "discover",
+      "actual_network": "discover",
+      "network_match": "True",
+      "expected_category": "general",
+      "actual_category": "unrecognized",
+      "category_match": "False",
+      "expected_code": "AT",
+      "actual_code": "AA",
+      "code_match": "False",
+      "confidence": "0.95",
+      "reasoning": "Category: The cardholder is unsure about a transaction on their statement and is seeking clarification, which indicates they do not recognize the transaction details. | Code: The dispute description indicates that the user does not recognize a transaction on their statement, which aligns perfectly with the reason code 'AA: Does Not Recognize'. This code is specifically designed for situations where a customer is unclear about a charge, suggesting a mix-up or misunderstanding, which is exactly what the user is experiencing.",
+      "description": "I noticed something unusual on my statement. It seems like there was a mix-up or misunderstanding with a recent transaction. Could you look into it and clarify what might have gone wrong? (Network: Discover)"
+    },
+    "result": {
+      "category": "unrecognized",
+      "reasoning": "The cardholder is unsure about a transaction and is seeking clarification, but they have not explicitly claimed fraud or denied making the purchase."
+    },
+    "trace": {
+      "steps": [
+        {
+          "step": "identify_category",
+          "prompt": "You are an expert Dispute Classification AI specializing in payment card chargebacks.\n\nYour task is to analyze the following dispute description and classify it into one of the standardized categories.\n\nDispute Description:\n\"\"\"\nI noticed something unusual on my statement. It seems like there was a mix-up or misunderstanding with a recent transaction. Could you look into it and clarify what might have gone wrong? (Network: Discover)\n\"\"\"\n\n### Standardized Categories with Examples:\n\n1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.\n   - IS: \"I didn't make this purchase\", \"My card was stolen\", \"I don't recognize this merchant\", \"Someone used my card without permission\"\n   - IS NOT: \"They charged me more than I agreed to\" (\u2192 general), \"My card was declined\" (\u2192 general), \"I didn't authorize this AMOUNT\" (\u2192 general)\n\n2. **product_not_received**: The cardholder paid but never received the goods or services.\n   - IS: \"My order never arrived\", \"I paid but got nothing\", \"Package was never delivered\"\n   - IS NOT: \"I received it but it was broken\" (\u2192 product_unacceptable), \"I returned it and want refund\" (\u2192 credit_not_processed)\n\n3. **duplicate**: The cardholder was charged multiple times for the same single transaction.\n   - IS: \"I see two identical charges\", \"Charged twice for same purchase\", \"I paid with cash but also got charged on card\"\n   - IS NOT: \"I was charged for a cancelled order\" (\u2192 credit_not_processed), \"Recurring charge I cancelled\" (\u2192 subscription_canceled)\n\n4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.\n   - IS: \"I cancelled my subscription but was still charged\", \"Recurring billing after cancellation\"\n   - IS NOT: \"I cancelled a one-time order\" (\u2192 credit_not_processed), \"I don't recognize this recurring charge\" (\u2192 fraudulent)\n\n5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.\n   - IS: \"Item arrived broken\", \"Not what I ordered\", \"Product doesn't work\", \"Counterfeit merchandise\"\n   - IS NOT: \"Never received it\" (\u2192 product_not_received), \"Want to return for refund\" (\u2192 credit_not_processed)\n\n6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.\n   - IS: \"I returned the item but no refund\", \"Cancelled order, still charged\", \"Merchant promised credit but never issued it\"\n   - IS NOT: \"Charged twice\" (\u2192 duplicate), \"Subscription cancelled\" (\u2192 subscription_canceled)\n\n7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.\n   - IS: \"What is this charge?\", \"I don't remember this purchase\", \"Can you help me identify this?\"\n   - IS NOT: \"I definitely didn't do this\" (\u2192 fraudulent), \"I recognize the visit but numbers are wrong\" (\u2192 general)\n\n8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.\n   - IS: \"Charged more than authorized amount\", \"Card was declined but charge appeared\", \"Wrong amount\", \"Transaction processed incorrectly\", \"Numbers don't match\", \"Bill is too high\"\n   - IS NOT: Any of the specific categories above\n\n### Classification Rules:\n1. Read the ENTIRE description before classifying.\n2. Look for EXPLICIT indicators, not assumptions.\n3. If \"declined\", \"refused\", \"wouldn't go through\" \u2192 likely **general** (authorization issue), NOT fraudulent.\n4. If \"didn't authorize\" is used in context of \"wrong amount\", \"high bill\", or \"extra charge\" \u2192 **general** (authorization amount dispute), NOT fraudulent.\n5. If \"returned\" or \"sent back\" goods \u2192 **credit_not_processed**, NOT product_unacceptable.\n6. If ambiguous between fraud and authorization \u2192 prefer **general** unless explicit fraud language (e.g., \"stolen card\", \"hacked\").\n7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.\n\nOutput the result in JSON format:\n{\n    \"category\": \"category_name\",\n    \"reasoning\": \"brief explanation\"\n}\n",
+          "llm_response": "```json\n{\n    \"category\": \"unrecognized\",\n    \"reasoning\": \"The cardholder is unsure about a transaction and is seeking clarification, but they have not explicitly claimed fraud or denied making the purchase.\"\n}\n```",
+          "parsed_output": {
+            "category": "unrecognized",
+            "reasoning": "The cardholder is unsure about a transaction and is seeking clarification, but they have not explicitly claimed fraud or denied making the purchase."
+          },
+          "model": "gpt-4o-mini"
+        }
+      ]
+    },
+    "status": "FAIL"
+  }
+]

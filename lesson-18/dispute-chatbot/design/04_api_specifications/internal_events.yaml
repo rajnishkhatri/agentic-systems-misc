@@ -1,0 +1,795 @@
+# Internal Event Schemas Between Components
+# Document ID: design/04_api_specifications/internal_events.yaml
+# Version: 1.0.0
+# Last Updated: 2025-12-08
+
+# ============================================================================
+# OVERVIEW
+# ============================================================================
+# This document defines all internal event schemas for communication between
+# the 5 major components of the Merchant Dispute Resolution Agentic Chatbot:
+#   1. State Machine Orchestrator
+#   2. Hierarchical Evidence Gatherer
+#   3. LLM Judge Panel
+#   4. Explainability Layer
+#   5. Network Translation Layer
+#
+# Event Flow:
+# UI → StateMachine → EvidenceGatherer → JudgePanel → NetworkTranslation
+#                  ↘        ↓        ↘       ↓      ↘       ↓
+#                    Explainability Layer (all events recorded)
+
+openapi: "3.0.0"
+info:
+  title: Internal Event Schemas
+  version: 1.0.0
+  description: |
+    Internal event schemas for asynchronous communication between
+    dispute resolution chatbot components.
+
+    NOTE: This file defines schema-only components (no REST endpoints).
+    The empty `paths` object satisfies OpenAPI 3.0 validation requirements.
+
+# Empty paths - this file contains only schema definitions for internal events
+paths: {}
+
+# ============================================================================
+# SHARED SCHEMAS
+# ============================================================================
+components:
+  schemas:
+    # ------------------------------------------
+    # Base Event Schema
+    # ------------------------------------------
+    BaseEvent:
+      type: object
+      required:
+        - event_id
+        - event_type
+        - timestamp
+        - dispute_id
+        - correlation_id
+        - schema_version
+      properties:
+        event_id:
+          type: string
+          format: uuid
+          description: Unique identifier for this event instance
+        event_type:
+          type: string
+          description: Type discriminator for event routing
+        schema_version:
+          type: string
+          pattern: "^\\d+\\.\\d+\\.\\d+$"
+          default: "1.0.0"
+          description: Semantic version for backward compatibility (e.g., "1.0.0")
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when event was created
+        dispute_id:
+          type: string
+          description: Associated dispute identifier
+        correlation_id:
+          type: string
+          format: uuid
+          description: Request correlation ID for distributed tracing
+        source_component:
+          type: string
+          enum:
+            - state_machine
+            - evidence_gatherer
+            - judge_panel
+            - explainability
+            - network_translation
+            - chainlit_ui
+          description: Component that emitted this event
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Additional context (trace_id, session_id, etc.)
+
+    # ------------------------------------------
+    # State Transition Event (Component 1 → All)
+    # ------------------------------------------
+    StateTransitionEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - from_state
+            - to_state
+            - trigger
+          properties:
+            event_type:
+              enum: [state_transition]
+            from_state:
+              $ref: '#/components/schemas/DisputeState'
+            to_state:
+              $ref: '#/components/schemas/DisputeState'
+            trigger:
+              type: string
+              enum:
+                - dispute_received
+                - reason_code_determined
+                - evidence_complete
+                - judges_passed
+                - judges_failed
+                - submission_acknowledged
+                - network_decision_won
+                - network_decision_lost
+                - timeout_expired
+                - manual_escalation
+                - deadline_passed
+              description: Event that triggered this transition
+            transition_data:
+              type: object
+              description: Context-specific data for the transition
+              additionalProperties: true
+            is_terminal:
+              type: boolean
+              default: false
+              description: Whether to_state is a terminal state
+            elapsed_time_ms:
+              type: integer
+              description: Time spent in from_state (milliseconds)
+
+    DisputeState:
+      type: string
+      enum:
+        - CLASSIFY
+        - GATHER_EVIDENCE
+        - VALIDATE
+        - SUBMIT
+        - MONITOR
+        - RESOLVED_WON
+        - RESOLVED_LOST
+        - ESCALATED
+        - EXPIRED
+
+    # ------------------------------------------
+    # Evidence Request Event (Component 1 → 2)
+    # ------------------------------------------
+    EvidenceRequestEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - reason_code
+            - required_evidence_types
+            - deadline
+          properties:
+            event_type:
+              enum: [evidence_request]
+            reason_code:
+              $ref: '#/components/schemas/ReasonCode'
+            required_evidence_types:
+              type: array
+              items:
+                type: string
+                enum:
+                  - transaction_history
+                  - shipping_proof
+                  - customer_signals
+                  - ce3_qualification
+                  - delivery_confirmation
+                  - signature_image
+              minItems: 1
+            deadline:
+              type: string
+              format: date-time
+              description: Deadline for evidence gathering
+            merchant_id:
+              type: string
+            transaction_id:
+              type: string
+            priority:
+              type: string
+              enum: [normal, high, urgent]
+              default: normal
+
+    # ------------------------------------------
+    # Reason Code (ref to common_schemas)
+    # ------------------------------------------
+    ReasonCode:
+      $ref: 'common_schemas.yaml#/components/schemas/ReasonCode'
+
+    # ------------------------------------------
+    # Evidence Collected Event (Component 2 → 1, 3)
+    # ------------------------------------------
+    EvidenceCollectedEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - evidence_package
+            - collection_summary
+          properties:
+            event_type:
+              enum: [evidence_collected]
+            evidence_package:
+              $ref: 'common_schemas.yaml#/components/schemas/EvidencePackage'
+            collection_summary:
+              type: object
+              required:
+                - total_items
+                - specialists_invoked
+                - duration_ms
+              properties:
+                total_items:
+                  type: integer
+                specialists_invoked:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - transaction_specialist
+                      - shipping_specialist
+                      - customer_specialist
+                failed_specialists:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      specialist:
+                        type: string
+                      error:
+                        type: string
+                duration_ms:
+                  type: integer
+                completeness_score:
+                  type: number
+                  minimum: 0
+                  maximum: 1
+
+    # =========================================================================
+    # SHARED SCHEMA REFERENCES (Centralized in common_schemas.yaml)
+    # =========================================================================
+    # NOTE: The following schemas are now referenced from common_schemas.yaml
+    # to prevent schema drift and ensure consistency across all API specs.
+    # =========================================================================
+
+    # ------------------------------------------
+    # Evidence Package (ref to common_schemas)
+    # ------------------------------------------
+    EvidencePackage:
+      $ref: 'common_schemas.yaml#/components/schemas/EvidencePackage'
+
+    # ------------------------------------------
+    # Prior Transaction (ref to common_schemas)
+    # ------------------------------------------
+    PriorTransaction:
+      $ref: 'common_schemas.yaml#/components/schemas/PriorTransaction'
+
+    # ------------------------------------------
+    # Shipping Evidence (ref to common_schemas)
+    # ------------------------------------------
+    ShippingEvidence:
+      $ref: 'common_schemas.yaml#/components/schemas/ShippingEvidence'
+
+    # ------------------------------------------
+    # Customer Signals (ref to common_schemas)
+    # ------------------------------------------
+    CustomerSignals:
+      $ref: 'common_schemas.yaml#/components/schemas/CustomerSignals'
+
+    # ------------------------------------------
+    # CE 3.0 Qualification (ref to common_schemas)
+    # ------------------------------------------
+    CE3Qualification:
+      $ref: 'common_schemas.yaml#/components/schemas/CE3Qualification'
+
+    # ------------------------------------------
+    # Validation Request Event (Component 1 → 3)
+    # ------------------------------------------
+    ValidationRequestEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - evidence_package_id
+            - judges_to_invoke
+          properties:
+            event_type:
+              enum: [validation_request]
+            evidence_package_id:
+              type: string
+              format: uuid
+            judges_to_invoke:
+              type: array
+              items:
+                type: string
+                enum:
+                  - evidence_quality
+                  - fabrication_detection
+                  - dispute_validity
+              default:
+                - evidence_quality
+                - fabrication_detection
+                - dispute_validity
+            timeout_ms:
+              type: integer
+              default: 30000
+              description: Maximum time to wait for all judges
+
+    # ------------------------------------------
+    # Judge Result Event (Component 3 → 1)
+    # ------------------------------------------
+    JudgeResultEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - panel_result
+          properties:
+            event_type:
+              enum: [judge_result]
+            panel_result:
+              $ref: '#/components/schemas/PanelResult'
+            execution_summary:
+              type: object
+              properties:
+                total_duration_ms:
+                  type: integer
+                judge_durations:
+                  type: object
+                  additionalProperties:
+                    type: integer
+                model_used:
+                  type: string
+                token_usage:
+                  type: object
+                  properties:
+                    input_tokens:
+                      type: integer
+                    output_tokens:
+                      type: integer
+
+    PanelResult:
+      type: object
+      required:
+        - passed
+        - results
+      properties:
+        passed:
+          type: boolean
+          description: True if all blocking judges passed
+        results:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/JudgeScore'
+        blocking_failures:
+          type: array
+          items:
+            type: string
+        warnings:
+          type: array
+          items:
+            type: string
+        aggregated_confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+
+    JudgeScore:
+      type: object
+      required:
+        - judge_name
+        - score
+        - threshold
+        - passed
+        - reasoning
+      properties:
+        judge_name:
+          type: string
+        score:
+          type: number
+          minimum: 0
+          maximum: 1
+        threshold:
+          type: number
+          minimum: 0
+          maximum: 1
+        passed:
+          type: boolean
+        reasoning:
+          type: string
+        evidence_gaps:
+          type: array
+          items:
+            type: string
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+        is_blocking:
+          type: boolean
+
+    # ------------------------------------------
+    # Submission Request Event (Component 1 → 5)
+    # ------------------------------------------
+    SubmissionRequestEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - target_network
+            - internal_dispute
+          properties:
+            event_type:
+              enum: [submission_request]
+            target_network:
+              type: string
+              enum:
+                - visa_vrol
+                - mastercard
+            internal_dispute:
+              $ref: '#/components/schemas/InternalDispute'
+            submission_options:
+              type: object
+              properties:
+                max_retries:
+                  type: integer
+                  default: 3
+                timeout_ms:
+                  type: integer
+                  default: 30000
+                use_mock_api:
+                  type: boolean
+                  default: true
+
+    InternalDispute:
+      type: object
+      required:
+        - dispute_id
+        - reason_code
+        - transaction_date
+        - amount
+      properties:
+        dispute_id:
+          type: string
+        reason_code:
+          $ref: '#/components/schemas/ReasonCode'
+        transaction_date:
+          type: string
+          format: date
+        amount:
+          type: number
+        currency:
+          type: string
+          default: USD
+        merchant_id:
+          type: string
+        evidence_package_id:
+          type: string
+          format: uuid
+        ce3_data:
+          $ref: '#/components/schemas/CE3Qualification'
+        validation_results:
+          $ref: '#/components/schemas/PanelResult'
+
+    # ------------------------------------------
+    # Submission Result Event (Component 5 → 1)
+    # ------------------------------------------
+    SubmissionResultEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - success
+          properties:
+            event_type:
+              enum: [submission_result]
+            success:
+              type: boolean
+            network_case_id:
+              type: string
+              description: Case ID assigned by network (if successful)
+            acknowledged_at:
+              type: string
+              format: date-time
+            error:
+              type: object
+              properties:
+                code:
+                  type: string
+                message:
+                  type: string
+                retryable:
+                  type: boolean
+            retry_count:
+              type: integer
+            network_response:
+              type: object
+              additionalProperties: true
+
+    # ------------------------------------------
+    # Resolution Event (Component 5 → 1)
+    # ------------------------------------------
+    ResolutionEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - outcome
+            - network_case_id
+          properties:
+            event_type:
+              enum: [resolution]
+            outcome:
+              type: string
+              enum:
+                - merchant_won
+                - cardholder_won
+                - split_decision
+                - withdrawn
+            network_case_id:
+              type: string
+            resolved_at:
+              type: string
+              format: date-time
+            network_decision_code:
+              type: string
+            decision_reason:
+              type: string
+            liability_shift:
+              type: boolean
+            recovered_amount:
+              type: number
+
+    # ------------------------------------------
+    # Escalation Event (Component 1 → External)
+    # ------------------------------------------
+    EscalationEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - escalation_reason
+            - escalation_type
+          properties:
+            event_type:
+              enum: [escalation]
+            escalation_reason:
+              type: string
+              enum:
+                - judge_failure
+                - evidence_insufficient
+                - timeout_exceeded
+                - manual_request
+                - pci_violation
+                - fabrication_detected
+            escalation_type:
+              type: string
+              enum:
+                - human_review
+                - compliance_alert
+                - security_incident
+            priority:
+              type: string
+              enum: [low, medium, high, critical]
+              default: medium
+            assigned_queue:
+              type: string
+            context:
+              type: object
+              properties:
+                last_state:
+                  $ref: '#/components/schemas/DisputeState'
+                failure_details:
+                  type: string
+                evidence_summary:
+                  type: object
+                judge_results:
+                  $ref: '#/components/schemas/PanelResult'
+
+    # ------------------------------------------
+    # Explainability Events (Component 4)
+    # ------------------------------------------
+    AuditLogEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - pillar
+            - action
+          properties:
+            event_type:
+              enum: [audit_log]
+            pillar:
+              type: string
+              enum:
+                - blackbox
+                - agent_facts
+                - guardrails
+                - phase_logger
+            action:
+              type: string
+              enum:
+                - record_start
+                - record_end
+                - validation_pass
+                - validation_fail
+                - decision_logged
+                - pci_scan_complete
+            phase:
+              type: string
+            agent_name:
+              type: string
+            input_hash:
+              type: string
+              description: SHA-256 hash of input for verification
+            output_hash:
+              type: string
+              description: SHA-256 hash of output for verification
+            duration_ms:
+              type: integer
+            storage_location:
+              type: string
+              description: S3 URI or DB table reference
+
+    PCIValidationEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - validation_passed
+          properties:
+            event_type:
+              enum: [pci_validation]
+            validation_passed:
+              type: boolean
+            violations:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  violation_type:
+                    type: string
+                    enum:
+                      - pan_detected
+                      - pii_detected
+                      - cvv_detected
+                  location:
+                    type: string
+            redacted_fields:
+              type: array
+              items:
+                type: string
+            scan_duration_ms:
+              type: integer
+
+    # ------------------------------------------
+    # Specialist Events (Component 2 Internal)
+    # ------------------------------------------
+    SpecialistInvocationEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - specialist_type
+            - status
+          properties:
+            event_type:
+              enum: [specialist_invocation]
+            specialist_type:
+              type: string
+              enum:
+                - transaction_specialist
+                - shipping_specialist
+                - customer_specialist
+                - evidence_planner
+            status:
+              type: string
+              enum:
+                - started
+                - completed
+                - failed
+                - timeout
+            input_summary:
+              type: object
+              additionalProperties: true
+            output_summary:
+              type: object
+              additionalProperties: true
+            error_message:
+              type: string
+            duration_ms:
+              type: integer
+            external_api_calls:
+              type: array
+              items:
+                type: object
+                properties:
+                  api_name:
+                    type: string
+                  status_code:
+                    type: integer
+                  duration_ms:
+                    type: integer
+
+    # ------------------------------------------
+    # Error Event (All Components)
+    # ------------------------------------------
+    ErrorEvent:
+      allOf:
+        - $ref: '#/components/schemas/BaseEvent'
+        - type: object
+          required:
+            - error_code
+            - error_message
+            - severity
+          properties:
+            event_type:
+              enum: [error]
+            error_code:
+              type: string
+            error_message:
+              type: string
+            severity:
+              type: string
+              enum:
+                - warning
+                - error
+                - critical
+            stack_trace:
+              type: string
+            recoverable:
+              type: boolean
+            suggested_action:
+              type: string
+              enum:
+                - retry
+                - escalate
+                - abort
+                - manual_intervention
+
+# ============================================================================
+# EVENT FLOW DOCUMENTATION
+# ============================================================================
+# State Transitions and Associated Events:
+#
+# CLASSIFY → GATHER_EVIDENCE
+#   Trigger: reason_code_determined
+#   Events: StateTransitionEvent, EvidenceRequestEvent
+#
+# GATHER_EVIDENCE → VALIDATE
+#   Trigger: evidence_complete
+#   Events: StateTransitionEvent, EvidenceCollectedEvent, ValidationRequestEvent
+#
+# VALIDATE → SUBMIT
+#   Trigger: judges_passed
+#   Events: StateTransitionEvent, JudgeResultEvent, SubmissionRequestEvent
+#
+# VALIDATE → ESCALATED
+#   Trigger: judges_failed
+#   Events: StateTransitionEvent, JudgeResultEvent, EscalationEvent
+#
+# SUBMIT → MONITOR
+#   Trigger: submission_acknowledged
+#   Events: StateTransitionEvent, SubmissionResultEvent
+#
+# MONITOR → RESOLVED_WON
+#   Trigger: network_decision_won
+#   Events: StateTransitionEvent, ResolutionEvent
+#
+# MONITOR → RESOLVED_LOST
+#   Trigger: network_decision_lost
+#   Events: StateTransitionEvent, ResolutionEvent
+#
+# Any State → EXPIRED
+#   Trigger: deadline_passed
+#   Events: StateTransitionEvent, ErrorEvent
+#
+# Any State → ESCALATED
+#   Trigger: manual_escalation | timeout_expired
+#   Events: StateTransitionEvent, EscalationEvent
+
+# ============================================================================
+# VERSION HISTORY
+# ============================================================================
+# Version | Date       | Author | Changes
+# --------|------------|--------|------------------------------------------
+# 1.0.0   | 2025-12-08 | Claude | Initial internal event schemas

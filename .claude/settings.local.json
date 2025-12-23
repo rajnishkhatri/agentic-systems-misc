@@ -126,7 +126,17 @@
       "Bash(git -C /Users/rajnishkhatri/Documents/recipe-chatbot add lesson-17/)",
       "Bash(git -C /Users/rajnishkhatri/Documents/recipe-chatbot reset HEAD lesson-17/.DS_Store)",
       "Bash(git -C /Users/rajnishkhatri/Documents/recipe-chatbot commit -m \"$(cat <<''EOF''\nfeat(lesson-17): add Agent Explainability Framework\n\nComplete implementation of four-pillar explainability system:\n\nBackend Components:\n- BlackBoxRecorder: Aviation-style flight recorder for agent workflows\n- AgentFacts: Verifiable metadata with cryptographic signatures (arXiv:2506.13794)\n- GuardRails: Declarative validators with rich trace generation\n- PhaseLogger: Multi-phase workflow logging (AgentRxiv-inspired)\n- PolicyBridge: Connects AgentFacts policies to GuardRails enforcement\n\nTests (114 passing):\n- Comprehensive TDD coverage for all components\n- Edge case handling and type validation tests\n\nInteractive Notebooks:\n- 01: BlackBox recording demo\n- 02: AgentFacts verification workflows\n- 03: GuardRails validation traces\n- 04: PhaseLogger workflow visualization\n\nTutorials & Documentation:\n- Explainability fundamentals narrative\n- BlackBox explanation guide\n- Analysis and reflection documents\n\nData Generation:\n- Synthetic datasets for PII examples, workflow traces\n- Agent metadata and parameter log generators\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
-      "WebFetch(domain:agentrxiv.github.io)"
+      "WebFetch(domain:agentrxiv.github.io)",
+      "Bash(uv sync:*)",
+      "Bash(/opt/anaconda3/bin/python3 -c \"from openapi_spec_validator import validate_spec; import yaml; spec = yaml.safe_load(open(''lesson-18/dispute-chatbot/design/04_api_specifications/mcp_tools.yaml'')); validate_spec(spec); print(''OpenAPI 3.0 spec valid'')\")",
+      "Bash(/opt/anaconda3/bin/pip install openapi-spec-validator -q)",
+      "Bash(/opt/anaconda3/bin/python3:*)",
+      "Bash(/Users/rajnishkhatri/Documents/recipe-chatbot/.venv/bin/python:*)",
+      "Bash(/Users/rajnishkhatri/Documents/recipe-chatbot/.venv/bin/pip install faker -q)",
+      "Bash(PYTHONPATH=/Users/rajnishkhatri/Documents/recipe-chatbot/lesson-18/dispute-chatbot python /Users/rajnishkhatri/Documents/recipe-chatbot/lesson-18/dispute-chatbot/scripts/evaluate_v6_trace.py)",
+      "Bash(export PYTHONPATH=/Users/rajnishkhatri/Documents/recipe-chatbot/lesson-18/dispute-chatbot)",
+      "Bash(PYTHONPATH=. python -m pytest tests/test_phases_classify_v9_rag.py -v --tb=short)",
+      "Bash(export PYTHONPATH=.)"
     ],
     "deny": [],
     "ask": []

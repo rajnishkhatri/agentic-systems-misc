@@ -1,0 +1,20 @@
+flowchart TD
+    A[Start: Audit Plan] --> B{Check Distribution}
+    B -->|Uniform?| C[RED FLAG: Cherry-Picked]
+    B -->|Diverse?| D{Check Hard Cases}
+    
+    C --> H[Reject Benchmark]
+    
+    D -->|Missing?| E[RED FLAG: Softball Test]
+    D -->|Present?| F{Check Leakage}
+    
+    E --> H
+    
+    F -->|Overlap Found?| G[RED FLAG: Memorization]
+    F -->|Clean?| I[Green Light: Robust Benchmark]
+    
+    style C fill:#ffc9c9,stroke:#e03131
+    style E fill:#ffc9c9,stroke:#e03131
+    style G fill:#ffc9c9,stroke:#e03131
+    style I fill:#dbfabb,stroke:#82c91e
+

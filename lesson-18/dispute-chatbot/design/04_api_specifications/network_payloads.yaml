@@ -1,0 +1,1212 @@
+# Visa VROL Network Payload Specifications
+# Document ID: design/04_api_specifications/network_payloads.yaml
+# Version: 1.0.0
+# Last Updated: 2025-12-08
+# Status: Phase 0 Foundation
+#
+# Purpose: Define Visa VROL (Visa Resolve Online) request/response formats
+# for merchant dispute defense submissions.
+#
+# Scope:
+#   - Fraud 10.4 (Card Not Present)
+#   - Product Not Received 13.1
+#
+# References:
+#   - Visa Core Rules and Visa Product and Service Rules (April 2024)
+#   - Visa Compelling Evidence 3.0 Program Guide
+#   - PRD Section 9: Network Translation Layer
+#   - SPIKE-001: VROL schema analysis findings
+
+openapi: "3.0.0"
+info:
+  title: Visa VROL Network Payloads
+  version: 1.0.0
+  description: |
+    Visa Resolve Online (VROL) request and response formats for merchant
+    dispute defense submissions.
+
+    **Phase 1 MVP Scope:**
+    - Fraud 10.4 (Card Not Present) with CE 3.0 evidence
+    - Product Not Received 13.1 with shipping evidence
+
+    **Implementation Note:**
+    Phase 1 uses a mock VROL adapter. Real Visa API integration
+    is planned for Phase 3.
+
+    **Field Mapping Strategy:**
+    Internal schema → VROL format translation is performed by
+    `backend/adapters/visa_vrol.py` (see Task 11.2).
+
+servers:
+  - url: https://api.visa.com/vrol/v1
+    description: Visa VROL Production (Phase 3)
+  - url: https://sandbox.api.visa.com/vrol/v1
+    description: Visa VROL Sandbox (Phase 2)
+  - url: http://localhost:8080/mock/vrol
+    description: Mock VROL (Phase 1 MVP)
+
+paths:
+  /disputes/{arn}/representment:
+    post:
+      operationId: submitRepresentment
+      summary: Submit dispute representment with evidence
+      description: |
+        Submit merchant's representment (defense) for a chargeback.
+        This endpoint accepts evidence package and returns a case ID.
+
+        **Timeout:** 30 seconds
+        **Retry Policy:** 3 attempts with exponential backoff (1s, 2s, 4s)
+      parameters:
+        - name: arn
+          in: path
+          required: true
+          description: Acquirer Reference Number (unique dispute identifier)
+          schema:
+            type: string
+            pattern: '^[0-9]{23}$'
+            example: "74027740010000000000001"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VROLRepresentmentRequest'
+            examples:
+              fraud_10_4_ce3:
+                summary: Fraud 10.4 with CE 3.0 evidence
+                value:
+                  $ref: '#/components/examples/Fraud104CE3Example'
+              pnr_13_1_pod:
+                summary: PNR 13.1 with proof of delivery
+                value:
+                  $ref: '#/components/examples/PNR131PODExample'
+      responses:
+        '200':
+          description: Representment accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VROLRepresentmentResponse'
+        '400':
+          description: Invalid request (validation errors)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VROLErrorResponse'
+        '404':
+          description: ARN not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VROLErrorResponse'
+        '422':
+          description: Business rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VROLErrorResponse'
+        '503':
+          description: Service temporarily unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VROLErrorResponse'
+
+  /disputes/{case_id}/status:
+    get:
+      operationId: getDisputeStatus
+      summary: Get dispute resolution status
+      description: |
+        Poll for dispute resolution status.
+
+        **Polling Interval:** 1 hour minimum
+        **Note:** Resolution typically takes 30-45 business days
+      parameters:
+        - name: case_id
+          in: path
+          required: true
+          description: VROL-assigned case identifier
+          schema:
+            type: string
+            pattern: '^VIS-[0-9]{4}-[0-9]{8}$'
+            example: "VIS-2024-12345678"
+      responses:
+        '200':
+          description: Status retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VROLStatusResponse'
+        '404':
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VROLErrorResponse'
+
+components:
+  schemas:
+    # =========================================================================
+    # REQUEST SCHEMAS
+    # =========================================================================
+
+    VROLRepresentmentRequest:
+      type: object
+      required:
+        - dispute_header
+        - merchant_info
+        - transaction_details
+        - representment_rights
+        - evidence
+        - questionnaire
+      properties:
+        dispute_header:
+          $ref: '#/components/schemas/DisputeHeader'
+        merchant_info:
+          $ref: '#/components/schemas/MerchantInfo'
+        cardholder_info:
+          $ref: '#/components/schemas/CardholderInfo'
+        transaction_details:
+          $ref: '#/components/schemas/TransactionDetails'
+        representment_rights:
+          $ref: '#/components/schemas/RepresentmentRights'
+        questionnaire:
+          $ref: '#/components/schemas/VROLQuestionnaire'
+        evidence:
+          $ref: '#/components/schemas/VROLEvidence'
+        supporting_documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportingDocument'
+          maxItems: 10
+          description: Additional supporting documents (max 10, each ≤5MB)
+      description: |
+        Complete representment request for Visa VROL.
+        All required fields must be present; validation fails otherwise.
+
+    DisputeHeader:
+      type: object
+      required:
+        - arn
+        - dispute_amount
+        - dispute_currency
+        - reason_code
+        - dispute_date
+      properties:
+        arn:
+          type: string
+          pattern: '^[0-9]{23}$'
+          description: |
+            Acquirer Reference Number (23 digits).
+            Format: BBBBBBBBBIIIIIIIIIIIIIICC
+            - B: BIN (9 digits)
+            - I: Unique identifier (12 digits)
+            - C: Check digits (2 digits)
+          example: "74027740010000000000001"
+        dispute_amount:
+          type: number
+          format: double
+          minimum: 0.01
+          description: Disputed amount in original currency
+          example: 149.99
+        dispute_currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          description: ISO 4217 currency code
+          example: "USD"
+        reason_code:
+          type: string
+          enum:
+            - "10.4"
+            - "13.1"
+            - "13.2"
+            - "13.3"
+            - "13.6"
+            - "13.7"
+          description: Visa dispute reason code
+          example: "10.4"
+        dispute_date:
+          type: string
+          format: date
+          description: Date dispute was filed (ISO 8601)
+          example: "2024-12-01"
+        response_due_date:
+          type: string
+          format: date
+          description: Evidence submission deadline (14 days from dispute_date)
+          example: "2024-12-15"
+
+    MerchantInfo:
+      type: object
+      required:
+        - merchant_id
+        - merchant_name
+        - mcc
+      properties:
+        merchant_id:
+          type: string
+          maxLength: 15
+          description: Visa-assigned merchant identifier
+          example: "MERCH123456789"
+        merchant_name:
+          type: string
+          maxLength: 50
+          description: Merchant DBA (Doing Business As) name
+          example: "ACME Electronics LLC"
+        mcc:
+          type: string
+          pattern: '^[0-9]{4}$'
+          description: Merchant Category Code (4 digits)
+          example: "5411"
+        acquirer_bin:
+          type: string
+          pattern: '^[0-9]{6,11}$'
+          description: Acquirer Bank Identification Number
+          example: "411111"
+        merchant_country:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          description: ISO 3166-1 alpha-3 country code
+          example: "USA"
+
+    CardholderInfo:
+      type: object
+      properties:
+        account_number_last4:
+          type: string
+          pattern: '^[0-9]{4}$'
+          description: Last 4 digits of card number
+        cardholder_name:
+          type: string
+          maxLength: 100
+          description: Name of cardholder (if available)
+        billing_address_city:
+          type: string
+          description: Cardholder billing city
+        billing_address_country:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          description: ISO 3166-1 alpha-3 country code
+      description: Cardholder information for validation (optional)
+
+    VROLQuestionnaire:
+      oneOf:
+        - $ref: '#/components/schemas/FraudQuestionnaire'
+        - $ref: '#/components/schemas/ConsumerQuestionnaire'
+      discriminator:
+        propertyName: questionnaire_type
+        mapping:
+          fraud: '#/components/schemas/FraudQuestionnaire'
+          consumer: '#/components/schemas/ConsumerQuestionnaire'
+      description: Dispute-specific questionnaire responses
+
+    FraudQuestionnaire:
+      type: object
+      required:
+        - questionnaire_type
+        - card_in_possession
+        - transaction_unrecognized
+      properties:
+        questionnaire_type:
+          type: string
+          enum: [fraud]
+        card_in_possession:
+          type: boolean
+          description: Was card in cardholder's possession?
+        transaction_unrecognized:
+          type: boolean
+          description: Does cardholder claim transaction is unrecognized?
+        police_report_filed:
+          type: boolean
+          description: Was a police report filed?
+        police_report_number:
+          type: string
+          description: Police report number (if filed)
+      description: Questionnaire for Fraud (10.4) disputes
+
+    ConsumerQuestionnaire:
+      type: object
+      required:
+        - questionnaire_type
+        - merchandise_received
+        - attempted_to_resolve
+      properties:
+        questionnaire_type:
+          type: string
+          enum: [consumer]
+        merchandise_received:
+          type: boolean
+          description: Did cardholder receive merchandise?
+        merchandise_returned:
+          type: boolean
+          description: Was merchandise returned?
+        return_date:
+          type: string
+          format: date
+          description: Date merchandise was returned
+        cancellation_date:
+          type: string
+          format: date
+          description: Date service was cancelled
+        attempted_to_resolve:
+          type: boolean
+          description: Did cardholder attempt to resolve with merchant?
+        merchant_response:
+          type: string
+          description: Merchant's response to resolution attempt
+      description: Questionnaire for Consumer (13.1) disputes
+
+    TransactionDetails:
+      type: object
+      required:
+        - transaction_id
+        - transaction_date
+        - transaction_amount
+        - transaction_currency
+        - card_type
+      properties:
+        transaction_id:
+          type: string
+          maxLength: 50
+          description: Original transaction reference ID
+          example: "txn_abc123def456"
+        transaction_date:
+          type: string
+          format: date-time
+          description: Original transaction timestamp (ISO 8601)
+          example: "2024-11-15T14:30:00Z"
+        transaction_amount:
+          type: number
+          format: double
+          minimum: 0.01
+          description: Original transaction amount
+          example: 149.99
+        transaction_currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          description: ISO 4217 currency code
+          example: "USD"
+        card_type:
+          type: string
+          enum:
+            - credit
+            - debit
+            - prepaid
+          description: Card product type
+          example: "credit"
+        pos_entry_mode:
+          type: string
+          enum:
+            - "01"  # Manual entry
+            - "02"  # Magnetic stripe
+            - "05"  # Chip
+            - "07"  # Contactless chip
+            - "09"  # E-commerce (CNP)
+            - "10"  # Credential on file
+          description: Point of Sale entry mode
+          example: "09"
+        electronic_commerce_indicator:
+          type: string
+          enum:
+            - "05"  # 3D Secure
+            - "06"  # 3D Secure non-participating
+            - "07"  # E-commerce no 3D Secure
+          description: E-commerce indicator (for CNP transactions)
+          example: "07"
+        authorization_code:
+          type: string
+          pattern: '^[A-Z0-9]{6}$'
+          description: Authorization approval code
+          example: "A12345"
+
+    RepresentmentRights:
+      type: object
+      required:
+        - representment_right_code
+      properties:
+        representment_right_code:
+          type: string
+          enum:
+            # Fraud 10.4 rights
+            - "FRD_CE3"      # Compelling Evidence 3.0
+            - "FRD_AUTH"     # Valid authorization
+            - "FRD_3DS"      # 3D Secure authentication
+            # PNR 13.1 rights
+            - "PNR_DELV"     # Proof of delivery
+            - "PNR_SIGN"     # Signed delivery confirmation
+            - "PNR_PICK"     # Customer pickup
+            # General rights
+            - "GEN_REFUND"   # Refund already issued
+            - "GEN_POLICY"   # Policy compliant
+          description: |
+            Representment right being exercised.
+
+            **Fraud 10.4 Rights:**
+            - FRD_CE3: Compelling Evidence 3.0 (preferred for CNP fraud)
+            - FRD_AUTH: Valid authorization obtained
+            - FRD_3DS: 3D Secure liability shift
+
+            **PNR 13.1 Rights:**
+            - PNR_DELV: Proof of delivery to cardholder address
+            - PNR_SIGN: Signed confirmation by cardholder
+            - PNR_PICK: Customer picked up merchandise
+          example: "FRD_CE3"
+        secondary_right_code:
+          type: string
+          description: Secondary representment right (if applicable)
+          example: "FRD_AUTH"
+        defense_narrative:
+          type: string
+          maxLength: 2000
+          description: |
+            Merchant's narrative explanation of defense.
+            Should be clear, factual, and reference attached evidence.
+          example: "Transaction authorized with matching device fingerprint and IP from 3 prior undisputed purchases."
+
+    # =========================================================================
+    # VROL Evidence with Polymorphism (oneOf)
+    # =========================================================================
+    # The evidence structure MUST match the reason_code in dispute_header.
+    # - Fraud 10.4: Use FraudVROLEvidence (requires CE 3.0 evidence)
+    # - PNR 13.1: Use ShippingVROLEvidence (requires shipping evidence)
+    #
+    # This enforces type safety and prevents invalid combinations like
+    # submitting shipping evidence for a fraud dispute.
+    # =========================================================================
+
+    VROLEvidence:
+      oneOf:
+        - $ref: '#/components/schemas/FraudVROLEvidence'
+        - $ref: '#/components/schemas/ShippingVROLEvidence'
+      discriminator:
+        propertyName: evidence_type
+        mapping:
+          fraud_ce3: '#/components/schemas/FraudVROLEvidence'
+          shipping_pnr: '#/components/schemas/ShippingVROLEvidence'
+      description: |
+        Polymorphic evidence structure based on dispute type.
+
+        **Type Safety Rules:**
+        - Fraud 10.4 disputes MUST use `FraudVROLEvidence` (evidence_type: "fraud_ce3")
+        - PNR 13.1 disputes MUST use `ShippingVROLEvidence` (evidence_type: "shipping_pnr")
+
+        **Validation:**
+        The evidence_type discriminator enforces mutual exclusivity.
+        A Fraud 10.4 request with shipping_evidence will fail validation.
+
+    # ------------------------------------------
+    # Fraud VROL Evidence (for 10.4 disputes)
+    # ------------------------------------------
+    FraudVROLEvidence:
+      type: object
+      required:
+        - evidence_type
+        - ce3_evidence
+      properties:
+        evidence_type:
+          type: string
+          enum: [fraud_ce3]
+          description: Discriminator for fraud evidence type
+        ce3_evidence:
+          $ref: '#/components/schemas/CE3Evidence'
+        authorization_evidence:
+          $ref: '#/components/schemas/AuthorizationEvidence'
+      description: |
+        Evidence package for Fraud 10.4 (Card Not Present) disputes.
+        Requires Compelling Evidence 3.0 data.
+
+    # ------------------------------------------
+    # Shipping VROL Evidence (for 13.1 disputes)
+    # ------------------------------------------
+    ShippingVROLEvidence:
+      type: object
+      required:
+        - evidence_type
+        - shipping_evidence
+      properties:
+        evidence_type:
+          type: string
+          enum: [shipping_pnr]
+          description: Discriminator for shipping evidence type
+        shipping_evidence:
+          $ref: '#/components/schemas/VROLShippingEvidence'
+        authorization_evidence:
+          $ref: '#/components/schemas/AuthorizationEvidence'
+      description: |
+        Evidence package for PNR 13.1 (Product Not Received) disputes.
+        Requires shipping and delivery proof.
+
+    CE3Evidence:
+      type: object
+      description: |
+        Compelling Evidence 3.0 evidence for Fraud 10.4 disputes.
+
+        **CE 3.0 Requirements (Visa Core Rules 11.4):**
+        1. At least 2 prior undisputed transactions
+        2. Within 120 days of disputed transaction
+        3. At least 2 matching signals:
+           - Device fingerprint
+           - IP address
+           - Email address
+           - Shipping address
+      required:
+        - prior_transactions
+        - matching_signals
+      properties:
+        prior_transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CE3PriorTransaction'
+          minItems: 2
+          maxItems: 10
+          description: |
+            Prior undisputed transactions from same cardholder.
+            Minimum 2 required; include up to 10 for stronger evidence.
+        matching_signals:
+          type: array
+          items:
+            type: string
+            enum:
+              - device_id
+              - ip_address
+              - email_address
+              - shipping_address
+          minItems: 2
+          maxItems: 4
+          description: |
+            Signals that match between disputed and prior transactions.
+            Minimum 2 required for CE 3.0 qualification.
+          example: ["device_id", "ip_address", "email_address"]
+        device_fingerprint_hash:
+          type: string
+          pattern: '^[a-f0-9]{64}$'
+          description: SHA-256 hash of device fingerprint
+          example: "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
+        ip_address_masked:
+          type: string
+          description: |
+            Masked IP address (last octet hidden for privacy).
+            Use full IP only in prior_transactions for matching.
+          example: "192.168.1.xxx"
+        email_domain:
+          type: string
+          description: Email domain (full email PII redacted)
+          example: "gmail.com"
+        shipping_address_hash:
+          type: string
+          pattern: '^[a-f0-9]{64}$'
+          description: SHA-256 hash of normalized shipping address
+
+    CE3PriorTransaction:
+      type: object
+      required:
+        - transaction_id
+        - transaction_date
+        - amount
+        - matching_signals
+      properties:
+        transaction_id:
+          type: string
+          maxLength: 50
+          description: Prior transaction reference ID
+          example: "txn_prior_001"
+        transaction_date:
+          type: string
+          format: date
+          description: Prior transaction date (ISO 8601)
+          example: "2024-10-15"
+        amount:
+          type: number
+          format: double
+          minimum: 0.01
+          description: Prior transaction amount
+          example: 89.99
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          default: "USD"
+          description: ISO 4217 currency code
+        authorization_code:
+          type: string
+          pattern: '^[A-Z0-9]{6}$'
+          description: Prior transaction auth code
+          example: "B67890"
+        matching_signals:
+          type: object
+          properties:
+            device_id_match:
+              type: boolean
+              description: Device fingerprint matches disputed transaction
+            ip_address_match:
+              type: boolean
+              description: IP address matches disputed transaction
+            email_match:
+              type: boolean
+              description: Email address matches disputed transaction
+            shipping_address_match:
+              type: boolean
+              description: Shipping address matches disputed transaction
+          description: |
+            Boolean flags indicating which signals match.
+            At least 2 must be true for CE 3.0 qualification.
+        undisputed:
+          type: boolean
+          default: true
+          description: Confirm transaction was never disputed
+
+    VROLShippingEvidence:
+      type: object
+      description: |
+        Shipping and delivery evidence for Product Not Received (13.1) disputes.
+
+        **Visa requirements for PNR representment:**
+        - Tracking number from recognized carrier
+        - Delivery confirmation to cardholder address
+        - Signature (if available) strengthens case
+      required:
+        - carrier
+        - tracking_number
+        - ship_date
+        - delivery_date
+      properties:
+        carrier:
+          type: string
+          enum:
+            - FEDEX
+            - UPS
+            - USPS
+            - DHL
+            - OTHER
+          description: Shipping carrier (uppercase for VROL)
+          example: "FEDEX"
+        tracking_number:
+          type: string
+          maxLength: 50
+          description: Carrier tracking number
+          example: "794644790248"
+        ship_date:
+          type: string
+          format: date
+          description: Date package was shipped
+          example: "2024-11-15"
+        delivery_date:
+          type: string
+          format: date
+          description: Confirmed delivery date
+          example: "2024-11-18"
+        delivery_status:
+          type: string
+          enum:
+            - DELIVERED
+            - SIGNED
+            - LEFT_AT_DOOR
+            - PICKED_UP
+            - RETURNED
+          description: Final delivery status
+          example: "DELIVERED"
+        recipient_signature:
+          type: boolean
+          description: Whether signature was obtained
+          example: true
+        recipient_name:
+          type: string
+          maxLength: 100
+          description: Name of person who received/signed (if available)
+          example: "J. SMITH"
+        delivery_address_verified:
+          type: boolean
+          description: Delivery address matches billing address
+          example: true
+        delivery_address_masked:
+          type: string
+          description: |
+            Masked delivery address (street number hidden).
+            Full address only in supporting documents.
+          example: "xxx Main St, Anytown, CA 90210"
+        proof_of_delivery_reference:
+          type: string
+          description: Reference to attached POD document
+          example: "doc_pod_001"
+
+    AuthorizationEvidence:
+      type: object
+      description: Authorization and transaction evidence (all dispute types)
+      properties:
+        authorization_code:
+          type: string
+          pattern: '^[A-Z0-9]{6}$'
+          description: Original authorization approval code
+          example: "A12345"
+        authorization_date:
+          type: string
+          format: date-time
+          description: Authorization timestamp
+          example: "2024-11-15T14:30:00Z"
+        avs_response_code:
+          type: string
+          pattern: '^[A-Z]$'
+          description: |
+            Address Verification Service response.
+            - Y: Address and ZIP match
+            - A: Address matches, ZIP does not
+            - Z: ZIP matches, address does not
+            - N: Neither match
+          example: "Y"
+        cvv_response_code:
+          type: string
+          pattern: '^[A-Z]$'
+          description: |
+            CVV verification response.
+            - M: Match
+            - N: No match
+            - P: Not processed
+          example: "M"
+        three_ds_authenticated:
+          type: boolean
+          description: 3D Secure authentication performed
+          example: false
+        three_ds_eci:
+          type: string
+          enum:
+            - "05"  # Fully authenticated
+            - "06"  # Attempted, not available
+            - "07"  # Not authenticated
+          description: 3D Secure Electronic Commerce Indicator
+
+    SupportingDocument:
+      type: object
+      required:
+        - document_id
+        - document_type
+        - file_reference
+      properties:
+        document_id:
+          type: string
+          format: uuid
+          description: Unique document identifier
+          example: "550e8400-e29b-41d4-a716-446655440001"
+        document_type:
+          type: string
+          enum:
+            - PROOF_OF_DELIVERY
+            - SIGNATURE_IMAGE
+            - INVOICE
+            - RECEIPT
+            - COMMUNICATION_LOG
+            - POLICY_DOCUMENT
+            - SCREENSHOT
+            - OTHER
+          description: Type of supporting document
+          example: "PROOF_OF_DELIVERY"
+        file_reference:
+          type: string
+          description: |
+            Reference to uploaded file (S3 pre-signed URL or document ID).
+            Files must be uploaded separately before submission.
+          example: "s3://vrol-uploads/doc_550e8400.pdf"
+        file_name:
+          type: string
+          maxLength: 255
+          description: Original file name
+          example: "fedex_pod_20241118.pdf"
+        file_size_bytes:
+          type: integer
+          maximum: 5242880  # 5MB
+          description: File size in bytes (max 5MB per document)
+          example: 125430
+        mime_type:
+          type: string
+          enum:
+            - application/pdf
+            - image/jpeg
+            - image/png
+            - image/tiff
+          description: File MIME type (PDF preferred)
+          example: "application/pdf"
+        description:
+          type: string
+          maxLength: 500
+          description: Brief description of document contents
+          example: "FedEx proof of delivery showing signature confirmation"
+
+    # =========================================================================
+    # RESPONSE SCHEMAS
+    # =========================================================================
+
+    VROLRepresentmentResponse:
+      type: object
+      required:
+        - case_id
+        - status
+        - received_at
+      properties:
+        case_id:
+          type: string
+          pattern: '^VIS-[0-9]{4}-[0-9]{8}$'
+          description: VROL-assigned case identifier
+          example: "VIS-2024-12345678"
+        status:
+          type: string
+          enum:
+            - RECEIVED
+            - PENDING_REVIEW
+            - ACCEPTED
+            - REJECTED
+          description: Initial submission status
+          example: "RECEIVED"
+        received_at:
+          type: string
+          format: date-time
+          description: Submission receipt timestamp
+          example: "2024-12-07T16:45:00Z"
+        arn:
+          type: string
+          description: Echo of submitted ARN
+          example: "74027740010000000000001"
+        estimated_resolution_date:
+          type: string
+          format: date
+          description: Estimated resolution date (typically 30-45 days)
+          example: "2025-01-15"
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/VROLWarning'
+          description: Non-blocking warnings about submission
+        validation_details:
+          type: object
+          properties:
+            evidence_score:
+              type: number
+              format: double
+              minimum: 0
+              maximum: 1
+              description: VROL evidence quality score (0-1)
+            missing_recommended_fields:
+              type: array
+              items:
+                type: string
+              description: Fields that would strengthen the case
+
+    VROLStatusResponse:
+      type: object
+      required:
+        - case_id
+        - status
+        - updated_at
+      properties:
+        case_id:
+          type: string
+          pattern: '^VIS-[0-9]{4}-[0-9]{8}$'
+          description: VROL case identifier
+          example: "VIS-2024-12345678"
+        status:
+          type: string
+          enum:
+            - RECEIVED
+            - PENDING_REVIEW
+            - UNDER_REVIEW
+            - ACCEPTED
+            - REJECTED
+            - RESOLVED_MERCHANT_FAVOR
+            - RESOLVED_CARDHOLDER_FAVOR
+            - WITHDRAWN
+            - EXPIRED
+          description: Current case status
+          example: "UNDER_REVIEW"
+        updated_at:
+          type: string
+          format: date-time
+          description: Last status update timestamp
+          example: "2024-12-10T09:30:00Z"
+        resolution:
+          $ref: '#/components/schemas/VROLResolution'
+        timeline:
+          type: array
+          items:
+            $ref: '#/components/schemas/VROLTimelineEvent'
+          description: Case status history
+
+    VROLResolution:
+      type: object
+      description: Final resolution details (only present when resolved)
+      properties:
+        outcome:
+          type: string
+          enum:
+            - MERCHANT_WIN
+            - CARDHOLDER_WIN
+            - WITHDRAWN
+            - EXPIRED
+          description: Final dispute outcome
+          example: "MERCHANT_WIN"
+        resolved_at:
+          type: string
+          format: date-time
+          description: Resolution timestamp
+          example: "2025-01-10T14:00:00Z"
+        reason:
+          type: string
+          description: Reason for decision
+          example: "Compelling Evidence 3.0 requirements met"
+        amount_credited:
+          type: number
+          format: double
+          description: Amount credited back to merchant (if won)
+          example: 149.99
+        liability_shift:
+          type: string
+          enum:
+            - MERCHANT
+            - ISSUER
+            - SHARED
+          description: Party bearing liability
+          example: "ISSUER"
+
+    VROLTimelineEvent:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Event timestamp
+        event_type:
+          type: string
+          description: Type of event
+        description:
+          type: string
+          description: Event description
+
+    VROLWarning:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Warning code
+          example: "WARN_001"
+        message:
+          type: string
+          description: Warning message
+          example: "CVV response code not provided; case may be weaker"
+        severity:
+          type: string
+          enum:
+            - LOW
+            - MEDIUM
+            - HIGH
+          description: Warning severity
+          example: "MEDIUM"
+
+    VROLErrorResponse:
+      type: object
+      required:
+        - error_code
+        - error_message
+      properties:
+        error_code:
+          type: string
+          description: Error code for programmatic handling
+          example: "VROL_ERR_001"
+        error_message:
+          type: string
+          description: Human-readable error message
+          example: "ARN not found in dispute database"
+        error_details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error
+              issue:
+                type: string
+                description: Specific issue with the field
+          description: Detailed field-level errors
+        retry_after:
+          type: integer
+          description: Seconds to wait before retry (for 503 errors)
+          example: 60
+
+  # ===========================================================================
+  # EXAMPLES
+  # ===========================================================================
+  examples:
+    Fraud104CE3Example:
+      summary: Fraud 10.4 with Compelling Evidence 3.0
+      value:
+        dispute_header:
+          arn: "74027740010000000000001"
+          dispute_amount: 149.99
+          dispute_currency: "USD"
+          reason_code: "10.4"
+          dispute_date: "2024-12-01"
+          response_due_date: "2024-12-15"
+        merchant_info:
+          merchant_id: "MERCH123456789"
+          merchant_name: "ACME Electronics LLC"
+          mcc: "5411"
+          acquirer_bin: "411111"
+          merchant_country: "USA"
+        cardholder_info:
+          account_number_last4: "1234"
+          cardholder_name: "John Doe"
+        transaction_details:
+          transaction_id: "txn_abc123def456"
+          transaction_date: "2024-11-15T14:30:00Z"
+          transaction_amount: 149.99
+          transaction_currency: "USD"
+          card_type: "credit"
+          pos_entry_mode: "09"
+          electronic_commerce_indicator: "07"
+          authorization_code: "A12345"
+        representment_rights:
+          representment_right_code: "FRD_CE3"
+          defense_narrative: "Transaction authorized with matching device fingerprint and IP address from 3 prior undisputed purchases within 120 days."
+        questionnaire:
+          questionnaire_type: "fraud"
+          card_in_possession: true
+          transaction_unrecognized: false
+          police_report_filed: false
+        evidence:
+          # Discriminator for polymorphic evidence (required for oneOf)
+          evidence_type: "fraud_ce3"
+          ce3_evidence:
+            prior_transactions:
+              - transaction_id: "txn_prior_001"
+                transaction_date: "2024-10-15"
+                amount: 89.99
+                currency: "USD"
+                authorization_code: "B67890"
+                matching_signals:
+                  device_id_match: true
+                  ip_address_match: true
+                  email_match: true
+                  shipping_address_match: false
+                undisputed: true
+              - transaction_id: "txn_prior_002"
+                transaction_date: "2024-09-20"
+                amount: 199.99
+                currency: "USD"
+                authorization_code: "C11111"
+                matching_signals:
+                  device_id_match: true
+                  ip_address_match: true
+                  email_match: true
+                  shipping_address_match: true
+                undisputed: true
+            matching_signals:
+              - "device_id"
+              - "ip_address"
+              - "email_address"
+            device_fingerprint_hash: "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
+            ip_address_masked: "192.168.1.xxx"
+            email_domain: "gmail.com"
+          authorization_evidence:
+            authorization_code: "A12345"
+            authorization_date: "2024-11-15T14:30:00Z"
+            avs_response_code: "Y"
+            cvv_response_code: "M"
+            three_ds_authenticated: false
+
+    PNR131PODExample:
+      summary: Product Not Received 13.1 with Proof of Delivery
+      value:
+        dispute_header:
+          arn: "74027740010000000000002"
+          dispute_amount: 299.99
+          dispute_currency: "USD"
+          reason_code: "13.1"
+          dispute_date: "2024-12-05"
+          response_due_date: "2024-12-19"
+        merchant_info:
+          merchant_id: "MERCH987654321"
+          merchant_name: "FastShip Warehouse"
+          mcc: "5999"
+          acquirer_bin: "422222"
+          merchant_country: "USA"
+        transaction_details:
+          transaction_id: "txn_xyz789abc123"
+          transaction_date: "2024-11-10T10:15:00Z"
+          transaction_amount: 299.99
+          transaction_currency: "USD"
+          card_type: "debit"
+          pos_entry_mode: "09"
+          authorization_code: "D22222"
+        representment_rights:
+          representment_right_code: "PNR_SIGN"
+          defense_narrative: "Package delivered to cardholder address with signature confirmation. FedEx tracking shows delivery on 2024-11-13 signed by J. SMITH."
+        questionnaire:
+          questionnaire_type: "consumer"
+          merchandise_received: false
+          attempted_to_resolve: true
+          merchant_response: "Provided tracking number"
+        evidence:
+          # Discriminator for polymorphic evidence (required for oneOf)
+          evidence_type: "shipping_pnr"
+          shipping_evidence:
+            carrier: "FEDEX"
+            tracking_number: "794644790248"
+            ship_date: "2024-11-10"
+            delivery_date: "2024-11-13"
+            delivery_status: "SIGNED"
+            recipient_signature: true
+            recipient_name: "J. SMITH"
+            delivery_address_verified: true
+            delivery_address_masked: "xxx Main St, Anytown, CA 90210"
+            proof_of_delivery_reference: "doc_pod_001"
+          authorization_evidence:
+            authorization_code: "D22222"
+            authorization_date: "2024-11-10T10:15:00Z"
+            avs_response_code: "Y"
+        supporting_documents:
+          - document_id: "550e8400-e29b-41d4-a716-446655440001"
+            document_type: "PROOF_OF_DELIVERY"
+            file_reference: "s3://vrol-uploads/doc_550e8400.pdf"
+            file_name: "fedex_pod_20241113.pdf"
+            file_size_bytes: 125430
+            mime_type: "application/pdf"
+            description: "FedEx proof of delivery with signature image"
+          - document_id: "550e8400-e29b-41d4-a716-446655440002"
+            document_type: "SIGNATURE_IMAGE"
+            file_reference: "s3://vrol-uploads/sig_550e8401.png"
+            file_name: "signature_jsmith.png"
+            file_size_bytes: 45230
+            mime_type: "image/png"
+            description: "Signature image captured at delivery"
+
+# =============================================================================
+# INTERNAL ↔ VROL FIELD MAPPING TABLE
+# =============================================================================
+# This section documents the mapping between internal schema fields
+# (from common_schemas.yaml) and Visa VROL format fields.
+#
+# | Internal Field                     | VROL Field                              | Notes                          |
+# |------------------------------------|-----------------------------------------|--------------------------------|
+# | dispute.id                         | dispute_header.arn                      | Must convert UUID → ARN format |
+# | dispute.amount                     | dispute_header.dispute_amount           | Direct mapping                 |
+# | dispute.reason_code                | dispute_header.reason_code              | Enum validation required       |
+# | dispute.deadline                   | dispute_header.response_due_date        | Format: YYYY-MM-DD             |
+# | merchant.id                        | merchant_info.merchant_id               | External merchant ID           |
+# | merchant.name                      | merchant_info.merchant_name             | Max 50 chars                   |
+# | merchant.mcc                       | merchant_info.mcc                       | 4-digit string                 |
+# | evidence.prior_transactions[]      | evidence.ce3_evidence.prior_transactions| Array mapping                  |
+# | evidence.shipping_evidence         | evidence.shipping_evidence              | Carrier must be uppercase      |
+# | evidence.customer_signals          | evidence.ce3_evidence.matching_signals  | Boolean → signal array         |
+# | evidence.ce3_qualification.eligible| evidence.evidence_type                  | Determines fraud_ce3 vs shipping_pnr |
+# =============================================================================
+#
+# POLYMORPHISM MAPPING (oneOf discriminator):
+# | Reason Code | evidence_type   | Required Evidence Schema |
+# |-------------|-----------------|--------------------------|
+# | 10.4        | fraud_ce3       | FraudVROLEvidence        |
+# | 13.1        | shipping_pnr    | ShippingVROLEvidence     |
+# =============================================================================
+
+# =============================================================================
+# VERSION HISTORY
+# =============================================================================
+# Version | Date       | Author | Changes
+# --------|------------|--------|------------------------------------------
+# 1.0.0   | 2025-12-08 | Claude | Initial VROL payloads for Fraud 10.4, PNR 13.1
+# 1.1.0   | 2025-12-08 | Claude | Add oneOf polymorphism for VROLEvidence (API_REVIEW_AND_PLAN Step 4)

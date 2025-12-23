@@ -1,0 +1,102 @@
+Network,reason_code,description,unified_category,reason_code_group,source_type,unmapped
+amex,A01,Charge Amount Exceeds Authorization Amount,general,authorization,canonical,FALSE
+amex,A02,No Valid Authorization,general,authorization,canonical,FALSE
+amex,A08,Authorization Approval Expired,general,authorization,canonical,FALSE
+amex,C02,Credit Not Processed,credit_not_processed,cardholder_disputes,canonical,FALSE
+amex,C04,Goods/Services Returned or Refused,credit_not_processed,cardholder_disputes,canonical,FALSE
+amex,C05,Goods/Services Cancelled,credit_not_processed,cardholder_disputes,canonical,FALSE
+amex,C08,Goods/Services Not Received or Only Partially Received,product_not_received,cardholder_disputes,canonical,FALSE
+amex,C14,Paid by Other Means,duplicate,cardholder_disputes,canonical,FALSE
+amex,C18,Request for Copy Unfulfilled,general,cardholder_disputes,canonical,FALSE
+amex,C28,Cancelled Recurring Billing,subscription_canceled,cardholder_disputes,canonical,FALSE
+amex,C31,Goods/Services Not as Described,product_unacceptable,cardholder_disputes,canonical,FALSE
+amex,C32,Goods/Services Damaged or Defective,product_unacceptable,cardholder_disputes,canonical,FALSE
+amex,F10,Missing Imprint,fraudulent,fraud,canonical,FALSE
+amex,F14,Missing Signature,fraudulent,fraud,canonical,FALSE
+amex,F24,No Cardholder Authorization,fraudulent,fraud,canonical,FALSE
+amex,F29,Card Not Present,fraudulent,fraud,canonical,FALSE
+amex,F30,EMV Counterfeit,fraudulent,fraud,canonical,FALSE
+amex,F31,EMV Lost/Stolen/Non-Received,fraudulent,fraud,canonical,FALSE
+amex,M01,Chargeback Authorization,general,retrieval_inquiry,canonical,FALSE
+amex,P01,Unassigned Card Number,general,processing_errors,canonical,FALSE
+amex,P03,Credit Processed as Charge,general,processing_errors,canonical,FALSE
+amex,P04,Charge Processed as Credit,general,processing_errors,canonical,FALSE
+amex,P05,Incorrect Charge Amount,general,processing_errors,canonical,FALSE
+amex,P07,Late Submission,general,processing_errors,canonical,FALSE
+amex,P08,Duplicate Charge,duplicate,processing_errors,canonical,FALSE
+amex,P22,Non-Matching Card Number,general,processing_errors,canonical,FALSE
+amex,P23,Currency Discrepancy,general,processing_errors,canonical,FALSE
+amex,R03,Insufficient Reply,general,retrieval_inquiry,canonical,FALSE
+amex,R13,No Reply,general,retrieval_inquiry,canonical,FALSE
+discover,AA,Does Not Recognize,unrecognized,cardholder_disputes,canonical,FALSE
+discover,AP,Cancelled Recurring Transaction,subscription_canceled,cardholder_disputes,canonical,FALSE
+discover,AT,Authorization Noncompliance,general,authorization,canonical,FALSE
+discover,AW,Altered Amount,general,cardholder_disputes,canonical,FALSE
+discover,CD,Credit/Debit Posted Incorrectly,general,cardholder_disputes,canonical,FALSE
+discover,CR,Cancelled Reservation,credit_not_processed,cardholder_disputes,canonical,FALSE
+discover,DA,Declined Authorization,general,cardholder_disputes,canonical,FALSE
+discover,DP,Duplicate Processing,duplicate,processing_errors,canonical,FALSE
+discover,EX,Expired Card,general,processing_errors,canonical,FALSE
+discover,IC,Illegible Card Number,general,processing_errors,canonical,FALSE
+discover,IN,Invalid Card Number,general,processing_errors,canonical,FALSE
+discover,LP,Late Presentment,general,processing_errors,canonical,FALSE
+discover,NA,No Authorization,general,processing_errors,canonical,FALSE
+discover,NC,Not Classified,general,processing_errors,canonical,FALSE
+discover,NF,Non-Receipt of Cash from ATM,product_not_received,cardholder_disputes,canonical,FALSE
+discover,PM,Paid by Other Means,duplicate,processing_errors,canonical,FALSE
+discover,RG,Non-Receipt of Goods or Services,product_not_received,processing_errors,canonical,FALSE
+discover,RM,Quality Discrepancy,product_unacceptable,processing_errors,canonical,FALSE
+discover,RN2,Credit Not Received,credit_not_processed,cardholder_disputes,canonical,FALSE
+discover,UA01,Fraud - Card Present Transaction,fraudulent,fraud,canonical,FALSE
+discover,UA02,Fraud - Card Not Present Transaction,fraudulent,fraud,canonical,FALSE
+discover,UA05,Fraud - Chip Card Counterfeit Transaction,fraudulent,fraud,canonical,FALSE
+discover,UA06,Fraud - Chip Card Lost/Stolen,fraudulent,fraud,canonical,FALSE
+mastercard,4807,Warning Bulletin File,general,authorization,canonical,FALSE
+mastercard,4808,Authorization-Related Chargeback,general,authorization,canonical,FALSE
+mastercard,4812,Account Number Not on File,general,authorization,canonical,FALSE
+mastercard,4831,Transaction Amount Differs,general,cardholder_disputes,canonical,FALSE
+mastercard,4834,Duplicate Processing,duplicate,cardholder_disputes,canonical,FALSE
+mastercard,4835,Card Not Present,fraudulent,cardholder_disputes,canonical,FALSE
+mastercard,4837,No Cardholder Authorization,fraudulent,fraud,canonical,FALSE
+mastercard,4840,Fraudulent Processing of Transactions,fraudulent,fraud,canonical,FALSE
+mastercard,4841,Cancelled Recurring Transaction,subscription_canceled,fraud,canonical,FALSE
+mastercard,4842,Late Presentment,general,fraud,canonical,FALSE
+mastercard,4846,Correct Transaction Currency Code Not Provided,general,fraud,canonical,FALSE
+mastercard,4849,Questionable Merchant Activity,fraudulent,fraud,canonical,FALSE
+mastercard,4850,Installment Billing Dispute,general,fraud,canonical,FALSE
+mastercard,4853,Cardholder Dispute,general,fraud,canonical,FALSE
+mastercard,4854,Cardholder Dispute - Not Elsewhere Classified,general,processing_errors,canonical,FALSE
+mastercard,4855,Goods or Services Not Provided,product_not_received,processing_errors,canonical,FALSE
+mastercard,4857,Card-Activated Telephone Transaction,general,processing_errors,canonical,FALSE
+mastercard,4859,"Addendum, No-show, or ATM Dispute",general,processing_errors,canonical,FALSE
+mastercard,4863,Cardholder Does Not Recognize - Potential Fraud,fraudulent,processing_errors,canonical,FALSE
+mastercard,4870,Chip Liability Shift,fraudulent,processing_errors,canonical,FALSE
+mastercard,4871,Chip/PIN Liability Shift,fraudulent,processing_errors,canonical,FALSE
+openapi_gateway_response,QUOTA_EXCEEDED,,,other,observed,TRUE
+openapi_gateway_response,UNAUTHORIZED,,fraudulent,other,observed,FALSE
+paypal,ITEM_NOT_RECEIVED,,product_not_received,non_card_dispute,observed,FALSE
+visa,10.1,EMV Liability Shift Counterfeit Fraud,fraudulent,fraud,canonical,FALSE
+visa,10.2,EMV Liability Shift Non-Counterfeit Fraud,fraudulent,fraud,canonical,FALSE
+visa,10.3,Other Fraud - Card Present Environment,fraudulent,fraud,canonical,FALSE
+visa,10.4,Other Fraud - Card Absent Environment,fraudulent,fraud,canonical,FALSE
+visa,10.5,Visa Fraud Monitoring Program,fraudulent,fraud,canonical,FALSE
+visa,11.1,Card Recovery Bulletin,general,authorization,canonical,FALSE
+visa,11.2,Declined Authorization,general,authorization,canonical,FALSE
+visa,11.3,No Authorization,general,authorization,canonical,FALSE
+visa,12.1,Late Presentment,general,processing_errors,canonical,FALSE
+visa,12.2,Incorrect Transaction Code,general,processing_errors,canonical,FALSE
+visa,12.3,Incorrect Currency,general,processing_errors,canonical,FALSE
+visa,12.4,Incorrect Account Number,general,processing_errors,canonical,FALSE
+visa,12.5,Incorrect Amount,general,processing_errors,canonical,FALSE
+visa,12.6.1,Duplicate Processing,duplicate,processing_errors,canonical,FALSE
+visa,12.6.2,Paid by Other Means,duplicate,processing_errors,canonical,FALSE
+visa,12.7,Invalid Data,general,processing_errors,canonical,FALSE
+visa,13.1,Merchandise/Services Not Received,product_not_received,consumer_disputes,canonical,FALSE
+visa,13.2,Cancelled Recurring Transaction,subscription_canceled,consumer_disputes,canonical,FALSE
+visa,13.3,Not as Described or Defective Merchandise/Services,product_unacceptable,consumer_disputes,canonical,FALSE
+visa,13.4,Counterfeit Merchandise,product_unacceptable,consumer_disputes,canonical,FALSE
+visa,13.5,Misrepresentation,product_unacceptable,consumer_disputes,canonical,FALSE
+visa,13.6,Credit Not Processed,credit_not_processed,consumer_disputes,canonical,FALSE
+visa,13.7,Cancelled Merchandise/Services,credit_not_processed,consumer_disputes,canonical,FALSE
+visa,13.8,Original Credit Transaction Not Accepted,general,consumer_disputes,canonical,FALSE
+visa,13.9,Non-Receipt of Cash or Load Transaction Value,product_not_received,consumer_disputes,canonical,FALSE

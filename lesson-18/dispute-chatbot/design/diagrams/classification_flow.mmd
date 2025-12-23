@@ -1,0 +1,48 @@
+flowchart TD
+    %% Inputs
+    Start([Start CLASSIFY Phase])
+    InputTask[Task: Description, Dispute ID] --> ExtractNetwork
+
+    %% Step 1: Network Identification
+    subgraph "Network Identification"
+        ExtractNetwork[Analyze Description for Network Keywords]
+        ExtractNetwork --> NetworkCheck{Network Found?}
+        NetworkCheck -- Yes --> SetNetwork[Target Network Identified]
+        NetworkCheck -- No --> AskUser[Target Network = 'unknown']
+    end
+
+    %% Step 2: Catalog Filtering
+    subgraph "Catalog Lookup"
+        SetNetwork --> LoadCatalog[Load reason_codes_catalog.csv]
+        LoadCatalog --> FilterCodes[Filter Codes by Network]
+        FilterCodes -->|Output| CandidateCodes[List of Valid Codes & Categories]
+    end
+
+    %% Step 3: LLM Classification
+    subgraph "LLM Analysis"
+        InputTask --> BuildPrompt[Construct Prompt]
+        CandidateCodes --> BuildPrompt
+        BuildPrompt -->|Context: Description + Valid Codes| LLM[LLM Classification]
+        LLM -->|Selects| SelectedCode[Selected Reason Code]
+        LLM -->|Generates| Confidence[Confidence Score]
+        LLM -->|Generates| Reasoning[Reasoning]
+    end
+
+    %% Step 4: Result Mapping
+    subgraph "Result Construction"
+        SelectedCode --> LookupCategory[Lookup Unified Category in Catalog]
+        LookupCategory --> CheckFraud{Category == 'fraudulent'?}
+        CheckFraud -- Yes --> SetFraudTrue[is_fraud = True]
+        CheckFraud -- No --> SetFraudFalse[is_fraud = False]
+        
+        SetNetwork --> FinalResult
+        SelectedCode --> FinalResult
+        SetFraudTrue --> FinalResult
+        SetFraudFalse --> FinalResult
+        Confidence --> FinalResult
+        Reasoning --> FinalResult
+    end
+
+    %% Output
+    FinalResult[ClassificationResult Object] --> End([End Phase])
+

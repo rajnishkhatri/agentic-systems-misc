@@ -1,0 +1,116 @@
+{# DSPy Optimized Prompt (MIPROv2) - ToT #}
+You are a customer service expert specializing in resolving transaction disputes for credit card users. Your task is to classify customer dispute descriptions into the correct category using a "Tree-of-Thought" approach. Analyze the complaint through three independent branches: 
+
+1. **Acknowledgment Branch:** Determine if the description acknowledges receipt or lack thereof of goods or services.
+2. **Complaint Specifics Branch:** Identify the specific nature of the complaint, such as processing issues or fraud.
+3. **Persona Branch:** Evaluate the customer's emotional state based on the linguistic tone and expressiveness.
+
+Once you have analyzed each branch, synthesize these findings to determine the final category of the dispute. Ensure you identify the 'Reason Code Group' in your synthesis if applicable. This structured approach will aid in efficiently and accurately addressing customer grievances.
+
+Input Field: Description
+Output Field: Result (JSON)
+
+---
+
+Description: I was eagerly waiting for something special, but it seems like the excitement was short-lived. I checked everywhere, even asked around, but it seems like it just vanished into thin air. Any insights on this would be appreciated. (Network: Discover)
+Result: {
+  "branch_a": {
+    "evidence_for_acknowledgment": [],
+    "evidence_against_acknowledgment": [],
+    "conclusion": "unclear"
+  },
+  "branch_b": {
+    "complaint_type": "processing",
+    "evidence": [
+      "vanished into thin air",
+      "eagerly waiting"
+    ]
+  },
+  "branch_c": {
+    "persona": "neutral",
+    "evidence": [
+      "eagerly waiting for something special",
+      "Any insights on this would be appreciated"
+    ]
+  },
+  "synthesis": {
+    "branch_agreement": 0.8,
+    "priority_rule_applied": null,
+    "reasoning": "Branches B and C support the idea of 'product_not_received' given the processing and expectation issues, aligned by the neutral demeanor. Branch A remains unclear due to lack of acknowledgment or denial evidence. Agreement leads to classifying this under 'product_not_received' with high confidence."
+  },
+  "category": "product_not_received",
+  "confidence": 0.9,
+  "confidence_rationale": "High confidence due to strong indications of non-receipt, with neutral demeanor suggesting a typical inquiry rather than accusatory or frustrated complaint."
+}
+
+Description: Hello, I hope this message finds you well. I was having a rather pleasant day, enjoying a nice cup of coffee at my favorite café, when I decided to make a purchase online. To my surprise, my card was declined, which was quite embarrassing. I double-checked my account, and everything seemed in order. Could you please help me understand why this happened? Thank you so much for your assistance. (Network: Discover)
+Result: {
+  "branch_a": {
+    "evidence_for_acknowledgment": [],
+    "evidence_against_acknowledgment": [
+      "card was declined",
+      "everything seemed in order"
+    ],
+    "conclusion": "denied"
+  },
+  "branch_b": {
+    "complaint_type": "processing",
+    "evidence": [
+      "card was declined",
+      "could you please help me understand why this happened"
+    ]
+  },
+  "branch_c": {
+    "persona": "neutral",
+    "evidence": [
+      "I hope this message finds you well",
+      "thank you so much for your assistance"
+    ]
+  },
+  "synthesis": {
+    "branch_agreement": 0.8,
+    "priority_rule_applied": null,
+    "reasoning": "The synthesis reflects a consensus on a processing issue since the card was unexpectedly declined without clear reason. A neutral persona supports a lack of aggression or urgency, aligning with the processing category."
+  },
+  "category": "general",
+  "confidence": 0.8,
+  "confidence_rationale": "Confidence is moderately high as the evidence consistently points to a processing issue, although specific acknowledgment of the problem was lacking."
+}
+
+Description: WHY IS MY CARD BLOCKED?! FIX THIS NOW! I DIDN'T DO ANYTHING WRONG! (Network: Openapi_Gateway_Response)
+Result: {
+  "branch_a": {
+    "evidence_for_acknowledgment": [
+      "I DIDN'T DO ANYTHING WRONG!"
+    ],
+    "evidence_against_acknowledgment": [
+      "FIX THIS NOW!",
+      "WHY IS MY CARD BLOCKED?!"
+    ],
+    "conclusion": "denied"
+  },
+  "branch_b": {
+    "complaint_type": "processing",
+    "evidence": [
+      "WHY IS MY CARD BLOCKED?! FIX THIS NOW!"
+    ]
+  },
+  "branch_c": {
+    "persona": "frustrated",
+    "evidence": [
+      "FIX THIS NOW!",
+      "WHY IS MY CARD BLOCKED?!"
+    ]
+  },
+  "synthesis": {
+    "branch_agreement": 0.8,
+    "priority_rule_applied": null,
+    "reasoning": "The branches indicate a processing issue as the primary category, given the emphasis on card blocking and the demand for resolution. The absence of specific transaction disputes shifts the focus away from potential fraud or duplicate transaction categories. While the acknowledgment branch shows denial due to the customer explicitly stating innocence, branch agreement is high because all indicate a goal to resolve the block issue. The complaint persona aligns with frustration underlining the need for urgent action."
+  },
+  "category": "general",
+  "confidence": 0.85,
+  "confidence_rationale": "High confidence in categorizing this as 'general' due to a strong focus on a card block with no dispute of specific charges. The identification of processing issues and the persona indicating urgency supports this classification."
+}
+
+Description: {{ description }}
+Result:

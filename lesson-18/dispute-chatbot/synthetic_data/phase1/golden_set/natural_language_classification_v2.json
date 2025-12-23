@@ -1,0 +1,3032 @@
+[
+  {
+    "true_reason_code": "A01",
+    "network": "amex",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_A01_emotional",
+    "description": "WHY IS MY BILL SO HIGH?! FIX THIS NOW! I DIDN'T AUTHORIZE THIS! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "A01",
+    "network": "amex",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_A01_narrative",
+    "description": "Hello, I hope you're having a good day. I recently checked my credit card statement and noticed a charge that was higher than what I remember authorizing. I was at the store last Tuesday, and I distinctly recall agreeing to a different amount. I even had a lovely chat with the cashier about the weather. Could you please help me understand why this discrepancy occurred? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "A01",
+    "network": "amex",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_A01_ambiguous",
+    "description": "I noticed something odd on my statement. The numbers don't seem to match what I expected from my last visit. Could you look into this for me? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "A02",
+    "network": "amex",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_A02_emotional",
+    "description": "WHY was I charged without my permission?! FIX THIS NOW! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "A02",
+    "network": "amex",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_A02_narrative",
+    "description": "Hello, I hope this message finds you well. I had quite a busy day yesterday, running errands and catching up with an old friend over coffee. However, when I checked my credit card statement this morning, I noticed a charge that I don't recall authorizing. It's quite puzzling because I always make sure to double-check my transactions. Could you please help me understand what happened here? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "A02",
+    "network": "amex",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_A02_ambiguous",
+    "description": "I noticed something odd on my statement. It seems like there was a mix-up with one of the entries. Could you look into it for me? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "C02",
+    "network": "amex",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C02_emotional",
+    "description": "WHERE'S MY REFUND?! It's been WEEKS! FIX THIS NOW! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "C02",
+    "network": "amex",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C02_narrative",
+    "description": "Hello there, I hope this message finds you well. I recently had a lovely day out with my family, and we decided to treat ourselves to a nice dinner. I used my Amex card to pay, but unfortunately, the restaurant had some issues with their system. They assured me that the charge wouldn't go through, but it seems it did. I've been waiting for the credit to appear on my statement, but it's been quite some time now. Could you please look into this for me? Thank you so much for your help! (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "C02",
+    "network": "amex",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C02_ambiguous",
+    "description": "I noticed something odd on my statement. It seems like a transaction didn't quite align with what I expected. Could you help clarify this for me? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "A08",
+    "network": "amex",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_A08_emotional",
+    "description": "WHY was my card declined? FIX THIS NOW! I need answers ASAP! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "A08",
+    "network": "amex",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_A08_narrative",
+    "description": "Hello, I hope this message finds you well. I had quite an eventful day yesterday. I started with a lovely breakfast at my favorite caf\u00e9, and then I went shopping for some essentials. However, when I tried to use my Amex card at the store, it was unexpectedly declined. I was quite surprised because I had checked my balance earlier, and everything seemed fine. Could you please help me understand why this happened? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "A08",
+    "network": "amex",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_A08_ambiguous",
+    "description": "I was at the checkout, and something unexpected happened. The transaction didn't go through, and I was left standing there, unsure of what to do next. It was quite puzzling, and I hope you can shed some light on this situation. (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "C04",
+    "network": "amex",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C04_emotional",
+    "description": "I RETURNED IT! WHERE'S MY MONEY? FIX THIS NOW! \ud83d\ude21 (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "C04",
+    "network": "amex",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C04_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I recently returned a blender I bought online because it wasn't quite what I expected. I followed all the return instructions to the letter, even made sure to get a tracking number. It's been over two weeks now, and I still haven't seen the refund on my card. I understand these things can take time, but I'm starting to get a bit worried. Could you please look into this for me? Thank you so much for your help! (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "C04",
+    "network": "amex",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C04_ambiguous",
+    "description": "I thought everything was sorted after our last chat, but it seems like there's still something pending on my account. I remember sending back the item as we discussed, and I was under the impression that everything was in order. Could you check if there's anything else I need to do on my end? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "C28",
+    "network": "amex",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C28_emotional",
+    "description": "WHY am I STILL being charged?! I CANCELLED! FIX THIS NOW! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "C28",
+    "network": "amex",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C28_narrative",
+    "description": "Hello, I hope this message finds you well. I recently noticed a charge on my Amex card that I wasn't expecting. It was a bit of a surprise, especially since I had a lovely morning with my family, enjoying breakfast and planning our weekend. I distinctly remember canceling this service a while back, and I'm quite puzzled as to why it's still appearing on my statement. Could you please look into this for me? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "C28",
+    "network": "amex",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C28_ambiguous",
+    "description": "I thought we were done with this, but it seems like things are still happening. Can you check what's going on? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "C18",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C18_emotional",
+    "description": "WHERE'S MY COPY? I ASKED WEEKS AGO! FIX THIS NOW! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "C18",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C18_narrative",
+    "description": "Hi there, I hope you're having a good day. I was just thinking about how much I enjoy my morning coffee when I realized I still haven't received the document I requested from you. It's been quite some time, and I'm starting to get a bit concerned. Could you please look into this for me? Thank you so much! (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "C18",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C18_ambiguous",
+    "description": "I was expecting something in the mail that hasn't shown up yet. It's been a while, and I'm not sure what happened. Could you check on this for me? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "C08",
+    "network": "amex",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C08_emotional",
+    "description": "WHERE'S MY ORDER?! I PAID AND GOT NOTHING! FIX THIS NOW! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "C08",
+    "network": "amex",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C08_narrative",
+    "description": "Hello, I hope this message finds you well. I recently ordered a set of kitchen knives from a website that seemed reputable. It was a sunny day, and I was excited to try out some new recipes. However, the package never arrived. I checked with my neighbors and even the local post office, but no luck. I was really looking forward to using them for a dinner party I had planned. Could you please help me resolve this issue? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "C08",
+    "network": "amex",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C08_ambiguous",
+    "description": "I was eagerly waiting for something special to arrive, but it seems like the excitement was short-lived. The anticipation was high, but the outcome was rather disappointing. I hope this can be sorted out soon. (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "C14",
+    "network": "amex",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C14_emotional",
+    "description": "WHY CHARGED TWICE? FIX THIS NOW! I PAID ALREADY! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "C14",
+    "network": "amex",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C14_narrative",
+    "description": "Hello, I hope this message finds you well. I recently had a lovely day out with my family, and we decided to have lunch at our favorite restaurant. I remember paying for the meal with cash because I had some extra on hand. However, when I checked my credit card statement later, I noticed a charge for the same meal. I'm a bit puzzled about this and would appreciate your help in resolving it. Thank you so much for your assistance! (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "C14",
+    "network": "amex",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C14_ambiguous",
+    "description": "I noticed something odd on my statement after my recent shopping trip. I remember settling everything at the counter, but it seems like there's a little hiccup. Could you help me sort this out? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "C05",
+    "network": "amex",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C05_emotional",
+    "description": "CANCELLED ORDER, STILL CHARGED! FIX THIS NOW! UNACCEPTABLE! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "C05",
+    "network": "amex",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C05_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I recently ordered a set of kitchen knives from a store online, but due to a change in my plans, I had to cancel the order. I made sure to cancel it well before the shipping date, and I even received a confirmation email from the store. However, to my surprise, I noticed that the charge still appeared on my credit card statement. I was really looking forward to using those funds for a family dinner this weekend. Could you please help me resolve this issue? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "C05",
+    "network": "amex",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C05_ambiguous",
+    "description": "I thought everything was sorted out, but it seems like there's still a little hiccup with the recent transaction. I remember making some changes, and I was under the impression that everything was settled. Could you take a look and let me know what's going on? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "C32",
+    "network": "amex",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C32_emotional",
+    "description": "THIS IS UNACCEPTABLE! My order arrived BROKEN! FIX THIS NOW! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "C32",
+    "network": "amex",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C32_narrative",
+    "description": "Hello, I hope this message finds you well. I recently ordered a set of glassware from your store, and I was so excited to use them for my dinner party last weekend. Unfortunately, when I opened the package, I found that several pieces were chipped and unusable. It was quite disappointing, especially since I had planned everything so meticulously. I would appreciate your guidance on how to resolve this issue. Thank you for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "C32",
+    "network": "amex",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C32_ambiguous",
+    "description": "I was really looking forward to using the item I purchased, but it seems like it didn't quite meet my expectations. I noticed something off when I first opened it, and it hasn't been quite right since. Could we discuss a possible solution? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "F14",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F14_emotional",
+    "description": "WHY was I charged without my OK? FIX THIS NOW! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "F14",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F14_narrative",
+    "description": "Hello, I hope this message finds you well. I recently noticed a charge on my Amex card that I don't recall authorizing. It was a busy day, and I was juggling a lot of errands, including picking up groceries and taking my dog to the vet. I usually keep track of my expenses, but this one slipped through the cracks. Could you please help me understand why this charge appeared? Thank you for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "F14",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F14_ambiguous",
+    "description": "I noticed something odd on my statement. It seems like there was a little oversight during my last purchase. Could you check what might have gone amiss? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "F10",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F10_emotional",
+    "description": "WHY is there a charge I NEVER made?! FIX THIS NOW! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "F10",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F10_narrative",
+    "description": "Hello, I hope this message finds you well. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There's a charge that I don't recall making. It's been a hectic week, with my cat getting into mischief and my car needing repairs, so I might have overlooked something. But I'm quite certain I didn't authorize this transaction. Could you please help me sort this out? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "F10",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F10_ambiguous",
+    "description": "I was reviewing my recent transactions and noticed something that doesn't quite add up. It's like a puzzle piece that doesn't fit. I remember all my purchases, but this one seems out of place. Could you help me understand what's going on? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "F24",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F24_emotional",
+    "description": "WHY is there a charge I DIDN'T MAKE? FIX THIS NOW! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "F24",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F24_narrative",
+    "description": "Hello, I hope this message finds you well. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There's a charge from a store I've never even heard of, let alone visited. It's quite puzzling because I always keep track of my expenses. I remember last Tuesday, I was at home all day, catching up on some reading and didn't even step out. Could you please help me understand how this charge appeared? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "F24",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F24_ambiguous",
+    "description": "I noticed something unusual on my statement. It seems like there's an entry that doesn't quite fit with my usual spending habits. Could you help clarify this for me? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "C31",
+    "network": "amex",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C31_emotional",
+    "description": "THIS IS UNACCEPTABLE! The product is NOTHING like what I ordered. FIX THIS NOW! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "C31",
+    "network": "amex",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C31_narrative",
+    "description": "Hello, I hope this message finds you well. I recently ordered a product using my Amex card, and to my surprise, it was not what I expected at all. I had a long day at work, and I was really looking forward to receiving this item. I even told my friends about it, and now I feel quite embarrassed. The description on the website was completely different from what I received. I would appreciate your assistance in resolving this matter. Thank you for your understanding. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "C31",
+    "network": "amex",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_C31_ambiguous",
+    "description": "I was really looking forward to using the item I got, but it seems like it doesn't quite match up with what I had in mind. It's a bit of a letdown, considering how much I anticipated its arrival. Could we discuss this further? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "F29",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F29_emotional",
+    "description": "WHAT THE HECK AMEX?! I DIDN'T BUY THIS! FIX IT NOW OR ELSE! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "F29",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F29_narrative",
+    "description": "Hello Amex team, I hope you're having a good day. I was just sipping my morning coffee when I noticed a charge on my statement that I don't recognize. It's strange because I haven't used my card for any online purchases recently. I remember last week I was busy with work and didn't have time to shop. Could you please help me understand what's going on? Thank you! (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "F29",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F29_ambiguous",
+    "description": "I noticed something odd on my statement. It seems like there's a charge that doesn't quite fit with my usual spending. I haven't been shopping much lately, especially not from home. Could you look into this for me? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "F30",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F30_emotional",
+    "description": "WHY is there a charge I DIDN'T make?! FIX THIS NOW! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "F30",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F30_narrative",
+    "description": "Hello, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There's a charge that I don't recall making. I remember using my card at the grocery store last week, but this one seems out of place. Could you please help me understand what's going on? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "F30",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F30_ambiguous",
+    "description": "I noticed something strange on my statement. It seems like my card had a little adventure without me. Could you look into this? Thanks. (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "F31",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F31_emotional",
+    "description": "MY CARD WAS STOLEN! FIX THIS NOW! I DIDN'T AUTHORIZE ANYTHING! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "F31",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F31_narrative",
+    "description": "Hello, I hope you're having a good day. I recently had a rather unusual experience. I was out for a walk in the park, enjoying the crisp autumn air, when I realized my credit card was missing. I retraced my steps, but it was nowhere to be found. Later, I noticed some transactions I didn't recognize. I'm quite puzzled and would appreciate your help in resolving this matter. Thank you for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "F31",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_amex_F31_ambiguous",
+    "description": "I noticed some unexpected activity on my account after a recent change in my wallet's contents. Could you help clarify this situation? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "M01",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_M01_emotional",
+    "description": "WHY was I charged?! FIX THIS NOW! I DIDN'T AUTHORIZE! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "M01",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_M01_narrative",
+    "description": "Hello, I hope this message finds you well. I recently noticed a charge on my Amex card that I don't recall authorizing. It was a busy day, and I was juggling a lot, from picking up groceries to attending a friend's birthday party. I might have missed something, but I don't remember agreeing to this charge. Could you please help me understand what happened? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "M01",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_M01_ambiguous",
+    "description": "I was reviewing my recent transactions and noticed something unexpected. It seems like there was a mix-up or misunderstanding. Could you look into this for me? I appreciate your help in clarifying this situation. (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "P01",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P01_emotional",
+    "description": "WHY IS MY CARD NOT WORKING? FIX THIS NOW! I NEED IT ASAP! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "P01",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P01_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I was just trying to buy my morning coffee, and to my surprise, my card was declined. I double-checked the number, and it seems correct. I even tried it at another store, but no luck. Could you please help me understand what's going on? Thank you so much for your assistance! (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "P01",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P01_ambiguous",
+    "description": "I was at the checkout, and something unexpected happened. The cashier looked puzzled, and I was left standing there, unsure of what to do next. Could you shed some light on this situation? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "P04",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P04_emotional",
+    "description": "WHY was I charged TWICE? FIX THIS NOW! UNACCEPTABLE! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "P04",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P04_narrative",
+    "description": "Hello, I hope this message finds you well. I recently had a lovely day out with my family, and we decided to treat ourselves to a nice dinner. Imagine my surprise when I checked my statement and noticed something odd. It seems like the amount I paid was processed differently than expected. I was under the impression it would be handled one way, but it appears to have been done another. Could you please help me understand what happened? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "P04",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P04_ambiguous",
+    "description": "I noticed something unusual on my statement after my recent purchase. It seems like the transaction didn't align with what I anticipated. Could you look into this for me? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "P07",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P07_emotional",
+    "description": "WHY was my payment LATE? FIX THIS NOW! UNACCEPTABLE! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "P07",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P07_narrative",
+    "description": "Hello there, I hope this message finds you well. I was just going through my statements while sipping my morning coffee, and I noticed something odd. It seems there was a delay in processing my payment, which is quite unusual. I always make sure to pay on time, so this has left me a bit puzzled. Could you please look into this matter for me? Thank you so much for your assistance! (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "P07",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P07_ambiguous",
+    "description": "I noticed something off with my recent statement. It seems like things didn't align as they usually do, and I'm not sure why. Could you help clarify this for me? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "P03",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P03_emotional",
+    "description": "WHY WAS I CHARGED TWICE?! FIX THIS NOW! UNACCEPTABLE! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "P03",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P03_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I recently had a bit of a mix-up with my credit card. You see, I was out shopping for some groceries, and when I got home, I noticed that a transaction I thought was a refund was actually processed as a charge. It's quite puzzling because I distinctly remember the cashier saying it was all sorted. Could you please help me understand what happened? Thank you so much for your assistance! (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "P03",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P03_ambiguous",
+    "description": "I was expecting a different outcome after my last visit to the store. The numbers on my statement don't match what I anticipated. Can we look into this? Thanks. (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "P05",
+    "network": "amex",
+    "category": "incorrect_amount",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P05_emotional",
+    "description": "WHY IS MY BILL SO HIGH?! FIX THIS NOW! I DIDN'T SPEND THAT MUCH! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "P05",
+    "network": "amex",
+    "category": "incorrect_amount",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P05_narrative",
+    "description": "Hello, I hope this message finds you well. I was reviewing my recent credit card statement over my morning coffee, and I noticed something odd. I remember purchasing a lovely set of kitchenware last week, but the amount charged seems higher than what I recall. I distinctly remember the cashier mentioning a discount, which doesn't seem to have been applied. Could you please look into this for me? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "P05",
+    "network": "amex",
+    "category": "incorrect_amount",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P05_ambiguous",
+    "description": "I was going through my statement and something doesn't quite add up. I remember a different figure when I made the purchase. Could you help clarify this for me? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "P08",
+    "network": "amex",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P08_emotional",
+    "description": "WHY AM I CHARGED TWICE? FIX THIS NOW! UNACCEPTABLE! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "P08",
+    "network": "amex",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P08_narrative",
+    "description": "Hello, I hope this message finds you well. I recently noticed something odd on my credit card statement. You see, last weekend, I went out for brunch with some friends at this lovely little caf\u00e9 downtown. We had a great time, and I remember paying for my meal with my Amex card. However, when I checked my statement later, I saw the same charge listed twice. I'm a bit puzzled about this and would appreciate any help you can provide in resolving it. Thank you so much for your assistance! (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "P08",
+    "network": "amex",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P08_ambiguous",
+    "description": "I was reviewing my recent transactions and noticed something peculiar. It seems like my account has been a bit too generous with a particular caf\u00e9 visit. Could you help clarify this for me? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "P22",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P22_emotional",
+    "description": "WHY IS MY CARD NOT WORKING? FIX THIS NOW! I NEED IT TODAY! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "P22",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P22_narrative",
+    "description": "Hello, I hope you're having a good day. I was just trying to buy some groceries when I noticed something odd. My card, which I've been using for years without any issues, suddenly didn't work. I double-checked the number, and it seems correct. I even tried it at another store, but the same thing happened. Could you please help me understand what's going on? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "P22",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P22_ambiguous",
+    "description": "I was at the checkout, and something unexpected happened. The cashier looked puzzled, and I felt a bit embarrassed. It seemed like there was a mismatch somewhere. Could you look into this for me? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "R03",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_R03_emotional",
+    "description": "WHY IS THIS STILL NOT FIXED?! I NEED MY MONEY BACK NOW! THIS IS UNACCEPTABLE! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "R03",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_R03_narrative",
+    "description": "Hello there, I hope this message finds you well. I recently had a rather busy day, juggling work and family commitments, and amidst all that, I noticed a charge on my Amex card that I had previously raised a concern about. I was under the impression that this matter was being handled, but it seems there hasn't been any resolution yet. Could you kindly look into this for me? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "R03",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_R03_ambiguous",
+    "description": "I thought we had sorted out that thing from last month, but it seems like there's still something hanging. Could you check on that for me? Thanks. (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "P23",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P23_emotional",
+    "description": "WHY IS MY BILL SO HIGH? FIX THIS NOW! I DIDN'T SPEND THAT MUCH! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "P23",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P23_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I recently returned from a lovely trip to Europe, where I enjoyed some delightful meals and sightseeing. However, upon reviewing my credit card statement, I noticed something peculiar. The amounts charged seem higher than what I recall spending. I remember paying for a dinner that was supposed to be 50 euros, but it appears as a much larger amount in dollars. Could you please help me understand this discrepancy? Thank you so much for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "P23",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_P23_ambiguous",
+    "description": "I was reviewing my recent transactions and noticed something odd. The numbers don't quite match up with what I expected. It's like the amounts have changed since I last checked. Could you look into this for me? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "R13",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_R13_emotional",
+    "description": "WHY NO RESPONSE? FIX THIS NOW! I NEED MY MONEY BACK! (Network: Amex)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "R13",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_R13_narrative",
+    "description": "Hello there, I hope this message finds you well. I recently had a rather busy day, juggling work and family commitments, and amidst all that, I noticed a charge on my Amex card that I don't recall authorizing. I tried reaching out to the merchant, but it seems like my emails are going into a void. It's quite puzzling, and I would appreciate any guidance you can provide on how to resolve this matter. Thank you for your assistance. (Network: Amex)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "R13",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_amex_R13_ambiguous",
+    "description": "I reached out a while back about something on my statement. It's been quiet on the other end, and I'm left wondering if there's a way to move forward. Any insights? (Network: Amex)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "AA",
+    "network": "discover",
+    "category": "unrecognized",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_AA_emotional",
+    "description": "WHAT IS THIS CHARGE?? I DIDN'T BUY ANYTHING! FIX THIS NOW! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "AA",
+    "network": "discover",
+    "category": "unrecognized",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_AA_narrative",
+    "description": "Hello, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed a charge that I don't recall making. It's been a busy week with work and family commitments, so I might have overlooked something, but I genuinely don't remember this transaction. Could you please help me understand what this is about? Thank you so much for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "AA",
+    "network": "discover",
+    "category": "unrecognized",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_AA_ambiguous",
+    "description": "I was reviewing my recent activities and noticed something that doesn't quite fit with my usual pattern. It's like finding a puzzle piece that doesn't belong to the picture. Could you help me sort this out? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "AP",
+    "network": "discover",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_AP_emotional",
+    "description": "I CANCELED THIS MONTHS AGO! WHY AM I STILL CHARGED? FIX THIS NOW! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "AP",
+    "network": "discover",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_AP_narrative",
+    "description": "Hello, I hope you're having a good day. I recently noticed a charge on my Discover card that I thought was resolved. I remember canceling this service a while back, but it seems like the charge still went through. I was just enjoying my morning coffee when I saw the notification, and it really caught me off guard. Could you please help me understand why this happened? Thank you so much for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "AP",
+    "network": "discover",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_AP_ambiguous",
+    "description": "I thought we were done with this, but it seems like something slipped through the cracks. Can we revisit our previous conversation? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "AT",
+    "network": "discover",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_AT_emotional",
+    "description": "WHY was my card charged without my OK? FIX THIS NOW! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "AT",
+    "network": "discover",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_AT_narrative",
+    "description": "Hello there, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There was a charge that I don't recall authorizing. It's quite puzzling because I usually keep track of my expenses meticulously. Could you please help me understand what happened here? Thank you so much for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "AT",
+    "network": "discover",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_AT_ambiguous",
+    "description": "I noticed something unusual on my statement. It seems like there was a mix-up or misunderstanding with a recent transaction. Could you look into it and clarify what might have gone wrong? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "AW",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_AW_emotional",
+    "description": "WHY IS MY BILL WRONG? FIX IT NOW! I DIDN'T SPEND THAT MUCH! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "AW",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_AW_narrative",
+    "description": "Hi there, I hope you're having a good day. I was just reviewing my recent credit card statement over my morning coffee, and I noticed something odd. It seems the amount charged for my last purchase at the local bookstore is higher than what I remember agreeing to. I distinctly recall the cashier telling me the total was $25, but my statement shows $35. Could you please look into this for me? Thank you so much for your help! (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "AW",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_AW_ambiguous",
+    "description": "I was going through my recent transactions and something doesn't quite add up. The numbers seem a bit off from what I recall. Could you help clarify this for me? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "CD",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_CD_emotional",
+    "description": "WHY IS MY ACCOUNT CHARGED TWICE? FIX THIS NOW! UNACCEPTABLE! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "CD",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_CD_narrative",
+    "description": "Hello Discover Team,\n\nI hope this message finds you well. I recently had a rather busy day, running errands and catching up with an old friend over coffee. It was a lovely afternoon, but when I got home and checked my credit card statement, I noticed something odd. There seems to be a discrepancy with a charge that doesn't match what I remember spending. I believe it might have been posted incorrectly. Could you please look into this for me? I appreciate your help in resolving this matter.\n\nThank you and have a great day! (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "CD",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_CD_ambiguous",
+    "description": "I was reviewing my recent transactions and noticed something that doesn't quite add up. It's like a puzzle piece that doesn't fit. Could you help me understand what's going on? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "CR",
+    "network": "discover",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_CR_emotional",
+    "description": "WHY IS MY MONEY STILL NOT BACK? I CANCELLED! FIX THIS NOW! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "CR",
+    "network": "discover",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_CR_narrative",
+    "description": "Hello there, I hope you're having a good day. I recently had to cancel a hotel reservation because my plans changed last minute. I was assured by the hotel that the cancellation was processed and that I wouldn't be charged. However, I noticed that the charge is still on my credit card statement. I understand these things can take time, but it's been over a week now. Could you please look into this for me? Thank you so much for your help! (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "CR",
+    "network": "discover",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_CR_ambiguous",
+    "description": "I thought everything was sorted out with the hotel, but my account still shows something unexpected. Can you check what's going on? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "DA",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_DA_emotional",
+    "description": "WHY WAS MY CARD DECLINED?! FIX THIS NOW! I NEED ANSWERS! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "DA",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_DA_narrative",
+    "description": "Hello, I hope this message finds you well. I was having a rather pleasant day, enjoying a nice cup of coffee at my favorite caf\u00e9, when I decided to make a purchase online. To my surprise, my card was declined, which was quite embarrassing. I double-checked my account, and everything seemed in order. Could you please help me understand why this happened? Thank you so much for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "DA",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_DA_ambiguous",
+    "description": "I was trying to complete a transaction, but something unexpected happened. It seems like there was a hiccup, and I couldn't proceed. Could you look into this for me? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "EX",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_EX_emotional",
+    "description": "WHY was my card DECLINED? FIX THIS NOW! I NEED IT! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "EX",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_EX_narrative",
+    "description": "Hello, I hope this message finds you well. I was having a lovely day, enjoying my morning coffee, when I decided to make a purchase online. To my surprise, my card was declined. I checked my account, and everything seemed fine. I don't understand why this happened, and it's quite inconvenient. Could you please look into this for me? Thank you so much for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "EX",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_EX_ambiguous",
+    "description": "I tried using my card today, but it seems like it's not cooperating. I thought everything was in order, but it looks like something's off. Could you help me figure out what's going on? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "DP",
+    "network": "discover",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_DP_emotional",
+    "description": "WHY CHARGED TWICE? FIX THIS NOW! UNACCEPTABLE! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "DP",
+    "network": "discover",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_DP_narrative",
+    "description": "Hello Discover Team,\n\nI hope this message finds you well. I recently had a rather busy day, running errands and catching up with an old friend over coffee. It was a lovely afternoon, but when I got home and checked my credit card statement, I noticed something odd. It seems that a transaction from my favorite bookstore, where I bought a couple of novels, appeared twice on my statement. I'm quite puzzled as I only made one purchase. Could you please look into this for me? Thank you so much for your assistance.\n\nWarm regards,\n[Your Name] (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "DP",
+    "network": "discover",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_DP_ambiguous",
+    "description": "I noticed something peculiar on my statement. It seems like a familiar amount appeared more than once. Could you help clarify this for me? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "IN",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_IN_emotional",
+    "description": "WHY IS MY CARD NOT WORKING?! FIX THIS NOW! I NEED IT ASAP! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "IN",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_IN_narrative",
+    "description": "Hi there, I hope you're having a good day. I was trying to buy some groceries yesterday, and to my surprise, my card was declined. I double-checked the number, and it seemed correct. I even tried it again today at a different store, but the same thing happened. I'm not sure what's going on, but it's quite inconvenient. Could you please help me figure this out? Thank you so much! (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "IN",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_IN_ambiguous",
+    "description": "I was at the checkout, and something unexpected happened. The cashier looked puzzled, and I had to leave without my items. Can you help clarify this situation? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "IC",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_IC_emotional",
+    "description": "FIX THIS NOW! My card number is unreadable, and I can't use it! UNACCEPTABLE! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "IC",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_IC_narrative",
+    "description": "Hello Discover, I hope this message finds you well. I had quite a day today, starting with a lovely breakfast at my favorite caf\u00e9. However, when I tried to use my card, the cashier couldn't read the numbers on it. It was quite embarrassing, and I had to use another payment method. I'm not sure what happened, but I would appreciate your help in resolving this issue. Thank you for your assistance! (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "IC",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_IC_ambiguous",
+    "description": "I was at the store today, and something unexpected happened with my card. It seems like the details weren't clear enough for the transaction. Could you look into this for me? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "LP",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_LP_emotional",
+    "description": "WHY was I charged so late? FIX THIS NOW! UNACCEPTABLE! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "LP",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_LP_narrative",
+    "description": "Hello, I hope this message finds you well. I recently noticed a charge on my Discover card that seemed to have been processed much later than expected. It was quite a surprise, especially since I had a busy day running errands and didn't have time to check my statements until now. I would appreciate it if you could look into this matter for me. Thank you for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "LP",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_LP_ambiguous",
+    "description": "I noticed something odd on my statement. It seems like things aren't lining up with when I expected them to. Could you help clarify this for me? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "NA",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_NA_emotional",
+    "description": "WHY was I charged? I NEVER approved this! FIX IT NOW! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "NA",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_NA_narrative",
+    "description": "Hello, I hope this message finds you well. I recently noticed a charge on my Discover card that I don't recall authorizing. It was a busy day, and I was juggling a lot of tasks, including picking up groceries and attending a meeting. I might have missed something, but I don't remember agreeing to this transaction. Could you please help me understand what happened? Thank you for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "NA",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_NA_ambiguous",
+    "description": "I noticed something odd on my statement. It seems like there was a mix-up or misunderstanding with a recent transaction. Could you look into it for me? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "NF",
+    "network": "discover",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_NF_emotional",
+    "description": "WHERE'S MY MONEY?! ATM TOOK IT, NO CASH! FIX THIS NOW! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "NF",
+    "network": "discover",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_NF_narrative",
+    "description": "Hello, I hope this message finds you well. I had quite an eventful day yesterday. After a lovely brunch with my friend, I decided to withdraw some cash from the ATM near the cafe. However, to my surprise, the machine didn't dispense any money, even though my account was debited. I was quite puzzled and a bit worried. Could you please look into this matter for me? Thank you so much for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "NF",
+    "network": "discover",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_NF_ambiguous",
+    "description": "I was at the machine, and something unexpected happened. It seemed like everything was going smoothly, but then there was a hiccup. I left without what I came for, and now I'm left wondering about the next steps. Can you help clarify this situation? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "PM",
+    "network": "discover",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_PM_emotional",
+    "description": "I ALREADY PAID! FIX THIS NOW! WHY CHARGE ME AGAIN? UNACCEPTABLE! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "PM",
+    "network": "discover",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_PM_narrative",
+    "description": "Hello, I hope this message finds you well. I recently noticed a charge on my Discover card that I believe was a mistake. You see, I had a lovely day out with my family last weekend, and I distinctly remember paying for our lunch with cash. It was a quaint little caf\u00e9, and I even chatted with the owner about their delicious pastries. Imagine my surprise when I saw the same amount charged to my card! I'm sure it's just a mix-up, but I would appreciate your help in resolving this. Thank you so much for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "PM",
+    "network": "discover",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_PM_ambiguous",
+    "description": "I noticed something odd on my statement. It seems like there's a repeat of something I handled differently. Could you look into it? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "RG",
+    "network": "discover",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_RG_emotional",
+    "description": "WHERE'S MY ORDER?! I PAID AND GOT NOTHING! FIX THIS NOW! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "RG",
+    "network": "discover",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_RG_narrative",
+    "description": "Hello, I hope this message finds you well. I recently ordered a lovely set of kitchenware from a store online. I was so excited because I had planned a dinner party for my friends. However, the package never arrived, and I was left scrambling to borrow dishes from my neighbor. I checked my emails and even my spam folder, but there was no update. Could you please help me figure out what happened? Thank you so much for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "RG",
+    "network": "discover",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_RG_ambiguous",
+    "description": "I was eagerly waiting for something special, but it seems like the excitement was short-lived. I checked everywhere, even asked around, but it seems like it just vanished into thin air. Any insights on this would be appreciated. (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "RM",
+    "network": "discover",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_RM_emotional",
+    "description": "THIS PRODUCT IS TRASH! I WANT MY MONEY BACK NOW! UNACCEPTABLE! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "RM",
+    "network": "discover",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_RM_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I recently purchased a product using my Discover card, and to my dismay, it wasn't quite what I expected. I had a busy day at work, and when I finally got home, I was looking forward to using it. However, it didn't meet the quality standards I anticipated. I was really hoping for something better, especially after reading all those positive reviews. Could you please help me resolve this issue? Thank you so much for your assistance! (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "RM",
+    "network": "discover",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_RM_ambiguous",
+    "description": "I thought it would be different. It just doesn't seem right, you know? I was expecting something else entirely. Can we talk about this? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "UA01",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_discover_UA01_emotional",
+    "description": "THIS IS RIDICULOUS! I DIDN'T BUY ANYTHING! FIX THIS NOW OR I'M DONE WITH YOU! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "UA01",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_discover_UA01_narrative",
+    "description": "Hello, I hope this message finds you well. I had quite a busy day yesterday, running errands and catching up with an old friend over coffee. However, when I checked my credit card statement this morning, I noticed a charge that I don't recognize. I was definitely not at the location where this transaction supposedly took place. Could you please help me understand what's going on? Thank you so much for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "UA01",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_discover_UA01_ambiguous",
+    "description": "I noticed something odd on my statement. I wasn't anywhere near that place yesterday. Can we look into this? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "RN2",
+    "network": "discover",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_RN2_emotional",
+    "description": "WHERE'S MY REFUND? I PAID AND GOT NOTHING! FIX THIS NOW! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "RN2",
+    "network": "discover",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_RN2_narrative",
+    "description": "Hello, I hope this message finds you well. I recently had a lovely day out with my family, and we decided to treat ourselves to a nice dinner. I used my Discover card to pay, but later realized that the credit I was supposed to receive for a previous transaction hasn't been processed yet. I checked my statements multiple times, and it's still not there. Could you please look into this for me? Thank you so much for your help! (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "RN2",
+    "network": "discover",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_RN2_ambiguous",
+    "description": "I noticed something odd when I was reviewing my recent activities. It seems like there's a missing piece in the puzzle, and I'm not sure why things aren't adding up. Could you help me figure this out? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "NC",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_NC_emotional",
+    "description": "WHY is there a charge I DIDN'T make? FIX THIS NOW! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "NC",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_NC_narrative",
+    "description": "Hello, I hope this message finds you well. I recently noticed a charge on my Discover card that I don't recall authorizing. It was a busy day, and I was juggling a lot of errands, so I might have missed something. I was at the grocery store, then picked up my kids from school, and later went to a yoga class. But I can't seem to place this particular transaction. Could you please help me understand what this charge is for? Thank you for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "NC",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_discover_NC_ambiguous",
+    "description": "I was reviewing my statement and noticed something that doesn't quite add up. It's like finding an extra sock after doing laundry. Could you help me sort this out? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "UA02",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_discover_UA02_emotional",
+    "description": "THIS IS RIDICULOUS! I DIDN'T BUY ANYTHING! FIX THIS NOW OR I'M DONE WITH YOU! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "UA02",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_discover_UA02_narrative",
+    "description": "Hello, Discover team. I hope this message finds you well. I was just going through my statements while sipping my morning coffee, and I noticed a charge that I don't recognize. It's quite puzzling because I haven't made any online purchases recently. I remember the last thing I bought was a book from the local store, and that was a week ago. Could you please help me understand this charge? Thank you for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "UA02",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_discover_UA02_ambiguous",
+    "description": "I noticed something odd on my statement. It seems like there's a charge that doesn't quite fit with my usual spending. I haven't been shopping online lately, so this is a bit unexpected. Could you look into it for me? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "UA05",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_discover_UA05_emotional",
+    "description": "THIS IS OUTRAGEOUS! I NEVER MADE THIS PURCHASE! FIX THIS NOW! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "UA05",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_discover_UA05_narrative",
+    "description": "Hello, I hope this message finds you well. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There was a transaction that I don't recall making. It was a bit of a shock, to be honest, because I always keep my card with me. I even remember using it at the grocery store yesterday, and everything seemed fine. Could you please help me understand what's going on? Thank you so much for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "UA05",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_discover_UA05_ambiguous",
+    "description": "I noticed something strange on my statement. It seems like my card had a mind of its own. Can you check this out? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "UA06",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_discover_UA06_emotional",
+    "description": "MY CARD WAS STOLEN! FIX THIS NOW OR I'M DONE WITH YOU! (Network: Discover)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "UA06",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_discover_UA06_narrative",
+    "description": "Hello, I hope this message finds you well. I had quite a day yesterday, starting with a lovely breakfast at my favorite caf\u00e9. However, things took a turn when I realized my credit card was missing. I retraced my steps, but it was nowhere to be found. Later, I noticed some transactions I didn't recognize. I'm quite puzzled and would appreciate your help in resolving this matter. Thank you for your assistance. (Network: Discover)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "UA06",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_discover_UA06_ambiguous",
+    "description": "I noticed some unexpected activity on my account after a recent outing. Could you please look into this for me? (Network: Discover)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4807",
+    "network": "mastercard",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4807_emotional",
+    "description": "WHY is my card blocked?! FIX THIS NOW! I NEED IT! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4807",
+    "network": "mastercard",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4807_narrative",
+    "description": "Hello there, I hope you're having a good day. I was just about to buy my morning coffee when I realized my card wasn't working. It was quite embarrassing, especially since I had already chatted with the barista about the weather. I checked my account, and everything seemed fine, so I'm not sure why this happened. Could you please help me understand what's going on? Thank you! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4807",
+    "network": "mastercard",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4807_ambiguous",
+    "description": "I was at the store, and something unexpected happened with my card. It was quite a surprise, and I'm not sure what to do next. Could you look into it? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4812",
+    "network": "mastercard",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4812_emotional",
+    "description": "WHY is my card NOT working?! FIX THIS NOW! I NEED ANSWERS! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4812",
+    "network": "mastercard",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4812_narrative",
+    "description": "Hello there, I hope this message finds you well. I had quite a busy day today, running errands and trying to catch up on some work. However, I encountered a bit of a hiccup when I tried to use my Mastercard. It seems there was an issue with my account number not being recognized. I was quite surprised as I've been using this card for a while now without any problems. Could you please look into this for me? Thank you so much for your assistance! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4812",
+    "network": "mastercard",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4812_ambiguous",
+    "description": "I tried to make a purchase today, but something seemed off. The transaction didn't go through, and I'm not sure why. Could you check if everything is in order on your end? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4808",
+    "network": "mastercard",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4808_emotional",
+    "description": "WHY was I charged TWICE?! FIX THIS NOW! UNACCEPTABLE! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4808",
+    "network": "mastercard",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4808_narrative",
+    "description": "Hello there, I hope this message finds you well. I recently had a rather busy day, running errands and catching up with an old friend over coffee. It was a lovely afternoon, but when I got home and checked my credit card statement, I noticed something odd. There was a charge that seemed to have been authorized twice for the same transaction. I'm a bit puzzled about how this happened, as I only made one purchase. Could you please help me understand and resolve this? Thank you so much for your assistance. (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4808",
+    "network": "mastercard",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4808_ambiguous",
+    "description": "I noticed something unusual on my statement after a recent shopping trip. It seems like my card was a bit too eager to participate. Could you help clarify this for me? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4834",
+    "network": "mastercard",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4834_emotional",
+    "description": "WHY CHARGED TWICE? FIX THIS NOW! UNACCEPTABLE! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4834",
+    "network": "mastercard",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4834_narrative",
+    "description": "Hello there, I hope you're having a good day. I recently noticed something odd on my credit card statement. You see, I went to my favorite coffee shop last Tuesday, and I remember the barista was super friendly. I ordered my usual latte, and everything seemed fine. But when I checked my statement later, I saw the same charge twice! I'm a bit puzzled because I only had one coffee. Could you please help me sort this out? Thank you so much! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4834",
+    "network": "mastercard",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4834_ambiguous",
+    "description": "I was reviewing my recent transactions and noticed something peculiar. It seems like my account has been a bit too active for a single visit. Could you take a closer look at this? Thanks. (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4831",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4831_emotional",
+    "description": "WHY IS MY BILL WRONG? FIX THIS NOW! I DIDN'T SPEND THAT MUCH! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4831",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4831_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I was just reviewing my recent credit card statement over a cup of coffee, and I noticed something odd. It seems the amount charged for my last purchase at the local grocery store doesn't match what I remember paying. I distinctly recall the cashier saying a different total. Could you please help me understand why there's a discrepancy? Thank you so much for your assistance! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4831",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4831_ambiguous",
+    "description": "I was just going through my statement and something doesn't quite add up. I remember a different number from what I see here. It's like when you think you have enough change for a coffee, but the barista tells you otherwise. Could you take a look and let me know what's going on? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4835",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4835_emotional",
+    "description": "I DIDN'T BUY THIS! FIX IT NOW OR I'M DONE WITH YOU! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4835",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4835_narrative",
+    "description": "Hello there, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed a charge that I don't recognize. It's strange because I haven't used my card for any online purchases recently. I remember the last time I used it was at the grocery store last week. Could you please help me understand what's going on? Thank you so much for your assistance! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4835",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4835_ambiguous",
+    "description": "I noticed something odd on my statement. It's like a surprise I didn't expect, and I wasn't even shopping online. Can you help clarify this for me? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4840",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4840_emotional",
+    "description": "WHY is there a charge I DIDN'T make?! FIX THIS NOW! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4840",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4840_narrative",
+    "description": "Hello, I hope this message finds you well. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There was a charge from a store I've never even heard of, let alone visited. I remember because I spent the entire day at home, catching up on my favorite TV series. Could you please help me understand how this happened? Thank you so much for your assistance! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4840",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4840_ambiguous",
+    "description": "I noticed something strange on my bill. It seems like there's a little surprise that I wasn't expecting. Could you help clarify this for me? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4837",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4837_emotional",
+    "description": "WHY is there a charge I DIDN'T MAKE?! FIX THIS NOW! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4837",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4837_narrative",
+    "description": "Hello, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There's a charge from a store I've never even heard of, let alone visited. I remember last week I was busy with work and didn't have time to shop. Could you please help me understand what's going on? Thank you! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4837",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4837_ambiguous",
+    "description": "I noticed something strange on my statement. It seems like someone else might have been involved in a recent transaction. Can you look into this for me? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4841",
+    "network": "mastercard",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4841_emotional",
+    "description": "WHY am I STILL being charged?! I CANCELED this! FIX IT NOW! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4841",
+    "network": "mastercard",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4841_narrative",
+    "description": "Hello there, I hope you're having a good day. I wanted to reach out because I noticed something odd on my credit card statement. You see, last month I decided to cancel a service I was no longer using. I remember it clearly because it was a sunny afternoon, and I was sipping on my favorite coffee while going through my subscriptions. However, to my surprise, I was charged again this month. I'm a bit puzzled and would appreciate your help in resolving this matter. Thank you so much for your assistance! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4841",
+    "network": "mastercard",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4841_ambiguous",
+    "description": "I thought we had an understanding last month, but it seems like things didn't go as planned. Can we revisit our previous conversation? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4842",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4842_emotional",
+    "description": "WHY was I charged so late? FIX THIS NOW! Unacceptable! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4842",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4842_narrative",
+    "description": "Hello there, I hope you're having a good day. I recently noticed a charge on my credit card statement that seemed a bit off. It was from a purchase I made quite some time ago, and I was surprised to see it appear just now. I remember that day well because it was sunny, and I had a lovely lunch with my friend before making the purchase. Could you please help me understand why this charge is showing up so late? Thank you for your assistance. (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4842",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4842_ambiguous",
+    "description": "I was reviewing my statement and noticed something odd. It seems like a transaction from a while back just appeared. I thought everything was settled, but now I'm not so sure. Could you look into this for me? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4846",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4846_emotional",
+    "description": "WHY IS MY BILL IN EUROS?! FIX THIS NOW! I DIDN'T AUTHORIZE THIS! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4846",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4846_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I recently made a purchase while on a trip to Paris, and I was expecting the charge to appear in dollars, as that's what I usually see. However, when I checked my statement, it was in euros, which was quite surprising. I was just wondering if there might have been a mix-up or if there's something I need to do on my end to correct this. Thank you for your assistance! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4846",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4846_ambiguous",
+    "description": "I noticed something odd on my recent statement. It seems like the numbers don't quite add up the way I expected. Could you help clarify this for me? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4849",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4849_emotional",
+    "description": "WHAT IS THIS CHARGE?! I DIDN'T BUY ANYTHING! FIX THIS NOW! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4849",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4849_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There's a charge from a merchant I don't recognize at all. I haven't made any purchases from them, and I'm quite puzzled about how this ended up on my account. Could you please help me understand what's going on? Thank you so much for your assistance! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4849",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4849_ambiguous",
+    "description": "I noticed something unusual on my statement. It seems like a surprise, and I wasn't expecting it. Could you look into this for me? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4850",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4850_emotional",
+    "description": "WHY am I still being charged?! FIX THIS NOW! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4850",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4850_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I recently noticed something odd with my credit card statement. You see, I signed up for a service a while back, and it was supposed to be a one-time payment. However, I keep seeing these charges pop up every month. It's quite puzzling because I distinctly remember agreeing to a single payment. I was just enjoying my morning coffee when I saw the latest charge, and it really threw me off. Could you please help me understand what's going on? Thank you so much for your assistance! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4850",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4850_ambiguous",
+    "description": "I thought we had an understanding, but it seems like things are still happening. Can we revisit our agreement? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4854",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4854_emotional",
+    "description": "WHY was I charged $200?! FIX THIS NOW! I DIDN'T AUTHORIZE IT! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4854",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4854_narrative",
+    "description": "Hello, I hope this message finds you well. I recently noticed a charge on my Mastercard that I don't recognize. It was a busy day, and I was juggling a lot, from picking up groceries to attending a friend's birthday party. I remember checking my account in the evening and seeing this unexpected charge. I don't recall making any purchases that would match this amount. Could you please help me understand what happened? Thank you for your assistance. (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4854",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4854_ambiguous",
+    "description": "I noticed something odd on my statement. It doesn't seem to fit with my usual activities. Could you look into it? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4853",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4853_emotional",
+    "description": "WHY was I charged TWICE for the same thing? FIX THIS NOW! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4853",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4853_narrative",
+    "description": "Hello, I hope this message finds you well. I recently noticed something odd on my credit card statement. You see, last Tuesday, after a long day at work, I decided to treat myself to a nice dinner at my favorite restaurant. Imagine my surprise when I checked my statement and saw two charges for the same meal! I remember the waiter being a bit flustered, but I didn't think much of it at the time. Could you please help me understand why this happened? Thank you so much for your assistance! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4853",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4853_ambiguous",
+    "description": "I was reviewing my recent transactions and noticed something peculiar. It seems like there's a bit of a mix-up with the amounts. I remember the day clearly because it was quite eventful, and I was sure everything was settled correctly. Could you take a closer look at this for me? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4857",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4857_emotional",
+    "description": "WHY was I charged for a call I NEVER made?! FIX THIS NOW! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4857",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4857_narrative",
+    "description": "Hello there, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There's a charge for a phone call that I don't recall making. It's quite puzzling because I usually keep track of my calls, especially those that might incur charges. Could you please help me understand this? Thank you so much for your assistance! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4857",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4857_ambiguous",
+    "description": "I noticed something unusual on my statement related to a service I didn't expect. Could you clarify this for me? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4855",
+    "network": "mastercard",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4855_emotional",
+    "description": "WHERE'S MY ORDER?! I PAID AND GOT NOTHING! FIX THIS NOW! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4855",
+    "network": "mastercard",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4855_narrative",
+    "description": "Hello there, I hope you're having a good day. I recently ordered a lovely set of garden tools from a website that seemed quite reputable. I was really looking forward to sprucing up my backyard this weekend. However, it's been over two weeks, and I haven't seen any sign of the package. I checked my emails, and there's no update on the delivery. Could you please help me figure out what's going on? Thank you so much for your assistance. (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4855",
+    "network": "mastercard",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4855_ambiguous",
+    "description": "I was eagerly waiting for something special, but it seems like the excitement was short-lived. The anticipation was high, but the outcome was rather disappointing. I wonder if there's a way to resolve this unexpected turn of events. (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4859",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4859_emotional",
+    "description": "WHY was I charged for a hotel I NEVER stayed at?! FIX THIS NOW! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4859",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4859_narrative",
+    "description": "Hello there, I hope you're having a lovely day. I recently had a rather peculiar experience. You see, I was planning a weekend getaway to the mountains, but due to unforeseen circumstances, I had to cancel my trip. Imagine my surprise when I noticed a charge from the hotel on my statement! I distinctly remember canceling the reservation well in advance. Could you please help me sort this out? Thank you so much for your assistance! (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4859",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_mastercard_4859_ambiguous",
+    "description": "I noticed something odd on my statement after my trip plans changed. Could you check the recent charges for me? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4870",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4870_emotional",
+    "description": "WHY was I charged? I DIDN'T DO THIS! FIX IT NOW! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4870",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4870_narrative",
+    "description": "Hello, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed a charge that I don't recognize. It's quite puzzling because I always make sure to use my card responsibly. I remember the last time I used it was at the grocery store, and everything seemed fine. Could you please help me understand what's going on? Thank you so much for your assistance. (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4870",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4870_ambiguous",
+    "description": "I noticed something odd on my statement after my last visit to the store. It seems like things didn't go as expected. Could you look into it? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4863",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4863_emotional",
+    "description": "WHAT IS THIS CHARGE?! I DIDN'T BUY ANYTHING! FIX THIS NOW! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4863",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4863_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I was just going through my credit card statement while sipping my morning coffee, and I noticed a charge that I don't recall making. It's quite puzzling because I usually keep track of my expenses meticulously. I even checked my calendar to see if I had any appointments or events that might explain it, but nothing seems to match. Could you please help me understand this charge? Thank you so much for your assistance. (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4863",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4863_ambiguous",
+    "description": "I was reviewing my recent transactions and noticed something that doesn't quite fit with my usual spending habits. It's like finding a puzzle piece that doesn't belong in the picture. Could you help me sort this out? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "4871",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4871_emotional",
+    "description": "WHY was I charged? I DIDN'T authorize this! FIX IT NOW! (Network: Mastercard)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "4871",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4871_narrative",
+    "description": "Hello, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed a charge that I don't recall making. It's quite puzzling because I always use my card with the chip and PIN, and I'm very careful about it. Could you please help me understand how this happened? Thank you so much for your assistance. (Network: Mastercard)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "4871",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_mastercard_4871_ambiguous",
+    "description": "I noticed something odd on my statement. It seems like there was a mix-up with how my card was used. Can you check what happened? (Network: Mastercard)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "UNAUTHORIZED",
+    "network": "openapi_gateway_response",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_openapi_gateway_response_UNAUTHORIZED_emotional",
+    "description": "WHAT IS THIS CHARGE?! I DIDN'T BUY ANYTHING! FIX THIS NOW! (Network: Openapi_Gateway_Response)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "UNAUTHORIZED",
+    "network": "openapi_gateway_response",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_openapi_gateway_response_UNAUTHORIZED_narrative",
+    "description": "Hello there, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There's a charge from a store I've never even heard of, let alone visited. I was quite surprised because I always keep track of my expenses. Could you please help me understand what's going on? Thank you so much for your assistance! (Network: Openapi_Gateway_Response)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "UNAUTHORIZED",
+    "network": "openapi_gateway_response",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_openapi_gateway_response_UNAUTHORIZED_ambiguous",
+    "description": "I noticed something unusual on my statement. It seems like a surprise, and I wasn't expecting it. Could you help clarify this for me? (Network: Openapi_Gateway_Response)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "QUOTA_EXCEEDED",
+    "network": "openapi_gateway_response",
+    "category": "processing_error",
+    "is_fraud": false,
+    "dispute_id": "gen_openapi_gateway_response_QUOTA_EXCEEDED_emotional",
+    "description": "WHY IS MY CARD BLOCKED?! FIX THIS NOW! I DIDN'T DO ANYTHING WRONG! (Network: Openapi_Gateway_Response)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "QUOTA_EXCEEDED",
+    "network": "openapi_gateway_response",
+    "category": "processing_error",
+    "is_fraud": false,
+    "dispute_id": "gen_openapi_gateway_response_QUOTA_EXCEEDED_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I was just going about my usual routine, you know, grabbing my morning coffee and planning my errands when I suddenly found myself unable to use my credit card. It was quite embarrassing at the checkout line. I checked my account and everything seemed fine, so I'm really puzzled as to why this happened. Could you please help me understand what's going on? Thank you so much for your assistance. (Network: Openapi_Gateway_Response)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "QUOTA_EXCEEDED",
+    "network": "openapi_gateway_response",
+    "category": "processing_error",
+    "is_fraud": false,
+    "dispute_id": "gen_openapi_gateway_response_QUOTA_EXCEEDED_ambiguous",
+    "description": "I was trying to make a purchase, but it seems like my usual access isn't available. Could you look into this? It was unexpected, and I'm not sure what changed. (Network: Openapi_Gateway_Response)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "10.1",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.1_emotional",
+    "description": "WHY was I charged for something I DIDN'T buy?! FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "10.1",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.1_narrative",
+    "description": "Hello, I hope this message finds you well. I recently noticed a charge on my Visa card that I don't recognize. It was a busy day for me; I had just returned from a long walk with my dog, and I was preparing dinner when I decided to check my bank statement. To my surprise, there was a transaction that seemed out of place. I am quite certain I didn't make this purchase, and I'm a bit puzzled about how it ended up on my account. Could you please help me resolve this issue? Thank you for your assistance. (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "10.1",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.1_ambiguous",
+    "description": "I noticed something odd on my statement after visiting a store that usually doesn't have any issues. Can you look into it? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "ITEM_NOT_RECEIVED",
+    "network": "paypal",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_paypal_ITEM_NOT_RECEIVED_emotional",
+    "description": "WHERE'S MY ORDER?! I paid and got NOTHING! FIX THIS NOW! (Network: Paypal)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "ITEM_NOT_RECEIVED",
+    "network": "paypal",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_paypal_ITEM_NOT_RECEIVED_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I recently made a purchase through PayPal, and while I was excited to receive my item, it seems to have vanished into thin air. I checked my mailbox every day last week, even during the rain, but alas, nothing arrived. I was really looking forward to this package as it was a gift for my niece's birthday. Could you please help me figure out what happened? Thank you so much for your assistance. (Network: Paypal)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "ITEM_NOT_RECEIVED",
+    "network": "paypal",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_paypal_ITEM_NOT_RECEIVED_ambiguous",
+    "description": "I was eagerly waiting for something special, but it seems like the universe had other plans. My anticipation turned into a waiting game, and now I'm left wondering if it was all just a dream. Any insights on this would be appreciated. (Network: Paypal)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "10.3",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.3_emotional",
+    "description": "WHY was $500 charged at a store I NEVER visited?! FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "10.3",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.3_narrative",
+    "description": "Hello, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There's a charge from a store I don't recall visiting. I usually keep track of my purchases, and this one doesn't ring a bell. Could you please help me understand what's going on? Thank you so much for your assistance. (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "10.3",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.3_ambiguous",
+    "description": "I noticed something strange on my bill. I was at home all day, yet there's an unexpected entry. Can you check this for me? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "10.2",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.2_emotional",
+    "description": "WHY was I charged for something I DIDN'T buy?! FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "10.2",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.2_narrative",
+    "description": "Hello, I hope this message finds you well. I had quite a busy day today, running errands and catching up with some old friends. However, when I finally sat down to review my credit card statement, I noticed a charge that I don't recognize. It seems to have occurred at a time when I was nowhere near the location of the transaction. I'm quite puzzled and would appreciate your assistance in resolving this matter. Thank you for your help! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "10.2",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.2_ambiguous",
+    "description": "I noticed something odd on my statement. It seems like a mix-up, as I wasn't where it says I was. Can you look into it? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "10.5",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.5_emotional",
+    "description": "WHY is there a charge I DIDN'T make? FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "10.5",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.5_narrative",
+    "description": "Hello, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There's a charge from a place I've never heard of, and I don't recall making any such purchase. It's quite puzzling, and I'm not sure how to proceed. Could you please help me understand what's going on? Thank you so much for your assistance. (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "10.5",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.5_ambiguous",
+    "description": "I noticed something unusual on my statement. It seems like there's a surprise I wasn't expecting. Could you help clarify this for me? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "11.1",
+    "network": "visa",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_11.1_emotional",
+    "description": "WHY is my card blocked?! FIX THIS NOW! I NEED IT! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "11.1",
+    "network": "visa",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_11.1_narrative",
+    "description": "Hello there, I hope you're having a good day. I was just trying to buy some groceries when my card was unexpectedly declined. It was quite embarrassing, especially since I had a long line of people behind me. I checked my account, and everything seemed fine. Could you please help me understand why this happened? Thank you so much for your assistance. (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "11.1",
+    "network": "visa",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_11.1_ambiguous",
+    "description": "I was at the store, and something unexpected happened with my card. It was quite a surprise, and I'm not sure what to do next. Can you look into it? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "10.4",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.4_emotional",
+    "description": "WHAT IS THIS CHARGE?! I DIDN'T BUY ANYTHING! FIX THIS NOW OR I'M DONE WITH YOU! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "10.4",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.4_narrative",
+    "description": "Hello there, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There's a charge from a place I've never heard of, and I certainly didn't make any purchases online recently. I usually keep track of my expenses, and this one just doesn't add up. Could you please help me understand what's going on? Thank you so much for your assistance! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "10.4",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "dispute_id": "gen_visa_10.4_ambiguous",
+    "description": "I was reviewing my recent transactions and noticed something that doesn't quite fit. It's like finding a puzzle piece that doesn't belong in the picture. I haven't been shopping online or anything, so this is a bit puzzling. Could you take a look and let me know what might be happening? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "11.2",
+    "network": "visa",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_11.2_emotional",
+    "description": "WHY WAS MY CARD DECLINED?! FIX THIS NOW! I NEED ANSWERS! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "11.2",
+    "network": "visa",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_11.2_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I was just trying to buy some groceries yesterday, and to my surprise, my card was declined at the checkout. It was quite embarrassing, especially since I had a long line of people behind me. I checked my account, and everything seemed fine. Could you please help me understand what went wrong? Thank you so much for your assistance. (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "11.2",
+    "network": "visa",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_11.2_ambiguous",
+    "description": "I was at the store, and something unexpected happened with my card. It was quite inconvenient, and I had to leave without my items. Could you look into this for me? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "11.3",
+    "network": "visa",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_11.3_emotional",
+    "description": "WHY was my card charged without my OK? FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "11.3",
+    "network": "visa",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_11.3_narrative",
+    "description": "Hello there, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There was a charge that I don't recall authorizing. It's quite puzzling because I usually keep track of my expenses meticulously. Could you please help me understand how this happened? Thank you so much for your assistance! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "11.3",
+    "network": "visa",
+    "category": "authorization",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_11.3_ambiguous",
+    "description": "I noticed something strange on my statement. It seems like there was a mix-up or oversight. Could you look into it? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "12.1",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.1_emotional",
+    "description": "WHY was I charged NOW? FIX THIS IMMEDIATELY! UNACCEPTABLE! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "12.1",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.1_narrative",
+    "description": "Hello, I hope this message finds you well. I recently noticed a charge on my Visa card that seemed a bit off. It was a lovely day, and I was just enjoying my morning coffee when I decided to check my account. To my surprise, there was a transaction that appeared much later than expected. I remember making the purchase weeks ago, and it just showed up now. Could you please help me understand why this happened? Thank you so much for your assistance. (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "12.1",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.1_ambiguous",
+    "description": "I noticed something odd with my recent statement. It seems like things aren't lining up as they should. Could you take a look? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "12.2",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.2_emotional",
+    "description": "WHY is there a WRONG charge on my card?! FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "12.2",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.2_narrative",
+    "description": "Hello, I hope this message finds you well. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There seems to be a transaction that doesn't quite match what I remember doing. I was sure I only bought groceries last week, but there's this charge that seems out of place. Could you please help me understand what's going on? Thank you so much for your assistance! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "12.2",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.2_ambiguous",
+    "description": "I was reviewing my recent activities and noticed something that doesn't align with my usual spending habits. It's like a puzzle piece that doesn't fit. Could you help clarify this for me? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "12.4",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.4_emotional",
+    "description": "FIX THIS NOW! Wrong account number! I NEED MY MONEY BACK ASAP! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "12.4",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.4_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I was just going through my statements while sipping my morning coffee, and I noticed something odd. It seems like there's a transaction linked to an account number that doesn't match mine. I double-checked my records, and I'm quite certain there's been a mix-up. Could you please look into this for me? Thank you so much for your help! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "12.4",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.4_ambiguous",
+    "description": "I was reviewing my recent transactions and noticed something peculiar. It seems like the details don't quite align with what I expected. Could you help clarify this for me? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "12.5",
+    "network": "visa",
+    "category": "incorrect_amount",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.5_emotional",
+    "description": "WHY IS MY BILL WRONG? FIX THIS NOW! I DIDN'T SPEND THAT MUCH! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "12.5",
+    "network": "visa",
+    "category": "incorrect_amount",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.5_narrative",
+    "description": "Hello, I hope you're having a good day. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. It seems the amount charged for my recent purchase at the bookstore is higher than what I remember paying. I distinctly recall the cashier saying it was $25, but my statement shows $35. Could you please help me understand this discrepancy? Thank you so much for your assistance! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "12.5",
+    "network": "visa",
+    "category": "incorrect_amount",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.5_ambiguous",
+    "description": "I was reviewing my recent transactions and noticed something that doesn't quite add up. It's like when you expect a certain number of apples in a basket, but there are more than you remember picking. Could you help clarify this for me? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "12.3",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.3_emotional",
+    "description": "WHY was I charged in euros?! FIX THIS NOW! I want my money back! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "12.3",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.3_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I recently made a purchase while on a trip to Paris, and I was expecting the charge to be in dollars, as that's what I usually see. However, when I checked my statement, it was in euros, which was quite surprising. I was just wondering if there might have been a mix-up or if there's something I might have missed. Thank you for your help! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "12.3",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.3_ambiguous",
+    "description": "I noticed something odd on my statement after my recent trip. The numbers don't quite add up the way I expected. Could you take a look and let me know what's going on? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "12.6.1",
+    "network": "visa",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.6.1_emotional",
+    "description": "WHY CHARGED TWICE? FIX THIS NOW! UNACCEPTABLE! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "12.6.1",
+    "network": "visa",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.6.1_narrative",
+    "description": "Hello there, I hope you're having a good day. I recently went to my favorite coffee shop, and after enjoying a lovely latte, I noticed something odd on my statement. It seems like I've been charged twice for the same purchase. I remember the barista was new, and there was a bit of a mix-up with the card machine. Could you please look into this for me? Thank you so much for your help! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "12.6.1",
+    "network": "visa",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.6.1_ambiguous",
+    "description": "I noticed something strange on my statement after my last visit to the store. It seems like the numbers don't quite add up, and I'm a bit puzzled. Could you help clarify this for me? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "12.6.2",
+    "network": "visa",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.6.2_emotional",
+    "description": "WHY CHARGED TWICE? FIX THIS NOW! I PAID ALREADY! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "12.6.2",
+    "network": "visa",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.6.2_narrative",
+    "description": "Hello, I hope this message finds you well. I recently had a lovely day out with my family, and we decided to have dinner at our favorite restaurant. I remember paying for the meal with cash, but to my surprise, I noticed a charge on my credit card statement for the same amount. I'm a bit puzzled as I distinctly recall settling the bill in person. Could you please help me resolve this? Thank you so much for your assistance. (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "12.6.2",
+    "network": "visa",
+    "category": "duplicate",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.6.2_ambiguous",
+    "description": "I noticed something odd on my statement. It seems like there's a repeat of something I handled differently. Could you check it out? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "12.7",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.7_emotional",
+    "description": "WHY is my card charged? FIX THIS NOW! I DIDN'T AUTHORIZE! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "12.7",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.7_narrative",
+    "description": "Hello, I hope this message finds you well. I was just going through my credit card statement while sipping my morning coffee, and I noticed something odd. There's a charge that doesn't seem right. I remember using my card at the grocery store last week, but this amount doesn't match any of my receipts. Could you please help me understand what's going on? Thank you so much for your assistance! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "12.7",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_12.7_ambiguous",
+    "description": "I was reviewing my recent transactions and noticed something peculiar. It seems like there's a mismatch somewhere, and I'm not sure how it happened. Could you take a closer look at this for me? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "13.2",
+    "network": "visa",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.2_emotional",
+    "description": "WHY am I STILL being charged?! I CANCELLED! FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "13.2",
+    "network": "visa",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.2_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I wanted to reach out because I noticed something odd on my credit card statement. You see, last month, I decided to cancel my membership with a service I was using. I even received a confirmation email about it. However, to my surprise, I saw a charge from them again this month. I was just sipping my morning coffee when I noticed it, and it really threw me off. Could you please help me sort this out? Thank you so much for your assistance! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "13.2",
+    "network": "visa",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.2_ambiguous",
+    "description": "I thought we had an understanding, but it seems like things are still happening. Can we revisit our previous conversation? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "13.1",
+    "network": "visa",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.1_emotional",
+    "description": "WHERE'S MY ORDER?! I PAID AND GOT NOTHING! FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "13.1",
+    "network": "visa",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.1_narrative",
+    "description": "Hello there, I hope this message finds you well. I recently ordered a lovely set of garden tools from a website using my Visa card. I was so excited because my garden is in desperate need of some TLC. However, it's been over a month, and I haven't seen any sign of the package. I even checked with my neighbors to see if it was delivered to the wrong address, but no luck. Could you please help me figure out what's going on? Thank you so much for your assistance! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "13.1",
+    "network": "visa",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.1_ambiguous",
+    "description": "I was eagerly waiting for something special to arrive, but it seems like the universe had other plans. It's been a while, and my anticipation has turned into a bit of a mystery. I wonder if there's a way to unravel this little puzzle? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "13.3",
+    "network": "visa",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.3_emotional",
+    "description": "THIS IS UNACCEPTABLE! The product is NOTHING like what I ordered! FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "13.3",
+    "network": "visa",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.3_narrative",
+    "description": "Hello there, I hope you're having a wonderful day. I recently ordered a lovely vase from your store, and I was so excited to receive it. However, when it arrived, it was not quite what I had expected. The color was off, and there were some chips on the edges. I was really looking forward to using it for my sister's birthday party, but now I'm not sure what to do. Could you please help me resolve this issue? Thank you so much for your assistance. (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "13.3",
+    "network": "visa",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.3_ambiguous",
+    "description": "I was really looking forward to using the item for a special occasion, but it seems like it won't work out as planned. It's not quite what I envisioned, and I'm unsure how to proceed. Any guidance would be appreciated. (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "13.5",
+    "network": "visa",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.5_emotional",
+    "description": "THIS IS UNACCEPTABLE! I was LIED to about the product! FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "13.5",
+    "network": "visa",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.5_narrative",
+    "description": "Hello there, I hope you're having a good day. I recently purchased a product using my Visa card, and it was supposed to be a top-of-the-line gadget. I was really excited because it was a gift for my nephew's birthday. However, when it arrived, it was nothing like what was advertised. I spent the whole afternoon trying to figure out if I had ordered the wrong item, but everything matched. I'm really puzzled and would appreciate your help in resolving this matter. Thank you! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "13.5",
+    "network": "visa",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.5_ambiguous",
+    "description": "I was expecting something quite different from what I received. It's like ordering a gourmet meal and getting fast food instead. I hope you understand the situation. (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "13.4",
+    "network": "visa",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.4_emotional",
+    "description": "THIS IS UNACCEPTABLE! I got a FAKE product! FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "13.4",
+    "network": "visa",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.4_narrative",
+    "description": "Hello there, I hope this message finds you well. I recently ordered a lovely handbag from a store online, and it was supposed to be a genuine designer piece. I was so excited when it arrived, but after a closer look, I realized it wasn't what I expected. It was a busy day, and I had just come back from a long walk with my dog, so I might have missed some details initially. Anyway, I believe there's been a mistake, and I'd appreciate your help in resolving this matter. Thank you for your understanding. (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "13.4",
+    "network": "visa",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.4_ambiguous",
+    "description": "I received something that doesn't quite match the description. It's like when you expect a sunny day but get rain instead. Could we look into this? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "13.6",
+    "network": "visa",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.6_emotional",
+    "description": "WHY IS MY REFUND STILL MISSING?! FIX THIS NOW! IT'S BEEN WEEKS! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "13.6",
+    "network": "visa",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.6_narrative",
+    "description": "Hello there, I hope you're having a good day. I recently returned a pair of shoes I bought online because they didn't fit quite right. The store assured me that the refund would be processed within a week. It's been over two weeks now, and I still haven't seen any changes on my credit card statement. I understand these things can take time, but I'm starting to get a bit worried. Could you please look into this for me? Thank you so much for your help! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "13.6",
+    "network": "visa",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.6_ambiguous",
+    "description": "I noticed something odd on my statement. It seems like things aren't balancing out as expected after my recent return. Could you help clarify this for me? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "13.8",
+    "network": "visa",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.8_emotional",
+    "description": "WHY was my refund not processed?! FIX THIS NOW! I'm FURIOUS! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "13.8",
+    "network": "visa",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.8_narrative",
+    "description": "Hello there, I hope you're having a good day. I recently tried to return an item I purchased, and the merchant assured me that the refund would be processed back to my card. However, it's been over two weeks, and I haven't seen any changes in my account. I even called the store, and they confirmed the transaction was completed on their end. I'm a bit puzzled and would appreciate any help you can provide. Thank you! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "13.8",
+    "network": "visa",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.8_ambiguous",
+    "description": "I noticed something odd with my account. It seems like something I expected didn't quite happen. Could you look into it? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "13.7",
+    "network": "visa",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.7_emotional",
+    "description": "I CANCELLED! Why is my money still gone? FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "13.7",
+    "network": "visa",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.7_narrative",
+    "description": "Hello there, I hope you're having a good day. I recently had a bit of a mix-up with a purchase I made. You see, I ordered a lovely set of garden tools online, but then I realized I didn't need them after all. I promptly canceled the order, and the seller confirmed it. However, I noticed that the charge is still on my credit card statement. I was hoping you could help me sort this out. Thank you so much for your assistance! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "13.7",
+    "network": "visa",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.7_ambiguous",
+    "description": "I thought everything was sorted out, but it seems like there's still something lingering on my account. It's a bit puzzling since I was under the impression that things were settled. Could you take a look and see what's going on? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  },
+  {
+    "true_reason_code": "13.9",
+    "network": "visa",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.9_emotional",
+    "description": "WHERE'S MY MONEY?! ATM said it dispensed cash, but I got NOTHING! FIX THIS NOW! (Network: Visa)",
+    "variation_type": "emotional",
+    "expected_confidence": 0.85
+  },
+  {
+    "true_reason_code": "13.9",
+    "network": "visa",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.9_narrative",
+    "description": "Hello there, I hope you're having a lovely day. I went to the ATM yesterday after a long day at work, hoping to withdraw some cash for the weekend. I was really looking forward to treating myself to a nice dinner. However, the machine said it dispensed the money, but I didn't receive anything. I checked my account, and the amount was deducted. Could you please help me resolve this? Thank you so much! (Network: Visa)",
+    "variation_type": "narrative",
+    "expected_confidence": 0.8
+  },
+  {
+    "true_reason_code": "13.9",
+    "network": "visa",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "dispute_id": "gen_visa_13.9_ambiguous",
+    "description": "I visited the ATM recently, and something unexpected happened. The machine seemed to complete the process, but my plans for the day took a different turn. I was left wondering about the outcome. Can we look into this together? (Network: Visa)",
+    "variation_type": "ambiguous",
+    "expected_confidence": 0.6
+  }
+]

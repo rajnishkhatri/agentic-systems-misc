@@ -1,0 +1,27 @@
+[
+  {
+    "fallacy_id": "cherry_picked_benchmarks",
+    "anti_pattern": {
+      "title": "Visa-Only Validation",
+      "description": "Testing only on favorable subsets where the model is known to perform well.",
+      "red_flags": [
+        "Single network (e.g., Visa only)",
+        "Single reason code (e.g., 10.4 only)",
+        "No confusion matrix provided",
+        "Perfect round numbers (100% success)"
+      ],
+      "code_smell": "test_set = df[df['network'] == 'visa']"
+    },
+    "pattern": {
+      "title": "Full Distribution Testing",
+      "description": "Evaluate across all networks, categories, and edge cases to assess true generalization.",
+      "best_practices": [
+        "Test all 5 networks (Visa, MC, Amex, Discover, Other)",
+        "Report per-category accuracy",
+        "Perform tail category analysis",
+        "Report TPR and TNR explicitly"
+      ],
+      "code_template": "test_set = load_json('diverse_classification_labels.json')"
+    }
+  }
+]

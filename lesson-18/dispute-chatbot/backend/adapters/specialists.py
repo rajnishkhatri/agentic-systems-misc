@@ -23,6 +23,7 @@ from backend.phases.evidence_models import (
     ShippingEvidence,
     SpecialistResult
 )
+from backend.adapters.data_loader import DataLoader
 
 
 class BaseSpecialist:
@@ -50,17 +51,40 @@ class TransactionSpecialist(BaseSpecialist):
     def __init__(self, failure_rate: float = 0.0, latency_ms: int = 100):
         super().__init__(failure_rate, latency_ms)
 
-    async def get_history(self, account_id: str, days: int = 30) -> TransactionEvidence:
+    async def get_history(self, account_id: str, days: int = 30, dispute_id: Optional[str] = None) -> TransactionEvidence:
         """Fetch transaction history for an account.
         
         Args:
             account_id: The account identifier.
             days: Number of days of history to fetch.
+            dispute_id: Optional dispute ID to lookup synthetic data.
             
         Returns:
             TransactionEvidence object.
         """
         await self._simulate_latency()
+
+        # Synthetic Data Lookup
+        if dispute_id:
+            loader = DataLoader()
+            data = loader.get_transaction_evidence(dispute_id)
+            if data:
+                tx_list = []
+                for t in data.get("ce3_transactions", []):
+                    tx_list.append(TransactionInfo(
+                        transaction_id=t.get("transaction_id", "unknown"),
+                        date=t.get("date", datetime.now().isoformat()),
+                        amount=float(t.get("amount", 0.0)),
+                        currency=t.get("currency", "USD"),
+                        description=t.get("description", "Unknown")
+                    ))
+                
+                return TransactionEvidence(
+                    success=True,
+                    timestamp=datetime.now().isoformat(),
+                    transactions=tx_list,
+                    total_found=len(tx_list)
+                )
 
         if self._should_fail() or account_id == "ACC_ERROR":
             return TransactionEvidence(
@@ -122,10 +146,28 @@ class CustomerSpecialist(BaseSpecialist):
     def __init__(self, failure_rate: float = 0.0, latency_ms: int = 100):
         super().__init__(failure_rate, latency_ms)
 
-    async def get_signals(self, customer_id: str) -> CustomerEvidence:
+    async def get_signals(self, customer_id: str, dispute_id: Optional[str] = None) -> CustomerEvidence:
         """Fetch customer signals (IP, Device, etc)."""
         await self._simulate_latency()
         
+        # Synthetic Data Lookup
+        if dispute_id:
+            loader = DataLoader()
+            data = loader.get_customer_evidence(dispute_id)
+            if data:
+                signal = CustomerSignal(
+                    ip_address=data.get("ip_address"),
+                    device_id=data.get("device_id"),
+                    email=data.get("email"),
+                    phone=data.get("phone"),
+                    # Note: shipping_address might be in shipping records, not always in profile
+                )
+                return CustomerEvidence(
+                    success=True,
+                    timestamp=datetime.now().isoformat(),
+                    signal=signal
+                )
+
         if self._should_fail() or customer_id == "CUST_ERROR":
             return CustomerEvidence(
                 success=False,
@@ -177,9 +219,35 @@ class ShippingSpecialist(BaseSpecialist):
     def __init__(self, failure_rate: float = 0.0, latency_ms: int = 100):
         super().__init__(failure_rate, latency_ms)
 
-    async def get_tracking(self, tracking_number: str) -> ShippingEvidence:
+    async def get_tracking(self, tracking_number: str, dispute_id: Optional[str] = None) -> ShippingEvidence:
         """Fetch shipping details and POD."""
         await self._simulate_latency()
+
+        # Synthetic Data Lookup
+        loader = DataLoader()
+        data = None
+        if dispute_id:
+            data = loader.get_shipping_evidence(dispute_id)
+        
+        # Fallback to tracking number lookup if no dispute_id or not found
+        if not data and tracking_number and tracking_number not in ["TRK_ERROR", "TRK_DELIVERED", "TRK_TRANSIT"]:
+             data = loader.get_shipping_by_tracking(tracking_number)
+
+        if data and data.get("shipping"):
+            s = data["shipping"]
+            # Extract POD from documents if available
+            pod_url = next((d.get("url") for d in data.get("documents", []) if d.get("type") == "proof_of_delivery"), None)
+            
+            return ShippingEvidence(
+                success=True,
+                timestamp=datetime.now().isoformat(),
+                tracking_number=s.get("tracking_number"),
+                carrier=s.get("carrier"),
+                status=s.get("status", "UNKNOWN").upper(),
+                delivered_date=s.get("delivery_date"), # Note: key is delivery_date in JSON, delivered_date in model
+                pod_signature_url=pod_url,
+                delivery_address=s.get("shipping_address")
+            )
 
         if self._should_fail() or tracking_number == "TRK_ERROR":
             return ShippingEvidence(

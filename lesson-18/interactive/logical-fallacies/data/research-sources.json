@@ -1,0 +1,31 @@
+[
+  {
+    "fallacy_id": "cherry_picked_benchmarks",
+    "source_type": "Academic",
+    "title": "Show Your Work: Improved Reporting of Experimental Results",
+    "authors": "Dodge, J., Gururangan, S., Card, D., Schwartz, R., & Smith, N. A.",
+    "year": "2019",
+    "citation": "arXiv:1909.03004 [cs.CL]",
+    "url": "https://arxiv.org/abs/1909.03004",
+    "relevance_score": 5,
+    "key_insight": "Reporting only the best result from a hyperparameter search (seed hacking) creates a false impression of performance.",
+    "application": "Explains why 'best of N' reporting is a statistical manipulation."
+  },
+  {
+    "fallacy_id": "cherry_picked_benchmarks",
+    "source_type": "Industry Case",
+    "title": "Google Gemini 'Hands-on' Demo",
+    "date": "Dec 2023",
+    "relevance_score": 5,
+    "key_insight": "The video was edited to speed up latency and used still frames instead of live video, misrepresenting real-time capabilities.",
+    "application": "Primary real-world example of 'Demo-to-Production Leap' via cherry-picking."
+  },
+  {
+    "fallacy_id": "cherry_picked_benchmarks",
+    "source_type": "GitHub/Community",
+    "title": "Open LLM Leaderboard Contamination",
+    "relevance_score": 4,
+    "key_insight": "Models finetuned on test set questions to game the leaderboard (Goodhart's Law).",
+    "application": "Illustrates 'Metric Hacking' and the need for held-out evaluation sets."
+  }
+]

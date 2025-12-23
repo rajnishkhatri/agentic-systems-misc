@@ -1,0 +1,51 @@
+{
+  "prog.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "description": "WHERE'S MY ORDER?! I PAID AND GOT NOTHING! FIX THIS NOW! (Network: Discover)",
+        "reasoning": "The customer is expressing frustration over not receiving an order after making a payment, indicating a failure in the shipping or fulfillment process. This falls under issues related to order processing or delivery problems.",
+        "category": "processing_errors"
+      },
+      {
+        "augmented": true,
+        "description": "I was at the checkout, and something unexpected happened. The cashier looked puzzled, and I was left standing there, unsure of what to do next. Could you shed some light on this situation? (Network: Amex)",
+        "reasoning": "The customer's description indicates a situation at the checkout where the transaction did not proceed as expected, leading to confusion. This suggests potential processing errors or issues related to the payment system at the point of sale, rather than fraud or a cardholder dispute.",
+        "category": "processing_errors"
+      },
+      {
+        "augmented": true,
+        "description": "WHY is there a charge I DIDN'T MAKE?! FIX THIS NOW! (Network: Mastercard)",
+        "reasoning": "The customer is expressing frustration over an unauthorized charge on their account, indicating that they did not make the transaction. This falls under the category of fraudulent transactions, as it involves a dispute over a charge that the customer claims they did not authorize.",
+        "category": "fraud"
+      }
+    ],
+    "signature": {
+      "instructions": "In a high-stakes situation where a customer has urgently reported a troubling issue with their credit card transaction, classify the provided dispute description into the correct category. Ensure to articulate clear reasoning behind your classification and select an appropriate category like fraud, processing errors, or authorization issues. Your response could directly influence customer satisfaction and service effectiveness, so make sure to be thorough and empathetic in your reasoning.",
+      "fields": [
+        {
+          "prefix": "Description:",
+          "description": "The customer's description of the dispute."
+        },
+        {
+          "prefix": "Reasoning:",
+          "description": "Reasoning for the classification."
+        },
+        {
+          "prefix": "Category:",
+          "description": "The unified category (e.g. fraud, authorization, processing_errors, etc.)"
+        }
+      ]
+    },
+    "lm": null
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.11",
+      "dspy": "3.0.4",
+      "cloudpickle": "3.1"
+    }
+  }
+}

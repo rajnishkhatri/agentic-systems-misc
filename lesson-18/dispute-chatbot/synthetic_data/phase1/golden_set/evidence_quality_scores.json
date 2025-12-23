@@ -1,0 +1,502 @@
+[
+  {
+    "dispute_id": "DIS-1756e678",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-87392cc1",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-fc3e8549",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-69feddd6",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-d7f87d30",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-cfcb8f2a",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-89a2a7e0",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-5e03d7d6",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-1fbac4ea",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-231f1dbf",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-eaeb4222",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-dac5c186",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-c6866790",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-f8275daf",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-92be7f38",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-763c831d",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-aad94dd2",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-15a96de0",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-fd252248",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-fb097cba",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-593fcd37",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-8d3f0bdd",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-9e22814b",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-cbbfe09e",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-4034a52e",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-f1fc779d",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-ba4319e0",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-fd6bf3b0",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-8c3b816d",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-f8c10d5b",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-2eb16e2d",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-e64a7249",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-fec79685",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-e465efaf",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-690a73bb",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-80786c3f",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-0469df51",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-84e57134",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-7a17711d",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-3fc27009",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-5022ee84",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-0f33504c",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-0bab5b3e",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-b36d5b2e",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-028601c1",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-955b6b55",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-546091a3",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-bdca7a97",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-64eacf79",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-985f1c33",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-9037c17f",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-48676dcc",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-325dc3e2",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-0339c434",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-3a681e00",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-1cef7628",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-5b4a5318",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-2106cc74",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-8e714399",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-c308a696",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-d70e5a5a",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-54d58894",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-c9f4ffe9",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-3d709b32",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-478e3988",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-f30e9fc9",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-9e52860e",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-4d273202",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-a258458d",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-4578e457",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-b31b65cb",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-b1558ff5",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-e658a797",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-b7ba9e91",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-8e00a27c",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-6c420a8f",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-3553e235",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-8122b80c",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-9e08096f",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-2c1ab6de",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-5024b4ae",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-a86ec619",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-c0382a16",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-13b11a1b",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-2b084f5b",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-84276542",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-acadb5a7",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-c9a24c47",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-806d2e5c",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-7187ad48",
+    "expected_score": 0.4,
+    "completeness": 0.5
+  },
+  {
+    "dispute_id": "DIS-445664b1",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-233be190",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-e736b2ef",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-90d0b892",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-86e21ea9",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-0e3f9d0b",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-7def5784",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-21c76de2",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-7fb9ac1a",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-69b52bb9",
+    "expected_score": 0.9,
+    "completeness": 1.0
+  }
+]

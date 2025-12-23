@@ -1,0 +1,104 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "standard": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        },
+        "json": {
+            "class": "pythonjsonlogger.jsonlogger.JsonFormatter",
+            "format": "%(asctime)s %(levelname)s %(name)s %(message)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "standard"
+        },
+        "prompts": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "json",
+            "filename": "prompts.log",
+            "maxBytes": 1024000,
+            "backupCount": 2
+        },
+        "guards": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "json",
+            "filename": "guards.log",
+            "maxBytes": 1024000,
+            "backupCount": 2
+        },
+        "judges": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "json",
+            "filename": "judges.log",
+            "maxBytes": 1024000,
+            "backupCount": 2
+        },
+        "evals": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "json",
+            "filename": "evals.log",
+            "maxBytes": 1024000,
+            "backupCount": 2
+        },
+        "orchestrator": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "json",
+            "filename": "orchestrator.log",
+            "maxBytes": 1024000,
+            "backupCount": 2
+        },
+        "explainability": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "json",
+            "filename": "explainability.log",
+            "maxBytes": 1024000,
+            "backupCount": 2
+        }
+    },
+    "loggers": {
+        "utils.prompt_service": {
+            "handlers": ["prompts"],
+            "level": "DEBUG",
+            "propagate": false
+        },
+        "utils.guardrails": {
+            "handlers": ["guards"],
+            "level": "DEBUG",
+            "propagate": false
+        },
+        "utils.save_for_eval": {
+            "handlers": ["evals"],
+            "level": "DEBUG",
+            "propagate": false
+        },
+        "judges": {
+            "handlers": ["judges"],
+            "level": "DEBUG",
+            "propagate": false
+        },
+        "orchestrators": {
+            "handlers": ["orchestrator"],
+            "level": "DEBUG",
+            "propagate": false
+        },
+        "utils.explainability": {
+            "handlers": ["explainability"],
+            "level": "DEBUG",
+            "propagate": false
+        }
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO"
+    }
+}

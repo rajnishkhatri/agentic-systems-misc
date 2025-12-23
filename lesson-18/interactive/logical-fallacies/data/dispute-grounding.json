@@ -1,0 +1,13 @@
+[
+  {
+    "fallacy_id": "cherry_picked_benchmarks",
+    "title": "The '99% Accuracy' Dispute Classifier",
+    "scenario": "A vendor claims their ReasonCodeClassifier achieves 99% accuracy on the 'golden test set'.",
+    "ground_truth": "The 'golden test set' consists of 100 records, all of which are Visa transactions with Reason Code 10.4.",
+    "reality": "When deployed to a diverse environment with Amex, Mastercard, and codes like A01/C02, the model fails significantly (accuracy drops to ~25%). The model was overfitted to the specific subset.",
+    "dataset_references": [
+      "lesson-18/dispute-chatbot/synthetic_data/phase1/golden_set/classification_labels.json",
+      "lesson-18/dispute-chatbot/synthetic_data/phase1/golden_set/diverse_classification_labels.json"
+    ]
+  }
+]

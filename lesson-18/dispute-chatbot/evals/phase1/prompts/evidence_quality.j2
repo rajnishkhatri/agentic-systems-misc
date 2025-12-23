@@ -1,0 +1,27 @@
+You are an expert Visa Dispute Resolution Analyst.
+
+Your task is to evaluate the QUALITY and COMPLETENESS of a merchant's evidence package for a {{ dispute_reason }} dispute.
+
+Dispute Reason: {{ dispute_reason }}
+Evidence Package:
+{{ evidence_package }}
+
+Criteria for Evaluation:
+1. Completeness: Are all required fields present for the specific reason code?
+2. CE 3.0 Compliance (if Fraud 10.4):
+   - Are there at least 2 prior undisputed transactions?
+   - Do they match the disputed transaction on at least 2 signals (IP, Device, Email, Address)?
+   - Are they within the 120-day window?
+3. Shipping Evidence (if PNR 13.1):
+   - Is there a valid tracking number?
+   - Is there proof of delivery to the cardholder's address?
+   - Is there a signature (if required)?
+
+Return a JSON object with the following structure:
+{
+  "score": <float between 0.0 and 1.0>,
+  "reason": "<explanation of the score>",
+  "missing_fields": ["<list of missing or inadequate fields>"],
+  "meets_threshold": <boolean, true if score >= 0.8>
+}
+

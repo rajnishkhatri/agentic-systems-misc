@@ -1,0 +1,340 @@
+[
+  {
+    "id": "fraud_01",
+    "status": "PASS",
+    "description": "I never signed up for this! My card was in my wallet the whole time. This $500 charge to 'TechServe' is a scam!",
+    "expected_reason": "10.4",
+    "actual_reason": "10.4",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "The customer claims they did not authorize the transaction and that their card was in their possession, indicating potential fraud. The description suggests that the charge is unauthorized, which aligns with the Visa reason code for fraud.",
+    "duration": 2.240902,
+    "tags": [
+      "fraud",
+      "visa",
+      "emotional"
+    ]
+  },
+  {
+    "id": "fraud_03",
+    "status": "PASS",
+    "description": "My card was lost last weekend and I see these charges I definitely didn't make.",
+    "expected_reason": "10.4",
+    "actual_reason": "10.4",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "The cardholder reported their card as lost and identified charges that they did not authorize, indicating potential fraudulent activity.",
+    "duration": 2.831932,
+    "tags": [
+      "fraud",
+      "visa",
+      "lost_card"
+    ]
+  },
+  {
+    "id": "fraud_04",
+    "status": "PASS",
+    "description": "Someone used my card number online. I still have the card but I didn't authorize this purchase.",
+    "expected_reason": "10.4",
+    "actual_reason": "10.4",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "The cardholder reports that their card number was used without authorization for an online purchase, indicating a fraudulent transaction despite having possession of the card.",
+    "duration": 3.228022,
+    "tags": [
+      "fraud",
+      "visa",
+      "cnp"
+    ]
+  },
+  {
+    "id": "merch_01",
+    "status": "PASS",
+    "description": "I ordered a laptop on Oct 1st. Tracking says delivered but I have nothing. Seller is not responding.",
+    "expected_reason": "13.1",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "The dispute involves a claim that the merchandise (laptop) was not received despite tracking indicating delivery. This aligns with the Visa reason code for Merchandise Not Received (13.1). The situation does not suggest fraud, as the customer is reporting a legitimate issue with the delivery.",
+    "duration": 3.290323,
+    "tags": [
+      "product_not_received",
+      "visa",
+      "neutral"
+    ]
+  },
+  {
+    "id": "fraud_02",
+    "status": "PASS",
+    "description": "Unrecognized transaction on my statement. I don't know who 'Online Services Ltd' is.",
+    "expected_reason": "10.4",
+    "actual_reason": "10.4",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "The customer does not recognize the transaction from 'Online Services Ltd', indicating a potential fraudulent charge. This aligns with Visa reason code 10.4, which pertains to fraud or unauthorized transactions.",
+    "duration": 3.365095,
+    "tags": [
+      "fraud",
+      "visa",
+      "neutral"
+    ]
+  },
+  {
+    "id": "sub_01",
+    "status": "FAIL",
+    "description": "I canceled my gym membership two months ago in writing, but you guys keep charging me $50/month. Stop it!",
+    "expected_reason": "13.2",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.85,
+    "reasoning": "The customer is disputing recurring charges for a service (gym membership) that they believe they have canceled. This falls under the category of 'Merchandise Not Received' as the customer is not receiving the service they canceled.",
+    "duration": 1.780422,
+    "tags": [
+      "subscription_canceled",
+      "visa",
+      "frustrated"
+    ]
+  },
+  {
+    "id": "sub_03",
+    "status": "FAIL",
+    "description": "Recurring billing was cancelled on your website on Jan 15th. Why am I charged on Feb 1st?",
+    "expected_reason": "13.2",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.85,
+    "reasoning": "The dispute involves a charge for a recurring billing that the customer believed was cancelled. This typically falls under the category of 'Merchandise Not Received' as the customer did not expect to be charged after cancellation.",
+    "duration": 1.819701,
+    "tags": [
+      "subscription_canceled",
+      "visa",
+      "neutral"
+    ]
+  },
+  {
+    "id": "sub_02",
+    "status": "FAIL",
+    "description": "This was supposed to be a free trial. I canceled before the 7 days were up but got charged anyway.",
+    "expected_reason": "13.2",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.85,
+    "reasoning": "The dispute involves a charge for a service that was supposed to be free during a trial period, and the customer canceled before the trial ended. This aligns with the reason code for merchandise or services not received as the customer did not authorize the charge after cancellation.",
+    "duration": 2.009727,
+    "tags": [
+      "subscription_canceled",
+      "visa",
+      "trial"
+    ]
+  },
+  {
+    "id": "merch_03",
+    "status": "PASS",
+    "description": "I paid for next day shipping but the item hasn't even shipped yet. It's been 5 days.",
+    "expected_reason": "13.1",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "The customer is disputing the transaction because they paid for next day shipping but the item has not shipped even after 5 days. This indicates that the merchandise has not been received as expected, which aligns with the reason code 13.1 for Merchandise Not Received.",
+    "duration": 2.7259,
+    "tags": [
+      "product_not_received",
+      "visa",
+      "shipping"
+    ]
+  },
+  {
+    "id": "qual_02",
+    "status": "FAIL",
+    "description": "Item description said 100% cotton but the shirt is synthetic polyester. Not what I ordered.",
+    "expected_reason": "13.3",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.85,
+    "reasoning": "The dispute is classified under reason code 13.1 (Merchandise Not Received) because the item received does not match the description provided at the time of purchase. The customer expected a 100% cotton shirt but received a synthetic polyester shirt instead, which constitutes a significant discrepancy in the merchandise.",
+    "duration": 2.536313,
+    "tags": [
+      "product_unacceptable",
+      "visa",
+      "misrepresentation"
+    ]
+  },
+  {
+    "id": "qual_03",
+    "status": "FAIL",
+    "description": "The vase arrived shattered in pieces. Poor packaging.",
+    "expected_reason": "13.3",
+    "actual_reason": "13.2",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.85,
+    "reasoning": "The dispute is related to merchandise that was received but in a damaged condition due to poor packaging, which falls under the category of 'Merchandise Not as Described'.",
+    "duration": 2.461745,
+    "tags": [
+      "product_unacceptable",
+      "visa",
+      "broken"
+    ]
+  },
+  {
+    "id": "qual_01",
+    "status": "FAIL",
+    "description": "The shoes arrived but the sole is peeling off. They are clearly used. I want a refund.",
+    "expected_reason": "13.3",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.85,
+    "reasoning": "The customer is disputing the quality of the merchandise received, indicating that the shoes are defective (peeling sole) and used, which falls under the category of merchandise not being as described or defective.",
+    "duration": 2.949928,
+    "tags": [
+      "product_unacceptable",
+      "visa",
+      "damaged"
+    ]
+  },
+  {
+    "id": "dup_01",
+    "status": "FAIL",
+    "description": "I see two charges for the same amount on the same day. I only pushed the button once.",
+    "expected_reason": "12.6",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "The customer is reporting duplicate charges for the same transaction, indicating a potential error in processing rather than fraud. This aligns with the reason code for merchandise not received, as the customer expected only one charge.",
+    "duration": 2.471283,
+    "tags": [
+      "duplicate",
+      "visa",
+      "confused"
+    ]
+  },
+  {
+    "id": "merch_02",
+    "status": "PASS",
+    "description": "Package never arrived. It's been 3 weeks past the delivery date.",
+    "expected_reason": "13.1",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "The dispute is classified under reason code 13.1 (Merchandise Not Received) because the customer states that the package has not arrived, and it is significantly past the expected delivery date.",
+    "duration": 6.461572,
+    "tags": [
+      "product_not_received",
+      "visa",
+      "late"
+    ]
+  },
+  {
+    "id": "credit_01",
+    "status": "FAIL",
+    "description": "I returned the item and they sent me a credit receipt, but the refund hasn't appeared on my card after 10 days.",
+    "expected_reason": "13.6",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.85,
+    "reasoning": "The dispute involves a refund that was promised but has not been processed, which aligns with the reason code for merchandise not received. The customer returned the item and received a credit receipt, indicating that the merchant acknowledged the return but failed to complete the refund process.",
+    "duration": 2.005705,
+    "tags": [
+      "credit_not_processed",
+      "visa",
+      "refund_missing"
+    ]
+  },
+  {
+    "id": "net_mc_01",
+    "status": "FAIL",
+    "description": "My Mastercard shows a transaction I didn't make.",
+    "expected_reason": "4837",
+    "actual_reason": "10.4",
+    "expected_network": "mastercard",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "The dispute indicates that the cardholder did not authorize the transaction, which is a clear indication of potential fraud. The reason code 10.4 is applicable as it pertains to unauthorized transactions.",
+    "duration": 1.81627,
+    "tags": [
+      "fraud",
+      "mastercard",
+      "robustness"
+    ]
+  },
+  {
+    "id": "dup_02",
+    "status": "FAIL",
+    "description": "Charged twice for the same meal at the restaurant.",
+    "expected_reason": "12.6",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.95,
+    "reasoning": "The dispute involves being charged twice for the same meal, which indicates a billing error rather than fraud. The appropriate reason code for this situation is 13.1, which covers issues related to merchandise not received or duplicate charges.",
+    "duration": 2.061054,
+    "tags": [
+      "duplicate",
+      "visa",
+      "neutral"
+    ]
+  },
+  {
+    "id": "amb_01",
+    "status": "PASS",
+    "description": "I don't recognize this.",
+    "expected_reason": "10.4",
+    "actual_reason": "10.4",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.85,
+    "reasoning": "The customer does not recognize the transaction, which typically indicates a potential fraud situation. This aligns with the Visa reason code for unauthorized transactions.",
+    "duration": 1.726531,
+    "tags": [
+      "unrecognized",
+      "ambiguous"
+    ]
+  },
+  {
+    "id": "net_amex_01",
+    "status": "FAIL",
+    "description": "I need to dispute a charge on my Amex card. The hotel overcharged me.",
+    "expected_reason": "C08",
+    "actual_reason": "13.1",
+    "expected_network": "amex",
+    "actual_network": "visa",
+    "confidence": 0.85,
+    "reasoning": "The dispute involves a charge for a hotel stay where the customer claims to have been overcharged. This situation typically falls under the category of 'Merchandise Not Received' or 'Service Not Rendered' as the customer did not receive the expected service at the agreed price.",
+    "duration": 2.86412,
+    "tags": [
+      "general",
+      "amex",
+      "robustness"
+    ]
+  },
+  {
+    "id": "amb_02",
+    "status": "FAIL",
+    "description": "Charge error.",
+    "expected_reason": "10.4",
+    "actual_reason": "13.1",
+    "expected_network": "visa",
+    "actual_network": "visa",
+    "confidence": 0.85,
+    "reasoning": "The description 'Charge error' typically indicates a mistake in the amount charged or a duplicate charge, which aligns with the reason code for 'Merchandise Not Received' as it often encompasses issues related to incorrect charges.",
+    "duration": 2.113865,
+    "tags": [
+      "general",
+      "ambiguous"
+    ]
+  }
+]

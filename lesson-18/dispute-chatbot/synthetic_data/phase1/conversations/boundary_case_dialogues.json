@@ -1,0 +1,455 @@
+[
+  {
+    "trace_id": "TRC-BC-001",
+    "category": "multi_turn_confusion",
+    "description": "User provides conflicting information across multiple turns",
+    "dispute_id": "DIS-BC-001",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I want to dispute a charge of $150 from Amazon on November 15th"
+      },
+      {
+        "role": "assistant",
+        "content": "I'll help you dispute this $150 Amazon charge from November 15th. Was this an unauthorized transaction or did you not receive the item?"
+      },
+      {
+        "role": "user",
+        "content": "I never ordered anything"
+      },
+      {
+        "role": "assistant",
+        "content": "This sounds like a fraud case (Reason Code 10.4). Let me gather some evidence. Did you recognize the merchant name when you saw the charge?"
+      },
+      {
+        "role": "user",
+        "content": "Actually wait, I did order something but it was supposed to be $50 not $150"
+      },
+      {
+        "role": "assistant",
+        "content": "I see - so you did make a purchase but were charged incorrectly. This changes the dispute type. Can you clarify: did you receive the item you ordered?"
+      },
+      {
+        "role": "user",
+        "content": "Yes I got it but it was wrong"
+      }
+    ],
+    "expected_failure_mode": "classification_error",
+    "red_flags": ["User changed story from fraud to overcharge to wrong item", "3 different dispute types mentioned", "Agent should flag contradiction"],
+    "final_state": "NEEDS_CLARIFICATION",
+    "success": false
+  },
+  {
+    "trace_id": "TRC-BC-002",
+    "category": "partial_evidence_completion",
+    "description": "Agent receives partial evidence and must determine if sufficient",
+    "dispute_id": "DIS-BC-002",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I need to dispute charge TXN-5678 for $299.99"
+      },
+      {
+        "role": "assistant",
+        "content": "I'll help you dispute TXN-5678 for $299.99. What's the reason for this dispute?"
+      },
+      {
+        "role": "user",
+        "content": "Package never arrived"
+      },
+      {
+        "role": "assistant",
+        "content": "This is a Product Not Received case (13.1). Let me check shipping records.",
+        "tool_name": "gather_evidence",
+        "tool_input": {"dispute_id": "DIS-BC-002", "evidence_type": "shipping"}
+      },
+      {
+        "role": "tool",
+        "content": "Evidence retrieved",
+        "tool_name": "gather_evidence",
+        "tool_output": {
+          "shipping": {
+            "carrier": "USPS",
+            "tracking_id": null,
+            "status": "unknown"
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "I found shipping records but there's no tracking number available. Without tracking information, we can still proceed but the case is weaker. Would you like to submit anyway or try to obtain tracking from the merchant first?"
+      }
+    ],
+    "expected_failure_mode": "evidence_quality",
+    "red_flags": ["tracking_id is null", "status is unknown", "Weak evidence package"],
+    "final_state": "AWAITING_USER_DECISION",
+    "success": null
+  },
+  {
+    "trace_id": "TRC-BC-003",
+    "category": "deadline_edge_case",
+    "description": "Dispute filed near deadline boundary",
+    "dispute_id": "DIS-BC-003",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I need to dispute a transaction from October 11th"
+      },
+      {
+        "role": "assistant",
+        "content": "I see this transaction is from October 11th. Today is December 9th, which is 59 days ago. Visa disputes typically have a 60-day window. We have approximately 1 day remaining to file. Would you like to proceed immediately?"
+      },
+      {
+        "role": "user",
+        "content": "Yes but I need to gather some documents first"
+      },
+      {
+        "role": "assistant",
+        "content": "I strongly recommend we submit today with whatever evidence is available. The 60-day deadline expires tomorrow and missing it means the dispute cannot be filed. I can help you submit a preliminary dispute now and add documentation later. Shall I proceed?"
+      }
+    ],
+    "expected_failure_mode": "compliance_violation",
+    "red_flags": ["59 days elapsed", "1 day to deadline", "User wants to delay"],
+    "final_state": "DEADLINE_WARNING",
+    "success": null
+  },
+  {
+    "trace_id": "TRC-BC-004",
+    "category": "repeated_question",
+    "description": "User repeats same question indicating confusion or dissatisfaction",
+    "dispute_id": "DIS-BC-004",
+    "turns": [
+      {
+        "role": "user",
+        "content": "What's the status of my dispute?"
+      },
+      {
+        "role": "assistant",
+        "content": "Your dispute DIS-BC-004 is currently in REVIEW status with the card network. The typical resolution time is 30-45 days.",
+        "tool_name": "check_status",
+        "tool_output": {"status": "REVIEW", "days_elapsed": 15}
+      },
+      {
+        "role": "user",
+        "content": "But what's happening with it?"
+      },
+      {
+        "role": "assistant",
+        "content": "The dispute is being reviewed by Visa. They're examining the evidence package we submitted. During this phase, the merchant may respond with counter-evidence."
+      },
+      {
+        "role": "user",
+        "content": "I don't understand. What's the status?"
+      },
+      {
+        "role": "assistant",
+        "content": "I notice you've asked about the status multiple times. Let me be more specific: Your dispute is ACTIVE and IN REVIEW. This means Visa received it and is evaluating it. Would you like to speak with a human agent who can provide more detailed information?"
+      }
+    ],
+    "expected_failure_mode": "user_escalation",
+    "red_flags": ["Same question asked 3 times", "User indicates confusion", "Should trigger escalation offer"],
+    "final_state": "ESCALATION_OFFERED",
+    "success": true
+  },
+  {
+    "trace_id": "TRC-BC-005",
+    "category": "ambiguous_classification",
+    "description": "Dispute description matches multiple reason codes equally",
+    "dispute_id": "DIS-BC-005",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I ordered a laptop but received an empty box. I think someone stole it during shipping."
+      },
+      {
+        "role": "assistant",
+        "content": "This is a challenging case that could fall under multiple categories. It could be: (1) Product Not Received (13.1) if the carrier lost it, or (2) Fraud (10.4) if you believe someone intercepted it. Let me check the tracking to determine the best approach.",
+        "tool_name": "gather_evidence",
+        "tool_input": {"dispute_id": "DIS-BC-005", "evidence_type": "shipping"}
+      },
+      {
+        "role": "tool",
+        "content": "Evidence retrieved",
+        "tool_name": "gather_evidence",
+        "tool_output": {
+          "shipping": {
+            "carrier": "FedEx",
+            "tracking_id": "FX123456",
+            "status": "delivered",
+            "signature": "FRONT DOOR"
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "The tracking shows delivered with 'FRONT DOOR' signature. Since you received an empty box, this suggests the issue occurred at the merchant's fulfillment center. I recommend filing as Merchandise Not As Described (13.3) rather than PNR or Fraud. Do you agree with this classification?"
+      }
+    ],
+    "expected_failure_mode": "classification_error",
+    "red_flags": ["Multiple possible reason codes", "Ambiguous user description", "Agent should explicitly state uncertainty"],
+    "final_state": "CLASSIFICATION_PENDING",
+    "success": null
+  },
+  {
+    "trace_id": "TRC-BC-006",
+    "category": "ce3_boundary",
+    "description": "CE 3.0 qualification with exactly minimum qualifying transactions",
+    "dispute_id": "DIS-BC-006",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I want to dispute a fraud charge at TechMart"
+      },
+      {
+        "role": "assistant",
+        "content": "I'll help you dispute this fraud charge. Let me check if you qualify for Compelling Evidence 3.0.",
+        "tool_name": "gather_evidence",
+        "tool_input": {"dispute_id": "DIS-BC-006", "evidence_type": "customer_history"}
+      },
+      {
+        "role": "tool",
+        "content": "Evidence retrieved",
+        "tool_name": "gather_evidence",
+        "tool_output": {
+          "customer_history": {
+            "prior_transactions": [
+              {"id": "HIST-001", "date": "2025-06-15", "amount": 75.00, "disputed": false},
+              {"id": "HIST-002", "date": "2025-08-20", "amount": 120.00, "disputed": false}
+            ]
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "You have exactly 2 prior undisputed transactions with TechMart. CE 3.0 requires minimum 2 qualifying transactions. You're at the exact boundary - this qualifies but just barely. I recommend we include both transactions in the evidence package. Note: if either transaction is later disputed, CE 3.0 eligibility would be lost."
+      }
+    ],
+    "expected_failure_mode": null,
+    "red_flags": ["Exactly at CE 3.0 minimum threshold", "Boundary condition should be flagged"],
+    "final_state": "CE3_QUALIFIED_BOUNDARY",
+    "success": true
+  },
+  {
+    "trace_id": "TRC-BC-007",
+    "category": "tool_failure_cascade",
+    "description": "Multiple consecutive tool failures",
+    "dispute_id": "DIS-BC-007",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Check status of DIS-BC-007"
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": "check_status"
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "First attempt failed. Retrying...",
+        "tool_name": "check_status"
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_output": "ConnectionError"
+      },
+      {
+        "role": "assistant",
+        "content": "Second attempt also failed. Making final attempt...",
+        "tool_name": "check_status"
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_output": "ServiceUnavailable"
+      },
+      {
+        "role": "assistant",
+        "content": "I apologize, but our system is experiencing technical difficulties. After 3 attempts, I'm unable to retrieve your dispute status. Please try again in a few minutes, or I can connect you with a human agent who may have alternative access. What would you prefer?"
+      }
+    ],
+    "expected_failure_mode": "network_timeout",
+    "red_flags": ["3 consecutive failures", "Different error types", "Retry budget exhausted"],
+    "final_state": "SYSTEM_ERROR",
+    "success": false
+  },
+  {
+    "trace_id": "TRC-BC-008",
+    "category": "evidence_contradiction_explicit",
+    "description": "Direct contradiction between user claim and evidence",
+    "dispute_id": "DIS-BC-008",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I never received my order from ShopCo"
+      },
+      {
+        "role": "assistant",
+        "content": "I'll verify the shipping status for your ShopCo order.",
+        "tool_name": "gather_evidence",
+        "tool_input": {"dispute_id": "DIS-BC-008", "evidence_type": "shipping"}
+      },
+      {
+        "role": "tool",
+        "content": "Evidence retrieved",
+        "tool_name": "gather_evidence",
+        "tool_output": {
+          "shipping": {
+            "carrier": "UPS",
+            "tracking_id": "1Z999AA1012",
+            "status": "delivered",
+            "delivery_date": "2025-11-25",
+            "signature": "J.SMITH",
+            "delivery_photo": "front_porch.jpg"
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "I found contradictory evidence. You stated you didn't receive the order, but UPS tracking shows: delivered on November 25th, signed by 'J.SMITH', with a delivery photo. This is a significant contradiction that would likely cause the dispute to fail. Can you help me understand: (1) Is J.SMITH someone at your address? (2) Did you check with neighbors? (3) Could the package have been stolen after delivery?"
+      }
+    ],
+    "expected_failure_mode": "evidence_contradiction",
+    "red_flags": ["User claim: not received", "Evidence: delivered with signature and photo", "Direct contradiction"],
+    "final_state": "CONTRADICTION_DETECTED",
+    "success": false
+  },
+  {
+    "trace_id": "TRC-BC-009",
+    "category": "pii_near_miss",
+    "description": "User provides sensitive data that must be redacted",
+    "dispute_id": "DIS-BC-009",
+    "turns": [
+      {
+        "role": "user",
+        "content": "The card that was charged is 4111-1111-1111-1111, I need to dispute it"
+      },
+      {
+        "role": "assistant",
+        "content": "[SECURITY NOTICE: Card number has been redacted from logs] I can see this is regarding card ending in 1111. For security, please don't share full card numbers in chat. I've already identified your account. What transaction would you like to dispute?"
+      },
+      {
+        "role": "user",
+        "content": "The $500 charge. My SSN is 123-45-6789 if you need it for verification"
+      },
+      {
+        "role": "assistant",
+        "content": "[SECURITY NOTICE: SSN has been redacted from logs] Please don't share your Social Security Number - we don't need it for disputes and it's not safe to share in chat. I've removed it from our records. Let's proceed with the $500 dispute. What's the merchant name?"
+      }
+    ],
+    "expected_failure_mode": "compliance_violation",
+    "red_flags": ["Full PAN in user input", "Full SSN in user input", "PII must be redacted"],
+    "final_state": "PII_REDACTED",
+    "success": true
+  },
+  {
+    "trace_id": "TRC-BC-010",
+    "category": "multi_dispute_confusion",
+    "description": "User has multiple active disputes causing confusion",
+    "dispute_id": "DIS-BC-010",
+    "turns": [
+      {
+        "role": "user",
+        "content": "What's happening with my dispute?"
+      },
+      {
+        "role": "assistant",
+        "content": "I see you have 3 active disputes. Which one would you like to check?\n1. DIS-BC-010A - $150 at Amazon (Filed Nov 1)\n2. DIS-BC-010B - $89 at Netflix (Filed Nov 15)\n3. DIS-BC-010C - $299 at BestBuy (Filed Nov 20)"
+      },
+      {
+        "role": "user",
+        "content": "The Amazon one"
+      },
+      {
+        "role": "assistant",
+        "content": "DIS-BC-010A (Amazon, $150): Status is RESOLVED - Won. The charge was reversed to your account on December 5th. You should see the credit on your next statement."
+      },
+      {
+        "role": "user",
+        "content": "What about the others?"
+      },
+      {
+        "role": "assistant",
+        "content": "Here's a summary of all your disputes:\n\n| Dispute | Merchant | Amount | Status | Filed | Est. Resolution |\n|---------|----------|--------|--------|-------|----------------|\n| DIS-BC-010A | Amazon | $150 | WON | Nov 1 | Complete |\n| DIS-BC-010B | Netflix | $89 | IN REVIEW | Nov 15 | Dec 30 |\n| DIS-BC-010C | BestBuy | $299 | PENDING EVIDENCE | Nov 20 | Jan 5 |\n\nDIS-BC-010C needs additional evidence. Would you like help gathering that?"
+      }
+    ],
+    "expected_failure_mode": null,
+    "red_flags": ["Multiple active disputes", "User didn't specify which one", "Agent should disambiguate"],
+    "final_state": "MULTI_DISPUTE_HANDLED",
+    "success": true
+  },
+  {
+    "trace_id": "TRC-BC-011",
+    "category": "agent_uncertainty",
+    "description": "Agent explicitly expresses uncertainty about classification",
+    "dispute_id": "DIS-BC-011",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I was charged for a subscription I cancelled 6 months ago"
+      },
+      {
+        "role": "assistant",
+        "content": "This could be classified multiple ways: (1) Unauthorized recurring charge if they continued billing after cancellation, or (2) Services not provided if the subscription was for a specific period. I'm 60% confident this is best handled as 'Cancelled Recurring Transaction' but I'd like to confirm: Do you have documentation of when you cancelled?"
+      },
+      {
+        "role": "user",
+        "content": "I have an email confirmation"
+      },
+      {
+        "role": "assistant",
+        "content": "The cancellation email is strong evidence. I'm now 85% confident we should file under 'Cancelled Recurring Transaction'. This has a higher success rate than 'Services Not Provided' for your situation. Would you like me to proceed with this classification?"
+      }
+    ],
+    "expected_failure_mode": "classification_error",
+    "red_flags": ["Agent expressed uncertainty (60%)", "Confidence updated based on evidence", "Should document uncertainty in trace"],
+    "final_state": "CLASSIFICATION_CONFIRMED",
+    "success": true
+  },
+  {
+    "trace_id": "TRC-BC-012",
+    "category": "empty_evidence_package",
+    "description": "No evidence available for dispute",
+    "dispute_id": "DIS-BC-012",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I need to dispute a charge but I don't have any receipts or tracking info"
+      },
+      {
+        "role": "assistant",
+        "content": "Let me check what evidence is available in our systems.",
+        "tool_name": "gather_evidence",
+        "tool_input": {"dispute_id": "DIS-BC-012", "evidence_type": "all"}
+      },
+      {
+        "role": "tool",
+        "content": "Evidence retrieved",
+        "tool_name": "gather_evidence",
+        "tool_output": {
+          "transactions": [],
+          "shipping": null,
+          "customer_history": {"prior_transactions": []},
+          "merchant_communication": null
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "I wasn't able to find any supporting evidence for this dispute. Without evidence, the likelihood of winning is very low (<20%). Here are your options:\n\n1. **Contact the merchant directly** - They may resolve it without a formal dispute\n2. **Gather evidence first** - Return with receipts, emails, or other documentation\n3. **File anyway** - We can submit based on your statement alone, but expect low success\n\nWhat would you like to do?"
+      }
+    ],
+    "expected_failure_mode": "evidence_quality",
+    "red_flags": ["Empty evidence package", "No transactions", "No shipping", "Quality score would be ~0"],
+    "final_state": "INSUFFICIENT_EVIDENCE",
+    "success": false
+  }
+]

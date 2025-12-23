@@ -1,0 +1,16 @@
+flowchart TD
+    A[Start Checklist] --> B[Task 1: Volume Check]
+    B -->|N < 50?| C[Warning: Sample Size]
+    B -->|N > 50| D[Task 2: Distribution]
+    
+    D -->|100% One Class| E[CRITICAL: Mono-Culture]
+    D -->|Balanced| F[Task 4: Naive Baseline]
+    
+    F -->|AI == Baseline| G[CRITICAL: Zero Value Add]
+    F -->|AI >> Baseline| H[Pass: Real Intelligence]
+    
+    style C fill:#fff3bf,stroke:#fab005
+    style E fill:#ffc9c9,stroke:#e03131
+    style G fill:#ffc9c9,stroke:#e03131
+    style H fill:#dbfabb,stroke:#82c91e
+

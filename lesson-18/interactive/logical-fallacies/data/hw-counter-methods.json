@@ -1,0 +1,10 @@
+[
+  {
+    "fallacy_id": "cherry_picked_benchmarks",
+    "hw_method": "HW3: Confusion Matrix",
+    "technique": "TPR + TNR Analysis",
+    "description": "Use a confusion matrix to separate True Positive Rate (Sensitivity) from True Negative Rate (Specificity). High accuracy on a cherry-picked set often hides a 0% TNR on out-of-distribution data.",
+    "code_reference": "sklearn.metrics.confusion_matrix",
+    "when_to_use": "When a model claims high accuracy but the test set distribution is unknown or suspicious."
+  }
+]

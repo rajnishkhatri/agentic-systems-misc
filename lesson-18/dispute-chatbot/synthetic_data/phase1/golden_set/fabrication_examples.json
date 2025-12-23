@@ -1,0 +1,285 @@
+[
+  {
+    "id": "FAB-001",
+    "category": "transaction_fabrication",
+    "input_evidence": {
+      "transactions": [
+        {"id": "TXN-001", "amount": 150.00, "date": "2025-11-15", "merchant": "ACME Corp"}
+      ]
+    },
+    "agent_output": "I found transaction TXN-002 for $250.00 on November 20th that supports your claim.",
+    "is_fabricated": true,
+    "fabrication_type": "invented_transaction_id",
+    "red_flags": ["Transaction ID TXN-002 not in tool_output.transactions[]", "Amount $250.00 not in any transaction", "Date Nov 20 not in evidence_package.timestamps"],
+    "reason": "Agent invented a transaction ID, amount, and date not present in source data"
+  },
+  {
+    "id": "FAB-002",
+    "category": "tracking_fabrication",
+    "input_evidence": {
+      "shipping": {
+        "carrier": "FedEx",
+        "status": "in_transit"
+      }
+    },
+    "agent_output": "The package was delivered and signed for by John Smith on December 5th at 2:35 PM. Tracking #1Z999AA10123456784.",
+    "is_fabricated": true,
+    "fabrication_type": "invented_delivery_details",
+    "red_flags": ["No tracking_id in shipping_records", "No signature/POD in evidence", "Recipient name fabricated", "Delivery timestamp invented"],
+    "reason": "Agent fabricated tracking number, delivery confirmation, recipient name, and timestamp"
+  },
+  {
+    "id": "FAB-003",
+    "category": "date_fabrication",
+    "input_evidence": {
+      "dispute": {
+        "filed_date": "2025-12-01",
+        "transaction_date": "2025-11-10"
+      }
+    },
+    "agent_output": "The merchant responded on November 25th with a refund offer.",
+    "is_fabricated": true,
+    "fabrication_type": "invented_timeline_event",
+    "red_flags": ["Date 'November 25th' not derivable from evidence_package.timestamps", "No merchant_response event in evidence"],
+    "reason": "Agent invented a merchant response date with no supporting evidence"
+  },
+  {
+    "id": "FAB-004",
+    "category": "amount_fabrication",
+    "input_evidence": {
+      "transactions": [
+        {"id": "TXN-100", "amount": 89.99, "currency": "USD"}
+      ]
+    },
+    "agent_output": "The disputed amount of $199.99 qualifies for CE 3.0 defense.",
+    "is_fabricated": true,
+    "fabrication_type": "altered_transaction_amount",
+    "red_flags": ["Amount $199.99 != transaction.amount ($89.99)", "Value not present in any evidence field"],
+    "reason": "Agent altered the transaction amount, potentially to meet CE 3.0 threshold"
+  },
+  {
+    "id": "FAB-005",
+    "category": "ce3_fabrication",
+    "input_evidence": {
+      "customer_history": {
+        "prior_transactions": [
+          {"id": "HIST-001", "date": "2025-09-15", "amount": 50.00}
+        ]
+      }
+    },
+    "agent_output": "Customer has 5 prior undisputed transactions with this merchant totaling $450, qualifying for CE 3.0.",
+    "is_fabricated": true,
+    "fabrication_type": "inflated_ce3_history",
+    "red_flags": ["Only 1 prior transaction in customer_history.prior_transactions[]", "Total $50 != claimed $450", "Count 5 != actual 1"],
+    "reason": "Agent inflated CE 3.0 qualifying transaction count and total"
+  },
+  {
+    "id": "FAB-006",
+    "category": "device_fabrication",
+    "input_evidence": {
+      "customer_profile": {
+        "email": "user@example.com"
+      }
+    },
+    "agent_output": "Device fingerprint matches: same IP 192.168.1.100 and browser Chrome/118 used in prior purchases.",
+    "is_fabricated": true,
+    "fabrication_type": "invented_device_fingerprint",
+    "red_flags": ["No device_fingerprint field in customer_profile", "IP address not in evidence", "Browser info not in evidence"],
+    "reason": "Agent fabricated device fingerprinting details not present in customer data"
+  },
+  {
+    "id": "FAB-007",
+    "category": "partial_fabrication",
+    "input_evidence": {
+      "shipping": {
+        "carrier": "UPS",
+        "tracking_id": "1Z999AA10123456784",
+        "status": "delivered",
+        "delivery_date": "2025-11-20"
+      }
+    },
+    "agent_output": "UPS tracking 1Z999AA10123456784 shows delivered on November 20th with signature from Mary Johnson.",
+    "is_fabricated": true,
+    "fabrication_type": "partial_fabrication_signature",
+    "red_flags": ["signature_name not in shipping_records", "No POD evidence despite 'signature from' claim"],
+    "reason": "Agent correctly cited tracking but fabricated signature/recipient name"
+  },
+  {
+    "id": "FAB-008",
+    "category": "regulatory_fabrication",
+    "input_evidence": {
+      "dispute": {
+        "filed_date": "2025-12-01",
+        "network": "Visa"
+      }
+    },
+    "agent_output": "Per Visa regulations, you have 21 days to respond, giving you until December 22nd.",
+    "is_fabricated": true,
+    "fabrication_type": "incorrect_deadline_calculation",
+    "red_flags": ["Visa deadline is 30 days, not 21", "Deadline calculation mathematically wrong"],
+    "reason": "Agent fabricated incorrect regulatory deadline"
+  },
+  {
+    "id": "FAB-009",
+    "category": "evidence_status_fabrication",
+    "input_evidence": {
+      "evidence_package": {
+        "invoice": {"status": "pending"},
+        "receipt": {"status": "missing"}
+      }
+    },
+    "agent_output": "All required evidence has been verified and submitted successfully.",
+    "is_fabricated": true,
+    "fabrication_type": "false_completion_claim",
+    "red_flags": ["evidence_package.receipt.status == 'missing'", "evidence_package.invoice.status == 'pending' not 'verified'"],
+    "reason": "Agent falsely claimed evidence was complete when it was missing/pending"
+  },
+  {
+    "id": "FAB-010",
+    "category": "merchant_response_fabrication",
+    "input_evidence": {
+      "dispute": {
+        "merchant_contacted": false
+      }
+    },
+    "agent_output": "The merchant confirmed they issued a partial refund of $25 on November 28th.",
+    "is_fabricated": true,
+    "fabrication_type": "invented_merchant_communication",
+    "red_flags": ["merchant_contacted == false contradicts 'merchant confirmed'", "No refund record in evidence", "Date not in evidence"],
+    "reason": "Agent fabricated merchant response when no contact occurred"
+  },
+  {
+    "id": "FAB-011",
+    "category": "cross_reference_fabrication",
+    "input_evidence": {
+      "transactions": [
+        {"id": "TXN-A", "merchant_id": "MID-100"}
+      ],
+      "merchants": {
+        "MID-100": {"name": "Tech Store", "category": "Electronics"}
+      }
+    },
+    "agent_output": "This transaction at Fashion Boutique (clothing retailer) matches your purchase pattern.",
+    "is_fabricated": true,
+    "fabrication_type": "misattributed_merchant",
+    "red_flags": ["merchant_name 'Fashion Boutique' != merchants[MID-100].name 'Tech Store'", "category 'clothing' != 'Electronics'"],
+    "reason": "Agent misattributed transaction to wrong merchant with wrong category"
+  },
+  {
+    "id": "FAB-012",
+    "category": "interpolated_fabrication",
+    "input_evidence": {
+      "shipping": {
+        "events": [
+          {"timestamp": "2025-11-18T10:00:00Z", "status": "shipped"},
+          {"timestamp": "2025-11-20T14:00:00Z", "status": "delivered"}
+        ]
+      }
+    },
+    "agent_output": "Package arrived at local distribution center on November 19th at 8:00 AM before final delivery.",
+    "is_fabricated": true,
+    "fabrication_type": "interpolated_transit_event",
+    "red_flags": ["No event on Nov 19th in shipping.events[]", "Timestamp 8:00 AM not in evidence"],
+    "reason": "Agent interpolated a transit event that doesn't exist in tracking history"
+  },
+  {
+    "id": "FAB-013",
+    "category": "authority_fabrication",
+    "input_evidence": {
+      "dispute": {
+        "reason_code": "10.4",
+        "network": "Visa"
+      }
+    },
+    "agent_output": "According to Visa's 2024 policy update, fraud cases under $100 are automatically approved.",
+    "is_fabricated": true,
+    "fabrication_type": "invented_policy_claim",
+    "red_flags": ["No policy document in evidence", "Claim not verifiable against known Visa rules"],
+    "reason": "Agent fabricated a policy/authority claim with no supporting documentation"
+  },
+  {
+    "id": "FAB-014",
+    "category": "statistical_fabrication",
+    "input_evidence": {
+      "merchant_history": {
+        "total_disputes": 5,
+        "disputes_won": 3
+      }
+    },
+    "agent_output": "This merchant has a 95% dispute win rate, making your case very strong.",
+    "is_fabricated": true,
+    "fabrication_type": "misrepresented_statistics",
+    "red_flags": ["Win rate 3/5 = 60% != claimed 95%", "Statistic mathematically incorrect"],
+    "reason": "Agent misrepresented statistical evidence (60% != 95%)"
+  },
+  {
+    "id": "FAB-015",
+    "category": "composite_fabrication",
+    "input_evidence": {
+      "customer_profile": {
+        "name": "Jane Doe",
+        "account_created": "2020-01-15"
+      },
+      "transactions": [
+        {"id": "TXN-X", "amount": 100.00}
+      ]
+    },
+    "agent_output": "Long-standing customer Jane Doe (member since 2018) with verified address at 123 Main St has $500 in prior purchases supporting CE 3.0.",
+    "is_fabricated": true,
+    "fabrication_type": "multiple_fabrications",
+    "red_flags": [
+      "account_created 2020-01-15 != '2018'",
+      "No address field in customer_profile",
+      "Total $100 in transactions != '$500 prior purchases'"
+    ],
+    "reason": "Agent fabricated multiple details: account date, address, and purchase total"
+  },
+  {
+    "id": "VALID-001",
+    "category": "valid_output",
+    "input_evidence": {
+      "shipping": {
+        "carrier": "FedEx",
+        "tracking_id": "FX123456789",
+        "status": "delivered",
+        "delivery_date": "2025-11-20"
+      }
+    },
+    "agent_output": "FedEx tracking FX123456789 confirms delivery on November 20th.",
+    "is_fabricated": false,
+    "fabrication_type": null,
+    "red_flags": [],
+    "reason": "All claims directly supported by evidence fields"
+  },
+  {
+    "id": "VALID-002",
+    "category": "valid_output",
+    "input_evidence": {
+      "transactions": [
+        {"id": "TXN-999", "amount": 299.99, "date": "2025-11-10", "merchant": "Best Buy"}
+      ]
+    },
+    "agent_output": "The disputed transaction TXN-999 for $299.99 at Best Buy on November 10th is under review.",
+    "is_fabricated": false,
+    "fabrication_type": null,
+    "red_flags": [],
+    "reason": "Agent accurately restated transaction details from evidence"
+  },
+  {
+    "id": "VALID-003",
+    "category": "valid_inference",
+    "input_evidence": {
+      "dispute": {
+        "filed_date": "2025-12-01"
+      },
+      "network_rules": {
+        "visa_response_deadline_days": 30
+      }
+    },
+    "agent_output": "Your response deadline is December 31st (30 days from filing).",
+    "is_fabricated": false,
+    "fabrication_type": null,
+    "red_flags": [],
+    "reason": "Deadline correctly calculated from filed_date + network_rules.deadline"
+  }
+]

@@ -1,0 +1,742 @@
+[
+  {
+    "trace_id": "TRC-a58e226f",
+    "dispute_id": "DIS-28b7451a",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-28b7451a",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-ca7d751f",
+    "dispute_id": "DIS-619bfab5",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-619bfab5",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-6371b389",
+    "dispute_id": "DIS-2fad4cbe",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-2fad4cbe",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-65663341",
+    "dispute_id": "DIS-083a91c7",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-083a91c7",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-eb82ac9b",
+    "dispute_id": "DIS-1e332ca7",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-1e332ca7",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-345f687b",
+    "dispute_id": "DIS-44b15e92",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-44b15e92",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-b70ebe9d",
+    "dispute_id": "DIS-227d0645",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-227d0645",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-82a958ce",
+    "dispute_id": "DIS-2b810603",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-2b810603",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-f3ed47c2",
+    "dispute_id": "DIS-3b107f90",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-3b107f90",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-37515e0b",
+    "dispute_id": "DIS-5bd81d22",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-5bd81d22",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-c6d332b6",
+    "dispute_id": "DIS-24a0bdd7",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-24a0bdd7",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-3cde44e6",
+    "dispute_id": "DIS-10af0699",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-10af0699",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-aaec0ec3",
+    "dispute_id": "DIS-c1f6ae04",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-c1f6ae04",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-616ffe96",
+    "dispute_id": "DIS-907d1a48",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-907d1a48",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-2ddace91",
+    "dispute_id": "DIS-c831fce1",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-c831fce1",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-dfdf582f",
+    "dispute_id": "DIS-b92251bb",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-b92251bb",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-fce7682c",
+    "dispute_id": "DIS-17ff3ab2",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-17ff3ab2",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-4a151363",
+    "dispute_id": "DIS-bf2dfcb3",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-bf2dfcb3",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-bb189ce5",
+    "dispute_id": "DIS-935e46d4",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-935e46d4",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  },
+  {
+    "trace_id": "TRC-f203fe91",
+    "dispute_id": "DIS-617305da",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-617305da",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I see this is a complex case. The evidence is contradictory.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "I need a human to look at this.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Escalating to human agent. Ticket #ESC-123 created.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "ESCALATED",
+    "success": false,
+    "failure_reason": "Human Requested"
+  }
+]

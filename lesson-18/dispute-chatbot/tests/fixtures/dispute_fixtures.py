@@ -1,7 +1,7 @@
 import json
-import pytest
-import os
 from pathlib import Path
+
+import pytest
 
 # Get the absolute path to the schema examples file
 # Assuming the file structure:
@@ -23,7 +23,7 @@ def example_data():
     """Load the examples.json file."""
     if not EXAMPLES_FILE.exists():
         pytest.fail(f"Test data file not found at: {EXAMPLES_FILE}")
-    
+
     with open(EXAMPLES_FILE, "r") as f:
         data = json.load(f)
     return data["examples"]

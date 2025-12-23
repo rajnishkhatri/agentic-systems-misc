@@ -1,0 +1,123 @@
+sequenceDiagram
+    autonumber
+    title Happy Path: Fraud 10.4 Dispute Resolution with CE 3.0
+
+    participant M as Merchant<br/>(Chainlit UI)
+    participant SM as State Machine<br/>Orchestrator
+    participant CL as Classify<br/>Phase
+    participant HG as Hierarchical<br/>Evidence Gatherer
+    participant TS as Transaction<br/>Specialist
+    participant CS as Customer<br/>Specialist
+    participant JP as LLM Judge<br/>Panel
+    participant NT as Network<br/>Translation
+    participant VA as Visa VROL<br/>(Mock API)
+    participant EX as Explainability<br/>Layer
+
+    Note over M,EX: Phase 1: CLASSIFY
+
+    M->>+SM: Submit Fraud Dispute<br/>(dispute_id, cardholder_claim: "Card stolen")
+    SM->>EX: trace_phase("CLASSIFY", dispute_id)
+    SM->>+CL: classify_dispute(dispute)
+
+    CL->>CL: LLMService.complete()<br/>routing_model
+    CL->>CL: Extract reason code<br/>Calculate deadline (dispute_date + 14d)
+    CL->>EX: log_decision("CLASSIFY", "FRAUD_10_4")
+
+    CL-->>-SM: ClassifyResponse<br/>{reason_code: FRAUD_10_4,<br/>ce3_potential: true,<br/>required_evidence: [PRIOR_TXN, DEVICE, IP, EMAIL]}
+
+    SM->>M: Phase Update: CLASSIFY complete<br/>Reason Code: Fraud 10.4<br/>Deadline: 14 days
+
+    Note over M,EX: Phase 2: GATHER_EVIDENCE
+
+    SM->>EX: trace_phase("GATHER_EVIDENCE", dispute_id)
+    SM->>+HG: gather_evidence(dispute, required_evidence)
+
+    HG->>HG: EvidencePlanner.create_plan()<br/>routing_model
+
+    par Parallel Evidence Collection (ThreadPoolExecutor)
+        HG->>+TS: gather(dispute, plan)
+        TS->>TS: LLMService.complete()<br/>default_model
+        TS->>TS: Query merchant transaction history
+        TS->>TS: Find 2+ prior undisputed txns<br/>within 120 days
+        TS->>EX: record_agent_call("TransactionSpecialist")
+        TS-->>-HG: PriorTransactions<br/>[txn_001: $89.99, txn_002: $150.00]
+
+    and
+        HG->>+CS: gather(dispute, plan)
+        CS->>CS: LLMService.complete()<br/>default_model
+        CS->>CS: Check device fingerprint<br/>Check IP geolocation<br/>Verify email match
+        CS->>EX: record_agent_call("CustomerSpecialist")
+        CS-->>-HG: CustomerSignals<br/>{device_match: true, ip_match: true, email_match: true}
+    end
+
+    HG->>HG: Assemble EvidencePackage
+    HG->>HG: check_ce3_eligibility()<br/>2 prior txns + 3 matching signals
+
+    HG-->>-SM: GatherResponse<br/>{status: COMPLETE,<br/>completeness_score: 0.95,<br/>ce3_eligible: true}
+
+    SM->>M: Phase Update: Evidence gathered<br/>CE 3.0 Qualified<br/>Ready for validation
+
+    Note over M,EX: Phase 3: VALIDATE
+
+    SM->>EX: trace_phase("VALIDATE", dispute_id)
+    SM->>+JP: validate_evidence(evidence_package)
+
+    par Judge Panel Evaluation
+        JP->>JP: EvidenceQualityJudge.evaluate()<br/>complete_structured() → judge_model
+        Note right of JP: Score: 0.88 (threshold: 0.8)<br/>PASSED - Evidence sufficient
+
+    and
+        JP->>JP: FabricationDetectionJudge.evaluate()<br/>complete_structured() → judge_model
+        Note right of JP: Score: 0.99 (threshold: 0.95)<br/>PASSED - No hallucinations
+
+    and
+        JP->>JP: DisputeValidityJudge.evaluate()<br/>complete_structured() → judge_model
+        Note right of JP: Score: 0.82 (threshold: 0.7)<br/>PASSED - Valid defense
+    end
+
+    JP->>EX: log_decision("VALIDATE", "all_judges_passed")
+    JP-->>-SM: PanelResult<br/>{passed: true,<br/>blocking_failures: [],<br/>warnings: []}
+
+    SM->>M: Phase Update: Validation passed<br/>All 3 judges approved<br/>Proceeding to submission
+
+    Note over M,EX: Phase 4: SUBMIT
+
+    SM->>EX: trace_phase("SUBMIT", dispute_id)
+    SM->>+NT: submit_dispute(evidence_package)
+
+    NT->>NT: Translate to VROL format<br/>Map CE 3.0 fields<br/>(priorTransactions, deviceFingerprint)
+    NT->>EX: validate_pci(payload)<br/>No PAN/PII detected
+
+    NT->>+VA: POST /vrol/submit<br/>(VROLPayload)
+    VA->>VA: Validate payload structure
+    VA->>VA: Generate case_id
+    VA-->>-NT: 200 OK<br/>{case_id: "VROL-2025-1234567890",<br/>acknowledged_at: "2025-12-08T10:30:47Z"}
+
+    NT->>EX: record_agent_call("VisaVROL")<br/>payload_hash: sha256:abc123...
+    NT-->>-SM: SubmitResponse<br/>{status: SUBMITTED,<br/>network_case_id: "VROL-2025-1234567890"}
+
+    SM->>M: Phase Update: Dispute submitted<br/>Case ID: VROL-2025-1234567890<br/>Expected resolution: ~30 days
+
+    Note over M,EX: Phase 5: MONITOR
+
+    SM->>EX: trace_phase("MONITOR", dispute_id)
+
+    loop Poll for resolution (daily)
+        SM->>+VA: GET /vrol/status/{case_id}
+        VA-->>-SM: {status: "PENDING"}
+    end
+
+    Note over VA: Day 25: Network decision received
+
+    SM->>+VA: GET /vrol/status/{case_id}
+    VA-->>-SM: {status: "RESOLVED",<br/>outcome: "MERCHANT_WIN",<br/>reason: "CE 3.0 evidence accepted"}
+
+    SM->>EX: log_decision("MONITOR", "RESOLVED_WON")
+
+    Note over M,EX: Phase 6: RESOLVED_WON (Terminal State)
+
+    SM->>M: Dispute Resolution Complete<br/>Outcome: MERCHANT WIN<br/>CE 3.0 evidence accepted by network
+
+    SM->>EX: export_audit_log(dispute_id)<br/>BlackBox + PhaseLogger + GuardRails
+
+    Note over M,EX: Total Flow: ~25-30 days<br/>Tool latency: <800ms P95 per phase<br/>Evidence gathering: <5 minutes

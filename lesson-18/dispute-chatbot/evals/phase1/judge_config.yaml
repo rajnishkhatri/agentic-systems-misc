@@ -1,0 +1,23 @@
+judges:
+  evidence_quality:
+    model: gpt-4o
+    threshold: 0.8
+    prompt_template: evidence_quality.j2
+    calibration_set: golden_set/evidence_quality_scores.json
+
+  fabrication_detection:
+    model: gpt-4o
+    threshold: 0.95
+    prompt_template: fabrication_detection.j2
+    calibration_set: golden_set/fabrication_examples.json
+
+  dispute_validity:
+    model: gpt-4o-mini  # Non-blocking
+    threshold: 0.7
+    prompt_template: dispute_validity.j2
+
+eval_schedule:
+  pr_checks: [evidence_quality, fabrication_detection]
+  nightly: [dispute_validity, regression_suite]
+  weekly: [golden_set_calibration]
+

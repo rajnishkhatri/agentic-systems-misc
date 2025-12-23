@@ -1,0 +1,911 @@
+[
+  {
+    "dispute_id": "disp_diverse_000",
+    "description": "This transaction is incorrect. (Network: Amex)",
+    "true_reason_code": "A01",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_001",
+    "description": "I am disputing this charge: No Valid Authorization (Network: Amex)",
+    "true_reason_code": "A02",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_002",
+    "description": "There is an issue with this payment. (Network: Amex)",
+    "true_reason_code": "A08",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_003",
+    "description": "Merchant promised a refund but I don't see it. (Network: Amex)",
+    "true_reason_code": "C02",
+    "network": "amex",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_004",
+    "description": "Merchant promised a refund but I don't see it. (Network: Amex)",
+    "true_reason_code": "C04",
+    "network": "amex",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_005",
+    "description": "Where is my credit? (Network: Amex)",
+    "true_reason_code": "C05",
+    "network": "amex",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_006",
+    "description": "It's been weeks and I still haven't gotten my order. (Network: Amex)",
+    "true_reason_code": "C08",
+    "network": "amex",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_007",
+    "description": "I was charged twice for the same thing. (Paid by Other Means) (Network: Amex)",
+    "true_reason_code": "C14",
+    "network": "amex",
+    "category": "duplicate",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_008",
+    "description": "This transaction is incorrect. (Network: Amex)",
+    "true_reason_code": "C18",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_009",
+    "description": "Recurring billing should have stopped. (Network: Amex)",
+    "true_reason_code": "C28",
+    "network": "amex",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_010",
+    "description": "This is not what I ordered. (Network: Amex)",
+    "true_reason_code": "C31",
+    "network": "amex",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_011",
+    "description": "The quality is terrible and I want a refund. (Network: Amex)",
+    "true_reason_code": "C32",
+    "network": "amex",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_012",
+    "description": "I did not make this transaction. It is fraud. (Missing Imprint) (Network: Amex)",
+    "true_reason_code": "F10",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_013",
+    "description": "Unauthorized transaction on my account. (Network: Amex)",
+    "true_reason_code": "F14",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_014",
+    "description": "My card was stolen and used for this charge. (Network: Amex)",
+    "true_reason_code": "F24",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_015",
+    "description": "I don't recognize this charge at all. (Network: Amex)",
+    "true_reason_code": "F29",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_016",
+    "description": "I don't recognize this charge at all. (Network: Amex)",
+    "true_reason_code": "F30",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_017",
+    "description": "My card was stolen and used for this charge. (Network: Amex)",
+    "true_reason_code": "F31",
+    "network": "amex",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_018",
+    "description": "I am disputing this charge: Chargeback Authorization (Network: Amex)",
+    "true_reason_code": "M01",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_019",
+    "description": "This transaction is incorrect. (Network: Amex)",
+    "true_reason_code": "P01",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_020",
+    "description": "I am disputing this charge: Credit Processed as Charge (Network: Amex)",
+    "true_reason_code": "P03",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_021",
+    "description": "This transaction is incorrect. (Network: Amex)",
+    "true_reason_code": "P04",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_022",
+    "description": "I am disputing this charge: Incorrect Charge Amount (Network: Amex)",
+    "true_reason_code": "P05",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_023",
+    "description": "I am disputing this charge: Late Submission (Network: Amex)",
+    "true_reason_code": "P07",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_024",
+    "description": "This is a duplicate charge. (Network: Amex)",
+    "true_reason_code": "P08",
+    "network": "amex",
+    "category": "duplicate",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_025",
+    "description": "I am disputing this charge: Non-Matching Card Number (Network: Amex)",
+    "true_reason_code": "P22",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_026",
+    "description": "This transaction is incorrect. (Network: Amex)",
+    "true_reason_code": "P23",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_027",
+    "description": "There is an issue with this payment. (Network: Amex)",
+    "true_reason_code": "R03",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_028",
+    "description": "I am disputing this charge: No Reply (Network: Amex)",
+    "true_reason_code": "R13",
+    "network": "amex",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_029",
+    "description": "I need more information about this. (Network: Discover)",
+    "true_reason_code": "AA",
+    "network": "discover",
+    "category": "unrecognized",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_030",
+    "description": "I ended my membership last month. (Network: Discover)",
+    "true_reason_code": "AP",
+    "network": "discover",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_031",
+    "description": "There is an issue with this payment. (Network: Discover)",
+    "true_reason_code": "AT",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_032",
+    "description": "This transaction is incorrect. (Network: Discover)",
+    "true_reason_code": "AW",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_033",
+    "description": "This transaction is incorrect. (Network: Discover)",
+    "true_reason_code": "CD",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_034",
+    "description": "Where is my credit? (Network: Discover)",
+    "true_reason_code": "CR",
+    "network": "discover",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_035",
+    "description": "There is an issue with this payment. (Network: Discover)",
+    "true_reason_code": "DA",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_036",
+    "description": "I see two identical transactions on my statement. (Network: Discover)",
+    "true_reason_code": "DP",
+    "network": "discover",
+    "category": "duplicate",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_037",
+    "description": "I am disputing this charge: Expired Card (Network: Discover)",
+    "true_reason_code": "EX",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_038",
+    "description": "This transaction is incorrect. (Network: Discover)",
+    "true_reason_code": "IC",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_039",
+    "description": "There is an issue with this payment. (Network: Discover)",
+    "true_reason_code": "IN",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_040",
+    "description": "There is an issue with this payment. (Network: Discover)",
+    "true_reason_code": "LP",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_041",
+    "description": "There is an issue with this payment. (Network: Discover)",
+    "true_reason_code": "NA",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_042",
+    "description": "There is an issue with this payment. (Network: Discover)",
+    "true_reason_code": "NC",
+    "network": "discover",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_043",
+    "description": "It's been weeks and I still haven't gotten my order. (Network: Discover)",
+    "true_reason_code": "NF",
+    "network": "discover",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_044",
+    "description": "This is a duplicate charge. (Network: Discover)",
+    "true_reason_code": "PM",
+    "network": "discover",
+    "category": "duplicate",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_045",
+    "description": "The package never arrived. (Network: Discover)",
+    "true_reason_code": "RG",
+    "network": "discover",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_046",
+    "description": "It arrived broken. (Network: Discover)",
+    "true_reason_code": "RM",
+    "network": "discover",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_047",
+    "description": "Merchant promised a refund but I don't see it. (Network: Discover)",
+    "true_reason_code": "RN2",
+    "network": "discover",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_048",
+    "description": "I did not make this transaction. It is fraud. (Fraud - Card Present Transaction) (Network: Discover)",
+    "true_reason_code": "UA01",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_049",
+    "description": "My card was stolen and used for this charge. (Network: Discover)",
+    "true_reason_code": "UA02",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_050",
+    "description": "Unauthorized transaction on my account. (Network: Discover)",
+    "true_reason_code": "UA05",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_051",
+    "description": "I did not make this transaction. It is fraud. (Fraud - Chip Card Lost/Stolen) (Network: Discover)",
+    "true_reason_code": "UA06",
+    "network": "discover",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_052",
+    "description": "I am disputing this charge: Warning Bulletin File (Network: Mastercard)",
+    "true_reason_code": "4807",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_053",
+    "description": "There is an issue with this payment. (Network: Mastercard)",
+    "true_reason_code": "4808",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_054",
+    "description": "I am disputing this charge: Account Number Not on File (Network: Mastercard)",
+    "true_reason_code": "4812",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_055",
+    "description": "This transaction is incorrect. (Network: Mastercard)",
+    "true_reason_code": "4831",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_056",
+    "description": "I see two identical transactions on my statement. (Network: Mastercard)",
+    "true_reason_code": "4834",
+    "network": "mastercard",
+    "category": "duplicate",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_057",
+    "description": "I don't recognize this charge at all. (Network: Mastercard)",
+    "true_reason_code": "4835",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_058",
+    "description": "Unauthorized transaction on my account. (Network: Mastercard)",
+    "true_reason_code": "4837",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_059",
+    "description": "I don't recognize this charge at all. (Network: Mastercard)",
+    "true_reason_code": "4840",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_060",
+    "description": "Recurring billing should have stopped. (Network: Mastercard)",
+    "true_reason_code": "4841",
+    "network": "mastercard",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_061",
+    "description": "There is an issue with this payment. (Network: Mastercard)",
+    "true_reason_code": "4842",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_062",
+    "description": "There is an issue with this payment. (Network: Mastercard)",
+    "true_reason_code": "4846",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_063",
+    "description": "My card was stolen and used for this charge. (Network: Mastercard)",
+    "true_reason_code": "4849",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_064",
+    "description": "This transaction is incorrect. (Network: Mastercard)",
+    "true_reason_code": "4850",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_065",
+    "description": "This transaction is incorrect. (Network: Mastercard)",
+    "true_reason_code": "4853",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_066",
+    "description": "This transaction is incorrect. (Network: Mastercard)",
+    "true_reason_code": "4854",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_067",
+    "description": "The package never arrived. (Network: Mastercard)",
+    "true_reason_code": "4855",
+    "network": "mastercard",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_068",
+    "description": "I am disputing this charge: Card-Activated Telephone Transaction (Network: Mastercard)",
+    "true_reason_code": "4857",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_069",
+    "description": "There is an issue with this payment. (Network: Mastercard)",
+    "true_reason_code": "4859",
+    "network": "mastercard",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_070",
+    "description": "My card was stolen and used for this charge. (Network: Mastercard)",
+    "true_reason_code": "4863",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_071",
+    "description": "I don't recognize this charge at all. (Network: Mastercard)",
+    "true_reason_code": "4870",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_072",
+    "description": "My card was stolen and used for this charge. (Network: Mastercard)",
+    "true_reason_code": "4871",
+    "network": "mastercard",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_073",
+    "description": "I am disputing this charge:  (Network: Openapi_Gateway_Response)",
+    "true_reason_code": "QUOTA_EXCEEDED",
+    "network": "openapi_gateway_response",
+    "category": "",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_074",
+    "description": "I don't recognize this charge at all. (Network: Openapi_Gateway_Response)",
+    "true_reason_code": "UNAUTHORIZED",
+    "network": "openapi_gateway_response",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_075",
+    "description": "Tracking says delivered but I don't have it. (Network: Paypal)",
+    "true_reason_code": "ITEM_NOT_RECEIVED",
+    "network": "paypal",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_076",
+    "description": "I did not make this transaction. It is fraud. (EMV Liability Shift Counterfeit Fraud) (Network: Visa)",
+    "true_reason_code": "10.1",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_077",
+    "description": "Unauthorized transaction on my account. (Network: Visa)",
+    "true_reason_code": "10.2",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_078",
+    "description": "Unauthorized transaction on my account. (Network: Visa)",
+    "true_reason_code": "10.3",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_079",
+    "description": "My card was stolen and used for this charge. (Network: Visa)",
+    "true_reason_code": "10.4",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_080",
+    "description": "Unauthorized transaction on my account. (Network: Visa)",
+    "true_reason_code": "10.5",
+    "network": "visa",
+    "category": "fraudulent",
+    "is_fraud": true,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_081",
+    "description": "This transaction is incorrect. (Network: Visa)",
+    "true_reason_code": "11.1",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_082",
+    "description": "There is an issue with this payment. (Network: Visa)",
+    "true_reason_code": "11.2",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_083",
+    "description": "There is an issue with this payment. (Network: Visa)",
+    "true_reason_code": "11.3",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_084",
+    "description": "This transaction is incorrect. (Network: Visa)",
+    "true_reason_code": "12.1",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_085",
+    "description": "There is an issue with this payment. (Network: Visa)",
+    "true_reason_code": "12.2",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_086",
+    "description": "This transaction is incorrect. (Network: Visa)",
+    "true_reason_code": "12.3",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_087",
+    "description": "This transaction is incorrect. (Network: Visa)",
+    "true_reason_code": "12.4",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_088",
+    "description": "I am disputing this charge: Incorrect Amount (Network: Visa)",
+    "true_reason_code": "12.5",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_089",
+    "description": "I was charged twice for the same thing. (Duplicate Processing) (Network: Visa)",
+    "true_reason_code": "12.6.1",
+    "network": "visa",
+    "category": "duplicate",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_090",
+    "description": "This is a duplicate charge. (Network: Visa)",
+    "true_reason_code": "12.6.2",
+    "network": "visa",
+    "category": "duplicate",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_091",
+    "description": "This transaction is incorrect. (Network: Visa)",
+    "true_reason_code": "12.7",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_092",
+    "description": "It's been weeks and I still haven't gotten my order. (Network: Visa)",
+    "true_reason_code": "13.1",
+    "network": "visa",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_093",
+    "description": "I ended my membership last month. (Network: Visa)",
+    "true_reason_code": "13.2",
+    "network": "visa",
+    "category": "subscription_canceled",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_094",
+    "description": "It arrived broken. (Network: Visa)",
+    "true_reason_code": "13.3",
+    "network": "visa",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_095",
+    "description": "It arrived broken. (Network: Visa)",
+    "true_reason_code": "13.4",
+    "network": "visa",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_096",
+    "description": "The quality is terrible and I want a refund. (Network: Visa)",
+    "true_reason_code": "13.5",
+    "network": "visa",
+    "category": "product_unacceptable",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_097",
+    "description": "I returned the item but haven't received my refund. (Credit Not Processed) (Network: Visa)",
+    "true_reason_code": "13.6",
+    "network": "visa",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_098",
+    "description": "Merchant promised a refund but I don't see it. (Network: Visa)",
+    "true_reason_code": "13.7",
+    "network": "visa",
+    "category": "credit_not_processed",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_099",
+    "description": "This transaction is incorrect. (Network: Visa)",
+    "true_reason_code": "13.8",
+    "network": "visa",
+    "category": "general",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  },
+  {
+    "dispute_id": "disp_diverse_100",
+    "description": "Tracking says delivered but I don't have it. (Network: Visa)",
+    "true_reason_code": "13.9",
+    "network": "visa",
+    "category": "product_not_received",
+    "is_fraud": false,
+    "expected_confidence": 0.9
+  }
+]

@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant V as Vendor
+    participant You as Engineer
+    participant VP as VP of Ops
+    
+    V->>VP: "Our model has 99% Accuracy!"
+    VP->>You: "Sounds great, right?"
+    You->>V: "Can I see the confusion matrix?"
+    V->>You: "It's proprietary... but trust the accuracy."
+    
+    Note right of You: EXECUTE PHASE
+    
+    You->>VP: "I ran a test on our Amex data."
+    You->>VP: "Accuracy was 0%."
+    
+    VP->>V: "Is that true?"
+    V->>VP: "Well, we focused on Visa first..."
+    
+    You->>V: "So the 99% claim is only for 60% of our traffic?"
+    You->>VP: "We need a robust benchmark before signing."
+    
+    VP->>V: "Agreed. Come back when it works on Amex."
+

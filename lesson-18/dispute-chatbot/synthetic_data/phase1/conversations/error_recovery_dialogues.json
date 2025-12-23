@@ -1,0 +1,1532 @@
+[
+  {
+    "trace_id": "TRC-9a2f15de",
+    "dispute_id": "DIS-669b64a1",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-669b64a1",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-8977a9ea",
+    "dispute_id": "DIS-1aaf7b93",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-1aaf7b93",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-9c477339",
+    "dispute_id": "DIS-825a2c30",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-825a2c30",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-5bb6e031",
+    "dispute_id": "DIS-26f055d7",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-26f055d7",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-d2214def",
+    "dispute_id": "DIS-7b5d4663",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-7b5d4663",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-88a039b1",
+    "dispute_id": "DIS-d32b24f5",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-d32b24f5",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-0c01ed97",
+    "dispute_id": "DIS-731e8ea4",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-731e8ea4",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-12cc01a0",
+    "dispute_id": "DIS-77facb3e",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-77facb3e",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-b26b3bed",
+    "dispute_id": "DIS-56b59548",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-56b59548",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-01b4f24c",
+    "dispute_id": "DIS-96462b7b",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-96462b7b",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-414c7378",
+    "dispute_id": "DIS-ce4bde65",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-ce4bde65",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-0bffa821",
+    "dispute_id": "DIS-e9164742",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-e9164742",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-b129e9e4",
+    "dispute_id": "DIS-fb22eb64",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-fb22eb64",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-1c0ca662",
+    "dispute_id": "DIS-728f825c",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-728f825c",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-5448aa9f",
+    "dispute_id": "DIS-778b3997",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-778b3997",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-ff7fb563",
+    "dispute_id": "DIS-cffeeadf",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-cffeeadf",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-28a831df",
+    "dispute_id": "DIS-9bfc10c7",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-9bfc10c7",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-7f938f5a",
+    "dispute_id": "DIS-c7db3c00",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-c7db3c00",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-baf50dbc",
+    "dispute_id": "DIS-f2ec93d7",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-f2ec93d7",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-4a8e37b0",
+    "dispute_id": "DIS-fa18ebae",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-fa18ebae",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-fbe1907c",
+    "dispute_id": "DIS-5fe7c7c8",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-5fe7c7c8",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-e7caed28",
+    "dispute_id": "DIS-1b840595",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-1b840595",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-cafb92f6",
+    "dispute_id": "DIS-d6e80a03",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-d6e80a03",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-7eacd98b",
+    "dispute_id": "DIS-05928202",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-05928202",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-6ceaa08d",
+    "dispute_id": "DIS-9109e241",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-9109e241",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-dbd56cdd",
+    "dispute_id": "DIS-9816af84",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-9816af84",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-2dc58cbf",
+    "dispute_id": "DIS-1578eb93",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-1578eb93",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-b7f4911d",
+    "dispute_id": "DIS-5b232510",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-5b232510",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-4426302b",
+    "dispute_id": "DIS-d22eb24a",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-d22eb24a",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-a3223e1a",
+    "dispute_id": "DIS-fc948c59",
+    "turns": [
+      {
+        "role": "user",
+        "content": "Dispute DIS-fc948c59",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Checking status...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call failed",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "TimeoutError"
+      },
+      {
+        "role": "assistant",
+        "content": "System is slow. Retrying...",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "tool",
+        "content": "Tool call succeeded",
+        "tool_name": "check_status",
+        "tool_input": null,
+        "tool_output": "Status: OPEN"
+      },
+      {
+        "role": "assistant",
+        "content": "Found it. Status is OPEN.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "RECOVERED",
+    "success": true,
+    "failure_reason": null
+  }
+]

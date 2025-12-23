@@ -1,0 +1,54 @@
+trace_id,code,quote,severity,notes
+TRC-9a2f15de,tool_timeout,"Tool call failed... TimeoutError",Medium,Recovered successfully after retry
+TRC-9a2f15de,retry_mechanism,"System is slow. Retrying...",Low,Automatic recovery worked
+TRC-a58e226f,contradictory_evidence,"I see this is a complex case. The evidence is contradictory.",High,Agent correctly identified complexity
+TRC-a58e226f,human_escalation,"Escalating to human agent.",Medium,Standard procedure for complex cases
+TRC-04dd4579,successful_classification,"It's a fraud dispute.",Low,Correct classification
+TRC-04dd4579,smooth_submission,"Submitted successfully.",Low,Happy path
+TRC-8977a9ea,tool_timeout,"Tool call failed... TimeoutError",Medium,Repeated pattern of network instability
+TRC-ca7d751f,contradictory_evidence,"The evidence is contradictory.",High, consistent escalation trigger
+TRC-f37beed1,successful_classification,"It's a fraud dispute.",Low,
+TRC-6371b389,user_escalation_request,"I need a human to look at this.",Medium,User initiated escalation
+TRC-eb82ac9b,complex_case_identification,"complex case",Medium,Agent self-identified difficulty
+TRC-1c0ca662,tool_timeout,"TimeoutError",Medium,
+TRC-b7f4911d,recovery_success,"Found it. Status is OPEN.",Low,
+TRC-6c4e3896,evidence_submission,"Evidence gathered. Submitting.",Low,
+TRC-21a1b545,submission_confirmation,"Submitted successfully.",Low,
+TRC-BC-001,classification_conflict,"This sounds like a fraud case (Reason Code 10.4).",High,"User story changed twice"
+TRC-BC-001,story_change_multi_type,"User changed from 'never ordered' to 'charged incorrectly' to 'wrong item'.",High,"Conflicting dispute types"
+TRC-BC-001,clarification_prompt,"This changes the dispute type. Can you clarify: did you receive the item you ordered?",Medium,"Needs disambiguation before classification"
+TRC-BC-002,partial_evidence,"There is no tracking number available.",High,"Shipping evidence incomplete"
+TRC-BC-002,weak_evidence_warning,"Without tracking information, we can still proceed but the case is weaker.",Medium,"Quality risk flagged to user"
+TRC-BC-002,user_decision_pending,"Would you like to submit anyway or try to obtain tracking first?",Low,"Shared decision with user"
+TRC-BC-003,deadline_edge_warning,"Today is December 9th... We have approximately 1 day remaining to file.",High,"Deadline boundary at 60 days"
+TRC-BC-003,user_delay_risk,"I strongly recommend we submit today with whatever evidence is available.",High,"User wants to delay despite deadline"
+TRC-BC-004,repeated_question,"I notice you've asked about the status multiple times.",Medium,"User confusion after 3 repeats"
+TRC-BC-004,escalation_offer,"Would you like to speak with a human agent?",Low,"Escalation offered due to confusion"
+TRC-BC-005,ambiguous_classification,"This could be: (1) 13.1 PNR or (2) 10.4 Fraud.",High,"Multiple plausible reason codes"
+TRC-BC-005,classification_recommendation,"I recommend filing as Merchandise Not As Described (13.3).",Medium,"Assistant proposes alternative code"
+TRC-BC-006,ce3_boundary,"You have exactly 2 prior undisputed transactions with TechMart.",Medium,"At CE 3.0 minimum threshold"
+TRC-BC-006,boundary_flag,"This qualifies but just barely.",Medium,"Boundary condition should be flagged"
+TRC-BC-007,tool_failure_cascade,"Tool call failed",Medium,"Consecutive tool failures across attempts"
+TRC-BC-007,retry_budget_exhausted,"After 3 attempts, I'm unable to retrieve your dispute status.",High,"Retry budget exhausted"
+TRC-BC-007,escalation_offer_system_failure,"I can connect you with a human agent.",Medium,"Escalation due to persistent system error"
+TRC-BC-008,evidence_contradiction,"You stated you didn't receive the order, but UPS tracking shows: delivered... signed by 'J.SMITH'.",High,"Direct contradiction detected"
+TRC-BC-008,delivery_proof_conflicts_claim,"Delivery photo and signature conflict with 'never received' claim.",High,"Conflict between user claim and evidence"
+TRC-BC-009,pii_pan_input,"The card that was charged is 4111-1111-1111-1111",Critical,"Full PAN shared; must be redacted"
+TRC-BC-009,pii_ssn_input,"My SSN is 123-45-6789",Critical,"Full SSN shared; must be redacted"
+TRC-BC-009,guardrails_redaction,"[SECURITY NOTICE: ... redacted from logs]",High,"GuardRails redaction applied"
+TRC-BC-010,multi_dispute_confusion,"I see you have 3 active disputes. Which one would you like to check?",Medium,"User did not specify which dispute"
+TRC-BC-010,disambiguation_prompt,"Which one would you like to check?",Low,"Prompt to disambiguate multiple disputes"
+TRC-BC-010,summary_response,"Here's a summary of all your disputes: | Dispute | Merchant | Amount | Status |",Low,"Agent summarized multiple disputes"
+TRC-BC-011,agent_uncertainty_expression,"I'm 60% confident this is best handled as 'Cancelled Recurring Transaction'.",Medium,"Agent explicitly states uncertainty"
+TRC-BC-011,confidence_update,"I'm now 85% confident we should file under 'Cancelled Recurring Transaction'.",Low,"Confidence updated after evidence"
+TRC-BC-012,empty_evidence_package,"I wasn't able to find any supporting evidence for this dispute.",Critical,"All evidence sources empty"
+TRC-BC-012,low_success_warning,"Without evidence, the likelihood of winning is very low (<20%).",High,"Warns user about low success probability"
+TRC-BC-012,user_options_presented,"What would you like to do? Contact merchant / Gather evidence / File anyway",Low,"Shared decision with user"
+TRC-65663341,contradictory_evidence,"I see this is a complex case. The evidence is contradictory.",High,"Escalation trigger"
+TRC-65663341,human_escalation,"Escalating to human agent. Ticket #ESC-123 created.",Medium,"User requested human review"
+TRC-345f687b,contradictory_evidence,"I see this is a complex case. The evidence is contradictory.",High,"Escalation trigger"
+TRC-345f687b,human_escalation,"Escalating to human agent. Ticket #ESC-123 created.",Medium,"User requested human review"
+TRC-NL-001,implicit_network_failure,"WHY was I charged... (Visa predicted, expected Amex)",High,"Implicit network failure: regex requires explicit keyword"
+TRC-NL-002,user_bank_perspective_gap,"WHY was I charged without permission... (10.4 vs A02)",Medium,"User describes fraud, bank has technical code (Auth Expired/No Auth)"
+TRC-NL-003,vague_input_overconfidence,"I noticed something odd... (Confidence: 0.85)",High,"Model is overconfident on vague input. Should be <0.7 to trigger clarification"
+TRC-NL-004,narrative_noise_failure,"I went to the store... (Selected 10.4 Fraud vs 13.x Merchandise)",Medium,"Model distracted by narrative context, missed core issue"

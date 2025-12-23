@@ -1,0 +1,2302 @@
+[
+  {
+    "dispute_id": "DIS-2d9ca28a",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z357959945540900281",
+      "carrier": "USPS",
+      "shipped_date": "2025-10-10T01:12:17.206881",
+      "delivery_date": "2025-10-14T01:12:17.206881",
+      "signed_by": "William Davis",
+      "shipping_address": "885 Cynthia Crescent\nDavisshire, CT 49337",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "4.73.75.102",
+      "device_id": "DEV-50ae8343",
+      "account_age_days": 852,
+      "prior_purchases_count": 49,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-196de1",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-bbbfd2c6",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "186.106.34.69",
+      "device_id": "DEV-1fb0b391",
+      "account_age_days": 807,
+      "prior_purchases_count": 45,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-0121e313",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z676823024293195673",
+      "carrier": "USPS",
+      "shipped_date": "2025-11-05T01:12:17.207723",
+      "delivery_date": "2025-11-08T01:12:17.207723",
+      "signed_by": "Christopher Ware",
+      "shipping_address": "40560 Elizabeth Turnpike Apt. 978\nBethview, GU 05103",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "8.153.62.43",
+      "device_id": "DEV-f83cc0b5",
+      "account_age_days": 770,
+      "prior_purchases_count": 10,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-687505",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-bda973e1",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z629969622310783250",
+      "carrier": "USPS",
+      "shipped_date": "2025-09-22T01:12:17.208244",
+      "delivery_date": "2025-09-24T01:12:17.208244",
+      "signed_by": "Regina Sparks",
+      "shipping_address": "33480 Anthony Land Apt. 794\nCodystad, IA 24629",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "86.50.160.81",
+      "device_id": "DEV-907cfc2b",
+      "account_age_days": 957,
+      "prior_purchases_count": 28,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-8b3420",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-7f03bfbc",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z713842774934025926",
+      "carrier": "FedEx",
+      "shipped_date": "2025-10-01T01:12:17.208676",
+      "delivery_date": "2025-10-05T01:12:17.208676",
+      "signed_by": "Paul Blackwell",
+      "shipping_address": "9664 Brooke Hills\nMarshallbury, NE 96625",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "5.166.166.130",
+      "device_id": "DEV-c122a7d9",
+      "account_age_days": 458,
+      "prior_purchases_count": 22,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-0807d2",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-f8e4e0fe",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "38.101.165.32",
+      "device_id": "DEV-9e96628f",
+      "account_age_days": 273,
+      "prior_purchases_count": 37,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-22e0ab85",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z902857007895224970",
+      "carrier": "UPS",
+      "shipped_date": "2025-10-10T01:12:17.209486",
+      "delivery_date": "2025-10-11T01:12:17.209486",
+      "signed_by": "Sandra Miller",
+      "shipping_address": "PSC 0093, Box 4602\nAPO AE 34258",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "50.237.76.30",
+      "device_id": "DEV-527f9a06",
+      "account_age_days": 481,
+      "prior_purchases_count": 3,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-111d46",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-6db80907",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z261214096614314719",
+      "carrier": "FedEx",
+      "shipped_date": "2025-10-04T01:12:17.209908",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "677 Jacqueline Summit\nSouth Jenniferchester, RI 66202",
+      "status": "in_transit"
+    },
+    "customer_signals": {
+      "ip_address": "55.164.68.33",
+      "device_id": "DEV-033d7013",
+      "account_age_days": 64,
+      "prior_purchases_count": 8,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-9be7a7",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-4026e93a",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "216.86.76.148",
+      "device_id": "DEV-72be1cbb",
+      "account_age_days": 764,
+      "prior_purchases_count": 50,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-4a8c3203",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z796156071261810707",
+      "carrier": "FedEx",
+      "shipped_date": "2025-11-18T01:12:17.210626",
+      "delivery_date": "2025-11-19T01:12:17.210626",
+      "signed_by": "Kaylee Miller",
+      "shipping_address": "3243 April Landing\nAndrewmouth, FM 60096",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "6.63.180.90",
+      "device_id": "DEV-1cd73196",
+      "account_age_days": 76,
+      "prior_purchases_count": 18,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-210ced",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-a31ba840",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z903549268411808517",
+      "carrier": "UPS",
+      "shipped_date": "2025-10-25T01:12:17.211113",
+      "delivery_date": "2025-10-29T01:12:17.211113",
+      "signed_by": "Dominic Harper",
+      "shipping_address": "57581 Sanford Street Suite 147\nPort Alyssabury, AK 70776",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "13.8.43.36",
+      "device_id": "DEV-9b8cdba6",
+      "account_age_days": 586,
+      "prior_purchases_count": 38,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-2ece95",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-5469f998",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "112.175.159.163",
+      "device_id": "DEV-9116a041",
+      "account_age_days": 261,
+      "prior_purchases_count": 46,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-86cfd444",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "60.118.187.156",
+      "device_id": "DEV-7679b064",
+      "account_age_days": 264,
+      "prior_purchases_count": 46,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-350f8287",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "154.127.137.166",
+      "device_id": "DEV-a8736f63",
+      "account_age_days": 777,
+      "prior_purchases_count": 11,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-2a2583ef",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "162.40.65.26",
+      "device_id": "DEV-a4861a53",
+      "account_age_days": 762,
+      "prior_purchases_count": 19,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-abbd3630",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z613052238060490182",
+      "carrier": "UPS",
+      "shipped_date": "2025-11-25T01:12:17.212875",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "84493 Ryan Union\nNew Anthony, MN 70264",
+      "status": "in_transit"
+    },
+    "customer_signals": {
+      "ip_address": "95.207.241.243",
+      "device_id": "DEV-05f0860a",
+      "account_age_days": 981,
+      "prior_purchases_count": 25,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-8a78a2",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-92dca57a",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z485307699150941634",
+      "carrier": "USPS",
+      "shipped_date": "2025-11-12T01:12:17.213216",
+      "delivery_date": "2025-11-13T01:12:17.213216",
+      "signed_by": "Allison Ryan",
+      "shipping_address": "0261 Mary Brook\nNew Jacquelineshire, OK 25809",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "59.80.61.229",
+      "device_id": "DEV-52568819",
+      "account_age_days": 453,
+      "prior_purchases_count": 1,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-83ed38",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-4fd0a8f5",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "188.4.137.186",
+      "device_id": "DEV-3110d97c",
+      "account_age_days": 682,
+      "prior_purchases_count": 22,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-180ff577",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "24.97.99.181",
+      "device_id": "DEV-06713540",
+      "account_age_days": 127,
+      "prior_purchases_count": 34,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-ff2728e2",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z849672368175469617",
+      "carrier": "UPS",
+      "shipped_date": "2025-11-15T01:12:17.214304",
+      "delivery_date": "2025-11-16T01:12:17.214304",
+      "signed_by": "Julia Gonzalez",
+      "shipping_address": "96126 Anthony Bridge\nRobertsberg, MA 17961",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "5.153.141.54",
+      "device_id": "DEV-48e117e3",
+      "account_age_days": 857,
+      "prior_purchases_count": 47,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-7f6c33",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-745d56d2",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z523472657355203935",
+      "carrier": "FedEx",
+      "shipped_date": "2025-10-30T01:12:17.214838",
+      "delivery_date": "2025-11-01T01:12:17.214838",
+      "signed_by": "Jacqueline Williamson",
+      "shipping_address": "997 Michael Rest\nBanksbury, WY 99902",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "138.168.18.124",
+      "device_id": "DEV-173cc84a",
+      "account_age_days": 140,
+      "prior_purchases_count": 1,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-b38e3d",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-563456b2",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z519125623914160888",
+      "carrier": "USPS",
+      "shipped_date": "2025-09-27T01:12:17.215272",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "76969 Bradley Points Suite 648\nAndersonport, IL 26268",
+      "status": "in_transit"
+    },
+    "customer_signals": {
+      "ip_address": "188.77.154.251",
+      "device_id": "DEV-ddd002ab",
+      "account_age_days": 191,
+      "prior_purchases_count": 12,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-c3e09a",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-8b5a2645",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "156.24.169.174",
+      "device_id": "DEV-d3e639a3",
+      "account_age_days": 610,
+      "prior_purchases_count": 1,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-68c27212",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "91.97.32.144",
+      "device_id": "DEV-59510c8e",
+      "account_age_days": 151,
+      "prior_purchases_count": 15,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-53f514fd",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z537160964235669959",
+      "carrier": "FedEx",
+      "shipped_date": "2025-11-07T01:12:17.216348",
+      "delivery_date": "2025-11-08T01:12:17.216348",
+      "signed_by": "Steven Thomas",
+      "shipping_address": "441 Smith Garden Apt. 726\nThompsontown, MH 18833",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "132.6.39.108",
+      "device_id": "DEV-003e61d4",
+      "account_age_days": 137,
+      "prior_purchases_count": 21,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-4a8982",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-4d6996b9",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "194.113.225.3",
+      "device_id": "DEV-5bee0c02",
+      "account_age_days": 389,
+      "prior_purchases_count": 3,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-4eaec7af",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z384212432858963273",
+      "carrier": "FedEx",
+      "shipped_date": "2025-10-17T01:12:17.217167",
+      "delivery_date": "2025-10-20T01:12:17.217167",
+      "signed_by": "Elizabeth Glenn",
+      "shipping_address": "5589 Jennifer Village\nSouth Davidmouth, MS 73810",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "194.10.225.120",
+      "device_id": "DEV-86658134",
+      "account_age_days": 659,
+      "prior_purchases_count": 40,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-13c48f",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-9a993909",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z932453968497306696",
+      "carrier": "UPS",
+      "shipped_date": "2025-10-06T01:12:17.217610",
+      "delivery_date": "2025-10-10T01:12:17.217610",
+      "signed_by": "Heather James",
+      "shipping_address": "21739 Brown Ports Suite 696\nLake Larryburgh, MN 28019",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "115.52.120.209",
+      "device_id": "DEV-6bf96ae0",
+      "account_age_days": 959,
+      "prior_purchases_count": 41,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-166baf",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-c5fa17bc",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "4.18.14.184",
+      "device_id": "DEV-423c8a79",
+      "account_age_days": 524,
+      "prior_purchases_count": 42,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-5bb6d553",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "10.13.57.126",
+      "device_id": "DEV-87c24343",
+      "account_age_days": 267,
+      "prior_purchases_count": 39,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-5467d5b1",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z470259632519983205",
+      "carrier": "FedEx",
+      "shipped_date": "2025-11-14T01:12:17.218764",
+      "delivery_date": "2025-11-18T01:12:17.218764",
+      "signed_by": "Cesar Conrad",
+      "shipping_address": "070 Joseph Parks Apt. 283\nPort Samanthafort, KY 50306",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "52.112.231.16",
+      "device_id": "DEV-b0dc4e45",
+      "account_age_days": 277,
+      "prior_purchases_count": 24,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-f15c83",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-45df8b6a",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "119.52.163.125",
+      "device_id": "DEV-eba0d1a3",
+      "account_age_days": 46,
+      "prior_purchases_count": 0,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-3381d50e",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "60.210.71.116",
+      "device_id": "DEV-49a557a2",
+      "account_age_days": 278,
+      "prior_purchases_count": 40,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-3b277eb9",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z823657935686762355",
+      "carrier": "USPS",
+      "shipped_date": "2025-10-07T01:12:17.219733",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "8668 Annette Terrace\nTimothyborough, TX 88206",
+      "status": "in_transit"
+    },
+    "customer_signals": {
+      "ip_address": "1.38.99.99",
+      "device_id": "DEV-b3d3ac11",
+      "account_age_days": 868,
+      "prior_purchases_count": 4,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-db33b5",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-b1585e7c",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z821411724841847281",
+      "carrier": "UPS",
+      "shipped_date": "2025-11-19T01:12:17.220068",
+      "delivery_date": "2025-11-23T01:12:17.220068",
+      "signed_by": "Dawn Orr",
+      "shipping_address": "732 Hernandez Mountains Apt. 169\nEast Virginiabury, NC 27799",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "40.90.38.159",
+      "device_id": "DEV-78c8074e",
+      "account_age_days": 885,
+      "prior_purchases_count": 13,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-2ec99f",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-b9cde48b",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z510467579359860024",
+      "carrier": "FedEx",
+      "shipped_date": "2025-09-19T01:12:17.220407",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "40773 Matthew Shores\nNorth Catherinechester, ID 60254",
+      "status": "in_transit"
+    },
+    "customer_signals": {
+      "ip_address": "19.68.18.61",
+      "device_id": "DEV-d3d514be",
+      "account_age_days": 767,
+      "prior_purchases_count": 45,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-2d2e9a",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-1667acb7",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "43.34.32.18",
+      "device_id": "DEV-60b24c15",
+      "account_age_days": 209,
+      "prior_purchases_count": 20,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-39d71494",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "48.90.117.65",
+      "device_id": "DEV-88e60b21",
+      "account_age_days": 128,
+      "prior_purchases_count": 4,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-60868a5b",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z084498274871713619",
+      "carrier": "USPS",
+      "shipped_date": "2025-11-14T01:12:17.221378",
+      "delivery_date": "2025-11-17T01:12:17.221378",
+      "signed_by": "Hunter Nunez",
+      "shipping_address": "562 Christopher Dale Suite 997\nJenningsmouth, IA 31948",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "7.11.89.254",
+      "device_id": "DEV-9e213f38",
+      "account_age_days": 207,
+      "prior_purchases_count": 24,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-523856",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-fc9d5c05",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z930219724999666416",
+      "carrier": "USPS",
+      "shipped_date": "2025-10-21T01:12:17.221837",
+      "delivery_date": "2025-10-25T01:12:17.221837",
+      "signed_by": "Michael Lee",
+      "shipping_address": "394 Jennifer Cliff Apt. 302\nWatsonview, CT 06669",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "218.17.56.53",
+      "device_id": "DEV-f8abedcb",
+      "account_age_days": 786,
+      "prior_purchases_count": 49,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-592b49",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-aff5dcc0",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z551530740374374792",
+      "carrier": "FedEx",
+      "shipped_date": "2025-11-15T01:12:17.222243",
+      "delivery_date": "2025-11-17T01:12:17.222243",
+      "signed_by": "David Perkins",
+      "shipping_address": "68928 Cox Manor\nWest Anneside, NE 25883",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "81.234.61.234",
+      "device_id": "DEV-27b9692c",
+      "account_age_days": 87,
+      "prior_purchases_count": 5,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-e34244",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-7d3affc3",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z316083196773155295",
+      "carrier": "USPS",
+      "shipped_date": "2025-10-13T01:12:17.222656",
+      "delivery_date": "2025-10-14T01:12:17.222656",
+      "signed_by": "Richard Smith",
+      "shipping_address": "01152 Ramos Mission\nRyanborough, PA 12262",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "220.201.178.72",
+      "device_id": "DEV-16950d37",
+      "account_age_days": 562,
+      "prior_purchases_count": 37,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-2b9a94",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-da6d2d83",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z500875974779078145",
+      "carrier": "FedEx",
+      "shipped_date": "2025-10-30T01:12:17.223042",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "59436 Young Radial\nLeachshire, TN 15956",
+      "status": "in_transit"
+    },
+    "customer_signals": {
+      "ip_address": "219.247.205.59",
+      "device_id": "DEV-2b2ce3b3",
+      "account_age_days": 686,
+      "prior_purchases_count": 8,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-9e2e9f",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-0d87c726",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z027211177004308661",
+      "carrier": "FedEx",
+      "shipped_date": "2025-11-02T01:12:17.223412",
+      "delivery_date": "2025-11-05T01:12:17.223412",
+      "signed_by": "Neil Watson",
+      "shipping_address": "85066 Lyons Valley\nOliviamouth, UT 93771",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "216.50.180.136",
+      "device_id": "DEV-43a8078e",
+      "account_age_days": 789,
+      "prior_purchases_count": 32,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-e38072",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-8f2a3a4a",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z514315832801173933",
+      "carrier": "UPS",
+      "shipped_date": "2025-09-21T01:12:17.223864",
+      "delivery_date": "2025-09-24T01:12:17.223864",
+      "signed_by": "Sarah Wilson",
+      "shipping_address": "56433 Walker Forges Suite 038\nGarrisonhaven, WY 53501",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "40.252.179.66",
+      "device_id": "DEV-4b40fe20",
+      "account_age_days": 647,
+      "prior_purchases_count": 2,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-7828cb",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-3366904b",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "27.205.23.249",
+      "device_id": "DEV-d617cb0e",
+      "account_age_days": 569,
+      "prior_purchases_count": 25,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-c403410d",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z235556571418190410",
+      "carrier": "USPS",
+      "shipped_date": "2025-11-11T01:12:17.224539",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "48003 Ball Trafficway Apt. 168\nNavarrotown, IL 75134",
+      "status": "in_transit"
+    },
+    "customer_signals": {
+      "ip_address": "86.21.36.208",
+      "device_id": "DEV-86d21b0e",
+      "account_age_days": 769,
+      "prior_purchases_count": 1,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-0f339a",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-be6a6740",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "104.182.151.221",
+      "device_id": "DEV-873c3b5b",
+      "account_age_days": 782,
+      "prior_purchases_count": 1,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-ccb65c0e",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z241594977921173592",
+      "carrier": "UPS",
+      "shipped_date": "2025-11-05T01:12:17.225170",
+      "delivery_date": "2025-11-08T01:12:17.225170",
+      "signed_by": "Gary Gardner",
+      "shipping_address": "96363 Ferguson Gardens\nRomanville, MA 28494",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "162.190.90.9",
+      "device_id": "DEV-22ddafa7",
+      "account_age_days": 243,
+      "prior_purchases_count": 2,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-fcf650",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-395403c6",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "56.146.223.16",
+      "device_id": "DEV-104a81e1",
+      "account_age_days": 906,
+      "prior_purchases_count": 39,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-d02ce0f3",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z962580495721618983",
+      "carrier": "FedEx",
+      "shipped_date": "2025-09-29T01:12:17.225881",
+      "delivery_date": "2025-10-02T01:12:17.225881",
+      "signed_by": "Madison Serrano",
+      "shipping_address": "25055 Shannon Ports Suite 699\nKristinchester, IA 96010",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "43.8.190.209",
+      "device_id": "DEV-0cb906b4",
+      "account_age_days": 828,
+      "prior_purchases_count": 12,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-af5ad9",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-94468377",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "167.149.239.148",
+      "device_id": "DEV-6ae685ff",
+      "account_age_days": 953,
+      "prior_purchases_count": 17,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-3403ad9b",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "103.82.197.236",
+      "device_id": "DEV-ef567e24",
+      "account_age_days": 755,
+      "prior_purchases_count": 41,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-6cae224c",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "64.67.240.155",
+      "device_id": "DEV-8d29c699",
+      "account_age_days": 825,
+      "prior_purchases_count": 4,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-c51146e4",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "111.124.192.194",
+      "device_id": "DEV-7c488f71",
+      "account_age_days": 600,
+      "prior_purchases_count": 14,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-4aff2291",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z516632444298794943",
+      "carrier": "FedEx",
+      "shipped_date": "2025-10-19T01:12:17.227620",
+      "delivery_date": "2025-10-20T01:12:17.227620",
+      "signed_by": "Danielle Stewart",
+      "shipping_address": "862 Skinner Bridge Suite 027\nMillershire, RI 67421",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "200.227.72.208",
+      "device_id": "DEV-bc88e988",
+      "account_age_days": 804,
+      "prior_purchases_count": 27,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-a9a836",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-ef0ae669",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "220.172.29.138",
+      "device_id": "DEV-5ef3fe3d",
+      "account_age_days": 856,
+      "prior_purchases_count": 50,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-1c163406",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "170.181.213.111",
+      "device_id": "DEV-0a594157",
+      "account_age_days": 827,
+      "prior_purchases_count": 45,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-65e398c6",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z839690751524162008",
+      "carrier": "USPS",
+      "shipped_date": "2025-10-16T01:12:17.228766",
+      "delivery_date": "2025-10-20T01:12:17.228766",
+      "signed_by": "Leslie Calhoun",
+      "shipping_address": "311 Mark Route\nWest Jenniferfort, SD 71855",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "7.35.221.140",
+      "device_id": "DEV-82e63dd8",
+      "account_age_days": 709,
+      "prior_purchases_count": 3,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-969e75",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-af5dbf12",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "119.164.7.82",
+      "device_id": "DEV-00275849",
+      "account_age_days": 328,
+      "prior_purchases_count": 46,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-da761afa",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z913530729306640608",
+      "carrier": "USPS",
+      "shipped_date": "2025-11-08T01:12:17.229570",
+      "delivery_date": "2025-11-10T01:12:17.229570",
+      "signed_by": "David Kelly",
+      "shipping_address": "566 Young Lodge\nBranchmouth, IN 62655",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "182.64.242.30",
+      "device_id": "DEV-6a782c5b",
+      "account_age_days": 729,
+      "prior_purchases_count": 39,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-1f0f45",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-303513c8",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z004979759198048005",
+      "carrier": "UPS",
+      "shipped_date": "2025-11-30T01:12:17.229977",
+      "delivery_date": "2025-12-02T01:12:17.229977",
+      "signed_by": "Emily Ellis",
+      "shipping_address": "7705 Garcia Skyway\nNorth Jeffreyburgh, CA 45598",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "35.132.83.2",
+      "device_id": "DEV-145e3330",
+      "account_age_days": 959,
+      "prior_purchases_count": 49,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-0878e0",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-d6933d87",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "28.102.156.69",
+      "device_id": "DEV-2a17ca4c",
+      "account_age_days": 842,
+      "prior_purchases_count": 50,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-a4ee3954",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z057920140754716557",
+      "carrier": "UPS",
+      "shipped_date": "2025-10-11T01:12:17.230652",
+      "delivery_date": "2025-10-15T01:12:17.230652",
+      "signed_by": "John Henderson",
+      "shipping_address": "68377 Bell Prairie\nDeborahbury, GU 42804",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "9.98.72.136",
+      "device_id": "DEV-addf7359",
+      "account_age_days": 910,
+      "prior_purchases_count": 50,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-f5aec0",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-340c3227",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z468723861990005633",
+      "carrier": "FedEx",
+      "shipped_date": "2025-11-14T01:12:17.231149",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "812 Jennifer Corners Suite 251\nSouth Lisa, KY 01631",
+      "status": "in_transit"
+    },
+    "customer_signals": {
+      "ip_address": "52.22.24.138",
+      "device_id": "DEV-29b7d852",
+      "account_age_days": 707,
+      "prior_purchases_count": 37,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-b52ede",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-803d42f3",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "126.13.17.185",
+      "device_id": "DEV-03e3b8c7",
+      "account_age_days": 132,
+      "prior_purchases_count": 37,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-1c980f32",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z260578904268136471",
+      "carrier": "USPS",
+      "shipped_date": "2025-10-03T01:12:17.231877",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "6535 William Pine Suite 478\nSimmonshaven, GA 13169",
+      "status": "in_transit"
+    },
+    "customer_signals": {
+      "ip_address": "210.1.185.206",
+      "device_id": "DEV-0af50fb4",
+      "account_age_days": 225,
+      "prior_purchases_count": 42,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-639d1c",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-f0cb2f8f",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "190.164.219.16",
+      "device_id": "DEV-d29d8022",
+      "account_age_days": 998,
+      "prior_purchases_count": 20,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-75c852f1",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z924277677468142594",
+      "carrier": "FedEx",
+      "shipped_date": "2025-11-06T01:12:17.232538",
+      "delivery_date": "2025-11-07T01:12:17.232538",
+      "signed_by": "Sean Davies",
+      "shipping_address": "0906 Rivera Shores\nDanielstown, KY 87507",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "162.16.224.97",
+      "device_id": "DEV-d2b59a02",
+      "account_age_days": 914,
+      "prior_purchases_count": 45,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-a6948b",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-aa62ff38",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "107.210.187.184",
+      "device_id": "DEV-6b151e44",
+      "account_age_days": 779,
+      "prior_purchases_count": 16,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-fc41189b",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "38.181.115.89",
+      "device_id": "DEV-6b7c2967",
+      "account_age_days": 743,
+      "prior_purchases_count": 8,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-d8a4b5e0",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "211.190.110.155",
+      "device_id": "DEV-233bcf2a",
+      "account_age_days": 921,
+      "prior_purchases_count": 8,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-5ffbd89e",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "219.37.45.60",
+      "device_id": "DEV-e1ac30d7",
+      "account_age_days": 207,
+      "prior_purchases_count": 22,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-1750d6d7",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "137.120.45.80",
+      "device_id": "DEV-8ffb4db2",
+      "account_age_days": 388,
+      "prior_purchases_count": 35,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-1243765a",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "138.205.97.199",
+      "device_id": "DEV-6cf5d208",
+      "account_age_days": 455,
+      "prior_purchases_count": 44,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-45face1f",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "101.204.9.196",
+      "device_id": "DEV-2dbf8a8f",
+      "account_age_days": 337,
+      "prior_purchases_count": 35,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-11a6298a",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z888078289223702346",
+      "carrier": "USPS",
+      "shipped_date": "2025-10-25T01:12:17.235194",
+      "delivery_date": "2025-10-29T01:12:17.235194",
+      "signed_by": "April Cooper",
+      "shipping_address": "3266 Ashley Islands Suite 974\nLyonston, ND 88998",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "10.190.64.132",
+      "device_id": "DEV-06b8a0bf",
+      "account_age_days": 996,
+      "prior_purchases_count": 41,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-7888f9",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-497682f5",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "144.144.117.5",
+      "device_id": "DEV-5d482766",
+      "account_age_days": 926,
+      "prior_purchases_count": 38,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-18f2535e",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z671064604187696427",
+      "carrier": "USPS",
+      "shipped_date": "2025-11-06T01:12:17.235822",
+      "delivery_date": "2025-11-09T01:12:17.235822",
+      "signed_by": "Emily Burgess",
+      "shipping_address": "453 Michele Trail\nNorth Dianaborough, LA 06116",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "32.146.223.106",
+      "device_id": "DEV-f248a6df",
+      "account_age_days": 431,
+      "prior_purchases_count": 42,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-ab944f",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-5783e325",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z190297678824388075",
+      "carrier": "UPS",
+      "shipped_date": "2025-11-10T01:12:17.236232",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "205 James Burgs\nHollyhaven, RI 05595",
+      "status": "in_transit"
+    },
+    "customer_signals": {
+      "ip_address": "84.181.80.162",
+      "device_id": "DEV-c2caa693",
+      "account_age_days": 788,
+      "prior_purchases_count": 15,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-daec3d",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-6f689949",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "69.38.135.86",
+      "device_id": "DEV-9cfd696b",
+      "account_age_days": 524,
+      "prior_purchases_count": 1,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-5be6e07f",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "133.67.170.30",
+      "device_id": "DEV-90c80d4d",
+      "account_age_days": 610,
+      "prior_purchases_count": 9,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-ef34f22d",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "21.198.91.135",
+      "device_id": "DEV-543b52c4",
+      "account_age_days": 523,
+      "prior_purchases_count": 8,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-ef8f1376",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z644163039785578462",
+      "carrier": "FedEx",
+      "shipped_date": "2025-09-26T01:12:17.237500",
+      "delivery_date": "2025-09-30T01:12:17.237500",
+      "signed_by": "Gregory Spencer",
+      "shipping_address": "793 Caitlin Glens Suite 894\nChavezburgh, WV 40975",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "208.137.118.94",
+      "device_id": "DEV-3f7e380b",
+      "account_age_days": 975,
+      "prior_purchases_count": 27,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-d1b05f",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-6299d720",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z902964294895014276",
+      "carrier": "USPS",
+      "shipped_date": "2025-10-30T01:12:17.237887",
+      "delivery_date": "2025-10-31T01:12:17.237887",
+      "signed_by": "Zachary Villanueva",
+      "shipping_address": "04232 Brittany Row Suite 749\nNew Donnaburgh, VA 24100",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "218.66.105.245",
+      "device_id": "DEV-ac3a6ed3",
+      "account_age_days": 55,
+      "prior_purchases_count": 35,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-901666",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-713d19bc",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "83.30.244.185",
+      "device_id": "DEV-38b10df3",
+      "account_age_days": 716,
+      "prior_purchases_count": 40,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-52458e8e",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z614003259850076212",
+      "carrier": "FedEx",
+      "shipped_date": "2025-11-15T01:12:17.238566",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "PSC 9636, Box 5594\nAPO AE 49179",
+      "status": "in_transit"
+    },
+    "customer_signals": {
+      "ip_address": "96.244.137.152",
+      "device_id": "DEV-73c7aacb",
+      "account_age_days": 953,
+      "prior_purchases_count": 36,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-75c72e",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-614ed231",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z992579713691543906",
+      "carrier": "FedEx",
+      "shipped_date": "2025-11-30T01:12:17.238854",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "6841 Larry Port Suite 127\nShelbyfort, CA 55545",
+      "status": "exception"
+    },
+    "customer_signals": {
+      "ip_address": "140.233.16.74",
+      "device_id": "DEV-184650bf",
+      "account_age_days": 810,
+      "prior_purchases_count": 29,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [
+      {
+        "id": "DOC-dbd4f3",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-1ff4b06e",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z007336732584155641",
+      "carrier": "FedEx",
+      "shipped_date": "2025-11-12T01:12:17.239845",
+      "delivery_date": "2025-11-13T01:12:17.239845",
+      "signed_by": "James Snyder",
+      "shipping_address": "69301 Richardson Light Suite 250\nPort Scott, GA 66183",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "48.114.91.43",
+      "device_id": "DEV-cbe08db1",
+      "account_age_days": 379,
+      "prior_purchases_count": 31,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-2b48eb",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-af36381b",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z022096802442320340",
+      "carrier": "FedEx",
+      "shipped_date": "2025-11-14T01:12:17.240213",
+      "delivery_date": "2025-11-16T01:12:17.240213",
+      "signed_by": "Bethany Hill",
+      "shipping_address": "0322 Brown Summit\nLake Nicholas, MI 82410",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "210.191.60.16",
+      "device_id": "DEV-1450633b",
+      "account_age_days": 510,
+      "prior_purchases_count": 48,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-69b8f8",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-f9e65b5d",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z265331968878258729",
+      "carrier": "USPS",
+      "shipped_date": "2025-11-18T01:12:17.240620",
+      "delivery_date": "2025-11-20T01:12:17.240620",
+      "signed_by": "Danielle Romero",
+      "shipping_address": "7989 Rachel Ranch\nAmyville, NE 80747",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "75.104.57.77",
+      "device_id": "DEV-4a8f5842",
+      "account_age_days": 664,
+      "prior_purchases_count": 37,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-324e9c",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-366e85cb",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "209.47.119.1",
+      "device_id": "DEV-d529a7a1",
+      "account_age_days": 744,
+      "prior_purchases_count": 1,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-55007fdd",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "13.132.208.37",
+      "device_id": "DEV-8e054917",
+      "account_age_days": 82,
+      "prior_purchases_count": 31,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-5b04ceb8",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z386118094346494127",
+      "carrier": "FedEx",
+      "shipped_date": "2025-11-03T01:12:17.241640",
+      "delivery_date": "2025-11-05T01:12:17.241640",
+      "signed_by": "Crystal Davis",
+      "shipping_address": "40372 Jim Via\nJasonbury, AR 96776",
+      "status": "delivered"
+    },
+    "customer_signals": {
+      "ip_address": "173.29.171.200",
+      "device_id": "DEV-59faf90d",
+      "account_age_days": 969,
+      "prior_purchases_count": 34,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-bb5500",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-ddc2f6b0",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "137.134.106.85",
+      "device_id": "DEV-761e8b97",
+      "account_age_days": 199,
+      "prior_purchases_count": 22,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-c7a01fb8",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "36.4.239.224",
+      "device_id": "DEV-c7251177",
+      "account_age_days": 427,
+      "prior_purchases_count": 44,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-814a1c30",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "183.194.232.232",
+      "device_id": "DEV-7747d100",
+      "account_age_days": 174,
+      "prior_purchases_count": 32,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-175d8ebd",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "212.48.232.99",
+      "device_id": "DEV-cace0453",
+      "account_age_days": 845,
+      "prior_purchases_count": 30,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  },
+  {
+    "dispute_id": "DIS-f1b80173",
+    "ce3_transactions": [],
+    "shipping": {
+      "tracking_number": "1Z012371271153392740",
+      "carrier": "USPS",
+      "shipped_date": "2025-10-26T01:12:17.243276",
+      "delivery_date": null,
+      "signed_by": null,
+      "shipping_address": "161 Parker Island\nSouth Elizabeth, MI 60629",
+      "status": "in_transit"
+    },
+    "customer_signals": {
+      "ip_address": "155.47.24.248",
+      "device_id": "DEV-3c63434e",
+      "account_age_days": 458,
+      "prior_purchases_count": 13,
+      "email_verified": true,
+      "phone_verified": false
+    },
+    "documents": [
+      {
+        "id": "DOC-02ca2a",
+        "type": "proof_of_delivery",
+        "filename": "pod.pdf",
+        "url": "http://mock-s3/pod.pdf",
+        "content_summary": "Proof of delivery signed by customer"
+      }
+    ],
+    "expected_quality_score": 0.9
+  },
+  {
+    "dispute_id": "DIS-91288719",
+    "ce3_transactions": [],
+    "shipping": null,
+    "customer_signals": {
+      "ip_address": "155.131.15.192",
+      "device_id": "DEV-2e1524f1",
+      "account_age_days": 766,
+      "prior_purchases_count": 49,
+      "email_verified": true,
+      "phone_verified": true
+    },
+    "documents": [],
+    "expected_quality_score": 0.5
+  }
+]

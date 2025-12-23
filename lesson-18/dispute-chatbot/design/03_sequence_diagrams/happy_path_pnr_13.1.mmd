@@ -1,0 +1,123 @@
+sequenceDiagram
+    autonumber
+    title Happy Path: Product Not Received (PNR) 13.1 Dispute Resolution
+
+    participant M as Merchant<br/>(Chainlit UI)
+    participant SM as State Machine<br/>Orchestrator
+    participant CL as Classify<br/>Phase
+    participant HG as Hierarchical<br/>Evidence Gatherer
+    participant SS as Shipping<br/>Specialist
+    participant CS as Customer<br/>Specialist
+    participant JP as LLM Judge<br/>Panel
+    participant NT as Network<br/>Translation
+    participant VA as Visa VROL<br/>(Mock API)
+    participant EX as Explainability<br/>Layer
+
+    Note over M,EX: Phase 1: CLASSIFY
+
+    M->>+SM: Submit PNR Dispute<br/>(dispute_id, cardholder_claim: "Never received product")
+    SM->>EX: trace_phase("CLASSIFY", dispute_id)
+    SM->>+CL: classify_dispute(dispute)
+
+    CL->>CL: LLMService.complete()<br/>routing_model
+    CL->>CL: Extract reason code<br/>Calculate deadline (dispute_date + 14d)
+    CL->>EX: log_decision("CLASSIFY", "PNR_13_1")
+
+    CL-->>-SM: ClassifyResponse<br/>{reason_code: PNR_13_1,<br/>ce3_potential: false,<br/>required_evidence: [SHIPPING_TRACKING, POD, SIGNATURE]}
+
+    SM->>M: Phase Update: CLASSIFY complete<br/>Reason Code: PNR 13.1<br/>Deadline: 14 days
+
+    Note over M,EX: Phase 2: GATHER_EVIDENCE
+
+    SM->>EX: trace_phase("GATHER_EVIDENCE", dispute_id)
+    SM->>+HG: gather_evidence(dispute, required_evidence)
+
+    HG->>HG: EvidencePlanner.create_plan()<br/>routing_model
+
+    par Parallel Evidence Collection (ThreadPoolExecutor)
+        HG->>+SS: gather(dispute, plan)
+        SS->>SS: LLMService.complete()<br/>default_model
+        SS->>SS: Query carrier APIs<br/>(FedEx/UPS)
+        SS->>SS: Extract tracking events<br/>Retrieve Proof of Delivery (POD)
+        SS->>EX: record_agent_call("ShippingSpecialist")
+        SS-->>-HG: ShippingEvidence<br/>{carrier: "FedEx",<br/>tracking: "794644790138",<br/>delivered_at: "2024-12-01T14:23:00Z",<br/>pod_signature: "J. Smith",<br/>delivery_photo: true}
+
+    and
+        HG->>+CS: gather(dispute, plan)
+        CS->>CS: LLMService.complete()<br/>default_model
+        CS->>CS: Verify shipping address<br/>matches cardholder address
+        CS->>EX: record_agent_call("CustomerSpecialist")
+        CS-->>-HG: CustomerSignals<br/>{address_match: true,<br/>prior_deliveries: 5}
+    end
+
+    HG->>HG: Assemble EvidencePackage
+    HG->>HG: check_pnr_eligibility()<br/>POD + signature + address match
+
+    HG-->>-SM: GatherResponse<br/>{status: COMPLETE,<br/>completeness_score: 0.92,<br/>pod_verified: true}
+
+    SM->>M: Phase Update: Evidence gathered<br/>POD Verified: Yes<br/>Ready for validation
+
+    Note over M,EX: Phase 3: VALIDATE
+
+    SM->>EX: trace_phase("VALIDATE", dispute_id)
+    SM->>+JP: validate_evidence(evidence_package)
+
+    par Judge Panel Evaluation
+        JP->>JP: EvidenceQualityJudge.evaluate()<br/>complete_structured() → judge_model
+        Note right of JP: Score: 0.91 (threshold: 0.8)<br/>PASSED - POD evidence strong
+
+    and
+        JP->>JP: FabricationDetectionJudge.evaluate()<br/>complete_structured() → judge_model
+        Note right of JP: Score: 0.98 (threshold: 0.95)<br/>PASSED - No hallucinations
+
+    and
+        JP->>JP: DisputeValidityJudge.evaluate()<br/>complete_structured() → judge_model
+        Note right of JP: Score: 0.85 (threshold: 0.7)<br/>PASSED - Valid defense
+    end
+
+    JP->>EX: log_decision("VALIDATE", "all_judges_passed")
+    JP-->>-SM: PanelResult<br/>{passed: true,<br/>blocking_failures: [],<br/>warnings: []}
+
+    SM->>M: Phase Update: Validation passed<br/>All 3 judges approved<br/>Proceeding to submission
+
+    Note over M,EX: Phase 4: SUBMIT
+
+    SM->>EX: trace_phase("SUBMIT", dispute_id)
+    SM->>+NT: submit_dispute(evidence_package)
+
+    NT->>NT: Translate to VROL format<br/>Map PNR 13.1 fields<br/>(trackingNumber, proofOfDelivery,<br/>deliverySignature, deliveryTimestamp)
+    NT->>EX: validate_pci(payload)<br/>No PAN/PII detected
+
+    NT->>+VA: POST /vrol/submit<br/>(VROLPayload)
+    VA->>VA: Validate payload structure
+    VA->>VA: Generate case_id
+    VA-->>-NT: 200 OK<br/>{case_id: "VROL-2025-9876543210",<br/>acknowledged_at: "2025-12-08T11:45:23Z"}
+
+    NT->>EX: record_agent_call("VisaVROL")<br/>payload_hash: sha256:def456...
+    NT-->>-SM: SubmitResponse<br/>{status: SUBMITTED,<br/>network_case_id: "VROL-2025-9876543210"}
+
+    SM->>M: Phase Update: Dispute submitted<br/>Case ID: VROL-2025-9876543210<br/>Expected resolution: ~30 days
+
+    Note over M,EX: Phase 5: MONITOR
+
+    SM->>EX: trace_phase("MONITOR", dispute_id)
+
+    loop Poll for resolution (daily)
+        SM->>+VA: GET /vrol/status/{case_id}
+        VA-->>-SM: {status: "PENDING"}
+    end
+
+    Note over VA: Day 22: Network decision received
+
+    SM->>+VA: GET /vrol/status/{case_id}
+    VA-->>-SM: {status: "RESOLVED",<br/>outcome: "MERCHANT_WIN",<br/>reason: "POD verified, signature confirmed"}
+
+    SM->>EX: log_decision("MONITOR", "RESOLVED_WON")
+
+    Note over M,EX: Phase 6: RESOLVED_WON (Terminal State)
+
+    SM->>M: Dispute Resolution Complete<br/>Outcome: MERCHANT WIN<br/>Delivery confirmed with POD signature
+
+    SM->>EX: export_audit_log(dispute_id)<br/>BlackBox + PhaseLogger + GuardRails
+
+    Note over M,EX: Total Flow: ~22-30 days<br/>Tool latency: <800ms P95 per phase<br/>Evidence gathering: <5 minutes

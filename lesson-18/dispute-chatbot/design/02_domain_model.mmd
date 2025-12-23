@@ -1,0 +1,148 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#f0f4f8', 'primaryBorderColor': '#2c5282', 'lineColor': '#4a5568', 'fontSize': '14px'}}}%%
+
+erDiagram
+    %% =========================================
+    %% Domain Model: Merchant Dispute Resolution
+    %% 7 Core Entities with Relationships
+    %% =========================================
+
+    MERCHANT {
+        uuid id PK "Unique identifier"
+        string external_id "Platform merchant ID"
+        string name "Business name"
+        enum platform "STRIPE|SQUARE|SHOPIFY|DIRECT"
+        enum tier "SMALL_BUSINESS|MID_MARKET|ENTERPRISE"
+        string industry "Business category"
+        string mcc "Merchant Category Code"
+        float win_rate "Historical dispute win rate"
+        int total_disputes "Total disputes count"
+        json settings "Merchant preferences"
+        datetime created_at
+        datetime updated_at
+    }
+
+    DISPUTE {
+        uuid id PK "Unique identifier"
+        string external_id "Network case ID (Visa ARN)"
+        enum status "CLASSIFY|GATHER|VALIDATE|SUBMIT|MONITOR|RESOLVED"
+        enum reason_code "FRAUD_10_4|PNR_13_1"
+        enum network "VISA"
+        decimal amount "Disputed amount USD"
+        string currency "ISO 4217 code"
+        datetime deadline "Evidence submission deadline"
+        datetime dispute_date "Date dispute filed"
+        string transaction_id "Original transaction ref"
+        datetime transaction_date "Original txn timestamp"
+        uuid merchant_id FK "Foreign key to Merchant"
+        boolean ce3_eligible "CE 3.0 qualification flag"
+        json ce3_prior_transactions "Qualifying prior txn IDs"
+        datetime created_at
+        datetime updated_at
+    }
+
+    EVIDENCE {
+        uuid id PK "Unique identifier"
+        uuid dispute_id FK "Foreign key to Dispute"
+        enum type "PRIOR_TRANSACTION|TRACKING|POD|DEVICE|IP|EMAIL"
+        enum source "SYSTEM_AUTO|MERCHANT|CARRIER_API|PLATFORM_API"
+        string source_reference "External reference"
+        json content "Structured evidence data"
+        string file_path "S3 path for documents"
+        float quality_score "Judge quality score 0-1"
+        string hash "SHA-256 integrity hash"
+        datetime timestamp "Evidence collection time"
+        datetime validated_at "Judge validation time"
+        uuid validated_by FK "Foreign key to Judge"
+        datetime created_at
+    }
+
+    JUDGE {
+        uuid id PK "Unique identifier"
+        enum type "EVIDENCE_QUALITY|FABRICATION|VALIDITY"
+        string name "Human-readable name"
+        string description "Judge purpose"
+        float threshold "Minimum passing score 0-1"
+        boolean is_blocking "Gates phase transition"
+        string model_version "LLM model ID"
+        string prompt_hash "SHA-256 prompt version"
+        text prompt_template "Judge prompt"
+        datetime calibration_date "Last calibration"
+        float calibration_accuracy "Golden set accuracy"
+        datetime created_at
+        datetime updated_at
+    }
+
+    SUBMISSION {
+        uuid id PK "Unique identifier"
+        uuid dispute_id FK "Foreign key to Dispute"
+        string network_case_id "Network assigned ID"
+        enum status "PENDING|SUBMITTED|ACKNOWLEDGED|RESOLVED|FAILED"
+        json payload "VROL formatted data"
+        string payload_hash "SHA-256 payload integrity"
+        json response "Network response data"
+        datetime submitted_at "Submission timestamp"
+        datetime acknowledged_at "Network ack timestamp"
+        datetime resolved_at "Resolution timestamp"
+        enum resolution "WON|LOST|WITHDRAWN|EXPIRED"
+        int retry_count "Submission attempts"
+        string last_error "Most recent error"
+        datetime created_at
+        datetime updated_at
+    }
+
+    AUDIT_LOG {
+        uuid id PK "Unique identifier"
+        uuid dispute_id FK "Foreign key to Dispute (optional)"
+        string trace_id "Distributed tracing ID"
+        enum pillar "BLACKBOX|AGENT_FACTS|GUARDRAILS|PHASE_LOGGER"
+        string event "Event type identifier"
+        enum severity "DEBUG|INFO|WARNING|ERROR|CRITICAL"
+        datetime timestamp "Microsecond precision"
+        json data "Event payload (PII redacted)"
+        string agent_id "Agent identifier"
+        string session_id "Conversation session"
+        string user_id "Merchant user (redacted)"
+    }
+
+    CONVERSATION {
+        uuid id PK "Unique identifier"
+        string session_id "Chainlit session ID"
+        uuid dispute_id FK "Foreign key to Dispute"
+        uuid merchant_id FK "Foreign key to Merchant"
+        enum state "GREETING|CLASSIFYING|GATHERING|VALIDATING|CONFIRMING|SUBMITTING|COMPLETED|ESCALATED"
+        json turns "List of Turn objects"
+        int turn_count "Number of turns"
+        json context "Accumulated agent context"
+        datetime started_at "Conversation start"
+        datetime ended_at "Conversation end"
+        enum outcome "SUBMITTED|ESCALATED|ABANDONED|ERROR"
+        datetime created_at
+        datetime updated_at
+    }
+
+    %% =========================================
+    %% Relationships
+    %% =========================================
+
+    %% Merchant relationships
+    MERCHANT ||--o{ DISPUTE : "has_many disputes"
+    MERCHANT ||--o{ CONVERSATION : "has_many conversations"
+
+    %% Dispute relationships
+    DISPUTE ||--o{ EVIDENCE : "has_many evidence"
+    DISPUTE ||--|| SUBMISSION : "has_one submission"
+    DISPUTE ||--|| CONVERSATION : "has_one conversation"
+    DISPUTE ||--o{ AUDIT_LOG : "has_many audit logs"
+
+    %% Evidence relationships
+    EVIDENCE }o--|| JUDGE : "validated_by"
+
+    %% Judge relationships
+    JUDGE ||--o{ AUDIT_LOG : "recorded_in"
+
+    %% =========================================
+    %% Cardinality Legend:
+    %% ||--|| : One to One
+    %% ||--o{ : One to Many
+    %% }o--|| : Many to One
+    %% =========================================

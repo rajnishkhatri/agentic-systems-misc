@@ -1,0 +1,142 @@
+sequenceDiagram
+    autonumber
+    title CE 3.0 (Compelling Evidence 3.0) Qualification Logic
+
+    participant M as Merchant<br/>(Chainlit UI)
+    participant SM as State Machine<br/>Orchestrator
+    participant CL as Classify<br/>Phase
+    participant EP as Evidence<br/>Planner
+    participant TS as Transaction<br/>Specialist
+    participant CS as Customer<br/>Specialist
+    participant CE as CE 3.0<br/>Validator
+    participant EX as Explainability<br/>Layer
+
+    Note over M,EX: CE 3.0 Qualification Flow<br/>Requires: ≥2 prior txns + ≥2 matching signals<br/>Time window: 120 days
+
+    Note over M,EX: Step 1: Initial Classification & CE 3.0 Potential Check
+
+    M->>+SM: Submit Fraud Dispute<br/>(dispute_id, txn_amount: $299.99)
+    SM->>+CL: classify_dispute(dispute)
+
+    CL->>CL: LLMService.complete()<br/>routing_model
+    CL->>CL: Extract reason code: FRAUD_10_4
+    CL->>CL: Check CE 3.0 eligibility criteria:<br/>- Fraud reason code ✓<br/>- Card-not-present ✓
+
+    CL->>EX: log_decision("CLASSIFY", {<br/>  reason_code: "FRAUD_10_4",<br/>  ce3_potential: true<br/>})
+
+    CL-->>-SM: ClassifyResponse<br/>{reason_code: FRAUD_10_4,<br/>ce3_potential: true,<br/>ce3_requirements: [PRIOR_TXN, DEVICE, IP, EMAIL]}
+
+    SM->>M: CE 3.0 potentially applicable<br/>Gathering qualifying evidence...
+
+    Note over M,EX: Step 2: Evidence Planner Creates CE 3.0 Strategy
+
+    SM->>+EP: create_evidence_plan(dispute, ce3_potential=true)
+
+    EP->>EP: LLMService.complete()<br/>routing_model
+    EP->>EP: Prioritize CE 3.0 evidence:<br/>1. Prior undisputed transactions<br/>2. Device fingerprint matching<br/>3. IP address matching<br/>4. Email address matching
+
+    EP->>EX: log_decision("PLAN", {<br/>  strategy: "CE_3_0_QUALIFICATION",<br/>  required_signals: 2<br/>})
+
+    EP-->>-SM: EvidencePlan<br/>{strategy: "CE_3_0",<br/>specialists: [TransactionSpecialist, CustomerSpecialist],<br/>priority: HIGH}
+
+    Note over M,EX: Step 3: Transaction Specialist - Prior Transaction Search
+
+    SM->>+TS: gather_prior_transactions(dispute)
+
+    TS->>TS: LLMService.complete()<br/>default_model
+
+    TS->>TS: Query merchant transaction history<br/>Filter criteria:<br/>- Same cardholder (card_token)<br/>- Within 120 days of disputed txn<br/>- Status: completed, not disputed
+
+    Note right of TS: Search window:<br/>disputed_date - 120 days<br/>to disputed_date
+
+    alt Found ≥2 qualifying transactions
+        TS->>TS: Validate prior transactions:<br/>- txn_001: $89.99, 45 days ago ✓<br/>- txn_002: $150.00, 78 days ago ✓<br/>- txn_003: $45.00, 112 days ago ✓
+
+        TS->>EX: record_agent_call("TransactionSpecialist", {<br/>  found_transactions: 3,<br/>  oldest_txn_days: 112,<br/>  ce3_txn_requirement: "MET"<br/>})
+
+        TS-->>SM: PriorTransactionResult<br/>{status: FOUND,<br/>transactions: [txn_001, txn_002, txn_003],<br/>ce3_txn_eligible: true}
+
+    else Found 0-1 qualifying transactions
+        TS->>TS: Insufficient prior transactions<br/>Found: 1 (needs ≥2)
+
+        TS->>EX: record_agent_call("TransactionSpecialist", {<br/>  found_transactions: 1,<br/>  ce3_txn_requirement: "NOT_MET"<br/>})
+
+        TS-->>-SM: PriorTransactionResult<br/>{status: INSUFFICIENT,<br/>transactions: [txn_001],<br/>ce3_txn_eligible: false,<br/>gap: "Need 1 more prior transaction"}
+    end
+
+    Note over M,EX: Step 4: Customer Specialist - Matching Signal Search
+
+    SM->>+CS: gather_customer_signals(dispute, prior_transactions)
+
+    CS->>CS: LLMService.complete()<br/>default_model
+
+    par Signal Matching (Parallel)
+        CS->>CS: Check Device Fingerprint Match<br/>Compare disputed txn device<br/>vs. prior txn devices
+
+        Note right of CS: Device fingerprint components:<br/>- Browser UA hash<br/>- Screen resolution<br/>- Timezone<br/>- Installed fonts hash
+
+    and
+        CS->>CS: Check IP Address Match<br/>Compare disputed txn IP<br/>vs. prior txn IPs
+
+        Note right of CS: IP matching rules:<br/>- Exact match OR<br/>- Same /24 subnet<br/>- Same geo region (city)
+
+    and
+        CS->>CS: Check Email Address Match<br/>Compare disputed txn email<br/>vs. prior txn emails
+
+        Note right of CS: Email normalization:<br/>- Case insensitive<br/>- Remove dots (Gmail)<br/>- Remove +alias suffix
+
+    and
+        CS->>CS: Check Shipping Address Match<br/>Compare disputed delivery addr<br/>vs. prior delivery addrs
+
+        Note right of CS: Address matching:<br/>- Standardize format<br/>- Fuzzy match (90% sim)
+    end
+
+    CS->>CS: Compile matching signals:<br/>- Device: MATCH ✓<br/>- IP: MATCH ✓<br/>- Email: MATCH ✓<br/>- Shipping: NO_MATCH
+
+    CS->>EX: record_agent_call("CustomerSpecialist", {<br/>  device_match: true,<br/>  ip_match: true,<br/>  email_match: true,<br/>  shipping_match: false,<br/>  total_signals: 3<br/>})
+
+    CS-->>-SM: CustomerSignalResult<br/>{matching_signals: 3,<br/>signals: {device: true, ip: true, email: true, shipping: false},<br/>ce3_signal_eligible: true}
+
+    Note over M,EX: Step 5: CE 3.0 Validator - Final Qualification Check
+
+    SM->>+CE: validate_ce3_eligibility(prior_txns, signals)
+
+    CE->>CE: Check CE 3.0 Requirements Matrix
+
+    Note over CE: CE 3.0 Qualification Matrix<br/>─────────────────────────────<br/>✓ Fraud reason code (10.4)<br/>✓ Prior transactions: 3 (≥2 required)<br/>✓ Time window: All within 120 days<br/>✓ Matching signals: 3 (≥2 required)<br/>─────────────────────────────<br/>QUALIFIED FOR CE 3.0
+
+    alt CE 3.0 Qualified
+        CE->>CE: Build CE 3.0 evidence package:<br/>- Prior txn IDs + dates<br/>- Device fingerprint proof<br/>- IP correlation report<br/>- Email match evidence
+
+        CE->>EX: log_decision("CE3_VALIDATION", {<br/>  qualified: true,<br/>  prior_txns: 3,<br/>  matching_signals: 3,<br/>  confidence: 0.95<br/>})
+
+        CE-->>SM: CE3ValidationResult<br/>{qualified: true,<br/>evidence_package: {...},<br/>strength: "STRONG",<br/>recommendation: "SUBMIT_WITH_CE3"}
+
+        SM->>M: CE 3.0 Qualification: APPROVED ✓<br/>3 prior transactions found<br/>3 matching signals confirmed<br/>Proceeding with enhanced defense
+
+    else CE 3.0 Not Qualified
+        CE->>CE: Identify qualification gaps:<br/>- Missing prior transactions<br/>- Insufficient matching signals
+
+        CE->>EX: log_decision("CE3_VALIDATION", {<br/>  qualified: false,<br/>  reason: "insufficient_signals",<br/>  prior_txns: 2,<br/>  matching_signals: 1<br/>})
+
+        CE-->>-SM: CE3ValidationResult<br/>{qualified: false,<br/>fallback_strategy: "STANDARD_DEFENSE",<br/>gaps: ["Need 1 more matching signal"]}
+
+        SM->>M: CE 3.0 Qualification: NOT MET<br/>Missing: 1 additional matching signal<br/>Proceeding with standard defense strategy
+    end
+
+    Note over M,EX: Step 6: Evidence Package Assembly
+
+    SM->>SM: Assemble final evidence package
+
+    alt CE 3.0 Qualified Path
+        SM->>SM: Include CE 3.0 specific fields:<br/>- priorUndisputedTransactions[]<br/>- deviceFingerprintMatch{}<br/>- ipAddressMatch{}<br/>- emailAddressMatch{}
+
+        Note right of SM: VROL CE 3.0 Payload fields:<br/>ce3Qualified: true<br/>ce3EvidenceType: "MULTI_SIGNAL"<br/>ce3PriorTxnCount: 3<br/>ce3MatchingSignals: ["DEVICE","IP","EMAIL"]
+
+    else Standard Defense Path
+        SM->>SM: Use standard evidence fields:<br/>- transactionReceipt<br/>- merchantPolicy<br/>- customerCommunication
+    end
+
+    SM->>EX: export_ce3_audit({<br/>  dispute_id: "...",<br/>  ce3_qualified: true/false,<br/>  evidence_summary: {...},<br/>  decision_rationale: "..."<br/>})
+
+    Note over M,EX: CE 3.0 Benefits (when qualified):<br/>- Higher win probability (~80% vs ~50%)<br/>- Stronger evidence standard met<br/>- Network gives more weight to merchant evidence

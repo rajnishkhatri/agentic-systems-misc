@@ -8,10 +8,10 @@ from typing import Any
 
 async def validate_evidence(task: dict[str, Any]) -> dict[str, Any]:
     """Execute the VALIDATE phase.
-    
+
     Args:
         task: Task dictionary containing gathered evidence
-        
+
     Returns:
         Dictionary with validation results (pass/fail, scores)
 
@@ -29,10 +29,10 @@ async def validate_evidence(task: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("task must contain 'evidence_gathered'")
 
     # Step 3: Edge case handling
-    
+
     # Step 4: Main logic
     # Stub implementation - will delegate to JudgePanel later
-    
+
     # Step 5: Return
     return {
         "validation_passed": True,

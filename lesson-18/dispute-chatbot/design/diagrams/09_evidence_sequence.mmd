@@ -1,0 +1,41 @@
+sequenceDiagram
+    autonumber
+    participant SM as State Machine
+    participant P as Planner
+    participant TS as Transaction<br/>Specialist
+    participant SS as Shipping<br/>Specialist
+    participant CS as Customer<br/>Specialist
+    participant A as Aggregator
+    participant PP as Payment<br/>Platform
+    participant SC as Shipping<br/>Carrier
+    
+    SM->>P: Gather evidence for Fraud (10.4)
+    
+    Note over P: Analyze dispute type<br/>& required evidence
+    
+    P->>P: Generate evidence plan
+    
+    par Parallel Evidence Collection
+        P->>TS: Collect transaction proof
+        TS->>PP: GET /transactions/{id}
+        PP-->>TS: Transaction details
+        TS->>PP: GET /authorization/{id}
+        PP-->>TS: Authorization logs
+        TS-->>A: TransactionEvidence
+    and
+        P->>SS: Collect delivery proof
+        SS->>SC: GET /tracking/{number}
+        SC-->>SS: Tracking history
+        SS->>SC: GET /proof-of-delivery/{id}
+        SC-->>SS: POD document
+        SS-->>A: ShippingEvidence
+    and
+        P->>CS: Collect customer history
+        CS->>CS: Query internal DB
+        CS-->>A: CustomerEvidence
+    end
+    
+    A->>A: Validate completeness
+    A->>A: Check for conflicts
+    A-->>SM: EvidencePackage
+

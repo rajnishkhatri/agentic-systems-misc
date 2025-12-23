@@ -1,0 +1,53 @@
+flowchart TB
+    subgraph Input["Input"]
+        EP[Evidence Package]
+    end
+    
+    subgraph JP["LLM Judge Panel"]
+        subgraph J1["Evidence Quality Judge"]
+            EQ[Evaluator]
+            EQT{Score ≥ 0.8?}
+        end
+        
+        subgraph J2["Fabrication Detection Judge"]
+            FD[Detector]
+            FDT{Score < 0.95?}
+        end
+        
+        subgraph J3["Dispute Validity Judge"]
+            DV[Validator]
+            DVT{Score ≥ 0.7?}
+        end
+        
+        AGG[Verdict<br/>Aggregator]
+    end
+    
+    subgraph Output["Output"]
+        PASS[✅ PASS<br/>Proceed to Submit]
+        WARN[⚠️ WARN<br/>Review recommended]
+        BLOCK[🛑 BLOCK<br/>Escalate to human]
+    end
+    
+    EP --> EQ
+    EP --> FD
+    EP --> DV
+    
+    EQ --> EQT
+    FD --> FDT
+    DV --> DVT
+    
+    EQT -->|Yes| AGG
+    EQT -->|No| AGG
+    FDT -->|Yes| AGG
+    FDT -->|No| AGG
+    DVT -->|Yes| AGG
+    DVT -->|No| AGG
+    
+    AGG -->|All Pass| PASS
+    AGG -->|DV Fail Only| WARN
+    AGG -->|EQ Fail or FD Fail| BLOCK
+    
+    style PASS fill:#c8e6c9
+    style WARN fill:#fff9c4
+    style BLOCK fill:#ffcdd2
+

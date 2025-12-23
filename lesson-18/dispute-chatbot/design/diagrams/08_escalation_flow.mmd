@@ -1,0 +1,49 @@
+flowchart TB
+    subgraph Trigger["Escalation Triggers"]
+        T1[Judge BLOCK<br/>Fabrication detected]
+        T2[Deadline <24h<br/>Insufficient evidence]
+        T3[Max retries<br/>exceeded]
+        T4[Classification<br/>failed]
+        T5[User requested<br/>human help]
+    end
+    
+    subgraph Decision["Escalation Decision"]
+        ED{Escalation<br/>Type?}
+    end
+    
+    subgraph Actions["Escalation Actions"]
+        A1[📧 Email ops team]
+        A2[💬 Slack alert]
+        A3[📋 Create ticket]
+        A4[📞 Priority callback]
+    end
+    
+    subgraph Queue["Escalation Queue"]
+        Q1[Low Priority<br/>24h SLA]
+        Q2[Medium Priority<br/>4h SLA]
+        Q3[High Priority<br/>1h SLA]
+        Q4[Critical<br/>Immediate]
+    end
+    
+    T1 --> ED
+    T2 --> ED
+    T3 --> ED
+    T4 --> ED
+    T5 --> ED
+    
+    ED -->|Fabrication| Q4
+    ED -->|Deadline| Q3
+    ED -->|Retry fail| Q2
+    ED -->|Classification| Q2
+    ED -->|User request| Q1
+    
+    Q4 --> A1 & A2 & A4
+    Q3 --> A1 & A2
+    Q2 --> A1 & A3
+    Q1 --> A3
+    
+    style Q4 fill:#ffcdd2
+    style Q3 fill:#fff9c4
+    style Q2 fill:#c8e6c9
+    style Q1 fill:#e3f2fd
+

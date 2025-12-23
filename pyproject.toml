@@ -6,7 +6,7 @@ requires-python = ">=3.11"
 dependencies = [
     "fastapi",
     "uvicorn",
-    "litellm",
+    "litellm[caching]",
     "python-dotenv",
     "httpx",
     "rich",
@@ -36,6 +36,9 @@ dependencies = [
     "langgraph>=0.2.0",
     "openai>=1.0.0",
     "redis>=5.0.0",
+    "json-repair>=0.30.0",
+    "pinecone-client>=3.0.0",
+    "tf-keras>=2.14.0",
 ]
 
 [project.optional-dependencies]

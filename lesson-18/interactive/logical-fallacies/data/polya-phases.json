@@ -1,0 +1,38 @@
+[
+  {
+    "phase": "UNDERSTAND",
+    "icon": "🎯",
+    "description": "Define the fallacy in the context of AI engineering and identify red flags.",
+    "key_elements": ["Definition", "Domain Example", "Red Flags"]
+  },
+  {
+    "phase": "PLAN",
+    "icon": "🗺️",
+    "description": "Develop a strategy to detect the fallacy using specific data sources and logical checks.",
+    "key_elements": ["Strategy", "Related Fallacies", "Data Sources"]
+  },
+  {
+    "phase": "TASKS",
+    "icon": "✅",
+    "description": "List specific verification steps, queries, and calculations needed to audit the claim.",
+    "key_elements": ["Verification Steps", "Data Queries", "Metric Code"]
+  },
+  {
+    "phase": "EXECUTE",
+    "icon": "📝",
+    "description": "Apply the plan to a real example, annotating the claim and calculating true metrics.",
+    "key_elements": ["Worked Example", "Annotations", "Counter-Response"]
+  },
+  {
+    "phase": "REFLECT",
+    "icon": "💡",
+    "description": "Synthesize takeaways, connect to broader patterns, and self-assess understanding.",
+    "key_elements": ["Key Takeaways", "Pattern Links", "Self-Assessment"]
+  },
+  {
+    "phase": "COUNTER",
+    "icon": "📚",
+    "description": "Apply rigorous evaluation methods (like HW assignments) to prevent or expose the fallacy.",
+    "key_elements": ["HW Method Ref", "Code Example", "Application"]
+  }
+]

@@ -1,0 +1,2502 @@
+[
+  {
+    "dispute_id": "DIS-2d9ca28a",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4933.86,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-14cc507a",
+      "name": "Spencer and Sons",
+      "mcc": "5732",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-8321ab36",
+      "name": "Brian Alvarez",
+      "email": "plara@example.org",
+      "phone": "800-263-2370x5584",
+      "billing_address": "885 Cynthia Crescent\nDavisshire, CT 49337"
+    },
+    "transaction_date": "2025-10-09T01:12:17.206881",
+    "dispute_date": "2025-11-19T01:12:17.206881",
+    "deadline": "2025-12-03T01:12:17.206881",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-bbbfd2c6",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 4847.15,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-3b0f6462",
+      "name": "Murray Group",
+      "mcc": "5311",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-20d19dc9",
+      "name": "Blake Hall",
+      "email": "tannerlauren@example.org",
+      "phone": "001-567-598-3433x5569",
+      "billing_address": "50623 Lindsay Parks Suite 128\nDenisemouth, VA 95298"
+    },
+    "transaction_date": "2025-11-10T01:12:17.207289",
+    "dispute_date": "2025-11-18T01:12:17.207289",
+    "deadline": "2025-12-02T01:12:17.207289",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-0121e313",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 1068.43,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-f707a89b",
+      "name": "Ware, Campbell and Mendoza",
+      "mcc": "5942",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-d383169c",
+      "name": "Latasha Pearson DDS",
+      "email": "sandrataylor@example.net",
+      "phone": "(764)447-3037",
+      "billing_address": "40560 Elizabeth Turnpike Apt. 978\nBethview, GU 05103"
+    },
+    "transaction_date": "2025-11-04T01:12:17.207723",
+    "dispute_date": "2025-12-03T01:12:17.207723",
+    "deadline": "2025-12-17T01:12:17.207723",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-bda973e1",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 55.42,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-6384d95b",
+      "name": "Jackson, Wright and Dorsey",
+      "mcc": "7311",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-bfec609b",
+      "name": "Daniel Fleming",
+      "email": "caseywilliams@example.net",
+      "phone": "4715684770",
+      "billing_address": "33480 Anthony Land Apt. 794\nCodystad, IA 24629"
+    },
+    "transaction_date": "2025-09-21T01:12:17.208244",
+    "dispute_date": "2025-11-15T01:12:17.208244",
+    "deadline": "2025-11-29T01:12:17.208244",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-7f03bfbc",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 2598.24,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-3faf9942",
+      "name": "Campos-Coleman",
+      "mcc": "5311",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-39560f28",
+      "name": "Omar Rogers",
+      "email": "vmiller@example.org",
+      "phone": "840-515-2224x5550",
+      "billing_address": "9664 Brooke Hills\nMarshallbury, NE 96625"
+    },
+    "transaction_date": "2025-09-30T01:12:17.208676",
+    "dispute_date": "2025-11-14T01:12:17.208676",
+    "deadline": "2025-11-28T01:12:17.208676",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-f8e4e0fe",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 3168.87,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-d6b04134",
+      "name": "Lewis, Boyd and Williams",
+      "mcc": "5732",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-5a8763ae",
+      "name": "Jacqueline Boyer MD",
+      "email": "keithdawn@example.org",
+      "phone": "+1-531-983-1238x5149",
+      "billing_address": "9102 Hardin Fields Apt. 975\nLake Jorge, MH 47191"
+    },
+    "transaction_date": "2025-11-18T01:12:17.209177",
+    "dispute_date": "2025-11-23T01:12:17.209177",
+    "deadline": "2025-12-07T01:12:17.209177",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-22e0ab85",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 815.71,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-b2b99a6a",
+      "name": "Meadows, Peterson and Sanchez",
+      "mcc": "5732",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-91e46cc2",
+      "name": "Theodore Moore",
+      "email": "lhinton@example.org",
+      "phone": "001-520-857-6529x50635",
+      "billing_address": "PSC 0093, Box 4602\nAPO AE 34258"
+    },
+    "transaction_date": "2025-10-09T01:12:17.209486",
+    "dispute_date": "2025-12-06T01:12:17.209486",
+    "deadline": "2025-12-20T01:12:17.209486",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-6db80907",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4649.95,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-92c316a0",
+      "name": "Jones-Winters",
+      "mcc": "7311",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-c347b3ba",
+      "name": "Howard Garcia",
+      "email": "caseysharon@example.net",
+      "phone": "(612)216-8425x069",
+      "billing_address": "677 Jacqueline Summit\nSouth Jenniferchester, RI 66202"
+    },
+    "transaction_date": "2025-10-03T01:12:17.209908",
+    "dispute_date": "2025-11-29T01:12:17.209908",
+    "deadline": "2025-12-13T01:12:17.209908",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-4026e93a",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 4185.32,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-1f9bebb9",
+      "name": "Miller, Thompson and Velazquez",
+      "mcc": "5311",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-608dc09e",
+      "name": "Stephanie Bennett",
+      "email": "kendrajones@example.com",
+      "phone": "968-370-9867",
+      "billing_address": "486 Taylor Rue\nBrownside, AL 83057"
+    },
+    "transaction_date": "2025-10-20T01:12:17.210327",
+    "dispute_date": "2025-11-23T01:12:17.210327",
+    "deadline": "2025-12-07T01:12:17.210327",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-4a8c3203",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 1413.06,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-5265871c",
+      "name": "Franco Inc",
+      "mcc": "7311",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-88374873",
+      "name": "Christopher Phillips",
+      "email": "mowens@example.org",
+      "phone": "+1-599-245-2337",
+      "billing_address": "3243 April Landing\nAndrewmouth, FM 60096"
+    },
+    "transaction_date": "2025-11-17T01:12:17.210626",
+    "dispute_date": "2025-11-28T01:12:17.210626",
+    "deadline": "2025-12-12T01:12:17.210626",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-a31ba840",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 3898.31,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-f5890f3f",
+      "name": "George, Houston and Thomas",
+      "mcc": "5942",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-66c9c32b",
+      "name": "Shawn Logan",
+      "email": "thomasbrown@example.org",
+      "phone": "573.629.2042x77265",
+      "billing_address": "57581 Sanford Street Suite 147\nPort Alyssabury, AK 70776"
+    },
+    "transaction_date": "2025-10-24T01:12:17.211113",
+    "dispute_date": "2025-12-02T01:12:17.211113",
+    "deadline": "2025-12-16T01:12:17.211113",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-5469f998",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1513.99,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-91c531db",
+      "name": "Rasmussen, Hogan and Howe",
+      "mcc": "5732",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-92e9849c",
+      "name": "Anthony Monroe",
+      "email": "harriscorey@example.com",
+      "phone": "529-307-4698",
+      "billing_address": "141 Amber Hollow\nNorth Tarafort, ND 00964"
+    },
+    "transaction_date": "2025-11-06T01:12:17.211573",
+    "dispute_date": "2025-12-08T01:12:17.211573",
+    "deadline": "2025-12-22T01:12:17.211573",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-86cfd444",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1244.0,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-259e13ff",
+      "name": "Clark, Molina and Clayton",
+      "mcc": "5311",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-16964c52",
+      "name": "Kevin Price",
+      "email": "gravesdavid@example.com",
+      "phone": "6996468389",
+      "billing_address": "53353 Hall Rue\nPeterton, NJ 99082"
+    },
+    "transaction_date": "2025-10-30T01:12:17.211955",
+    "dispute_date": "2025-12-02T01:12:17.211955",
+    "deadline": "2025-12-16T01:12:17.211955",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-350f8287",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1409.69,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-f8b1b2a1",
+      "name": "Horton, Rodriguez and Bennett",
+      "mcc": "5942",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-36b683a5",
+      "name": "Mary Tanner",
+      "email": "paula99@example.net",
+      "phone": "2479398556",
+      "billing_address": "7164 Thompson Forks\nNew Jessicaland, UT 58062"
+    },
+    "transaction_date": "2025-09-15T01:12:17.212316",
+    "dispute_date": "2025-11-10T01:12:17.212316",
+    "deadline": "2025-11-24T01:12:17.212316",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-2a2583ef",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 3851.06,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-14380575",
+      "name": "Ruiz Group",
+      "mcc": "5732",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-9336039e",
+      "name": "Benjamin Lee",
+      "email": "msoto@example.net",
+      "phone": "001-688-469-9178",
+      "billing_address": "Unit 3447 Box 0700\nDPO AP 54548"
+    },
+    "transaction_date": "2025-11-08T01:12:17.212548",
+    "dispute_date": "2025-11-11T01:12:17.212548",
+    "deadline": "2025-11-25T01:12:17.212548",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-abbd3630",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 195.66,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-c57b8073",
+      "name": "Wolfe, Neal and Reynolds",
+      "mcc": "5732",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-e3839ea8",
+      "name": "Dillon Carpenter",
+      "email": "tiffany33@example.com",
+      "phone": "+1-533-682-1006",
+      "billing_address": "84493 Ryan Union\nNew Anthony, MN 70264"
+    },
+    "transaction_date": "2025-11-24T01:12:17.212875",
+    "dispute_date": "2025-11-27T01:12:17.212875",
+    "deadline": "2025-12-11T01:12:17.212875",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-92dca57a",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 538.18,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-f735e6cb",
+      "name": "Roman-Tanner",
+      "mcc": "5311",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-2dc864f9",
+      "name": "Benjamin Thompson",
+      "email": "smithloretta@example.org",
+      "phone": "(803)282-3492x200",
+      "billing_address": "0261 Mary Brook\nNew Jacquelineshire, OK 25809"
+    },
+    "transaction_date": "2025-11-11T01:12:17.213216",
+    "dispute_date": "2025-11-30T01:12:17.213216",
+    "deadline": "2025-12-14T01:12:17.213216",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-4fd0a8f5",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1617.73,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-98736533",
+      "name": "Cohen, Baker and Pope",
+      "mcc": "5311",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-8b9d2264",
+      "name": "Brooke Evans",
+      "email": "brandon42@example.com",
+      "phone": "517-624-7783x21524",
+      "billing_address": "2348 Alicia Ports\nLake Teresaport, AS 22816"
+    },
+    "transaction_date": "2025-10-09T01:12:17.213627",
+    "dispute_date": "2025-11-30T01:12:17.213627",
+    "deadline": "2025-12-14T01:12:17.213627",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-180ff577",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 2906.1,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-6a9aa120",
+      "name": "Johnson, Caldwell and Hanson",
+      "mcc": "5311",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-46db50e8",
+      "name": "Robyn Miller",
+      "email": "qwilliamson@example.com",
+      "phone": "355.329.3471",
+      "billing_address": "052 Kelley Extensions Apt. 237\nCummingschester, MT 46155"
+    },
+    "transaction_date": "2025-11-10T01:12:17.213996",
+    "dispute_date": "2025-11-19T01:12:17.213996",
+    "deadline": "2025-12-03T01:12:17.213996",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-ff2728e2",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 690.52,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-4eadce93",
+      "name": "Rodgers PLC",
+      "mcc": "5942",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-0b103ee7",
+      "name": "Nicole Turner",
+      "email": "deankristi@example.net",
+      "phone": "329.790.9157x305",
+      "billing_address": "96126 Anthony Bridge\nRobertsberg, MA 17961"
+    },
+    "transaction_date": "2025-11-14T01:12:17.214304",
+    "dispute_date": "2025-12-03T01:12:17.214304",
+    "deadline": "2025-12-17T01:12:17.214304",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-745d56d2",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4191.57,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-6a2fe3d0",
+      "name": "Cain, Murray and Macias",
+      "mcc": "5942",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-17df4be8",
+      "name": "Cynthia Garrett",
+      "email": "cynthiahayes@example.net",
+      "phone": "5416375859",
+      "billing_address": "997 Michael Rest\nBanksbury, WY 99902"
+    },
+    "transaction_date": "2025-10-29T01:12:17.214838",
+    "dispute_date": "2025-12-01T01:12:17.214838",
+    "deadline": "2025-12-15T01:12:17.214838",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-563456b2",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 1524.85,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-fbfacb9a",
+      "name": "Sandoval-Gutierrez",
+      "mcc": "7311",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-c0f2abab",
+      "name": "Richard Contreras",
+      "email": "josephhernandez@example.com",
+      "phone": "(582)210-7236",
+      "billing_address": "76969 Bradley Points Suite 648\nAndersonport, IL 26268"
+    },
+    "transaction_date": "2025-09-26T01:12:17.215272",
+    "dispute_date": "2025-11-20T01:12:17.215272",
+    "deadline": "2025-12-04T01:12:17.215272",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-8b5a2645",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1859.12,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-ccece47c",
+      "name": "Castro, Montgomery and Morgan",
+      "mcc": "5732",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-62b677ec",
+      "name": "David Ayers",
+      "email": "brittney24@example.net",
+      "phone": "+1-677-653-8633x8443",
+      "billing_address": "2275 Myers Cliffs Apt. 898\nWilliamsfurt, IN 38234"
+    },
+    "transaction_date": "2025-10-16T01:12:17.215673",
+    "dispute_date": "2025-11-11T01:12:17.215673",
+    "deadline": "2025-11-25T01:12:17.215673",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-68c27212",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1984.76,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-73d3a3f1",
+      "name": "Espinoza Group",
+      "mcc": "5311",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-d323aff0",
+      "name": "Donald Taylor",
+      "email": "donald46@example.org",
+      "phone": "+1-539-758-0623x8947",
+      "billing_address": "33519 Bailey Crest Suite 147\nStephanietown, WV 18737"
+    },
+    "transaction_date": "2025-10-05T01:12:17.215971",
+    "dispute_date": "2025-11-13T01:12:17.215971",
+    "deadline": "2025-11-27T01:12:17.215971",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-53f514fd",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 3991.56,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-c6afde5f",
+      "name": "Walker-Sharp",
+      "mcc": "5942",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-fbf0e129",
+      "name": "Linda Vincent",
+      "email": "jesusfitzgerald@example.org",
+      "phone": "533.711.3128x40385",
+      "billing_address": "441 Smith Garden Apt. 726\nThompsontown, MH 18833"
+    },
+    "transaction_date": "2025-11-06T01:12:17.216348",
+    "dispute_date": "2025-11-14T01:12:17.216348",
+    "deadline": "2025-11-28T01:12:17.216348",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-4d6996b9",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1372.79,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-22aacde8",
+      "name": "Novak, Phillips and Andersen",
+      "mcc": "5942",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-af8d0d0f",
+      "name": "Brandon Hernandez",
+      "email": "rbaker@example.com",
+      "phone": "+1-833-666-1257",
+      "billing_address": "669 Smith Meadow\nNew Jasonview, LA 25960"
+    },
+    "transaction_date": "2025-09-28T01:12:17.216789",
+    "dispute_date": "2025-11-27T01:12:17.216789",
+    "deadline": "2025-12-11T01:12:17.216789",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-4eaec7af",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 1489.5,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-f55050a3",
+      "name": "Contreras, Scott and Sanchez",
+      "mcc": "5942",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-12fcdb94",
+      "name": "William Bowen",
+      "email": "johnsonlori@example.net",
+      "phone": "001-379-523-5110x38943",
+      "billing_address": "5589 Jennifer Village\nSouth Davidmouth, MS 73810"
+    },
+    "transaction_date": "2025-10-16T01:12:17.217167",
+    "dispute_date": "2025-12-06T01:12:17.217167",
+    "deadline": "2025-12-20T01:12:17.217167",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-9a993909",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 3441.14,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-aa8ca2d8",
+      "name": "Wilson, Vazquez and Owen",
+      "mcc": "5732",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-b8601813",
+      "name": "Daniel Allen",
+      "email": "ufletcher@example.net",
+      "phone": "426.955.6310",
+      "billing_address": "21739 Brown Ports Suite 696\nLake Larryburgh, MN 28019"
+    },
+    "transaction_date": "2025-10-05T01:12:17.217610",
+    "dispute_date": "2025-11-24T01:12:17.217610",
+    "deadline": "2025-12-08T01:12:17.217610",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-c5fa17bc",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 2039.19,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-b17f18a3",
+      "name": "Weaver Inc",
+      "mcc": "5732",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-5ff0feda",
+      "name": "Timothy Keith",
+      "email": "villarrealvickie@example.com",
+      "phone": "001-202-918-4268",
+      "billing_address": "18387 Campos Isle\nNew Peggy, GA 48046"
+    },
+    "transaction_date": "2025-09-20T01:12:17.218038",
+    "dispute_date": "2025-11-17T01:12:17.218038",
+    "deadline": "2025-12-01T01:12:17.218038",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-5bb6d553",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 618.66,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-4e44ae35",
+      "name": "Herrera, Walker and Luna",
+      "mcc": "5311",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-f386473f",
+      "name": "Stephanie Garza",
+      "email": "robert46@example.org",
+      "phone": "498.857.1667",
+      "billing_address": "985 Baker Drive Apt. 190\nSouth Markberg, WA 95681"
+    },
+    "transaction_date": "2025-10-30T01:12:17.218387",
+    "dispute_date": "2025-12-07T01:12:17.218387",
+    "deadline": "2025-12-21T01:12:17.218387",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-5467d5b1",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 25.94,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-3ae31ff3",
+      "name": "Gibson, Haney and Erickson",
+      "mcc": "7311",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-e71e0823",
+      "name": "Christopher Chang",
+      "email": "kennedyrandy@example.net",
+      "phone": "001-325-483-9742",
+      "billing_address": "070 Joseph Parks Apt. 283\nPort Samanthafort, KY 50306"
+    },
+    "transaction_date": "2025-11-13T01:12:17.218764",
+    "dispute_date": "2025-12-02T01:12:17.218764",
+    "deadline": "2025-12-16T01:12:17.218764",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-45df8b6a",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1983.93,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-f07ceb39",
+      "name": "Miller Inc",
+      "mcc": "5311",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-a9b1ab1d",
+      "name": "Krystal Clark",
+      "email": "danielle03@example.org",
+      "phone": "270.405.1074",
+      "billing_address": "9750 Christina Mill\nNorth Teresamouth, HI 13501"
+    },
+    "transaction_date": "2025-11-28T01:12:17.219103",
+    "dispute_date": "2025-11-30T01:12:17.219103",
+    "deadline": "2025-12-14T01:12:17.219103",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-3381d50e",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 660.73,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-be945e40",
+      "name": "Freeman, Kim and Reyes",
+      "mcc": "7311",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-b62b1de2",
+      "name": "Jeffrey Taylor",
+      "email": "flee@example.net",
+      "phone": "001-444-747-9332",
+      "billing_address": "Unit 2203 Box 3636\nDPO AA 04562"
+    },
+    "transaction_date": "2025-10-15T01:12:17.219390",
+    "dispute_date": "2025-12-05T01:12:17.219390",
+    "deadline": "2025-12-19T01:12:17.219390",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-3b277eb9",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 387.4,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-3c00e600",
+      "name": "Jackson, Krueger and Carroll",
+      "mcc": "5942",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-d4bf778e",
+      "name": "Thomas Montes",
+      "email": "jdavis@example.net",
+      "phone": "(965)936-6582x7150",
+      "billing_address": "8668 Annette Terrace\nTimothyborough, TX 88206"
+    },
+    "transaction_date": "2025-10-06T01:12:17.219733",
+    "dispute_date": "2025-12-01T01:12:17.219733",
+    "deadline": "2025-12-15T01:12:17.219733",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-b1585e7c",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 2978.35,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-e67e32fc",
+      "name": "Pace and Sons",
+      "mcc": "5311",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-d70c8dad",
+      "name": "Kathryn Morris",
+      "email": "greenlonnie@example.net",
+      "phone": "+1-463-354-5497",
+      "billing_address": "732 Hernandez Mountains Apt. 169\nEast Virginiabury, NC 27799"
+    },
+    "transaction_date": "2025-11-18T01:12:17.220068",
+    "dispute_date": "2025-12-01T01:12:17.220068",
+    "deadline": "2025-12-15T01:12:17.220068",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-b9cde48b",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 3079.61,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-af9a9398",
+      "name": "Sexton and Sons",
+      "mcc": "5732",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-2cdeb304",
+      "name": "Raymond Carlson",
+      "email": "pgriffith@example.net",
+      "phone": "001-343-589-6167x951",
+      "billing_address": "40773 Matthew Shores\nNorth Catherinechester, ID 60254"
+    },
+    "transaction_date": "2025-09-18T01:12:17.220407",
+    "dispute_date": "2025-11-11T01:12:17.220407",
+    "deadline": "2025-11-25T01:12:17.220407",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-1667acb7",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 2635.76,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-a166c030",
+      "name": "Harper PLC",
+      "mcc": "5311",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-3b4c9712",
+      "name": "Michael Roberts",
+      "email": "kpalmer@example.com",
+      "phone": "990-524-4408x592",
+      "billing_address": "92752 Gilbert Turnpike\nEmilyside, MD 90763"
+    },
+    "transaction_date": "2025-10-30T01:12:17.220713",
+    "dispute_date": "2025-11-20T01:12:17.220713",
+    "deadline": "2025-12-04T01:12:17.220713",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-39d71494",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 3755.3,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-874134c3",
+      "name": "Wong, Smith and Jones",
+      "mcc": "7311",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-9b43c8eb",
+      "name": "Louis Perry DDS",
+      "email": "wquinn@example.com",
+      "phone": "(267)941-0304x420",
+      "billing_address": "33225 Tyler Forest\nNicholasland, IA 87914"
+    },
+    "transaction_date": "2025-09-15T01:12:17.221068",
+    "dispute_date": "2025-11-14T01:12:17.221068",
+    "deadline": "2025-11-28T01:12:17.221068",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-60868a5b",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4036.91,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-e0446f65",
+      "name": "Thomas Inc",
+      "mcc": "5311",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-928418d2",
+      "name": "Kim Cruz",
+      "email": "ortiznancy@example.com",
+      "phone": "2122503163",
+      "billing_address": "562 Christopher Dale Suite 997\nJenningsmouth, IA 31948"
+    },
+    "transaction_date": "2025-11-13T01:12:17.221378",
+    "dispute_date": "2025-11-30T01:12:17.221378",
+    "deadline": "2025-12-14T01:12:17.221378",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-fc9d5c05",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4987.44,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-6f3db3f5",
+      "name": "Hopkins, Woods and Lucas",
+      "mcc": "5942",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-62102c3f",
+      "name": "Christina Thomas",
+      "email": "raymondroach@example.net",
+      "phone": "(429)355-4495x15935",
+      "billing_address": "394 Jennifer Cliff Apt. 302\nWatsonview, CT 06669"
+    },
+    "transaction_date": "2025-10-20T01:12:17.221837",
+    "dispute_date": "2025-11-19T01:12:17.221837",
+    "deadline": "2025-12-03T01:12:17.221837",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-aff5dcc0",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 1480.31,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-83e52089",
+      "name": "Thomas-Swanson",
+      "mcc": "5732",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-7a61c21f",
+      "name": "Samantha Jones",
+      "email": "thomasnixon@example.com",
+      "phone": "3378980088",
+      "billing_address": "68928 Cox Manor\nWest Anneside, NE 25883"
+    },
+    "transaction_date": "2025-11-14T01:12:17.222243",
+    "dispute_date": "2025-12-01T01:12:17.222243",
+    "deadline": "2025-12-15T01:12:17.222243",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-7d3affc3",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4383.87,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-7e2c91b9",
+      "name": "Rodriguez, Collins and Griffin",
+      "mcc": "5942",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-c32b89e2",
+      "name": "Daniel Lynn",
+      "email": "ihernandez@example.net",
+      "phone": "(200)313-2576",
+      "billing_address": "01152 Ramos Mission\nRyanborough, PA 12262"
+    },
+    "transaction_date": "2025-10-12T01:12:17.222656",
+    "dispute_date": "2025-11-09T01:12:17.222656",
+    "deadline": "2025-11-23T01:12:17.222656",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-da6d2d83",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 1752.0,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-802ebb84",
+      "name": "Bush-Fitzgerald",
+      "mcc": "7311",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-cb10006b",
+      "name": "Dawn Salazar",
+      "email": "tiffany92@example.org",
+      "phone": "(477)708-1089x780",
+      "billing_address": "59436 Young Radial\nLeachshire, TN 15956"
+    },
+    "transaction_date": "2025-10-29T01:12:17.223042",
+    "dispute_date": "2025-11-22T01:12:17.223042",
+    "deadline": "2025-12-06T01:12:17.223042",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-0d87c726",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4211.53,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-e521514d",
+      "name": "Ayala, Vang and Frye",
+      "mcc": "5311",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-ccced98a",
+      "name": "Johnathan Howard",
+      "email": "vwong@example.net",
+      "phone": "001-445-622-0745",
+      "billing_address": "85066 Lyons Valley\nOliviamouth, UT 93771"
+    },
+    "transaction_date": "2025-11-01T01:12:17.223412",
+    "dispute_date": "2025-11-26T01:12:17.223412",
+    "deadline": "2025-12-10T01:12:17.223412",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-8f2a3a4a",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 99.29,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-f0bdb663",
+      "name": "Williams, Hurley and Jenkins",
+      "mcc": "5311",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-510a2864",
+      "name": "Pamela Miller",
+      "email": "banderson@example.net",
+      "phone": "(726)477-1337",
+      "billing_address": "56433 Walker Forges Suite 038\nGarrisonhaven, WY 53501"
+    },
+    "transaction_date": "2025-09-20T01:12:17.223864",
+    "dispute_date": "2025-11-17T01:12:17.223864",
+    "deadline": "2025-12-01T01:12:17.223864",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-3366904b",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 2260.54,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-7cde444e",
+      "name": "Combs-Perkins",
+      "mcc": "5732",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-0c43adb2",
+      "name": "Evan Rivera",
+      "email": "twells@example.org",
+      "phone": "351.464.7352x31164",
+      "billing_address": "Unit 2841 Box 8694\nDPO AA 25775"
+    },
+    "transaction_date": "2025-09-17T01:12:17.224181",
+    "dispute_date": "2025-11-13T01:12:17.224181",
+    "deadline": "2025-11-27T01:12:17.224181",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-c403410d",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 2459.88,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-3126bfa3",
+      "name": "Ford-Patton",
+      "mcc": "5942",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-5f6abc1f",
+      "name": "Bruce Campbell",
+      "email": "fordpamela@example.com",
+      "phone": "001-923-883-8736x656",
+      "billing_address": "48003 Ball Trafficway Apt. 168\nNavarrotown, IL 75134"
+    },
+    "transaction_date": "2025-11-10T01:12:17.224539",
+    "dispute_date": "2025-11-17T01:12:17.224539",
+    "deadline": "2025-12-01T01:12:17.224539",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-be6a6740",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 692.42,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-e9ab4396",
+      "name": "Boyd-Hudson",
+      "mcc": "5311",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-01046721",
+      "name": "Justin Heath",
+      "email": "ytran@example.com",
+      "phone": "974.483.1116",
+      "billing_address": "99040 Jessica Loaf Suite 504\nCopelandside, NJ 26594"
+    },
+    "transaction_date": "2025-09-27T01:12:17.224878",
+    "dispute_date": "2025-11-19T01:12:17.224878",
+    "deadline": "2025-12-03T01:12:17.224878",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-ccb65c0e",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 3477.54,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-a3c2a796",
+      "name": "Garcia LLC",
+      "mcc": "5732",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-ccab3b2d",
+      "name": "Brad Stewart",
+      "email": "arthur53@example.net",
+      "phone": "+1-731-434-4349x8158",
+      "billing_address": "96363 Ferguson Gardens\nRomanville, MA 28494"
+    },
+    "transaction_date": "2025-11-04T01:12:17.225170",
+    "dispute_date": "2025-11-18T01:12:17.225170",
+    "deadline": "2025-12-02T01:12:17.225170",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-395403c6",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 4769.87,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-55949dff",
+      "name": "Williams-Horton",
+      "mcc": "5311",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-8ee063e4",
+      "name": "Nancy Miller",
+      "email": "chall@example.org",
+      "phone": "+1-330-760-9682x317",
+      "billing_address": "150 Kelly Road\nPort Amandaton, OK 78161"
+    },
+    "transaction_date": "2025-10-13T01:12:17.225543",
+    "dispute_date": "2025-12-01T01:12:17.225543",
+    "deadline": "2025-12-15T01:12:17.225543",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-d02ce0f3",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4329.26,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-3a2a1966",
+      "name": "Butler-Campbell",
+      "mcc": "5311",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-f86562b5",
+      "name": "Ashley Rodriguez",
+      "email": "iscott@example.com",
+      "phone": "2336255583",
+      "billing_address": "25055 Shannon Ports Suite 699\nKristinchester, IA 96010"
+    },
+    "transaction_date": "2025-09-28T01:12:17.225881",
+    "dispute_date": "2025-11-25T01:12:17.225881",
+    "deadline": "2025-12-09T01:12:17.225881",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-94468377",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 2999.97,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-7e4e0f65",
+      "name": "Montgomery LLC",
+      "mcc": "5942",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-d7fb5b5c",
+      "name": "Barbara Montgomery",
+      "email": "esmith@example.net",
+      "phone": "639-473-0230x92800",
+      "billing_address": "682 Oscar Parkways\nGreeneville, CO 36921"
+    },
+    "transaction_date": "2025-10-14T01:12:17.226237",
+    "dispute_date": "2025-11-13T01:12:17.226237",
+    "deadline": "2025-11-27T01:12:17.226237",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-3403ad9b",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 3830.57,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-ed508dba",
+      "name": "Clark, Ward and Smith",
+      "mcc": "7311",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-212db6fb",
+      "name": "Brittany Gray",
+      "email": "christopher04@example.org",
+      "phone": "892-972-3229x55421",
+      "billing_address": "8879 Johnson Mountain Apt. 049\nChangmouth, PR 54384"
+    },
+    "transaction_date": "2025-10-30T01:12:17.226597",
+    "dispute_date": "2025-12-02T01:12:17.226597",
+    "deadline": "2025-12-16T01:12:17.226597",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-6cae224c",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 2829.09,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-f19349d5",
+      "name": "Robbins LLC",
+      "mcc": "5311",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-b48c1e08",
+      "name": "Dr. Lauren Key",
+      "email": "rebecca92@example.net",
+      "phone": "+1-668-263-3760x95209",
+      "billing_address": "87281 Jesse Shoals\nDustinmouth, NH 60633"
+    },
+    "transaction_date": "2025-09-27T01:12:17.226876",
+    "dispute_date": "2025-11-17T01:12:17.226876",
+    "deadline": "2025-12-01T01:12:17.226876",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-c51146e4",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 2453.94,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-e16325f2",
+      "name": "Randall-Gardner",
+      "mcc": "5942",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-4e2dfe58",
+      "name": "Elizabeth Reid",
+      "email": "rrogers@example.com",
+      "phone": "623.653.9452",
+      "billing_address": "31663 Carroll Flats Suite 888\nChristianside, PW 72292"
+    },
+    "transaction_date": "2025-10-31T01:12:17.227208",
+    "dispute_date": "2025-12-01T01:12:17.227208",
+    "deadline": "2025-12-15T01:12:17.227208",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-4aff2291",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4725.28,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-c393c1cb",
+      "name": "Alexander, Rodriguez and Grant",
+      "mcc": "5311",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-9320a430",
+      "name": "Nancy Adams",
+      "email": "danieltran@example.net",
+      "phone": "001-974-497-9289",
+      "billing_address": "862 Skinner Bridge Suite 027\nMillershire, RI 67421"
+    },
+    "transaction_date": "2025-10-18T01:12:17.227620",
+    "dispute_date": "2025-11-13T01:12:17.227620",
+    "deadline": "2025-11-27T01:12:17.227620",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-ef0ae669",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1893.53,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-47fe49b2",
+      "name": "Williams, Torres and Johnson",
+      "mcc": "5732",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-7f02d593",
+      "name": "Kara Skinner",
+      "email": "andrewjackson@example.net",
+      "phone": "(444)803-9279",
+      "billing_address": "34147 Richard Branch Apt. 784\nGriffinchester, RI 72302"
+    },
+    "transaction_date": "2025-11-03T01:12:17.228074",
+    "dispute_date": "2025-11-13T01:12:17.228074",
+    "deadline": "2025-11-27T01:12:17.228074",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-1c163406",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1194.24,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-bc7dd76e",
+      "name": "Martin-Chavez",
+      "mcc": "5311",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-ddcfe859",
+      "name": "Amanda Dougherty",
+      "email": "dunlapangela@example.net",
+      "phone": "(901)261-2442x15140",
+      "billing_address": "7998 Merritt Hills Suite 024\nJamesborough, NM 20220"
+    },
+    "transaction_date": "2025-11-02T01:12:17.228428",
+    "dispute_date": "2025-11-24T01:12:17.228428",
+    "deadline": "2025-12-08T01:12:17.228428",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-65e398c6",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 3452.06,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-3c62e8b3",
+      "name": "Simmons-Baker",
+      "mcc": "5942",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-b434af53",
+      "name": "Amanda Phillips",
+      "email": "kelly42@example.org",
+      "phone": "741-525-1852x13750",
+      "billing_address": "311 Mark Route\nWest Jenniferfort, SD 71855"
+    },
+    "transaction_date": "2025-10-15T01:12:17.228766",
+    "dispute_date": "2025-12-04T01:12:17.228766",
+    "deadline": "2025-12-18T01:12:17.228766",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-af5dbf12",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 4256.92,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-10e93133",
+      "name": "Delacruz-Davis",
+      "mcc": "5311",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-7833b3e9",
+      "name": "Amy Herrera",
+      "email": "marynicholson@example.org",
+      "phone": "001-362-889-6407x1022",
+      "billing_address": "420 Green Fords\nMoniquetown, OH 38895"
+    },
+    "transaction_date": "2025-11-13T01:12:17.229179",
+    "dispute_date": "2025-12-04T01:12:17.229179",
+    "deadline": "2025-12-18T01:12:17.229179",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-da761afa",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 2570.53,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-fe55f175",
+      "name": "Johnson, Nelson and Weiss",
+      "mcc": "5732",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-b459b397",
+      "name": "Ashley Jones",
+      "email": "jonesdana@example.org",
+      "phone": "598-610-5489",
+      "billing_address": "566 Young Lodge\nBranchmouth, IN 62655"
+    },
+    "transaction_date": "2025-11-07T01:12:17.229570",
+    "dispute_date": "2025-12-06T01:12:17.229570",
+    "deadline": "2025-12-20T01:12:17.229570",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-303513c8",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 1651.2,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-de881400",
+      "name": "Rodriguez, Hamilton and Walker",
+      "mcc": "5732",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-d1895ffd",
+      "name": "Travis Adams",
+      "email": "cynthia72@example.org",
+      "phone": "001-595-925-6568x60423",
+      "billing_address": "7705 Garcia Skyway\nNorth Jeffreyburgh, CA 45598"
+    },
+    "transaction_date": "2025-11-29T01:12:17.229977",
+    "dispute_date": "2025-12-01T01:12:17.229977",
+    "deadline": "2025-12-15T01:12:17.229977",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-d6933d87",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 4877.21,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-90a4b728",
+      "name": "Bell Inc",
+      "mcc": "7311",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-6253b0c6",
+      "name": "Jasmine Reese",
+      "email": "logansarah@example.com",
+      "phone": "+1-805-207-5095x6911",
+      "billing_address": "Unit 0295 Box 6352\nDPO AA 30650"
+    },
+    "transaction_date": "2025-10-11T01:12:17.230297",
+    "dispute_date": "2025-11-20T01:12:17.230297",
+    "deadline": "2025-12-04T01:12:17.230297",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-a4ee3954",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 333.99,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-e962ac13",
+      "name": "Brown-Hardy",
+      "mcc": "5732",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-8c80c250",
+      "name": "John Harvey",
+      "email": "ortegabilly@example.org",
+      "phone": "+1-385-301-0490x9027",
+      "billing_address": "68377 Bell Prairie\nDeborahbury, GU 42804"
+    },
+    "transaction_date": "2025-10-10T01:12:17.230652",
+    "dispute_date": "2025-11-15T01:12:17.230652",
+    "deadline": "2025-11-29T01:12:17.230652",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-340c3227",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 557.61,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-4f031a80",
+      "name": "Palmer, Brown and Woods",
+      "mcc": "5942",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-9f40ca5c",
+      "name": "Toni Mitchell",
+      "email": "melissaharrell@example.net",
+      "phone": "001-312-390-1865x19283",
+      "billing_address": "812 Jennifer Corners Suite 251\nSouth Lisa, KY 01631"
+    },
+    "transaction_date": "2025-11-13T01:12:17.231149",
+    "dispute_date": "2025-11-20T01:12:17.231149",
+    "deadline": "2025-12-04T01:12:17.231149",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-803d42f3",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1035.15,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-bcc8c745",
+      "name": "Durham, Franco and Hayes",
+      "mcc": "5942",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-db44829d",
+      "name": "Andre Smith",
+      "email": "butlermeredith@example.net",
+      "phone": "308-958-9659",
+      "billing_address": "PSC 9025, Box 2793\nAPO AP 10443"
+    },
+    "transaction_date": "2025-11-10T01:12:17.231545",
+    "dispute_date": "2025-11-23T01:12:17.231545",
+    "deadline": "2025-12-07T01:12:17.231545",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-1c980f32",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 3717.71,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-054423b3",
+      "name": "Rivas-Neal",
+      "mcc": "5732",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-0264a5eb",
+      "name": "Andrea Torres",
+      "email": "charles22@example.net",
+      "phone": "521.717.1285x785",
+      "billing_address": "6535 William Pine Suite 478\nSimmonshaven, GA 13169"
+    },
+    "transaction_date": "2025-10-02T01:12:17.231877",
+    "dispute_date": "2025-11-29T01:12:17.231877",
+    "deadline": "2025-12-13T01:12:17.231877",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-f0cb2f8f",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 44.1,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-78659106",
+      "name": "Harrington Ltd",
+      "mcc": "5942",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-10493e1b",
+      "name": "Kimberly Patrick",
+      "email": "davidwaters@example.com",
+      "phone": "+1-799-842-8564x66693",
+      "billing_address": "9153 Fernandez Field Suite 937\nWest Donnaburgh, TX 66483"
+    },
+    "transaction_date": "2025-09-27T01:12:17.232216",
+    "dispute_date": "2025-11-20T01:12:17.232216",
+    "deadline": "2025-12-04T01:12:17.232216",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-75c852f1",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 1806.02,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-23156220",
+      "name": "Roberts Inc",
+      "mcc": "5732",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-13a166e5",
+      "name": "Angela Dean",
+      "email": "frankbrown@example.com",
+      "phone": "4836391892",
+      "billing_address": "0906 Rivera Shores\nDanielstown, KY 87507"
+    },
+    "transaction_date": "2025-11-05T01:12:17.232538",
+    "dispute_date": "2025-12-08T01:12:17.232538",
+    "deadline": "2025-12-22T01:12:17.232538",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-aa62ff38",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 4403.73,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-c768504f",
+      "name": "Moore, Woods and Cobb",
+      "mcc": "5942",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-dc6bfccc",
+      "name": "Michael Hall",
+      "email": "joshuamiller@example.net",
+      "phone": "654-709-2761x66880",
+      "billing_address": "748 Miguel Circles\nLake Hectorhaven, NJ 15530"
+    },
+    "transaction_date": "2025-11-17T01:12:17.232967",
+    "dispute_date": "2025-11-18T01:12:17.232967",
+    "deadline": "2025-12-02T01:12:17.232967",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-fc41189b",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1336.66,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-e8443046",
+      "name": "Cantrell Inc",
+      "mcc": "5311",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-13fc67ce",
+      "name": "Mark Sparks",
+      "email": "tammy03@example.org",
+      "phone": "(487)225-6489",
+      "billing_address": "593 Simon Crescent\nJacobmouth, TN 58186"
+    },
+    "transaction_date": "2025-10-17T01:12:17.233256",
+    "dispute_date": "2025-11-24T01:12:17.233256",
+    "deadline": "2025-12-08T01:12:17.233256",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-d8a4b5e0",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 4512.56,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-d1e22f54",
+      "name": "Williams LLC",
+      "mcc": "5942",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-55e342da",
+      "name": "Terry Freeman",
+      "email": "xhicks@example.com",
+      "phone": "738.413.2381",
+      "billing_address": "55237 Sanders Motorway Suite 963\nPenastad, FL 62061"
+    },
+    "transaction_date": "2025-11-16T01:12:17.233559",
+    "dispute_date": "2025-12-01T01:12:17.233559",
+    "deadline": "2025-12-15T01:12:17.233559",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-5ffbd89e",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 598.14,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-2dcbb165",
+      "name": "Evans-Villarreal",
+      "mcc": "5942",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-a93bbdfd",
+      "name": "John Patton",
+      "email": "nicolehoward@example.com",
+      "phone": "424-359-5107x125",
+      "billing_address": "95340 Sandra Plaza Apt. 082\nWest Gabrielshire, TN 21662"
+    },
+    "transaction_date": "2025-10-31T01:12:17.233901",
+    "dispute_date": "2025-11-27T01:12:17.233901",
+    "deadline": "2025-12-11T01:12:17.233901",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-1750d6d7",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 4863.0,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-86353fbe",
+      "name": "Henry, Fisher and White",
+      "mcc": "5732",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-968e168f",
+      "name": "Kimberly Hampton",
+      "email": "xesparza@example.com",
+      "phone": "+1-888-278-0441x5786",
+      "billing_address": "Unit 6146 Box 7014\nDPO AA 59595"
+    },
+    "transaction_date": "2025-10-19T01:12:17.234201",
+    "dispute_date": "2025-11-26T01:12:17.234201",
+    "deadline": "2025-12-10T01:12:17.234201",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-1243765a",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1789.9,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-4501ec45",
+      "name": "Santana PLC",
+      "mcc": "5942",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-d72526d5",
+      "name": "Zachary Floyd",
+      "email": "masonapril@example.com",
+      "phone": "535-770-5249",
+      "billing_address": "7702 Walters Isle Apt. 101\nWest Nathanton, AK 32300"
+    },
+    "transaction_date": "2025-10-11T01:12:17.234513",
+    "dispute_date": "2025-11-27T01:12:17.234513",
+    "deadline": "2025-12-11T01:12:17.234513",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-45face1f",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 3901.67,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-7b5fd806",
+      "name": "White Inc",
+      "mcc": "5732",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-753af096",
+      "name": "Joseph Martinez",
+      "email": "ucordova@example.org",
+      "phone": "882.782.9120x99916",
+      "billing_address": "856 Prince Trace\nStevenschester, MT 58075"
+    },
+    "transaction_date": "2025-11-07T01:12:17.234808",
+    "dispute_date": "2025-12-04T01:12:17.234808",
+    "deadline": "2025-12-18T01:12:17.234808",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-11a6298a",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 1438.35,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-f3aee1d4",
+      "name": "Goodman, Moreno and Miller",
+      "mcc": "5732",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-b5a61e96",
+      "name": "Ashlee Franco",
+      "email": "jimenezcynthia@example.com",
+      "phone": "362.803.2211x0076",
+      "billing_address": "3266 Ashley Islands Suite 974\nLyonston, ND 88998"
+    },
+    "transaction_date": "2025-10-24T01:12:17.235194",
+    "dispute_date": "2025-11-28T01:12:17.235194",
+    "deadline": "2025-12-12T01:12:17.235194",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-497682f5",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 4266.36,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-a7cf4357",
+      "name": "Taylor-Thornton",
+      "mcc": "5311",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-86b6e0fe",
+      "name": "Gregory Martin",
+      "email": "bobby89@example.org",
+      "phone": "298.644.7541x02246",
+      "billing_address": "8519 Taylor Mission\nPort Briannachester, NY 44749"
+    },
+    "transaction_date": "2025-11-05T01:12:17.235564",
+    "dispute_date": "2025-12-06T01:12:17.235564",
+    "deadline": "2025-12-20T01:12:17.235564",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-18f2535e",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4255.32,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-61cced9a",
+      "name": "Perry Inc",
+      "mcc": "5311",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-d2c5dfbe",
+      "name": "Daniel Cooley",
+      "email": "brent95@example.com",
+      "phone": "380-584-4740x575",
+      "billing_address": "453 Michele Trail\nNorth Dianaborough, LA 06116"
+    },
+    "transaction_date": "2025-11-05T01:12:17.235822",
+    "dispute_date": "2025-11-19T01:12:17.235822",
+    "deadline": "2025-12-03T01:12:17.235822",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-5783e325",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4429.85,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-311d72b7",
+      "name": "Logan, Knight and Anderson",
+      "mcc": "7311",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-f19d8f56",
+      "name": "Justin Collins",
+      "email": "utorres@example.org",
+      "phone": "881-967-1685x35552",
+      "billing_address": "205 James Burgs\nHollyhaven, RI 05595"
+    },
+    "transaction_date": "2025-11-09T01:12:17.236232",
+    "dispute_date": "2025-11-21T01:12:17.236232",
+    "deadline": "2025-12-05T01:12:17.236232",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-6f689949",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1779.64,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-1e924fb1",
+      "name": "Watson-Henson",
+      "mcc": "5311",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-4b110171",
+      "name": "Douglas Morris",
+      "email": "michelle18@example.net",
+      "phone": "+1-565-663-5215x388",
+      "billing_address": "574 Amanda Forks Suite 643\nNew Shannon, OR 26224"
+    },
+    "transaction_date": "2025-11-26T01:12:17.236544",
+    "dispute_date": "2025-12-06T01:12:17.236544",
+    "deadline": "2025-12-20T01:12:17.236544",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-5be6e07f",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 4820.95,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-41dfd1e9",
+      "name": "Ray Inc",
+      "mcc": "5311",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-349d53ee",
+      "name": "Jack Gonzalez",
+      "email": "csmith@example.com",
+      "phone": "001-507-809-9776x127",
+      "billing_address": "8106 Dunlap Trace Suite 276\nNorth Angelica, AR 76143"
+    },
+    "transaction_date": "2025-10-04T01:12:17.236830",
+    "dispute_date": "2025-11-15T01:12:17.236830",
+    "deadline": "2025-11-29T01:12:17.236830",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-ef34f22d",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 3002.4,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-2b5ea453",
+      "name": "Edwards-Holland",
+      "mcc": "7311",
+      "descriptor": "INC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-aac73c1e",
+      "name": "Jose Morales",
+      "email": "cathy08@example.net",
+      "phone": "848.419.0359x193",
+      "billing_address": "64783 Anderson Station Apt. 904\nTapiaport, MI 64098"
+    },
+    "transaction_date": "2025-09-29T01:12:17.237153",
+    "dispute_date": "2025-11-10T01:12:17.237153",
+    "deadline": "2025-11-24T01:12:17.237153",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-ef8f1376",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 3667.93,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-6ae6cd81",
+      "name": "Mahoney-Guzman",
+      "mcc": "5942",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-563c39a3",
+      "name": "Heidi Richard",
+      "email": "xavierpena@example.org",
+      "phone": "001-321-314-1476x118",
+      "billing_address": "793 Caitlin Glens Suite 894\nChavezburgh, WV 40975"
+    },
+    "transaction_date": "2025-09-25T01:12:17.237500",
+    "dispute_date": "2025-11-11T01:12:17.237500",
+    "deadline": "2025-11-25T01:12:17.237500",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-6299d720",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 847.36,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-4a2110e5",
+      "name": "Pugh and Sons",
+      "mcc": "5732",
+      "descriptor": "AND SONS STORE"
+    },
+    "cardholder": {
+      "id": "CUST-af79bb49",
+      "name": "Alicia Nixon",
+      "email": "allisonmarshall@example.com",
+      "phone": "3617994958",
+      "billing_address": "04232 Brittany Row Suite 749\nNew Donnaburgh, VA 24100"
+    },
+    "transaction_date": "2025-10-29T01:12:17.237887",
+    "dispute_date": "2025-11-15T01:12:17.237887",
+    "deadline": "2025-11-29T01:12:17.237887",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-713d19bc",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1127.74,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-9cba5cae",
+      "name": "Ball-Gordon",
+      "mcc": "5311",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-7cda3942",
+      "name": "Ms. Jennifer Welch DDS",
+      "email": "markthompson@example.net",
+      "phone": "(514)969-7435x15012",
+      "billing_address": "737 Charles Creek\nRobertston, TX 92530"
+    },
+    "transaction_date": "2025-09-28T01:12:17.238294",
+    "dispute_date": "2025-11-22T01:12:17.238294",
+    "deadline": "2025-12-06T01:12:17.238294",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-52458e8e",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4000.55,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-8f0daa36",
+      "name": "Williams-Clark",
+      "mcc": "7311",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-d778b369",
+      "name": "Jamie Martin",
+      "email": "lking@example.com",
+      "phone": "283.944.5492x8229",
+      "billing_address": "PSC 9636, Box 5594\nAPO AE 49179"
+    },
+    "transaction_date": "2025-11-14T01:12:17.238566",
+    "dispute_date": "2025-11-30T01:12:17.238566",
+    "deadline": "2025-12-14T01:12:17.238566",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-614ed231",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 2523.62,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-8d5058ab",
+      "name": "Powell PLC",
+      "mcc": "5732",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-706bdfd5",
+      "name": "Michelle Sanchez",
+      "email": "tferguson@example.com",
+      "phone": "298.486.4896x976",
+      "billing_address": "6841 Larry Port Suite 127\nShelbyfort, CA 55545"
+    },
+    "transaction_date": "2025-11-29T01:12:17.238854",
+    "dispute_date": "2025-12-07T01:12:17.238854",
+    "deadline": "2025-12-21T01:12:17.238854",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-1ff4b06e",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 1394.91,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-78396250",
+      "name": "Jones, Powell and Morgan",
+      "mcc": "5732",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-832e2157",
+      "name": "Manuel Scott",
+      "email": "xgriffin@example.com",
+      "phone": "601.523.1174x05791",
+      "billing_address": "69301 Richardson Light Suite 250\nPort Scott, GA 66183"
+    },
+    "transaction_date": "2025-11-11T01:12:17.239845",
+    "dispute_date": "2025-11-20T01:12:17.239845",
+    "deadline": "2025-12-04T01:12:17.239845",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-af36381b",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 4528.16,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-605e16f2",
+      "name": "Ward Ltd",
+      "mcc": "5311",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-58800ec1",
+      "name": "Victoria Valentine",
+      "email": "morseashley@example.com",
+      "phone": "(925)421-7894",
+      "billing_address": "0322 Brown Summit\nLake Nicholas, MI 82410"
+    },
+    "transaction_date": "2025-11-13T01:12:17.240213",
+    "dispute_date": "2025-11-27T01:12:17.240213",
+    "deadline": "2025-12-11T01:12:17.240213",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-f9e65b5d",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 769.37,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-bde6bdc1",
+      "name": "Carey, Lindsey and Conner",
+      "mcc": "5732",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-114e085c",
+      "name": "William Mcdonald",
+      "email": "whernandez@example.org",
+      "phone": "+1-863-324-3858x22744",
+      "billing_address": "7989 Rachel Ranch\nAmyville, NE 80747"
+    },
+    "transaction_date": "2025-11-17T01:12:17.240620",
+    "dispute_date": "2025-11-22T01:12:17.240620",
+    "deadline": "2025-12-06T01:12:17.240620",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-366e85cb",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1797.55,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-be52b688",
+      "name": "Miller-Martin",
+      "mcc": "5732",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-1709fc79",
+      "name": "Keith Patterson",
+      "email": "raymond13@example.net",
+      "phone": "764-588-8886x9729",
+      "billing_address": "PSC 5172, Box 1691\nAPO AP 66039"
+    },
+    "transaction_date": "2025-11-08T01:12:17.240936",
+    "dispute_date": "2025-11-16T01:12:17.240936",
+    "deadline": "2025-11-30T01:12:17.240936",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-55007fdd",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1862.31,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-fafd1491",
+      "name": "Munoz, Rogers and Nielsen",
+      "mcc": "5311",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-76db6a1a",
+      "name": "Jessica Lewis",
+      "email": "marissa40@example.net",
+      "phone": "001-633-687-2679x42672",
+      "billing_address": "318 Robert Ville\nPort Kristenside, GU 38891"
+    },
+    "transaction_date": "2025-11-18T01:12:17.241281",
+    "dispute_date": "2025-12-01T01:12:17.241281",
+    "deadline": "2025-12-15T01:12:17.241281",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-5b04ceb8",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 1579.21,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-acdff6ec",
+      "name": "Stephenson, Mcconnell and Torres",
+      "mcc": "5311",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-55c9cda0",
+      "name": "Kathleen Powers",
+      "email": "davisandrea@example.net",
+      "phone": "(744)799-8673x4501",
+      "billing_address": "40372 Jim Via\nJasonbury, AR 96776"
+    },
+    "transaction_date": "2025-11-02T01:12:17.241640",
+    "dispute_date": "2025-11-26T01:12:17.241640",
+    "deadline": "2025-12-10T01:12:17.241640",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-ddc2f6b0",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 2942.51,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-06adc9cc",
+      "name": "Mitchell LLC",
+      "mcc": "7311",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-ecf52de0",
+      "name": "Anne Banks",
+      "email": "jshaw@example.net",
+      "phone": "668.745.6030x5453",
+      "billing_address": "21195 Young Mall\nColechester, SC 29342"
+    },
+    "transaction_date": "2025-11-01T01:12:17.242003",
+    "dispute_date": "2025-11-29T01:12:17.242003",
+    "deadline": "2025-12-13T01:12:17.242003",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-c7a01fb8",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 1723.16,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-da0fff68",
+      "name": "Jones-Crawford",
+      "mcc": "5311",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-cdd96394",
+      "name": "Luke Gomez",
+      "email": "nicholasramsey@example.net",
+      "phone": "001-522-522-3587x3959",
+      "billing_address": "867 Mackenzie Greens Apt. 167\nCharlesberg, IA 97816"
+    },
+    "transaction_date": "2025-10-28T01:12:17.242332",
+    "dispute_date": "2025-11-13T01:12:17.242332",
+    "deadline": "2025-11-27T01:12:17.242332",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-814a1c30",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 3108.73,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-f0c0a6ca",
+      "name": "Richardson PLC",
+      "mcc": "5942",
+      "descriptor": "PLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-a9a66a71",
+      "name": "Traci Lewis",
+      "email": "chandlerangela@example.net",
+      "phone": "+1-363-962-7179",
+      "billing_address": "PSC 3377, Box 2506\nAPO AE 60823"
+    },
+    "transaction_date": "2025-11-11T01:12:17.242574",
+    "dispute_date": "2025-11-17T01:12:17.242574",
+    "deadline": "2025-12-01T01:12:17.242574",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-175d8ebd",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 2708.93,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-1464002c",
+      "name": "Ward, Johnson and Stephenson",
+      "mcc": "5732",
+      "descriptor": "LTD STORE"
+    },
+    "cardholder": {
+      "id": "CUST-86d229c0",
+      "name": "Megan Bowen",
+      "email": "nicole88@example.org",
+      "phone": "001-958-833-7426x074",
+      "billing_address": "062 Victor Mews Suite 611\nEast Taylor, CT 41783"
+    },
+    "transaction_date": "2025-11-30T01:12:17.242909",
+    "dispute_date": "2025-12-01T01:12:17.242909",
+    "deadline": "2025-12-15T01:12:17.242909",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  },
+  {
+    "dispute_id": "DIS-f1b80173",
+    "network": "visa",
+    "reason_code": "13.1",
+    "amount": 1680.01,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-061f58a5",
+      "name": "Marks, Orr and Carter",
+      "mcc": "7311",
+      "descriptor": "GROUP STORE"
+    },
+    "cardholder": {
+      "id": "CUST-ce024354",
+      "name": "Michelle Brown",
+      "email": "youngjessica@example.com",
+      "phone": "588-875-2533x9480",
+      "billing_address": "161 Parker Island\nSouth Elizabeth, MI 60629"
+    },
+    "transaction_date": "2025-10-25T01:12:17.243276",
+    "dispute_date": "2025-11-27T01:12:17.243276",
+    "deadline": "2025-12-11T01:12:17.243276",
+    "expected_outcome": "win",
+    "evidence_completeness": 1.0
+  },
+  {
+    "dispute_id": "DIS-91288719",
+    "network": "visa",
+    "reason_code": "10.4",
+    "amount": 2137.2,
+    "currency": "USD",
+    "merchant": {
+      "id": "MER-05be8dad",
+      "name": "Maxwell-Dixon",
+      "mcc": "5942",
+      "descriptor": "LLC STORE"
+    },
+    "cardholder": {
+      "id": "CUST-44d2a861",
+      "name": "David Marquez",
+      "email": "kathrynharris@example.com",
+      "phone": "+1-355-650-0202x6211",
+      "billing_address": "582 Crawford Ranch Apt. 388\nJenniferfort, AL 34806"
+    },
+    "transaction_date": "2025-10-29T01:12:17.243633",
+    "dispute_date": "2025-11-14T01:12:17.243633",
+    "deadline": "2025-11-28T01:12:17.243633",
+    "expected_outcome": "lose",
+    "evidence_completeness": 0.6
+  }
+]

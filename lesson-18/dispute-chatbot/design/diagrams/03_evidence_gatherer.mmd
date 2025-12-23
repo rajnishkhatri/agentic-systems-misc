@@ -1,0 +1,49 @@
+flowchart TB
+    subgraph Orchestrator["State Machine Orchestrator"]
+        SM[State Machine]
+    end
+    
+    subgraph HEG["Hierarchical Evidence Gatherer"]
+        P[Planner Agent]
+        
+        subgraph Specialists["Specialist Agents (Parallel)"]
+            TS[Transaction<br/>Specialist]
+            SS[Shipping<br/>Specialist]
+            CS[Customer<br/>Specialist]
+        end
+        
+        A[Aggregator]
+    end
+    
+    subgraph External["External Systems"]
+        PP[Payment Platforms<br/>Stripe/Square/Shopify]
+        SC[Shipping Carriers<br/>FedEx/UPS/USPS]
+        DB[(Internal DB<br/>Customer History)]
+    end
+    
+    SM -->|"1. Request evidence<br/>for Dispute DIS-001"| P
+    
+    P -->|"2a. Plan: Need<br/>transaction proof"| TS
+    P -->|"2b. Plan: Need<br/>delivery proof"| SS
+    P -->|"2c. Plan: Need<br/>customer history"| CS
+    
+    TS -->|"3a. Query"| PP
+    SS -->|"3b. Query"| SC
+    CS -->|"3c. Query"| DB
+    
+    PP -->|"4a. Transaction data"| TS
+    SC -->|"4b. Tracking/POD"| SS
+    DB -->|"4c. CE 3.0 history"| CS
+    
+    TS -->|"5a. Evidence items"| A
+    SS -->|"5b. Evidence items"| A
+    CS -->|"5c. Evidence items"| A
+    
+    A -->|"6. Compiled<br/>evidence package"| SM
+    
+    style P fill:#e1f5fe
+    style TS fill:#fff3e0
+    style SS fill:#fff3e0
+    style CS fill:#fff3e0
+    style A fill:#e8f5e9
+

@@ -1,0 +1,2202 @@
+[
+  {
+    "trace_id": "TRC-04dd4579",
+    "dispute_id": "DIS-a3ab8359",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-a3ab8359",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-f37beed1",
+    "dispute_id": "DIS-294ec7af",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-294ec7af",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-6c4e3896",
+    "dispute_id": "DIS-d5a65a36",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-d5a65a36",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-21a1b545",
+    "dispute_id": "DIS-77c0fc23",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-77c0fc23",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-bce771ca",
+    "dispute_id": "DIS-7b8b82d9",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-7b8b82d9",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-2cc7acf2",
+    "dispute_id": "DIS-967c50b8",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-967c50b8",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-bf275fca",
+    "dispute_id": "DIS-1699afc8",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-1699afc8",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-cdf68905",
+    "dispute_id": "DIS-7865d842",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-7865d842",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-75ae5570",
+    "dispute_id": "DIS-70fe2dff",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-70fe2dff",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-69fc3c91",
+    "dispute_id": "DIS-01b37a75",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-01b37a75",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-3f26ed0c",
+    "dispute_id": "DIS-ae64e7c0",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-ae64e7c0",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-c039fbc8",
+    "dispute_id": "DIS-5b07cc61",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-5b07cc61",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-27808be0",
+    "dispute_id": "DIS-9c51e5c5",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-9c51e5c5",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-36265167",
+    "dispute_id": "DIS-6b5b90ed",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-6b5b90ed",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-c440a341",
+    "dispute_id": "DIS-f5f55fb4",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-f5f55fb4",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-1792963e",
+    "dispute_id": "DIS-e2bc6607",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-e2bc6607",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-5658393c",
+    "dispute_id": "DIS-97223527",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-97223527",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-f99bbbdb",
+    "dispute_id": "DIS-76d36755",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-76d36755",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-8a8092eb",
+    "dispute_id": "DIS-1025f272",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-1025f272",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-a78cbb3b",
+    "dispute_id": "DIS-247ecf35",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-247ecf35",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-41f8565c",
+    "dispute_id": "DIS-bf074cf4",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-bf074cf4",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-8520eb04",
+    "dispute_id": "DIS-764efe20",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-764efe20",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-36098f90",
+    "dispute_id": "DIS-b5a2fbef",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-b5a2fbef",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-f0954d6e",
+    "dispute_id": "DIS-6ecf4294",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-6ecf4294",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-4650ab32",
+    "dispute_id": "DIS-98eb55b3",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-98eb55b3",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-0f3a0c40",
+    "dispute_id": "DIS-18e6f29d",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-18e6f29d",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-e74db3da",
+    "dispute_id": "DIS-0726bf68",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-0726bf68",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-33735fb0",
+    "dispute_id": "DIS-909cd1f0",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-909cd1f0",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-9caa6ee5",
+    "dispute_id": "DIS-35bc5095",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-35bc5095",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-5d0f8a8b",
+    "dispute_id": "DIS-ffe8016c",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-ffe8016c",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-c22b8d39",
+    "dispute_id": "DIS-9ebba4d3",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-9ebba4d3",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-19f01a4c",
+    "dispute_id": "DIS-dc6b3b73",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-dc6b3b73",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-ee32e66f",
+    "dispute_id": "DIS-98e2b6d1",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-98e2b6d1",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-08d5fd0d",
+    "dispute_id": "DIS-528b4052",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-528b4052",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-d060ad5a",
+    "dispute_id": "DIS-76bdb77a",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-76bdb77a",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-6e3a161d",
+    "dispute_id": "DIS-4bdec4e6",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-4bdec4e6",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-6488e9d5",
+    "dispute_id": "DIS-9765fde2",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-9765fde2",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-b74dfc93",
+    "dispute_id": "DIS-ae6089f4",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-ae6089f4",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-6f4b070a",
+    "dispute_id": "DIS-2fe96d46",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-2fe96d46",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-4d28e948",
+    "dispute_id": "DIS-0583ff41",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-0583ff41",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-927c8b09",
+    "dispute_id": "DIS-3161f504",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-3161f504",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-ccd7e39a",
+    "dispute_id": "DIS-8f8cdf79",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-8f8cdf79",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-093bde2f",
+    "dispute_id": "DIS-5880bc3c",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-5880bc3c",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-76a21db7",
+    "dispute_id": "DIS-3a463154",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-3a463154",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-7d06e223",
+    "dispute_id": "DIS-a418d84f",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-a418d84f",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-b5437e7c",
+    "dispute_id": "DIS-56f636fa",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-56f636fa",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-8f3a9711",
+    "dispute_id": "DIS-7cf35179",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-7cf35179",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-55082fe6",
+    "dispute_id": "DIS-1c808154",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-1c808154",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-02a8224d",
+    "dispute_id": "DIS-a2bc1768",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-a2bc1768",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  },
+  {
+    "trace_id": "TRC-3a9f770f",
+    "dispute_id": "DIS-b39ee0fd",
+    "turns": [
+      {
+        "role": "user",
+        "content": "I have a dispute DIS-b39ee0fd",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "I found it. It's a fraud dispute.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "user",
+        "content": "Here is the evidence.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Evidence gathered. Submitting.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      },
+      {
+        "role": "assistant",
+        "content": "Submitted successfully.",
+        "tool_name": null,
+        "tool_input": null,
+        "tool_output": null
+      }
+    ],
+    "final_state": "SUBMITTED",
+    "success": true,
+    "failure_reason": null
+  }
+]

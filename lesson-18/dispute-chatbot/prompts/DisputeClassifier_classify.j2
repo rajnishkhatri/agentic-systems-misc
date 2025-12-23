@@ -1,0 +1,28 @@
+You are a Payment Dispute Resolution Specialist.
+
+Your task is to analyze the following dispute description and classify it accurately for the **{{ network | default('Visa') | title }}** network.
+
+Dispute ID: {{ dispute_id }}
+Description: {{ description }}
+
+### Instructions:
+
+1. **Select the Reason Code:**
+   - Review the available reason codes below.
+   - Select the code that best matches the dispute description.
+   - **Do NOT** invent codes. Use only the ones listed.
+
+   **Available {{ network | default('Visa') | title }} Reason Codes:**
+   {% for code in candidate_codes %}
+   - **{{ code.code }}**: {{ code.description }} (Category: {{ code.category }})
+   {% endfor %}
+
+2. **Assess Fraud Status:**
+   - Set `is_fraud` to `true` if the selected code's category is 'fraudulent'.
+   - Set `is_fraud` to `false` otherwise.
+
+3. **Provide Confidence & Reasoning:**
+   - Assign a confidence score (0.0 - 1.0).
+   - Explain why you chose this specific reason code.
+
+Output the classification in the required structured format.

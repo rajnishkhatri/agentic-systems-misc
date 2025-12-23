@@ -1,0 +1,23 @@
+flowchart TD
+    A[Vendor Claim] -->|"99% Accuracy!"| B(Evaluation Phase)
+    
+    subgraph "The Cherry-Picked Path"
+        C[Full Dataset] -->|Filter: Easy Cases Only| D[Golden Set]
+        D -->|Test| E[Model]
+        E -->|Success| F[High Score reported]
+    end
+    
+    subgraph "The Reality Path"
+        C -->|Random Sample| G[Representative Set]
+        G -->|Test| E
+        E -->|Failure| H[Real Performance: 25%]
+    end
+    
+    F --> I{Is it a Fallacy?}
+    H --> I
+    I -->|Yes| J[Evaluation Bias Detected]
+    
+    style F fill:#dbfabb,stroke:#82c91e
+    style H fill:#ffc9c9,stroke:#e03131
+    style D fill:#fff3bf,stroke:#fab005,stroke-dasharray: 5 5
+

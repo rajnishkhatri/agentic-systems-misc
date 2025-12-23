@@ -1,0 +1,178 @@
+sequenceDiagram
+    autonumber
+    title Error Recovery: Timeout, Judge Failure, and Retry Flows
+
+    participant M as Merchant<br/>(Chainlit UI)
+    participant SM as State Machine<br/>Orchestrator
+    participant HG as Hierarchical<br/>Evidence Gatherer
+    participant JP as LLM Judge<br/>Panel
+    participant NT as Network<br/>Translation
+    participant VA as Visa VROL<br/>(Mock API)
+    participant ES as Escalation<br/>Service
+    participant EX as Explainability<br/>Layer
+
+    Note over M,EX: Scenario 1: Network Timeout with Exponential Backoff
+
+    SM->>EX: trace_phase("SUBMIT", dispute_id)
+    SM->>+NT: submit_dispute(evidence_package)
+    NT->>+VA: POST /vrol/submit (VROLPayload)
+
+    Note over VA: Network timeout (>30s)
+    VA--x-NT: ⏱️ TIMEOUT
+
+    NT->>EX: log_error("SUBMIT", "NETWORK_TIMEOUT", attempt=1)
+    NT->>NT: Retry Strategy: Exponential Backoff<br/>Wait 1s before retry
+
+    rect rgb(255, 245, 238)
+        Note over NT,VA: Retry Attempt 1 (after 1s delay)
+        NT->>+VA: POST /vrol/submit (VROLPayload)
+        VA--x-NT: ⏱️ TIMEOUT
+        NT->>EX: log_error("SUBMIT", "NETWORK_TIMEOUT", attempt=2)
+        NT->>NT: Wait 2s before retry
+    end
+
+    rect rgb(255, 240, 230)
+        Note over NT,VA: Retry Attempt 2 (after 2s delay)
+        NT->>+VA: POST /vrol/submit (VROLPayload)
+        VA--x-NT: ⏱️ TIMEOUT
+        NT->>EX: log_error("SUBMIT", "NETWORK_TIMEOUT", attempt=3)
+        NT->>NT: Wait 4s before retry
+    end
+
+    rect rgb(255, 235, 222)
+        Note over NT,VA: Retry Attempt 3 (after 4s delay)
+        NT->>+VA: POST /vrol/submit (VROLPayload)
+        VA-->>-NT: 200 OK<br/>{case_id: "VROL-2025-1234567890"}
+        NT->>EX: log_recovery("SUBMIT", "SUCCESS_AFTER_RETRY", attempts=4)
+    end
+
+    NT-->>-SM: SubmitResponse<br/>{status: SUBMITTED,<br/>retry_count: 3}
+
+    SM->>M: "Visa system was slow. Retrying..."<br/>→ "Submission successful after 3 retries"
+
+    Note over M,EX: Scenario 2: Judge Failure → Human Escalation
+
+    SM->>EX: trace_phase("VALIDATE", dispute_id)
+    SM->>+JP: validate_evidence(evidence_package)
+
+    par Judge Panel Evaluation
+        JP->>JP: EvidenceQualityJudge.evaluate()<br/>complete_structured() → judge_model
+        Note right of JP: Score: 0.72 (threshold: 0.8)<br/>❌ FAILED - Evidence insufficient
+
+    and
+        JP->>JP: FabricationDetectionJudge.evaluate()<br/>complete_structured() → judge_model
+        Note right of JP: Score: 0.98 (threshold: 0.95)<br/>✅ PASSED - No hallucinations
+
+    and
+        JP->>JP: DisputeValidityJudge.evaluate()<br/>complete_structured() → judge_model
+        Note right of JP: Score: 0.75 (threshold: 0.7)<br/>✅ PASSED - Valid defense
+    end
+
+    JP->>EX: log_decision("VALIDATE", "BLOCKING_JUDGE_FAILED")
+
+    JP-->>-SM: PanelResult<br/>{passed: false,<br/>blocking_failures: ["EvidenceQuality"],<br/>failure_reasons: ["Missing proof of delivery"]}
+
+    Note over SM: Blocking judge failed → Escalate to human review
+
+    SM->>+ES: create_escalation_ticket(dispute_id, context)
+
+    ES->>ES: Package escalation context:<br/>- Dispute summary<br/>- Evidence package<br/>- Judge scores & reasoning<br/>- BlackBox trace link<br/>- Suggested remediation
+
+    ES->>EX: log_decision("ESCALATION", "JUDGE_FAILURE_HANDOFF")
+
+    ES-->>-SM: EscalationTicket<br/>{ticket_id: "ESC-2025-001",<br/>assigned_to: "dispute_team@merchant.com"}
+
+    SM->>M: "I need human review for this evidence.<br/>Escalating to your dispute team."<br/>Ticket: ESC-2025-001<br/>Missing: Proof of delivery document
+
+    Note over M,EX: Scenario 3: Evidence Gathering Timeout → Partial Results + Prompt
+
+    SM->>EX: trace_phase("GATHER_EVIDENCE", dispute_id)
+    SM->>+HG: gather_evidence(dispute, required_evidence)
+
+    par Parallel Evidence Collection (ThreadPoolExecutor, timeout=30s)
+        HG->>HG: TransactionSpecialist.gather()<br/>✅ Completed in 5s
+        Note right of HG: Found 3 prior transactions
+
+    and
+        HG->>HG: ShippingSpecialist.gather()<br/>⏱️ Timeout after 30s
+        Note right of HG: FedEx API unresponsive
+
+    and
+        HG->>HG: CustomerSpecialist.gather()<br/>✅ Completed in 8s
+        Note right of HG: Device + IP signals found
+    end
+
+    HG->>EX: log_error("GATHER", "SPECIALIST_TIMEOUT",<br/>specialist="ShippingSpecialist")
+
+    HG->>HG: Assemble partial EvidencePackage<br/>completeness_score: 0.65<br/>missing: [shipping_evidence]
+
+    HG-->>-SM: GatherResponse<br/>{status: PARTIAL,<br/>completeness_score: 0.65,<br/>gaps: ["shipping_proof_of_delivery"]}
+
+    SM->>M: "Evidence gathering partially complete."<br/>"To strengthen your case, I need:<br/>• Shipping proof of delivery<br/><br/>Where can I find this?"
+
+    M->>SM: "I have tracking number 1Z999AA10123456784"
+
+    SM->>+HG: gather_evidence(dispute,<br/>specific_evidence=["shipping"],<br/>tracking_number="1Z999AA10123456784")
+
+    HG->>HG: ShippingSpecialist.gather()<br/>with specific tracking number
+    HG->>EX: record_agent_call("ShippingSpecialist", retry=true)
+
+    HG-->>-SM: GatherResponse<br/>{status: COMPLETE,<br/>completeness_score: 0.92}
+
+    SM->>M: "Evidence package complete.<br/>Proceeding to validation."
+
+    Note over M,EX: Scenario 4: Max Retries Exceeded → Hard Escalation
+
+    SM->>EX: trace_phase("SUBMIT", dispute_id)
+    SM->>+NT: submit_dispute(evidence_package)
+
+    loop Retry Loop (max 3 attempts)
+        NT->>+VA: POST /vrol/submit
+        VA--x-NT: 503 Service Unavailable
+        NT->>NT: Backoff: 1s → 2s → 4s
+    end
+
+    NT->>EX: log_error("SUBMIT", "MAX_RETRIES_EXCEEDED",<br/>attempts=4, last_error="503")
+
+    NT-->>-SM: SubmitResponse<br/>{status: FAILED,<br/>error: "MAX_RETRIES_EXCEEDED"}
+
+    Note over SM: Max retries exceeded → Hard escalation required
+
+    SM->>+ES: create_escalation_ticket(dispute_id, context,<br/>priority="HIGH", type="SYSTEM_FAILURE")
+
+    ES->>ES: Alert operations team via Slack<br/>Package full BlackBox trace<br/>Include deadline urgency
+
+    ES-->>-SM: EscalationTicket<br/>{ticket_id: "ESC-2025-002",<br/>priority: "HIGH",<br/>sla: "4 hours"}
+
+    SM->>M: "Visa system is unavailable after multiple attempts.<br/>Escalating to operations team (Priority: HIGH)<br/>Ticket: ESC-2025-002<br/><br/>Your dispute deadline is protected.<br/>We will retry submission automatically."
+
+    Note over M,EX: Scenario 5: Deadline Warning with Urgency Escalation
+
+    SM->>SM: Cron job: check_deadlines()
+
+    Note over SM: Dispute deadline in 3 days<br/>Evidence still incomplete
+
+    SM->>EX: log_decision("MONITOR", "DEADLINE_WARNING_3DAY")
+
+    SM->>M: "⚠️ DEADLINE WARNING<br/><br/>Evidence deadline is in 3 days.<br/>Current status: Evidence 65% complete<br/><br/>Missing items:<br/>• Proof of delivery<br/>• Customer signature<br/><br/>Priority: Complete submission TODAY"
+
+    alt Evidence not submitted within 24 hours
+        SM->>+ES: create_escalation_ticket(dispute_id,<br/>type="DEADLINE_RISK", deadline_days=2)
+        ES->>ES: Notify merchant owner<br/>+ dispute team lead<br/>+ SMS alert
+
+        ES-->>-SM: EscalationTicket<br/>{ticket_id: "ESC-2025-003"}
+
+        SM->>M: "⚠️ CRITICAL: 2 days remaining<br/>Escalated to your dispute team lead"
+    end
+
+    Note over M,EX: Error Recovery Summary
+
+    rect rgb(240, 248, 255)
+        Note over M,EX: Recovery Strategy Matrix
+        Note over SM: Network Timeout → Exponential backoff (1s, 2s, 4s) max 3 retries
+        Note over SM: Judge Failure (blocking) → Human escalation with full context
+        Note over SM: Judge Failure (non-blocking) → Warning, continue flow
+        Note over SM: Specialist Timeout → Partial results + merchant prompt for gaps
+        Note over SM: Max Retries Exceeded → Hard escalation + deadline protection
+        Note over SM: Deadline Approaching → Progressive alerts (7, 3, 1 day)
+    end

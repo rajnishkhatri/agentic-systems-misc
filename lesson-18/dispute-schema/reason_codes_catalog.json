@@ -1,0 +1,1809 @@
+{
+  "generated_at": "2025-12-12T12:53:08.939243+00:00",
+  "root": "lesson-18/dispute-schema",
+  "counts": {
+    "total": 101,
+    "by_namespace": {
+      "amex": 29,
+      "visa": 25,
+      "discover": 23,
+      "mastercard": 21,
+      "openapi_gateway_response": 2,
+      "paypal": 1
+    },
+    "by_unified_category": {
+      "general": 45,
+      "fraudulent": 23,
+      "credit_not_processed": 7,
+      "duplicate": 7,
+      "product_not_received": 7,
+      "product_unacceptable": 6,
+      "subscription_canceled": 4,
+      "null": 1,
+      "unrecognized": 1
+    },
+    "by_network_family": {
+      "processing_errors": 33,
+      "fraud": 23,
+      "cardholder_disputes": 20,
+      "authorization": 10,
+      "consumer_disputes": 9,
+      "retrieval_inquiry": 3,
+      "other": 2,
+      "non_card_dispute": 1
+    },
+    "by_source_type": {
+      "canonical": 98,
+      "observed": 3
+    },
+    "unmapped": 1
+  },
+  "records": [
+    {
+      "namespace": "amex",
+      "code": "A01",
+      "description": "Charge Amount Exceeds Authorization Amount",
+      "unified_category": "general",
+      "network_family": "authorization",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 98,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "A02",
+      "description": "No Valid Authorization",
+      "unified_category": "general",
+      "network_family": "authorization",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 99,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "A08",
+      "description": "Authorization Approval Expired",
+      "unified_category": "general",
+      "network_family": "authorization",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 100,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "C02",
+      "description": "Credit Not Processed",
+      "unified_category": "credit_not_processed",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 113,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "C04",
+      "description": "Goods/Services Returned or Refused",
+      "unified_category": "credit_not_processed",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 114,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "C05",
+      "description": "Goods/Services Cancelled",
+      "unified_category": "credit_not_processed",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 115,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "C08",
+      "description": "Goods/Services Not Received or Only Partially Received",
+      "unified_category": "product_not_received",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 116,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "C14",
+      "description": "Paid by Other Means",
+      "unified_category": "duplicate",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 117,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "C18",
+      "description": "Request for Copy Unfulfilled",
+      "unified_category": "general",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 118,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "C28",
+      "description": "Cancelled Recurring Billing",
+      "unified_category": "subscription_canceled",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 119,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "C31",
+      "description": "Goods/Services Not as Described",
+      "unified_category": "product_unacceptable",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 120,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "C32",
+      "description": "Goods/Services Damaged or Defective",
+      "unified_category": "product_unacceptable",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 121,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "F10",
+      "description": "Missing Imprint",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 90,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "F14",
+      "description": "Missing Signature",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 91,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "F24",
+      "description": "No Cardholder Authorization",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 92,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "F29",
+      "description": "Card Not Present",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 93,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "F30",
+      "description": "EMV Counterfeit",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 94,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "F31",
+      "description": "EMV Lost/Stolen/Non-Received",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 95,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "M01",
+      "description": "Chargeback Authorization",
+      "unified_category": "general",
+      "network_family": "retrieval_inquiry",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 126,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "P01",
+      "description": "Unassigned Card Number",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 103,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "P03",
+      "description": "Credit Processed as Charge",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 104,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "P04",
+      "description": "Charge Processed as Credit",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 105,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "P05",
+      "description": "Incorrect Charge Amount",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 106,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "P07",
+      "description": "Late Submission",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 107,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "P08",
+      "description": "Duplicate Charge",
+      "unified_category": "duplicate",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 108,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "P22",
+      "description": "Non-Matching Card Number",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 109,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "P23",
+      "description": "Currency Discrepancy",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 110,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "R03",
+      "description": "Insufficient Reply",
+      "unified_category": "general",
+      "network_family": "retrieval_inquiry",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 124,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "amex",
+      "code": "R13",
+      "description": "No Reply",
+      "unified_category": "general",
+      "network_family": "retrieval_inquiry",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 125,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "AA",
+      "description": "Does Not Recognize",
+      "unified_category": "unrecognized",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 156,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "AP",
+      "description": "Cancelled Recurring Transaction",
+      "unified_category": "subscription_canceled",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 157,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "AT",
+      "description": "Authorization Noncompliance",
+      "unified_category": "general",
+      "network_family": "authorization",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 141,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "AW",
+      "description": "Altered Amount",
+      "unified_category": "general",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 158,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "CD",
+      "description": "Credit/Debit Posted Incorrectly",
+      "unified_category": "general",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 159,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "CR",
+      "description": "Cancelled Reservation",
+      "unified_category": "credit_not_processed",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 160,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "DA",
+      "description": "Declined Authorization",
+      "unified_category": "general",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 161,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "DP",
+      "description": "Duplicate Processing",
+      "unified_category": "duplicate",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 144,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "EX",
+      "description": "Expired Card",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 145,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "IC",
+      "description": "Illegible Card Number",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 146,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "IN",
+      "description": "Invalid Card Number",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 147,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "LP",
+      "description": "Late Presentment",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 148,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "NA",
+      "description": "No Authorization",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 149,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "NC",
+      "description": "Not Classified",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 150,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "NF",
+      "description": "Non-Receipt of Cash from ATM",
+      "unified_category": "product_not_received",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 162,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "PM",
+      "description": "Paid by Other Means",
+      "unified_category": "duplicate",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 151,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "RG",
+      "description": "Non-Receipt of Goods or Services",
+      "unified_category": "product_not_received",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 152,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "RM",
+      "description": "Quality Discrepancy",
+      "unified_category": "product_unacceptable",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 153,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "RN2",
+      "description": "Credit Not Received",
+      "unified_category": "credit_not_processed",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 163,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "UA01",
+      "description": "Fraud - Card Present Transaction",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 135,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "UA02",
+      "description": "Fraud - Card Not Present Transaction",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 136,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "UA05",
+      "description": "Fraud - Chip Card Counterfeit Transaction",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 137,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "discover",
+      "code": "UA06",
+      "description": "Fraud - Chip Card Lost/Stolen",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 138,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4807",
+      "description": "Warning Bulletin File",
+      "unified_category": "general",
+      "network_family": "authorization",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 53,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4808",
+      "description": "Authorization-Related Chargeback",
+      "unified_category": "general",
+      "network_family": "authorization",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 54,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4812",
+      "description": "Account Number Not on File",
+      "unified_category": "general",
+      "network_family": "authorization",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 55,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4831",
+      "description": "Transaction Amount Differs",
+      "unified_category": "general",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 58,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4834",
+      "description": "Duplicate Processing",
+      "unified_category": "duplicate",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 59,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4835",
+      "description": "Card Not Present",
+      "unified_category": "fraudulent",
+      "network_family": "cardholder_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 60,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4837",
+      "description": "No Cardholder Authorization",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 63,
+          "kind": "canonical"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 303,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 310,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/design_patterns_deep_dive_narration.md",
+          "line": 760,
+          "kind": "observed"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4840",
+      "description": "Fraudulent Processing of Transactions",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 64,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4841",
+      "description": "Cancelled Recurring Transaction",
+      "unified_category": "subscription_canceled",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 65,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4842",
+      "description": "Late Presentment",
+      "unified_category": "general",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 66,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4846",
+      "description": "Correct Transaction Currency Code Not Provided",
+      "unified_category": "general",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 67,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4849",
+      "description": "Questionable Merchant Activity",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 68,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4850",
+      "description": "Installment Billing Dispute",
+      "unified_category": "general",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 69,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4853",
+      "description": "Cardholder Dispute",
+      "unified_category": "general",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 70,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4854",
+      "description": "Cardholder Dispute - Not Elsewhere Classified",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 73,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4855",
+      "description": "Goods or Services Not Provided",
+      "unified_category": "product_not_received",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 74,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4857",
+      "description": "Card-Activated Telephone Transaction",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 75,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4859",
+      "description": "Addendum, No-show, or ATM Dispute",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 76,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4863",
+      "description": "Cardholder Does Not Recognize - Potential Fraud",
+      "unified_category": "fraudulent",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 79,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4870",
+      "description": "Chip Liability Shift",
+      "unified_category": "fraudulent",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 80,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "mastercard",
+      "code": "4871",
+      "description": "Chip/PIN Liability Shift",
+      "unified_category": "fraudulent",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 81,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "openapi_gateway_response",
+      "code": "QUOTA_EXCEEDED",
+      "description": null,
+      "unified_category": null,
+      "network_family": "other",
+      "source_type": "observed",
+      "unmapped": true,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/aws-integration/openapi.yaml",
+          "line": 932,
+          "kind": "observed"
+        }
+      ]
+    },
+    {
+      "namespace": "openapi_gateway_response",
+      "code": "UNAUTHORIZED",
+      "description": null,
+      "unified_category": "fraudulent",
+      "network_family": "other",
+      "source_type": "observed",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/aws-integration/openapi.yaml",
+          "line": 928,
+          "kind": "observed"
+        }
+      ]
+    },
+    {
+      "namespace": "paypal",
+      "code": "ITEM_NOT_RECEIVED",
+      "description": null,
+      "unified_category": "product_not_received",
+      "network_family": "non_card_dispute",
+      "source_type": "observed",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 422,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/design_patterns_deep_dive_narration.md",
+          "line": 547,
+          "kind": "observed"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "10.1",
+      "description": "EMV Liability Shift Counterfeit Fraud",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 14,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "10.2",
+      "description": "EMV Liability Shift Non-Counterfeit Fraud",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 15,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "10.3",
+      "description": "Other Fraud - Card Present Environment",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 16,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "10.4",
+      "description": "Other Fraud - Card Absent Environment",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 17,
+          "kind": "canonical"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 48,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 55,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 122,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 129,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/deep_dive_real_world_cases.md",
+          "line": 110,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/deep_dive_real_world_cases.md",
+          "line": 131,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/multiagent_system_deep_dive.md",
+          "line": 670,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/multiagent_system_deep_dive.md",
+          "line": 845,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/multiagent_system_deep_dive.md",
+          "line": 850,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/multiagent_system_deep_dive.md",
+          "line": 880,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/design_patterns_deep_dive_narration.md",
+          "line": 35,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/plan/agentic_chatbot_implementation_plan.md",
+          "line": 212,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/aws-integration/dynamodb-schema.md",
+          "line": 74,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/aws-integration/dynamodb-schema.md",
+          "line": 96,
+          "kind": "observed"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "10.5",
+      "description": "Visa Fraud Monitoring Program",
+      "unified_category": "fraudulent",
+      "network_family": "fraud",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 18,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "11.1",
+      "description": "Card Recovery Bulletin",
+      "unified_category": "general",
+      "network_family": "authorization",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 21,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "11.2",
+      "description": "Declined Authorization",
+      "unified_category": "general",
+      "network_family": "authorization",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 22,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "11.3",
+      "description": "No Authorization",
+      "unified_category": "general",
+      "network_family": "authorization",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 23,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "12.1",
+      "description": "Late Presentment",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 26,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "12.2",
+      "description": "Incorrect Transaction Code",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 27,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "12.3",
+      "description": "Incorrect Currency",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 28,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "12.4",
+      "description": "Incorrect Account Number",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 29,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "12.5",
+      "description": "Incorrect Amount",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 30,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "12.6.1",
+      "description": "Duplicate Processing",
+      "unified_category": "duplicate",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 31,
+          "kind": "canonical"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 253,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 260,
+          "kind": "observed"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "12.6.2",
+      "description": "Paid by Other Means",
+      "unified_category": "duplicate",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 32,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "12.7",
+      "description": "Invalid Data",
+      "unified_category": "general",
+      "network_family": "processing_errors",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 33,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "13.1",
+      "description": "Merchandise/Services Not Received",
+      "unified_category": "product_not_received",
+      "network_family": "consumer_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 36,
+          "kind": "canonical"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 167,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 174,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 375,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 382,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/deep_dive_real_world_cases.md",
+          "line": 321,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/multiagent_system_deep_dive.md",
+          "line": 1018,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/multiagent_system_deep_dive.md",
+          "line": 1050,
+          "kind": "observed"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "13.2",
+      "description": "Cancelled Recurring Transaction",
+      "unified_category": "subscription_canceled",
+      "network_family": "consumer_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 37,
+          "kind": "canonical"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 212,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/examples.json",
+          "line": 219,
+          "kind": "observed"
+        },
+        {
+          "path": "lesson-18/dispute-schema/explanation/deep_dive_real_world_cases.md",
+          "line": 444,
+          "kind": "observed"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "13.3",
+      "description": "Not as Described or Defective Merchandise/Services",
+      "unified_category": "product_unacceptable",
+      "network_family": "consumer_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 38,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "13.4",
+      "description": "Counterfeit Merchandise",
+      "unified_category": "product_unacceptable",
+      "network_family": "consumer_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 39,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "13.5",
+      "description": "Misrepresentation",
+      "unified_category": "product_unacceptable",
+      "network_family": "consumer_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 40,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "13.6",
+      "description": "Credit Not Processed",
+      "unified_category": "credit_not_processed",
+      "network_family": "consumer_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 41,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "13.7",
+      "description": "Cancelled Merchandise/Services",
+      "unified_category": "credit_not_processed",
+      "network_family": "consumer_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 42,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "13.8",
+      "description": "Original Credit Transaction Not Accepted",
+      "unified_category": "general",
+      "network_family": "consumer_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 43,
+          "kind": "canonical"
+        }
+      ]
+    },
+    {
+      "namespace": "visa",
+      "code": "13.9",
+      "description": "Non-Receipt of Cash or Load Transaction Value",
+      "unified_category": "product_not_received",
+      "network_family": "consumer_disputes",
+      "source_type": "canonical",
+      "unmapped": false,
+      "sources": [
+        {
+          "path": "lesson-18/dispute-schema/network_reason_codes.ts",
+          "line": 44,
+          "kind": "canonical"
+        }
+      ]
+    }
+  ]
+}

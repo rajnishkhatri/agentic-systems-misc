@@ -1,0 +1,259 @@
+sequenceDiagram
+    autonumber
+    title Escalation Flow: Human Handoff Workflow with Context Preservation
+
+    participant M as Merchant<br/>(Chainlit UI)
+    participant SM as State Machine<br/>Orchestrator
+    participant JP as LLM Judge<br/>Panel
+    participant HG as Hierarchical<br/>Evidence Gatherer
+    participant ES as Escalation<br/>Service
+    participant TK as Ticketing<br/>System
+    participant HR as Human<br/>Reviewer
+    participant EX as Explainability<br/>Layer
+
+    Note over M,EX: Scenario 1: Blocking Judge Failure → Human Review Escalation
+
+    SM->>EX: trace_phase("VALIDATE", dispute_id)
+    SM->>+JP: validate_evidence(evidence_package)
+
+    par Judge Panel Evaluation
+        JP->>JP: EvidenceQualityJudge.evaluate()<br/>complete_structured() → judge_model
+        Note right of JP: Score: 0.65 (threshold: 0.8)<br/>❌ FAILED - Evidence insufficient
+
+    and
+        JP->>JP: FabricationDetectionJudge.evaluate()<br/>complete_structured() → judge_model
+        Note right of JP: Score: 0.97 (threshold: 0.95)<br/>✅ PASSED - No hallucinations
+
+    and
+        JP->>JP: DisputeValidityJudge.evaluate()<br/>complete_structured() → judge_model
+        Note right of JP: Score: 0.68 (threshold: 0.7)<br/>⚠️ WARNING - Borderline validity
+    end
+
+    JP->>EX: log_decision("VALIDATE", "BLOCKING_JUDGE_FAILED",<br/>failed_judge="EvidenceQuality", score=0.65)
+
+    JP-->>-SM: PanelResult<br/>{passed: false,<br/>blocking_failures: ["EvidenceQuality"],<br/>warnings: ["DisputeValidity"],<br/>failure_reasons: ["Missing shipping POD", "Unclear transaction timeline"]}
+
+    Note over SM: Blocking judge failed → Initiate human escalation
+
+    SM->>+ES: create_escalation_request(dispute_id,<br/>type="JUDGE_FAILURE",<br/>priority="MEDIUM")
+
+    rect rgb(240, 248, 255)
+        Note over ES: Context Preservation Package Assembly
+        ES->>ES: Gather dispute summary<br/>- dispute_id, reason_code<br/>- cardholder claim<br/>- amount, deadline
+
+        ES->>ES: Gather evidence package<br/>- Transaction history<br/>- Customer signals<br/>- Shipping records (if any)
+
+        ES->>ES: Gather judge results<br/>- All scores with thresholds<br/>- Detailed reasoning<br/>- Specific evidence gaps
+
+        ES->>EX: export_blackbox_trace(dispute_id)
+        EX-->>ES: BlackBoxTrace<br/>{trace_url, agent_calls, timing}
+
+        ES->>ES: Generate suggested remediation<br/>- List missing evidence<br/>- Recommend actions<br/>- Estimate effort
+    end
+
+    ES->>+TK: create_ticket(EscalationPackage)
+
+    TK->>TK: Assign based on priority + expertise<br/>Route to dispute_team@merchant.com
+
+    TK-->>-ES: Ticket<br/>{ticket_id: "ESC-2025-001",<br/>assigned_to: "dispute_team@merchant.com",<br/>sla: "24 hours"}
+
+    ES->>EX: log_decision("ESCALATION", "TICKET_CREATED",<br/>ticket_id="ESC-2025-001")
+
+    ES-->>-SM: EscalationResponse<br/>{ticket_id: "ESC-2025-001",<br/>status: "AWAITING_REVIEW",<br/>sla_hours: 24}
+
+    SM->>M: "I need human review for this evidence.<br/>Escalating to your dispute team."<br/><br/>Ticket: ESC-2025-001<br/>Priority: Medium (24hr SLA)<br/><br/>Issues identified:<br/>• Missing proof of delivery<br/>• Unclear transaction timeline<br/><br/>Your dispute team will contact you shortly.
+
+    Note over M,EX: Scenario 2: Human Reviewer Actions → Resolution or Rejection
+
+    HR->>+TK: access_ticket("ESC-2025-001")
+
+    TK-->>-HR: Full context package:<br/>- Dispute summary<br/>- Evidence package<br/>- Judge scores + reasoning<br/>- BlackBox trace link<br/>- Suggested remediation
+
+    HR->>HR: Review evidence<br/>Analyze judge reasoning<br/>Check merchant capability
+
+    alt Reviewer: Can Resolve with Additional Evidence
+        HR->>+TK: update_ticket(status="GATHERING_MORE_EVIDENCE")
+        TK-->>-HR: Status updated
+
+        HR->>+SM: request_additional_evidence(dispute_id,<br/>required=["shipping_pod", "signed_confirmation"])
+
+        SM->>M: "Human reviewer requests:<br/>• Shipping proof of delivery<br/>• Signed delivery confirmation<br/><br/>Please provide these documents."
+
+        M->>SM: Upload: pod_document.pdf, signature.pdf
+
+        SM->>+HG: gather_evidence(dispute,<br/>additional_files=["pod_document.pdf", "signature.pdf"])
+        HG->>HG: Process uploaded documents
+        HG->>EX: record_agent_call("DocumentProcessor")
+        HG-->>-SM: GatherResponse<br/>{status: COMPLETE, completeness_score: 0.92}
+
+        SM->>+JP: validate_evidence(updated_package)
+        JP->>EX: log_decision("VALIDATE", "RETRY_AFTER_ESCALATION")
+        JP-->>-SM: PanelResult<br/>{passed: true}
+
+        SM->>+ES: resolve_escalation(ticket_id="ESC-2025-001",<br/>resolution="EVIDENCE_GATHERED")
+        ES->>+TK: close_ticket(ticket_id, resolution="RESOLVED")
+        TK-->>-ES: Ticket closed
+        ES-->>-SM: Escalation resolved
+
+        SM->>M: "Additional evidence accepted.<br/>Ticket ESC-2025-001 resolved.<br/>Proceeding to submission."
+
+    else Reviewer: Cannot Win Dispute
+        HR->>+TK: update_ticket(status="REJECTED",<br/>reason="Insufficient evidence available")
+        TK-->>-HR: Status updated
+
+        HR->>+SM: reject_dispute(dispute_id,<br/>reason="Cannot gather required evidence")
+
+        SM->>+ES: close_escalation(ticket_id="ESC-2025-001",<br/>outcome="REJECTED")
+        ES->>EX: log_decision("ESCALATION", "DISPUTE_REJECTED")
+        ES->>+TK: close_ticket(ticket_id, resolution="REJECTED")
+        TK-->>-ES: Ticket closed
+        ES-->>-SM: Escalation closed
+
+        SM-->>-HR: Acknowledged
+
+        SM->>M: "After human review, this dispute cannot proceed.<br/><br/>Reason: Insufficient evidence available<br/>Ticket: ESC-2025-001 (Closed)<br/><br/>Recommendation: Accept the chargeback or<br/>contact cardholder directly."
+    end
+
+    Note over M,EX: Scenario 3: Low Confidence Classification → Human Classifier
+
+    SM->>EX: trace_phase("CLASSIFY", dispute_id)
+    SM->>SM: LLMService.complete()<br/>routing_model
+
+    Note over SM: Classification confidence: 0.45<br/>(threshold: 0.7 for auto-proceed)
+
+    SM->>EX: log_decision("CLASSIFY", "LOW_CONFIDENCE",<br/>confidence=0.45, threshold=0.7)
+
+    SM->>+ES: create_escalation_request(dispute_id,<br/>type="LOW_CONFIDENCE_CLASSIFICATION",<br/>priority="HIGH")
+
+    ES->>ES: Package context:<br/>- Original cardholder claim<br/>- Tentative classification<br/>- Confidence score<br/>- Alternative reason codes
+
+    ES->>+TK: create_ticket(EscalationPackage)
+    TK-->>-ES: Ticket<br/>{ticket_id: "ESC-2025-002",<br/>priority: "HIGH",<br/>sla: "4 hours"}
+
+    ES-->>-SM: EscalationResponse<br/>{ticket_id: "ESC-2025-002"}
+
+    SM->>M: "I'm not confident about the dispute category.<br/>Escalating to specialist for classification.<br/><br/>Ticket: ESC-2025-002<br/>Priority: HIGH (4hr SLA)<br/><br/>Possible categories:<br/>• Fraud 10.4 (Card Stolen) - 45% likely<br/>• Fraud 10.1 (Unauthorized) - 35% likely<br/>• PNR 13.1 (Product Not Received) - 20% likely"
+
+    HR->>+TK: access_ticket("ESC-2025-002")
+    TK-->>-HR: Classification context
+
+    HR->>HR: Analyze cardholder claim<br/>Review transaction details<br/>Determine correct reason code
+
+    HR->>+SM: set_classification(dispute_id,<br/>reason_code="FRAUD_10_4",<br/>human_override=true)
+
+    SM->>EX: log_decision("CLASSIFY", "HUMAN_OVERRIDE",<br/>original_confidence=0.45, override_code="FRAUD_10_4")
+
+    SM->>+ES: resolve_escalation(ticket_id="ESC-2025-002")
+    ES->>+TK: close_ticket(ticket_id)
+    TK-->>-ES: Closed
+    ES-->>-SM: Resolved
+
+    SM-->>-HR: Acknowledged
+
+    SM->>M: "Classification confirmed by specialist:<br/>Fraud 10.4 (Card Stolen)<br/><br/>Proceeding with evidence gathering."
+
+    Note over M,EX: Scenario 4: System Failure → Operations Escalation
+
+    SM->>EX: trace_phase("SUBMIT", dispute_id)
+
+    loop Retry Loop (max 3 attempts)
+        SM->>SM: submit_dispute()
+        Note over SM: All retries failed<br/>503 Service Unavailable
+    end
+
+    SM->>EX: log_error("SUBMIT", "MAX_RETRIES_EXCEEDED")
+
+    SM->>+ES: create_escalation_request(dispute_id,<br/>type="SYSTEM_FAILURE",<br/>priority="CRITICAL")
+
+    ES->>ES: Package context:<br/>- Full BlackBox trace<br/>- Error logs<br/>- Retry history<br/>- Deadline urgency
+
+    ES->>+TK: create_ticket(EscalationPackage,<br/>notify=["ops_team@company.com", "on_call_sre"])
+
+    TK->>TK: Trigger Slack alert<br/>Page on-call engineer
+
+    TK-->>-ES: Ticket<br/>{ticket_id: "ESC-2025-003",<br/>priority: "CRITICAL",<br/>sla: "1 hour"}
+
+    ES-->>-SM: EscalationResponse<br/>{ticket_id: "ESC-2025-003"}
+
+    SM->>M: "⚠️ SYSTEM ISSUE<br/><br/>Visa system unavailable after multiple attempts.<br/>Escalated to operations team (Priority: CRITICAL)<br/><br/>Ticket: ESC-2025-003<br/>SLA: 1 hour response<br/><br/>Your dispute deadline is protected.<br/>We will retry automatically once resolved."
+
+    Note over M,EX: Scenario 5: Deadline-Driven Escalation Chain
+
+    SM->>SM: Cron: check_deadlines()
+
+    Note over SM: Dispute deadline in 3 days<br/>Evidence 60% complete
+
+    SM->>+ES: create_escalation_request(dispute_id,<br/>type="DEADLINE_WARNING",<br/>days_remaining=3)
+
+    ES->>+TK: create_ticket(priority="MEDIUM",<br/>notify=["merchant_owner@merchant.com"])
+    TK-->>-ES: Ticket created
+
+    ES-->>-SM: EscalationResponse
+
+    SM->>M: "⚠️ DEADLINE WARNING (3 days)<br/><br/>Evidence still incomplete (60%).<br/>Missing: Shipping POD, Customer signature<br/><br/>Priority: Complete TODAY"
+
+    Note over SM: 24 hours later, still incomplete
+
+    SM->>SM: Cron: check_deadlines()
+
+    Note over SM: Dispute deadline in 2 days<br/>Evidence 65% complete
+
+    SM->>+ES: escalate_priority(ticket_id,<br/>new_priority="HIGH",<br/>days_remaining=2)
+
+    ES->>+TK: update_ticket(priority="HIGH",<br/>notify=["merchant_owner", "dispute_team_lead"],<br/>channels=["email", "sms"])
+
+    TK->>TK: Send SMS alert
+
+    TK-->>-ES: Updated
+
+    ES-->>-SM: Priority escalated
+
+    SM->>M: "⚠️ CRITICAL: 2 days remaining<br/>Escalated to dispute team lead<br/><br/>SMS notification sent to merchant owner"
+
+    Note over SM: 24 hours later, still incomplete
+
+    SM->>SM: Cron: check_deadlines()
+
+    Note over SM: Dispute deadline in 1 day<br/>Evidence 70% complete
+
+    SM->>+ES: escalate_priority(ticket_id,<br/>new_priority="CRITICAL",<br/>days_remaining=1)
+
+    ES->>+TK: update_ticket(priority="CRITICAL",<br/>notify=["merchant_owner", "dispute_team_lead", "account_manager"],<br/>channels=["email", "sms", "phone"])
+
+    TK->>TK: Initiate phone call to merchant
+
+    TK-->>-ES: Updated
+
+    ES-->>-SM: Priority escalated
+
+    SM->>M: "🚨 FINAL WARNING: 1 day remaining<br/><br/>Evidence still incomplete (70%).<br/>Phone call initiated to merchant owner.<br/><br/>Risk: Missing deadline = automatic loss"
+
+    Note over M,EX: Escalation Summary
+
+    rect rgb(240, 248, 255)
+        Note over M,EX: Escalation Type Matrix
+
+        Note over SM: Judge Failure (Blocking)<br/>→ Human review with full context<br/>→ SLA: 24 hours
+
+        Note over SM: Low Confidence Classification<br/>→ Human classifier override<br/>→ SLA: 4 hours
+
+        Note over SM: System Failure<br/>→ Operations team + SRE<br/>→ SLA: 1 hour
+
+        Note over SM: Deadline Warning (3d)<br/>→ Email notification<br/>→ Priority: Medium
+
+        Note over SM: Deadline Warning (2d)<br/>→ Email + SMS<br/>→ Priority: High
+
+        Note over SM: Deadline Warning (1d)<br/>→ Email + SMS + Phone<br/>→ Priority: Critical
+    end
+
+    rect rgb(255, 250, 240)
+        Note over M,EX: Context Preservation Checklist
+
+        Note over ES: ✓ Dispute summary (ID, amount, deadline)
+        Note over ES: ✓ Evidence package (all gathered data)
+        Note over ES: ✓ Judge scores + detailed reasoning
+        Note over ES: ✓ BlackBox trace URL for full audit
+        Note over ES: ✓ Suggested remediation actions
+        Note over ES: ✓ Conversation history summary
+        Note over ES: ✓ Timeline of all actions taken
+    end

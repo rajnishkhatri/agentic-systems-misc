@@ -1,0 +1,61 @@
+flowchart TB
+    subgraph Events["System Events"]
+        AE[Agent Events]
+        JE[Judge Events]
+        SE[State Events]
+        UE[User Events]
+    end
+    
+    subgraph EL["Explainability Layer"]
+        subgraph BB["BlackBox Recorder"]
+            BBR[Record all<br/>agent inputs/outputs]
+        end
+        
+        subgraph AF["AgentFacts"]
+            AFR[Capture agent<br/>assertions & decisions]
+        end
+        
+        subgraph GR["GuardRails"]
+            GRR[Log validation<br/>results & blocks]
+        end
+        
+        subgraph PL["PhaseLogger"]
+            PLR[Track state<br/>transitions & timing]
+        end
+    end
+    
+    subgraph Storage["Storage"]
+        S3[(S3<br/>BlackBox)]
+        TS[(TimescaleDB<br/>Audit Logs)]
+        R[(Redis<br/>Session State)]
+    end
+    
+    subgraph Output["Outputs"]
+        AT[Audit Trail<br/>JSON Export]
+        DB[Dashboard<br/>Metrics]
+        AL[Alert<br/>Notifications]
+    end
+    
+    AE --> BB
+    JE --> BB
+    AE --> AF
+    JE --> GR
+    SE --> PL
+    UE --> PL
+    
+    BB --> S3
+    AF --> TS
+    GR --> TS
+    PL --> R
+    PL --> TS
+    
+    S3 --> AT
+    TS --> AT
+    TS --> DB
+    GR --> AL
+    
+    style BB fill:#e3f2fd
+    style AF fill:#e8f5e9
+    style GR fill:#fff3e0
+    style PL fill:#fce4ec
+

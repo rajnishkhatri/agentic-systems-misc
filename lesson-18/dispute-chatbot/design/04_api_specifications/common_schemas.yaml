@@ -1,0 +1,600 @@
+# Common Shared Schemas for Dispute Resolution Chatbot
+# Document ID: design/04_api_specifications/common_schemas.yaml
+# Version: 1.0.0
+# Last Updated: 2025-12-08
+#
+# This file contains shared schemas referenced by:
+#   - mcp_tools.yaml (MCP tool definitions)
+#   - internal_events.yaml (internal event schemas)
+#
+# Usage: $ref: 'common_schemas.yaml#/components/schemas/SchemaName'
+
+openapi: "3.0.0"
+info:
+  title: Common Shared Schemas
+  version: 1.0.0
+  description: |
+    Shared schema definitions for the Merchant Dispute Resolution Chatbot.
+    These schemas are used across MCP tools and internal events to ensure
+    consistency and prevent schema drift.
+
+paths: {}
+
+components:
+  schemas:
+    # ============================================================================
+    # CORE DOMAIN SCHEMAS
+    # ============================================================================
+
+    # ------------------------------------------
+    # Reason Code (Visa dispute reason codes)
+    # ------------------------------------------
+    ReasonCode:
+      type: string
+      enum:
+        - "10.4"   # Fraud - Card Not Present
+        - "13.1"   # Product Not Received
+        - "13.2"   # Not as Described
+        - "13.3"   # Defective Merchandise
+        - "13.6"   # Credit Not Processed
+        - "13.7"   # Cancelled Merchandise
+      description: |
+        Visa dispute reason codes.
+        - 10.4: Fraud - Card Not Present (requires CE 3.0 evidence)
+        - 13.1: Product Not Received (requires shipping evidence)
+        - 13.2-13.7: Other dispute types
+      example: "10.4"
+
+    # ------------------------------------------
+    # Prior Transaction (for CE 3.0 qualification)
+    # ------------------------------------------
+    PriorTransaction:
+      type: object
+      required:
+        - transaction_id
+        - date
+        - amount
+      properties:
+        transaction_id:
+          type: string
+          description: Unique transaction identifier
+          example: "txn_abc123def456"
+        date:
+          type: string
+          format: date
+          description: Transaction date (ISO 8601)
+          example: "2024-10-15"
+        amount:
+          type: number
+          format: double
+          description: Transaction amount in USD
+          minimum: 0.01
+          example: 149.99
+        currency:
+          type: string
+          default: "USD"
+          description: Currency code (ISO 4217)
+          example: "USD"
+        undisputed:
+          type: boolean
+          default: true
+          description: Whether transaction was never disputed
+        device_fingerprint:
+          type: string
+          description: Device fingerprint hash for CE 3.0 matching
+          example: "fp_a1b2c3d4e5f6"
+        ip_address:
+          type: string
+          format: ipv4
+          description: IP address at time of transaction
+          example: "192.168.1.100"
+        email:
+          type: string
+          format: email
+          description: Customer email used for transaction
+          example: "customer@example.com"
+        shipping_address_hash:
+          type: string
+          description: Hash of shipping address for matching
+          example: "addr_hash_xyz789"
+      description: |
+        Prior undisputed transaction for Compelling Evidence 3.0 qualification.
+        CE 3.0 requires ≥2 prior transactions within 120 days with ≥2 matching signals.
+
+    # ------------------------------------------
+    # Evidence Package (collected evidence)
+    # ------------------------------------------
+    EvidencePackage:
+      type: object
+      properties:
+        package_id:
+          type: string
+          format: uuid
+          description: Unique identifier for this evidence package
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        dispute_id:
+          type: string
+          description: Associated dispute identifier
+          example: "disp_123abc"
+        created_at:
+          type: string
+          format: date-time
+          description: Package creation timestamp
+        completeness_score:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: Evidence completeness score (0-1)
+          example: 0.85
+        prior_transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriorTransaction'
+          description: Prior undisputed transactions for CE 3.0
+        shipping_evidence:
+          $ref: '#/components/schemas/ShippingEvidence'
+        customer_signals:
+          $ref: '#/components/schemas/CustomerSignals'
+        ce3_qualification:
+          $ref: '#/components/schemas/CE3Qualification'
+        evidence_gaps:
+          type: array
+          items:
+            type: string
+          description: List of missing or incomplete evidence fields
+          example: ["proof_of_delivery", "signature_image"]
+      description: |
+        Complete evidence package assembled by the Hierarchical Evidence Gatherer.
+        Contains all evidence types relevant to the dispute reason code.
+
+    # ------------------------------------------
+    # Shipping Evidence (for PNR 13.1 disputes)
+    # ------------------------------------------
+    ShippingEvidence:
+      type: object
+      properties:
+        tracking_number:
+          type: string
+          description: Carrier tracking number
+          example: "1Z999AA10123456784"
+        carrier:
+          type: string
+          enum:
+            - fedex
+            - ups
+            - usps
+            - dhl
+            - other
+          description: Shipping carrier
+          example: "ups"
+        ship_date:
+          type: string
+          format: date
+          description: Date package was shipped
+        delivery_date:
+          type: string
+          format: date
+          description: Confirmed delivery date
+        proof_of_delivery_url:
+          type: string
+          format: uri
+          description: URL to proof of delivery document
+        signature_image_url:
+          type: string
+          format: uri
+          description: URL to signature image (if available)
+        delivery_address:
+          type: string
+          description: Delivery address (redacted for PCI)
+        delivery_address_verified:
+          type: boolean
+          description: Whether delivery address matches billing address
+        recipient_name:
+          type: string
+          description: Name of person who signed for delivery
+      description: |
+        Shipping and delivery evidence for Product Not Received (13.1) disputes.
+
+    # ------------------------------------------
+    # Customer Signals (for CE 3.0 matching)
+    # ------------------------------------------
+    CustomerSignals:
+      type: object
+      properties:
+        device_fingerprint_match:
+          type: boolean
+          description: Device fingerprint matches prior transactions
+        ip_address_match:
+          type: boolean
+          description: IP address matches prior transactions
+        email_match:
+          type: boolean
+          description: Email address matches prior transactions
+        shipping_address_match:
+          type: boolean
+          description: Shipping address matches prior transactions
+        matching_signal_count:
+          type: integer
+          minimum: 0
+          maximum: 4
+          description: Total number of matching signals (CE 3.0 requires ≥2)
+          example: 3
+      description: |
+        Customer identity signals for Compelling Evidence 3.0 qualification.
+        CE 3.0 requires at least 2 matching signals from the 4 categories.
+
+    # ------------------------------------------
+    # CE 3.0 Qualification Result
+    # ------------------------------------------
+    CE3Qualification:
+      type: object
+      required:
+        - eligible
+      properties:
+        eligible:
+          type: boolean
+          description: Whether dispute qualifies for CE 3.0 defense
+        reason:
+          type: string
+          description: Explanation of eligibility decision
+          example: "2 prior transactions with 3 matching signals"
+        qualifying_transactions:
+          type: array
+          items:
+            type: string
+          description: Transaction IDs that qualify for CE 3.0
+        matching_signals:
+          type: array
+          items:
+            type: string
+            enum:
+              - device_fingerprint
+              - ip_address
+              - email
+              - shipping_address
+          description: Which signals matched across transactions
+        eligibility_score:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: Confidence score for CE 3.0 eligibility
+        prior_transaction_count:
+          type: integer
+          minimum: 0
+          description: Number of qualifying prior transactions
+        matching_signal_count:
+          type: integer
+          minimum: 0
+          maximum: 4
+          description: Number of matching signals (CE 3.0 requires ≥2)
+      description: |
+        Compelling Evidence 3.0 qualification result.
+        Requirements:
+        - ≥2 prior undisputed transactions
+        - Within 120 days of disputed transaction
+        - ≥2 matching signals (device, IP, email, or shipping address)
+
+    # ============================================================================
+    # EVIDENCE DETAIL SCHEMAS (Centralized from mcp_tools.yaml)
+    # ============================================================================
+
+    # ------------------------------------------
+    # Device Fingerprint Evidence
+    # ------------------------------------------
+    DeviceFingerprint:
+      type: object
+      properties:
+        fingerprint_id:
+          type: string
+          description: Unique device fingerprint identifier
+          example: "fp_abc123xyz"
+        match_confidence:
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 1.0
+          description: Confidence score for fingerprint match
+          example: 0.98
+        device_type:
+          type: string
+          description: Type of device identified
+          example: "iPhone 15 Pro"
+        browser_hash:
+          type: string
+          description: Hash of browser fingerprint components
+        os_version:
+          type: string
+          description: Operating system version
+      description: |
+        Device fingerprint data for CE 3.0 matching.
+        Used to verify same device across transactions.
+
+    # ------------------------------------------
+    # IP Geolocation Evidence
+    # ------------------------------------------
+    IPGeolocation:
+      type: object
+      properties:
+        ip_address:
+          type: string
+          format: ipv4
+          description: IP address at time of transaction
+          example: "203.0.113.42"
+        city:
+          type: string
+          description: City from geolocation lookup
+          example: "San Francisco"
+        region:
+          type: string
+          description: State/region from geolocation
+          example: "California"
+        country:
+          type: string
+          description: Country code (ISO 3166-1 alpha-2)
+          example: "US"
+        match_confidence:
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 1.0
+          description: Confidence score for IP match
+          example: 0.92
+        is_vpn:
+          type: boolean
+          description: Whether IP is detected as VPN/proxy
+        isp:
+          type: string
+          description: Internet Service Provider name
+      description: |
+        IP geolocation evidence for CE 3.0 matching.
+        Used to verify consistent location across transactions.
+
+    # ------------------------------------------
+    # Email Verification Evidence
+    # ------------------------------------------
+    EmailVerification:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Customer email address
+          example: "customer@example.com"
+        email_domain:
+          type: string
+          description: Email domain for partial matching
+          example: "example.com"
+        account_age_days:
+          type: integer
+          minimum: 0
+          description: Days since email was first seen
+          example: 847
+        transaction_count:
+          type: integer
+          minimum: 0
+          description: Number of prior transactions with this email
+          example: 23
+        match:
+          type: boolean
+          description: Whether email matches prior transactions
+        verified:
+          type: boolean
+          description: Whether email has been verified (e.g., via confirmation)
+      description: |
+        Email verification evidence for CE 3.0 matching.
+        Used to verify consistent customer identity.
+
+    # ------------------------------------------
+    # Tracking Info (Shipping Evidence)
+    # ------------------------------------------
+    TrackingInfo:
+      type: object
+      properties:
+        carrier:
+          type: string
+          enum:
+            - fedex
+            - ups
+            - usps
+            - dhl
+            - other
+          description: Shipping carrier (lowercase)
+          example: "fedex"
+        tracking_number:
+          type: string
+          description: Carrier tracking number
+          example: "794644790135"
+        status:
+          type: string
+          enum:
+            - in_transit
+            - out_for_delivery
+            - delivered
+            - exception
+            - returned
+          description: Current tracking status
+          example: "delivered"
+        ship_date:
+          type: string
+          format: date
+          description: Date package was shipped
+        delivery_date:
+          type: string
+          format: date-time
+          description: Confirmed delivery timestamp
+          example: "2024-11-18T14:30:00Z"
+        delivery_location:
+          type: string
+          description: Delivery location description
+          example: "Front door"
+        events:
+          type: array
+          items:
+            type: object
+            properties:
+              timestamp:
+                type: string
+                format: date-time
+              location:
+                type: string
+              description:
+                type: string
+          description: Tracking event history
+      description: |
+        Shipping tracking information for PNR 13.1 disputes.
+        Retrieved from carrier APIs (FedEx, UPS, etc.).
+
+    # ------------------------------------------
+    # Proof of Delivery
+    # ------------------------------------------
+    ProofOfDelivery:
+      type: object
+      properties:
+        available:
+          type: boolean
+          description: Whether POD document is available
+        pod_url:
+          type: string
+          format: uri
+          description: URL to proof of delivery document
+        signed_by:
+          type: string
+          description: Name/descriptor of recipient
+          example: "RESIDENTIAL"
+        signature_image_url:
+          type: string
+          format: uri
+          nullable: true
+          description: URL to signature image (if available)
+        delivery_timestamp:
+          type: string
+          format: date-time
+          description: Exact delivery timestamp from carrier
+        gps_coordinates:
+          type: object
+          properties:
+            latitude:
+              type: number
+              format: double
+            longitude:
+              type: number
+              format: double
+          description: GPS coordinates of delivery (if available)
+      description: |
+        Proof of delivery evidence for PNR 13.1 disputes.
+        Includes signature, timestamp, and location verification.
+
+    # ------------------------------------------
+    # Delivery Photo Evidence
+    # ------------------------------------------
+    DeliveryPhoto:
+      type: object
+      properties:
+        available:
+          type: boolean
+          description: Whether delivery photo is available
+        photo_url:
+          type: string
+          format: uri
+          nullable: true
+          description: URL to delivery photo
+        timestamp:
+          type: string
+          format: date-time
+          nullable: true
+          description: Photo capture timestamp
+        location_verified:
+          type: boolean
+          description: Whether photo location matches delivery address
+      description: |
+        Delivery photo evidence for PNR 13.1 disputes.
+        Photo proof of package delivery location.
+
+    # ------------------------------------------
+    # Evidence Gap (Missing/Incomplete Evidence)
+    # ------------------------------------------
+    EvidenceGap:
+      type: object
+      required:
+        - field
+        - severity
+        - message
+      properties:
+        field:
+          type: string
+          description: Name of the missing or incomplete field
+          example: "signature_image"
+        severity:
+          type: string
+          enum:
+            - REQUIRED
+            - WARNING
+            - INFO
+          description: |
+            Gap severity level:
+            - REQUIRED: Must be filled before submission
+            - WARNING: Recommended but not blocking
+            - INFO: Nice to have
+          example: "REQUIRED"
+        message:
+          type: string
+          description: Human-readable description of the gap
+          example: "Signature image not available from carrier"
+        suggested_action:
+          type: string
+          description: Suggested action to fill the gap
+          example: "Contact carrier for signature proof"
+      description: |
+        Represents a gap in the evidence package.
+        Used by the Evidence Gatherer to prompt merchant for missing data.
+
+    # ------------------------------------------
+    # Remediation Action
+    # ------------------------------------------
+    RemediationAction:
+      type: object
+      required:
+        - action
+        - description
+      properties:
+        action:
+          type: string
+          enum:
+            - gather_more_evidence
+            - request_merchant_input
+            - escalate_to_human
+            - retry_specialist
+            - contact_carrier
+          description: Type of remediation action
+          example: "gather_more_evidence"
+        description:
+          type: string
+          description: Human-readable action description
+          example: "Search for additional prior transactions"
+        priority:
+          type: string
+          enum:
+            - low
+            - medium
+            - high
+          default: medium
+          description: Action priority level
+        target_field:
+          type: string
+          description: Field this action aims to fill
+          example: "prior_transactions"
+      description: |
+        Remediation action suggested when judge validation fails.
+        Guides the system or merchant on next steps.
+
+    # ============================================================================
+    # VERSION HISTORY
+    # ============================================================================
+    # Version | Date       | Author | Changes
+    # --------|------------|--------|------------------------------------------
+    # 1.0.0   | 2025-12-08 | Claude | Initial shared schemas extraction
+    # 1.1.0   | 2025-12-08 | Claude | Add DeviceFingerprint, IPGeolocation, EmailVerification,
+    #         |            |        | TrackingInfo, ProofOfDelivery, DeliveryPhoto, EvidenceGap,
+    #         |            |        | RemediationAction (API_REVIEW_AND_PLAN Step 1)

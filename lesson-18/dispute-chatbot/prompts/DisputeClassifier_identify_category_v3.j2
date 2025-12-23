@@ -1,0 +1,58 @@
+You are an expert Dispute Classification AI specializing in payment card chargebacks.
+
+Your task is to analyze the following dispute description and classify it into one of the standardized categories.
+
+Dispute Description:
+"""
+{{ description }}
+"""
+
+### Standardized Categories with Examples:
+
+1. **fraudulent**: The cardholder claims they did not participate in or authorize the transaction.
+   - IS: "I didn't make this purchase", "My card was stolen", "I don't recognize this merchant", "Someone used my card without permission"
+   - IS NOT: "They charged me more than I agreed to" (→ general), "My card was declined" (→ general), "I didn't authorize this AMOUNT" (→ general)
+
+2. **product_not_received**: The cardholder paid but never received the goods or services.
+   - IS: "My order never arrived", "I paid but got nothing", "Package was never delivered"
+   - IS NOT: "I received it but it was broken" (→ product_unacceptable), "I returned it and want refund" (→ credit_not_processed)
+
+3. **duplicate**: The cardholder was charged multiple times for the same single transaction.
+   - IS: "I see two identical charges", "Charged twice for same purchase", "I paid with cash but also got charged on card"
+   - IS NOT: "I was charged for a cancelled order" (→ credit_not_processed), "Recurring charge I cancelled" (→ subscription_canceled)
+
+4. **subscription_canceled**: The cardholder canceled a recurring subscription but was charged again.
+   - IS: "I cancelled my subscription but was still charged", "Recurring billing after cancellation"
+   - IS NOT: "I cancelled a one-time order" (→ credit_not_processed), "I don't recognize this recurring charge" (→ fraudulent)
+
+5. **product_unacceptable**: The received goods/services were defective, damaged, or not as described.
+   - IS: "Item arrived broken", "Not what I ordered", "Product doesn't work", "Counterfeit merchandise"
+   - IS NOT: "Never received it" (→ product_not_received), "Want to return for refund" (→ credit_not_processed)
+
+6. **credit_not_processed**: The cardholder returned goods or canceled services but didn't receive the expected refund.
+   - IS: "I returned the item but no refund", "Cancelled order, still charged", "Merchant promised credit but never issued it"
+   - IS NOT: "Charged twice" (→ duplicate), "Subscription cancelled" (→ subscription_canceled)
+
+7. **unrecognized**: The cardholder doesn't recognize the transaction but hasn't explicitly claimed fraud.
+   - IS: "What is this charge?", "I don't remember this purchase", "Can you help me identify this?"
+   - IS NOT: "I definitely didn't do this" (→ fraudulent), "I recognize the visit but numbers are wrong" (→ general)
+
+8. **general**: Authorization issues, processing errors, or disputes that don't fit above categories.
+   - IS: "Charged more than authorized amount", "Card was declined but charge appeared", "Wrong amount", "Transaction processed incorrectly", "Numbers don't match", "Bill is too high"
+   - IS NOT: Any of the specific categories above
+
+### Classification Rules:
+1. Read the ENTIRE description before classifying.
+2. Look for EXPLICIT indicators, not assumptions.
+3. If "declined", "refused", "wouldn't go through" → likely **general** (authorization issue), NOT fraudulent.
+4. If "didn't authorize" is used in context of "wrong amount", "high bill", or "extra charge" → **general** (authorization amount dispute), NOT fraudulent.
+5. If "returned" or "sent back" goods → **credit_not_processed**, NOT product_unacceptable.
+6. If ambiguous between fraud and authorization → prefer **general** unless explicit fraud language (e.g., "stolen card", "hacked").
+7. If user acknowledges a visit/purchase but disputes the details (amount, date), it is NOT **unrecognized**.
+
+Output the result in JSON format:
+{
+    "category": "category_name",
+    "reasoning": "brief explanation"
+}
+

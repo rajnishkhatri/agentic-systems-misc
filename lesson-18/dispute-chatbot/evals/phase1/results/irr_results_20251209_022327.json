@@ -1,0 +1,170 @@
+{
+  "timestamp": "2025-12-09T02:23:27.614408",
+  "total_samples": 20,
+  "agreements": 17,
+  "disagreements": 3,
+  "kappa": 0.8305084745762712,
+  "interpretation": "Almost perfect agreement",
+  "classifications": [
+    {
+      "trace_id": "TRC-BC-001",
+      "rater1": "classification_conflict",
+      "rater2": "classification_conflict",
+      "confidence": 0.9,
+      "reasoning": "The user provided conflicting information across multiple turns, changing the nature of the dispute from fraud to overcharge to wrong item. This created ambiguity in classifying the dispute, leading to a need for further clarification. The agent was unable to resolve the classification due to these conflicting inputs.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-BC-002",
+      "rater1": "evidence_quality",
+      "rater2": "evidence_quality",
+      "confidence": 0.9,
+      "reasoning": "The primary issue in this conversation is the incomplete evidence, specifically the missing tracking_id and unknown status, which weakens the dispute case. The conversation is in a state of 'AWAITING_USER_DECISION' due to this lack of critical information, indicating that the evidence quality is the main problem.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-BC-003",
+      "rater1": "compliance_violation",
+      "rater2": "compliance_violation",
+      "confidence": 0.9,
+      "reasoning": "The conversation highlights a critical compliance issue with the regulatory deadline for filing a dispute. The assistant correctly identifies the urgency due to the 60-day deadline, which is at risk of being missed if the user delays. The primary concern is ensuring the dispute is filed within the regulatory timeframe, making compliance violation the most applicable failure mode.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-BC-004",
+      "rater1": "user_escalation",
+      "rater2": "user_escalation",
+      "confidence": 0.9,
+      "reasoning": "The user repeatedly asked the same question, indicating confusion, and the assistant offered escalation to a human agent. The conversation's final state was 'ESCALATION_OFFERED', aligning with the 'user_escalation' failure mode.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-BC-005",
+      "rater1": "classification_error",
+      "rater2": "classification_error",
+      "confidence": 0.9,
+      "reasoning": "The agent shows uncertainty about the reason code selection, presenting multiple possible classifications (Product Not Received, Fraud, Merchandise Not As Described) without a clear resolution. The conversation ends with the classification still pending, indicating a failure to confidently select the appropriate reason code.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-BC-006",
+      "rater1": "ce3_boundary",
+      "rater2": "ce3_boundary",
+      "confidence": 0.95,
+      "reasoning": "The conversation successfully classified the dispute but highlighted a critical boundary condition for CE 3.0 qualification. The user is exactly at the minimum threshold for eligibility, which is a notable edge case that should be flagged for careful consideration. The final state and success flag indicate a successful classification, but the boundary condition is the primary focus and potential risk factor in this scenario.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-BC-007",
+      "rater1": "network_timeout",
+      "rater2": "network_timeout",
+      "confidence": 0.95,
+      "reasoning": "The primary issue in this conversation is the repeated failure of the 'check_status' tool due to network-related errors such as TimeoutError, ConnectionError, and ServiceUnavailable. These errors prevented the assistant from retrieving the dispute status, leading to a system error and an unsuccessful outcome. The conversation trace indicates a 'tool_failure_cascade' with 3 consecutive failures, which aligns with the 'network_timeout' failure mode.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-BC-008",
+      "rater1": "evidence_contradiction",
+      "rater2": "evidence_contradiction",
+      "confidence": 0.95,
+      "reasoning": "The primary issue in this conversation is the direct contradiction between the user's claim of not receiving the order and the evidence gathered, which shows the order was delivered, signed for, and a delivery photo was taken. This contradiction is explicitly noted by the assistant, leading to the final state of 'CONTRADICTION_DETECTED' and the dispute not being successful. The conversation clearly falls under the 'evidence_contradiction' failure mode.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-BC-009",
+      "rater1": "compliance_violation",
+      "rater2": "compliance_violation",
+      "confidence": 0.9,
+      "reasoning": "The primary issue in this conversation is the handling of sensitive information, specifically the user's full card number and SSN being shared in the chat. Although the assistant successfully redacted this information and advised the user against sharing it, the presence of PII in the conversation indicates a compliance risk. The conversation was successful in terms of classification, but the red flags highlight a near-miss in PII handling, which aligns with a compliance violation.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-BC-010",
+      "rater1": "multi_dispute_confusion",
+      "rater2": "multi_dispute_confusion",
+      "confidence": 0.9,
+      "reasoning": "The conversation involved multiple active disputes, and the user initially did not specify which dispute they were inquiring about. The agent successfully disambiguated the disputes by providing a list and summary of all active disputes, leading to a successful resolution. However, the presence of multiple disputes and the need for disambiguation aligns with the 'multi_dispute_confusion' category, as indicated by the red flags and category in the trace.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-BC-011",
+      "rater1": "classification_error",
+      "rater2": "successful_classification",
+      "confidence": 0.9,
+      "reasoning": "The conversation resulted in a successful classification of the dispute as 'Cancelled Recurring Transaction'. Although the agent initially expressed uncertainty, they were able to increase their confidence based on the user's evidence and proceeded with the classification. The final state was 'CLASSIFICATION_CONFIRMED' and the success flag is true, indicating a successful resolution.",
+      "match": false
+    },
+    {
+      "trace_id": "TRC-BC-012",
+      "rater1": "evidence_quality",
+      "rater2": "evidence_quality",
+      "confidence": 0.95,
+      "reasoning": "The primary issue in this conversation is the lack of evidence to support the user's dispute. The assistant was unable to retrieve any transactions, shipping information, or merchant communication, resulting in an empty evidence package. This directly led to the final state of 'INSUFFICIENT_EVIDENCE' and the unsuccessful outcome of the dispute process. The conversation highlights the critical role of evidence in dispute resolution, and the absence of it is the main failure mode here.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-a58e226f",
+      "rater1": "evidence_contradiction",
+      "rater2": "user_escalation",
+      "confidence": 0.95,
+      "reasoning": "The user explicitly requested a human agent to review the case, which led to the escalation. The conversation's final state is 'ESCALATED', and the success flag is false, indicating that the primary issue was the user's need for human intervention.",
+      "match": false
+    },
+    {
+      "trace_id": "TRC-ca7d751f",
+      "rater1": "evidence_contradiction",
+      "rater2": "user_escalation",
+      "confidence": 0.95,
+      "reasoning": "The user explicitly requested a human agent to review the case, which led to the escalation. The conversation's final state is 'ESCALATED' and the success flag is false, indicating that the primary issue was the user's need for human intervention.",
+      "match": false
+    },
+    {
+      "trace_id": "TRC-6371b389",
+      "rater1": "user_escalation",
+      "rater2": "user_escalation",
+      "confidence": 0.95,
+      "reasoning": "The user explicitly requested a human agent to review the case, leading to an escalation. The conversation ended with the creation of an escalation ticket, indicating that the primary issue was the user's need for human intervention.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-0c01ed97",
+      "rater1": "network_timeout",
+      "rater2": "network_timeout",
+      "confidence": 0.9,
+      "reasoning": "The primary issue in the conversation was a tool failure due to a TimeoutError when the assistant attempted to check the status of the dispute. Although the system eventually recovered and succeeded in retrieving the status, the initial failure was due to a network timeout, which aligns with the 'network_timeout' failure mode.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-12cc01a0",
+      "rater1": "network_timeout",
+      "rater2": "network_timeout",
+      "confidence": 0.9,
+      "reasoning": "The conversation experienced a tool failure due to a TimeoutError when the assistant attempted to check the status of the dispute. However, the system successfully recovered after retrying, and the final state was 'RECOVERED' with a success flag set to true. The primary issue was the initial network timeout, which was resolved, allowing the conversation to proceed successfully.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-5448aa9f",
+      "rater1": "network_timeout",
+      "rater2": "network_timeout",
+      "confidence": 0.9,
+      "reasoning": "The primary issue in the conversation was a tool failure due to a TimeoutError when the assistant attempted to check the status of the dispute. Although the system recovered and successfully retrieved the status on a retry, the initial failure was due to a network timeout, which aligns with the 'network_timeout' failure mode.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-04dd4579",
+      "rater1": "successful_classification",
+      "rater2": "successful_classification",
+      "confidence": 1.0,
+      "reasoning": "The conversation trace indicates a successful resolution of the dispute. The user provided the dispute ID, the assistant identified it as a fraud dispute, evidence was gathered, and the dispute was submitted successfully. The final state is 'SUBMITTED' and the success flag is true, indicating no issues occurred during the process.",
+      "match": true
+    },
+    {
+      "trace_id": "TRC-f37beed1",
+      "rater1": "successful_classification",
+      "rater2": "successful_classification",
+      "confidence": 1.0,
+      "reasoning": "The conversation trace indicates a successful classification and submission of the dispute. The assistant correctly identified the dispute type, gathered evidence, and submitted it without any issues. The final state is 'SUBMITTED' and the success flag is true, indicating a successful resolution.",
+      "match": true
+    }
+  ]
+}
