@@ -361,32 +361,32 @@
         Output: Timing verification
         Verification: `time jupyter nbconvert --execute` <3 min total
 
-- [ ] 7.0 Testing and Validation
-  - [ ] 7.1 Run full test suite and verify ≥90% coverage
+- [x] 7.0 Testing and Validation
+  - [x] 7.1 Run full test suite and verify ≥90% coverage
         Input: All generator tests
         Output: Coverage report
         Verification: `pytest --cov` shows ≥90% coverage
-  - [ ] 7.2 Validate all JSON files parse correctly
+  - [x] 7.2 Validate all JSON files parse correctly
         Input: All JSON files in data/
         Output: Validation script output
         Verification: No JSON parse errors
-  - [ ] 7.3 Validate all Mermaid diagrams render
+  - [x] 7.3 Validate all Mermaid diagrams render
         Input: All .mmd files
         Output: Rendered diagrams
         Verification: `mmdc` converts all diagrams without error
-  - [ ] 7.4 Validate all tutorial links work
+  - [x] 7.4 Validate all tutorial links work
         Input: All .md files
         Output: Link checker output
         Verification: No broken internal links
-  - [ ] 7.5 Run ruff format and check on all Python files
+  - [x] 7.5 Run ruff format and check on all Python files
         Input: All .py files
         Output: Ruff output
         Verification: No formatting or linting errors
-  - [ ] 7.6 Manual review against PRD validation checkpoints
+  - [x] 7.6 Manual review against PRD validation checkpoints
         Input: PRD Section 11 checkpoints
         Output: Checklist completion
         Verification: All 6 checkpoints pass
-  - [ ] 7.7 Component integration test
+  - [x] 7.7 Component integration test
         Input: All React components, JSON data files, Python generators
         Output: Automated integration test that mounts all components together
         Test Coverage:
@@ -398,24 +398,24 @@
         - Verify WorkedExampleBreakdown annotations render
         Verification: All integration tests pass, no console errors
 
-- [ ] 8.0 Publishing and Reflection Documentation
-  - [ ] 8.1 Conduct self-review of all content
+- [x] 8.0 Publishing and Reflection Documentation
+  - [x] 8.1 Conduct self-review of all content
         Input: All tutorials, notebooks, components
         Output: Self-review notes
         Verification: Review documented with any issues found
-  - [ ] 8.2 Draft social media post for Cherry-Picked Benchmarks
+  - [x] 8.2 Draft social media post for Cherry-Picked Benchmarks
         Input: Tutorial content, key visuals
         Output: Draft post (LinkedIn/Twitter format)
         Verification: Self-contained, engaging, links to full tutorial
-  - [ ] 8.3 Document learnings in reflection notes
+  - [x] 8.3 Document learnings in reflection notes
         Input: Development experience
         Output: `REFLECTION_NOTES.md` with lessons learned
         Verification: Contains ≥3 learnings for next iteration
-  - [ ] 8.4 Identify improvements for next fallacy iteration
+  - [x] 8.4 Identify improvements for next fallacy iteration
         Input: Reflection notes
         Output: Improvement list in reflection notes
         Verification: Actionable improvements documented
-  - [ ] 8.5 Update PRD status (Cherry-Picked Benchmarks → Complete)
+  - [x] 8.5 Update PRD status (Cherry-Picked Benchmarks → Complete)
         Input: PRD Section 13 status table
         Output: Updated status
         Verification: PRD reflects completion
@@ -447,33 +447,33 @@
 ## PRD Validation Checkpoints
 
 ### Checkpoint 1: Research Complete (Task 2.0)
-- [ ] ≥3 sources documented (arXiv, GitHub, web)
-- [ ] Sources are directly relevant (not digressed)
-- [ ] Key insights extracted for tutorial content
+- [x] ≥3 sources documented (arXiv, GitHub, web)
+- [x] Sources are directly relevant (not digressed)
+- [x] Key insights extracted for tutorial content
 
 ### Checkpoint 2: Content Complete (Task 3.0)
-- [ ] All 6 Pólya phases written (.md files)
-- [ ] Visual diagram for each phase
-- [ ] Pattern/Anti-pattern documented
-- [ ] Grounded in dispute-chatbot data
+- [x] All 6 Pólya phases written (.md files)
+- [x] Visual diagram for each phase
+- [x] Pattern/Anti-pattern documented
+- [x] Grounded in dispute-chatbot data
 
 ### Checkpoint 3: Data Layer Complete (Task 4.0)
-- [ ] JSON entries added
-- [ ] Python generators implemented
-- [ ] TDD tests passing with ≥90% coverage
+- [x] JSON entries added
+- [x] Python generators implemented
+- [x] TDD tests passing with ≥90% coverage
 
 ### Checkpoint 4: Interactive Layer Complete (Task 5.0)
-- [ ] React/JSX components functional
-- [ ] Mobile responsive (768px+)
-- [ ] No external dependencies (Tailwind only)
+- [x] React/JSX components functional
+- [x] Mobile responsive (768px+)
+- [x] No external dependencies (Tailwind only)
 
 ### Checkpoint 5: Ready for Publishing (Task 7.0)
-- [ ] Self-review complete
-- [ ] No broken links/references
-- [ ] Diagrams render correctly
-- [ ] Social media post drafted
+- [x] Self-review complete
+- [x] No broken links/references
+- [x] Diagrams render correctly
+- [x] Social media post drafted
 
 ### Checkpoint 6: Reflection Complete (Task 8.0)
-- [ ] Feedback gathered (self + social)
-- [ ] Learnings documented
-- [ ] Improvements identified for next iteration
+- [x] Feedback gathered (self + social)
+- [x] Learnings documented
+- [x] Improvements identified for next iteration

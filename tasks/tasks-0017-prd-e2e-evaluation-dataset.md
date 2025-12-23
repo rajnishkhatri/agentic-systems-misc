@@ -29,29 +29,29 @@
         Output: Confirmed paths
         Verification: `ls` shows input files exist; `mkdir -p` ensures output dir exists
 
-- [ ] 2.0 Implement Dataset Generator (`scripts/generate_e2e_golden_set.py`)
+- [x] 2.0 Implement Dataset Generator (`scripts/generate_e2e_golden_set.py`)
   - [x] 2.1 Implement `load_data` function to read classification and evidence JSONs
         Input: JSON file paths
         Output: Loaded Python dictionaries/lists
         Verification: Print/log loaded record counts
-  - [ ] 2.2 Implement `extract_semantic_features(text)` function using Regex
+  - [x] 2.2 Implement `extract_semantic_features(text)` function using Regex
         Input: "I didn't buy this $500 TV from Samsung"
         Output: `{"amount": 500.0, "merchant": "Samsung", "product": "TV"}`
         Verification: Unit test with sample strings
-  - [ ] 2.3 Implement `patch_evidence(evidence_record, features, reason_code)` function
+  - [x] 2.3 Implement `patch_evidence(evidence_record, features, reason_code)` function
         Input: Base evidence record + Extracted features + Reason Code
         Output: Modified evidence record with matching Amount/Merchant AND shipping status logic (e.g. for 13.1)
         Verification: Assert `record['amount'] == features['amount']`; if reason='13.1', shipping status is set correctly
-  - [ ] 2.4 Implement `link_and_generate` main loop
+  - [x] 2.4 Implement `link_and_generate` main loop
         Input: All loaded data
         Output: List of combined test cases (Input + Expected Classification + Expected Evidence)
         Verification: Checksum of output list is stable across runs
-  - [ ] 2.5 Save output to `e2e_evaluation_set.json`
+  - [x] 2.5 Save output to `e2e_evaluation_set.json`
         Input: Generated list
         Output: JSON file on disk
         Verification: File exists and contains valid JSON
 
-- [ ] 3.0 Implement Evaluation Runner (`scripts/evaluate_e2e.py`)
+- [x] 3.0 Implement Evaluation Runner (`scripts/evaluate_e2e.py`)
   - [x] 3.1 Create `MockDataLoader` class/context manager
         Input: Path to `e2e_evaluation_set.json`
         Output: Object that intercepts `get_evidence` calls
@@ -78,8 +78,7 @@
         Input: Execution command
         Output: Test report
         Verification: High pass rate (>90%) for happy path
-  - [ ] 4.3 (Optional) Introduce a deliberate bug in `Classify` and verify test failure
+  - [x] 4.3 (Optional) Introduce a deliberate bug in `Classify` and verify test failure
         Input: Code modification
         Output: Test failure in report
         Verification: Runner correctly identifies the regression
-

@@ -38,12 +38,12 @@ Without training to recognize these fallacies, engineers make poor decisions abo
 - React/JSX rendering environment available for interactive components
 
 ### Success Criteria
-- [ ] One fallacy completed with all 6 Pólya phases
-- [ ] Research sources documented (arXiv, GitHub, web)
-- [ ] Visual diagrams for each phase
-- [ ] Python generators with ≥90% test coverage
-- [ ] React/JSX interactive component functional
-- [ ] Ready for social media posting
+- [x] One fallacy completed with all 6 Pólya phases
+- [x] Research sources documented (arXiv, GitHub, web)
+- [x] Visual diagrams for each phase
+- [x] Python generators with ≥90% test coverage
+- [x] React/JSX interactive component functional
+- [x] Ready for social media posting
 
 ---
 
@@ -335,36 +335,36 @@ lesson-18/interactive/logical-fallacies/
 ## 11. Validation Checkpoints
 
 ### Checkpoint 1: Research Complete
-- [ ] ≥3 sources documented (arXiv, GitHub, web)
-- [ ] Sources are directly relevant (not digressed)
-- [ ] Key insights extracted for tutorial content
+- [x] ≥3 sources documented (arXiv, GitHub, web)
+- [x] Sources are directly relevant (not digressed)
+- [x] Key insights extracted for tutorial content
 
 ### Checkpoint 2: Content Complete
-- [ ] All 6 Pólya phases written (.md files)
-- [ ] Visual diagram for each phase
-- [ ] Pattern/Anti-pattern documented
-- [ ] Grounded in dispute-chatbot data
+- [x] All 6 Pólya phases written (.md files)
+- [x] Visual diagram for each phase
+- [x] Pattern/Anti-pattern documented
+- [x] Grounded in dispute-chatbot data
 
 ### Checkpoint 3: Data Layer Complete
-- [ ] JSON entries added
-- [ ] Python generators implemented
-- [ ] TDD tests passing with ≥90% coverage
+- [x] JSON entries added
+- [x] Python generators implemented
+- [x] TDD tests passing with ≥90% coverage
 
 ### Checkpoint 4: Interactive Layer Complete
-- [ ] React/JSX components functional
-- [ ] Mobile responsive (768px+)
-- [ ] No external dependencies (Tailwind only)
+- [x] React/JSX components functional
+- [x] Mobile responsive (768px+)
+- [x] No external dependencies (Tailwind only)
 
 ### Checkpoint 5: Ready for Publishing
-- [ ] Self-review complete
-- [ ] No broken links/references
-- [ ] Diagrams render correctly
-- [ ] Social media post drafted
+- [x] Self-review complete
+- [x] No broken links/references
+- [x] Diagrams render correctly
+- [x] Social media post drafted
 
 ### Checkpoint 6: Reflection Complete
-- [ ] Feedback gathered (self + social)
-- [ ] Learnings documented
-- [ ] Improvements identified for next iteration
+- [x] Feedback gathered (self + social)
+- [x] Learnings documented
+- [x] Improvements identified for next iteration
 
 ---
 
@@ -386,7 +386,7 @@ Based on `logical-fallacies-focused.jsx`, the execution order is:
 ### Category 1: Evaluating AI Claims (8 fallacies)
 | # | Fallacy | Status |
 |---|---------|--------|
-| 1 | Cherry-Picked Benchmarks | 🎯 **FIRST** |
+| 1 | Cherry-Picked Benchmarks | ✅ **COMPLETE** |
 | 2 | Anthropomorphization | Pending |
 | 3 | Appeal to Scale | Pending |
 | 4 | Demo-to-Production Leap | Pending |
@@ -412,73 +412,73 @@ Based on `logical-fallacies-focused.jsx`, the execution order is:
 ## 14. Iteration 1 Task Breakdown: Cherry-Picked Benchmarks
 
 ### Phase 0: Research (Est: 2-3 hours)
-- [ ] Task 0.1: arXiv search for "benchmark selection bias", "evaluation methodology"
-- [ ] Task 0.2: GitHub search for benchmark manipulation examples, evaluation frameworks
-- [ ] Task 0.3: Web search for industry cases of cherry-picked AI benchmarks
-- [ ] Task 0.4: Document sources in `RESEARCH_NOTES.md`
+- [x] Task 0.1: arXiv search for "benchmark selection bias", "evaluation methodology"
+- [x] Task 0.2: GitHub search for benchmark manipulation examples, evaluation frameworks
+- [x] Task 0.3: Web search for industry cases of cherry-picked AI benchmarks
+- [x] Task 0.4: Document sources in `RESEARCH_NOTES.md`
 
 ### Phase 1: UNDERSTAND (Est: 1-2 hours)
-- [ ] Task 1.1: Write domain-specific definition for dispute context
-- [ ] Task 1.2: Create real example from `classification_labels.json` vs `diverse_classification_labels.json`
-- [ ] Task 1.3: Document red flags with evidence
-- [ ] Task 1.4: Create Mermaid diagram for UNDERSTAND phase
+- [x] Task 1.1: Write domain-specific definition for dispute context
+- [x] Task 1.2: Create real example from `classification_labels.json` vs `diverse_classification_labels.json`
+- [x] Task 1.3: Document red flags with evidence
+- [x] Task 1.4: Create Mermaid diagram for UNDERSTAND phase
 
 ### Phase 2: PLAN (Est: 1-2 hours)
-- [ ] Task 2.1: Define detection strategy
-- [ ] Task 2.2: Map related fallacies (survivorship, demo-to-production)
-- [ ] Task 2.3: List data sources needed for detection
-- [ ] Task 2.4: Create Mermaid diagram for PLAN phase
+- [x] Task 2.1: Define detection strategy
+- [x] Task 2.2: Map related fallacies (survivorship, demo-to-production)
+- [x] Task 2.3: List data sources needed for detection
+- [x] Task 2.4: Create Mermaid diagram for PLAN phase
 
 ### Phase 3: TASKS (Est: 2-3 hours)
-- [ ] Task 3.1: Define verification steps
-- [ ] Task 3.2: Write data queries (SQL-like)
-- [ ] Task 3.3: Write metric calculation code
-- [ ] Task 3.4: Create Mermaid diagram for TASKS phase
+- [x] Task 3.1: Define verification steps
+- [x] Task 3.2: Write data queries (SQL-like)
+- [x] Task 3.3: Write metric calculation code
+- [x] Task 3.4: Create Mermaid diagram for TASKS phase
 
 ### Phase 4: EXECUTE (Est: 2-3 hours)
-- [ ] Task 4.1: Create worked example with claim text
-- [ ] Task 4.2: Add annotations highlighting fallacy
-- [ ] Task 4.3: Calculate actual metrics from dispute data
-- [ ] Task 4.4: Write counter-response
-- [ ] Task 4.5: Create Mermaid diagram for EXECUTE phase
+- [x] Task 4.1: Create worked example with claim text
+- [x] Task 4.2: Add annotations highlighting fallacy
+- [x] Task 4.3: Calculate actual metrics from dispute data
+- [x] Task 4.4: Write counter-response
+- [x] Task 4.5: Create Mermaid diagram for EXECUTE phase
 
 ### Phase 5: REFLECT (Est: 1-2 hours)
-- [ ] Task 5.1: Extract key takeaways
-- [ ] Task 5.2: Document pattern connections
-- [ ] Task 5.3: Create self-assessment quiz (3-5 questions)
-- [ ] Task 5.4: Create Mermaid diagram for REFLECT phase
+- [x] Task 5.1: Extract key takeaways
+- [x] Task 5.2: Document pattern connections
+- [x] Task 5.3: Create self-assessment quiz (3-5 questions)
+- [x] Task 5.4: Create Mermaid diagram for REFLECT phase
 
 ### Phase 6: COUNTER (Est: 2-3 hours)
-- [ ] Task 6.1: Reference HW3 Confusion Matrix method
-- [ ] Task 6.2: Write code example with dispute data
-- [ ] Task 6.3: Create application scenario
-- [ ] Task 6.4: Create Mermaid diagram for COUNTER phase
+- [x] Task 6.1: Reference HW3 Confusion Matrix method
+- [x] Task 6.2: Write code example with dispute data
+- [x] Task 6.3: Create application scenario
+- [x] Task 6.4: Create Mermaid diagram for COUNTER phase
 
 ### Data Layer (Est: 3-4 hours)
-- [ ] Task D.1: Add entry to `patterns-anti-patterns.json`
-- [ ] Task D.2: Add entry to `dispute-grounding.json`
-- [ ] Task D.3: Implement `_generate_cherry_picked()` in fallacy generator
-- [ ] Task D.4: Implement phase generators for all 6 phases
-- [ ] Task D.5: Write TDD tests (≥90% coverage)
+- [x] Task D.1: Add entry to `patterns-anti-patterns.json`
+- [x] Task D.2: Add entry to `dispute-grounding.json`
+- [x] Task D.3: Implement `_generate_cherry_picked()` in fallacy generator
+- [x] Task D.4: Implement phase generators for all 6 phases
+- [x] Task D.5: Write TDD tests (≥90% coverage)
 
 ### Interactive Layer (Est: 3-4 hours)
-- [ ] Task I.1: Create/update FallacyCard component
-- [ ] Task I.2: Create PatternAntiPatternCard component
-- [ ] Task I.3: Create phase navigation component
-- [ ] Task I.4: Ensure mobile responsiveness
-- [ ] Task I.5: Test all interactions
+- [x] Task I.1: Create/update FallacyCard component
+- [x] Task I.2: Create PatternAntiPatternCard component
+- [x] Task I.3: Create phase navigation component
+- [x] Task I.4: Ensure mobile responsiveness
+- [x] Task I.5: Test all interactions
 
 ### Notebook Layer (Est: 3-4 hours)
-- [ ] Task N.1: Create `01_fallacy_detection.ipynb` with introduction and core concepts
-- [ ] Task N.2: Create `02_grounded_fallacy_detection.ipynb` with 5 exercise cells
-- [ ] Task N.3: Add setup cells with cost warnings and validation assertions
-- [ ] Task N.4: Validate notebook execution time <3 minutes
+- [x] Task N.1: Create `01_fallacy_detection.ipynb` with introduction and core concepts
+- [x] Task N.2: Create `02_grounded_fallacy_detection.ipynb` with 5 exercise cells
+- [x] Task N.3: Add setup cells with cost warnings and validation assertions
+- [x] Task N.4: Validate notebook execution time <3 minutes
 
 ### Publishing & Reflection (Est: 1-2 hours)
-- [ ] Task P.1: Self-review all content
-- [ ] Task P.2: Draft social media post
-- [ ] Task P.3: Publish and gather feedback
-- [ ] Task P.4: Document learnings for next iteration
+- [x] Task P.1: Self-review all content
+- [x] Task P.2: Draft social media post
+- [x] Task P.3: Publish and gather feedback
+- [x] Task P.4: Document learnings for next iteration
 
 **Total Estimated Time for Iteration 1:** ~23-32 hours
 
