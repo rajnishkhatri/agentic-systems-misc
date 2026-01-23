@@ -14,7 +14,7 @@ import React, { useState, useEffect } from 'react';
 // ============================================================================
 
 // GitHub URL for companion markdown document (now in app docs directory)
-const COMPANION_MD_BASE_URL = 'https://github.com/rajnishkhatri/Documents/blob/main/recipe-chatbot/lesson-32/ml-fraud-app/docs/address-fraud-first-principles-companion.md';
+const COMPANION_MD_BASE_URL = 'https://github.com/rajnishkhatri/ml-fraud-react/blob/main/docs/address-fraud-first-principles-companion.md';
 
 // Reference Link Component for consistent styling and linking
 const ReferenceLink = ({ section, anchor, children, tooltip, className = "" }) => {

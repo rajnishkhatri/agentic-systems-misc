@@ -5,6 +5,35 @@ import React, { useState, useEffect, useRef } from 'react';
 // A recursive exploration from surface knowledge to irreducible axioms
 // ============================================================================
 
+// GitHub URL for companion markdown document (now in app docs directory)
+const COMPANION_MD_BASE_URL = 'https://github.com/rajnishkhatri/ml-fraud-react/blob/main/docs/ml-fraud-first-principles-guide.md';
+
+// Reference Link Component for consistent styling and linking
+const ReferenceLink = ({ section, anchor, children, tooltip, className = "" }) => {
+  const url = `${COMPANION_MD_BASE_URL}${anchor ? `#${anchor}` : ''}`;
+
+  return (
+    <div className="group relative inline-block">
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`inline-flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg border border-slate-600/50 bg-slate-800/30 text-slate-300 hover:text-slate-100 hover:border-slate-500 transition-all duration-200 hover:bg-slate-700/50 ${className}`}
+        title={tooltip || `Deep dive: ${section}`}
+      >
+        <span className="text-xs">📖</span>
+        {children}
+        <span className="text-xs opacity-70">↗</span>
+      </a>
+      {tooltip && (
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 text-xs text-slate-200 bg-slate-900 border border-slate-700 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+          {tooltip}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const MLFraudFirstPrinciplesGuide = ({ onBack }) => {
   const [activePhase, setActivePhase] = useState(0);
   const [expandedAxioms, setExpandedAxioms] = useState({});
@@ -49,6 +78,14 @@ const MLFraudFirstPrinciplesGuide = ({ onBack }) => {
       <div className="border-l-4 border-amber-500 pl-6 py-2">
         <p className="text-amber-400 font-mono text-sm tracking-widest">PHASE 1: ESTABLISH BASELINE</p>
         <h2 className="text-3xl font-serif text-slate-100 mt-2">What is ML Fraud Detection at its most literal, observable level?</h2>
+        <div className="mt-4">
+          <ReferenceLink
+            section="Baseline Summary"
+            anchor="phase-1-baseline-summary"
+            tooltip="Deep dive: Observable phenomena, factual inventory, key definitions">
+            📚 Companion Deep Dive
+          </ReferenceLink>
+        </div>
       </div>
 
       {/* Factual Inventory */}
@@ -235,6 +272,14 @@ const MLFraudFirstPrinciplesGuide = ({ onBack }) => {
         <div className="border-l-4 border-cyan-500 pl-6 py-2">
           <p className="text-cyan-400 font-mono text-sm tracking-widest">PHASE 2: CHALLENGE ASSUMPTIONS</p>
           <h2 className="text-3xl font-serif text-slate-100 mt-2">Why do we believe these things are true?</h2>
+          <div className="mt-4">
+            <ReferenceLink
+              section="Assumption Audit"
+              anchor="phase-2-assumption-audit"
+              tooltip="Deep dive: Explicit assumptions, reasoning by analogy vs first principles">
+              📚 Companion Deep Dive
+            </ReferenceLink>
+          </div>
         </div>
 
         <div className={`bg-slate-800/50 rounded-xl p-8 border border-slate-700/50 transition-all duration-500 ${animatedItems.includes(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
@@ -445,6 +490,14 @@ const MLFraudFirstPrinciplesGuide = ({ onBack }) => {
         <div className="border-l-4 border-violet-500 pl-6 py-2">
           <p className="text-violet-400 font-mono text-sm tracking-widest">PHASE 3: DRILL TO AXIOMS</p>
           <h2 className="text-3xl font-serif text-slate-100 mt-2">What truths cannot be derived from anything more fundamental?</h2>
+          <div className="mt-4">
+            <ReferenceLink
+              section="First Principles Map"
+              anchor="phase-3-first-principles-map"
+              tooltip="Deep dive: Recursive why chains, identified axioms, Law of Large Numbers">
+              📚 Companion Deep Dive
+            </ReferenceLink>
+          </div>
         </div>
 
         {/* Recursive Why Chains */}
@@ -573,6 +626,14 @@ const MLFraudFirstPrinciplesGuide = ({ onBack }) => {
         <div className="border-l-4 border-emerald-500 pl-6 py-2">
           <p className="text-emerald-400 font-mono text-sm tracking-widest">PHASE 4: UNDERSTAND MECHANISMS</p>
           <h2 className="text-3xl font-serif text-slate-100 mt-2">How do axioms combine to produce observed phenomena?</h2>
+          <div className="mt-4">
+            <ReferenceLink
+              section="Mechanistic Model"
+              anchor="phase-4-mechanistic-model"
+              tooltip="Deep dive: Causal flow diagrams, leverage points, regularization, LightGBM tradeoffs">
+              📚 Companion Deep Dive
+            </ReferenceLink>
+          </div>
         </div>
 
         {/* Tab Navigation */}
@@ -824,6 +885,14 @@ const MLFraudFirstPrinciplesGuide = ({ onBack }) => {
         <div className="border-l-4 border-pink-500 pl-6 py-2">
           <p className="text-pink-400 font-mono text-sm tracking-widest">PHASE 5: CONTEXTUALIZE & APPLY</p>
           <h2 className="text-3xl font-serif text-slate-100 mt-2">Where does this understanding apply and where does it break down?</h2>
+          <div className="mt-4">
+            <ReferenceLink
+              section="Boundary Conditions"
+              anchor="phase-5-boundary-conditions--applications"
+              tooltip="Deep dive: When axioms hold/break, transfer opportunities, emerging frontiers">
+              📚 Companion Deep Dive
+            </ReferenceLink>
+          </div>
         </div>
 
         {/* Boundary Conditions */}
@@ -1081,6 +1150,14 @@ const MLFraudFirstPrinciplesGuide = ({ onBack }) => {
         <div className="border-l-4 border-indigo-500 pl-6 py-2">
           <p className="text-indigo-400 font-mono text-sm tracking-widest">PHASE 6: SYNTHESIS</p>
           <h2 className="text-3xl font-serif text-slate-100 mt-2">Test Your First-Principles Understanding</h2>
+          <div className="mt-4">
+            <ReferenceLink
+              section="Synthesis"
+              anchor="synthesis-rebuilding-from-first-principles"
+              tooltip="Deep dive: Rebuilding from first principles, quick reference, self-assessment">
+              📚 Companion Deep Dive
+            </ReferenceLink>
+          </div>
         </div>
 
         <div className={`bg-slate-800/50 rounded-xl p-8 border border-slate-700/50 transition-all duration-500 ${animatedItems.includes(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
