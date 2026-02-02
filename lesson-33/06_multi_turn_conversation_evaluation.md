@@ -1,10 +1,5 @@
 # Tutorial 06: Multi-Turn Conversation Evaluation — A First Principles Guide
 
-**Source:** First Principles Analysis of Chapter 6, "Application-Centric AI Evals for Engineers and Technical Product Managers"
-**Authors:** Shreya Shankar and Hamel Husain (original), First Principles analysis by AI Evals Course
-**Reading Time:** 30-35 minutes
-**Difficulty:** Advanced
-
 ---
 
 ## Learning Objectives
